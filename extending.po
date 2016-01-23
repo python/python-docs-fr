@@ -1050,28 +1050,41 @@ msgid ""
 "pointer, C code which raises the exception could cause a core dump or other "
 "unintended side effects."
 msgstr ""
+"Notez également que la variable :c:data:`SpamError` contient une référence "
+"àla nouvelle classe créée; ceci est intentionnel! Comme l'exception peut "
+"êtreretirée du module par un code externe, une référence à la classe est "
+"nécessairepour assurer qu'il ne sera pas rejeté, causant :c:data:`SpamError` "
+"à devenirun pointeur défaillant. S'il devenait un pointeur défaillant, le C "
+"code qui soulèvel'exception peut engendrer un rejet central ou des effets "
+"secondaires innatendus."
 
 #: extending/extending.rst:235
 msgid ""
 "We discuss the use of ``PyMODINIT_FUNC`` as a function return type later in "
 "this sample."
 msgstr ""
+"Nous traiterons de l'utilisation de ``PyMODINIT_FUNC`` comme un type de "
+"retour de fonction plus tard dans cette section."
 
 #: extending/extending.rst:238
 msgid ""
 "The :exc:`spam.error` exception can be raised in your extension module using "
 "a call to :c:func:`PyErr_SetString` as shown below::"
 msgstr ""
+"L'exception :exc:`spam.error` peut être levée dans votre module d'extension "
+"en appelant :c:func:`PyErr_SetString` comme montré ci-dessous::"
 
 #: extending/extending.rst:261
 msgid "Back to the Example"
-msgstr ""
+msgstr "Retour vers l'Exemple"
 
 #: extending/extending.rst:263
 msgid ""
 "Going back to our example function, you should now be able to understand "
 "this statement::"
 msgstr ""
+"En retournant vers notre fonction exemple, vous devriez maintenant "
+"êtrecapable de comprendre cette affirmation::"
 
 #: extending/extending.rst:269
 msgid ""
@@ -1083,12 +1096,23 @@ msgid ""
 "which it points (so in Standard C, the variable :c:data:`command` should "
 "properly be declared as ``const char *command``)."
 msgstr ""
+"Elle retourne *NULL* (l'indicateur d'erreur pour les fonctions retournant "
+"des pointeurs d'objet) si une erreur est detectée dans la liste des "
+"arguments,se fiant à l'exception définie par :c:func:`PyArg_ParseTuple`. "
+"Autrement,la valeur chaîne de l'argument a été copiée dans la variable "
+"locale :c:data:`command`. Il s'agit d'une attribution de pointeur et vous "
+"n'êtes pas supposés modifier la chaîne qui vers laquelle il pointe (donc en "
+"C Standard, la variable :c:data:`command` doit être clairement déclarée "
+"comme ``const char *command``)."
 
 #: extending/extending.rst:277
 msgid ""
 "The next statement is a call to the Unix function :c:func:`system`, passing "
 "it the string we just got from :c:func:`PyArg_ParseTuple`::"
 msgstr ""
+"La prochaine instruction est un appel à la fonction Unix :c:func:`system`, "
+"en lui passant la chaîne que nous venons d'obtenir à partir de :c:func:"
+"`PyArg_ParseTuple`::"
 
 #: extending/extending.rst:282
 msgid ""
@@ -1104,6 +1128,8 @@ msgid ""
 "In this case, it will return an integer object.  (Yes, even integers are "
 "objects on the heap in Python!)"
 msgstr ""
+"Dans ce cas, elle retournera un objet entier. (Oui, même les entiers sont "
+"des objets dans le tas en Python!)"
 
 #: extending/extending.rst:293
 msgid ""
@@ -1112,6 +1138,10 @@ msgid ""
 "``None``.   You need this idiom to do so (which is implemented by the :c:"
 "macro:`Py_RETURN_NONE` macro)::"
 msgstr ""
+"Si vous avez une fonction C qui ne retourne aucun argument utile (une "
+"fonction retournant :c:type:`void`), la fonction Python correspondante doit "
+"retourner ``None``. Vous aurez besoin de cette locution pour cela (qui est "
+"implémentée par la macro :c:macro:`Py_RETURN_NONE`)::"
 
 #: extending/extending.rst:301
 msgid ""
@@ -1119,6 +1149,9 @@ msgid ""
 "is a genuine Python object rather than a *NULL* pointer, which means \"error"
 "\" in most contexts, as we have seen."
 msgstr ""
+":c:data:`Py_None` est le nom C pour l'objet spécial Python ``None``. C'est "
+"un authentique objet Python plutôt qu'un pointeur *NULL*, qui signifie "
+"\"error\" dans la plupart des situations, comme nous l'avons vu."
 
 #: extending/extending.rst:309
 msgid "The Module's Method Table and Initialization Function"
