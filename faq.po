@@ -945,7 +945,7 @@ msgstr ""
 
 #: faq/design.rst:541
 msgid "How are lists implemented?"
-msgstr ""
+msgstr "Comment est-ce que les listes sont implémentées ?"
 
 #: faq/design.rst:543
 msgid ""
@@ -954,12 +954,19 @@ msgid ""
 "objects, and keeps a pointer to this array and the array's length in a list "
 "head structure."
 msgstr ""
+"Les listes en Python sont de vrais tableaux de longueur variable "
+"contrairement à des listes orientées *Lisp* (i.e des listes chaînées). "
+"L'implémentation utilise un tableau contigu de références à d'autres objets. "
+"Elle conserve également un pointeur vers ce tableau et la longueur du "
+"tableau dans une structure de tête de liste."
 
 #: faq/design.rst:547
 msgid ""
 "This makes indexing a list ``a[i]`` an operation whose cost is independent "
 "of the size of the list or the value of the index."
 msgstr ""
+"Cela rend l'indexation d'une liste ``a[i]`` une opération dont le coût est "
+"indépendant de la taille de la liste ou de la valeur de l'indice."
 
 #: faq/design.rst:550
 msgid ""
@@ -968,10 +975,15 @@ msgid ""
 "repeatedly; when the array must be grown, some extra space is allocated so "
 "the next few times don't require an actual resize."
 msgstr ""
+"Lorsque des éléments sont ajoutés ou insérés, le tableau de références est "
+"redimensionné. Un savoir-faire ingénieux permet l'amélioration des "
+"performances lors de l'ajout fréquent d'éléments ; Lorsque le tableau doit "
+"être étendu, un certain espace supplémentaire est alloué de sorte que pour "
+"la prochaine fois, ceci ne nécessite plus un redimensionnement effectif."
 
 #: faq/design.rst:557
 msgid "How are dictionaries implemented?"
-msgstr ""
+msgstr "Comment les dictionnaires sont-ils implémentés ?"
 
 #: faq/design.rst:559
 msgid ""
@@ -979,6 +991,10 @@ msgid ""
 "B-trees, this gives better performance for lookup (the most common operation "
 "by far) under most circumstances, and the implementation is simpler."
 msgstr ""
+"Les dictionnaires Python sont implémentés sous forme de tables de hachage "
+"redimensionnables.  Par rapport aux *B-trees*, cela donne de meilleures "
+"performances pour la recherche (l'opération la plus courante de loin) dans "
+"la plupart des circonstances, et leur implémentation est plus simple."
 
 #: faq/design.rst:563
 msgid ""
@@ -997,7 +1013,7 @@ msgstr ""
 
 #: faq/design.rst:576
 msgid "Why must dictionary keys be immutable?"
-msgstr ""
+msgstr "Pourquoi les clés du dictionnaire sont immuables ?"
 
 #: faq/design.rst:578
 msgid ""
@@ -1011,6 +1027,16 @@ msgid ""
 "be found either, because the value of the object found in that hash bin "
 "would be different."
 msgstr ""
+"L'implémentation de la table de hachage des dictionnaires utilise une valeur "
+"de hachage calculée à partir de la valeur de la clé pour trouver la clé elle-"
+"même.  Si la clé était un objet mutable, sa valeur peut changer, et donc son "
+"hachage pourrait également changer.  Mais toute personne modifiant l'objet "
+"clé ne peut pas dire qu'elle a été utilisée comme une clé de dictionnaire. "
+"Il ne peut déplacer l'entrée dans le dictionnaire.  Ainsi, lorsque vous "
+"essayez de rechercher le même objet dans le dictionnaire, il ne sera pas "
+"disponible parce que sa valeur de hachage est différente. Si vous essayez de "
+"chercher l'ancienne valeur, elle serait également introuvable car la valeur "
+"de l'objet trouvé dans cet emplacement de hachage serait différente."
 
 #: faq/design.rst:587
 msgid ""
@@ -1019,16 +1045,23 @@ msgid ""
 "as the list ``L``.  Tuples are immutable and can therefore be used as "
 "dictionary keys."
 msgstr ""
+"Si vous voulez un dictionnaire indexé avec une liste, il faut simplement "
+"convertir la liste en un  *tuple*  ; la fonction ``tuple(L)` crée un *tuple* "
+"avec les mêmes entrées que la liste ``L``.  Les *tuples* sont immuables et "
+"peuvent donc être utilisés comme clés du dictionnaire."
 
 #: faq/design.rst:591
 msgid "Some unacceptable solutions that have been proposed:"
-msgstr ""
+msgstr "Certaines solutions insatisfaisantes qui ont été proposées :"
 
 #: faq/design.rst:593
 msgid ""
 "Hash lists by their address (object ID).  This doesn't work because if you "
 "construct a new list with the same value it won't be found; e.g.::"
 msgstr ""
+"Les listes de hachage par leur adresse (*ID* de l'objet).  Cela ne "
+"fonctionne pas parce que si vous créez une nouvelle liste avec la même "
+"valeur, elle ne sera pas retrouvée; par exemple.::"
 
 #: faq/design.rst:599
 msgid ""
@@ -1036,6 +1069,10 @@ msgid ""
 "the second line differs from that in the first line.  In other words, "
 "dictionary keys should be compared using ``==``, not using :keyword:`is`."
 msgstr ""
+"cela soulèverait une exception de type *KeyError* car l'id de ``[1, 2]`` "
+"utilisée dans la deuxième ligne diffère de celle de la première ligne.  En "
+"d'autres termes, les clés de dictionnaire doivent être comparées à l'aide du "
+"comparateur  ``==`` et non à l'aide du :keyword:`is`."
 
 #: faq/design.rst:603
 msgid ""
@@ -1043,6 +1080,10 @@ msgid ""
 "being a mutable object, could contain a reference to itself, and then the "
 "copying code would run into an infinite loop."
 msgstr ""
+"Faire une copie lors de l'utilisation d'une liste en tant que clé.  Cela ne "
+"fonctionne pas puisque la liste, étant un objet mutable, pourrait contenir "
+"une référence à elle-même ou avoir une boucle infinie au niveau du code "
+"copié."
 
 #: faq/design.rst:607
 msgid ""
@@ -1181,7 +1222,7 @@ msgstr ""
 
 #: faq/design.rst:716
 msgid "Why is there no goto?"
-msgstr ""
+msgstr "Pourquoi n'y a-t-il pas de goto en Python ?"
 
 #: faq/design.rst:718
 msgid ""
@@ -1190,12 +1231,20 @@ msgid ""
 "all reasonable uses of the \"go\" or \"goto\" constructs of C, Fortran, and "
 "other languages.  For example::"
 msgstr ""
+"Vous pouvez utiliser les exceptions afin de mettre en place un  \"goto "
+"structuré\" qui fonctionne même avec les appels de fonctions.  Beaucoup de "
+"personnes estiment que les exceptions peuvent émuler idéalement tout "
+"utilisation raisonnable des constructions \"go\" ou \"goto\" en C, en "
+"Fortran ou autres langages de programmation.  Par exemple::"
 
 #: faq/design.rst:733
 msgid ""
 "This doesn't allow you to jump into the middle of a loop, but that's usually "
 "considered an abuse of goto anyway.  Use sparingly."
 msgstr ""
+"Cela ne vous permet pas de sauter au milieu d'une boucle. Néanmoins, dans "
+"tous les cas cela est généralement considéré comme un abus de goto.  À "
+"Utiliser avec parcimonie."
 
 #: faq/design.rst:738
 msgid "Why can't raw strings (r-strings) end with a backslash?"
@@ -1232,6 +1281,8 @@ msgstr ""
 #: faq/design.rst:764
 msgid "Why doesn't Python have a \"with\" statement for attribute assignments?"
 msgstr ""
+"Pourquoi la déclaration \"with\" pour les assignations d'attributs n'existe "
+"pas en Python ?"
 
 #: faq/design.rst:766
 msgid ""
@@ -1239,10 +1290,13 @@ msgid ""
 "code on the entrance and exit from the block.  Some language have a "
 "construct that looks like this::"
 msgstr ""
+"Python a une instruction \"with\" qui encapsule l'exécution d'un bloc, en "
+"appelant le code sur l'entrée et la sortie du bloc.  Certains langages "
+"possèdent une construction qui ressemble à ceci::"
 
 #: faq/design.rst:774
 msgid "In Python, such a construct would be ambiguous."
-msgstr ""
+msgstr "En Python, une telle construction serait ambiguë."
 
 #: faq/design.rst:776
 msgid ""
@@ -1251,6 +1305,11 @@ msgid ""
 "assigned to. This is the main point of static typing -- the compiler "
 "*always* knows the scope of every variable at compile time."
 msgstr ""
+"Les autres langages, tels que le Pascal, le Delphi et le C++ utilisent des "
+"types statiques, il est donc possible de savoir d'une manière claire et "
+"directe ce à quoi est attribué un membre. C'est le point principal du typage "
+"statique --le compilateur connaît *toujours* la portée de toutes les "
+"variables au moment de la compilation."
 
 #: faq/design.rst:781
 msgid ""
@@ -1260,6 +1319,11 @@ msgid ""
 "simple reading, what attribute is being referenced: a local one, a global "
 "one, or a member attribute?"
 msgstr ""
+"Python utilise le typage dynamique. Il est impossible de savoir à l'avance "
+"quel attribut est utilisé comme référence lors de l'exécution. Les attributs "
+"membres peuvent être ajoutés ou retirés des objets à la volée. Il est donc "
+"impossible de savoir, d'une simple lecture, quel attribut est référencé : "
+"s'il est local, global ou un attribut membre?"
 
 #: faq/design.rst:787
 msgid "For instance, take the following incomplete snippet::"
@@ -1364,11 +1428,11 @@ msgstr ""
 
 #: faq/extending.rst:3
 msgid "Extending/Embedding FAQ"
-msgstr ""
+msgstr "FAQ Extension/Intégration"
 
 #: faq/extending.rst:13
 msgid "Can I create my own functions in C?"
-msgstr ""
+msgstr "Puis-je créer mes propres fonctions en C ?"
 
 #: faq/extending.rst:15
 msgid ""
@@ -1383,7 +1447,7 @@ msgstr ""
 
 #: faq/extending.rst:23
 msgid "Can I create my own functions in C++?"
-msgstr ""
+msgstr "Puis-je créer mes propres fonctions en C++ ?"
 
 #: faq/extending.rst:25
 msgid ""
@@ -1392,16 +1456,23 @@ msgid ""
 "each function that is going to be called by the Python interpreter.  Global "
 "or static C++ objects with constructors are probably not a good idea."
 msgstr ""
+"Oui, en utilisant les fonctionnalités de compatibilité C existantes en C++.  "
+"Placez ``extern \"C\" { ... }`` autour des fichiers Python inclus et mettez  "
+"``extern \"C\"`` avant chaque fonction qui va être appelée par "
+"l'interpréteur Python.  Les objets  C++ globaux ou statiques avec les "
+"constructeurs ne sont probablement pas une bonne idée."
 
 #: faq/extending.rst:34
 msgid "Writing C is hard; are there any alternatives?"
-msgstr ""
+msgstr "Écrire directement en C est difficile ; existe-t-il des alternatives ?"
 
 #: faq/extending.rst:36
 msgid ""
 "There are a number of alternatives to writing your own C extensions, "
 "depending on what you're trying to do."
 msgstr ""
+"Il y a un certain nombre de solutions existantes qui vous permettent "
+"d'écrire vos propres extensions C, selon ce que vous essayez de faire."
 
 #: faq/extending.rst:41
 msgid ""
