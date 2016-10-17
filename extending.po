@@ -18,13 +18,15 @@ msgstr ""
 
 #: ../Doc/extending/building.rst:7
 msgid "Building C and C++ Extensions"
-msgstr ""
+msgstr "Construire des extensions C et C++"
 
 #: ../Doc/extending/building.rst:9
 msgid ""
 "A C extension for CPython is a shared library (e.g. a ``.so`` file on Linux, "
 "``.pyd`` on Windows), which exports an *initialization function*."
 msgstr ""
+"Une extension C pour CPython est une bibliothèque partagée (Un ``.so`` sur "
+"Linux, un ``.pyd`` sur windows), qui expose une *fonction d'initialisation*."
 
 #: ../Doc/extending/building.rst:12
 msgid ""
@@ -33,16 +35,23 @@ msgid ""
 "extension. When using distutils, the correct filename is generated "
 "automatically."
 msgstr ""
+"Pour pouvoir être importée, la bibliothèque partagée doit pourvoir être "
+"trouvée dans :envvar:`PYTHONPATH`, et doit porter le nom du module, avec "
+"l'extension appropriée. En utilisant distutils, le nom est généré "
+"automatiquement."
 
 #: ../Doc/extending/building.rst:16
 msgid "The initialization function has the signature:"
-msgstr ""
+msgstr "La fonction d'initialisation doit avoir le prototype :"
 
 #: ../Doc/extending/building.rst:20
 msgid ""
 "It returns either a fully-initialized module, or a :c:type:`PyModuleDef` "
 "instance. See :ref:`initializing-modules` for details."
 msgstr ""
+"Elle doit donner soit un module entièrement initialisé, soit une instance "
+"de :c:type:`PyModuleDef`. Voir :ref:`initializing-modules` pour plus de "
+"détails."
 
 #: ../Doc/extending/building.rst:25
 msgid ""
@@ -53,6 +62,14 @@ msgid ""
 "``PyInitU_<modulename>``, with ``<modulename>`` encoded using Python's "
 "*punycode* encoding with hyphens replaced by underscores. In Python::"
 msgstr ""
+"Pour les modules dont les noms sont entièrement en ASCII, la fonction doit "
+"être nommée ``PyInit_<modulename>``, dont ``<modulename>`` est remplacé par "
+"le nom du module. En utilisant :ref:`multi-phase-initialization`, il est "
+"possible d'utiliser des noms de modules comptant des caractères non-ASCII. "
+"Dans ce cas, le nom de la fonction d'initialisation est "
+"``PyInitU_<modulename>``, où ``modulename`` est encodé avec l'encodage "
+"*punyencode* de Python, dont les tirets sont remplacés par des tirets-bas. "
+"En Python ça donne : ::"
 
 #: ../Doc/extending/building.rst:39
 msgid ""
@@ -65,7 +82,7 @@ msgstr ""
 
 #: ../Doc/extending/building.rst:49
 msgid "Building C and C++ Extensions with distutils"
-msgstr ""
+msgstr "Construire les extensions C et C++ avec distutils"
 
 #: ../Doc/extending/building.rst:53
 msgid ""
@@ -73,6 +90,10 @@ msgid ""
 "Python. Since distutils also supports creation of binary packages, users "
 "don't necessarily need a compiler and distutils to install the extension."
 msgstr ""
+"Des modules d'extension peuvent être construits avec distutils, qui est "
+"inclus dans Python. Puisque distutils gère aussi la création de paquets "
+"binaires, les utilisateurs n'auront pas nécessairement besoin ni d'un "
+"compilateur ni de distutils pour installer l'extension."
 
 #: ../Doc/extending/building.rst:57
 msgid ""
@@ -82,7 +103,7 @@ msgstr ""
 
 #: ../Doc/extending/building.rst:73
 msgid "With this :file:`setup.py`, and a file :file:`demo.c`, running ::"
-msgstr ""
+msgstr "Avec ce :file:`setup.py` et un fichier :file:`demo.c`, lancer : ::"
 
 #: ../Doc/extending/building.rst:77
 msgid ""
@@ -91,6 +112,10 @@ msgid ""
 "will end up in a subdirectory :file:`build/lib.system`, and may have a name "
 "like :file:`demo.so` or :file:`demo.pyd`."
 msgstr ""
+"compilera :file:`demo.c`, et produira un module d'extension nommé ``demo`` "
+"dans le dossier :file:`build`. En fonction du système, le fichier du module "
+"peut se retrouver dans :file:`build/lib.system`, et son nom peut être :file:"
+"`demo.py` ou :file:`demo.pyd`."
 
 #: ../Doc/extending/building.rst:82
 msgid ""
@@ -103,6 +128,15 @@ msgid ""
 "distutils documentation in :ref:`distutils-index` to learn more about the "
 "features of distutils; this section explains building extension modules only."
 msgstr ""
+"Dans le fichier :file:`setup.py`, tout est exécuté en appelant la fonction "
+"``setup``. Elle prend un nombre variable d'arguments nommés, dont l'exemple "
+"précédent n'utilise qu'une partie. L'exemple précise des méta-informations "
+"pour construire les paquets, et définir le contenu du paquet. Normalement un "
+"paquet contient des modules additionnels, comme des modules sources, "
+"documentation, sous paquets, etc. Referez-vous à la documentation de "
+"distutils dans :ref:`distutils-index` pour en apprendre plus sur les "
+"fonctionnalités de distutils. Cette section n'explique que la construction "
+"de modules d'extension."
 
 #: ../Doc/extending/building.rst:91
 msgid ""
@@ -136,26 +170,34 @@ msgid ""
 "These lines are for demonstration purposes only; distutils users should "
 "trust that distutils gets the invocations right."
 msgstr ""
+"Ces lignes ne sont qu'à titre d'exemple, les utilisateurs de distutils "
+"doivent avoir confiance en distutils qui fera les appels correctement."
 
 #: ../Doc/extending/building.rst:146
 msgid "Distributing your extension modules"
-msgstr ""
+msgstr "Distribuer vos modules d'extension"
 
 #: ../Doc/extending/building.rst:148
 msgid ""
 "When an extension has been successfully build, there are three ways to use "
 "it."
 msgstr ""
+"Lorsqu'une extension a été construite avec succès, il existe trois moyens de "
+"l'utiliser."
 
 #: ../Doc/extending/building.rst:150
 msgid ""
 "End-users will typically want to install the module, they do so by running ::"
 msgstr ""
+"Typiquement, les utilisateurs vont vouloir installer le module, ils le font "
+"en exécutant : ::"
 
 #: ../Doc/extending/building.rst:154
 msgid ""
 "Module maintainers should produce source packages; to do so, they run ::"
 msgstr ""
+"Les mainteneurs de modules voudront produire des paquets source, pour ce "
+"faire ils exécuteront : ::"
 
 #: ../Doc/extending/building.rst:158
 msgid ""
@@ -170,10 +212,13 @@ msgid ""
 "create binary distributions. Depending on the platform, one of the following "
 "commands can be used to do so. ::"
 msgstr ""
+"Si la distribution source a été construite avec succès, les mainteneurs "
+"peuvent créer une distribution binaire. En fonction de la plateforme, une "
+"des commandes suivantes peut être utilisée. ::"
 
 #: ../Doc/extending/embedding.rst:8
 msgid "Embedding Python in Another Application"
-msgstr ""
+msgstr "Intégrer Python dans une autre Application"
 
 #: ../Doc/extending/embedding.rst:10
 msgid ""
@@ -187,6 +232,15 @@ msgid ""
 "writing some scripts in Python.  You can also use it yourself if some of the "
 "functionality can be written in Python more easily."
 msgstr ""
+"Les chapitres précédents couvraient l'extension de Python, c'est à dire, "
+"comment enrichir une fonctionnalité de Python en y attachant une "
+"bibliothèque de fonctions C. C'est aussi possible dans l'autre sens: "
+"enrichir vos applications C/C++ en y intégrant Python. Intégrer Python vous "
+"permet d'implémenter certaines fonctionnalités de vos applications en Python "
+"plutôt qu'en C ou C++. C'est utile dans de nombreux cas, un exemple serait "
+"de permettre aux utilisateurs d'adapter une application à leur besoins en y "
+"écrivant des scripts Python. Vous pouvez aussi l'utiliser vous même si "
+"certaines fonctionnalités peuvent être rédigées plus facilement en Python."
 
 #: ../Doc/extending/embedding.rst:20
 msgid ""
@@ -196,6 +250,11 @@ msgid ""
 "nothing to do with Python --- instead, some parts of the application "
 "occasionally call the Python interpreter to run some Python code."
 msgstr ""
+"Intégrer et étendre Python sont des tâches presque identiques. La différence "
+"est qu'en étendant Python, le programme principal reste l'interpréteur "
+"Python, alors qu'en intégrant Python le programme principal peut ne rien à "
+"voir avec Python. C'est simplement quelques parties du programme qui "
+"appellent l'interprète Python pour exécuter un peu de code Python."
 
 #: ../Doc/extending/embedding.rst:26
 msgid ""
@@ -206,6 +265,11 @@ msgid ""
 "Python.  Then later you can call the interpreter from any part of the "
 "application."
 msgstr ""
+"En intégrant Python, vous fournissez le programme principal. L'une de ses "
+"tâches sera d'initialiser l'interpréteur. Au minimum vous devrez appeler :c:"
+"func:`Py_Initialize`. Il est possible, avec quelques appels supplémentaires, "
+"de passer des options à Python. Ensuite vous pourrez appeler l'interpréteur "
+"depuis n'importe quelle partie de votre programme."
 
 #: ../Doc/extending/embedding.rst:32
 msgid ""
@@ -216,20 +280,28 @@ msgid ""
 "level operations described in the previous chapters to construct and use "
 "Python objects."
 msgstr ""
+"Il existe différents moyens d'appeler l'interpréteur: vous pouvez donner une "
+"chaîne contenant des instructions Python à :c:func:`PyRun_SimpleString`, ou "
+"vous pouvez donner un pointeur de fichier *stdio* et un nom de fichier "
+"(juste pour nommer les messages d'erreur) à :c:func:`PyRunSimpleFile`. Vous "
+"pouvez aussi appeler les API de bas niveau décrites dans les chapitres "
+"précédents pour construire et utiliser des objets Python."
 
 #: ../Doc/extending/embedding.rst:42
 msgid ":ref:`c-api-index`"
-msgstr ""
+msgstr ":ref:`c-api-index`"
 
 #: ../Doc/extending/embedding.rst:42
 msgid ""
 "The details of Python's C interface are given in this manual. A great deal "
 "of necessary information can be found here."
 msgstr ""
+"Les détails sur l'interface entre Python et le C sont donnés dans ce manuel. "
+"Pléthore informations s'y trouvent."
 
 #: ../Doc/extending/embedding.rst:49
 msgid "Very High Level Embedding"
-msgstr ""
+msgstr "Intégration de Très Haut Niveau"
 
 #: ../Doc/extending/embedding.rst:51
 msgid ""
@@ -238,6 +310,10 @@ msgid ""
 "needing to interact with the application directly. This can for example be "
 "used to perform some operation on a file. ::"
 msgstr ""
+"La manière la plus simple d'intégrer Python est d'utiliser une interface de "
+"très haut niveau. Cette interface a pour but d'exécuter un script Python "
+"sans avoir à interagir avec directement. C'est utile, par exemple, pour "
+"effectuer une opération sur un fichier. ::"
 
 #: ../Doc/extending/embedding.rst:77
 msgid ""
@@ -256,7 +332,7 @@ msgstr ""
 
 #: ../Doc/extending/embedding.rst:92
 msgid "Beyond Very High Level Embedding: An overview"
-msgstr ""
+msgstr "Au delà de l'Intégration de Haut Niveau: Survol"
 
 #: ../Doc/extending/embedding.rst:94
 msgid ""
@@ -266,6 +342,11 @@ msgid ""
 "calls. At the cost of having to write more C code, you can achieve almost "
 "anything."
 msgstr ""
+"L'interface de haut niveau vous permet d'exécuter n'importe quel morceau de "
+"code Python depuis votre application, mais échanger des données est quelque "
+"peu alambiqué. Si c'est ce dont vous avez besoin, vous devez utiliser des "
+"appels de niveau plus bas. Il vous en coûtera plus de lignes de C à écrire, "
+"mais vous pourrez presque tout faire."
 
 #: ../Doc/extending/embedding.rst:99
 msgid ""
@@ -274,36 +355,42 @@ msgid ""
 "previous chapters are still valid. To show this, consider what the extension "
 "code from Python to C really does:"
 msgstr ""
+"Il est à souligner qu'étendre ou intégrer Python revient à la louche au "
+"même, en dépit de la différence d'intention. La plupart des sujets parcourus "
+"dans les chapitres précédents sont toujours valides. Pour le prouver, "
+"regardez ce qu'un code d'extension de Python vers C fait réellement :"
 
 #: ../Doc/extending/embedding.rst:104
 msgid "Convert data values from Python to C,"
-msgstr ""
+msgstr "Convertir des valeurs de Python vers le C,"
 
 #: ../Doc/extending/embedding.rst:106
 msgid "Perform a function call to a C routine using the converted values, and"
-msgstr ""
+msgstr "Appeler une fonction C en utilisant les valeurs converties, et"
 
 #: ../Doc/extending/embedding.rst:108
 msgid "Convert the data values from the call from C to Python."
-msgstr ""
+msgstr "Convertir les résultats de l'appel à la fonction C pour Python."
 
 #: ../Doc/extending/embedding.rst:110
 msgid "When embedding Python, the interface code does:"
-msgstr ""
+msgstr "Lors de l'intégration de Python, le code de l'interface fait :"
 
 #: ../Doc/extending/embedding.rst:112
 msgid "Convert data values from C to Python,"
-msgstr ""
+msgstr "Convertir les valeurs depuis le C vers Python,"
 
 #: ../Doc/extending/embedding.rst:114
 msgid ""
 "Perform a function call to a Python interface routine using the converted "
 "values, and"
 msgstr ""
+"Effectuer un appel de fonction de l'interface Python en utilisant les "
+"valeurs converties, et"
 
 #: ../Doc/extending/embedding.rst:117
 msgid "Convert the data values from the call from Python to C."
-msgstr ""
+msgstr "Convertir les valeurs de l'appel Python pour le C."
 
 #: ../Doc/extending/embedding.rst:119
 msgid ""
@@ -312,6 +399,11 @@ msgid ""
 "is the routine that you call between both data conversions. When extending, "
 "you call a C routine, when embedding, you call a Python routine."
 msgstr ""
+"Tel que vous le voyez, les conversions sont simplement inversées pour "
+"s'adapter au différentes directions de transfert inter-langage. La seule "
+"différence est la fonction que vous appelez entre les deux conversions de "
+"données. Lors de l'extension, vous appelez une fonction C, lors de "
+"l'intégration vous appelez une fonction Python."
 
 #: ../Doc/extending/embedding.rst:124
 msgid ""
@@ -320,10 +412,15 @@ msgid ""
 "be understood.  Since these aspects do not differ from extending the "
 "interpreter, you can refer to earlier chapters for the required information."
 msgstr ""
+"Ce chapitre ne couvrira pas la conversion des données de Python vers le C ni "
+"l'inverse. Aussi, un usage correct des références, ainsi que savoir gérer "
+"les erreurs sont considérés acquis. Ces aspects étant identiques à "
+"l'extension de l'interpréteur, vous pouvez vous référer aux chapitres "
+"précédents."
 
 #: ../Doc/extending/embedding.rst:133
 msgid "Pure Embedding"
-msgstr ""
+msgstr "Intégration Pure"
 
 #: ../Doc/extending/embedding.rst:135
 msgid ""
@@ -332,10 +429,14 @@ msgid ""
 "directly interact with the application (but that will change in the next "
 "section)."
 msgstr ""
+"L'objectif du premier programme est d'exécuter une fonction dans un script "
+"Python. Comme dans la section à propos des interfaces de haut niveau, "
+"l'interpréteur n'interagit pas directement avec l'application (mais le fera "
+"dans la section suivante)."
 
 #: ../Doc/extending/embedding.rst:140
 msgid "The code to run a function defined in a Python script is:"
-msgstr ""
+msgstr "Le code pour appeler une fonction définie dans un script Python est :"
 
 #: ../Doc/extending/embedding.rst:145
 msgid ""
@@ -345,6 +446,11 @@ msgid ""
 "(let's call the finished executable :program:`call`), and use it to execute "
 "a Python script, such as:"
 msgstr ""
+"Ce code charge un script Python en utilisant ``argv[1]``, et appelle une "
+"fonction dont le nom est dans ``argv[2]``. Ses arguments entiers sont les "
+"autres valeurs de ``argv``. Si vous :ref:`compilez et liez <compiling>` ce "
+"programme (appelons l'exécutable :program:`call`), et l'appellez pour "
+"exécuter un script Python, tel que :"
 
 #: ../Doc/extending/embedding.rst:160
 msgid "then the result should be:"
@@ -356,6 +462,10 @@ msgid ""
 "is for data conversion between Python and C, and for error reporting.  The "
 "interesting part with respect to embedding Python starts with ::"
 msgstr ""
+"Bien que le programme soit plutôt gros pour ses fonctionnalités, la plupart "
+"du code n'est que conversion de données entre Python et C, aussi que pour "
+"rapporter les erreurs. La partie intéressante, qui concerne l'intégration de "
+"Python débute par : ::"
 
 #: ../Doc/extending/embedding.rst:177
 msgid ""
@@ -364,6 +474,10 @@ msgid ""
 "which is constructed using the :c:func:`PyUnicode_FromString` data "
 "conversion routine. ::"
 msgstr ""
+"Après avoir initialisé l'interpréteur, le script est chargé en utilisant :c:"
+"func:`PyImport_Import`. Cette fonction prend une chaîne Python pour "
+"argument, elle même construite en utilisant la fonction de conversion :c:"
+"func:`PyUnicode_FromString`."
 
 #: ../Doc/extending/embedding.rst:190
 msgid ""
@@ -373,6 +487,11 @@ msgid ""
 "proceeds by constructing a tuple of arguments as normal.  The call to the "
 "Python function is then made with::"
 msgstr ""
+"Une fois le script chargé, le nom recherché est obtenu en utilisant :c:func:"
+"`PyObject_GetAttrString`. Si le nom existe, et que l'objet récupéré peut "
+"être appelé, vous pouvez présumer sans risque que c'est une fonction. Le "
+"programme continue, classiquement, par la construction de l'uplet "
+"d'arguments. L'appel à la fonction Python est alors effectué avec : ::"
 
 #: ../Doc/extending/embedding.rst:198
 msgid ""
@@ -380,10 +499,13 @@ msgid ""
 "reference to the return value of the function.  Be sure to release the "
 "reference after examining the value."
 msgstr ""
+"Après l'exécution de la fonction, ``pValue`` est soit *NULL*, soit une "
+"référence sur la valeur donnée par la fonction. Assurez-vous de libérer la "
+"référence après avoir utilisé la valeur."
 
 #: ../Doc/extending/embedding.rst:206
 msgid "Extending Embedded Python"
-msgstr ""
+msgstr "Étendre un Python Intégré"
 
 #: ../Doc/extending/embedding.rst:208
 msgid ""
@@ -396,12 +518,24 @@ msgid ""
 "and write some glue code that gives Python access to those routines, just "
 "like you would write a normal Python extension.  For example::"
 msgstr ""
+"Jusqu'à présent, l'interpréteur Python intégré n'avait pas accès aux "
+"fonctionnalités de l'application elle-même. L'API Python le permet en "
+"étendant l'interpréteur intégré. Autrement dit, l'interpréteur intégré est "
+"étendu avec des fonctions fournies par l'application. Bien que cela puisse "
+"sembler complexe, ce n'est pas si dur. Il suffit d'oublier que l'application "
+"démarre l'interpréteur Python, au lieu de cela, voyez l'application comme un "
+"ensemble de fonctions, et rédigez un peu de code pour exposer ces fonctions "
+"à Python, tout comme vous écririez une extension Python normale. Par "
+"exemple : ::"
 
 #: ../Doc/extending/embedding.rst:245
 msgid ""
 "Insert the above code just above the :c:func:`main` function. Also, insert "
 "the following two statements before the call to :c:func:`Py_Initialize`::"
 msgstr ""
+"Insérez le code ci-dessus juste avant la fonction :c:func:`main`. Ajoutez "
+"aussi les deux instructions suivantes avant l'appel à :c:func:"
+"`Py_Initialize` ::"
 
 #: ../Doc/extending/embedding.rst:251
 msgid ""
@@ -409,16 +543,21 @@ msgid ""
 "numargs` function accessible to the embedded Python interpreter. With these "
 "extensions, the Python script can do things like"
 msgstr ""
+"Ces deux lignes initialisent la variable ``numarg``, et rend la fonction :"
+"func:`emb.numargs` accessible à l'interprète intégré. Avec ces ajouts, le "
+"script Python petit maintenant faire des choses comme"
 
 #: ../Doc/extending/embedding.rst:260
 msgid ""
 "In a real application, the methods will expose an API of the application to "
 "Python."
 msgstr ""
+"Dans un cas réel, les méthodes exposeraient une API de l'application a "
+"Python."
 
 #: ../Doc/extending/embedding.rst:270
 msgid "Embedding Python in C++"
-msgstr ""
+msgstr "Intégrer Python dans du C++"
 
 #: ../Doc/extending/embedding.rst:272
 msgid ""
@@ -428,10 +567,15 @@ msgid ""
 "and link your program.  There is no need to recompile Python itself using C+"
 "+."
 msgstr ""
+"Il est aussi possible d'intégrer Python dans un programme en C++, la manière "
+"exacte dont cela se fait dépend de détails du système C++ utilisé. En "
+"général vous écrirez le programme principal en C++, utiliserez un "
+"compilateur C++ pour compiler et lier votre programme. Il n'y a pas besoin "
+"de recompiler Python en utilisant C++."
 
 #: ../Doc/extending/embedding.rst:281
 msgid "Compiling and Linking under Unix-like systems"
-msgstr ""
+msgstr "Compiler et Lier en environnement Unix ou similaire"
 
 #: ../Doc/extending/embedding.rst:283
 msgid ""
@@ -440,6 +584,10 @@ msgid ""
 "application, particularly because Python needs to load library modules "
 "implemented as C dynamic extensions (:file:`.so` files) linked against it."
 msgstr ""
+"Ce n'est pas évident de trouver les bonnes options à passer au compilateur "
+"(et *linker*) pour intégrer l'interpréteur Python dans une application, "
+"Python ayant besoin de charger des extensions sous forme de bibliothèques "
+"dynamiques en C (des :file:`.so`) pour se lier avec."
 
 #: ../Doc/extending/embedding.rst:289
 msgid ""
@@ -449,6 +597,10 @@ msgid ""
 "available).  This script has several options, of which the following will be "
 "directly useful to you:"
 msgstr ""
+"Pour trouver les bonnes option de compilateur et *linker*, vous pouvez "
+"exécuter le script :file:`python(X.Y)-config` généré durant l'installation "
+"(un script :file:`python3-config` peut aussi être disponible). Ce script a "
+"quelques options, celles-ci vous seront utiles :"
 
 #: ../Doc/extending/embedding.rst:295
 msgid ""
@@ -469,6 +621,10 @@ msgid ""
 "that you use the absolute path to :file:`python{X.Y}-config`, as in the "
 "above example."
 msgstr ""
+"Pour éviter la confusion entre différentes installations de Python, (et plus "
+"spécialement entre celle de votre système et votre version compilée), il est "
+"recommandé d'utiliser un chemin absolu vers :file:`python{X.Y}-config`, "
+"comme dans l'exemple précédent."
 
 #: ../Doc/extending/embedding.rst:317
 msgid ""
@@ -481,10 +637,19 @@ msgid ""
 "extract the configuration values that you will want to combine together.  "
 "For example:"
 msgstr ""
+"Si cette procédure ne fonctionne pas pour vous (il n'est pas garanti qu'elle "
+"fonctionne pour toutes les plateformes Unix, mais nous traiteront volontiers "
+"les :ref:`rapports de bugs <reporting-bugs>`), vous devrez lire "
+"ladocumentation de votre système sur la liaison dynamique (*dynamic "
+"linking*) et / ouexaminer le :file:`Makefile` de Python (utilisez :func:"
+"`sysconfig.get_makefile_filename` pour trouver son emplacement) et les "
+"options de compilation. Dans ce cas, le module :mod:`sysconfig` est un outil "
+"utile pour extraire automatiquement les valeurs de configuration que vous "
+"voudrez combiner ensemble. Par example :"
 
 #: ../Doc/extending/extending.rst:8
 msgid "Extending Python with C or C++"
-msgstr ""
+msgstr "Étendre Python en C ou C++"
 
 #: ../Doc/extending/extending.rst:10
 msgid ""
@@ -493,6 +658,11 @@ msgid ""
 "done directly in Python: they can implement new built-in object types, and "
 "they can call C library functions and system calls."
 msgstr ""
+"Il est relativement facile d'ajouter de nouveaux modules à Python, si vous "
+"savez programmer en C. Ces :dfn:`<modules d'extension> extension modules` "
+"permettent deux choses qui ne sont pas possible directement en Python: Elles "
+"peuvent définir de nouveaux types natifs, et peuvent appeler des fonctions "
+"de bibliothèques C ou appels systèmes."
 
 #: ../Doc/extending/extending.rst:15
 msgid ""
@@ -501,12 +671,19 @@ msgid ""
 "aspects of the Python run-time system.  The Python API is incorporated in a "
 "C source file by including the header ``\"Python.h\"``."
 msgstr ""
+"Pour gérer les extensions, l'API Python (*Application Programmer Interface*) "
+"définit un ensemble de fonctions, macros et variables qui donnent accès à la "
+"plupart des aspects du système d'exécution de Python. L'API Python est "
+"incorporée dans un fichier source C en incluant l'en-tête ``\"Python.h\"``."
 
 #: ../Doc/extending/extending.rst:20
 msgid ""
 "The compilation of an extension module depends on its intended use as well "
 "as on your system setup; details are given in later chapters."
 msgstr ""
+"La compilation d'un module d'extension dépend de l'usage prévu et de la "
+"configuration du système, plus de détails peuvent être trouvés dans les "
+"chapitres suivants."
 
 #: ../Doc/extending/extending.rst:25
 msgid ""
@@ -520,10 +697,21 @@ msgid ""
 "with C code and are more portable between implementations of Python than "
 "writing and compiling a C extension module."
 msgstr ""
+"L'interface d'extension C est spécifique à CPython, et les modules "
+"d'extension ne fonctionne pas sur les autres implémentations de Python. Dans "
+"de nombreux cas, il est possible d'éviter la rédaction des extensions en C "
+"et ainsi préserver la portabilité vers d'autres implémentations. Par "
+"exemple, si vous devez appeler une fonction de la bibliothèque C ou faire un "
+"appel système, vous devriez envisager d'utiliser le module :mod:`ctypes` ou "
+"d'utiliser la bibliothèque `cffi <https://cffi.readthedocs.org>`_ plutôt que "
+"d'écrire du code C sur mesure. Ces modules vous permettent d'écrire du code "
+"Python s'interfaçant avec le code C et sont plus portables entre les "
+"implémentations de Python que l'écriture et la compilation d'une d'extension "
+"C."
 
 #: ../Doc/extending/extending.rst:39
 msgid "A Simple Example"
-msgstr ""
+msgstr "Un exemple simple"
 
 #: ../Doc/extending/extending.rst:41
 msgid ""
@@ -533,6 +721,12 @@ msgid ""
 "terminated character string as argument and returns an integer.  We want "
 "this function to be callable from Python as follows::"
 msgstr ""
+"Créons un module d'extension appelé ``spam`` (la nourriture préférée de fans "
+"des Monty Python ...) et disons que nous voulons créer une interface Python "
+"à la fonction de la bibliothèque C :c:func:`system`. [#]_ Cette fonction "
+"prend une chaîne de caractères terminée par NULL comme argument et renvoie "
+"un entier. Nous voulons que cette fonction soit appelable à partir de Python "
+"comme suit : ::"
 
 #: ../Doc/extending/extending.rst:50
 msgid ""
@@ -541,16 +735,22 @@ msgid ""
 "`spammodule.c`; if the module name is very long, like ``spammify``, the "
 "module name can be just :file:`spammify.c`.)"
 msgstr ""
+"Commencez par créer un fichier :file:`spammodule.c`. (Historiquement, si un "
+"module se nomme ``spam``, le fichier C contenant son implémentation est "
+"appelé :file:`spammodule.c`. Si le nom du module est très long, comme "
+"``spammify``, le nom du module peut être juste :file:`spammify.c`.)"
 
 #: ../Doc/extending/extending.rst:55
 msgid "The first line of our file can be::"
-msgstr ""
+msgstr "La première ligne de notre fichier peut être : ::"
 
 #: ../Doc/extending/extending.rst:59
 msgid ""
 "which pulls in the Python API (you can add a comment describing the purpose "
 "of the module and a copyright notice if you like)."
 msgstr ""
+"qui récupère l'API Python (vous pouvez ajouter un commentaire décrivant le "
+"but du module et un avis de droit d'auteur si vous le souhaitez)."
 
 #: ../Doc/extending/extending.rst:64
 msgid ""
@@ -558,6 +758,9 @@ msgid ""
 "standard headers on some systems, you *must* include :file:`Python.h` before "
 "any standard headers are included."
 msgstr ""
+"Python pouvant définir certaines définitions pré-processeur qui affectent "
+"les têtes standard sur certains systèmes, vous *devez* inclure :file:`Python."
+"h` avant les en-têtes standards."
 
 #: ../Doc/extending/extending.rst:68
 msgid ""
@@ -569,6 +772,13 @@ msgid ""
 "on your system, it declares the functions :c:func:`malloc`, :c:func:`free` "
 "and :c:func:`realloc` directly."
 msgstr ""
+"Tous les symboles exposés par :file:`Python.h` sont préfixés de ``Py`` ou "
+"``PY``, sauf ceux qui sont définis dans les en-têtes standard. Pour le "
+"confort, et comme ils sont largement utilisés par l'interpréteur Python, ``"
+"\"Python.h\"`` inclu lui même quelques d'en-têtes standard : ``<stdio.h>``, "
+"``<string.h>``, ``<errno.h>`` et ``<stdlib.h>``. Si ce dernier n'existe pas "
+"sur votre système, il déclare les fonctions :c:func:`malloc`, :c:func:`free` "
+"et :c:func:`realloc` directement."
 
 #: ../Doc/extending/extending.rst:76
 msgid ""
@@ -576,6 +786,10 @@ msgid ""
 "called when the Python expression ``spam.system(string)`` is evaluated "
 "(we'll see shortly how it ends up being called)::"
 msgstr ""
+"La prochaine chose que nous ajoutons à notre fichier de module est la "
+"fonction C qui sera appelée lorsque l'expression Python ``spam."
+"system(chaîne)`` sera évaluée (nous verrons bientôt comment elle finit par "
+"être appelée) ::"
 
 #: ../Doc/extending/extending.rst:92
 msgid ""
@@ -584,12 +798,18 @@ msgid ""
 "C function.  The C function always has two arguments, conventionally named "
 "*self* and *args*."
 msgstr ""
+"Il ya une correspondance directe de la liste des arguments en Python (par "
+"exemple, l'expression ``\"ls -l\"``) aux arguments passés à la fonction C. "
+"La fonction C a toujours deux arguments, appelés par convention *self* et "
+"*args*."
 
 #: ../Doc/extending/extending.rst:97
 msgid ""
 "The *self* argument points to the module object for module-level functions; "
 "for a method it would point to the object instance."
 msgstr ""
+"Pour les fonctions au niveau du module, l'argument *self* pointe sur l'objet "
+"module, pour une méthode, il pointe sur l'instance de l'objet."
 
 #: ../Doc/extending/extending.rst:100
 msgid ""
@@ -602,6 +822,15 @@ msgid ""
 "determine the required types of the arguments as well as the types of the C "
 "variables into which to store the converted values.  More about this later."
 msgstr ""
+"L'argument *args* sera un pointeur vers un *tuple* Python contenant les "
+"arguments. Chaque élément du *tuple* correspond à un argument dans la liste "
+"des arguments de l'appel. Les arguments sont des objets Python --- afin d'en "
+"faire quelque chose dans notre fonction C, nous devons les convertir en "
+"valeurs C. La fonction :c:func:`PyArg_ParseTuple` de l'API Python vérifie "
+"les types des arguments et les convertit en valeurs C. Elle utilise un "
+"modèle sous forme de chaîne pour déterminer les types requis des arguments "
+"ainsi que les types de variables C dans lequel stocker les valeurs "
+"converties. Nous en verront plus, plus tard."
 
 #: ../Doc/extending/extending.rst:109
 msgid ""
@@ -612,10 +841,16 @@ msgid ""
 "the calling function can return *NULL* immediately (as we saw in the "
 "example)."
 msgstr ""
+":c:func:`PyArg_ParseTuple` renvoie vrai (pas zéro) si tous les arguments ont "
+"le bon type et que ses composants ont été stockés dans les variables dont "
+"les adresses données. Il retourne faux (zéro) si une liste d'arguments "
+"invalide a été passée. Dans ce dernier cas, elle soulève également une "
+"exception appropriée de sorte que la fonction d'appel puisse retourner "
+"*NULL* immédiatement (comme nous l'avons vu dans l'exemple)."
 
 #: ../Doc/extending/extending.rst:119
 msgid "Intermezzo: Errors and Exceptions"
-msgstr ""
+msgstr "Intermezzo: Les Erreurs et Exceptions"
 
 #: ../Doc/extending/extending.rst:121
 msgid ""
@@ -631,12 +866,26 @@ msgid ""
 "Library Reference).  It is important to know about them to understand how "
 "errors are passed around."
 msgstr ""
+"Une convention primordiale imprégnant tout l'interpréteur Python est: quand "
+"une fonction échoue, elle devrait laisser une exception et renvoyer une "
+"valeur d'erreur (typiquement un pointeur *NULL*). Dans l'interpréteur, les "
+"exceptions sont stockés dans une variable globale statique, si cette "
+"variable est *NULL*, aucune exception n'a eu lieu. Une seconde variable "
+"globale stocke la \"valeur associée\" à l'exception (le deuxième argument "
+"de :keyword:`raise`). Une troisième variable contient la trace de la pile "
+"dans le cas où l'erreur soit survenue dans du code Python. Ces trois "
+"variables sont les équivalents C du résultat de :meth:`sys.exc_info` en "
+"Python (voir la section sur le module :mod:`sys` dans *The Python Library "
+"Reference*). Il est important de les connaître pour comprendre comment les "
+"erreurs sont propagées."
 
 #: ../Doc/extending/extending.rst:132
 msgid ""
 "The Python API defines a number of functions to set various types of "
 "exceptions."
 msgstr ""
+"L'API Python définit un certain nombre de fonctions pour créer différents "
+"types d'exceptions."
 
 #: ../Doc/extending/extending.rst:134
 msgid ""
@@ -646,6 +895,11 @@ msgid ""
 "indicates the cause of the error and is converted to a Python string object "
 "and stored as the \"associated value\" of the exception."
 msgstr ""
+"La plus courante est :c:func:`PyErr_SetString`. Ses arguments sont un objet "
+"exception et une chaîne C. L'objet exception est généralement un objet "
+"prédéfini comme :c:data:`PyExc_ZeroDivisionError`. La chaîne C indique la "
+"cause de l'erreur et est convertie en une chaîne Python puis stockée en tant "
+"que \"valeur associée\" à l'exception."
 
 #: ../Doc/extending/extending.rst:140
 msgid ""
@@ -656,6 +910,11 @@ msgid ""
 "associated value.  You don't need to :c:func:`Py_INCREF` the objects passed "
 "to any of these functions."
 msgstr ""
+"Une autre fonction utile est :c:func:`PyErr_SetFromErrno`, qui construit une "
+"exception à partir de la valeur de la variable globale :c:data:`errno`. La "
+"fonction la plus générale est :c:func:`PyErr_SetObject`, qui prend deux "
+"arguments: l'exception et sa valeur associée. Vous ne devez pas appliquer :c:"
+"func:`Py_INCREF` aux objets transmis à ces fonctions."
 
 #: ../Doc/extending/extending.rst:147
 msgid ""
@@ -665,6 +924,12 @@ msgid ""
 "`PyErr_Occurred` to see whether an error occurred in a function call, since "
 "you should be able to tell from the return value."
 msgstr ""
+"Vous pouvez tester de manière non destructive si une exception a été levée "
+"avec :c:func:`PyErr_Occurred`. Cela renvoie l'objet exception actuel, ou "
+"*NULL* si aucune exception n'a eu lieu. Cependant, vous ne devriez pas avoir "
+"besoin d'appeler :c:func:`PyErr_Occurred` pour voir si une erreur est "
+"survenue durant l'appel d'une fonction, puisque vous devriez être en mesure "
+"de le déterminer à partir de la valeur de retour."
 
 #: ../Doc/extending/extending.rst:153
 msgid ""
@@ -679,6 +944,17 @@ msgid ""
 "code and tries to find an exception handler specified by the Python "
 "programmer."
 msgstr ""
+"Lorsqu'une fonction *f* ayant appelé une autre fonction *g* détecte que "
+"cette dernière a échoué, *f* devrait donner une valeur d'erreur à son tour "
+"(habituellement *NULL* ou ``-1``). *f* ne devrait *pas* appeler l'une des "
+"fonctions :c:func:`PyErr_\\*`, l'une d'elles ayant déjà été appelée par *g*. "
+"La fonction appelant *f* est alors censée retourner aussi un code d'erreur à "
+"celle qui l'a appelée, toujours sans utiliser :c:func:`PyErr_\\*`, et ainsi "
+"de suite. La cause la plus détaillée de l'erreur a déjà été signalée par la "
+"fonction l'ayant détectée en premier. Une fois l'erreur remontée à la boucle "
+"principale de l'interpréteur Python, il interrompt le code en cours "
+"d'exécution et essaie de trouver un gestionnaire d'exception spécifié par le "
+"développeur Python."
 
 #: ../Doc/extending/extending.rst:163
 msgid ""
@@ -688,6 +964,12 @@ msgid ""
 "can cause information about the cause of the error to be lost: most "
 "operations can fail for a variety of reasons.)"
 msgstr ""
+"(Il ya des situations où un module peut effectivement donner un message "
+"d'erreur plus détaillé en appelant une autre fonction :c:func:`PyErr_\\*`, "
+"dans de tels cas, il est tout à fait possible de le faire. Cependant, ce "
+"n'est généralement pas nécessaire, et peut amener à perdre des informations "
+"sur la cause de l'erreur: la plupart des opérations peuvent échouer pour "
+"tout un tas de raisons)."
 
 #: ../Doc/extending/extending.rst:169
 msgid ""
@@ -697,6 +979,12 @@ msgid ""
 "pass the error on to the interpreter but wants to handle it completely by "
 "itself (possibly by trying something else, or pretending nothing went wrong)."
 msgstr ""
+"Pour ignorer une exception qui aurait été émise lors d'un appel de fonction "
+"qui aurait échoué, l'exception doit être retirée explicitement en appelant :"
+"c:func:`PyErr_Clear`. Le seul cas pour lequel du code C devrait appeler :c:"
+"func:`PyErr_Clear` est lorsqu'il ne veut pas passer l'erreur à "
+"l'interpréteur, mais souhaite la gérer lui-même (peut-être en essayant "
+"quelque chose d'autre, ou en prétendant que rien n'a mal tourné)."
 
 #: ../Doc/extending/extending.rst:175
 msgid ""
@@ -706,6 +994,12 @@ msgid ""
 "creating functions (for example, :c:func:`PyLong_FromLong`) already do this, "
 "so this note is only relevant to those who call :c:func:`malloc` directly."
 msgstr ""
+"Chaque échec de :c:func:`malloc` doit être transformé en une exception --- "
+"l'appelant direct de :c:func:`malloc` (ou :c:func:`realloc`) doit appeler :c:"
+"func:`PyErr_NoMemory` et prendre l'initiative de renvoyer une valeur "
+"d'erreur. Toutes les fonctions construisant des objets (tels que :c:func:"
+"`PyLong_FromLong`) le font déjà, donc cette note ne concerne que ceux qui "
+"appellent :c:func:`malloc` directement."
 
 #: ../Doc/extending/extending.rst:181
 msgid ""
@@ -714,6 +1008,10 @@ msgid ""
 "positive value or zero for success and ``-1`` for failure, like Unix system "
 "calls."
 msgstr ""
+"Notez également que, à l'exception notable de :c:func:`PyArg_ParseTuple` et "
+"compagnie, les fonctions qui renvoient leur statut sous forme d'entier "
+"donnent généralement une valeur positive ou zéro en cas de succès et ``-1`` "
+"en cas d'échec, comme les appels du système Unix."
 
 #: ../Doc/extending/extending.rst:185
 msgid ""
@@ -721,6 +1019,9 @@ msgid ""
 "c:func:`Py_DECREF` calls for objects you have already created) when you "
 "return an error indicator!"
 msgstr ""
+"Enfin, lorsque vous renvoyez un code d'erreur, n'oubliez pas faire un brin "
+"de nettoyage (en appelant :c:func:`Py_XDECREF` ou :c:func:`Py_DECREF` avec "
+"les objets que vous auriez déjà créés) !"
 
 #: ../Doc/extending/extending.rst:189
 msgid ""
@@ -734,12 +1035,26 @@ msgid ""
 "you have an argument whose value must be in a particular range or must "
 "satisfy other conditions, :c:data:`PyExc_ValueError` is appropriate."
 msgstr ""
+"Le choix de l'exception à lever vous incombe. Il existe des objets C "
+"correspondant à chaque exception Python, tel que :c:data:"
+"`PyExc_ZeroDivisionError`, que vous pouvez utiliser directement. Choisissez "
+"judicieusement vos exceptions, typiquement n'utilisez pas :c:data:"
+"`PyExc_TypeError` pour indiquer qu'un fichier n'a pas pu être ouvert (qui "
+"devrait probablement être :c:data:`PyExc_IOError`). Si quelque chose ne va "
+"pas avec la liste des arguments, la fonction :c:func:`PyArg_ParseTuple` "
+"soulève habituellement une exception :c:data:`PyExc_TypeError`. Mais si vous "
+"avez un argument dont la valeur doit être dans un intervalle particulier ou "
+"qui doit satisfaire d'autres conditions, :c:data:`PyExc_ValueError` sera "
+"plus appropriée."
 
 #: ../Doc/extending/extending.rst:199
 msgid ""
 "You can also define a new exception that is unique to your module. For this, "
 "you usually declare a static object variable at the beginning of your file::"
 msgstr ""
+"Vous pouvez également créer une exception spécifique à votre module. Pour "
+"cela, déclarez simplement une variable statique au début de votre "
+"fichier : ::"
 
 #: ../Doc/extending/extending.rst:204
 msgid ""
@@ -747,6 +1062,9 @@ msgid ""
 "`PyInit_spam`) with an exception object (leaving out the error checking for "
 "now)::"
 msgstr ""
+"et initialisez-la dans la fonction d'initialisation de votre module (:c:func:"
+"`PyInit_spam`) avec un objet exception (Passons, pour le moment, la "
+"vérification des codes d'erreur) ::"
 
 #: ../Doc/extending/extending.rst:222
 msgid ""
@@ -755,6 +1073,10 @@ msgid ""
 "class being :exc:`Exception` (unless another class is passed in instead of "
 "*NULL*), described in :ref:`bltin-exceptions`."
 msgstr ""
+"Notez que le nom de exception, côté Python, est :exc:`spam.error`. La "
+"fonction :c:func:`PyErr_NewException` peut créer une classe héritant de :exc:"
+"`Exception` (à moins qu'une autre classe ne lui soit fournie à la place de "
+"*NULL*), voir :ref:`bltin-exceptions`."
 
 #: ../Doc/extending/extending.rst:227
 msgid ""
@@ -766,28 +1088,41 @@ msgid ""
 "pointer, C code which raises the exception could cause a core dump or other "
 "unintended side effects."
 msgstr ""
+"Notez également que la variable :c:data:`SpamError` contient une référence "
+"àla nouvelle classe créée; ceci est intentionnel! Comme l'exception peut "
+"êtreretirée du module par un code externe, une référence à la classe est "
+"nécessairepour assurer qu'il ne sera pas rejeté, causant :c:data:`SpamError` "
+"à devenirun pointeur défaillant. S'il devenait un pointeur défaillant, le C "
+"code qui soulèvel'exception peut engendrer un rejet central ou des effets "
+"secondaires innatendus."
 
 #: ../Doc/extending/extending.rst:234
 msgid ""
 "We discuss the use of ``PyMODINIT_FUNC`` as a function return type later in "
 "this sample."
 msgstr ""
+"Nous traiterons de l'utilisation de ``PyMODINIT_FUNC`` comme un type de "
+"retour de fonction plus tard dans cette section."
 
 #: ../Doc/extending/extending.rst:237
 msgid ""
 "The :exc:`spam.error` exception can be raised in your extension module using "
 "a call to :c:func:`PyErr_SetString` as shown below::"
 msgstr ""
+"L'exception :exc:`spam.error` peut être levée dans votre module d'extension "
+"en appelant :c:func:`PyErr_SetString` comme montré ci-dessous::"
 
 #: ../Doc/extending/extending.rst:260
 msgid "Back to the Example"
-msgstr ""
+msgstr "Retour vers l'Exemple"
 
 #: ../Doc/extending/extending.rst:262
 msgid ""
 "Going back to our example function, you should now be able to understand "
 "this statement::"
 msgstr ""
+"En retournant vers notre fonction exemple, vous devriez maintenant "
+"êtrecapable de comprendre cette affirmation::"
 
 #: ../Doc/extending/extending.rst:268
 msgid ""
@@ -799,24 +1134,40 @@ msgid ""
 "which it points (so in Standard C, the variable :c:data:`command` should "
 "properly be declared as ``const char *command``)."
 msgstr ""
+"Elle retourne *NULL* (l'indicateur d'erreur pour les fonctions retournant "
+"des pointeurs d'objet) si une erreur est detectée dans la liste des "
+"arguments,se fiant à l'exception définie par :c:func:`PyArg_ParseTuple`. "
+"Autrement,la valeur chaîne de l'argument a été copiée dans la variable "
+"locale :c:data:`command`. Il s'agit d'une attribution de pointeur et vous "
+"n'êtes pas supposés modifier la chaîne qui vers laquelle il pointe (donc en "
+"C Standard, la variable :c:data:`command` doit être clairement déclarée "
+"comme ``const char *command``)."
 
 #: ../Doc/extending/extending.rst:276
 msgid ""
 "The next statement is a call to the Unix function :c:func:`system`, passing "
 "it the string we just got from :c:func:`PyArg_ParseTuple`::"
 msgstr ""
+"La prochaine instruction est un appel à la fonction Unix :c:func:`system`, "
+"en lui passant la chaîne que nous venons d'obtenir à partir de :c:func:"
+"`PyArg_ParseTuple`::"
 
 #: ../Doc/extending/extending.rst:281
 msgid ""
 "Our :func:`spam.system` function must return the value of :c:data:`sts` as a "
 "Python object.  This is done using the function :c:func:`PyLong_FromLong`. ::"
 msgstr ""
+"Notre fonction :func:`spam.system` doit retourner la valeur de :c:data:`sts` "
+"comme un objet Python. Cela est effectué par l'utilisation de la fonction :c:"
+"func:`PyLong_FromLong`. ::"
 
 #: ../Doc/extending/extending.rst:286
 msgid ""
 "In this case, it will return an integer object.  (Yes, even integers are "
 "objects on the heap in Python!)"
 msgstr ""
+"Dans ce cas, elle retournera un objet entier. (Oui, même les entiers sont "
+"des objets dans le tas en Python!)"
 
 #: ../Doc/extending/extending.rst:289
 msgid ""
@@ -825,6 +1176,10 @@ msgid ""
 "``None``.   You need this idiom to do so (which is implemented by the :c:"
 "macro:`Py_RETURN_NONE` macro)::"
 msgstr ""
+"Si vous avez une fonction C qui ne retourne aucun argument utile (une "
+"fonction retournant :c:type:`void`), la fonction Python correspondante doit "
+"retourner ``None``. Vous aurez besoin de cette locution pour cela (qui est "
+"implémentée par la macro :c:macro:`Py_RETURN_NONE`)::"
 
 #: ../Doc/extending/extending.rst:297
 msgid ""
@@ -832,6 +1187,9 @@ msgid ""
 "is a genuine Python object rather than a *NULL* pointer, which means \"error"
 "\" in most contexts, as we have seen."
 msgstr ""
+":c:data:`Py_None` est le nom C pour l'objet spécial Python ``None``. C'est "
+"un authentique objet Python plutôt qu'un pointeur *NULL*, qui signifie "
+"\"error\" dans la plupart des situations, comme nous l'avons vu."
 
 #: ../Doc/extending/extending.rst:305
 msgid "The Module's Method Table and Initialization Function"
@@ -1121,6 +1479,9 @@ msgid ""
 "Note that any Python object references which are provided to the caller are "
 "*borrowed* references; do not decrement their reference count!"
 msgstr ""
+"Notez que n'importe quelles références sur un objet Python qui sont données "
+"à l'appelant sont des références *empruntées* ; ne décrémentez pas leur "
+"compteur de références ! "
 
 #: ../Doc/extending/extending.rst:626
 msgid "Some example calls::"
@@ -1730,7 +2091,7 @@ msgstr ""
 
 #: ../Doc/extending/extending.rst:1340 ../Doc/extending/newtypes.rst:1506
 msgid "Footnotes"
-msgstr ""
+msgstr "Notes"
 
 #: ../Doc/extending/extending.rst:1341
 msgid ""
@@ -1804,6 +2165,8 @@ msgid ""
 "`Python Packaging User Guide: Binary Extensions <https://packaging.python."
 "org/en/latest/extensions/>`_"
 msgstr ""
+"`Python Packaging User Guide: Binary Extensions <https://packaging.python."
+"org/en/latest/extensions/>`_"
 
 #: ../Doc/extending/index.rst:36
 msgid ""
@@ -2877,7 +3240,7 @@ msgstr ""
 
 #: ../Doc/extending/newtypes.rst:1159
 msgid "Meaning"
-msgstr ""
+msgstr "Signification"
 
 #: ../Doc/extending/newtypes.rst:1161
 msgid ":const:`READONLY`"
