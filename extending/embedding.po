@@ -1,0 +1,459 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2016, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-30 10:42+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../Doc/extending/embedding.rst:8
+msgid "Embedding Python in Another Application"
+msgstr "Intégrer Python dans une autre Application"
+
+#: ../Doc/extending/embedding.rst:10
+msgid ""
+"The previous chapters discussed how to extend Python, that is, how to extend "
+"the functionality of Python by attaching a library of C functions to it.  It "
+"is also possible to do it the other way around: enrich your C/C++ "
+"application by embedding Python in it.  Embedding provides your application "
+"with the ability to implement some of the functionality of your application "
+"in Python rather than C or C++. This can be used for many purposes; one "
+"example would be to allow users to tailor the application to their needs by "
+"writing some scripts in Python.  You can also use it yourself if some of the "
+"functionality can be written in Python more easily."
+msgstr ""
+"Les chapitres précédents couvraient l'extension de Python, c'est à dire, "
+"comment enrichir une fonctionnalité de Python en y attachant une "
+"bibliothèque de fonctions C. C'est aussi possible dans l'autre sens: "
+"enrichir vos applications C/C++ en y intégrant Python. Intégrer Python vous "
+"permet d'implémenter certaines fonctionnalités de vos applications en Python "
+"plutôt qu'en C ou C++. C'est utile dans de nombreux cas, un exemple serait "
+"de permettre aux utilisateurs d'adapter une application à leur besoins en y "
+"écrivant des scripts Python. Vous pouvez aussi l'utiliser vous même si "
+"certaines fonctionnalités peuvent être rédigées plus facilement en Python."
+
+#: ../Doc/extending/embedding.rst:20
+msgid ""
+"Embedding Python is similar to extending it, but not quite.  The difference "
+"is that when you extend Python, the main program of the application is still "
+"the Python interpreter, while if you embed Python, the main program may have "
+"nothing to do with Python --- instead, some parts of the application "
+"occasionally call the Python interpreter to run some Python code."
+msgstr ""
+"Intégrer et étendre Python sont des tâches presque identiques. La différence "
+"est qu'en étendant Python, le programme principal reste l'interpréteur "
+"Python, alors qu'en intégrant Python le programme principal peut ne rien à "
+"voir avec Python. C'est simplement quelques parties du programme qui "
+"appellent l'interprète Python pour exécuter un peu de code Python."
+
+#: ../Doc/extending/embedding.rst:26
+msgid ""
+"So if you are embedding Python, you are providing your own main program.  "
+"One of the things this main program has to do is initialize the Python "
+"interpreter.  At the very least, you have to call the function :c:func:"
+"`Py_Initialize`.  There are optional calls to pass command line arguments to "
+"Python.  Then later you can call the interpreter from any part of the "
+"application."
+msgstr ""
+"En intégrant Python, vous fournissez le programme principal. L'une de ses "
+"tâches sera d'initialiser l'interpréteur. Au minimum vous devrez appeler :c:"
+"func:`Py_Initialize`. Il est possible, avec quelques appels supplémentaires, "
+"de passer des options à Python. Ensuite vous pourrez appeler l'interpréteur "
+"depuis n'importe quelle partie de votre programme."
+
+#: ../Doc/extending/embedding.rst:32
+msgid ""
+"There are several different ways to call the interpreter: you can pass a "
+"string containing Python statements to :c:func:`PyRun_SimpleString`, or you "
+"can pass a stdio file pointer and a file name (for identification in error "
+"messages only) to :c:func:`PyRun_SimpleFile`.  You can also call the lower-"
+"level operations described in the previous chapters to construct and use "
+"Python objects."
+msgstr ""
+"Il existe différents moyens d'appeler l'interpréteur: vous pouvez donner une "
+"chaîne contenant des instructions Python à :c:func:`PyRun_SimpleString`, ou "
+"vous pouvez donner un pointeur de fichier *stdio* et un nom de fichier "
+"(juste pour nommer les messages d'erreur) à :c:func:`PyRunSimpleFile`. Vous "
+"pouvez aussi appeler les API de bas niveau décrites dans les chapitres "
+"précédents pour construire et utiliser des objets Python."
+
+#: ../Doc/extending/embedding.rst:42
+msgid ":ref:`c-api-index`"
+msgstr ":ref:`c-api-index`"
+
+#: ../Doc/extending/embedding.rst:42
+msgid ""
+"The details of Python's C interface are given in this manual. A great deal "
+"of necessary information can be found here."
+msgstr ""
+"Les détails sur l'interface entre Python et le C sont donnés dans ce manuel. "
+"Pléthore informations s'y trouvent."
+
+#: ../Doc/extending/embedding.rst:49
+msgid "Very High Level Embedding"
+msgstr "Intégration de Très Haut Niveau"
+
+#: ../Doc/extending/embedding.rst:51
+msgid ""
+"The simplest form of embedding Python is the use of the very high level "
+"interface. This interface is intended to execute a Python script without "
+"needing to interact with the application directly. This can for example be "
+"used to perform some operation on a file. ::"
+msgstr ""
+"La manière la plus simple d'intégrer Python est d'utiliser une interface de "
+"très haut niveau. Cette interface a pour but d'exécuter un script Python "
+"sans avoir à interagir avec directement. C'est utile, par exemple, pour "
+"effectuer une opération sur un fichier. ::"
+
+#: ../Doc/extending/embedding.rst:75
+msgid ""
+"The :c:func:`Py_SetProgramName` function should be called before :c:func:"
+"`Py_Initialize` to inform the interpreter about paths to Python run-time "
+"libraries.  Next, the Python interpreter is initialized with :c:func:"
+"`Py_Initialize`, followed by the execution of a hard-coded Python script "
+"that prints the date and time.  Afterwards, the :c:func:`Py_Finalize` call "
+"shuts the interpreter down, followed by the end of the program.  In a real "
+"program, you may want to get the Python script from another source, perhaps "
+"a text-editor routine, a file, or a database.  Getting the Python code from "
+"a file can better be done by using the :c:func:`PyRun_SimpleFile` function, "
+"which saves you the trouble of allocating memory space and loading the file "
+"contents."
+msgstr ""
+"La  fonction :c:func:`Py_SetProgramName` devrait être appelée avant :c:func:"
+"`Py_Initialize` pour informer l'interpréteur des chemins vers les "
+"bibliothèque Python. Ensuite, l'interpréteur Python est initialisé avec :c:"
+"func:`Py_Initialize`, suivi par l'exécution d'un script Python, codé en dur, "
+"qui affiche la date et l'heure. Ensuite, l'interpréteur est arrêté par un "
+"appel à :c:func:`Py_Finalize`, puis le programme se termine. Dans un vrai "
+"programme, vous voudrez peut-être obtenir le script Python d'une autre "
+"source, peut-être d'une fonction d'un éditeur de texte, un fichier ou une "
+"base de données. Obtenir le code Python à partir d'un fichier se fait plus "
+"aisément avec :c:func:`PyRun_SimpleFile`,ce qui vous évite d'avoir à allouer "
+"la mémoire et d'y charger le contenu du fichier."
+
+#: ../Doc/extending/embedding.rst:90
+msgid "Beyond Very High Level Embedding: An overview"
+msgstr "Au delà de l'Intégration de Haut Niveau: Survol"
+
+#: ../Doc/extending/embedding.rst:92
+msgid ""
+"The high level interface gives you the ability to execute arbitrary pieces "
+"of Python code from your application, but exchanging data values is quite "
+"cumbersome to say the least. If you want that, you should use lower level "
+"calls. At the cost of having to write more C code, you can achieve almost "
+"anything."
+msgstr ""
+"L'interface de haut niveau vous permet d'exécuter n'importe quel morceau de "
+"code Python depuis votre application, mais échanger des données est quelque "
+"peu alambiqué. Si c'est ce dont vous avez besoin, vous devez utiliser des "
+"appels de niveau plus bas. Il vous en coûtera plus de lignes de C à écrire, "
+"mais vous pourrez presque tout faire."
+
+#: ../Doc/extending/embedding.rst:97
+msgid ""
+"It should be noted that extending Python and embedding Python is quite the "
+"same activity, despite the different intent. Most topics discussed in the "
+"previous chapters are still valid. To show this, consider what the extension "
+"code from Python to C really does:"
+msgstr ""
+"Il est à souligner qu'étendre ou intégrer Python revient à la louche au "
+"même, en dépit de la différence d'intention. La plupart des sujets parcourus "
+"dans les chapitres précédents sont toujours valides. Pour le prouver, "
+"regardez ce qu'un code d'extension de Python vers C fait réellement :"
+
+#: ../Doc/extending/embedding.rst:102
+msgid "Convert data values from Python to C,"
+msgstr "Convertir des valeurs de Python vers le C,"
+
+#: ../Doc/extending/embedding.rst:104
+msgid "Perform a function call to a C routine using the converted values, and"
+msgstr "Appeler une fonction C en utilisant les valeurs converties, et"
+
+#: ../Doc/extending/embedding.rst:106
+msgid "Convert the data values from the call from C to Python."
+msgstr "Convertir les résultats de l'appel à la fonction C pour Python."
+
+#: ../Doc/extending/embedding.rst:108
+msgid "When embedding Python, the interface code does:"
+msgstr "Lors de l'intégration de Python, le code de l'interface fait :"
+
+#: ../Doc/extending/embedding.rst:110
+msgid "Convert data values from C to Python,"
+msgstr "Convertir les valeurs depuis le C vers Python,"
+
+#: ../Doc/extending/embedding.rst:112
+msgid ""
+"Perform a function call to a Python interface routine using the converted "
+"values, and"
+msgstr ""
+"Effectuer un appel de fonction de l'interface Python en utilisant les "
+"valeurs converties, et"
+
+#: ../Doc/extending/embedding.rst:115
+msgid "Convert the data values from the call from Python to C."
+msgstr "Convertir les valeurs de l'appel Python pour le C."
+
+#: ../Doc/extending/embedding.rst:117
+msgid ""
+"As you can see, the data conversion steps are simply swapped to accommodate "
+"the different direction of the cross-language transfer. The only difference "
+"is the routine that you call between both data conversions. When extending, "
+"you call a C routine, when embedding, you call a Python routine."
+msgstr ""
+"Tel que vous le voyez, les conversions sont simplement inversées pour "
+"s'adapter au différentes directions de transfert inter-langage. La seule "
+"différence est la fonction que vous appelez entre les deux conversions de "
+"données. Lors de l'extension, vous appelez une fonction C, lors de "
+"l'intégration vous appelez une fonction Python."
+
+#: ../Doc/extending/embedding.rst:122
+msgid ""
+"This chapter will not discuss how to convert data from Python to C and vice "
+"versa.  Also, proper use of references and dealing with errors is assumed to "
+"be understood.  Since these aspects do not differ from extending the "
+"interpreter, you can refer to earlier chapters for the required information."
+msgstr ""
+"Ce chapitre ne couvrira pas la conversion des données de Python vers le C ni "
+"l'inverse. Aussi, un usage correct des références, ainsi que savoir gérer "
+"les erreurs sont considérés acquis. Ces aspects étant identiques à "
+"l'extension de l'interpréteur, vous pouvez vous référer aux chapitres "
+"précédents."
+
+#: ../Doc/extending/embedding.rst:131
+msgid "Pure Embedding"
+msgstr "Intégration Pure"
+
+#: ../Doc/extending/embedding.rst:133
+msgid ""
+"The first program aims to execute a function in a Python script. Like in the "
+"section about the very high level interface, the Python interpreter does not "
+"directly interact with the application (but that will change in the next "
+"section)."
+msgstr ""
+"L'objectif du premier programme est d'exécuter une fonction dans un script "
+"Python. Comme dans la section à propos des interfaces de haut niveau, "
+"l'interpréteur n'interagit pas directement avec l'application (mais le fera "
+"dans la section suivante)."
+
+#: ../Doc/extending/embedding.rst:138
+msgid "The code to run a function defined in a Python script is:"
+msgstr "Le code pour appeler une fonction définie dans un script Python est :"
+
+#: ../Doc/extending/embedding.rst:143
+msgid ""
+"This code loads a Python script using ``argv[1]``, and calls the function "
+"named in ``argv[2]``.  Its integer arguments are the other values of the "
+"``argv`` array.  If you :ref:`compile and link <compiling>` this program "
+"(let's call the finished executable :program:`call`), and use it to execute "
+"a Python script, such as:"
+msgstr ""
+"Ce code charge un script Python en utilisant ``argv[1]``, et appelle une "
+"fonction dont le nom est dans ``argv[2]``. Ses arguments entiers sont les "
+"autres valeurs de ``argv``. Si vous :ref:`compilez et liez <compiling>` ce "
+"programme (appelons l'exécutable :program:`call`), et l'appellez pour "
+"exécuter un script Python, tel que :"
+
+#: ../Doc/extending/embedding.rst:158
+msgid "then the result should be:"
+msgstr ""
+
+#: ../Doc/extending/embedding.rst:166
+msgid ""
+"Although the program is quite large for its functionality, most of the code "
+"is for data conversion between Python and C, and for error reporting.  The "
+"interesting part with respect to embedding Python starts with ::"
+msgstr ""
+"Bien que le programme soit plutôt gros pour ses fonctionnalités, la plupart "
+"du code n'est que conversion de données entre Python et C, aussi que pour "
+"rapporter les erreurs. La partie intéressante, qui concerne l'intégration de "
+"Python débute par : ::"
+
+#: ../Doc/extending/embedding.rst:175
+msgid ""
+"After initializing the interpreter, the script is loaded using :c:func:"
+"`PyImport_Import`.  This routine needs a Python string as its argument, "
+"which is constructed using the :c:func:`PyUnicode_FromString` data "
+"conversion routine. ::"
+msgstr ""
+"Après avoir initialisé l'interpréteur, le script est chargé en utilisant :c:"
+"func:`PyImport_Import`. Cette fonction prend une chaîne Python pour "
+"argument, elle même construite en utilisant la fonction de conversion :c:"
+"func:`PyUnicode_FromString`."
+
+#: ../Doc/extending/embedding.rst:188
+msgid ""
+"Once the script is loaded, the name we're looking for is retrieved using :c:"
+"func:`PyObject_GetAttrString`.  If the name exists, and the object returned "
+"is callable, you can safely assume that it is a function.  The program then "
+"proceeds by constructing a tuple of arguments as normal.  The call to the "
+"Python function is then made with::"
+msgstr ""
+"Une fois le script chargé, le nom recherché est obtenu en utilisant :c:func:"
+"`PyObject_GetAttrString`. Si le nom existe, et que l'objet récupéré peut "
+"être appelé, vous pouvez présumer sans risque que c'est une fonction. Le "
+"programme continue, classiquement, par la construction de l'uplet "
+"d'arguments. L'appel à la fonction Python est alors effectué avec : ::"
+
+#: ../Doc/extending/embedding.rst:196
+msgid ""
+"Upon return of the function, ``pValue`` is either *NULL* or it contains a "
+"reference to the return value of the function.  Be sure to release the "
+"reference after examining the value."
+msgstr ""
+"Après l'exécution de la fonction, ``pValue`` est soit *NULL*, soit une "
+"référence sur la valeur donnée par la fonction. Assurez-vous de libérer la "
+"référence après avoir utilisé la valeur."
+
+#: ../Doc/extending/embedding.rst:204
+msgid "Extending Embedded Python"
+msgstr "Étendre un Python Intégré"
+
+#: ../Doc/extending/embedding.rst:206
+msgid ""
+"Until now, the embedded Python interpreter had no access to functionality "
+"from the application itself.  The Python API allows this by extending the "
+"embedded interpreter.  That is, the embedded interpreter gets extended with "
+"routines provided by the application. While it sounds complex, it is not so "
+"bad.  Simply forget for a while that the application starts the Python "
+"interpreter.  Instead, consider the application to be a set of subroutines, "
+"and write some glue code that gives Python access to those routines, just "
+"like you would write a normal Python extension.  For example::"
+msgstr ""
+"Jusqu'à présent, l'interpréteur Python intégré n'avait pas accès aux "
+"fonctionnalités de l'application elle-même. L'API Python le permet en "
+"étendant l'interpréteur intégré. Autrement dit, l'interpréteur intégré est "
+"étendu avec des fonctions fournies par l'application. Bien que cela puisse "
+"sembler complexe, ce n'est pas si dur. Il suffit d'oublier que l'application "
+"démarre l'interpréteur Python, au lieu de cela, voyez l'application comme un "
+"ensemble de fonctions, et rédigez un peu de code pour exposer ces fonctions "
+"à Python, tout comme vous écririez une extension Python normale. Par "
+"exemple : ::"
+
+#: ../Doc/extending/embedding.rst:243
+msgid ""
+"Insert the above code just above the :c:func:`main` function. Also, insert "
+"the following two statements before the call to :c:func:`Py_Initialize`::"
+msgstr ""
+"Insérez le code ci-dessus juste avant la fonction :c:func:`main`. Ajoutez "
+"aussi les deux instructions suivantes avant l'appel à :c:func:"
+"`Py_Initialize` ::"
+
+#: ../Doc/extending/embedding.rst:249
+msgid ""
+"These two lines initialize the ``numargs`` variable, and make the :func:`emb."
+"numargs` function accessible to the embedded Python interpreter. With these "
+"extensions, the Python script can do things like"
+msgstr ""
+"Ces deux lignes initialisent la variable ``numarg``, et rend la fonction :"
+"func:`emb.numargs` accessible à l'interprète intégré. Avec ces ajouts, le "
+"script Python petit maintenant faire des choses comme"
+
+#: ../Doc/extending/embedding.rst:258
+msgid ""
+"In a real application, the methods will expose an API of the application to "
+"Python."
+msgstr ""
+"Dans un cas réel, les méthodes exposeraient une API de l'application a "
+"Python."
+
+#: ../Doc/extending/embedding.rst:268
+msgid "Embedding Python in C++"
+msgstr "Intégrer Python dans du C++"
+
+#: ../Doc/extending/embedding.rst:270
+msgid ""
+"It is also possible to embed Python in a C++ program; precisely how this is "
+"done will depend on the details of the C++ system used; in general you will "
+"need to write the main program in C++, and use the C++ compiler to compile "
+"and link your program.  There is no need to recompile Python itself using C+"
+"+."
+msgstr ""
+"Il est aussi possible d'intégrer Python dans un programme en C++, la manière "
+"exacte dont cela se fait dépend de détails du système C++ utilisé. En "
+"général vous écrirez le programme principal en C++, utiliserez un "
+"compilateur C++ pour compiler et lier votre programme. Il n'y a pas besoin "
+"de recompiler Python en utilisant C++."
+
+#: ../Doc/extending/embedding.rst:279
+msgid "Compiling and Linking under Unix-like systems"
+msgstr "Compiler et Lier en environnement Unix ou similaire"
+
+#: ../Doc/extending/embedding.rst:281
+msgid ""
+"It is not necessarily trivial to find the right flags to pass to your "
+"compiler (and linker) in order to embed the Python interpreter into your "
+"application, particularly because Python needs to load library modules "
+"implemented as C dynamic extensions (:file:`.so` files) linked against it."
+msgstr ""
+"Ce n'est pas évident de trouver les bonnes options à passer au compilateur "
+"(et *linker*) pour intégrer l'interpréteur Python dans une application, "
+"Python ayant besoin de charger des extensions sous forme de bibliothèques "
+"dynamiques en C (des :file:`.so`) pour se lier avec."
+
+#: ../Doc/extending/embedding.rst:287
+msgid ""
+"To find out the required compiler and linker flags, you can execute the :"
+"file:`python{X.Y}-config` script which is generated as part of the "
+"installation process (a :file:`python3-config` script may also be "
+"available).  This script has several options, of which the following will be "
+"directly useful to you:"
+msgstr ""
+"Pour trouver les bonnes option de compilateur et *linker*, vous pouvez "
+"exécuter le script :file:`python(X.Y)-config` généré durant l'installation "
+"(un script :file:`python3-config` peut aussi être disponible). Ce script a "
+"quelques options, celles-ci vous seront utiles :"
+
+#: ../Doc/extending/embedding.rst:293
+msgid ""
+"``pythonX.Y-config --cflags`` will give you the recommended flags when "
+"compiling:"
+msgstr ""
+
+#: ../Doc/extending/embedding.rst:301
+msgid ""
+"``pythonX.Y-config --ldflags`` will give you the recommended flags when "
+"linking:"
+msgstr ""
+
+#: ../Doc/extending/embedding.rst:310
+msgid ""
+"To avoid confusion between several Python installations (and especially "
+"between the system Python and your own compiled Python), it is recommended "
+"that you use the absolute path to :file:`python{X.Y}-config`, as in the "
+"above example."
+msgstr ""
+"Pour éviter la confusion entre différentes installations de Python, (et plus "
+"spécialement entre celle de votre système et votre version compilée), il est "
+"recommandé d'utiliser un chemin absolu vers :file:`python{X.Y}-config`, "
+"comme dans l'exemple précédent."
+
+#: ../Doc/extending/embedding.rst:315
+msgid ""
+"If this procedure doesn't work for you (it is not guaranteed to work for all "
+"Unix-like platforms; however, we welcome :ref:`bug reports <reporting-"
+"bugs>`) you will have to read your system's documentation about dynamic "
+"linking and/or examine Python's :file:`Makefile` (use :func:`sysconfig."
+"get_makefile_filename` to find its location) and compilation options.  In "
+"this case, the :mod:`sysconfig` module is a useful tool to programmatically "
+"extract the configuration values that you will want to combine together.  "
+"For example:"
+msgstr ""
+"Si cette procédure ne fonctionne pas pour vous (il n'est pas garanti qu'elle "
+"fonctionne pour toutes les plateformes Unix, mais nous traiteront volontiers "
+"les :ref:`rapports de bugs <reporting-bugs>`), vous devrez lire "
+"ladocumentation de votre système sur la liaison dynamique (*dynamic "
+"linking*) et / ouexaminer le :file:`Makefile` de Python (utilisez :func:"
+"`sysconfig.get_makefile_filename` pour trouver son emplacement) et les "
+"options de compilation. Dans ce cas, le module :mod:`sysconfig` est un outil "
+"utile pour extraire automatiquement les valeurs de configuration que vous "
+"voudrez combiner ensemble. Par example :"
