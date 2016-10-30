@@ -1,0 +1,1052 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 1990-2016, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 2.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-30 10:44+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../Doc/library/compiler.rst:6
+msgid "Python compiler package"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:8
+msgid "The :mod:`compiler` package has been removed in Python 3."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:14
+msgid ""
+"The Python compiler package is a tool for analyzing Python source code and "
+"generating Python bytecode.  The compiler contains libraries to generate an "
+"abstract syntax tree from Python source code and to generate Python :term:"
+"`bytecode` from the tree."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:19
+msgid ""
+"The :mod:`compiler` package is a Python source to bytecode translator "
+"written in Python.  It uses the built-in parser and standard :mod:`parser` "
+"module to generate a concrete syntax tree.  This tree is used to generate an "
+"abstract syntax tree (AST) and then Python bytecode."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:24
+msgid ""
+"The full functionality of the package duplicates the built-in compiler "
+"provided with the Python interpreter.  It is intended to match its behavior "
+"almost exactly.  Why implement another compiler that does the same thing?  "
+"The package is useful for a variety of purposes.  It can be modified more "
+"easily than the built-in compiler.  The AST it generates is useful for "
+"analyzing Python source code."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:31
+msgid ""
+"This chapter explains how the various components of the :mod:`compiler` "
+"package work.  It blends reference material with a tutorial."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:36
+msgid "The basic interface"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:43
+msgid ""
+"The top-level of the package defines four functions.  If you import :mod:"
+"`compiler`, you will get these functions and a collection of modules "
+"contained in the package."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:50
+msgid ""
+"Returns an abstract syntax tree for the Python source code in *buf*. The "
+"function raises :exc:`SyntaxError` if there is an error in the source code.  "
+"The return value is a :class:`compiler.ast.Module` instance that contains "
+"the tree."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:57
+msgid ""
+"Return an abstract syntax tree for the Python source code in the file "
+"specified by *path*.  It is equivalent to ``parse(open(path).read())``."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:63
+msgid ""
+"Do a pre-order walk over the abstract syntax tree *ast*.  Call the "
+"appropriate method on the *visitor* instance for each node encountered."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:69
+msgid ""
+"Compile the string *source*, a Python module, statement or expression, into "
+"a code object that can be executed by the exec statement or :func:`eval`. "
+"This function is a replacement for the built-in :func:`compile` function."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:73
+msgid "The *filename* will be used for run-time error messages."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:75
+msgid ""
+"The *mode* must be 'exec' to compile a module, 'single' to compile a single "
+"(interactive) statement, or 'eval' to compile an expression."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:78
+msgid ""
+"The *flags* and *dont_inherit* arguments affect future-related statements, "
+"but are not supported yet."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:84
+msgid "Compiles the file *source* and generates a .pyc file."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:86
+msgid ""
+"The :mod:`compiler` package contains the following modules: :mod:`ast`, :mod:"
+"`consts`, :mod:`future`, :mod:`misc`, :mod:`pyassem`, :mod:`pycodegen`, :mod:"
+"`symbols`, :mod:`transformer`, and :mod:`visitor`."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:92
+msgid "Limitations"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:94
+msgid ""
+"There are some problems with the error checking of the compiler package.  "
+"The interpreter detects syntax errors in two distinct phases.  One set of "
+"errors is detected by the interpreter's parser, the other set by the "
+"compiler.  The compiler package relies on the interpreter's parser, so it "
+"get the first phases of error checking for free.  It implements the second "
+"phase itself, and that implementation is incomplete.  For example, the "
+"compiler package does not raise an error if a name appears more than once in "
+"an argument list:  ``def f(x, x): ...``"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:103
+msgid "A future version of the compiler should fix these problems."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:107
+msgid "Python Abstract Syntax"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:109
+msgid ""
+"The :mod:`compiler.ast` module defines an abstract syntax for Python.  In "
+"the abstract syntax tree, each node represents a syntactic construct.  The "
+"root of the tree is :class:`Module` object."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:113
+msgid ""
+"The abstract syntax offers a higher level interface to parsed Python source "
+"code.  The :mod:`parser` module and the compiler written in C for the Python "
+"interpreter use a concrete syntax tree.  The concrete syntax is tied closely "
+"to the grammar description used for the Python parser.  Instead of a single "
+"node for a construct, there are often several levels of nested nodes that "
+"are introduced by Python's precedence rules."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:120
+msgid ""
+"The abstract syntax tree is created by the :mod:`compiler.transformer` "
+"module. The transformer relies on the built-in Python parser to generate a "
+"concrete syntax tree.  It generates an abstract syntax tree from the "
+"concrete tree."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:128
+msgid ""
+"The :mod:`transformer` module was created by Greg Stein and Bill Tutt for an "
+"experimental Python-to-C compiler.  The current version contains a number of "
+"modifications and improvements, but the basic form of the abstract syntax "
+"and of the transformer are due to Stein and Tutt."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:135
+msgid "AST Nodes"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:140
+msgid ""
+"The :mod:`compiler.ast` module is generated from a text file that describes "
+"each node type and its elements.  Each node type is represented as a class "
+"that inherits from the abstract base class :class:`compiler.ast.Node` and "
+"defines a set of named attributes for child nodes."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:148
+msgid ""
+"The :class:`Node` instances are created automatically by the parser "
+"generator. The recommended interface for specific :class:`Node` instances is "
+"to use the public attributes to access child nodes.  A public attribute may "
+"be bound to a single node or to a sequence of nodes, depending on the :class:"
+"`Node` type.  For example, the :attr:`bases` attribute of the :class:`Class` "
+"node, is bound to a list of base class nodes, and the :attr:`doc` attribute "
+"is bound to a single node."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:156
+msgid ""
+"Each :class:`Node` instance has a :attr:`lineno` attribute which may be "
+"``None``.  XXX Not sure what the rules are for which nodes will have a "
+"useful lineno."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:160
+msgid "All :class:`Node` objects offer the following methods:"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:165
+msgid ""
+"Returns a flattened list of the child nodes and objects in the order they "
+"occur.  Specifically, the order of the nodes is the order in which they "
+"appear in the Python grammar.  Not all of the children are :class:`Node` "
+"instances.  The names of functions and classes, for example, are plain "
+"strings."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:174
+msgid ""
+"Returns a flattened list of the child nodes in the order they occur.  This "
+"method is like :meth:`getChildren`, except that it only returns those "
+"children that are :class:`Node` instances."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:179
+msgid ""
+"Two examples illustrate the general structure of :class:`Node` classes.  "
+"The :keyword:`while` statement is defined by the following grammar "
+"production::"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:185
+msgid ""
+"The :class:`While` node has three attributes: :attr:`test`, :attr:`body`, "
+"and :attr:`else_`.  (If the natural name for an attribute is also a Python "
+"reserved word, it can't be used as an attribute name.  An underscore is "
+"appended to the word to make it a legal identifier, hence :attr:`else_` "
+"instead of :keyword:`else`.)"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:191
+msgid ""
+"The :keyword:`if` statement is more complicated because it can include "
+"several tests.   ::"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:196
+msgid ""
+"The :class:`If` node only defines two attributes: :attr:`tests` and :attr:"
+"`else_`.  The :attr:`tests` attribute is a sequence of test expression, "
+"consequent body pairs.  There is one pair for each :keyword:`if`/:keyword:"
+"`elif` clause.  The first element of the pair is the test expression.  The "
+"second elements is a :class:`Stmt` node that contains the code to execute if "
+"the test is true."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:203
+msgid ""
+"The :meth:`getChildren` method of :class:`If` returns a flat list of child "
+"nodes.  If there are three :keyword:`if`/:keyword:`elif` clauses and no :"
+"keyword:`else` clause, then :meth:`getChildren` will return a list of six "
+"elements: the first test expression, the first :class:`Stmt`, the second "
+"text expression, etc."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:209
+msgid ""
+"The following table lists each of the :class:`Node` subclasses defined in :"
+"mod:`compiler.ast` and each of the public attributes available on their "
+"instances.  The values of most of the attributes are themselves :class:"
+"`Node` instances or sequences of instances.  When the value is something "
+"other than an instance, the type is noted in the comment.  The attributes "
+"are listed in the order in which they are returned by :meth:`getChildren` "
+"and :meth:`getChildNodes`."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:218
+msgid "Node type"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:218
+msgid "Attribute"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:218
+msgid "Value"
+msgstr "Valeur"
+
+#: ../Doc/library/compiler.rst:220
+msgid ":class:`Add`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:220 ../Doc/library/compiler.rst:304
+#: ../Doc/library/compiler.rst:318 ../Doc/library/compiler.rst:390
+#: ../Doc/library/compiler.rst:408 ../Doc/library/compiler.rst:418
+#: ../Doc/library/compiler.rst:430 ../Doc/library/compiler.rst:450
+#: ../Doc/library/compiler.rst:466
+msgid ":attr:`left`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:220
+msgid "left operand"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:222 ../Doc/library/compiler.rst:306
+#: ../Doc/library/compiler.rst:320 ../Doc/library/compiler.rst:392
+#: ../Doc/library/compiler.rst:410 ../Doc/library/compiler.rst:420
+#: ../Doc/library/compiler.rst:432 ../Doc/library/compiler.rst:452
+#: ../Doc/library/compiler.rst:468
+msgid ":attr:`right`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:222
+msgid "right operand"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:224
+msgid ":class:`And`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:224 ../Doc/library/compiler.rst:236
+#: ../Doc/library/compiler.rst:243 ../Doc/library/compiler.rst:251
+#: ../Doc/library/compiler.rst:264 ../Doc/library/compiler.rst:266
+#: ../Doc/library/compiler.rst:268 ../Doc/library/compiler.rst:297
+#: ../Doc/library/compiler.rst:394 ../Doc/library/compiler.rst:426
+#: ../Doc/library/compiler.rst:434 ../Doc/library/compiler.rst:438
+#: ../Doc/library/compiler.rst:462 ../Doc/library/compiler.rst:464
+#: ../Doc/library/compiler.rst:486
+msgid ":attr:`nodes`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:224
+msgid "list of operands"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:226
+msgid ":class:`AssAttr`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:226
+msgid "*attribute as target of assignment*"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:229 ../Doc/library/compiler.rst:254
+#: ../Doc/library/compiler.rst:260 ../Doc/library/compiler.rst:262
+#: ../Doc/library/compiler.rst:289 ../Doc/library/compiler.rst:302
+#: ../Doc/library/compiler.rst:312 ../Doc/library/compiler.rst:360
+#: ../Doc/library/compiler.rst:364 ../Doc/library/compiler.rst:376
+#: ../Doc/library/compiler.rst:380 ../Doc/library/compiler.rst:396
+#: ../Doc/library/compiler.rst:424 ../Doc/library/compiler.rst:454
+#: ../Doc/library/compiler.rst:470 ../Doc/library/compiler.rst:488
+#: ../Doc/library/compiler.rst:490 ../Doc/library/compiler.rst:498
+msgid ":attr:`expr`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:229
+msgid "expression on the left-hand side of the dot"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:232 ../Doc/library/compiler.rst:366
+msgid ":attr:`attrname`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:232
+msgid "the attribute name, a string"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:234 ../Doc/library/compiler.rst:241
+#: ../Doc/library/compiler.rst:343 ../Doc/library/compiler.rst:386
+#: ../Doc/library/compiler.rst:456 ../Doc/library/compiler.rst:472
+msgid ":attr:`flags`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:234 ../Doc/library/compiler.rst:241
+msgid "XXX"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:236
+msgid ":class:`AssList`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:236
+msgid "list of list elements being assigned to"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:239
+msgid ":class:`AssName`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:239 ../Doc/library/compiler.rst:280
+#: ../Doc/library/compiler.rst:336 ../Doc/library/compiler.rst:378
+#: ../Doc/library/compiler.rst:422
+msgid ":attr:`name`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:239
+msgid "name being assigned to"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:243
+msgid ":class:`AssTuple`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:243
+msgid "list of tuple elements being assigned to"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:246
+msgid ":class:`Assert`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:246 ../Doc/library/compiler.rst:358
+#: ../Doc/library/compiler.rst:406 ../Doc/library/compiler.rst:492
+msgid ":attr:`test`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:246
+msgid "the expression to be tested"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:248
+msgid ":attr:`fail`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:248
+msgid "the value of the :exc:`AssertionError`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:251
+msgid ":class:`Assign`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:251
+msgid "a list of assignment targets, one per equal sign"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:254
+msgid "the value being assigned"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:256
+msgid ":class:`AugAssign`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:256 ../Doc/library/compiler.rst:272
+#: ../Doc/library/compiler.rst:310 ../Doc/library/compiler.rst:415
+msgid ":attr:`node`"
+msgstr ":attr:`node`"
+
+#: ../Doc/library/compiler.rst:258
+msgid ":attr:`op`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:262
+msgid ":class:`Backquote`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:264
+msgid ":class:`Bitand`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:266
+msgid ":class:`Bitor`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:268
+msgid ":class:`Bitxor`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:270
+msgid ":class:`Break`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:272
+msgid ":class:`CallFunc`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:272
+msgid "expression for the callee"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:274
+msgid ":attr:`args`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:274
+msgid "a list of arguments"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:276
+msgid ":attr:`star_args`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:276
+msgid "the extended \\*-arg value"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:278
+msgid ":attr:`dstar_args`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:278
+msgid "the extended \\*\\*-arg value"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:280
+msgid ":class:`Class`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:280
+msgid "the name of the class, a string"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:282
+msgid ":attr:`bases`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:282
+msgid "a list of base classes"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:284 ../Doc/library/compiler.rst:345
+#: ../Doc/library/compiler.rst:412
+msgid ":attr:`doc`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:284 ../Doc/library/compiler.rst:345
+#: ../Doc/library/compiler.rst:412
+msgid "doc string, a string or ``None``"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:287 ../Doc/library/compiler.rst:348
+#: ../Doc/library/compiler.rst:350 ../Doc/library/compiler.rst:388
+msgid ":attr:`code`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:287
+msgid "the body of the class statement"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:289
+msgid ":class:`Compare`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:291
+msgid ":attr:`ops`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:293
+msgid ":class:`Const`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:293 ../Doc/library/compiler.rst:448
+#: ../Doc/library/compiler.rst:504
+msgid ":attr:`value`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:295
+msgid ":class:`Continue`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:297
+msgid ":class:`Decorators`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:297
+msgid "List of function decorator expressions"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:300
+msgid ":class:`Dict`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:300
+msgid ":attr:`items`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:302
+msgid ":class:`Discard`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:304
+msgid ":class:`Div`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:308
+msgid ":class:`Ellipsis`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:310
+msgid ":class:`Expression`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:312
+msgid ":class:`Exec`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:314
+msgid ":attr:`locals`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:316
+msgid ":attr:`globals`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:318
+msgid ":class:`FloorDiv`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:322
+msgid ":class:`For`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:322 ../Doc/library/compiler.rst:352
+#: ../Doc/library/compiler.rst:400
+msgid ":attr:`assign`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:324 ../Doc/library/compiler.rst:402
+msgid ":attr:`list`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:326 ../Doc/library/compiler.rst:476
+#: ../Doc/library/compiler.rst:482 ../Doc/library/compiler.rst:494
+#: ../Doc/library/compiler.rst:502
+msgid ":attr:`body`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:328 ../Doc/library/compiler.rst:372
+#: ../Doc/library/compiler.rst:480 ../Doc/library/compiler.rst:496
+msgid ":attr:`else_`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:330
+msgid ":class:`From`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:330
+msgid ":attr:`modname`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:332 ../Doc/library/compiler.rst:368
+#: ../Doc/library/compiler.rst:374
+msgid ":attr:`names`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:334
+msgid ":class:`Function`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:334
+msgid ":attr:`decorators`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:334
+msgid ":class:`Decorators` or ``None``"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:336
+msgid "name used in def, a string"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:338 ../Doc/library/compiler.rst:382
+msgid ":attr:`argnames`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:338
+msgid "list of argument names, as strings"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:341 ../Doc/library/compiler.rst:384
+msgid ":attr:`defaults`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:341
+msgid "list of default values"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:343
+msgid "xxx"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:348
+msgid "the body of the function"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:350
+msgid ":class:`GenExpr`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:352
+msgid ":class:`GenExprFor`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:354
+msgid ":attr:`iter`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:356 ../Doc/library/compiler.rst:404
+msgid ":attr:`ifs`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:358
+msgid ":class:`GenExprIf`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:360
+msgid ":class:`GenExprInner`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:362 ../Doc/library/compiler.rst:398
+msgid ":attr:`quals`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:364
+msgid ":class:`Getattr`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:368
+msgid ":class:`Global`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:370
+msgid ":class:`If`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:370
+msgid ":attr:`tests`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:374
+msgid ":class:`Import`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:376
+msgid ":class:`Invert`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:378
+msgid ":class:`Keyword`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:382
+msgid ":class:`Lambda`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:390
+msgid ":class:`LeftShift`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:394
+msgid ":class:`List`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:396
+msgid ":class:`ListComp`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:400
+msgid ":class:`ListCompFor`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:406
+msgid ":class:`ListCompIf`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:408
+msgid ":class:`Mod`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:412
+msgid ":class:`Module`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:415
+msgid "body of the module, a :class:`Stmt`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:418
+msgid ":class:`Mul`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:422
+msgid ":class:`Name`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:424
+msgid ":class:`Not`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:426
+msgid ":class:`Or`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:428
+msgid ":class:`Pass`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:430
+msgid ":class:`Power`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:434
+msgid ":class:`Print`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:436 ../Doc/library/compiler.rst:440
+msgid ":attr:`dest`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:438
+msgid ":class:`Printnl`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:442
+msgid ":class:`Raise`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:442
+msgid ":attr:`expr1`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:444
+msgid ":attr:`expr2`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:446
+msgid ":attr:`expr3`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:448
+msgid ":class:`Return`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:450
+msgid ":class:`RightShift`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:454
+msgid ":class:`Slice`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:458
+msgid ":attr:`lower`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:460
+msgid ":attr:`upper`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:462
+msgid ":class:`Sliceobj`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:462
+msgid "list of statements"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:464
+msgid ":class:`Stmt`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:466
+msgid ":class:`Sub`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:470
+msgid ":class:`Subscript`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:474
+msgid ":attr:`subs`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:476
+msgid ":class:`TryExcept`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:478
+msgid ":attr:`handlers`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:482
+msgid ":class:`TryFinally`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:484
+msgid ":attr:`final`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:486
+msgid ":class:`Tuple`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:488
+msgid ":class:`UnaryAdd`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:490
+msgid ":class:`UnarySub`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:492
+msgid ":class:`While`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:498
+msgid ":class:`With`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:500
+msgid ":attr:`vars`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:504
+msgid ":class:`Yield`"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:509
+msgid "Assignment nodes"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:511
+msgid ""
+"There is a collection of nodes used to represent assignments.  Each "
+"assignment statement in the source code becomes a single :class:`Assign` "
+"node in the AST. The :attr:`nodes` attribute is a list that contains a node "
+"for each assignment target.  This is necessary because assignment can be "
+"chained, e.g. ``a = b = 2``. Each :class:`Node` in the list will be one of "
+"the following classes: :class:`AssAttr`, :class:`AssList`, :class:`AssName`, "
+"or :class:`AssTuple`."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:518
+msgid ""
+"Each target assignment node will describe the kind of object being assigned "
+"to: :class:`AssName` for a simple name, e.g. ``a = 1``. :class:`AssAttr` for "
+"an attribute assigned, e.g. ``a.x = 1``. :class:`AssList` and :class:"
+"`AssTuple` for list and tuple expansion respectively, e.g. ``a, b, c = "
+"a_tuple``."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:523
+msgid ""
+"The target assignment nodes also have a :attr:`flags` attribute that "
+"indicates whether the node is being used for assignment or in a delete "
+"statement.  The :class:`AssName` is also used to represent a delete "
+"statement, e.g. :class:`del x`."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:528
+msgid ""
+"When an expression contains several attribute references, an assignment or "
+"delete statement will contain only one :class:`AssAttr` node -- for the "
+"final attribute reference.  The other attribute references will be "
+"represented as :class:`Getattr` nodes in the :attr:`expr` attribute of the :"
+"class:`AssAttr` instance."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:536
+msgid "Examples"
+msgstr "Exemples"
+
+#: ../Doc/library/compiler.rst:538
+msgid ""
+"This section shows several simple examples of ASTs for Python source code.  "
+"The examples demonstrate how to use the :func:`parse` function, what the "
+"repr of an AST looks like, and how to access attributes of an AST node."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:542
+msgid ""
+"The first module defines a single function.  Assume it is stored in :file:"
+"`doublelib.py`.  ::"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:554
+msgid ""
+"In the interactive interpreter session below, I have reformatted the long "
+"AST reprs for readability.  The AST reprs use unqualified class names.  If "
+"you want to create an instance from a repr, you must import the class names "
+"from the :mod:`compiler.ast` module. ::"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:588
+msgid "Using Visitors to Walk ASTs"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:593
+msgid ""
+"The visitor pattern is ...  The :mod:`compiler` package uses a variant on "
+"the visitor pattern that takes advantage of Python's introspection features "
+"to eliminate the need for much of the visitor's infrastructure."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:597
+msgid ""
+"The classes being visited do not need to be programmed to accept visitors.  "
+"The visitor need only define visit methods for classes it is specifically "
+"interested in; a default visit method can handle the rest."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:601
+msgid "XXX The magic :meth:`visit` method for visitors."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:609
+msgid ""
+"The :class:`ASTVisitor` is responsible for walking over the tree in the "
+"correct order.  A walk begins with a call to :meth:`preorder`.  For each "
+"node, it checks the *visitor* argument to :meth:`preorder` for a method "
+"named 'visitNodeType,' where NodeType is the name of the node's class, e.g. "
+"for a :class:`While` node a :meth:`visitWhile` would be called.  If the "
+"method exists, it is called with the node as its first argument."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:616
+msgid ""
+"The visitor method for a particular node type can control how child nodes "
+"are visited during the walk.  The :class:`ASTVisitor` modifies the visitor "
+"argument by adding a visit method to the visitor; this method can be used to "
+"visit a particular child node.  If no visitor is found for a particular node "
+"type, the :meth:`default` method is called."
+msgstr ""
+
+#: ../Doc/library/compiler.rst:622
+msgid ":class:`ASTVisitor` objects have the following methods:"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:624
+msgid "XXX describe extra arguments"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:637
+msgid "Bytecode Generation"
+msgstr ""
+
+#: ../Doc/library/compiler.rst:639
+msgid ""
+"The code generator is a visitor that emits bytecodes.  Each visit method can "
+"call the :meth:`emit` method to emit a new bytecode.  The basic code "
+"generator is specialized for modules, classes, and functions.  An assembler "
+"converts that emitted instructions to the low-level bytecode format.  It "
+"handles things like generation of constant lists of code objects and "
+"calculation of jump offsets."
+msgstr ""
