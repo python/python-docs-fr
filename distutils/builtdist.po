@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../Doc/distutils/builtdist.rst:5
 msgid "Creating Built Distributions"
-msgstr ""
+msgstr "Créer une Distribution Compilée"
 
 #: ../Doc/distutils/builtdist.rst:7
 msgid ""
@@ -30,6 +30,12 @@ msgid ""
 "word is already spoken for in Python.  (And \"installer\" is a term specific "
 "to the world of mainstream desktop systems.)"
 msgstr ""
+"Une \"distribution compilée\" vous fait surement penser à un \"paquet binaire"
+"\" ou à un \"installateur\" (tout dépend de votre environnement). Ce n'est "
+"cependant pas forcément un binaire, il peut ne contenir que des sources "
+"Python et/ou du byte-code; et nous n'appelons pas ça un *package* parce que "
+"ce mot est déjà utiliseé dans Python (et \"installateur\" est un terme "
+"spécifique au monde des systèmes de bureau). "
 
 #: ../Doc/distutils/builtdist.rst:14
 msgid ""
@@ -44,6 +50,16 @@ msgid ""
 "to turn source distributions into built distributions for as many platforms "
 "as there are packagers."
 msgstr ""
+"Une distribution compilée est une manière de rendre la vie plus facile à "
+"ceux qui installent votre module: pour les utilisateurs de système Linux "
+"basé sur RPM, ce sera des binaire RPM; pour les utilisateurs de Windows, "
+"c'est un installateur exécutable; pour les utilisateurs de Linux basé sur "
+"Debian, c'est un paquet Debian; et ainsi de suite. Évidemment, personne "
+"n'est capable de créer une distribution compilée pour toute les plateformes "
+"existantes, donc Distutils est fait pour permettre aux développeurs de se "
+"concentrer sur leurs spécialités---écrire du code et créer des distribution "
+"source---pendant que d'autres, appelés *packagers* s'occupent de transformer "
+"les sources en paquets pour chaques plateforme."
 
 #: ../Doc/distutils/builtdist.rst:24
 msgid ""
@@ -55,12 +71,21 @@ msgid ""
 "are, a packager uses the setup script and the :command:`bdist` command "
 "family to generate built distributions."
 msgstr ""
+"Bien sur, le développeur du module peut être son propre *packager*; ou le "
+"*packager* peut être un volontaire \"quelque part\" qui a accès à une "
+"plateforme que le développeur initial n'a pas; ou bien un logiciel qui prend "
+"les sources périodiquement et les transforme en une distribution compilée "
+"pour autant de plateforme que le logiciel a accès.  Peu importe qui ils "
+"sont, les *packagers* utilisent ``setup.py`` et la command :command:`bdist` "
+"afin de générer une distribution compilée."
 
 #: ../Doc/distutils/builtdist.rst:32
 msgid ""
 "As a simple example, if I run the following command in the Distutils source "
 "tree::"
 msgstr ""
+"Pour prendre un exemple simple, si je lance la commande suivante dans les "
+"sources de Distutils ::"
 
 #: ../Doc/distutils/builtdist.rst:37
 msgid ""
@@ -72,6 +97,13 @@ msgid ""
 "considered \"dumb\" because it has to be unpacked in a specific location to "
 "work.)"
 msgstr ""
+"alors Distutils construit ma distribution du module (Distutils lui même dans "
+"ce cas), fait une \"fausse\" installation (aussi dans le dossier :file:"
+"`build`) et crée le type de distribution compilée par défaut pour ma "
+"plateforme. Le format par défaut est un \"bête\" fichier tar pour Unix et un "
+"simple installateur exécutable pour Windows (ce fichier tar est considéré "
+"comme \"bête\" car il doit être décompressé à un endroit précis pour "
+"fonctionner)."
 
 #: ../Doc/distutils/builtdist.rst:44
 msgid ""
@@ -83,6 +115,14 @@ msgid ""
 "given to the :command:`bdist_dumb` command; the default is to make dumb "
 "distributions relative to :file:`{prefix}`.)"
 msgstr ""
+"Par conséquent, la commande si dessus crée le fichier :file:`Distutils-1.0."
+"{plat}.tar.gz` sur les systèmes Unix; décompresser cette tarball au bon "
+"endroit installe Distutils exactement comme si vous aviez téléchargé la "
+"distribution source et lancé ``python setup.py install`` (le \"bon endroit\" "
+"est soit la racine du système de fichier, ou le dossier de Python :file:"
+"`{prefix}`, tout dépend des options données à la commande :command:"
+"`bdist_dumb` ;la valeur par défaut est de créer une distribution \"bête\" "
+"relative à :file:`{prefix}`)."
 
 #: ../Doc/distutils/builtdist.rst:52
 msgid ""
@@ -94,6 +134,14 @@ msgid ""
 "executable installer for Windows, is far more convenient for users even if "
 "your distribution doesn't include any extensions."
 msgstr ""
+"Évidemment, pour une distribution en Python pur, ce n'est pas aussi simple "
+"que de simplement lancer ``python setup.py install``\\ ---mais pour une "
+"distribution non-pure qui inclut des extensions qui devraient être "
+"compilées, ça peut faire la différence entre quelqu'un qui sera capable "
+"d'utiliser votre extension, ou non. De plus créer une distribution compilée "
+"\"intelligente\" tel qu'un paquet RPM ou un installateur executable Windows, "
+"est bien plus pratique pour les utilisateurs, même si votre module n'inclut "
+"aucune extension."
 
 #: ../Doc/distutils/builtdist.rst:60
 msgid ""
@@ -108,10 +156,13 @@ msgid ""
 "---again, this archive would be unpacked from the root directory to install "
 "the Distutils."
 msgstr ""
+"aurait, quand lancé sur un système Unix, crée file:`Distutils-1.0.{plat}.zip`"
+"\\ ---à nouveau, cette archive devra être décompressé depuis la racine pour "
+"installer Distutils."
 
 #: ../Doc/distutils/builtdist.rst:70
 msgid "The available formats for built distributions are:"
-msgstr ""
+msgstr "Les formats disponible pour les distributions compilées sont:"
 
 #: ../Doc/distutils/builtdist.rst:73
 msgid "Format"
@@ -127,11 +178,11 @@ msgstr "Notes"
 
 #: ../Doc/distutils/builtdist.rst:75
 msgid "``gztar``"
-msgstr ""
+msgstr "``gztar``"
 
 #: ../Doc/distutils/builtdist.rst:75
 msgid "gzipped tar file (:file:`.tar.gz`)"
-msgstr ""
+msgstr "Fichier tar gzippé (:file:`.tar.gz`)"
 
 #: ../Doc/distutils/builtdist.rst:75
 msgid "\\(1)"
@@ -139,27 +190,27 @@ msgstr "\\(1)"
 
 #: ../Doc/distutils/builtdist.rst:78
 msgid "``bztar``"
-msgstr ""
+msgstr "``bztar``"
 
 #: ../Doc/distutils/builtdist.rst:78
 msgid "bzipped tar file (:file:`.tar.bz2`)"
-msgstr ""
+msgstr "fichier tar de type bzipped (:file:`.tar.bz2`)"
 
 #: ../Doc/distutils/builtdist.rst:81
 msgid "``xztar``"
-msgstr ""
+msgstr "``xztar``"
 
 #: ../Doc/distutils/builtdist.rst:81
 msgid "xzipped tar file (:file:`.tar.xz`)"
-msgstr ""
+msgstr "fichier tar de type xzipped (:file:`.tar.xz`)"
 
 #: ../Doc/distutils/builtdist.rst:84
 msgid "``ztar``"
-msgstr ""
+msgstr "``ztar``"
 
 #: ../Doc/distutils/builtdist.rst:84
 msgid "compressed tar file (:file:`.tar.Z`)"
-msgstr ""
+msgstr "Fichier tar compressé (:file:`.tar.Z`)"
 
 #: ../Doc/distutils/builtdist.rst:84
 msgid "\\(3)"
@@ -167,31 +218,31 @@ msgstr "\\(3)"
 
 #: ../Doc/distutils/builtdist.rst:87
 msgid "``tar``"
-msgstr ""
+msgstr "``tar``"
 
 #: ../Doc/distutils/builtdist.rst:87
 msgid "tar file (:file:`.tar`)"
-msgstr ""
+msgstr "Fichier tar (:file:`.tar`)"
 
 #: ../Doc/distutils/builtdist.rst:89
 msgid "``zip``"
-msgstr ""
+msgstr "``zip``"
 
 #: ../Doc/distutils/builtdist.rst:89
 msgid "zip file (:file:`.zip`)"
-msgstr ""
+msgstr "Fichier zip (:file:`.zip`)"
 
 #: ../Doc/distutils/builtdist.rst:89
 msgid "(2),(4)"
-msgstr ""
+msgstr "(2),(4)"
 
 #: ../Doc/distutils/builtdist.rst:91
 msgid "``rpm``"
-msgstr ""
+msgstr "``rpm``"
 
 #: ../Doc/distutils/builtdist.rst:91
 msgid "RPM"
-msgstr ""
+msgstr "RPM"
 
 #: ../Doc/distutils/builtdist.rst:91
 msgid "\\(5)"
@@ -199,27 +250,27 @@ msgstr "\\(5)"
 
 #: ../Doc/distutils/builtdist.rst:93
 msgid "``pkgtool``"
-msgstr ""
+msgstr "``pkgtool``"
 
 #: ../Doc/distutils/builtdist.rst:93
 msgid "Solaris :program:`pkgtool`"
-msgstr ""
+msgstr "Solaris :program:`pkgtool`"
 
 #: ../Doc/distutils/builtdist.rst:95
 msgid "``sdux``"
-msgstr ""
+msgstr "``sdux``"
 
 #: ../Doc/distutils/builtdist.rst:95
 msgid "HP-UX :program:`swinstall`"
-msgstr ""
+msgstr "HP-UX :program:`swinstall`"
 
 #: ../Doc/distutils/builtdist.rst:97
 msgid "``wininst``"
-msgstr ""
+msgstr "``wininst``"
 
 #: ../Doc/distutils/builtdist.rst:97
 msgid "self-extracting ZIP file for Windows"
-msgstr ""
+msgstr "Fichier zip auto-extracteur Windows"
 
 #: ../Doc/distutils/builtdist.rst:97
 msgid "\\(4)"
@@ -227,15 +278,15 @@ msgstr "\\(4)"
 
 #: ../Doc/distutils/builtdist.rst:100
 msgid "``msi``"
-msgstr ""
+msgstr "``msi``"
 
 #: ../Doc/distutils/builtdist.rst:100
 msgid "Microsoft Installer."
-msgstr ""
+msgstr "Installateur Microsoft"
 
 #: ../Doc/distutils/builtdist.rst:103
 msgid "Added support for the ``xztar`` format."
-msgstr ""
+msgstr "Ajout du support des fichiers ``xztar``"
 
 #: ../Doc/distutils/builtdist.rst:107
 msgid "Notes:"
@@ -243,27 +294,31 @@ msgstr "Notes : "
 
 #: ../Doc/distutils/builtdist.rst:110
 msgid "default on Unix"
-msgstr ""
+msgstr "Par défaut sur Unix"
 
 #: ../Doc/distutils/builtdist.rst:113
 msgid "default on Windows"
-msgstr ""
+msgstr "Par défaut sur Windows"
 
 #: ../Doc/distutils/builtdist.rst:116
 msgid "requires external :program:`compress` utility."
-msgstr ""
+msgstr "requires external :program:`compress` utility."
 
 #: ../Doc/distutils/builtdist.rst:119
 msgid ""
 "requires either external :program:`zip` utility or :mod:`zipfile` module "
 "(part of the standard Python library since Python 1.6)"
 msgstr ""
+"nécéssite soit un programme :program:`zip` extérieur ou le module :mod:"
+"`zipfile` (inclu dans la bibliothèque standard depuis Python 1.6)"
 
 #: ../Doc/distutils/builtdist.rst:123
 msgid ""
 "requires external :program:`rpm` utility, version 3.0.4 or better (use ``rpm "
 "--version`` to find out which version you have)"
 msgstr ""
+"nécessite un programme externe :program:`rpm` , version 3.0.4 ou mieux "
+"(utilisez ``rpm --version`` pour connaître quelle version vous avez)"
 
 #: ../Doc/distutils/builtdist.rst:126
 msgid ""
@@ -279,7 +334,7 @@ msgstr ""
 
 #: ../Doc/distutils/builtdist.rst:136
 msgid "Command"
-msgstr ""
+msgstr "Command"
 
 #: ../Doc/distutils/builtdist.rst:136
 msgid "Formats"
@@ -287,45 +342,47 @@ msgstr "Formats"
 
 #: ../Doc/distutils/builtdist.rst:138
 msgid ":command:`bdist_dumb`"
-msgstr ""
+msgstr ":command:`bdist_dumb`"
 
 #: ../Doc/distutils/builtdist.rst:138
 msgid "tar, gztar, bztar, xztar, ztar, zip"
-msgstr ""
+msgstr "tar, gztar, bztar, xztar, ztar, zip"
 
 #: ../Doc/distutils/builtdist.rst:140
 msgid ":command:`bdist_rpm`"
-msgstr ""
+msgstr ":command:`bdist_rpm`"
 
 #: ../Doc/distutils/builtdist.rst:140
 msgid "rpm, srpm"
-msgstr ""
+msgstr "rpm, srpm"
 
 #: ../Doc/distutils/builtdist.rst:142
 msgid ":command:`bdist_wininst`"
-msgstr ""
+msgstr ":command:`bdist_wininst`"
 
 #: ../Doc/distutils/builtdist.rst:142
 msgid "wininst"
-msgstr ""
+msgstr "wininst"
 
 #: ../Doc/distutils/builtdist.rst:144
 msgid ":command:`bdist_msi`"
-msgstr ""
+msgstr ":command:`bdist_msi`"
 
 #: ../Doc/distutils/builtdist.rst:144
 msgid "msi"
-msgstr ""
+msgstr "msi"
 
 #: ../Doc/distutils/builtdist.rst:147
 msgid ""
 "The following sections give details on the individual :command:`bdist_\\*` "
 "commands."
 msgstr ""
+"Le chapitre suivant donne des détails individuel sur les commandes :command:"
+"`bdist_\\*` "
 
 #: ../Doc/distutils/builtdist.rst:163
 msgid "Creating RPM packages"
-msgstr ""
+msgstr "Créer un paquet RPM"
 
 #: ../Doc/distutils/builtdist.rst:165
 msgid ""
@@ -337,12 +394,21 @@ msgid ""
 "distributions, you may also be able to create RPMs that work on different "
 "RPM-based distributions."
 msgstr ""
+"Le format RPM est utilisé par beaucoup de distributions Linux populaires, "
+"incluant Red Hat, SuSE et Mandrake. Si l'une d'entre elle (ou n'importe "
+"quelle autre distribution basé sur RPM) est votre environnement habituel, "
+"créer un paquet pour les autres utilisateur de ces distributions est "
+"trivial. Cela dépend de la complexité de votre module et des différences "
+"entre les distributions Linux, vous pourrez aussi créer des RPM qui "
+"fonctionneront sur des distributions RPM différentes."
 
 #: ../Doc/distutils/builtdist.rst:172
 msgid ""
 "The usual way to create an RPM of your module distribution is to run the :"
 "command:`bdist_rpm` command::"
 msgstr ""
+"La manière habituelle de créer un RPM de votre module est d'utiliser la "
+"commande :command:`bdist_rpm`::"
 
 #: ../Doc/distutils/builtdist.rst:177
 msgid "or the :command:`bdist` command with the :option:`!--format` option::"
@@ -355,6 +421,10 @@ msgid ""
 "you can explicitly specify multiple :command:`bdist_\\*` commands and their "
 "options::"
 msgstr ""
+"La première vous permet de spécifier des options spécifique à RPM; la "
+"dernière vous permet de spécifier plusieurs format d'un seul coup. Si vous "
+"avez besoin d'utiliser les deux, vous pouvez explicitement spécifier "
+"plusieurs commande :command:`bdist_\\*` et leurs options."
 
 #: ../Doc/distutils/builtdist.rst:188
 msgid ""
@@ -365,34 +435,41 @@ msgid ""
 "any Distutils configuration files.  Various options and sections in the :"
 "file:`.spec` file are derived from options in the setup script as follows:"
 msgstr ""
+"La création de Package RPM est configurée par une fichier :file:`.spec`, un "
+"peu comme Distutils est configuré par ``setup.py``. Pour vous faciliter la "
+"tâche, la commande :command:`bdist_rpm` crée normalement un fichier :file:`."
+"spec` basé sur les informations que vous fournissez dans ``setup.py``,  dans "
+"les options de la ligne de commande et dans la configuration de Distutils. "
+"Beaucoup d'options du fichier :file:`.spec` sont dérivées des options du "
+"script de préparation suivant:"
 
 #: ../Doc/distutils/builtdist.rst:196 ../Doc/distutils/builtdist.rst:220
 msgid "RPM :file:`.spec` file option or section"
-msgstr ""
+msgstr "Option de fichier RPM :file:`.spec`"
 
 #: ../Doc/distutils/builtdist.rst:196
 msgid "Distutils setup script option"
-msgstr ""
+msgstr "Options du script de préparation Distutils"
 
 #: ../Doc/distutils/builtdist.rst:198
 msgid "Name"
-msgstr "Nom"
+msgstr "*Name*"
 
 #: ../Doc/distutils/builtdist.rst:198
 msgid "``name``"
-msgstr ""
+msgstr "``name``"
 
 #: ../Doc/distutils/builtdist.rst:200
 msgid "Summary (in preamble)"
-msgstr ""
+msgstr "*Summary* (dans le préambule)"
 
 #: ../Doc/distutils/builtdist.rst:200
 msgid "``description``"
-msgstr ""
+msgstr "``description``"
 
 #: ../Doc/distutils/builtdist.rst:202
 msgid "Version"
-msgstr ""
+msgstr "*Version*"
 
 #: ../Doc/distutils/builtdist.rst:202
 msgid "``version``"
@@ -400,37 +477,39 @@ msgstr "``version``"
 
 #: ../Doc/distutils/builtdist.rst:204 ../Doc/distutils/builtdist.rst:227
 msgid "Vendor"
-msgstr ""
+msgstr "*vendor*"
 
 #: ../Doc/distutils/builtdist.rst:204
 msgid ""
 "``author`` and ``author_email``, or  --- & ``maintainer`` and "
 "``maintainer_email``"
 msgstr ""
+"``author`` et ``author_email``, ou  --- & ``maintainer`` et "
+"``maintainer_email``"
 
 #: ../Doc/distutils/builtdist.rst:208
 msgid "Copyright"
-msgstr "Copyright"
+msgstr "*Copyright*"
 
 #: ../Doc/distutils/builtdist.rst:208
 msgid "``license``"
-msgstr ""
+msgstr "``license``"
 
 #: ../Doc/distutils/builtdist.rst:210
 msgid "Url"
-msgstr ""
+msgstr "*Url*"
 
 #: ../Doc/distutils/builtdist.rst:210
 msgid "``url``"
-msgstr ""
+msgstr "``url``"
 
 #: ../Doc/distutils/builtdist.rst:212
 msgid "%description (section)"
-msgstr ""
+msgstr "%description (section)"
 
 #: ../Doc/distutils/builtdist.rst:212
 msgid "``long_description``"
-msgstr ""
+msgstr "``long_description``"
 
 #: ../Doc/distutils/builtdist.rst:215
 msgid ""
@@ -438,50 +517,53 @@ msgid ""
 "corresponding options in the setup script.  Most of these are handled "
 "through options to the :command:`bdist_rpm` command as follows:"
 msgstr ""
+"De plus, il y a beaucoup d'options dans le fichier :file:`.spec` qui n'ont "
+"aucun équivalent dans le script de préparation. La plupart de celles ci sont "
+"gérées par les options de la commande :command:`bdist_rpm` suivant:"
 
 #: ../Doc/distutils/builtdist.rst:220
 msgid ":command:`bdist_rpm` option"
-msgstr ""
+msgstr "Option de :command:`bdist_rpm` "
 
 #: ../Doc/distutils/builtdist.rst:220
 msgid "default value"
-msgstr ""
+msgstr "Valeur par défaut"
 
 #: ../Doc/distutils/builtdist.rst:223
 msgid "Release"
-msgstr "Version"
+msgstr "*Release*"
 
 #: ../Doc/distutils/builtdist.rst:223
 msgid "``release``"
-msgstr ""
+msgstr "``release``"
 
 #: ../Doc/distutils/builtdist.rst:223
 msgid "\"1\""
-msgstr ""
+msgstr "\"1\""
 
 #: ../Doc/distutils/builtdist.rst:225
 msgid "Group"
-msgstr ""
+msgstr "*Group*"
 
 #: ../Doc/distutils/builtdist.rst:225
 msgid "``group``"
-msgstr ""
+msgstr "``group``"
 
 #: ../Doc/distutils/builtdist.rst:225
 msgid "\"Development/Libraries\""
-msgstr ""
+msgstr "\"Développement/Bibliothèques\""
 
 #: ../Doc/distutils/builtdist.rst:227
 msgid "``vendor``"
-msgstr ""
+msgstr "``vendor``"
 
 #: ../Doc/distutils/builtdist.rst:227
 msgid "(see above)"
-msgstr ""
+msgstr "(voir au-dessus)"
 
 #: ../Doc/distutils/builtdist.rst:229
 msgid "Packager"
-msgstr ""
+msgstr "*Packager*"
 
 #: ../Doc/distutils/builtdist.rst:229
 msgid "``packager``"
@@ -492,43 +574,43 @@ msgstr "``packager``"
 #: ../Doc/distutils/builtdist.rst:237 ../Doc/distutils/builtdist.rst:239
 #: ../Doc/distutils/builtdist.rst:241 ../Doc/distutils/builtdist.rst:243
 msgid "(none)"
-msgstr ""
+msgstr "(none)"
 
 #: ../Doc/distutils/builtdist.rst:231
 msgid "Provides"
-msgstr ""
+msgstr "*Provides*"
 
 #: ../Doc/distutils/builtdist.rst:231
 msgid "``provides``"
-msgstr ""
+msgstr "``provides``"
 
 #: ../Doc/distutils/builtdist.rst:233
 msgid "Requires"
-msgstr ""
+msgstr "*Requires*"
 
 #: ../Doc/distutils/builtdist.rst:233
 msgid "``requires``"
-msgstr ""
+msgstr "``requires``"
 
 #: ../Doc/distutils/builtdist.rst:235
 msgid "Conflicts"
-msgstr ""
+msgstr "*Conflicts*"
 
 #: ../Doc/distutils/builtdist.rst:235
 msgid "``conflicts``"
-msgstr ""
+msgstr "``conflicts``"
 
 #: ../Doc/distutils/builtdist.rst:237
 msgid "Obsoletes"
-msgstr ""
+msgstr "*Obsoletes*"
 
 #: ../Doc/distutils/builtdist.rst:237
 msgid "``obsoletes``"
-msgstr ""
+msgstr "``obsoletes``"
 
 #: ../Doc/distutils/builtdist.rst:239
 msgid "Distribution"
-msgstr ""
+msgstr "*Distribution*"
 
 #: ../Doc/distutils/builtdist.rst:239
 msgid "``distribution_name``"
@@ -536,19 +618,19 @@ msgstr "``distribution_name``"
 
 #: ../Doc/distutils/builtdist.rst:241
 msgid "BuildRequires"
-msgstr ""
+msgstr "*BuildRequires*"
 
 #: ../Doc/distutils/builtdist.rst:241
 msgid "``build_requires``"
-msgstr ""
+msgstr "``build_requires``"
 
 #: ../Doc/distutils/builtdist.rst:243
 msgid "Icon"
-msgstr ""
+msgstr "*Icon*"
 
 #: ../Doc/distutils/builtdist.rst:243
 msgid "``icon``"
-msgstr ""
+msgstr "``icon``"
 
 #: ../Doc/distutils/builtdist.rst:246
 msgid ""
@@ -567,6 +649,8 @@ msgid ""
 "There are three steps to building a binary RPM package, all of which are "
 "handled automatically by the Distutils:"
 msgstr ""
+"La création de binaire RPM se fait en trois étapes, chacune gérée "
+"automatiquement par Distutils:"
 
 #: ../Doc/distutils/builtdist.rst:257
 msgid ""
@@ -574,22 +658,29 @@ msgid ""
 "Distutils setup script; in fact, much of the information in the  setup "
 "script winds up in the :file:`.spec` file)"
 msgstr ""
+"Créer un fichier :file:`.spec` qui décrira le paquet (comme le script de "
+"préparation Distutils, en réalité la plupart des informations du script de "
+"préparation se retrouve dans le fichier :file:`.spec`)"
 
 #: ../Doc/distutils/builtdist.rst:261
 msgid "create the source RPM"
-msgstr ""
+msgstr "creer un RPM source"
 
 #: ../Doc/distutils/builtdist.rst:263
 msgid ""
 "create the \"binary\" RPM (which may or may not contain binary code, "
 "depending on whether your module distribution contains Python extensions)"
 msgstr ""
+"Créer le RPM \"binaire\" (qui peut ou non contenir des binaires, tout dépend "
+"de si votre module contiens des extensions)"
 
 #: ../Doc/distutils/builtdist.rst:266
 msgid ""
 "Normally, RPM bundles the last two steps together; when you use the "
 "Distutils, all three steps are typically bundled together."
 msgstr ""
+"Normalement, RPM réunit les deux dernières étapes ensemble; quand vous "
+"utilisez Distutils, les trois étapes sont regroupées."
 
 #: ../Doc/distutils/builtdist.rst:269
 msgid ""
@@ -604,7 +695,7 @@ msgstr ""
 
 #: ../Doc/distutils/builtdist.rst:297
 msgid "Creating Windows Installers"
-msgstr ""
+msgstr "Créer un installateur Windows"
 
 #: ../Doc/distutils/builtdist.rst:299
 msgid ""
@@ -614,12 +705,19 @@ msgid ""
 "metadata in the setup script, let the user select a few options, and start "
 "or cancel the installation."
 msgstr ""
+"Les installateurs exécutable sont le format naturel pour les distributions "
+"sur Windows. Ils affichent une jolie interface graphique, montrent quelques "
+"informations à propos du module qui va être installé, tiré des métadonnées "
+"dans le script de préparation, laisse l'utilisateur choisir quelques options "
+"et démarrer ou annuler l'installation."
 
 #: ../Doc/distutils/builtdist.rst:305
 msgid ""
 "Since the metadata is taken from the setup script, creating Windows "
 "installers is usually as easy as running::"
 msgstr ""
+"Etant donné que les métadonnées sont tirées du script de préparation, créer "
+"un installateur Windows est généralement facile, il suffit de lancer::"
 
 #: ../Doc/distutils/builtdist.rst:310
 msgid "or the :command:`bdist` command with the :option:`!--formats` option::"
@@ -632,6 +730,10 @@ msgid ""
 "a name like :file:`foo-1.0.win32.exe`.  These installers can even be created "
 "on Unix platforms or Mac OS X."
 msgstr ""
+"Si vous avez un module pur (contenant seulement des modules et des packages "
+"en Python pur), l'installateur final ne sera lié a aucune version de Python "
+"et aura un nom du type :file:`foo-1.0.win32.exe`. Ces installateurs peuvent "
+"même être créés sur les plateformes Unix ou Mac OS X."
 
 #: ../Doc/distutils/builtdist.rst:319
 msgid ""
@@ -641,6 +743,11 @@ msgid ""
 "exe`.  You have to create a separate installer for every Python version you "
 "want to support."
 msgstr ""
+"Si vous avez une distribution \"non-pure\", l'extension peut être créée "
+"uniquement pour les plateformes Windows et sera lié à une version de Python. "
+"Le nom de l'installateur reflétera ça et sera de format :file:`foo-1.0.win32-"
+"py2.0.exe`. Vous devrez créer un installateur pour chaque version de Python "
+"que vous voulez supporter."
 
 #: ../Doc/distutils/builtdist.rst:325
 msgid ""
@@ -675,7 +782,7 @@ msgstr ""
 
 #: ../Doc/distutils/builtdist.rst:346
 msgid "Cross-compiling on Windows"
-msgstr ""
+msgstr "Compiler pour toute les plateformes Windows"
 
 #: ../Doc/distutils/builtdist.rst:348
 msgid ""
@@ -684,6 +791,10 @@ msgid ""
 "installed, you can use a 32bit version of Windows to create 64bit extensions "
 "and vice-versa."
 msgstr ""
+"Depuis Python 2.6, distutils est capable de compiler pour toute les "
+"plateformes de Windows. En pratique, cela signifie qu'avec les bons outils "
+"installés, vous pouvez utiliser une version 32 bits de Windows pour créer "
+"une extension 64 bits et vice-versa."
 
 #: ../Doc/distutils/builtdist.rst:353
 msgid ""
@@ -698,12 +809,16 @@ msgid ""
 "to build a 64bit version of your extension.  The Windows Installers also "
 "support this option, so the command::"
 msgstr ""
+"Pour construire une version 64 bits de votre module. L'installateur Windows "
+"supporte aussi cette option, donc la commande::"
 
 #: ../Doc/distutils/builtdist.rst:364
 msgid ""
 "would create a 64bit installation executable on your 32bit version of "
 "Windows."
 msgstr ""
+"créera un installateur executable 64 bits depuis votre version 32 bits de "
+"Windows. "
 
 #: ../Doc/distutils/builtdist.rst:366
 msgid ""
@@ -716,6 +831,14 @@ msgid ""
 "configuration of the 'pythoncore' project before cross-compiling extensions "
 "is possible."
 msgstr ""
+"Pour compiler pour toute les versions de Windows, vous devez télécharger le "
+"code source de Python et de le compiler pour la plateforme choisie - il est "
+"impossible de le faire depuis une installation de Python (vu que les "
+"fichiers .lib pour les autres plateformes ne sont pas inclut). En pratique, "
+"cela veut dire qu'un utilisateur de systeme 32 bits devra utiliser Visual "
+"Studio 2008 pour ouvrir la solution :file:`PCBuild/PCbuild.sln` dans "
+"l'arborescence des sources de Python et construire la version \"x64\" du "
+"projet \"pythoncore\" avant de pouvoir compiler son extension."
 
 #: ../Doc/distutils/builtdist.rst:375
 msgid ""
@@ -724,10 +847,15 @@ msgid ""
 "these tools (using Control Panel->[Add/Remove] Programs is a convenient way "
 "to check or modify your existing install.)"
 msgstr ""
+"Remarquez que par défaut Visual Studio 2008 n'installe pas les outils et "
+"compilateur 64 bits. Vous devrez peut être re-executer le processus "
+"d'installation et sélectionner ces outils (utiliser le Panneau de Contrôle-"
+">[Ajouter/Supprimer] est un bon moyen de vérifier ou modifier votre "
+"installation existante.)"
 
 #: ../Doc/distutils/builtdist.rst:383
 msgid "The Postinstallation script"
-msgstr ""
+msgstr "Le script de post-installation"
 
 #: ../Doc/distutils/builtdist.rst:385
 msgid ""
@@ -751,12 +879,17 @@ msgid ""
 "(``sys.stdout``, ``sys.stderr``) is redirected into a buffer and will be "
 "displayed in the GUI after the script has finished."
 msgstr ""
+"Le script d'installation s'exécute intégré à la fenêtre d'installation, "
+"chaque sortie (``sys.stdout``, ``sys.stderr``) est redirigé dans le tampon "
+"et sera affiché dans le GUI après que les scripts soient finis."
 
 #: ../Doc/distutils/builtdist.rst:399
 msgid ""
 "Some functions especially useful in this context are available as additional "
 "built-in functions in the installation script."
 msgstr ""
+"certaines fonctions spécialement utiles dans ce contexte sont disponibles "
+"comme fonctions intégrées additionnelles  dans le script d'installation."
 
 #: ../Doc/distutils/builtdist.rst:406
 msgid ""
@@ -765,6 +898,11 @@ msgid ""
 "uninstaller, so that it will be removed when the distribution is "
 "uninstalled. To be safe, directories are only removed if they are empty."
 msgstr ""
+"Ces fonctions peuvent être appelées lorsqu'un répertoire ou un fichier est "
+"crée par le script de post installation au moment de l'installation. Cela va "
+"enregistrer le *chemin* avec le des-installeur, de sorte qu'il soit retiré "
+"lors de la des-installation de la distribution. pour être sûr, les "
+"répertoires sont uniquement retirés s'ils sont vides."
 
 #: ../Doc/distutils/builtdist.rst:414
 msgid ""
@@ -772,10 +910,14 @@ msgid ""
 "like the Start Menu or the Desktop.  It returns the full path to the folder. "
 "*csidl_string* must be one of the following strings::"
 msgstr ""
+"Cette fonction peut être utilisée pour extraire des localisations de "
+"fichiers spéciaux sous Windows comme un menu démarrer ou le Bureau. Cela "
+"retourne le chemin complet pour le fichier. *csidl_string* doit être unes "
+"des chaines suivantes::"
 
 #: ../Doc/distutils/builtdist.rst:434
 msgid "If the folder cannot be retrieved, :exc:`OSError` is raised."
-msgstr ""
+msgstr "Si le fichier ne peut être extrait, :exc:`OSError` est obtenu.."
 
 #: ../Doc/distutils/builtdist.rst:436
 msgid ""
@@ -783,6 +925,9 @@ msgid ""
 "probably also the configuration.  For details refer to Microsoft's "
 "documentation of the :c:func:`SHGetSpecialFolderPath` function."
 msgstr ""
+"Quel dossier est disponible dépend de la version exacte de Windows, et "
+"probablement aussi de la configuration. pour des détails se référer à la "
+"documentation Microsoft de la fonction :c:func:`SHGetCheminCompletFichier."
 
 #: ../Doc/distutils/builtdist.rst:443
 msgid ""
@@ -795,10 +940,18 @@ msgid ""
 "*iconpath*.  Again, for details consult the Microsoft documentation for the :"
 "class:`IShellLink` interface."
 msgstr ""
+"Cette fonction crée un raccourci. *cible* est le chemin au programme auquel "
+"mène le raccourci. *description* est la description du raccourci. "
+"*nomfichier* est le titre du raccourci que verra l'utilisateur. *arguments* "
+"spécifie les arguments de la ligne de commande, si existant. *cheminRep* est "
+"le répertoire de travail pour le programme. *cheminIcone* est le fichier "
+"contenant l’icône pour le raccourci, et *IndexIcone* est l'index pour "
+"l’icône dans le fichier *cheminIcone*. Encore, pour les details consulter la "
+"documentation Microsoft pour l'interface :class:`ILienShell`."
 
 #: ../Doc/distutils/builtdist.rst:454
 msgid "Vista User Access Control (UAC)"
-msgstr ""
+msgstr "Controle d'accès utilisateur Vista (UAC)"
 
 #: ../Doc/distutils/builtdist.rst:456
 msgid ""
