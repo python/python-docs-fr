@@ -4993,7 +4993,7 @@ msgstr "``b'%s'`` est déprécié, mais ne sera pas retiré des version 3.x."
 
 #: ../Doc/library/stdtypes.rst:3328
 msgid "``b'%r'`` is deprecated, but will not be removed during the 3.x series."
-msgstr ""
+msgstr "``b'%r'`` est déprécié mais ne sera pas retiré dans Python 3.x."
 
 #: ../Doc/library/stdtypes.rst:3338
 msgid ":pep:`461`."
@@ -5045,12 +5045,20 @@ msgid ""
 "The :class:`~memoryview.itemsize` attribute will give you the number of "
 "bytes in a single element."
 msgstr ""
+"``len(view)`` est égal à la grandeur de :class:`~memoryview.tolist`. Si "
+"``view.ndim = 0``, la longueur vaut 1. Si ``view.ndim = 1``, la longueur est "
+"égale au nombre d'éléments de la vue. Pour les dimensions plus grandes, la "
+"longueur est égale à la longueur de la sous-liste représentée par la vue. "
+"L'attribut :class:`~memoryview.itemsize` vous donnera la taille en octets "
+"d'un élément."
 
 #: ../Doc/library/stdtypes.rst:3369
 msgid ""
 "A :class:`memoryview` supports slicing and indexing to expose its data. One-"
 "dimensional slicing will result in a subview::"
 msgstr ""
+"Une :class:`memoryview` autorise le découpage et l'indicage de ses données. "
+"Découper sur une dimension donnera une sous-vue::"
 
 #: ../Doc/library/stdtypes.rst:3382
 msgid ""
@@ -5062,16 +5070,27 @@ msgid ""
 "*ndim* integers where *ndim* is the number of dimensions.  Zero-dimensional "
 "memoryviews can be indexed with the empty tuple."
 msgstr ""
+"Si le :class:`~memoryview.format` est un des formats natif du module :mod:"
+"`struct`, indexer avec un nombre entier ou un *tuple* de nombres entiers est "
+"aussi autorisé et renvoie un seul *element* du bon type.  Les *memoryview* à "
+"une dimension peuvent être indexées avec un nombre entier ou un *tuple* d'un "
+"entier.  Les *memoryview* multi-dimensionnelles peuvent être indexées avec "
+"des *tuples* d'exactement *ndim* entiers où *ndim* est le nombre de "
+"dimensions.  Les *memoryviews* à zéro dimension peuvent être indexées avec "
+"un *tuple* vide."
 
 #: ../Doc/library/stdtypes.rst:3391
 msgid "Here is an example with a non-byte format::"
-msgstr ""
+msgstr "Voici un exemple avec un autre format que *byte*::"
 
 #: ../Doc/library/stdtypes.rst:3403
 msgid ""
 "If the underlying object is writable, the memoryview supports one-"
 "dimensional slice assignment. Resizing is not allowed::"
 msgstr ""
+"Si l'objet sous-jacent est accessible en écriture, la *memoryview* "
+"autorisera les assignations de tranches à une dimension. Redimensionner "
+"n'est cependant pas autorisé::"
 
 #: ../Doc/library/stdtypes.rst:3424
 msgid ""
@@ -5079,18 +5098,26 @@ msgid ""
 "'b' or 'c' are also hashable. The hash is defined as ``hash(m) == hash(m."
 "tobytes())``::"
 msgstr ""
+"Les *memoryviews* à une dimension de types hachables (lecture seule) avec "
+"les formats 'B', 'b', ou 'c' sont aussi hachables. La fonction de hachage "
+"est définie tel que ``hash(m) == hash(m.tobytes())``::"
 
 #: ../Doc/library/stdtypes.rst:3436
 msgid ""
 "One-dimensional memoryviews can now be sliced. One-dimensional memoryviews "
 "with formats 'B', 'b' or 'c' are now hashable."
 msgstr ""
+"Les *memoryviews* à une dimension peuvent aussi être découpées. Les "
+"*memoryviews* à une dimension avec les formats 'B', 'b', ou 'c' sont "
+"mainteannt hachables."
 
 #: ../Doc/library/stdtypes.rst:3440
 msgid ""
 "memoryview is now registered automatically with :class:`collections.abc."
 "Sequence`"
 msgstr ""
+"*memoryview* est maintenant enregistrée automatiquement avec :class:"
+"`collections.abc.Sequence`"
 
 #: ../Doc/library/stdtypes.rst:3444
 msgid "memoryviews can now be indexed with tuple of integers."
@@ -5195,6 +5222,12 @@ msgid ""
 "release() is handy to remove these restrictions (and free any dangling "
 "resources) as soon as possible."
 msgstr ""
+"Libère le tampon sous-jacent exposé par l'objet *memoryview*.  Beaucoup "
+"d'objets prennent des initiatives particulières lorsqu'ils sont liés à une "
+"vue (par exemple, un :class:`bytearray` refusera temporairement de se faire "
+"redimensionner). Par conséquent, appeler *release()* peut être pratique pour "
+"lever ces restrictions (et en libérer les resources liées) aussi tôt que "
+"possible."
 
 #: ../Doc/library/stdtypes.rst:3549
 msgid ""
@@ -5234,6 +5267,10 @@ msgid ""
 "mod:`struct` syntax. One of the formats must be a byte format ('B', 'b' or "
 "'c'). The byte length of the result must be the same as the original length."
 msgstr ""
+"Le format de destination est limité à un seul élément natif de la syntaxe du "
+"module :mod:`struct`. L'un des formats doit être un *byte* ('B', 'b', ou "
+"'c'). La longueur du résultat en octets doit être la même que la longueur "
+"initiale."
 
 #: ../Doc/library/stdtypes.rst:3587
 msgid "Cast 1D/long to 1D/unsigned bytes::"
@@ -5290,58 +5327,72 @@ msgid ""
 "arbitrary format strings, but some methods (e.g. :meth:`tolist`) are "
 "restricted to native single element formats."
 msgstr ""
+"Une chaîne contenant le format (dans le style de :mod:`struct`) pour chaque "
+"élément de la vue. Une *memoryview* peut être crée depuis des exportateurs "
+"de formats arbitraires, mais certaines méthodes (comme :meth:`tolist`) sont "
+"limitées aux formats natifs à un seul élément."
 
 #: ../Doc/library/stdtypes.rst:3726
 msgid ""
 "format ``'B'`` is now handled according to the struct module syntax. This "
 "means that ``memoryview(b'abc')[0] == b'abc'[0] == 97``."
 msgstr ""
+"Le format ``'B'`` est maintenant traité selon la syntaxe du module *struct*. "
+"Cela signifie que ``memoryview(b'abc')[0] == b'abc'[0] == 97``."
 
 #: ../Doc/library/stdtypes.rst:3732
 msgid "The size in bytes of each element of the memoryview::"
-msgstr ""
+msgstr "La taille en octets de chaque élément d'une *memoryview*::"
 
 #: ../Doc/library/stdtypes.rst:3745
 msgid ""
 "An integer indicating how many dimensions of a multi-dimensional array the "
 "memory represents."
 msgstr ""
+"Un nombre entier indiquant le nombre de dimensions d'un tableau multi-"
+"dimensionnel représenté par la *memoryview*."
 
 #: ../Doc/library/stdtypes.rst:3750
 msgid ""
 "A tuple of integers the length of :attr:`ndim` giving the shape of the "
 "memory as an N-dimensional array."
 msgstr ""
+"Un *tuple* d'entiers de longueur :attr:`ndim` donnant la forme de la "
+"*memoryview* sous forme d'un tableau à N dimensions."
 
 #: ../Doc/library/stdtypes.rst:3753 ../Doc/library/stdtypes.rst:3761
 msgid "An empty tuple instead of ``None`` when ndim = 0."
-msgstr ""
+msgstr "Un *tuple* vide au lieu de ``None`` lorsque *ndim = 0*."
 
 #: ../Doc/library/stdtypes.rst:3758
 msgid ""
 "A tuple of integers the length of :attr:`ndim` giving the size in bytes to "
 "access each element for each dimension of the array."
 msgstr ""
+"Un *tuple* d'entiers de longueur :attr:`ndim` donnant la taille en octets "
+"permettant d'accéder à chaque dimensions du tableau."
 
 #: ../Doc/library/stdtypes.rst:3766
 msgid "Used internally for PIL-style arrays. The value is informational only."
 msgstr ""
+"Détail de l'implémentation des *PIL-style arrays*. La valeur n'est donné "
+"qu'a titre d'information."
 
 #: ../Doc/library/stdtypes.rst:3770
 msgid "A bool indicating whether the memory is C-:term:`contiguous`."
-msgstr ""
+msgstr "Un booléen indiquant si la mémoire est C-:term:`contiguous`."
 
 #: ../Doc/library/stdtypes.rst:3776
 msgid "A bool indicating whether the memory is Fortran :term:`contiguous`."
-msgstr ""
+msgstr "Un booléen indiquant si la mémoire est Fortran :term:`contiguous`."
 
 #: ../Doc/library/stdtypes.rst:3782
 msgid "A bool indicating whether the memory is :term:`contiguous`."
-msgstr ""
+msgstr "Un booléen indiquant si la mémoire est :term:`contiguous`."
 
 #: ../Doc/library/stdtypes.rst:3790
 msgid "Set Types --- :class:`set`, :class:`frozenset`"
-msgstr ""
+msgstr "Types d'ensembles --- :class:`set`, :class:`frozenset`"
 
 #: ../Doc/library/stdtypes.rst:3794
 msgid ""
@@ -5352,6 +5403,12 @@ msgid ""
 "in :class:`dict`, :class:`list`, and :class:`tuple` classes, and the :mod:"
 "`collections` module.)"
 msgstr ""
+"Un objet :dfn:`set` est une collection non-triée d'objets :term:`hashable` "
+"distincts. Les utilisations classiques sont le test d'appartenance, la "
+"déduplication d'une séquence, ou le calcul d'opérations mathématiques telles "
+"que l'intersection, l'union, la différence, ou la différence symétrique. "
+"(Pour les autres conteneurs, voir les classes natives :class:`dict`, :class:"
+"`list`, et :class:`tuple`, ainsi que le module :mod:`collections`.)"
 
 #: ../Doc/library/stdtypes.rst:3801
 msgid ""
@@ -5360,6 +5417,11 @@ msgid ""
 "position or order of insertion.  Accordingly, sets do not support indexing, "
 "slicing, or other sequence-like behavior."
 msgstr ""
+"Comme pour les autres collections, les ensembles supportent ``x in set``, "
+"``len(set)``, et ``for x in set``. En temps que collection non-triée, les "
+"ensembles n'enregistrent pas la position des éléments ou leur ordre "
+"d'insertion.  En conséquence, les *sets* n'autorisent ni l'indexation, ni le "
+"découpage, ou tout autre comportement de séquence."
 
 #: ../Doc/library/stdtypes.rst:3806
 msgid ""
@@ -5372,6 +5434,14 @@ msgid ""
 "it is created; it can therefore be used as a dictionary key or as an element "
 "of another set."
 msgstr ""
+"Il existe actuellement deux types natifs pour les ensembles, :class:`set` "
+"et :class:`fronzenset`. Le type :class:`set` est mutable --- son contenu "
+"peut changer en utilisant des méthodes comme :meth:`~set.add` et :meth:`~set."
+"remove`. Puisqu'il est mutable, il n'a pas de valeur de hachage et ne peut "
+"donc pas être utilisé ni comme clef de dictionnaire ni comme élément d'un "
+"autre ensemble. Le type :class:`frozenset` est immuable et :term:`hashable` "
+"--- son contenu ne peut être modifié après sa création, il peut ainsi être "
+"utilisé comme clef de dictionnaire ou élément d'un autre *set*."
 
 #: ../Doc/library/stdtypes.rst:3814
 msgid ""
