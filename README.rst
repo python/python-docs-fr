@@ -51,11 +51,10 @@ How to Contribute
 ~~~~~~~~~~~~~~~~~
 
 You can either contribute on `transifex/python-doc
-<https://www.transifex.com/python-doc/>`_, by simply openning an issue
-on this repository if you simply found an error, or by editing ``po``
-files.
+<https://www.transifex.com/python-doc/>`_, or by simply openning an
+issue on this repository, or by editing the ``po`` files.
 
-To modify those file you first have to fork this project and follow
+To modify those files you first have to fork this project and follow
 github instructions to clone it.
 
 Next, to edit the files, you can use an editor of your choice, there's many:
