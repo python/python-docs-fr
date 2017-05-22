@@ -55,10 +55,8 @@ You can either contribute on `transifex/python-doc
 on this repository if you simply found an error, or by editing ``po``
 files.
 
-To download ``po`` files you should fork this project then::
-
-  $ git clone https://github.com/[Your Github Handle]/python-docs-fr.git
-  $ cd python-docs-fr
+To modify those file you first have to fork this project and follow
+github instructions to clone it.
 
 Next, to edit the files, you can use an editor of your choice, there's many:
 
