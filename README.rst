@@ -41,9 +41,10 @@ distributing   100%   100%   100%
 Contributing to the Translation
 -------------------------------
 
-Your help is welcome, you can start by reviewing fuzzy entries to help
-keeping the documentation up to date. You can also proofread already
-translated entries, and finally translated untranslated ones.
+Your help is welcome, you can start with easy tasks like reviewing
+fuzzy entries to help keeping the documentation up to date.  You can
+also proofread already translated entries, and finally translate
+untranslated ones.
 
 
 How to Contribute
