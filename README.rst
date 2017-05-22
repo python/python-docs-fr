@@ -148,3 +148,13 @@ to open an issue if you disagree.
 - underscore: *tiret bas*, *underscore* (in italics)
 - little-endian, big-endian: `petit-boutise, gros-boutiste
   <https://fr.wikipedia.org/wiki/Endianness>`_
+
+
+Project History
+---------------
+
+This project was started `around 2012
+<https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b5a4804d5f519ce3ea341e027c>`_
+by `afpy <https://www.afpy.org/>`_ members, in 2017 this project
+became the official french Python documentation translation thanks to
+`PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
