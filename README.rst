@@ -86,6 +86,15 @@ What to translate
   ::`` in French to place the space before the column.
 
 
+Where to get help
+~~~~~~~~~~~~~~~~~
+
+The coordinator for this translation is `mdk <https://mdk.fr/>`_.
+
+Feel free to ask your questions on ``#python-fr`` on `freenode
+<https://webchat.freenode.net/>`_.
+
+
 Priorities
 ----------
 
