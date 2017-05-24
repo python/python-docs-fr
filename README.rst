@@ -50,8 +50,8 @@ untranslated ones.
 How to Contribute
 ~~~~~~~~~~~~~~~~~
 
-You can either contribute on `transifex/python-doc
-<https://www.transifex.com/python-doc/>`_, or by simply openning an
+You can either contribute on `transifex/python-doc/public
+<https://www.transifex.com/python-doc/public/>`_, or by simply openning an
 issue on this repository, or by editing the ``po`` files.
 
 To modify those files you first have to fork this project and follow
