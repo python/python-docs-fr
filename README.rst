@@ -149,7 +149,7 @@ to open an issue if you disagree.
 - list compréhension: *liste en compréhension*
 - mutable: *variable*
 - prompt: *invite*
-- regular expression: *expression rationnelle*
+- regular expression: *expression rationnelle*, *expression régulière*
 - socket: *socket* (in italics)
 - statement: *instruction*
 - underscore: *tiret bas*, *underscore* (in italics)
