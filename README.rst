@@ -165,3 +165,13 @@ This project was started `around 2012
 by `afpy <https://www.afpy.org/>`_ members, in 2017 this project
 became the official french Python documentation translation thanks to
 `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+
+
+Maintenance
+-----------
+
+Find fuzzy strings:
+
+.. code-block:: bash
+
+  grep -c fuzzy **/*.po | grep -v ':1$\|:0$'
