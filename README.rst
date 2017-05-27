@@ -175,3 +175,27 @@ Find fuzzy strings:
 .. code-block:: bash
 
   grep -c fuzzy **/*.po | grep -v ':1$\|:0$'
+
+
+Merge pot files from cpython doc:
+
+.. code-block:: bash
+
+  VERSION=3.6
+  git clone --depth 1 --branch $VERSION https://github.com/python/cpython.git /tmp/cpython/
+  (cd /tmp/cpython/ && sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+  POT_PATH="/tmp/cpython/pot/"
+  PO_PATH="./"
+
+  find "$POT_PATH" -name '*.pot' |
+      while read -r POT
+      do
+          PO="$PO_PATH/$(echo "$POT" | sed "s#$POT_PATH##; s#\.pot\$#.po#")"
+          mkdir -p "$(dirname "$PO")"
+          if [ -f "$PO" ]
+          then
+              msgmerge --backup=off --force-po -U "$PO" "$POT"
+          else
+              msgcat -o "$PO" "$POT"
+          fi
+      done
