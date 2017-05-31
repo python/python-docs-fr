@@ -860,6 +860,15 @@ msgid ""
 "*number*. Inside the ``'['`` and ``']'`` of a character class, all numeric "
 "escapes are treated as characters."
 msgstr ""
+"Correspond au contenu du groupe du même nombre. Les groupes sont numérotés à "
+"partir de 1.  Par exemple, ``(.+) \\1`` correspond à ``'the the'`` ou ``'55 "
+"55'``, mais pas à ``'thethe'`` (notez l'espace après le groupe).  Cette "
+"séquence spéciale ne peut être utilisée que pour faire référence aux 99 "
+"premiers groupes.  Si le premier chiffre de *number* est 0, ou si *number* "
+"est un nombre octal de 3 chiffres, il ne sera pas interprété comme une "
+"référence à un groupe, mais comme le caractère à la valeur octale *number*. "
+"À l'intérieur des ``'['`` et ``']'`` d'une classe de caractères, tous les "
+"échappements numériques sont traités comme des caractères."
 
 #: ../Doc/library/re.rst:357
 msgid "``\\A``"
@@ -867,7 +876,7 @@ msgstr "``\\A``"
 
 #: ../Doc/library/re.rst:357
 msgid "Matches only at the start of the string."
-msgstr ""
+msgstr "Correspond uniquement au début d'une chaîne de caractères."
 
 #: ../Doc/library/re.rst:372
 msgid "``\\b``"
@@ -884,6 +893,14 @@ msgid ""
 "``r'\\bfoo\\b'`` matches ``'foo'``, ``'foo.'``, ``'(foo)'``, ``'bar foo "
 "baz'`` but not ``'foobar'`` or ``'foo3'``."
 msgstr ""
+"Correspond à la chaîne vide, mais uniquement au début ou à la fin d'un mot. "
+"Un mot est défini comme une séquence de caractères Unicode alphanumériques "
+"ou de tirets bas, la fin d'un mot est ainsi indiquée par une espace ou un "
+"caractère qui n'est ni alphanumérique ni un tiret bas.  Notez que "
+"formellement, ``\\b`` est défini comme la liaison entre ``\\w`` et ``\\W`` "
+"(et inversement), ou entre ``\\w`` et le début/fin d'un mot. Cela signifie "
+"que ``r'\\bfoo\\b'`` validera ``'foo'``, ``'foo.'``, ``'(foo)'`` ou ``'bar "
+"foo baz'`` mais pas ``'foobar'`` ou ``'foo3'``."
 
 #: ../Doc/library/re.rst:369
 msgid ""
@@ -892,6 +909,10 @@ msgid ""
 "represents the backspace character, for compatibility with Python's string "
 "literals."
 msgstr ""
+"Les caractères alphanumériques Unicode sont utilisés par défaut, mais cela "
+"peut être changé en utilisant l'option :const:`ASCII`.  À l'intérieur d'un "
+"intervalle de caractères, ``\\b`` représente le caractère *backspace*, par "
+"compatibilité avec les chaînes littérales Python."
 
 #: ../Doc/library/re.rst:380
 msgid "``\\B``"
@@ -905,6 +926,12 @@ msgid ""
 "opposite of ``\\b``, so word characters are Unicode alphanumerics or the "
 "underscore, although this can be changed by using the :const:`ASCII` flag."
 msgstr ""
+"Correspond à la chaîne vide, mais uniquement quand elle *n'est pas* au début "
+"ou à la fin d'un mot.  Cela signifie que ``r'py\\B'`` valide ``'python'``, "
+"``'py3'`` ou ``'py2'``, mais pas ``'py'``, ``'py.'`` ou ``'py!'``. ``\\B`` "
+"est simplement l'opposé de ``\\b``, donc les caractères de mots sont les "
+"alphanumériques et tirets bas Unicode, bien que cela puisse être changé avec "
+"l'option :const:`ASCII`."
 
 #: ../Doc/library/re.rst:391
 msgid "``\\d``"
@@ -913,7 +940,7 @@ msgstr "``\\d``"
 #: ../Doc/library/re.rst:388 ../Doc/library/re.rst:408
 #: ../Doc/library/re.rst:427
 msgid "For Unicode (str) patterns:"
-msgstr ""
+msgstr "Pour les motifs Unicode (str) :"
 
 #: ../Doc/library/re.rst:384
 msgid ""
@@ -923,15 +950,21 @@ msgid ""
 "matched (but the flag affects the entire regular expression, so in such "
 "cases using an explicit ``[0-9]`` may be a better choice)."
 msgstr ""
+"Valide n'importe quel chiffre décimal Unicode (soit tout caractère Unicode "
+"de catégorie [Nd]).  Cela inclue ``[0-9]``, mais aussi bien d'autres "
+"caractères de chiffres.  Si l'option :const:`ASCII` est utilisée, seuls les "
+"caractères de la classe ``[0-9]`` correspondront (mais l'option affectant "
+"l'expression rationnelle entière, il peut être préférable dans ce genre de "
+"cas d'utiliser un ``[0-9]`` explicite)."
 
 #: ../Doc/library/re.rst:391 ../Doc/library/re.rst:412
 #: ../Doc/library/re.rst:431
 msgid "For 8-bit (bytes) patterns:"
-msgstr ""
+msgstr "Pour les motifs 8-bit (bytes) :"
 
 #: ../Doc/library/re.rst:391
 msgid "Matches any decimal digit; this is equivalent to ``[0-9]``."
-msgstr ""
+msgstr "Valide n'importe quel chiffre décimal ; équivalent à ``[0-9]``."
 
 #: ../Doc/library/re.rst:398
 msgid "``\\D``"
@@ -945,6 +978,11 @@ msgid ""
 "expression, so in such cases using an explicit ``[^0-9]`` may be a better "
 "choice)."
 msgstr ""
+"Valide tout caractère qui n'est pas un chiffre décimal Unicode. C'est "
+"l'opposé de ``\\d``. Si l'option :const:`ASCII` est utilisée, cela devient "
+"équivalent à ``[^0-9]`` (mais l'option affectant l'expression rationnelle "
+"entière, il peut être préférable dans ce genre de cas d'utiliser un "
+"``[^0-9]`` explicite)."
 
 #: ../Doc/library/re.rst:412
 msgid "``\\s``"
@@ -959,12 +997,21 @@ msgid ""
 "entire regular expression, so in such cases using an explicit ``[ \\t\\n\\r"
 "\\f\\v]`` may be a better choice)."
 msgstr ""
+"Valide les caractères d'espacement Unicode (qui incluent ``[ \\t\\n\\r\\f"
+"\\v]`` et bien d'autres, comme les espaces insécables requises par les "
+"règles typographiques de beaucoup de langues). Si l'option :const:`ASCII` "
+"est utilisée, seuls les caractères de la classe ``[ \\t\\n\\r\\f\\v]`` sont "
+"validés (mais l'option affectant l'expression rationnelle entière, il peut "
+"être préférable dans ce genre de cas d'utiliser un ``[ \\t\\n\\r\\f\\v]`` "
+"explicite)."
 
 #: ../Doc/library/re.rst:411
 msgid ""
 "Matches characters considered whitespace in the ASCII character set; this is "
 "equivalent to ``[ \\t\\n\\r\\f\\v]``."
 msgstr ""
+"Valide les caractères considérés comme des espacements dans la table ASCII ; "
+"équivalent à ``[ \\t\\n\\r\\f\\v]``."
 
 #: ../Doc/library/re.rst:419
 msgid "``\\S``"
@@ -978,6 +1025,11 @@ msgid ""
 "regular expression, so in such cases using an explicit ``[^ \\t\\n\\r\\f"
 "\\v]`` may be a better choice)."
 msgstr ""
+"Valide tout caractère qui n'est pas un caractère d'espacement Unicode. c'est "
+"l'opposé de ``\\s``. Si l'option :const:`ASCII` est utilisée, cela devient "
+"équivalent à ``[^ \\t\\n\\r\\f\\v]`` (mais l'option affectant l'expression "
+"rationnelle entière, il peut être préférable dans ce genre de cas d'utiliser "
+"un ``[^ \\t\\n\\r\\f\\v]`` explicite)."
 
 #: ../Doc/library/re.rst:431
 msgid "``\\w``"
@@ -991,12 +1043,20 @@ msgid ""
 "flag affects the entire regular expression, so in such cases using an "
 "explicit ``[a-zA-Z0-9_]`` may be a better choice)."
 msgstr ""
+"Valide les caractères Unicode de mot ; cela inclut la plupart des caractères "
+"qui peuvent être compris dans un mot d'une quelconque langue, aussi bien que "
+"les nombres et les tirets bas. Si l'option :const:`ASCII` est utilisée, "
+"seuls les caractères de la classe ``[a-zA-Z0-9_]`` sont validés (mais "
+"l'option affectant l'expression rationnelle entière, il peut être préférable "
+"dans ce genre de cas d'utiliser un ``[a-zA-Z0-9_]`` explicite)."
 
 #: ../Doc/library/re.rst:430
 msgid ""
 "Matches characters considered alphanumeric in the ASCII character set; this "
 "is equivalent to ``[a-zA-Z0-9_]``."
 msgstr ""
+"Valide les caractères alphanumériques de la table ASCII ; équivalent à ``[a-"
+"zA-Z0-9_]``."
 
 #: ../Doc/library/re.rst:438
 msgid "``\\W``"
@@ -1010,6 +1070,11 @@ msgid ""
 "expression, so in such cases using an explicit ``[^a-zA-Z0-9_]`` may be a "
 "better choice)."
 msgstr ""
+"Valide tout caractère qui n'est pas un caractère Unicode de mot. C'est "
+"l'opposé de ``\\w``. Si l'option :const:`ASCII` est utilisée, cela devient "
+"équivalent à ``[^a-zA-Z0-9_]`` (mais l'option affectant l'expression "
+"rationnelle entière, il peut être préférable dans ce genre de cas d'utiliser "
+"un ``[^a-zA-Z0-9_]`` explicite)."
 
 #: ../Doc/library/re.rst:441
 msgid "``\\Z``"
@@ -1017,25 +1082,33 @@ msgstr "``\\Z``"
 
 #: ../Doc/library/re.rst:441
 msgid "Matches only at the end of the string."
-msgstr ""
+msgstr "Correspond uniquement à la fin d'une chaîne de caractères."
 
 #: ../Doc/library/re.rst:443
 msgid ""
 "Most of the standard escapes supported by Python string literals are also "
 "accepted by the regular expression parser::"
 msgstr ""
+"La plupart des échappements standards supportés par les chaînes littérales "
+"sont aussi acceptés par le parseur d'expressions rationnelles: ::"
 
 #: ../Doc/library/re.rst:450
 msgid ""
 "(Note that ``\\b`` is used to represent word boundaries, and means "
 "\"backspace\" only inside character classes.)"
 msgstr ""
+"(Notez que ``\\b`` est utilisé pour représenter les bornes d'un mot, et "
+"signifie « *backspace* » uniquement à l'intérieur d'une classe de "
+"caractères.)"
 
 #: ../Doc/library/re.rst:453
 msgid ""
 "``'\\u'`` and ``'\\U'`` escape sequences are only recognized in Unicode "
 "patterns.  In bytes patterns they are not treated specially."
 msgstr ""
+"Les séquences d'échappement ``'\\u'`` et ``'\\U'`` sont seulement reconnues "
+"dans les motifs Unicode.  Aucun traitement spécifique ne leur est porté dans "
+"les motifs 8-bit."
 
 #: ../Doc/library/re.rst:456
 msgid ""
@@ -1044,19 +1117,26 @@ msgid ""
 "Otherwise, it is a group reference.  As for string literals, octal escapes "
 "are always at most three digits in length."
 msgstr ""
+"Les séquences octales d'échappement sont inclues dans une forme limitée.  Si "
+"le premier chiffre est un 0, ou s'il y a trois chiffres octaux, la séquence "
+"est considérée comme octale. Autrement, il s'agit d'une référence vers un "
+"groupe.  Comme pour les chaînes littérales, les séquences octales ne font "
+"jamais plus de 3 caractères de long."
 
 #: ../Doc/library/re.rst:461
 msgid "The ``'\\u'`` and ``'\\U'`` escape sequences have been added."
-msgstr ""
+msgstr "Les séquences d'échappement ``'\\u'`` et ``'\\U'`` ont été ajoutées."
 
 #: ../Doc/library/re.rst:464
 msgid ""
 "Unknown escapes consisting of ``'\\'`` and an ASCII letter now are errors."
 msgstr ""
+"Les séquences inconnues composées de ``'\\'`` et d'une lettre ASCII sont "
+"maintenant des erreurs."
 
 #: ../Doc/library/re.rst:472
 msgid "Mastering Regular Expressions"
-msgstr ""
+msgstr "Maîtriser les expression rationnelles"
 
 #: ../Doc/library/re.rst:471
 msgid ""
@@ -1064,10 +1144,14 @@ msgid ""
 "second edition of the book no longer covers Python at all, but the first "
 "edition covered writing good regular expression patterns in great detail."
 msgstr ""
+"Livre sur les expressions rationnelles par Jeffrey Friedl, publié chez "
+"OReilly.  La seconde édition de ce livre ne couvre plus du tout Python, mais "
+"la première version explique en détails comment écrire de bonnes expressions "
+"rationnelles."
 
 #: ../Doc/library/re.rst:480
 msgid "Module Contents"
-msgstr ""
+msgstr "Contenu du module"
 
 #: ../Doc/library/re.rst:482
 msgid ""
@@ -1076,12 +1160,18 @@ msgid ""
 "compiled regular expressions.  Most non-trivial applications always use the "
 "compiled form."
 msgstr ""
+"Le module définit plusieurs fonctions, constantes, et une exception. "
+"Certaines fonctions sont des versions simplifiées des méthodes plus "
+"complètes des expressions rationnelles compilées.  La plupart des "
+"applications non triviales utilisent toujours la version compilée."
 
 #: ../Doc/library/re.rst:487
 msgid ""
 "Flag constants are now instances of :class:`RegexFlag`, which is a subclass "
 "of :class:`enum.IntFlag`."
 msgstr ""
+"Les constantes d'options sont maintenant des instances de :class:"
+"`RegexFlag`, sous-classe de :class:`enum.IntFlag`."
 
 #: ../Doc/library/re.rst:493
 msgid ""
@@ -1089,6 +1179,9 @@ msgid ""
 "can be used for matching using its :func:`~regex.match` and :func:`~regex."
 "search` methods, described below."
 msgstr ""
+"Compile un motif vers une expression rationnelle compilée, dont les "
+"méthodes :func:`~regex.match` et :func:`~regex.search`, décrites ci-dessous, "
+"peuvent être utilisées pour analyser des textes."
 
 #: ../Doc/library/re.rst:497
 msgid ""
@@ -1096,14 +1189,17 @@ msgid ""
 "Values can be any of the following variables, combined using bitwise OR (the "
 "``|`` operator)."
 msgstr ""
+"Le comportement des expressions peut être modifié en spécifiant une valeur "
+"*flags*. Les valeurs sont comprises dans les variables suivantes, et peuvent "
+"être combinées avec un *ou* bit-à-bit (opérateur ``|``)."
 
 #: ../Doc/library/re.rst:501
 msgid "The sequence ::"
-msgstr ""
+msgstr "La séquence : ::"
 
 #: ../Doc/library/re.rst:506
 msgid "is equivalent to ::"
-msgstr ""
+msgstr "est équivalente à : ::"
 
 #: ../Doc/library/re.rst:510
 msgid ""
@@ -1111,6 +1207,9 @@ msgid ""
 "object for reuse is more efficient when the expression will be used several "
 "times in a single program."
 msgstr ""
+"mais utiliser :func:`re.compile` et sauvegarder l'expression rationnelle "
+"retournée pour la réutiliser est plus efficace quand l'expression est amenée "
+"à être utilisée plusieurs fois dans un même programme."
 
 #: ../Doc/library/re.rst:516
 msgid ""
@@ -1119,6 +1218,10 @@ msgid ""
 "that use only a few regular expressions at a time needn't worry about "
 "compiling regular expressions."
 msgstr ""
+"Les versions compilées des motifs les plus récents passés à :func:`re."
+"compile` et autres fonctions d'analyse du module sont mises en cache, ainsi "
+"les programmes qui n'utilisent que quelques expressions rationnelles en même "
+"temps n'ont pas à s'inquiéter de la compilation de ces expressions."
 
 #: ../Doc/library/re.rst:525
 msgid ""
@@ -1126,6 +1229,9 @@ msgid ""
 "\\S`` perform ASCII-only matching instead of full Unicode matching.  This is "
 "only meaningful for Unicode patterns, and is ignored for byte patterns."
 msgstr ""
+"Fait correspondre à ``\\w``, ``\\W``, ``\\b``, ``\\B``, ``\\d``, ``\\D``, ``"
+"\\s`` et ``\\s`` des caractères ASCII seulement, plutôt qu'Unicode.  Cela "
+"n'a du sens que pour les motifs Unicode, et est ignoré pour les motifs 8-bit."
 
 #: ../Doc/library/re.rst:529
 msgid ""
@@ -1134,10 +1240,15 @@ msgid ""
 "u)``), but these are redundant in Python 3 since matches are Unicode by "
 "default for strings (and Unicode matching isn't allowed for bytes)."
 msgstr ""
+"Notez que par compatibilité envers les versions précédentes, l'option :const:"
+"`re.U` existe toujours (ainsi que son synonyme :const:`re.UNICODE` et sa "
+"version embarquée ``(?u)``), mais elles sont redondantes en Python 3 depuis "
+"que l'analyse est faite en Unicode par défaut pour les chaînes de caractères "
+"(et que l'analyse Unicode n'est pas permise pour les chaînes 8-bit)."
 
 #: ../Doc/library/re.rst:538
 msgid "Display debug information about compiled expression."
-msgstr ""
+msgstr "Affiche des informations de debug à propos de l'expression compilée."
 
 #: ../Doc/library/re.rst:544
 msgid ""
@@ -1145,6 +1256,9 @@ msgid ""
 "lowercase letters, too.  This is not affected by the current locale and "
 "works for Unicode characters as expected."
 msgstr ""
+"Réalise une analyse insensible à la classe ; les expressions comme ``[A-Z]`` "
+"valideront aussi les lettres minuscules.  Cela n'est pas affecté par la "
+"locale courante et fonctionne comme convenu avec les caractères Unicode."
 
 #: ../Doc/library/re.rst:552
 msgid ""
@@ -1155,12 +1269,20 @@ msgid ""
 "Python 3 for Unicode (str) patterns. This flag can be used only with bytes "
 "patterns."
 msgstr ""
+"Fait dépendre ``\\w``, ``\\W``, ``\\b``, ``\\B``, ``\\s`` et ``\\S`` de la "
+"locale courante. L'utilisation de cette option est déconseillée à cause du "
+"mécanisme de locale très peu fiable, et ne gérant qu'une « culture » à la "
+"fois ; vous devriez à la place utiliser l'analyse Unicode, qui est le défaut "
+"en Python 3 pour les motifs Unicode (str). Cette option ne peut être "
+"utilisée qu'avec les motifs 8-bit."
 
 #: ../Doc/library/re.rst:558
 msgid ""
 ":const:`re.LOCALE` can be used only with bytes patterns and is not "
 "compatible with :const:`re.ASCII`."
 msgstr ""
+":const:`re.LOCALE`` ne peut être utilisée qu'avec les motifs 8-bit et n'est "
+"pas compatible avec :const:`re.ASCII`."
 
 #: ../Doc/library/re.rst:566
 msgid ""
@@ -1172,12 +1294,21 @@ msgid ""
 "only at the end of the string and immediately before the newline (if any) at "
 "the end of the string."
 msgstr ""
+"Quand spécifiée, le caractère ``'^'`` correspond au début d'une chaîne et au "
+"début d'une ligne (caractère suivant directement le saut de ligne) ; et le "
+"caractère ``'$'`` correspond à la fin d'une chaîne et à la fin d'une ligne "
+"(juste avant le saut de ligne).  Par défaut, ``'^'`` correspond uniquement "
+"au début de la chaîne, et ``'$'`` uniquement à la fin de la chaîne, ou "
+"immédiatement avant le saut de ligne (s'il y a) à la fin de la chaîne."
 
 #: ../Doc/library/re.rst:577
 msgid ""
 "Make the ``'.'`` special character match any character at all, including a "
 "newline; without this flag, ``'.'`` will match anything *except* a newline."
 msgstr ""
+"Fait correspondre tous les caractères possibles à ``'.'``, incluant le saut "
+"de ligne ; sans cette option, ``'.'`` correspondrait à tout caractère à "
+"l'exception du saut de ligne."
 
 #: ../Doc/library/re.rst:584
 msgid ""
@@ -1189,12 +1320,22 @@ msgid ""
 "by an unescaped backslash, all characters from the leftmost such ``#`` "
 "through the end of the line are ignored."
 msgstr ""
+"Cette option vous autorise à écrire des expressions rationnelles qui "
+"présentent mieux et sont plus lisibles en vous permettant de séparer "
+"visuellement les sections logiques du motif et d'ajouter des commentaires. "
+"Les caractères d'espacement à l'intérieur du motif sont ignorés, sauf à "
+"l'intérieur des classes de caractères ou quand précédés d'un *backslash* non "
+"échappé. Quand une ligne contient un ``#`` qui n'est pas dans une classe de "
+"caractères ou précédé d'un *backslash* non échappé, tous les caractères "
+"depuis le ``#`` le plus à gauche jusqu'à la fin de la ligne sont ignorés."
 
 #: ../Doc/library/re.rst:592
 msgid ""
 "This means that the two following regular expression objects that match a "
 "decimal number are functionally equal::"
 msgstr ""
+"Cela signifie que les deux expressions rationnelles suivantes qui valident "
+"un nombre décimal sont fonctionnellement égales : ::"
 
 #: ../Doc/library/re.rst:605
 msgid ""
@@ -1204,6 +1345,11 @@ msgid ""
 "string matches the pattern; note that this is different from finding a zero-"
 "length match at some point in the string."
 msgstr ""
+"Analyse *string* à la recherche du premier emplacement où l'expression "
+"rationnelle *pattern* trouve une correspondance, et retourne le :ref:`match "
+"object <match-objects>` correspondant.  Retourne ``None`` si aucune position "
+"dans la chaîne ne valide le motif ; notez que cela est différent de trouver "
+"une correspondance avec une chaîne vide à un certain endroit de la chaîne."
 
 #: ../Doc/library/re.rst:614
 msgid ""
@@ -1212,12 +1358,18 @@ msgid ""
 "objects>`.  Return ``None`` if the string does not match the pattern; note "
 "that this is different from a zero-length match."
 msgstr ""
+"Si zéro ou plus caractères au début de *string* correspondant à l'expression "
+"rationnelle *pattern*, retourne le :ref:`match object <match-objects>` "
+"correspondant.  Retourne ``None`` si la chaîne ne correspond pas au motif ; "
+"notez que cela est différent d'une correspondance avec une chaîne vide."
 
 #: ../Doc/library/re.rst:619
 msgid ""
 "Note that even in :const:`MULTILINE` mode, :func:`re.match` will only match "
 "at the beginning of the string and not at the beginning of each line."
 msgstr ""
+"Notez que même en mode :const:`MULTILINE`, :func:`re.match` ne validera "
+"qu'au début de la chaîne et non au début de chaque ligne."
 
 #: ../Doc/library/re.rst:622
 msgid ""
