@@ -414,7 +414,7 @@ msgstr ""
 "vous que Python utilise aussi le *backslash* comme une séquence "
 "d'échappement dans les chaînes littérales ; si la séquence d'échappement "
 "n'est pas reconnue par le parseur Python, le *backslash* et les caractères "
-"qui le suivent sont inclus dans la chaîne retournée.  Cependant, si Python "
+"qui le suivent sont inclus dans la chaîne renvoyée.  Cependant, si Python "
 "avait reconnu la séquence, le *backslash* aurait dû être doublé.  C'est "
 "assez compliqué et difficile à comprendre, c'est pourquoi il est hautement "
 "recommandé d'utiliser des chaînes brutes pour tout sauf les expressions les "
@@ -1208,7 +1208,7 @@ msgid ""
 "times in a single program."
 msgstr ""
 "mais utiliser :func:`re.compile` et sauvegarder l'expression rationnelle "
-"retournée pour la réutiliser est plus efficace quand l'expression est amenée "
+"renvoyée pour la réutiliser est plus efficace quand l'expression est amenée "
 "à être utilisée plusieurs fois dans un même programme."
 
 #: ../Doc/library/re.rst:516
@@ -1346,8 +1346,8 @@ msgid ""
 "length match at some point in the string."
 msgstr ""
 "Analyse *string* à la recherche du premier emplacement où l'expression "
-"rationnelle *pattern* trouve une correspondance, et retourne le :ref:`match "
-"object <match-objects>` correspondant.  Retourne ``None`` si aucune position "
+"rationnelle *pattern* trouve une correspondance, et renvoie l':ref:`objet de "
+"correspondance <match-objects>` trouvé.  Renvoie ``None`` si aucune position "
 "dans la chaîne ne valide le motif ; notez que cela est différent de trouver "
 "une correspondance avec une chaîne vide à un certain endroit de la chaîne."
 
@@ -1358,10 +1358,11 @@ msgid ""
 "objects>`.  Return ``None`` if the string does not match the pattern; note "
 "that this is different from a zero-length match."
 msgstr ""
-"Si zéro ou plus caractères au début de *string* correspondant à l'expression "
-"rationnelle *pattern*, retourne le :ref:`match object <match-objects>` "
-"correspondant.  Retourne ``None`` si la chaîne ne correspond pas au motif ; "
-"notez que cela est différent d'une correspondance avec une chaîne vide."
+"Si zéro ou plus caractères au début de *string* correspondent à l'expression "
+"rationnelle *pattern*, renvoie l':ref:`objet de correspondance <match-"
+"objects>` trouvé.  Renvoie ``None`` si la chaîne ne correspond pas au "
+"motif ; notez que cela est différent d'une correspondance avec une chaîne "
+"vide."
 
 #: ../Doc/library/re.rst:619
 msgid ""
@@ -1376,6 +1377,8 @@ msgid ""
 "If you want to locate a match anywhere in *string*, use :func:`search` "
 "instead (see also :ref:`search-vs-match`)."
 msgstr ""
+"Si vous voulez trouver une correspondance n'importe où dans *string*, "
+"utilisez plutôt :func:`search` (voir aussi :ref:`search-vs-match`)."
 
 #: ../Doc/library/re.rst:628
 msgid ""
@@ -1384,6 +1387,10 @@ msgid ""
 "string does not match the pattern; note that this is different from a zero-"
 "length match."
 msgstr ""
+"Si l'entièreté de la chaîne *string* correspond à l'expression rationnelle "
+"*pattern*, renvoie l':ref:`objet de correspondance <match-objects>` trouvé.  "
+"Renvoie ``None`` si la chaîne ne correspond pas au motif ; notez que cela "
+"est différent d'une correspondance avec une chaîne vide."
 
 #: ../Doc/library/re.rst:638
 msgid ""
@@ -1393,6 +1400,12 @@ msgid ""
 "*maxsplit* splits occur, and the remainder of the string is returned as the "
 "final element of the list. ::"
 msgstr ""
+"Sépare *string* selon les occurrences de *pattern*.  Si des parenthèses "
+"capturantes sont utilisées dans *pattern*, alors les textes des groupes du "
+"motif sont aussi renvoyés comme éléments de la liste résultante. Si "
+"*maxsplit* est différent de zéro, il ne pourra y avoir plus de *maxsplit* "
+"séparations, et le reste de la chaîne sera renvoyé comme le dernier élément "
+"de la liste. : ::"
 
 #: ../Doc/library/re.rst:653
 msgid ""
@@ -1400,18 +1413,25 @@ msgid ""
 "of the string, the result will start with an empty string.  The same holds "
 "for the end of the string:"
 msgstr ""
+"S'il y a des groupes capturants dans le séparateur et qu'ils trouvent une "
+"correspondance au début de la chaîne, le résultat commencera par une chaîne "
+"vide.  La même chose se produit pour la fin de la chaîne :"
 
 #: ../Doc/library/re.rst:660
 msgid ""
 "That way, separator components are always found at the same relative indices "
 "within the result list."
 msgstr ""
+"De cette manière, les séparateurs sont toujours trouvés aux mêmes indices "
+"relatifs dans la liste résultante."
 
 #: ../Doc/library/re.rst:665
 msgid ""
 ":func:`split` doesn't currently split a string on an empty pattern match. "
 "For example:"
 msgstr ""
+":func:`split` ne sépare actuellement pas une chaîne sur une correspondance "
+"vide. Par exemple :"
 
 #: ../Doc/library/re.rst:671
 msgid ""
@@ -1422,6 +1442,12 @@ msgid ""
 "backward incompatible change, a :exc:`FutureWarning` will be raised in the "
 "meanwhile."
 msgstr ""
+"Même si ``'x*'`` correspond aussi à 0 'x' avant 'a', entre 'b' et 'c', et "
+"après 'c', ces correspondances sont actuellement ignorées.  Le comportement "
+"correct (i.e. découper aussi sur les correspondances vides et renvoyer "
+"``['', 'a', 'b', 'c', '']``) sera implémenté dans les futures versions de "
+"Python, mais comme cela constitue un changement incompatible avec les "
+"précédentes, une :exc:`FutureWarning` sera levée pendant la transition."
 
 #: ../Doc/library/re.rst:678
 msgid ""
@@ -1429,17 +1455,24 @@ msgid ""
 "string.  Since this doesn't match the expected behavior, a :exc:`ValueError` "
 "will be raised starting from Python 3.5::"
 msgstr ""
+"Les motifs qui ne peuvent correspondre qu'à des chaînes vides ne permettent "
+"actuellement pas de découper la chaîne.  Puisque cela ne correspond pas au "
+"comportement voulu, une :exc:`ValueError` sera levée à partir de Python "
+"3.5 : ::"
 
 #: ../Doc/library/re.rst:688 ../Doc/library/re.rst:760
 #: ../Doc/library/re.rst:780
 msgid "Added the optional flags argument."
-msgstr ""
+msgstr "Ajout de l'argument optionnel *flags*"
 
 #: ../Doc/library/re.rst:691
 msgid ""
 "Splitting on a pattern that could match an empty string now raises a "
 "warning.  Patterns that can only match empty strings are now rejected."
 msgstr ""
+"Découper sur un motif qui peut correspondre à une chaîne vide lève "
+"maintenant un avertissement.  Les motifs qui ne peuvent correspondre qu'à "
+"des chaînes vides sont maintenant rejetés."
 
 #: ../Doc/library/re.rst:697
 msgid ""
@@ -1450,6 +1483,14 @@ msgid ""
 "one group.  Empty matches are included in the result unless they touch the "
 "beginning of another match."
 msgstr ""
+"Renvoie toutes les correspondances de *pattern* dans *string* qui ne se "
+"chevauchent pas, sous forme d'une liste de chaînes.  Le chaîne *string* est "
+"analysée de la gauche vers la droite, et les correspondances sont renvoyées "
+"dans l'ordre où elles sont trouvées.  Si un groupe ou plus sont présents "
+"dans le motif, renvoie une liste de groupes ; il s'agira d'une liste de "
+"*tuples* si le motif a plus d'un groupe.  Les correspondances vides sont "
+"inclues dans le résultat sauf si elles touchent le début d'une autre "
+"correspondance."
 
 #: ../Doc/library/re.rst:707
 msgid ""
@@ -1669,11 +1710,11 @@ msgstr ""
 
 #: ../Doc/library/re.rst:937
 msgid "Identical to the :func:`sub` function, using the compiled pattern."
-msgstr ""
+msgstr "Identique à la fonction :func:`sub`, en utilisant le motif compilé."
 
 #: ../Doc/library/re.rst:942
 msgid "Identical to the :func:`subn` function, using the compiled pattern."
-msgstr ""
+msgstr "Identique à la fonction :func:`subn`, en utilisant le motif compilé."
 
 #: ../Doc/library/re.rst:947
 msgid ""
@@ -1681,10 +1722,14 @@ msgid ""
 "`.compile`, any ``(?...)`` inline flags in the pattern, and implicit flags "
 "such as :data:`UNICODE` if the pattern is a Unicode string."
 msgstr ""
+"Les options de validation de l'expression rationnelle.  Il s'agit d'une "
+"combinaison des options données à :func:`compile`, des potentielles options "
+"``(?...)`` dans le motif, et des options implicites comme :data:`UNICODE` si "
+"le motif est une chaîne Unicode."
 
 #: ../Doc/library/re.rst:954
 msgid "The number of capturing groups in the pattern."
-msgstr ""
+msgstr "Le nombre de groupes capturants dans le motif."
 
 #: ../Doc/library/re.rst:959
 msgid ""
@@ -1692,14 +1737,19 @@ msgid ""
 "group numbers.  The dictionary is empty if no symbolic groups were used in "
 "the pattern."
 msgstr ""
+"Un dictionnaire associant les noms de groupes symboliques définis par ``(?"
+"P<id>)`` aux groupes numérotés.  Le dictionnaire est vide si aucun groupe "
+"symbolique n'est utilisé dans le motif."
 
 #: ../Doc/library/re.rst:966
 msgid "The pattern string from which the RE object was compiled."
 msgstr ""
+"La chaîne de motif depuis laquelle l'objet expression rationnelle a été "
+"compilé."
 
 #: ../Doc/library/re.rst:972
 msgid "Match Objects"
-msgstr ""
+msgstr "Objets de correspondance"
 
 #: ../Doc/library/re.rst:974
 msgid ""
@@ -1707,10 +1757,15 @@ msgid ""
 "match` and :meth:`~regex.search` return ``None`` when there is no match, you "
 "can test whether there was a match with a simple ``if`` statement::"
 msgstr ""
+"Les objets de correspondance ont toujours une valeur booléenne ``True``. "
+"Puisque :meth:`~regex.match` et :meth:`~regex.search` renvoient ``None`` "
+"quand il n'y a pas de correspondance, vous pouvez tester s'il y a eu "
+"correspondance avec une simple instruction ``if`` : ::"
 
 #: ../Doc/library/re.rst:983
 msgid "Match objects support the following methods and attributes:"
 msgstr ""
+"Les objets de correspondance supportent les méthodes et attributs suivants :"
 
 #: ../Doc/library/re.rst:988
 msgid ""
@@ -1720,6 +1775,12 @@ msgid ""
 "backreferences (``\\1``, ``\\2``) and named backreferences (``\\g<1>``, ``"
 "\\g<name>``) are replaced by the contents of the corresponding group."
 msgstr ""
+"Renvoie la chaîne obtenue en substituant les séquences d'échappement du "
+"gabarit *template*, comme réalisé par la méthode :meth:`~regex.sub`. Les "
+"séquences comme ``\\n`` sont converties vers les caractères appropriés, et "
+"les références arrières numériques (``\\1``, ``\\2``) et nommées (``"
+"\\g<1>``, ``\\g<name>``) sont remplacées par les contenus des groupes "
+"correspondant."
 
 #: ../Doc/library/re.rst:1000
 msgid ""
@@ -1735,6 +1796,18 @@ msgid ""
 "the corresponding result is ``None``. If a group is contained in a part of "
 "the pattern that matched multiple times, the last match is returned."
 msgstr ""
+"Renvoie un ou plus sous-groupes de la correspondance.  Si un seul argument "
+"est donné, le résultat est une chaîne simple ; s'il y a plusieurs arguments, "
+"le résultat est un *tuple* comprenant un élément par argument. Sans "
+"arguments, *group1* vaut par défaut zéro (la correspondance entière est "
+"renvoyée). Si un argument *groupN* vaut zéro, l'élément associé sera la "
+"chaîne de correspondance entière ; s'il est dans l'intervalle fermé [1..99], "
+"c'est la correspondance avec le groupe de parenthèses associé.  Si un numéro "
+"de groupe est négatif ou supérieur au nombre de groupes définis dans le "
+"motif, une exception :exc:`indexError` est levée. Si un groupe est contenu "
+"dans une partie du motif qui n'a aucune correspondance, l'élément associé "
+"sera ``None``. Si un groupe est contenu dans une partie du motif qui a "
+"plusieurs correspondances, seule la dernière correspondance est renvoyée."
 
 #: ../Doc/library/re.rst:1022
 msgid ""
@@ -1743,24 +1816,31 @@ msgid ""
 "string argument is not used as a group name in the pattern, an :exc:"
 "`IndexError` exception is raised."
 msgstr ""
+"Si l'expression rationnelle utilise la syntaxe ``(?P<name>...)``, les "
+"arguments *groupN* peuvent alors aussi être des chaînes identifiant les "
+"groupes par leurs noms.  Si une chaîne donnée en argument n'est pas utilisée "
+"comme nom de groupe dans le motif, une exception :exc:`IndexError` est levée."
 
 #: ../Doc/library/re.rst:1027
 msgid "A moderately complicated example:"
-msgstr ""
+msgstr "Un exemple modérément compliqué :"
 
 #: ../Doc/library/re.rst:1035
 msgid "Named groups can also be referred to by their index:"
-msgstr ""
+msgstr "Les groupes nommés peuvent aussi être référencés par leur index :"
 
 #: ../Doc/library/re.rst:1042
 msgid "If a group matches multiple times, only the last match is accessible:"
 msgstr ""
+"Si un groupe a plusieurs correspondances, seule la dernière est accessible :"
 
 #: ../Doc/library/re.rst:1051
 msgid ""
 "This is identical to ``m.group(g)``.  This allows easier access to an "
 "individual group from a match:"
 msgstr ""
+"Cela est identique à ``m.group(g)``.  Cela permet un accès plus facile à un "
+"groupe individuel depuis une correspondance :"
 
 #: ../Doc/library/re.rst:1067
 msgid ""
@@ -1768,6 +1848,9 @@ msgid ""
 "however many groups are in the pattern.  The *default* argument is used for "
 "groups that did not participate in the match; it defaults to ``None``."
 msgstr ""
+"Renvoie un *tuple* contenant tous les sous-groupes de la correspondance, de "
+"1 jusqu'au nombre de groupes dans le motif.  L'argument *default* est "
+"utilisé pour les groupes sans correspondance ; il vaut ``None`` par défaut."
 
 #: ../Doc/library/re.rst:1071
 msgid "For example:"
