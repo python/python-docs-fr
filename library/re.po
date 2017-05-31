@@ -1500,6 +1500,12 @@ msgid ""
 "found.  Empty matches are included in the result unless they touch the "
 "beginning of another match."
 msgstr ""
+"Renvoie un :term:`iterator` produisant des :ref:`objets de correspondance "
+"<match-objects>` pour toutes les correspondances non chevauchantes de "
+"l'expression rationnelle *pattern* sur la chaîne *string*.  *string* est "
+"analysée de la gauche vers la droite, et les correspondances sont renvoyées "
+"dans l'ordre où elles sont trouvées.  Les correspondances vides sont inclues "
+"dans le résultat sauf si elles touchent le début d'une autre correspondance."
 
 #: ../Doc/library/re.rst:716
 msgid ""
@@ -1512,6 +1518,15 @@ msgid ""
 "as ``\\&`` are left alone.  Backreferences, such as ``\\6``, are replaced "
 "with the substring matched by group 6 in the pattern. For example:"
 msgstr ""
+"Renvoie la chaîne obtenue en remplaçant les occurrences (sans chevauchement) "
+"les plus à gauche de *pattern* dans *string* par le remplacement *repl*.  Si "
+"le motif n'est pas trouvé, *string* est renvoyée inchangée.  *repl* peut "
+"être une chaîne de caractères ou une fonction ; si c'est une chaîne, toutes "
+"les séquences d'échappement qu'elle contient sont traduites.  Ainsi, ``\\n`` "
+"est convertie en un simple saut de ligne, ``\r`` en un retour chariot, et "
+"ainsi de suite.  Les séquences inconnues telles que ``\\&`` sont laissées "
+"intactes.  Les références arrières, telles que ``\\6``, sont remplacées par "
+"la sous-chaîne correspondant au groupe 6 dans le motif. Par exemple :"
 
 #: ../Doc/library/re.rst:730
 msgid ""
@@ -1519,10 +1534,15 @@ msgid ""
 "of *pattern*.  The function takes a single match object argument, and "
 "returns the replacement string.  For example:"
 msgstr ""
+"Si *repl* est une fonction, elle est appelée pour chaque occurrence non "
+"chevauchante de *pattern*.  La fonction prend comme argument un objet de "
+"correspondance, et renvoie la chaîne de remplacement.  Par exemple :"
 
 #: ../Doc/library/re.rst:742
 msgid "The pattern may be a string or an RE object."
 msgstr ""
+"Le motif peut être une chaîne de caractères ou un objet expression "
+"rationnelle."
 
 #: ../Doc/library/re.rst:744
 msgid ""
@@ -1532,6 +1552,12 @@ msgid ""
 "only when not adjacent to a previous match, so ``sub('x*', '-', 'abc')`` "
 "returns ``'-a-b-c-'``."
 msgstr ""
+"L'argument optionnel *count* est le nombre maximum d'occurrences du motif à "
+"remplacer : *count* ne doit pas être un nombre négatif.  Si omis ou nul, "
+"toutes les occurrences seront remplacées. Les correspondances vides avec le "
+"motif sont remplacées uniquement quand elles ne sont pas adjacentes à une "
+"précédente correspondance, ainsi ``sub('x*', '-', 'abc')`` renvoie ``'-a-b-"
+"c-'``."
 
 #: ../Doc/library/re.rst:750
 msgid ""
@@ -1545,17 +1571,28 @@ msgid ""
 "backreference ``\\g<0>`` substitutes in the entire substring matched by the "
 "RE."
 msgstr ""
+"Dans les arguments *repl* de type *string*, en plus des séquences "
+"d'échappement et références arrières décrites au-dessus, ``\\g<name>`` "
+"utilisera la sous-chaîne correspondant au groupe nommé ``name``, comme "
+"défini par la syntaxe ``(?P<name>...)``. ``\\g<number>`` utilise le groupe "
+"numéroté associé ; ``\\g<2>`` est ainsi équivalent à ``\\2``, mais n'est pas "
+"ambigu dans un remplacement tel que ``\\g<2>0``, ``\\20`` serait interprété "
+"comme une référence au groupe 20, et non une référence au groupe 2 suivie "
+"par un caractère littéral ``'0'``.  La référence arrière ``\\g<0>`` est "
+"remplacée par la sous-chaîne entière validée par l'expression rationnelle."
 
 #: ../Doc/library/re.rst:763 ../Doc/library/re.rst:783
 #: ../Doc/library/re.rst:995
 msgid "Unmatched groups are replaced with an empty string."
-msgstr ""
+msgstr "Les groupes sans correspondance sont remplacés par une chaîne vide."
 
 #: ../Doc/library/re.rst:766
 msgid ""
 "Unknown escapes in *pattern* consisting of ``'\\'`` and an ASCII letter now "
 "are errors."
 msgstr ""
+"Les séquences d'échappement inconnues dans *pattern* formées par ``'\\'`` et "
+"une lettre ASCII sont maintenant des erreurs."
 
 #: ../Doc/library/re.rst:772
 msgid ""
@@ -1563,18 +1600,27 @@ msgid ""
 "escapes in repl consisting of '\\' and an ASCII letter now raise a "
 "deprecation warning and will be forbidden in Python 3.7."
 msgstr ""
+"Déprécié depuis la version 3.5, sera supprimé dans la 3.7 : Les séquences "
+"d'échappement dans *repl* formées d'un '\\' et d'une lettre ASCII lèvent "
+"maintenant un avertissement de dépréciation et seront interdites en Python "
+"3.7."
 
 #: ../Doc/library/re.rst:772
 msgid ""
 "Unknown escapes in *repl* consisting of ``'\\'`` and an ASCII letter now "
 "raise a deprecation warning and will be forbidden in Python 3.7."
 msgstr ""
+"Les séquences d'échappement dans *repl* formées d'un ``'\\'`` et d'une "
+"lettre ASCII lèvent maintenant un avertissement de dépréciation et seront "
+"interdites en Python 3.7."
 
 #: ../Doc/library/re.rst:777
 msgid ""
 "Perform the same operation as :func:`sub`, but return a tuple ``(new_string, "
 "number_of_subs_made)``."
 msgstr ""
+"Réalise la même opération que :func:`sub`, mais renvoie un *tuple* "
+"``(nouvelle_chaîne, nombre_de_substitutions_réalisées)``."
 
 #: ../Doc/library/re.rst:789
 msgid ""
@@ -1582,14 +1628,18 @@ msgid ""
 "``'_'``. This is useful if you want to match an arbitrary literal string "
 "that may have regular expression metacharacters in it.  For example::"
 msgstr ""
+"Échappe tous les caractères de *pattern* à l'exception des lettres ASCII, "
+"des nombres et de ``'_'``. Cela est utile si vous voulez valider une "
+"quelconque chaîne littérale qui pourrait contenir des métacaractères "
+"d'expressions rationnelles.  Par exemple : ::"
 
 #: ../Doc/library/re.rst:804
 msgid "The ``'_'`` character is no longer escaped."
-msgstr ""
+msgstr "Le caractère ``'_'`` n'est plus échappé."
 
 #: ../Doc/library/re.rst:810
 msgid "Clear the regular expression cache."
-msgstr ""
+msgstr "Vide le cache d'expressions rationnelles."
 
 #: ../Doc/library/re.rst:815
 msgid ""
@@ -1599,40 +1649,48 @@ msgid ""
 "matching.  It is never an error if a string contains no match for a "
 "pattern.  The error instance has the following additional attributes:"
 msgstr ""
+"Exception levée quand une chaîne passée à l'une des fonctions ici présentes "
+"n'est pas une expression rationnelle valide (contenant par exemple une "
+"parenthèse non fermée) ou quand d'autres erreurs se produisent durant la "
+"compilation ou l'analyse.  Il ne se produit jamais d'erreur si une chaîne ne "
+"contient aucune correspondance pour un motif.  Les instances de l'erreur ont "
+"les attributs additionnels suivants :"
 
 #: ../Doc/library/re.rst:823
 msgid "The unformatted error message."
-msgstr ""
+msgstr "Le message d'erreur non formatté."
 
 #: ../Doc/library/re.rst:827
 msgid "The regular expression pattern."
-msgstr ""
+msgstr "Le motif d'expression rationnelle."
 
 #: ../Doc/library/re.rst:831
 msgid "The index of *pattern* where compilation failed."
-msgstr ""
+msgstr "L'index dans *pattern* où la compilation a échoué."
 
 #: ../Doc/library/re.rst:835
 msgid "The line corresponding to *pos*."
-msgstr ""
+msgstr "La ligne correspondant à *pos*."
 
 #: ../Doc/library/re.rst:839
 msgid "The column corresponding to *pos*."
-msgstr ""
+msgstr "La colonne correspondant à *pos*."
 
 #: ../Doc/library/re.rst:841
 msgid "Added additional attributes."
-msgstr ""
+msgstr "Ajout des attributs additionnels."
 
 #: ../Doc/library/re.rst:847
 msgid "Regular Expression Objects"
-msgstr ""
+msgstr "Objets d'expressions rationnelles"
 
 #: ../Doc/library/re.rst:849
 msgid ""
 "Compiled regular expression objects support the following methods and "
 "attributes:"
 msgstr ""
+"Les expressions rationnelles compilées supportent les méthodes et attributs "
+"suivants :"
 
 #: ../Doc/library/re.rst:854
 msgid ""
@@ -1642,6 +1700,11 @@ msgid ""
 "pattern; note that this is different from finding a zero-length match at "
 "some point in the string."
 msgstr ""
+"Analyse *string* à la recherche du premier emplacement où l'expression "
+"rationnelle trouve une correspondance, et envoie l':ref:`objet de "
+"correspondance <match-objects>` trouvé.  Renvoie ``None`` si aucune position "
+"dans la chaîne ne satisfait le motif ; notez que cela est différent que de "
+"trouver une correspondance vide dans la chaîne."
 
 #: ../Doc/library/re.rst:860
 msgid ""
@@ -1651,6 +1714,11 @@ msgid ""
 "beginning of the string and at positions just after a newline, but not "
 "necessarily at the index where the search is to start."
 msgstr ""
+"Le second paramètre *pos* (optionnel) donne l'index dans la chaîne où la "
+"recherche doit débuter ; il vaut ``0`` par défaut.  Cela n'est pas "
+"complètement équivalent à un *slicing* sur la chaîne ; le caractère de motif "
+"``'^'`` correspond au début réel de la chaîne et aux positions juste après "
+"un saut de ligne, mais pas nécessairement à l'index où la recherche commence."
 
 #: ../Doc/library/re.rst:866
 msgid ""
