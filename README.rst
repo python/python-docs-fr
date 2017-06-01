@@ -27,8 +27,9 @@ the PSF for inclusion in the documentation.
 TODO
 ----
 
-- Wait for the Documentation Contribution Agreement to be redacted
-- Setup "The Knight Who Say Ni"
+- Patch `docsbuild-scripts
+  <https://github.com/python/docsbuild-scripts/>`_ to build
+  translations too.
 
 
 Translation Progression
