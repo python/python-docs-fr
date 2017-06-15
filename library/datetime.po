@@ -93,6 +93,20 @@ msgid ""
 "change frequently, and there is no standard suitable for every application "
 "aside from UTC."
 msgstr ""
+"Pour les applications qui nécessitent des objets avisés, les objets :class:`."
+"datetime` et :class:`.time` ont un attribut optionnel d'information sur le "
+"fuseau horaire, :attr:`!tzinfo`, qui peut être réglé sur une instance d'une "
+"sous-classe de la classe abstraite :class:`tzinfo`. Ces objets :class:"
+"`tzinfo` capturent l'information à propos du décalage avec le temps UTC, le "
+"nom du fuseau horaire, et si l'heure d'été est effective.  Notez qu'une "
+"seule classe concrète :class:`tzinfo`, la classe :class:`timezone`, est "
+"proposée par le module :mod:`datetime`.  La classe :class:`timezone` "
+"représente des fuseaux horaires simples avec un décalage fixe par rapport à "
+"UTC, comme UTC lui-même ou les fuseaux EST et EDT d'Amérique du Nord.  "
+"Supporter des fuseaux horaires d'un niveau de détails plus avancé est à la "
+"charge de l'application.  Les règles d'ajustement du temps à travers le "
+"monde sont plus politiques que rationnelles, changent fréquemment, et il n'y "
+"a pas de standard qui vaille pour toute application, en dehors d'UTC."
 
 #: ../Doc/library/datetime.rst:51
 msgid "The :mod:`datetime` module exports the following constants:"
@@ -306,18 +320,28 @@ msgid ""
 "tiebreaker.  If no argument is a float, the conversion and normalization "
 "processes are exact (no information is lost)."
 msgstr ""
+"Si l'un des arguments est un flottant et qu'il y a des microsecondes "
+"décimales, les microsecondes décimales laissées par les arguments sont "
+"combinées et leur somme est arrondie  à la microseconde la plus proche (en "
+"arrondissant les demis vers le nombre pair).  Si aucun argument n'est "
+"flottant, les processus de conversion et de normalisation seront exacts (pas "
+"d'informations perdues)."
 
 #: ../Doc/library/datetime.rst:187
 msgid ""
 "If the normalized value of days lies outside the indicated range, :exc:"
 "`OverflowError` is raised."
 msgstr ""
+"Si la valeur normalisée des jours déborde de l'intervalle indiqué, une :exc:"
+"`OverflowError` est levée."
 
 #: ../Doc/library/datetime.rst:190
 msgid ""
 "Note that normalization of negative values may be surprising at first. For "
 "example,"
 msgstr ""
+"Notez que la normalisation de valeurs négatives peut être surprenante au "
+"premier abord. Par exemple,"
 
 #: ../Doc/library/datetime.rst:199
 msgid "Class attributes are:"
@@ -507,6 +531,8 @@ msgid ""
 "Computes the quotient and the remainder: ``q = t1 // t2`` (3) and ``r = t1 % "
 "t2``. q is an integer and r is a :class:`timedelta` object."
 msgstr ""
+"Calcule le quotient et le reste : ``q = t1 // t2`` (3) et ``r = t1 % t2``. q "
+"est un entier et r est un objet :class:`timedelta`."
 
 #: ../Doc/library/datetime.rst:276
 msgid "``+t1``"
@@ -514,7 +540,7 @@ msgstr "``+t1``"
 
 #: ../Doc/library/datetime.rst:276
 msgid "Returns a :class:`timedelta` object with the same value. (2)"
-msgstr ""
+msgstr "Renvoie un objet :class:`timedelta` avec la même valeur. (2)"
 
 #: ../Doc/library/datetime.rst:279
 msgid "``-t1``"
@@ -525,6 +551,8 @@ msgid ""
 "equivalent to :class:`timedelta`\\ (-*t1.days*, -*t1.seconds*, -*t1."
 "microseconds*), and to *t1*\\* -1. (1)(4)"
 msgstr ""
+"équivalent à :class:`timedelta`\\ (-*t1.days*, -*t1.seconds*, -*t1."
+"microseconds*), et à *t1*\\* -1. (1)(4)"
 
 #: ../Doc/library/datetime.rst:283
 msgid "``abs(t)``"
@@ -535,6 +563,8 @@ msgid ""
 "equivalent to +\\ *t* when ``t.days >= 0``, and to -*t* when ``t.days < 0``. "
 "(2)"
 msgstr ""
+"équivalent à +\\ *t* quand ``t.days >= 0``, et à -*t* quand ``t.days < 0``. "
+"(2)"
 
 #: ../Doc/library/datetime.rst:286
 msgid "``str(t)``"
@@ -545,6 +575,8 @@ msgid ""
 "Returns a string in the form ``[D day[s], ][H]H:MM:SS[.UUUUUU]``, where D is "
 "negative for negative ``t``. (5)"
 msgstr ""
+"Renvoie une chaîne de la forme ``[D day[s], ][H]H:MM:SS[.UUUUUU]``, où D est "
+"négatif pour ``t`` négatif. (5)"
 
 #: ../Doc/library/datetime.rst:290
 msgid "``repr(t)``"
@@ -555,6 +587,8 @@ msgid ""
 "Returns a string in the form ``datetime.timedelta(D[, S[, U]])``, where D is "
 "negative for negative ``t``. (5)"
 msgstr ""
+"Renvoie une chaîne de la forme ``datetime.timedelta(D[, S[, U]])``, où D est "
+"négatif pour ``t`` négatif. (5)"
 
 #: ../Doc/library/datetime.rst:295 ../Doc/library/datetime.rst:490
 #: ../Doc/library/datetime.rst:2092
@@ -584,6 +618,9 @@ msgid ""
 "similarly to their internal representation.  This leads to somewhat unusual "
 "results for negative timedeltas.  For example:"
 msgstr ""
+"La représentation en chaîne de caractères des objets :class:`timedelta` est "
+"normalisée similairement à leur représentation interne.  Cela amène à des "
+"résultats inhabituels pour des *timedeltas* négatifs.  Par exemple :"
 
 #: ../Doc/library/datetime.rst:319
 msgid ""
@@ -591,6 +628,9 @@ msgid ""
 "support certain additions and subtractions with :class:`date` and :class:`."
 "datetime` objects (see below)."
 msgstr ""
+"En plus des opérations listées ci-dessus, les objets :class:`timedelta` "
+"supportent certaines additions et soustractions avec des objets :class:"
+"`date` et :class:`datetime` (voir ci-dessous)."
 
 #: ../Doc/library/datetime.rst:323
 msgid ""
@@ -599,6 +639,11 @@ msgid ""
 "the :func:`divmod` function.  True division and multiplication of a :class:"
 "`timedelta` object by a :class:`float` object are now supported."
 msgstr ""
+"La division entière et la vraie division d'un objet :class:`timedelta` par "
+"un autre :class:`timedelta` sont maintenant supportées, comme le sont les "
+"opérations de reste euclidien et la fonction :func:`divmod`.  La vraie "
+"division et la multiplication d'un objet :class:`timedelta` par un :class:"
+"`float` sont maintenant supportées."
 
 #: ../Doc/library/datetime.rst:330
 msgid ""
@@ -610,6 +655,13 @@ msgid ""
 "raised unless the comparison is ``==`` or ``!=``.  The latter cases return :"
 "const:`False` or :const:`True`, respectively."
 msgstr ""
+"Les comparaisons entre objets :class:`timedelta` sont maintenant supportées "
+"avec le :class:`timedelta` représentant la plus courte durée considéré comme "
+"le plus petit. Afin d'empêcher les comparaisons de types mixtes de retomber "
+"sur la comparaison par défaut par l'adresse de l'objet, quand un objet :"
+"class:`timedelta` est comparé à un objet de type différent, une :exc:"
+"`TypeError` est levée à moins que la comparaison soit ``==`` ou ``!=``.  Ces "
+"derniers cas renvoient respectivement :const:``False`` et :const:``True``."
 
 #: ../Doc/library/datetime.rst:338
 msgid ""
@@ -618,6 +670,10 @@ msgid ""
 "object is considered to be true if and only if it isn't equal to "
 "``timedelta(0)``."
 msgstr ""
+"Les objets :class:`timedelta` sont :term:`hashable` (utilisables comme clés "
+"de dictionnaires), supportent le protocole *pickle*, et dans un contexte "
+"booléen, un :class:`timedelta` est considéré vrai si et seulement si il "
+"n'est pas égal à ``timedelta(0)``."
 
 #: ../Doc/library/datetime.rst:342 ../Doc/library/datetime.rst:523
 #: ../Doc/library/datetime.rst:984 ../Doc/library/datetime.rst:1484
@@ -629,12 +685,17 @@ msgid ""
 "Return the total number of seconds contained in the duration. Equivalent to "
 "``td / timedelta(seconds=1)``."
 msgstr ""
+"Retourne le nombre total de secondes contenues dans la durée. Équivalent à "
+"``td / timedelta(seconds=1)``."
 
 #: ../Doc/library/datetime.rst:349
 msgid ""
 "Note that for very large time intervals (greater than 270 years on most "
 "platforms) this method will lose microsecond accuracy."
 msgstr ""
+"Notez que pour des intervalles de temps très larges (supérieurs à 270 ans "
+"sur la plupart des plateformes), cette méthode perdra la précision des "
+"microsecondes."
 
 #: ../Doc/library/datetime.rst:355
 msgid "Example usage:"
@@ -655,12 +716,22 @@ msgid ""
 "computations.  See the book for algorithms for converting between proleptic "
 "Gregorian ordinals and many other calendar systems."
 msgstr ""
+"Un objet :class:`date` représente une date (année, mois et jour) dans un "
+"calendrier idéal, l'actuel calendrier grégorien étendu indéfiniment dans les "
+"deux directions.  Le 1er janvier de l'an 1 est appelé le jour numéro 1, le 2 "
+"janvier de l'an 1 est appelé le jour numéro 2, et ainsi de suite.  Cela "
+"correspond à la définition du calendrier « grégorien proleptique » dans le "
+"livre *Calendrical Calculations* de Dershowitz et Reingold, où il est la "
+"base de tous les calculs.  Référez-vous au livre pour les algorithmes de "
+"conversion entre calendriers grégorien proleptique et les autres systèmes."
 
 #: ../Doc/library/datetime.rst:395
 msgid ""
 "All arguments are required.  Arguments may be integers, in the following "
 "ranges:"
 msgstr ""
+"Tous les arguments sont requis.  Les arguments peuvent être des entiers, "
+"dans les intervalles suivant :"
 
 #: ../Doc/library/datetime.rst:398
 msgid "``MINYEAR <= year <= MAXYEAR``"
@@ -678,16 +749,20 @@ msgstr "``1 <= day <= number of days in the given month and year``"
 msgid ""
 "If an argument outside those ranges is given, :exc:`ValueError` is raised."
 msgstr ""
+"Si un argument est donné en dehors de ces intervalles, une :exc:`valueError` "
+"est levée."
 
 #: ../Doc/library/datetime.rst:405 ../Doc/library/datetime.rst:706
 msgid "Other constructors, all class methods:"
-msgstr ""
+msgstr "Autres constructeurs, méthodes de classe :"
 
 #: ../Doc/library/datetime.rst:409
 msgid ""
 "Return the current local date.  This is equivalent to ``date."
 "fromtimestamp(time.time())``."
 msgstr ""
+"Renvoie la date locale courante.  Cela est équivalent à ``date."
+"fromtimestamp(time.time())``."
 
 #: ../Doc/library/datetime.rst:415
 msgid ""
@@ -699,6 +774,14 @@ msgid ""
 "that on non-POSIX systems that include leap seconds in their notion of a "
 "timestamp, leap seconds are ignored by :meth:`fromtimestamp`."
 msgstr ""
+"Renvoie la date locale correspondant au *timestamp* *POSIX*, tel que renvoyé "
+"par :func:`time.time`.  Elle peut lever une :exc:`OverflowError`, si le "
+"*timestamp* est en dehors des bornes gérées par la fonction C :c:func:"
+"`localtime` de la plateforme, et une :exc:`OSError` en cas d'échec de :c:"
+"func:`localtime`. Il est commun d'être restreint aux années entre 1970 et "
+"2038.  notez que sur les systèmes non *POSIX* qui incluent les secondes de "
+"décalage dans leur notion de *timestamp*, ces secondes sont ignorées par :"
+"meth:`fromtimestamp`."
 
 #: ../Doc/library/datetime.rst:423
 msgid ""
@@ -707,6 +790,10 @@ msgid ""
 "function. Raise :exc:`OSError` instead of :exc:`ValueError` on :c:func:"
 "`localtime` failure."
 msgstr ""
+"Lève une :exc:`OverflowError` plutôt qu'une :exc:`ValueError` si le "
+"*timestamp* est en dehors des bornes gérées par la fonction C :c:func:"
+"`localtime` de la plateforme. Lève une :exc:`OSError` plutôt qu'une :exc:"
+"`ValueError` en cas d'échec de :c:func:`localtime`."
 
 #: ../Doc/library/datetime.rst:432
 msgid ""
@@ -715,6 +802,10 @@ msgid ""
 "<= ordinal <= date.max.toordinal()``. For any date *d*, ``date.fromordinal(d."
 "toordinal()) == d``."
 msgstr ""
+"Renvoie la date correspondant à l'ordinal grégorien proleptique, où le 1er "
+"janvier de l'an 1 a l'ordinal 1.  :exc:`ValueError` est levée à moins que "
+"``1 <= ordinal <= date.max.toordinal()``. Pour toute date *d*, ``date."
+"fromordinal(d.toordinal()) == d``."
 
 #: ../Doc/library/datetime.rst:438 ../Doc/library/datetime.rst:832
 #: ../Doc/library/datetime.rst:1392 ../Doc/library/datetime.rst:1924
@@ -723,21 +814,23 @@ msgstr "Attributs de la classe :"
 
 #: ../Doc/library/datetime.rst:442
 msgid "The earliest representable date, ``date(MINYEAR, 1, 1)``."
-msgstr ""
+msgstr "La plus vieille date représentable, ``date(MINYEAR, 1, 1)``."
 
 #: ../Doc/library/datetime.rst:447
 msgid "The latest representable date, ``date(MAXYEAR, 12, 31)``."
-msgstr ""
+msgstr "La dernière date représentable, ``date(MAXYEAR, 12, 31)``."
 
 #: ../Doc/library/datetime.rst:452
 msgid ""
 "The smallest possible difference between non-equal date objects, "
 "``timedelta(days=1)``."
 msgstr ""
+"La plus petite différence possible entre deux objets dates non-égaux, "
+"``timedelta(days=1)``."
 
 #: ../Doc/library/datetime.rst:460 ../Doc/library/datetime.rst:856
 msgid "Between :const:`MINYEAR` and :const:`MAXYEAR` inclusive."
-msgstr ""
+msgstr "Entre :const:`MINYEAR` et :const:`MAXYEAR` inclus."
 
 #: ../Doc/library/datetime.rst:465 ../Doc/library/datetime.rst:861
 msgid "Between 1 and 12 inclusive."
@@ -745,7 +838,7 @@ msgstr "Entre 1 et 12 inclus."
 
 #: ../Doc/library/datetime.rst:470 ../Doc/library/datetime.rst:866
 msgid "Between 1 and the number of days in the given month of the given year."
-msgstr ""
+msgstr "Entre 1 et le nombre de jours du mois donné de l'année donnée."
 
 #: ../Doc/library/datetime.rst:478
 msgid "``date2 = date1 + timedelta``"
@@ -780,6 +873,8 @@ msgid ""
 "*date1* is considered less than *date2* when *date1* precedes *date2* in "
 "time. (4)"
 msgstr ""
+"*date1* est considérée comme inférieure à *date2* quand *date1* précède "
+"*date2* dans le temps. (4)"
 
 #: ../Doc/library/datetime.rst:493
 msgid ""
@@ -789,6 +884,11 @@ msgid ""
 "`OverflowError` is raised if ``date2.year`` would be smaller than :const:"
 "`MINYEAR` or larger than :const:`MAXYEAR`."
 msgstr ""
+"*date2* est déplacée en avant dans le temps si ``timedelta.days > 0``, ou en "
+"arrière si ``timedelta.days < 0``.  Après quoi ``date2 - date1 == timedelta."
+"days``. ``timedelta.seconds`` et ``timedelta.microseconds`` sont ignorés. "
+"Une :exc:`OverflowError` est levée si ``date2.year`` devait être inférieure "
+"à :const:`MINYEAR` ou supérieure à :const:`MAXYEAR`."
 
 #: ../Doc/library/datetime.rst:500
 msgid ""
@@ -796,12 +896,18 @@ msgid ""
 "isolation can overflow in cases where date1 - timedelta does not. "
 "``timedelta.seconds`` and ``timedelta.microseconds`` are ignored."
 msgstr ""
+"Cela n'est pas vraiment équivalent à date1 + (-timedelta), parce que -"
+"timedelta isolé peut dépasser les bornes dans des cas où date1 - timedelta "
+"ne les dépasserait pas. ``timedelta.seconds`` et ``timedelta."
+"microseconds``sont ignorés."
 
 #: ../Doc/library/datetime.rst:505
 msgid ""
 "This is exact, and cannot overflow.  timedelta.seconds and timedelta."
 "microseconds are 0, and date2 + timedelta == date1 after."
 msgstr ""
+"Cela est exact, et ne peut pas dépasser les bornes.  timedelta.seconds et "
+"timedelta.microseconds valent 0, et date2 + timedelta == date1 après cela."
 
 #: ../Doc/library/datetime.rst:509
 msgid ""
@@ -816,12 +922,25 @@ msgid ""
 "raised unless the comparison is ``==`` or ``!=``.  The latter cases return :"
 "const:`False` or :const:`True`, respectively."
 msgstr ""
+"En d'autres termes, ``date1 < date2`` si et seulement si ``date1.toordinal() "
+"< date2.toordinal()``. Afin d'empêcher les comparaisons de retomber sur la "
+"comparaison par défaut par l'adresse des objets, la comparaison de dates "
+"lève normalement une :exc:`TypeError` si l'autre opérande n'est pas un "
+"objet :class:`date`. Cependant, ``NotImplemented`` est retourné à la place "
+"si l'autre opérande a un attribut :meth:`timetuple`.  Cela permet à d'autres "
+"types d'objets dates d'avoir une chance d'implémenter une comparaison entre "
+"types différents. Sinon, quand un objet :class:`date` est comparé à un objet "
+"d'un type différent, une :exc:`TypeError` est levée à moins que la "
+"comparaison soit ``==`` ou ``!=``.  Ces derniers cas renvoient "
+"respectivement :const:`False` et :const:`True`."
 
 #: ../Doc/library/datetime.rst:520
 msgid ""
 "Dates can be used as dictionary keys. In Boolean contexts, all :class:`date` "
 "objects are considered to be true."
 msgstr ""
+"Les dates peuvent être utilisées en tant que clés de dictionnaires. Dans un "
+"contexte booléen, tous les objets :class:`date` sont considérés comme vrais."
 
 #: ../Doc/library/datetime.rst:527
 msgid ""
@@ -829,6 +948,9 @@ msgid ""
 "values by whichever keyword arguments are specified.  For example, if ``d == "
 "date(2002, 12, 31)``, then ``d.replace(day=26) == date(2002, 12, 26)``."
 msgstr ""
+"Renvoie une date avec la même valeur, excepté pour les valeurs spécifiées "
+"par arguments nommés.  Par exemple, si ``d == date(2002, 12, 31)``, alors "
+"``d.replace(day=26) == date(2002, 12, 26)``."
 
 #: ../Doc/library/datetime.rst:534
 msgid ""
@@ -839,6 +961,12 @@ msgid ""
 "date(d.year, 1, 1).toordinal() + 1`` is the day number within the current "
 "year starting with ``1`` for January 1st."
 msgstr ""
+"Renvoie une :class:`time.struct_time` telle que renvoyée par :func:`time."
+"localtime`. Les heures, minutes et secondes valent 0, et le *flag* *DST* "
+"(heure d'été) est -1. ``d.timetuple()`` est équivalent à ``time."
+"struct_time((d.year, d.month, d.day, 0, 0, 0, d.weekday(), yday, -1))``, où "
+"``yday = d.toordinal() - date(d.year, 1, 1).toordinal() + 1`` est le numéro "
+"du jour dans l'année courante, commençant avec ``1`` pour le 1er janvier."
 
 #: ../Doc/library/datetime.rst:544
 msgid ""
@@ -846,6 +974,9 @@ msgid ""
 "1 has ordinal 1.  For any :class:`date` object *d*, ``date.fromordinal(d."
 "toordinal()) == d``."
 msgstr ""
+"Renvoie l'ordinal grégorien proleptique de la date, où le 1er janvier de "
+"l'an 1 a l'ordinal 1.  Pour tout objet :class:`date` *d*, ``date."
+"fromordinal(d.toordinal()) == d``."
 
 #: ../Doc/library/datetime.rst:551
 msgid ""
@@ -853,6 +984,9 @@ msgid ""
 "For example, ``date(2002, 12, 4).weekday() == 2``, a Wednesday. See also :"
 "meth:`isoweekday`."
 msgstr ""
+"Renvoie le jour de la semaine sous forme de nombre, où lundi vaut 0 et "
+"dimanche vaut 6. Par exemple, ``date(2002, 12, 4).weekday() == 2``, un "
+"mercredi. Voir aussi :meth:`isoweekday`."
 
 #: ../Doc/library/datetime.rst:558
 msgid ""
@@ -860,10 +994,15 @@ msgid ""
 "For example, ``date(2002, 12, 4).isoweekday() == 3``, a Wednesday. See also :"
 "meth:`weekday`, :meth:`isocalendar`."
 msgstr ""
+"Renvoie le jour de la semaine sous forme de nombre, où lundi vaut 1 et "
+"dimanche vaut 7. Par exemple, ``date(2002, 12, 4).isoweekday() == 3``, un "
+"mercredi. Voir aussi :meth:`weekday`, :meth:`isocalendar`."
 
 #: ../Doc/library/datetime.rst:565
 msgid "Return a 3-tuple, (ISO year, ISO week number, ISO weekday)."
 msgstr ""
+"Renvoie un *tuple* de 3 éléments, (année ISO, numéro de semaine ISO, jour de "
+"la semaine ISO)."
 
 #: ../Doc/library/datetime.rst:567
 msgid ""
