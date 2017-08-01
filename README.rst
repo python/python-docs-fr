@@ -204,7 +204,7 @@ Merge pot files from cpython doc:
 
 .. code-block:: bash
 
-  VERSION=3.6
+  VERSION="$(git describe --contains --all HEAD)"
   git clone --depth 1 --branch $VERSION https://github.com/python/cpython.git /tmp/cpython/
   (cd /tmp/cpython/ && sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
   POT_PATH="/tmp/cpython/pot/"
