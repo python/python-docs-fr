@@ -242,3 +242,13 @@ Merge pot files from cpython doc:
               msgcat -o "$PO" "$POT"
           fi
       done
+
+Run a test build locally:
+
+- Create a ``locales/fr/`` directory.
+- Put your ``python-docs-fr`` clone (or a symlink) in it as ``LC_MESSAGES``
+- Nagigate to a ``cpython`` clone, in the ``Docs/`` directory
+
+and run::
+
+  make SPHINXOPTS='-D locale_dirs=/PATH/TO/locales/ -D language=fr -D gettext_compact=0' autobuild-dev-html
