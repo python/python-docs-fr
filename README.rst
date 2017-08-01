@@ -11,7 +11,7 @@ you to participate, we are proposing an agreement that you will
 provide your improvements to Python's documentation or the translation
 of Python's documentation for the PSF's use under the CC0 license
 (available at
-`https://creativecommons.org/publicdomain/zero/1.0/legalcode`_). In
+https://creativecommons.org/publicdomain/zero/1.0/legalcode). In
 return, you may publicly claim credit for the portion of the
 translation you contributed and if your translation is accepted by the
 PSF, you may (but are not required to) submit a patch including an
