@@ -27,9 +27,8 @@ the PSF for inclusion in the documentation.
 TODO
 ----
 
-- Patch `docsbuild-scripts
-  <https://github.com/python/docsbuild-scripts/>`_ to build
-  translations too.
+- Check and merge the language switch:
+  https://github.com/python/cpython/pull/2652
 
 
 Translation Progression
