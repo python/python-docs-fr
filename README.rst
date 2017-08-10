@@ -217,7 +217,7 @@ Find fuzzy strings:
 
 .. code-block:: bash
 
-  grep -c fuzzy **/*.po | grep -v ':1$\|:0$'
+  find -name '*.po' | xargs -L1 msgattrib --only-fuzzy --no-obsolete
 
 
 Merge pot files from cpython doc:
