@@ -210,30 +210,37 @@ after ensuring ``~/.local/bin/`` is in your ``PATH``.
 
     git config diff.podiff.textconv podiff
 
+
 Maintenance
 -----------
 
-Find fuzzy strings:
+All those snippets are to run from the root of a ``python-docs-fr``
+clone, and some expect to find an up-to-date CPython clone near to it,
+like::
 
-.. code-block:: bash
+  ~/
+  ├── python-docs-fr/
+  └── cpython/
 
-  find -name '*.po' | xargs -L1 msgattrib --only-fuzzy --no-obsolete
+To clone CPython you may use::
+
+  git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
+
+This avoids to download the whole history (not usefull to build
+documentation) but still fetches all branches.
 
 
-Merge pot files from cpython doc:
+Merge pot files from CPython
+''''''''''''''''''''''''''''
 
 .. code-block:: bash
 
   VERSION="$(git describe --contains --all HEAD)"
-  git clone --depth 1 --branch $VERSION https://github.com/python/cpython.git /tmp/cpython/
-  (cd /tmp/cpython/ && sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
-  POT_PATH="/tmp/cpython/pot/"
-  PO_PATH="./"
-
-  find "$POT_PATH" -name '*.pot' |
+  (cd ../cpython; git checkout $VERSION && git pull --ff-only && sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+  find ../cpython/pot/ -name '*.pot' |
       while read -r POT
       do
-          PO="$PO_PATH/$(echo "$POT" | sed "s#$POT_PATH##; s#\.pot\$#.po#")"
+          PO="./$(echo "$POT" | sed "s#../cpython/pot/##; s#\.pot\$#.po#")"
           mkdir -p "$(dirname "$PO")"
           if [ -f "$PO" ]
           then
@@ -243,12 +250,40 @@ Merge pot files from cpython doc:
           fi
       done
 
-Run a test build locally:
 
-- Create a ``locales/fr/`` directory.
-- Put your ``python-docs-fr`` clone (or a symlink) in it as ``LC_MESSAGES``
-- Nagigate to a ``cpython`` clone, in the ``Docs/`` directory
+Find fuzzy strings
+''''''''''''''''''
 
-and run::
+.. code-block:: bash
 
-  make SPHINXOPTS='-D locale_dirs=/PATH/TO/locales/ -D language=fr -D gettext_compact=0' autobuild-dev-html
+  find -name '*.po' | xargs -L1 msgattrib --only-fuzzy --no-obsolete
+
+
+Run a test build locally
+''''''''''''''''''''''''
+
+.. code-block:: bash
+
+  mkdir -p /tmp/$USER/locales/fr
+  ln -nfs $(readlink -f .) /tmp/$USER/locales/fr/LC_MESSAGES
+  make -C ../cpython/Docs SPHINXOPTS="-D locale_dirs=/tmp/$USER/locales/ -D language=fr -D gettext_compact=0" autobuild-dev-html
+
+
+Synchronize translation with Transifex
+''''''''''''''''''''''''''''''''''''''
+
+You'll need the ``transifex-client``, ``pomerge``, and ``poindent``
+from Pypi, and you'll need to configure ``tx`` via ``tx init``, and then:
+
+.. code-block:: bash
+
+   tx pull
+   pomerge --from .tx/*.po .tx/**/*.po --to *.po **/*.po
+   poindent --modified
+
+Now you should review and commit the pull, then push:
+
+.. code-block:: bash
+
+   pomerge --from *.po **/*.po --to .tx/*.po .tx/**/*.po
+   tx push -t
