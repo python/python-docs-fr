@@ -266,7 +266,7 @@ Run a test build locally
 
   mkdir -p /tmp/$USER/locales/fr
   ln -nfs $(readlink -f .) /tmp/$USER/locales/fr/LC_MESSAGES
-  make -C ../cpython/Docs SPHINXOPTS="-D locale_dirs=/tmp/$USER/locales/ -D language=fr -D gettext_compact=0" autobuild-dev-html
+  make -C ../cpython/Doc SPHINXOPTS="-D locale_dirs=/tmp/$USER/locales/ -D language=fr -D gettext_compact=0" autobuild-dev-html
 
 
 Synchronize translation with Transifex
