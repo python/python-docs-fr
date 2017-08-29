@@ -231,7 +231,7 @@ documentation) but still fetches all branches.
 
 
 Merge pot files from CPython
-''''''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -252,7 +252,7 @@ Merge pot files from CPython
 
 
 Find fuzzy strings
-''''''''''''''''''
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -260,7 +260,7 @@ Find fuzzy strings
 
 
 Run a test build locally
-''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -270,7 +270,7 @@ Run a test build locally
 
 
 Synchronize translation with Transifex
-''''''''''''''''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You'll need the ``transifex-client``, ``pomerge``, and ``poindent``
 from Pypi, and you'll need to configure ``tx`` via ``tx init``, and then:
