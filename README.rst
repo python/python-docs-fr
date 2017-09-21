@@ -203,7 +203,7 @@ after ensuring ``~/.local/bin/`` is in your ``PATH``.
 
     cat <<EOF > ~/.local/bin/podiff
     #!/bin/sh
-    grep -v '^#:' "$1"
+    grep -v '^#:' "\$1"
     EOF
 
     chmod a+x ~/.local/bin/podiff
