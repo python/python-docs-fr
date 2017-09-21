@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-01 13:21+0200\n"
-"PO-Revision-Date: 2017-08-31 13:43+0200\n"
+"PO-Revision-Date: 2017-09-21 13:06+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: ../Doc/library/stdtypes.rst:8
 msgid "Built-in Types"
@@ -3462,7 +3462,7 @@ msgid ""
 "example, a dictionary)."
 msgstr ""
 "Si *format* ne nécessite qu'un seul argument, *values* peut être un objet "
-"unique. [5]_ Si *values* est un tuple, il doit contenir exactement lenombre "
+"unique. [5]_ Si *values* est un tuple, il doit contenir exactement le nombre "
 "d'éléments spécifiés par la chaîne de format, ou un seul objet de "
 "correspondances ( *mapping object*, par exemple, un dictionnaire)."
 
@@ -6299,6 +6299,8 @@ msgid ""
 "The interpreter supports several other kinds of objects. Most of these "
 "support only one or two operations."
 msgstr ""
+"L'interpréteur gère aussi d'autres types d'objets, la pluspart ne supportant "
+"cependant qu'une ou deux opérations."
 
 #: ../Doc/library/stdtypes.rst:4358
 msgid "Modules"
@@ -6314,6 +6316,13 @@ msgid ""
 "exist, rather it requires an (external) *definition* for a module named "
 "*foo* somewhere.)"
 msgstr ""
+"La seule opération spéciale sur un module est l'accès à ses attributs : ``m."
+"name``, où *m* est un module et *name* donne accès un nom défini dans la "
+"table des symboles de *m*.  Il est possible d'assigner un attribut de "
+"module.  (Notez que l'instruction :keyword:`import` n'est pas strictement "
+"une opération sur un objet module. ``import foo`` ne nécessite pas qu'un "
+"objet module nommé *foo* existe, il nécessite cependant une *définition* "
+"(externe) d'un module nommé *foo* quelque part.)"
 
 #: ../Doc/library/stdtypes.rst:4367
 msgid ""
@@ -6339,10 +6348,13 @@ msgid ""
 "'sys' (built-in)>``.  If loaded from a file, they are written as ``<module "
 "'os' from '/usr/local/lib/pythonX.Y/os.pyc'>``."
 msgstr ""
+"Les modules natifs à l'interpréteur sont représentés ``<module 'sys' (built-"
+"in)>``.  S'ils sont chargés depuis un fichier, ils sont représentés "
+"``<module 'os' from '/usr/local/lib/pythonX.Y/os.pyc'>``."
 
 #: ../Doc/library/stdtypes.rst:4383
 msgid "Classes and Class Instances"
-msgstr ""
+msgstr "Les Classes et Instances de Classes"
 
 #: ../Doc/library/stdtypes.rst:4385
 msgid "See :ref:`objects` and :ref:`class` for these."
@@ -6357,6 +6369,9 @@ msgid ""
 "Function objects are created by function definitions.  The only operation on "
 "a function object is to call it: ``func(argument-list)``."
 msgstr ""
+"Les objets fonctions sont crées par les définitions de fonctions.  La seule "
+"opération applicable à un objet fonction est de l'appeler : ``func(argument-"
+"list)``."
 
 #: ../Doc/library/stdtypes.rst:4396
 msgid ""
@@ -6365,10 +6380,14 @@ msgid ""
 "function), but the implementation is different, hence the different object "
 "types."
 msgstr ""
+"Il existe en fait deux catégories d'objets fonctions : Les fonctions natives "
+"et les fonctions définies par l'utilisateur.  Les deux gèrent les mêmes "
+"opérations (l'appel à la fonction), mais leur implémentation est différente, "
+"d'où les deux types distincts."
 
 #: ../Doc/library/stdtypes.rst:4400
 msgid "See :ref:`function` for more information."
-msgstr ""
+msgstr "Voir :ref:`function` pour plus d'information."
 
 #: ../Doc/library/stdtypes.rst:4406
 msgid "Methods"
@@ -6381,6 +6400,10 @@ msgid ""
 "class instance methods.  Built-in methods are described with the types that "
 "support them."
 msgstr ""
+"Les méthodes sont des fonctions appelées via la notation d'attribut.  Il en "
+"existe deux variantes : Les méthodes natives (tel que :meth:`append` sur les "
+"listes), et les méthodes d'instances de classes. Les méthodes natives sont "
+"représentées avec le type qui les supporte."
 
 #: ../Doc/library/stdtypes.rst:4415
 msgid ""
@@ -6393,6 +6416,15 @@ msgid ""
 "n)`` is completely equivalent to calling ``m.__func__(m.__self__, arg-1, "
 "arg-2, ..., arg-n)``."
 msgstr ""
+"Si vous accédez à une méthode (une fonction définie dans l'espace de nom "
+"d'une classe) via une instance, vous obtenez un objet spécial, une :dfn:"
+"`bound method` (aussi appellée :dfn:`instance method`). Lorsqu'elle est "
+"appelée, elle ajoute l'argument ``self`` à la liste des arguments.  Les "
+"méthodes liées ont deux attributs spéciaux, en lecture seule : ``m."
+"__self__`` est l'objet sur lequel la méthode travaille, et ``m.__func__`` "
+"est la fonction implémentant la méthode. Appeler ``m(arg-1, arg-2, …, arg-"
+"n)`` est tout à fait équivalent à appeler ``m.__func__(m.__self__, arg-1, "
+"arg-2, …, arg-n)``."
 
 #: ../Doc/library/stdtypes.rst:4424
 msgid ""
@@ -6403,10 +6435,17 @@ msgid ""
 "results in an :exc:`AttributeError` being raised.  In order to set a method "
 "attribute, you need to explicitly set it on the underlying function object::"
 msgstr ""
+"Comme les objets fonctions, les objets méthodes, liées, acceptent des "
+"attributs arbitraires. Cependant, puisque les attributs de méthodes doivent "
+"être stockés dans la fonction sous-jacente (``meth.__func__``), affecter des "
+"attributs à des objets *bound method* est interdit. Toute tentative "
+"d'affecter un attribut sur un objet *bound method* lèvera une :exc:"
+"`AttributeError`. Pour affecter l'attribut, vous devrez explicitement "
+"l'affecter à sa fonction sous-jascente::"
 
 #: ../Doc/library/stdtypes.rst:4444 ../Doc/library/stdtypes.rst:4472
 msgid "See :ref:`types` for more information."
-msgstr ""
+msgstr "Voir :ref:`types` pour plus d'information."
 
 #: ../Doc/library/stdtypes.rst:4452
 msgid "Code Objects"
@@ -6421,6 +6460,12 @@ msgid ""
 "function and can be extracted from function objects through their :attr:"
 "`__code__` attribute. See also the :mod:`code` module."
 msgstr ""
+"Les objets code sont utilisés par l'implémentation pour représenter du code "
+"Python \"pseudo-compilé\", comme un corps de fonction. Ils sont différents "
+"des objets fonction dans le sens où ils ne contiennent pas de référence à "
+"leur environnement global d'exécution. Les objets code sont renvoyés par la "
+"fonction native :func:`compile` et peuvent être obtenus des objets fonction "
+"via leur attribut :attr:`__code__`. Voir aussi le module :mod:`code`."
 
 #: ../Doc/library/stdtypes.rst:4469
 msgid ""
@@ -6433,7 +6478,7 @@ msgstr ""
 
 #: ../Doc/library/stdtypes.rst:4478
 msgid "Type Objects"
-msgstr ""
+msgstr "Objets Type"
 
 #: ../Doc/library/stdtypes.rst:4484
 msgid ""
@@ -6442,14 +6487,18 @@ msgid ""
 "operations on types.  The standard module :mod:`types` defines names for all "
 "standard built-in types."
 msgstr ""
+"Les objets types représentent les différents types d'objets. Le type d'un "
+"objet est obtenu via la fonction native :func:`type`. Il n'existe aucune "
+"opération spéciale sur les types. Le module standard :mod:`types` définit "
+"les noms de tous les types natifs."
 
 #: ../Doc/library/stdtypes.rst:4489
 msgid "Types are written like this: ``<class 'int'>``."
-msgstr ""
+msgstr "Les types sont représentés : ``<class 'int'>``."
 
 #: ../Doc/library/stdtypes.rst:4495
 msgid "The Null Object"
-msgstr ""
+msgstr "L'objet Null"
 
 #: ../Doc/library/stdtypes.rst:4497
 msgid ""
@@ -6457,6 +6506,9 @@ msgid ""
 "It supports no special operations.  There is exactly one null object, named "
 "``None`` (a built-in name).  ``type(None)()`` produces the same singleton."
 msgstr ""
+"Cet objet est renvoyé par les fonctions ne renvoyant pas explicitement une "
+"valeur. Il ne supporte aucune opération spéciale. Il existe exactement un "
+"objet *null* nommé ``None`` (c'est un nom natif). ``type(None)()``."
 
 #: ../Doc/library/stdtypes.rst:4501
 msgid "It is written as ``None``."
@@ -6464,7 +6516,7 @@ msgstr "C'est écrit ``None``."
 
 #: ../Doc/library/stdtypes.rst:4507
 msgid "The Ellipsis Object"
-msgstr ""
+msgstr "L'objet Points de Suspension"
 
 #: ../Doc/library/stdtypes.rst:4509
 msgid ""
@@ -6473,6 +6525,10 @@ msgid ""
 "`Ellipsis` (a built-in name).  ``type(Ellipsis)()`` produces the :const:"
 "`Ellipsis` singleton."
 msgstr ""
+"Cet objet est utilisé classiquement lors des découpes (voir :ref:"
+"`slicings`). Il ne supporte aucune opération spéciale. Il n'y a qu'un seul "
+"objet *ellipsis*, nommé :const:`Ellipsis` (un nom natif). ``type(Ellipsis)"
+"()`` produit le *singleton* :const:`Ellipsis`."
 
 #: ../Doc/library/stdtypes.rst:4514
 msgid "It is written as ``Ellipsis`` or ``...``."
@@ -6480,7 +6536,7 @@ msgstr "C'est écrit ``Ellipsis`` ou ``...``."
 
 #: ../Doc/library/stdtypes.rst:4520
 msgid "The NotImplemented Object"
-msgstr ""
+msgstr "L'objet *NotImplemented*"
 
 #: ../Doc/library/stdtypes.rst:4522
 msgid ""
@@ -6489,6 +6545,10 @@ msgid ""
 "more information.  There is exactly one ``NotImplemented`` object. "
 "``type(NotImplemented)()`` produces the singleton instance."
 msgstr ""
+"Cet objet est renvoyé depuis des comparaisons ou des opérations binaires "
+"effectées sur des types qu'elles ne supportent pas. Voir :ref:`comparisons` "
+"pour plus d'informations. Il n'y a qu'un seul objet ``NotImplemented``. "
+"``type(NotImplemented)()`` renvoit un *singleton*."
 
 #: ../Doc/library/stdtypes.rst:4527
 msgid "It is written as ``NotImplemented``."
@@ -6519,7 +6579,7 @@ msgstr ""
 
 #: ../Doc/library/stdtypes.rst:4548
 msgid "They are written as ``False`` and ``True``, respectively."
-msgstr ""
+msgstr "Ils s'écrivent ``False`` et ``True``, respectivement."
 
 #: ../Doc/library/stdtypes.rst:4554
 msgid "Internal Objects"
@@ -6530,10 +6590,12 @@ msgid ""
 "See :ref:`types` for this information.  It describes stack frame objects, "
 "traceback objects, and slice objects."
 msgstr ""
+"Voir :ref:`types`. Ils décrivent les objets *stack frame*, *traceback*, et "
+"*slice*."
 
 #: ../Doc/library/stdtypes.rst:4563
 msgid "Special Attributes"
-msgstr ""
+msgstr "Attributs Spéciaux"
 
 #: ../Doc/library/stdtypes.rst:4565
 msgid ""
@@ -6541,6 +6603,9 @@ msgid ""
 "types, where they are relevant.  Some of these are not reported by the :func:"
 "`dir` built-in function."
 msgstr ""
+"L'implémentation ajoute quelques attributs spéciaux et en lecture seule, à "
+"certains types, lorsque ça a du sens. Certains ne sont *pas* listés par la "
+"fonction native :func:`dir`."
 
 #: ../Doc/library/stdtypes.rst:4572
 msgid ""
@@ -6552,28 +6617,32 @@ msgstr ""
 
 #: ../Doc/library/stdtypes.rst:4578
 msgid "The class to which a class instance belongs."
-msgstr ""
+msgstr "La classe de l'instance de classe."
 
 #: ../Doc/library/stdtypes.rst:4583
 msgid "The tuple of base classes of a class object."
-msgstr ""
+msgstr "Le *tuple* des classes parentes d'un objet classe."
 
 #: ../Doc/library/stdtypes.rst:4588
 msgid ""
 "The name of the class, function, method, descriptor, or generator instance."
-msgstr ""
+msgstr "Le nom de la classe, fonction, méthode, descripteur, ou générateur."
 
 #: ../Doc/library/stdtypes.rst:4594
 msgid ""
 "The :term:`qualified name` of the class, function, method, descriptor, or "
 "generator instance."
 msgstr ""
+"Le :term:`qualified name` de la classe, fonction, méthode, descripteur, ou "
+"générateur."
 
 #: ../Doc/library/stdtypes.rst:4602
 msgid ""
 "This attribute is a tuple of classes that are considered when looking for "
 "base classes during method resolution."
 msgstr ""
+"Cet attribut est un *tuple* contenant les classes parents prises en compte "
+"lors de la résolution de méthode."
 
 #: ../Doc/library/stdtypes.rst:4608
 msgid ""
@@ -6581,12 +6650,19 @@ msgid ""
 "resolution order for its instances.  It is called at class instantiation, "
 "and its result is stored in :attr:`~class.__mro__`."
 msgstr ""
+"Cette méthode peut être surchargée par une meta-classe pour personnaliser "
+"l'ordre de la recherche de méthode pour ses instances.  Elle est appelée à "
+"la l'initialisation de la classe, et son résultat est stocké dans "
+"l'attribut :attr:`~class.__mro__`."
 
 #: ../Doc/library/stdtypes.rst:4615
 msgid ""
 "Each class keeps a list of weak references to its immediate subclasses.  "
 "This method returns a list of all those references still alive. Example::"
 msgstr ""
+"Chaque classe garde une liste de références faibles à ses classes filles "
+"immédiates. Cette méthode renvoie la liste de toutes ces références encore "
+"valables. Exemple : ::"
 
 #: ../Doc/library/stdtypes.rst:4624
 msgid "Footnotes"
@@ -6611,6 +6687,8 @@ msgstr ""
 #: ../Doc/library/stdtypes.rst:4631
 msgid "They must have since the parser can't tell the type of the operands."
 msgstr ""
+"Nécessairement, puisque le parseur ne peut pas discerner le type des "
+"opérandes."
 
 #: ../Doc/library/stdtypes.rst:4633
 msgid ""
@@ -6618,12 +6696,17 @@ msgid ""
 "\" (Letter, uppercase), \"Ll\" (Letter, lowercase), or \"Lt\" (Letter, "
 "titlecase)."
 msgstr ""
+"Les caractères capitalisables sont ceux dont la propriété unicode *general "
+"category* est soit \"Lu\" (pour *Letter*, *uppercase*), soit \"Ll\" (pour "
+"*Letter*, *lowercase*), soit \"Lt\" (pour *Letter*, *titlecase*)."
 
 #: ../Doc/library/stdtypes.rst:4636
 msgid ""
 "To format only a tuple you should therefore provide a singleton tuple whose "
 "only element is the tuple to be formatted."
 msgstr ""
+"Pour insérer un *tuple*, vous devez donc donner un *tuple* d'un seul "
+"élément, contenant le *tuple* à insérer."
 
 #~ msgid "``None``"
 #~ msgstr "``None``"
