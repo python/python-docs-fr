@@ -168,7 +168,9 @@ bug                        bogue, *bug*
 built-in                   primitive, native
 debugging                  débogage
 double quote               guillemet
+call stack                 pile d'appels
 e.g.                       e.g. (pour *exempli gratia*)
+garbage collector          ramasse-miettes
 identifier                 identifiant
 immutable                  immuable
 interpreter                interpréteur
@@ -180,6 +182,7 @@ mutable                    variable
 namespace                  *namespace*, espace de noms
 parameter                  paramètre
 prompt                     invite
+raise                      lever
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (On évite
                            "retourne" qui pourrait porter à confusion.
