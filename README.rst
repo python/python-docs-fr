@@ -142,7 +142,9 @@ Translation Resources
 - `Glossaire traduc.org <http://glossaire.traduc.org>`_
 - `Glossaires et Dictionnaires of traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
-- glossary.po, as it's already translated.
+- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, as it's
+  already translated.
+- `deepl.com/translator <https://www.deepl.com>`_
 
 
 Glossary
@@ -152,31 +154,33 @@ For consistency in our translations, here are some propositions and
 reminders for frequent terms you'll have to translate, don't hesitate
 to open an issue if you disagree.
 
-- double quote: *guillemet*
-- simple quote: *guillemet simple*, *apostrophe* (*apostrophe* is to glue,
-  *guillemet* is to surround, use when appropriate)
 - -like: *-compatible* (when appropriate)
 - abstract data type: *type abstrait*
 - argument: *argument* (Don't mix with parameter)
-- parameter: *paramètre*
 - backslash: *antislash*, *backslash* (in italics)
 - bound: *lier*
 - bug: *bogue*, *bug* (in italics)
-- debugging: *débogage*
 - built-in: *primitive*, *native*
+- debugging: *débogage*
+- double quote: *guillemet*
 - identifier: *identifiant*
 - immutable: *immuable*
 - interpreter: *interpréteur*
 - library: *bibliothèque*
 - list compréhension: *liste en compréhension*
+- little-endian, big-endian: `petit-boutise, gros-boutiste
+  <https://fr.wikipedia.org/wiki/Endianness>`_
 - mutable: *variable*
+- parameter: *paramètre*
 - prompt: *invite*
 - regular expression: *expression rationnelle*, *expression régulière*
+- return: Renvoie, ou parfois donne. On évite "retourne" qui pourrait
+  porter à confusion.
+- simple quote: *guillemet simple*, *apostrophe* (*apostrophe* is to
+  glue, *guillemet* is to surround, use when appropriate)
 - socket: *socket* (in italics)
 - statement: *instruction*
 - underscore: *tiret bas*, *underscore* (in italics)
-- little-endian, big-endian: `petit-boutise, gros-boutiste
-  <https://fr.wikipedia.org/wiki/Endianness>`_
 
 
 Project History
