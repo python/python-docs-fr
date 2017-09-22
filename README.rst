@@ -24,13 +24,6 @@ You signify acceptance of this agreement by submitting your work to
 the PSF for inclusion in the documentation.
 
 
-TODO
-----
-
-- Check and merge the language switch:
-  https://github.com/python/cpython/pull/2652
-
-
 Translation Progression
 -----------------------
 
