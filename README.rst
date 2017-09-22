@@ -168,6 +168,7 @@ bug                        bogue, *bug*
 built-in                   primitive, native
 debugging                  débogage
 double quote               guillemet
+e.g.                       e.g. (pour *exempli gratia*)
 identifier                 identifiant
 immutable                  immuable
 interpreter                interpréteur
