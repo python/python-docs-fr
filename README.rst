@@ -181,7 +181,7 @@ namespace                  *namespace*, espace de noms
 parameter                  paramètre
 prompt                     invite
 regular expression         expression rationnelle, expression régulière
-return                     Renvoie, ou parfois donne. On évite
+return                     renvoie, donne (On évite
                            "retourne" qui pourrait porter à confusion.
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
