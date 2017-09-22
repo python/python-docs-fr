@@ -163,6 +163,7 @@ Term                       Proposed Translation
 abstract data type         type abstrait
 argument                   argument (Don't mix with parameter)
 backslash                  antislash, *backslash*
+binary method              méthode à deux opérandes
 bound                      lier
 bug                        bogue, *bug*
 built-in                   primitive, native
@@ -171,12 +172,14 @@ double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 identifier                 identifiant
 immutable                  immuable
+in-place method            méthode augmentée
 interpreter                interpréteur
 library                    bibliothèque
 list compréhension         liste en compréhension
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
 mutable                    variable
+namespace                  *namespace*
 parameter                  paramètre
 prompt                     invite
 regular expression         expression rationnelle, expression régulière
@@ -185,6 +188,7 @@ return                     Renvoie, ou parfois donne. On évite
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
 socket                     *socket*
+special method             méthode magique
 statement                  instruction
 underscore                 tiret bas, *underscore*
 ========================== ===========================================
