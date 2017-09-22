@@ -69,6 +69,12 @@ translated entries, and finally translate untranslated ones.
 - ``::`` at the end of some paragraphs have to be translated to `` :
   ::`` in French to place the space before the column.
 
+You can find files with a few translations missing::
+
+    for file in library/*; do echo $(msgattrib --untranslated $file | grep ^msgid | sed 1d | wc -l ) $file; done | grep -v ^0 | sort -gr | tail
+
+Or replace the ``tail`` by a ``head`` to get files with a lot of work.
+
 
 Where to get help
 ~~~~~~~~~~~~~~~~~
