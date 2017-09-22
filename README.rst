@@ -138,7 +138,9 @@ Translation Resources
 
 - `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
 - IRC channel `#python-fr <irc.lc/freenode/python-fr>`_ on freenode.
-- The `liste traductions <http://lists.afpy.org/mailman/listinfo/traductions>`_
+- The `liste traductions <http://lists.afpy.org/mailman/listinfo/traductions>`_.
+- The `doc-sig mailing list
+  <https://mail.python.org/mailman/listinfo/doc-sig>`_.
 - `Glossaire traduc.org <http://glossaire.traduc.org>`_
 - `Glossaires et Dictionnaires of traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
