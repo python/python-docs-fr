@@ -173,6 +173,7 @@ to open an issue if you disagree.
 - mutable: *variable*
 - prompt: *invite*
 - regular expression: *expression rationnelle*, *expression régulière*
+- return: *renvoyer* (plutôt que "retourner", ambigu avec les chaînes de caractères)
 - socket: *socket* (in italics)
 - statement: *instruction*
 - underscore: *tiret bas*, *underscore* (in italics)
