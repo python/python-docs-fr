@@ -350,6 +350,15 @@ msgid ""
 "installed in :file:`{exec_prefix}/lib/python{X.Y}/lib-dynload`, where *X.Y* "
 "is the version number of Python, for example ``3.2``."
 msgstr ""
+"Une chaîne donnant le préfixe de dossier sécifique au site où les fichiers "
+"dépendant de la plateforme sont installés. Par défaut, c'est ``'/usr/"
+"local'``. C'est configurable à la compilation avec l'option ``--exec-"
+"prefix`` du script :program:`configure`. Tous les fichiers de configurations "
+"(tel que :file:`pyconfig,h`) sont installés dans le dossier :file:"
+"`{exec_prefix}/lib/python{X.Y}/config`, et les modules sous forme de "
+"bibliothèques partagées sont installés dans :file:`{exec_prefix}/lib/"
+"python{X.Y}/lib-dynload`, où *X.Y* est le numéro de version de  Python, par "
+"exemple ``3.2``."
 
 #: ../Doc/library/sys.rst:234
 msgid ""
@@ -358,6 +367,9 @@ msgid ""
 "the Python installation will still be available, via :data:"
 "`base_exec_prefix`."
 msgstr ""
+"Si un :ref:`environment virtuel <venv-def>` est actif, cette valeur sera "
+"modifiée par ``site.py`` pour pointer vers l'environnement virtuel. La "
+"valeur d'origine sera toujours disponnible via :data:`base_exec_prefix`."
 
 #: ../Doc/library/sys.rst:242
 msgid ""
@@ -366,6 +378,10 @@ msgid ""
 "retrieve the real path to its executable, :data:`sys.executable` will be an "
 "empty string or ``None``."
 msgstr ""
+"Une chaîne donnant le chemin absolu vers l'interpréteur Python, un fichier "
+"binaire exécutable, sur les système sur lesquels ça à du sense. Si Python "
+"n'est pas capable de récupérer le chemin réel de son exécutable, :data:`sys."
+"executable` sera une chaîne vide ou ``None``."
 
 #: ../Doc/library/sys.rst:250
 msgid ""
@@ -374,6 +390,10 @@ msgid ""
 "statements are honored, and it is possible to intercept the exit attempt at "
 "an outer level."
 msgstr ""
+"Quitte Python.  C'est implémente en levant l'exception :exc:`SystemExit`, "
+"afin que toutes les actions de nettoyage spécifiées par des clauses "
+"*finally* soient correctement exécutées. Il est aussi possible d'intercepter "
+"la tentative de sortie à un niveau au dessus."
 
 #: ../Doc/library/sys.rst:255
 msgid ""
@@ -390,6 +410,19 @@ msgid ""
 "code of 1.  In particular, ``sys.exit(\"some error message\")`` is a quick "
 "way to exit a program when an error occurs."
 msgstr ""
+"L'argument optionnel *arg* peut être un nombre entier donnant l'état de "
+"sortie (zéro par défaut), ou un autre type d'objet.  Pour les shells (et "
+"autres), si c'est un entier, zéro signifie \"terminé avec succès\", et "
+"toutes les autres valeurs signifient \"terminé anormalement\". La pluspart "
+"des systèmes imposent qu'il se situe dans la plage 0--127, et leur "
+"comportement n'est pas défini pour les autres cas. Certains systèmes peu "
+"communs ont pour convention d'assigner un sens particulier à des valeur "
+"spécifiques. Les programmes Unix utilisent généralement 2 pour les erreurs "
+"de syntaxe dans les arguments de la ligne de commande, et 1 pour toutes les "
+"autres erreurs. Si un autre type est passé, ``None`` est équivalent à zéro, "
+"et tout autre objet est écrit sur :data:`stderr` et donne un code de sortie "
+"1. Typiquement, ``sys.exit(\"some error message\")`` est un moyen rapide de "
+"quitter un programme en cas d'erreur."
 
 #: ../Doc/library/sys.rst:268
 msgid ""
@@ -397,6 +430,9 @@ msgid ""
 "exit the process when called from the main thread, and the exception is not "
 "intercepted."
 msgstr ""
+"Puisque la fonction :func:`exit` ne fait \"que\" lever une exception, elle "
+"ne fera quiter le processus que si elle est appelée depuis le *thread* "
+"principal, et que l'exception n'est pas interceptée."
 
 #: ../Doc/library/sys.rst:272
 msgid ""
@@ -404,12 +440,17 @@ msgid ""
 "exc:`SystemExit` (such as an error flushing buffered data in the standard "
 "streams), the exit status is changed to 120."
 msgstr ""
+"Si une erreur survient lors du nettoyage après que l'interpréteur Python ai "
+"intercepté un :exc:`SystemExit` (typiquement une erreur en vidant les "
+"tampons des sorties standard), le code de sortie est changé à 120."
 
 #: ../Doc/library/sys.rst:280
 msgid ""
 "The :term:`struct sequence` *flags* exposes the status of command line "
 "flags. The attributes are read only."
 msgstr ""
+"La :term:`struct sequence` *flags* expose l'état des options de ligne de "
+"commande. Ces attributs sont en lecture seule."
 
 #: ../Doc/library/sys.rst:284 ../Doc/library/sys.rst:322
 #: ../Doc/library/sys.rst:634
@@ -418,7 +459,7 @@ msgstr "attribut"
 
 #: ../Doc/library/sys.rst:284
 msgid "flag"
-msgstr ""
+msgstr "option"
 
 #: ../Doc/library/sys.rst:286
 msgid ":const:`debug`"
@@ -514,15 +555,15 @@ msgstr ":option:`-R`"
 
 #: ../Doc/library/sys.rst:300
 msgid "Added ``quiet`` attribute for the new :option:`-q` flag."
-msgstr ""
+msgstr "Ajout de l'attribut ``quiet`` pour la nouvelle option :option:`-q`."
 
 #: ../Doc/library/sys.rst:303
 msgid "The ``hash_randomization`` attribute."
-msgstr ""
+msgstr "L'attribut ``hash_randomization``."
 
 #: ../Doc/library/sys.rst:306
 msgid "Removed obsolete ``division_warning`` attribute."
-msgstr ""
+msgstr "Suppression de l'attribut obsolète ``division_warning``."
 
 #: ../Doc/library/sys.rst:312
 msgid ""
@@ -533,14 +574,21 @@ msgid ""
 "programming language; see section 5.2.4.2.2 of the 1999 ISO/IEC C standard "
 "[C99]_, 'Characteristics of floating types', for details."
 msgstr ""
+"Un :term:`struct sequence` contenant des informations à propos du type "
+"*float*. Il\n"
+"contient des informations de bas niveau à propos de la précision et de la "
+"représentation intene. Les valeurs correspondent aux différentes constantes "
+"à propos des nombes à virgule flottantes définies dans le ficheir d'entête :"
+"file:`float.h`. Voir la section  5.2.4.2.2 de *1999 ISO/IEC C standard* "
+"[C99]_, *Characteristics of floating types*, pour plus de détails."
 
 #: ../Doc/library/sys.rst:322
 msgid "float.h macro"
-msgstr ""
+msgstr "macro float.h"
 
 #: ../Doc/library/sys.rst:322 ../Doc/library/sys.rst:634
 msgid "explanation"
-msgstr ""
+msgstr "explication"
 
 #: ../Doc/library/sys.rst:324
 msgid ":const:`epsilon`"
@@ -555,6 +603,8 @@ msgid ""
 "difference between 1 and the least value greater than 1 that is "
 "representable as a float"
 msgstr ""
+"difference entre 1 et la plus petite valeur plus grande que 1 représentable "
+"en *float*"
 
 #: ../Doc/library/sys.rst:327
 msgid ":const:`dig`"
@@ -569,6 +619,8 @@ msgid ""
 "maximum number of decimal digits that can be faithfully represented in a "
 "float;  see below"
 msgstr ""
+"nombre maximum de décimales pouvant être représentées fidèlement dans un "
+"*float* (voir ci-desous)"
 
 #: ../Doc/library/sys.rst:330
 msgid ":const:`mant_dig`"
@@ -583,6 +635,7 @@ msgid ""
 "float precision: the number of base-``radix`` digits in the significand of a "
 "float"
 msgstr ""
+"précision: nombre de base-``radix`` chiffres dans la mantisse du *float*"
 
 #: ../Doc/library/sys.rst:333
 msgid ":const:`max`"
@@ -594,7 +647,7 @@ msgstr "DBL_MAX"
 
 #: ../Doc/library/sys.rst:333
 msgid "maximum representable finite float"
-msgstr ""
+msgstr "plus grand float fini représentable"
 
 #: ../Doc/library/sys.rst:335
 msgid ":const:`max_exp`"
@@ -608,6 +661,8 @@ msgstr "DBL_MAX_EXP"
 msgid ""
 "maximum integer e such that ``radix**(e-1)`` is a representable finite float"
 msgstr ""
+"plus grand nombre entier *e* tel que ``radix**(e-1)`` soit représentable "
+"sous forme de *float* finit"
 
 #: ../Doc/library/sys.rst:338
 msgid ":const:`max_10_exp`"
@@ -622,6 +677,8 @@ msgid ""
 "maximum integer e such that ``10**e`` is in the range of representable "
 "finite floats"
 msgstr ""
+"plus grand nombre entier *e* tel que ``10**e`` est dans l'intervalle des "
+"nombre flotants finis"
 
 #: ../Doc/library/sys.rst:341
 msgid ":const:`min`"
@@ -633,7 +690,7 @@ msgstr "DBL_MIN"
 
 #: ../Doc/library/sys.rst:341
 msgid "minimum positive normalized float"
-msgstr ""
+msgstr "plus petit nombre à virgule flottante positif normalisé"
 
 #: ../Doc/library/sys.rst:343
 msgid ":const:`min_exp`"
@@ -646,6 +703,7 @@ msgstr "DBL_MIN_EXP"
 #: ../Doc/library/sys.rst:343
 msgid "minimum integer e such that ``radix**(e-1)`` is a normalized float"
 msgstr ""
+"plus petit entier *e* tel que ``radix**(e-1)`` est un *float* normalisé"
 
 #: ../Doc/library/sys.rst:346
 msgid ":const:`min_10_exp`"
@@ -657,7 +715,7 @@ msgstr "DBL_MIN_10_EXP"
 
 #: ../Doc/library/sys.rst:346
 msgid "minimum integer e such that ``10**e`` is a normalized float"
-msgstr ""
+msgstr "plus petit nombre entier *e* tel que ``10**e`` est un float normalisé"
 
 #: ../Doc/library/sys.rst:349
 msgid ":const:`radix`"
@@ -669,7 +727,7 @@ msgstr "FLT_RADIX"
 
 #: ../Doc/library/sys.rst:349
 msgid "radix of exponent representation"
-msgstr ""
+msgstr "base de la représentation de l'exposant"
 
 #: ../Doc/library/sys.rst:351
 msgid ":const:`rounds`"
@@ -686,6 +744,11 @@ msgid ""
 "interpreter startup time.  See section 5.2.4.2.2 of the C99 standard for an "
 "explanation of the possible values and their meanings."
 msgstr ""
+"constante, nombre entier représentant le mode d'arrondi utilisé pour les "
+"opérations arithmétiques. Elle reflète la valeur de la macro système "
+"FLT_ROUNDS au moment du démarrage de l'interpréteur. Voir section "
+"5.2.4.4.2.2 de la norme C99 pour une explication des valeurs possibles et de "
+"leurs significations."
 
 #: ../Doc/library/sys.rst:359
 msgid ""
