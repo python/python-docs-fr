@@ -156,34 +156,37 @@ For consistency in our translations, here are some propositions and
 reminders for frequent terms you'll have to translate, don't hesitate
 to open an issue if you disagree.
 
-- -like: *-compatible* (when appropriate)
-- abstract data type: *type abstrait*
-- argument: *argument* (Don't mix with parameter)
-- backslash: *antislash*, *backslash* (in italics)
-- bound: *lier*
-- bug: *bogue*, *bug* (in italics)
-- built-in: *primitive*, *native*
-- debugging: *débogage*
-- double quote: *guillemet*
-- identifier: *identifiant*
-- immutable: *immuable*
-- interpreter: *interpréteur*
-- library: *bibliothèque*
-- list compréhension: *liste en compréhension*
-- little-endian, big-endian: `petit-boutise, gros-boutiste
-  <https://fr.wikipedia.org/wiki/Endianness>`_
-- mutable: *variable*
-- parameter: *paramètre*
-- prompt: *invite*
-- regular expression: *expression rationnelle*, *expression régulière*
-- return: Renvoie, ou parfois donne. On évite "retourne" qui pourrait
-  porter à confusion.
-- simple quote: *guillemet simple*, *apostrophe* (*apostrophe* is to
-  glue, *guillemet* is to surround, use when appropriate)
-- socket: *socket* (in italics)
-- statement: *instruction*
-- underscore: *tiret bas*, *underscore* (in italics)
-
+========================== ===========================================
+Term                       Proposed Translation
+========================== ===========================================
+-like                      -compatible
+abstract data type         type abstrait
+argument                   argument (Don't mix with parameter)
+backslash                  antislash, *backslash*
+bound                      lier
+bug                        bogue, *bug*
+built-in                   primitive, native
+debugging                  débogage
+double quote               guillemet
+identifier                 identifiant
+immutable                  immuable
+interpreter                interpréteur
+library                    bibliothèque
+list compréhension         liste en compréhension
+little-endian, big-endian  `petit-boutiste, gros-boutiste
+                           <https://fr.wikipedia.org/wiki/Endianness>`_
+mutable                    variable
+parameter                  paramètre
+prompt                     invite
+regular expression         expression rationnelle, expression régulière
+return                     Renvoie, ou parfois donne. On évite
+                           "retourne" qui pourrait porter à confusion.
+simple quote               guillemet simple, apostrophe (apostrophe
+                           is to glue, guillemet is to surround)
+socket                     *socket*
+statement                  instruction
+underscore                 tiret bas, *underscore*
+========================== ===========================================
 
 Project History
 ---------------
