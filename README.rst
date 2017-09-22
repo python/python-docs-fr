@@ -24,43 +24,11 @@ You signify acceptance of this agreement by submitting your work to
 the PSF for inclusion in the documentation.
 
 
-Translation Progression
------------------------
-
-============  =====  =====  =====
-          ..    2.7    3.5    3.6
-============  =====  =====  =====
-    about.po   100%   100%   100%
-     bugs.po   100%   100%   100%
-       c-api     9%    12%    11%
- contents.po   100%   100%   100%
-copyright.po   100%   100%   100%
-distributing   100%   100%   100%
-   distutils    32%    33%    33%
-   extending    21%    24%    24%
-         faq    29%    33%    32%
- glossary.po    85%   100%   100%
-       howto     7%     6%     6%
-     install    45%    46%    43%
-  installing   100%   100%    66%
-     library    16%    20%    19%
-  license.po   100%   100%   100%
-   reference     5%     5%     5%
-   sphinx.po   100%   100%   100%
-    tutorial   100%   100%   100%
-       using    31%    21%    19%
-    whatsnew     6%    41%     7%
-     ~total~    19%    25%    19%
-============  =====  =====  =====
-
-
 Contributing to the Translation
 -------------------------------
 
-Your help is welcome, you can start with easy tasks like reviewing
-fuzzy entries to help keeping the documentation up to date.  You can
-also proofread already translated entries, and finally translate
-untranslated ones.
+To clone, as we're working on the ``3.6`` branch, you can use ``git
+clone --branch 3.6``.
 
 
 How to Contribute
@@ -91,12 +59,14 @@ can review and merge it.
 What to translate
 ~~~~~~~~~~~~~~~~~
 
-- Prioritize the higher version, identical strings between version can
-  automatically be reused.
+You can start with easy tasks like reviewing fuzzy entries to help
+keeping the documentation up to date.  You can also proofread already
+translated entries, and finally translate untranslated ones.
+
 - Do not translate content of ``:ref:...`` and ``:term:...``
 - Put english words, if you have to use them, in *italics* (surrounded
   by stars).
-- ``::`` at the end of some paragraphs have to be translated to ``:
+- ``::`` at the end of some paragraphs have to be translated to `` :
   ::`` in French to place the space before the column.
 
 
@@ -107,6 +77,36 @@ The coordinator for this translation is `mdk <https://mdk.fr/>`_.
 
 Feel free to ask your questions on ``#python-fr`` on `freenode
 <https://webchat.freenode.net/>`_.
+
+
+Translation Progression
+-----------------------
+
+============  =====  =====  =====
+          ..    2.7    3.5    3.6
+============  =====  =====  =====
+    about.po   100%   100%   100%
+     bugs.po   100%   100%   100%
+       c-api     9%    12%    11%
+ contents.po   100%   100%   100%
+copyright.po   100%   100%   100%
+distributing   100%   100%   100%
+   distutils    32%    33%    33%
+   extending    21%    24%    24%
+         faq    29%    33%    32%
+ glossary.po    85%   100%   100%
+       howto     7%     6%     6%
+     install    45%    46%    43%
+  installing   100%   100%    66%
+     library    16%    20%    19%
+  license.po   100%   100%   100%
+   reference     5%     5%     5%
+   sphinx.po   100%   100%   100%
+    tutorial   100%   100%   100%
+       using    31%    21%    19%
+    whatsnew     6%    41%     7%
+     ~total~    19%    25%    19%
+============  =====  =====  =====
 
 
 Priorities
