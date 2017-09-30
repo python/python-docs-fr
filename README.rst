@@ -1,5 +1,5 @@
-This is the French Translation of the Python Documentation
-==========================================================
+French Translation of the Python Documentation
+==============================================
 
 We currently only translate stable documentation versions. That's why
 the master branch is empty. See the 3.6 branch for real content.
