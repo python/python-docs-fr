@@ -85,36 +85,6 @@ Feel free to ask your questions on ``#python-fr`` on `freenode
 <https://webchat.freenode.net/>`_.
 
 
-Translation Progression
------------------------
-
-============  =====  =====  =====
-          ..    2.7    3.5    3.6
-============  =====  =====  =====
-    about.po   100%   100%   100%
-     bugs.po   100%   100%   100%
-       c-api     9%    12%    11%
- contents.po   100%   100%   100%
-copyright.po   100%   100%   100%
-distributing   100%   100%   100%
-   distutils    32%    33%    33%
-   extending    21%    24%    24%
-         faq    29%    33%    32%
- glossary.po    85%   100%   100%
-       howto     7%     6%     6%
-     install    45%    46%    43%
-  installing   100%   100%    66%
-     library    16%    20%    19%
-  license.po   100%   100%   100%
-   reference     5%     5%     5%
-   sphinx.po   100%   100%   100%
-    tutorial   100%   100%   100%
-       using    31%    21%    19%
-    whatsnew     6%    41%     7%
-     ~total~    19%    25%    19%
-============  =====  =====  =====
-
-
 Priorities
 ----------
 
