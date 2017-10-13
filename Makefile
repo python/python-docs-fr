@@ -59,7 +59,7 @@ todo:
 
 .PHONY: merge
 merge: $(VENV)/bin/sphinx-build
-ifneq "$(shell cd $(CPYTHON_CLONE); git describe --contains --all HEAD)" "$(BRANCH)"
+ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
 	$(error "You're merging from a different branch")
 endif
 	(cd $(CPYTHON_CLONE); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
