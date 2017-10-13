@@ -60,20 +60,16 @@ What to translate
 ~~~~~~~~~~~~~~~~~
 
 You can start with easy tasks like reviewing fuzzy entries to help
-keeping the documentation up to date.  You can also proofread already
-translated entries, and finally translate untranslated ones.
+keeping the documentation up to date (find them using ``make fuzzy``).
+
+You can also proofread already translated entries, and finally
+translate untranslated ones (find them using ``make todo``)..
 
 - Do not translate content of ``:ref:...`` and ``:term:...``
 - Put english words, if you have to use them, in *italics* (surrounded
   by stars).
 - ``::`` at the end of some paragraphs have to be translated to `` :
   ::`` in French to place the space before the column.
-
-You can find files with a few translations missing::
-
-    for file in library/*; do echo $(msgattrib --untranslated $file | grep ^msgid | sed 1d | wc -l ) $file; done | grep -v ^0 | sort -gr | tail
-
-Or replace the ``tail`` by a ``head`` to get files with a lot of work.
 
 
 Where to get help
@@ -219,20 +215,7 @@ Merge pot files from CPython
 
 .. code-block:: bash
 
-  VERSION="$(git describe --contains --all HEAD)"
-  (cd ../cpython; git checkout $VERSION && git pull --ff-only && sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
-  find ../cpython/pot/ -name '*.pot' |
-      while read -r POT
-      do
-          PO="./$(echo "$POT" | sed "s#../cpython/pot/##; s#\.pot\$#.po#")"
-          mkdir -p "$(dirname "$PO")"
-          if [ -f "$PO" ]
-          then
-              msgmerge --backup=off --force-po -U "$PO" "$POT"
-          else
-              msgcat -o "$PO" "$POT"
-          fi
-      done
+  make merge
 
 
 Find fuzzy strings
@@ -240,7 +223,7 @@ Find fuzzy strings
 
 .. code-block:: bash
 
-  find -name '*.po' | xargs -L1 msgattrib --only-fuzzy --no-obsolete
+  make fuzzy
 
 
 Run a test build locally
@@ -248,9 +231,7 @@ Run a test build locally
 
 .. code-block:: bash
 
-  mkdir -p /tmp/$USER/locales/fr
-  ln -nfs $(readlink -f .) /tmp/$USER/locales/fr/LC_MESSAGES
-  make -C ../cpython/Doc SPHINXOPTS="-D locale_dirs=/tmp/$USER/locales/ -D language=fr -D gettext_compact=0" autobuild-dev-html
+  make
 
 
 Synchronize translation with Transifex
