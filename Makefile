@@ -24,8 +24,8 @@ BRANCH = $(shell git describe --contains --all HEAD)
 .PHONY: all
 all: $(VENV)/bin/sphinx-build $(VENV)/bin/blurb $(SPHINX_CONF)
 	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
-	ln -nfs $(readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
-	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-D locale_dirs=$(CPYTHON_CLONE)/Doc/locales -D language=$(LANGUAGE) -D gettext_compact=0' $(MODE)
+	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
+	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0' $(MODE)
 
 
 $(SPHINX_CONF):
