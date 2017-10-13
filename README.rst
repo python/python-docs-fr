@@ -81,24 +81,6 @@ Feel free to ask your questions on ``#python-fr`` on `freenode
 <https://webchat.freenode.net/>`_.
 
 
-Priorities
-----------
-
-The ``tutorial/`` directory has a high priority as translations aim
-for newcomers, then here are files most read in the original version:
-
-- library/functions.po
-- library/stdtypes.po
-- library/string.po
-- library/re.po
-- library/datetime.po
-- library/csv.po
-- library/os.po
-- library/random.po
-- library/json.po
-- library/subprocess.po
-
-
 Translation Resources
 ---------------------
 
