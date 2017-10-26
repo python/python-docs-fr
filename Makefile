@@ -48,8 +48,8 @@ $(VENV)/bin/blurb: $(VENV)/bin/activate
 .PHONY: progress
 progress:
 	@python3 -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
-	$(shell msgcat **/*.po | msgattrib --translated | grep -c '^msgid') \
-	$(shell msgcat **/*.po | grep -c '^msgid')
+	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
+	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
 .PHONY: todo

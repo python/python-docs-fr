@@ -1,7 +1,7 @@
 French Translation of the Python Documentation
 ==============================================
 
-**Translated: 27.2%**
+**Translated: 27.7%**
 
 See the `README.rst file on master
 <https://github.com/python/python-docs-fr/blob/master/README.rst>`_
