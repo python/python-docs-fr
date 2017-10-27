@@ -126,7 +126,7 @@ library                    bibliothèque
 list compréhension         liste en compréhension
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
-mutable                    variable
+mutable                    muable
 namespace                  *namespace*, espace de noms
 parameter                  paramètre
 prompt                     invite
