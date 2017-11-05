@@ -79,4 +79,4 @@ endif
 
 .PHONY: fuzzy
 fuzzy:
-	find -name '*.po' | xargs -L1 msgattrib --only-fuzzy --no-obsolete
+	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c ^msgid) $$file; done | grep -v ^0 | sort -gr
