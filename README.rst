@@ -70,6 +70,10 @@ translate untranslated ones (find them using ``make todo``)..
   by stars).
 - ``::`` at the end of some paragraphs have to be translated to `` :
   ::`` in French to place the space before the column.
+- If you translate a link title, please translate the link too
+  (typically if it's Wikipedia and the article has a translation). If
+  no translation of the target exists, do not translate the
+  title.
 
 
 Where to get help
