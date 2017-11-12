@@ -113,7 +113,7 @@ argument                   argument (Don't mix with parameter)
 backslash                  antislash, *backslash*
 bound                      lier
 bug                        bogue, *bug*
-built-in                   primitive, native
+built-in                   native
 debugging                  débogage
 double quote               guillemet
 call stack                 pile d'appels
