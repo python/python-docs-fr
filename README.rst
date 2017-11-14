@@ -118,9 +118,9 @@ backslash                  antislash, *backslash*
 bound                      lier
 bug                        bogue, *bug*
 built-in                   native
+call stack                 pile d'appels
 debugging                  débogage
 double quote               guillemet
-call stack                 pile d'appels
 e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
 identifier                 identifiant
