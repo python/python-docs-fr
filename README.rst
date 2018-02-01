@@ -55,6 +55,10 @@ Next, to edit the files, you can use an editor of your choice, there's many:
 Finally, once your contribution is done, do a ``pull request`` so we
 can review and merge it.
 
+Please write your issues and pull requests in english for consistency
+with the python github organization and because non-french people may
+receive github notifications about our activity.
+
 
 What to translate
 ~~~~~~~~~~~~~~~~~
