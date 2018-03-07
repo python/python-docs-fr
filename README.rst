@@ -131,7 +131,7 @@ identifier                 identifiant
 immutable                  immuable
 interpreter                interpréteur
 library                    bibliothèque
-list compréhension         liste en compréhension
+list comprehension         liste en compréhension
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
 mutable                    muable
