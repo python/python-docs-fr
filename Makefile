@@ -7,6 +7,7 @@
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
+# - make upgrade_venv  # To upgrade the venv that compiles the doc
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -19,13 +20,14 @@ VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
 BRANCH = $(shell git describe --contains --all HEAD)
+JOBS = 1
 
 
 .PHONY: all
 all: $(VENV)/bin/sphinx-build $(VENV)/bin/blurb $(SPHINX_CONF)
 	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
 	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
-	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0' $(MODE)
+	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0' $(MODE)
 
 
 $(SPHINX_CONF):
@@ -43,6 +45,11 @@ $(VENV)/bin/sphinx-build: $(VENV)/bin/activate
 
 $(VENV)/bin/blurb: $(VENV)/bin/activate
 	. $(VENV)/bin/activate; python3 -m pip install blurb
+
+
+.PHONY: upgrade_venv
+upgrade_venv: $(VENV)/bin/activate
+	. $(VENV)/bin/activate; python3 -m pip install --upgrade sphinx blurb
 
 
 .PHONY: progress
