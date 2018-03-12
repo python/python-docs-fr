@@ -52,6 +52,9 @@ Next, to edit the files, you can use an editor of your choice, there's many:
 - Vé on Android
 - Probably many others
 
+Before commiting, you should use `grammalecte
+<https://www.dicollecte.org/>`_ to check for your translations.
+
 Finally, once your contribution is done, do a ``pull request`` so we
 can review and merge it.
 
