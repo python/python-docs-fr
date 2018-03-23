@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 09:58+0100\n"
+"POT-Creation-Date: 2018-03-23 09:03+0100\n"
 "PO-Revision-Date: 2018-02-15 00:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1920,21 +1920,16 @@ msgstr "__slots__"
 
 #: ../Doc/reference/datamodel.rst:1656
 msgid ""
-"By default, instances of classes have a dictionary for attribute storage.  "
-"This wastes space for objects having very few instance variables.  The space "
-"consumption can become acute when creating large numbers of instances."
+"*__slots__* allow us to explicitly declare data members (like properties) "
+"and deny the creation of *__dict__* and *__weakref__* (unless explicitly "
+"declared in *__slots__* or available in a parent.)"
 msgstr ""
 
 #: ../Doc/reference/datamodel.rst:1660
-msgid ""
-"The default can be overridden by defining *__slots__* in a class definition. "
-"The *__slots__* declaration takes a sequence of instance variables and "
-"reserves just enough space in each instance to hold a value for each "
-"variable.  Space is saved because *__dict__* is not created for each "
-"instance."
+msgid "The space saved over using *__dict__* can be significant."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1668
+#: ../Doc/reference/datamodel.rst:1664
 msgid ""
 "This class variable can be assigned a string, iterable, or sequence of "
 "strings with variable names used by instances.  *__slots__* reserves space "
@@ -1942,18 +1937,17 @@ msgid ""
 "and *__weakref__* for each instance."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1675
+#: ../Doc/reference/datamodel.rst:1671
 msgid "Notes on using *__slots__*"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1677
+#: ../Doc/reference/datamodel.rst:1673
 msgid ""
-"When inheriting from a class without *__slots__*, the *__dict__* attribute "
-"of that class will always be accessible, so a *__slots__* definition in the "
-"subclass is meaningless."
+"When inheriting from a class without *__slots__*, the *__dict__* and "
+"*__weakref__* attribute of the instances will always be accessible."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1681
+#: ../Doc/reference/datamodel.rst:1676
 msgid ""
 "Without a *__dict__* variable, instances cannot be assigned new variables "
 "not listed in the *__slots__* definition.  Attempts to assign to an unlisted "
@@ -1962,7 +1956,7 @@ msgid ""
 "the *__slots__* declaration."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1687
+#: ../Doc/reference/datamodel.rst:1682
 msgid ""
 "Without a *__weakref__* variable for each instance, classes defining "
 "*__slots__* do not support weak references to its instances. If weak "
@@ -1970,7 +1964,7 @@ msgid ""
 "strings in the *__slots__* declaration."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1692
+#: ../Doc/reference/datamodel.rst:1687
 msgid ""
 "*__slots__* are implemented at the class level by creating descriptors (:ref:"
 "`descriptors`) for each variable name.  As a result, class attributes cannot "
@@ -1978,14 +1972,16 @@ msgid ""
 "otherwise, the class attribute would overwrite the descriptor assignment."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1698
+#: ../Doc/reference/datamodel.rst:1693
 msgid ""
-"The action of a *__slots__* declaration is limited to the class where it is "
-"defined.  As a result, subclasses will have a *__dict__* unless they also "
-"define *__slots__* (which must only contain names of any *additional* slots)."
+"The action of a *__slots__* declaration is not limited to the class where it "
+"is defined.  *__slots__* declared in parents are available in child classes. "
+"However, child subclasses will get a *__dict__*  and *__weakref__* unless "
+"they also define *__slots__* (which should only contain names of any "
+"*additional* slots)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1702
+#: ../Doc/reference/datamodel.rst:1699
 msgid ""
 "If a class defines a slot also defined in a base class, the instance "
 "variable defined by the base class slot is inaccessible (except by "
@@ -1994,29 +1990,36 @@ msgid ""
 "prevent this."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1707
+#: ../Doc/reference/datamodel.rst:1704
 msgid ""
 "Nonempty *__slots__* does not work for classes derived from \"variable-length"
 "\" built-in types such as :class:`int`, :class:`bytes` and :class:`tuple`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1710
+#: ../Doc/reference/datamodel.rst:1707
 msgid ""
 "Any non-string iterable may be assigned to *__slots__*. Mappings may also be "
 "used; however, in the future, special meaning may be assigned to the values "
 "corresponding to each key."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1714
+#: ../Doc/reference/datamodel.rst:1711
 msgid ""
 "*__class__* assignment works only if both classes have the same *__slots__*."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1720
+#: ../Doc/reference/datamodel.rst:1713
+msgid ""
+"Multiple inheritance with multiple slotted parent classes can be used, but "
+"only one parent is allowed to have attributes created by slots (the other "
+"bases must have empty slot layouts) - violations raise :exc:`TypeError`."
+msgstr ""
+
+#: ../Doc/reference/datamodel.rst:1721
 msgid "Customizing class creation"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1722
+#: ../Doc/reference/datamodel.rst:1723
 msgid ""
 "Whenever a class inherits from another class, *__init_subclass__* is called "
 "on that class. This way, it is possible to write classes which change the "
@@ -2026,14 +2029,14 @@ msgid ""
 "defining the method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1731
+#: ../Doc/reference/datamodel.rst:1732
 msgid ""
 "This method is called whenever the containing class is subclassed. *cls* is "
 "then the new subclass. If defined as a normal instance method, this method "
 "is implicitly converted to a class method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1735
+#: ../Doc/reference/datamodel.rst:1736
 msgid ""
 "Keyword arguments which are given to a new class are passed to the parent's "
 "class ``__init_subclass__``. For compatibility with other classes using "
@@ -2041,13 +2044,13 @@ msgid ""
 "pass the others over to the base class, as in::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1749
+#: ../Doc/reference/datamodel.rst:1750
 msgid ""
 "The default implementation ``object.__init_subclass__`` does nothing, but "
 "raises an error if it is called with any arguments."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1754
+#: ../Doc/reference/datamodel.rst:1755
 msgid ""
 "The metaclass hint ``metaclass`` is consumed by the rest of the type "
 "machinery, and is never passed to ``__init_subclass__`` implementations. The "
@@ -2055,18 +2058,18 @@ msgid ""
 "``type(cls)``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1765
+#: ../Doc/reference/datamodel.rst:1766
 msgid "Metaclasses"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1771
+#: ../Doc/reference/datamodel.rst:1772
 msgid ""
 "By default, classes are constructed using :func:`type`. The class body is "
 "executed in a new namespace and the class name is bound locally to the "
 "result of ``type(name, bases, namespace)``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1775
+#: ../Doc/reference/datamodel.rst:1776
 msgid ""
 "The class creation process can be customized by passing the ``metaclass`` "
 "keyword argument in the class definition line, or by inheriting from an "
@@ -2074,59 +2077,59 @@ msgid ""
 "both ``MyClass`` and ``MySubclass`` are instances of ``Meta``::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1789
+#: ../Doc/reference/datamodel.rst:1790
 msgid ""
 "Any other keyword arguments that are specified in the class definition are "
 "passed through to all metaclass operations described below."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1792
+#: ../Doc/reference/datamodel.rst:1793
 msgid "When a class definition is executed, the following steps occur:"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1794
+#: ../Doc/reference/datamodel.rst:1795
 msgid "the appropriate metaclass is determined"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1795
+#: ../Doc/reference/datamodel.rst:1796
 msgid "the class namespace is prepared"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1796
+#: ../Doc/reference/datamodel.rst:1797
 msgid "the class body is executed"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1797
+#: ../Doc/reference/datamodel.rst:1798
 msgid "the class object is created"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1800
+#: ../Doc/reference/datamodel.rst:1801
 msgid "Determining the appropriate metaclass"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1804
+#: ../Doc/reference/datamodel.rst:1805
 msgid ""
 "The appropriate metaclass for a class definition is determined as follows:"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1806
+#: ../Doc/reference/datamodel.rst:1807
 msgid ""
 "if no bases and no explicit metaclass are given, then :func:`type` is used"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1807
+#: ../Doc/reference/datamodel.rst:1808
 msgid ""
 "if an explicit metaclass is given and it is *not* an instance of :func:"
 "`type`, then it is used directly as the metaclass"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1809
+#: ../Doc/reference/datamodel.rst:1810
 msgid ""
 "if an instance of :func:`type` is given as the explicit metaclass, or bases "
 "are defined, then the most derived metaclass is used"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1812
+#: ../Doc/reference/datamodel.rst:1813
 msgid ""
 "The most derived metaclass is selected from the explicitly specified "
 "metaclass (if any) and the metaclasses (i.e. ``type(cls)``) of all specified "
@@ -2135,11 +2138,11 @@ msgid ""
 "that criterion, then the class definition will fail with ``TypeError``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1822
+#: ../Doc/reference/datamodel.rst:1823
 msgid "Preparing the class namespace"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1827
+#: ../Doc/reference/datamodel.rst:1828
 msgid ""
 "Once the appropriate metaclass has been identified, then the class namespace "
 "is prepared. If the metaclass has a ``__prepare__`` attribute, it is called "
@@ -2147,25 +2150,25 @@ msgid ""
 "additional keyword arguments, if any, come from the class definition)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1832
+#: ../Doc/reference/datamodel.rst:1833
 msgid ""
 "If the metaclass has no ``__prepare__`` attribute, then the class namespace "
 "is initialised as an empty ordered mapping."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1837
+#: ../Doc/reference/datamodel.rst:1838
 msgid ":pep:`3115` - Metaclasses in Python 3000"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1838
+#: ../Doc/reference/datamodel.rst:1839
 msgid "Introduced the ``__prepare__`` namespace hook"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1842
+#: ../Doc/reference/datamodel.rst:1843
 msgid "Executing the class body"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1847
+#: ../Doc/reference/datamodel.rst:1848
 msgid ""
 "The class body is executed (approximately) as ``exec(body, globals(), "
 "namespace)``. The key difference from a normal call to :func:`exec` is that "
@@ -2174,7 +2177,7 @@ msgid ""
 "inside a function."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1853
+#: ../Doc/reference/datamodel.rst:1854
 msgid ""
 "However, even when the class definition occurs inside the function, methods "
 "defined inside the class still cannot see names defined at the class scope. "
@@ -2183,11 +2186,11 @@ msgid ""
 "reference described in the next section."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1862
+#: ../Doc/reference/datamodel.rst:1863
 msgid "Creating the class object"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1869
+#: ../Doc/reference/datamodel.rst:1870
 msgid ""
 "Once the class namespace has been populated by executing the class body, the "
 "class object is created by calling ``metaclass(name, bases, namespace, "
@@ -2195,7 +2198,7 @@ msgid ""
 "to ``__prepare__``)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1874
+#: ../Doc/reference/datamodel.rst:1875
 msgid ""
 "This class object is the one that will be referenced by the zero-argument "
 "form of :func:`super`. ``__class__`` is an implicit closure reference "
@@ -2206,7 +2209,7 @@ msgid ""
 "is identified based on the first argument passed to the method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1884
+#: ../Doc/reference/datamodel.rst:1885
 msgid ""
 "In CPython 3.6 and later, the ``__class__`` cell is passed to the metaclass "
 "as a ``__classcell__`` entry in the class namespace. If present, this must "
@@ -2216,39 +2219,39 @@ msgid ""
 "future."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1891
+#: ../Doc/reference/datamodel.rst:1892
 msgid ""
 "When using the default metaclass :class:`type`, or any metaclass that "
 "ultimately calls ``type.__new__``, the following additional customisation "
 "steps are invoked after creating the class object:"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1895
+#: ../Doc/reference/datamodel.rst:1896
 msgid ""
 "first, ``type.__new__`` collects all of the descriptors in the class "
 "namespace that define a :meth:`~object.__set_name__` method;"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1897
+#: ../Doc/reference/datamodel.rst:1898
 msgid ""
 "second, all of these ``__set_name__`` methods are called with the class "
 "being defined and the assigned name of that particular descriptor; and"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1899
+#: ../Doc/reference/datamodel.rst:1900
 msgid ""
 "finally, the :meth:`~object.__init_subclass__` hook is called on the "
 "immediate parent of the new class in its method resolution order."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1902
+#: ../Doc/reference/datamodel.rst:1903
 msgid ""
 "After the class object is created, it is passed to the class decorators "
 "included in the class definition (if any) and the resulting object is bound "
 "in the local namespace as the defined class."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1906
+#: ../Doc/reference/datamodel.rst:1907
 msgid ""
 "When a new class is created by ``type.__new__``, the object provided as the "
 "namespace parameter is copied to a new ordered mapping and the original "
@@ -2256,19 +2259,19 @@ msgid ""
 "becomes the :attr:`~object.__dict__` attribute of the class object."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1913
+#: ../Doc/reference/datamodel.rst:1914
 msgid ":pep:`3135` - New super"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1914
+#: ../Doc/reference/datamodel.rst:1915
 msgid "Describes the implicit ``__class__`` closure reference"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1918
+#: ../Doc/reference/datamodel.rst:1919
 msgid "Metaclass example"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1920
+#: ../Doc/reference/datamodel.rst:1921
 msgid ""
 "The potential uses for metaclasses are boundless. Some ideas that have been "
 "explored include enum, logging, interface checking, automatic delegation, "
@@ -2276,13 +2279,13 @@ msgid ""
 "locking/synchronization."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1925
+#: ../Doc/reference/datamodel.rst:1926
 msgid ""
 "Here is an example of a metaclass that uses an :class:`collections."
 "OrderedDict` to remember the order that class variables are defined::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1948
+#: ../Doc/reference/datamodel.rst:1949
 msgid ""
 "When the class definition for *A* gets executed, the process begins with "
 "calling the metaclass's :meth:`__prepare__` method which returns an empty :"
@@ -2294,17 +2297,17 @@ msgid ""
 "an attribute called ``members``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1959
+#: ../Doc/reference/datamodel.rst:1960
 msgid "Customizing instance and subclass checks"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1961
+#: ../Doc/reference/datamodel.rst:1962
 msgid ""
 "The following methods are used to override the default behavior of the :func:"
 "`isinstance` and :func:`issubclass` built-in functions."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1964
+#: ../Doc/reference/datamodel.rst:1965
 msgid ""
 "In particular, the metaclass :class:`abc.ABCMeta` implements these methods "
 "in order to allow the addition of Abstract Base Classes (ABCs) as \"virtual "
@@ -2312,21 +2315,21 @@ msgid ""
 "other ABCs."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1971
+#: ../Doc/reference/datamodel.rst:1972
 msgid ""
 "Return true if *instance* should be considered a (direct or indirect) "
 "instance of *class*. If defined, called to implement ``isinstance(instance, "
 "class)``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1978
+#: ../Doc/reference/datamodel.rst:1979
 msgid ""
 "Return true if *subclass* should be considered a (direct or indirect) "
 "subclass of *class*.  If defined, called to implement ``issubclass(subclass, "
 "class)``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1983
+#: ../Doc/reference/datamodel.rst:1984
 msgid ""
 "Note that these methods are looked up on the type (metaclass) of a class.  "
 "They cannot be defined as class methods in the actual class.  This is "
@@ -2334,11 +2337,11 @@ msgid ""
 "only in this case the instance is itself a class."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1994
+#: ../Doc/reference/datamodel.rst:1995
 msgid ":pep:`3119` - Introducing Abstract Base Classes"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:1991
+#: ../Doc/reference/datamodel.rst:1992
 msgid ""
 "Includes the specification for customizing :func:`isinstance` and :func:"
 "`issubclass` behavior through :meth:`~class.__instancecheck__` and :meth:"
@@ -2347,22 +2350,22 @@ msgid ""
 "language."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2001
+#: ../Doc/reference/datamodel.rst:2002
 msgid "Emulating callable objects"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2008
+#: ../Doc/reference/datamodel.rst:2009
 msgid ""
 "Called when the instance is \"called\" as a function; if this method is "
 "defined, ``x(arg1, arg2, ...)`` is a shorthand for ``x.__call__(arg1, "
 "arg2, ...)``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2015
+#: ../Doc/reference/datamodel.rst:2016
 msgid "Emulating container types"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2017
+#: ../Doc/reference/datamodel.rst:2018
 msgid ""
 "The following methods can be defined to implement container objects.  "
 "Containers usually are sequences (such as lists or tuples) or mappings (like "
@@ -2395,7 +2398,7 @@ msgid ""
 "iterate through the values."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2052
+#: ../Doc/reference/datamodel.rst:2053
 msgid ""
 "Called to implement the built-in function :func:`len`.  Should return the "
 "length of the object, an integer ``>=`` 0.  Also, an object that doesn't "
@@ -2403,7 +2406,7 @@ msgid ""
 "zero is considered to be false in a Boolean context."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2059
+#: ../Doc/reference/datamodel.rst:2060
 msgid ""
 "In CPython, the length is required to be at most :attr:`sys.maxsize`. If the "
 "length is larger than :attr:`!sys.maxsize` some features (such as :func:"
@@ -2412,7 +2415,7 @@ msgid ""
 "`__bool__` method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2068
+#: ../Doc/reference/datamodel.rst:2069
 msgid ""
 "Called to implement :func:`operator.length_hint`. Should return an estimated "
 "length for the object (which may be greater or less than the actual length). "
@@ -2420,20 +2423,20 @@ msgid ""
 "optimization and is never required for correctness."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2078
+#: ../Doc/reference/datamodel.rst:2079
 msgid ""
 "Slicing is done exclusively with the following three methods.  A call like ::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2082
+#: ../Doc/reference/datamodel.rst:2083
 msgid "is translated to ::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2086
+#: ../Doc/reference/datamodel.rst:2087
 msgid "and so forth.  Missing slice items are always filled in with ``None``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2093
+#: ../Doc/reference/datamodel.rst:2094
 msgid ""
 "Called to implement evaluation of ``self[key]``. For sequence types, the "
 "accepted keys should be integers and slice objects.  Note that the special "
@@ -2445,19 +2448,19 @@ msgid ""
 "*key* is missing (not in the container), :exc:`KeyError` should be raised."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2104
+#: ../Doc/reference/datamodel.rst:2105
 msgid ""
 ":keyword:`for` loops expect that an :exc:`IndexError` will be raised for "
 "illegal indexes to allow proper detection of the end of the sequence."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2110
+#: ../Doc/reference/datamodel.rst:2111
 msgid ""
 "Called by :class:`dict`\\ .\\ :meth:`__getitem__` to implement ``self[key]`` "
 "for dict subclasses when key is not in the dictionary."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2116
+#: ../Doc/reference/datamodel.rst:2117
 msgid ""
 "Called to implement assignment to ``self[key]``.  Same note as for :meth:"
 "`__getitem__`.  This should only be implemented for mappings if the objects "
@@ -2466,7 +2469,7 @@ msgid ""
 "for improper *key* values as for the :meth:`__getitem__` method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2125
+#: ../Doc/reference/datamodel.rst:2126
 msgid ""
 "Called to implement deletion of ``self[key]``.  Same note as for :meth:"
 "`__getitem__`.  This should only be implemented for mappings if the objects "
@@ -2475,7 +2478,7 @@ msgid ""
 "values as for the :meth:`__getitem__` method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2134
+#: ../Doc/reference/datamodel.rst:2135
 msgid ""
 "This method is called when an iterator is required for a container. This "
 "method should return a new iterator object that can iterate over all the "
@@ -2483,21 +2486,21 @@ msgid ""
 "the container."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2138
+#: ../Doc/reference/datamodel.rst:2139
 msgid ""
 "Iterator objects also need to implement this method; they are required to "
 "return themselves.  For more information on iterator objects, see :ref:"
 "`typeiter`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2144
+#: ../Doc/reference/datamodel.rst:2145
 msgid ""
 "Called (if present) by the :func:`reversed` built-in to implement reverse "
 "iteration.  It should return a new iterator object that iterates over all "
 "the objects in the container in reverse order."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2148
+#: ../Doc/reference/datamodel.rst:2149
 msgid ""
 "If the :meth:`__reversed__` method is not provided, the :func:`reversed` "
 "built-in will fall back to using the sequence protocol (:meth:`__len__` and :"
@@ -2506,7 +2509,7 @@ msgid ""
 "more efficient than the one provided by :func:`reversed`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2155
+#: ../Doc/reference/datamodel.rst:2156
 msgid ""
 "The membership test operators (:keyword:`in` and :keyword:`not in`) are "
 "normally implemented as an iteration through a sequence.  However, container "
@@ -2514,14 +2517,14 @@ msgid ""
 "implementation, which also does not require the object be a sequence."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2162
+#: ../Doc/reference/datamodel.rst:2163
 msgid ""
 "Called to implement membership test operators.  Should return true if *item* "
 "is in *self*, false otherwise.  For mapping objects, this should consider "
 "the keys of the mapping rather than the values or the key-item pairs."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2166
+#: ../Doc/reference/datamodel.rst:2167
 msgid ""
 "For objects that don't define :meth:`__contains__`, the membership test "
 "first tries iteration via :meth:`__iter__`, then the old sequence iteration "
@@ -2529,11 +2532,11 @@ msgid ""
 "reference <membership-test-details>`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2175
+#: ../Doc/reference/datamodel.rst:2176
 msgid "Emulating numeric types"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2177
+#: ../Doc/reference/datamodel.rst:2178
 msgid ""
 "The following methods can be defined to emulate numeric objects. Methods "
 "corresponding to operations that are not supported by the particular kind of "
@@ -2541,7 +2544,7 @@ msgid ""
 "should be left undefined."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2203
+#: ../Doc/reference/datamodel.rst:2204
 msgid ""
 "These methods are called to implement the binary arithmetic operations (``"
 "+``, ``-``, ``*``, ``@``, ``/``, ``//``, ``%``, :func:`divmod`, :func:`pow`, "
@@ -2554,13 +2557,13 @@ msgid ""
 "version of the built-in :func:`pow` function is to be supported."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2214
+#: ../Doc/reference/datamodel.rst:2215
 msgid ""
 "If one of those methods does not support the operation with the supplied "
 "arguments, it should return ``NotImplemented``."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2237
+#: ../Doc/reference/datamodel.rst:2238
 msgid ""
 "These methods are called to implement the binary arithmetic operations (``"
 "+``, ``-``, ``*``, ``@``, ``/``, ``//``, ``%``, :func:`divmod`, :func:`pow`, "
@@ -2572,13 +2575,13 @@ msgid ""
 "__rsub__(x)`` is called if ``x.__sub__(y)`` returns *NotImplemented*."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2248
+#: ../Doc/reference/datamodel.rst:2249
 msgid ""
 "Note that ternary :func:`pow` will not try calling :meth:`__rpow__` (the "
 "coercion rules would become too complicated)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2253
+#: ../Doc/reference/datamodel.rst:2254
 msgid ""
 "If the right operand's type is a subclass of the left operand's type and "
 "that subclass provides the reflected method for the operation, this method "
@@ -2586,7 +2589,7 @@ msgid ""
 "behavior allows subclasses to override their ancestors' operations."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2273
+#: ../Doc/reference/datamodel.rst:2274
 msgid ""
 "These methods are called to implement the augmented arithmetic assignments "
 "(``+=``, ``-=``, ``*=``, ``@=``, ``/=``, ``//=``, ``%=``, ``**=``, ``<<=``, "
@@ -2602,20 +2605,19 @@ msgid ""
 "fact part of the data model."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2294
+#: ../Doc/reference/datamodel.rst:2295
 msgid ""
 "Called to implement the unary arithmetic operations (``-``, ``+``, :func:"
 "`abs` and ``~``)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2309
+#: ../Doc/reference/datamodel.rst:2308
 msgid ""
-"Called to implement the built-in functions :func:`complex`, :func:`int`, :"
-"func:`float` and :func:`round`.  Should return a value of the appropriate "
-"type."
+"Called to implement the built-in functions :func:`complex`, :func:`int` and :"
+"func:`float`.  Should return a value of the appropriate type."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2316
+#: ../Doc/reference/datamodel.rst:2315
 msgid ""
 "Called to implement :func:`operator.index`, and whenever Python needs to "
 "losslessly convert the numeric object to an integer object (such as in "
@@ -2624,18 +2626,33 @@ msgid ""
 "integer type.  Must return an integer."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2324
+#: ../Doc/reference/datamodel.rst:2323
 msgid ""
 "In order to have a coherent integer type class, when :meth:`__index__` is "
 "defined :meth:`__int__` should also be defined, and both should return the "
 "same value."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2332
+#: ../Doc/reference/datamodel.rst:2335
+msgid ""
+"Called to implement the built-in function :func:`round` and :mod:`math` "
+"functions :func:`~math.trunc`, :func:`~math.floor` and :func:`~math.ceil`. "
+"Unless *ndigits* is passed to :meth:`!__round__` all these methods should "
+"return the value of the object truncated to an :class:`~numbers.Integral` "
+"(typically an :class:`int`)."
+msgstr ""
+
+#: ../Doc/reference/datamodel.rst:2341
+msgid ""
+"If :meth:`__int__` is not defined then the built-in function :func:`int` "
+"falls back to :meth:`__trunc__`."
+msgstr ""
+
+#: ../Doc/reference/datamodel.rst:2348
 msgid "With Statement Context Managers"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2334
+#: ../Doc/reference/datamodel.rst:2350
 msgid ""
 "A :dfn:`context manager` is an object that defines the runtime context to be "
 "established when executing a :keyword:`with` statement. The context manager "
@@ -2645,32 +2662,32 @@ msgid ""
 "can also be used by directly invoking their methods."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2345
+#: ../Doc/reference/datamodel.rst:2361
 msgid ""
 "Typical uses of context managers include saving and restoring various kinds "
 "of global state, locking and unlocking resources, closing opened files, etc."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2348
+#: ../Doc/reference/datamodel.rst:2364
 msgid ""
 "For more information on context managers, see :ref:`typecontextmanager`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2353
+#: ../Doc/reference/datamodel.rst:2369
 msgid ""
 "Enter the runtime context related to this object. The :keyword:`with` "
 "statement will bind this method's return value to the target(s) specified in "
 "the :keyword:`as` clause of the statement, if any."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2360
+#: ../Doc/reference/datamodel.rst:2376
 msgid ""
 "Exit the runtime context related to this object. The parameters describe the "
 "exception that caused the context to be exited. If the context was exited "
 "without an exception, all three arguments will be :const:`None`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2364
+#: ../Doc/reference/datamodel.rst:2380
 msgid ""
 "If an exception is supplied, and the method wishes to suppress the exception "
 "(i.e., prevent it from being propagated), it should return a true value. "
@@ -2678,27 +2695,27 @@ msgid ""
 "method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2368
+#: ../Doc/reference/datamodel.rst:2384
 msgid ""
 "Note that :meth:`__exit__` methods should not reraise the passed-in "
 "exception; this is the caller's responsibility."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2375
+#: ../Doc/reference/datamodel.rst:2391
 msgid ":pep:`343` - The \"with\" statement"
 msgstr ":pep:`343` - The \"with\" statement"
 
-#: ../Doc/reference/datamodel.rst:2375
+#: ../Doc/reference/datamodel.rst:2391
 msgid ""
 "The specification, background, and examples for the Python :keyword:`with` "
 "statement."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2382
+#: ../Doc/reference/datamodel.rst:2398
 msgid "Special method lookup"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2384
+#: ../Doc/reference/datamodel.rst:2400
 msgid ""
 "For custom classes, implicit invocations of special methods are only "
 "guaranteed to work correctly if defined on an object's type, not in the "
@@ -2706,7 +2723,7 @@ msgid ""
 "following code raises an exception::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2399
+#: ../Doc/reference/datamodel.rst:2415
 msgid ""
 "The rationale behind this behaviour lies with a number of special methods "
 "such as :meth:`__hash__` and :meth:`__repr__` that are implemented by all "
@@ -2715,21 +2732,21 @@ msgid ""
 "type object itself::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2412
+#: ../Doc/reference/datamodel.rst:2428
 msgid ""
 "Incorrectly attempting to invoke an unbound method of a class in this way is "
 "sometimes referred to as 'metaclass confusion', and is avoided by bypassing "
 "the instance when looking up special methods::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2421
+#: ../Doc/reference/datamodel.rst:2437
 msgid ""
 "In addition to bypassing any instance attributes in the interest of "
 "correctness, implicit special method lookup generally also bypasses the :"
 "meth:`__getattribute__` method even of the object's metaclass::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2447
+#: ../Doc/reference/datamodel.rst:2463
 msgid ""
 "Bypassing the :meth:`__getattribute__` machinery in this fashion provides "
 "significant scope for speed optimisations within the interpreter, at the "
@@ -2738,44 +2755,44 @@ msgid ""
 "invoked by the interpreter)."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2458
+#: ../Doc/reference/datamodel.rst:2474
 msgid "Coroutines"
 msgstr "Coroutines"
 
-#: ../Doc/reference/datamodel.rst:2462
+#: ../Doc/reference/datamodel.rst:2478
 msgid "Awaitable Objects"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2464
+#: ../Doc/reference/datamodel.rst:2480
 msgid ""
 "An :term:`awaitable` object generally implements an :meth:`__await__` "
 "method. :term:`Coroutine` objects returned from :keyword:`async def` "
 "functions are awaitable."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2470
+#: ../Doc/reference/datamodel.rst:2486
 msgid ""
 "The :term:`generator iterator` objects returned from generators decorated "
 "with :func:`types.coroutine` or :func:`asyncio.coroutine` are also "
 "awaitable, but they do not implement :meth:`__await__`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2476
+#: ../Doc/reference/datamodel.rst:2492
 msgid ""
 "Must return an :term:`iterator`.  Should be used to implement :term:"
 "`awaitable` objects.  For instance, :class:`asyncio.Future` implements this "
 "method to be compatible with the :keyword:`await` expression."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2482
+#: ../Doc/reference/datamodel.rst:2498
 msgid ":pep:`492` for additional information about awaitable objects."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2488
+#: ../Doc/reference/datamodel.rst:2504
 msgid "Coroutine Objects"
 msgstr "Objets coroutines"
 
-#: ../Doc/reference/datamodel.rst:2490
+#: ../Doc/reference/datamodel.rst:2506
 msgid ""
 ":term:`Coroutine` objects are :term:`awaitable` objects. A coroutine's "
 "execution can be controlled by calling :meth:`__await__` and iterating over "
@@ -2786,18 +2803,18 @@ msgid ""
 "not directly raise unhandled :exc:`StopIteration` exceptions."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2498
+#: ../Doc/reference/datamodel.rst:2514
 msgid ""
 "Coroutines also have the methods listed below, which are analogous to those "
 "of generators (see :ref:`generator-methods`).  However, unlike generators, "
 "coroutines do not directly support iteration."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2502
+#: ../Doc/reference/datamodel.rst:2518
 msgid "It is a :exc:`RuntimeError` to await on a coroutine more than once."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2508
+#: ../Doc/reference/datamodel.rst:2524
 msgid ""
 "Starts or resumes execution of the coroutine.  If *value* is ``None``, this "
 "is equivalent to advancing the iterator returned by :meth:`__await__`.  If "
@@ -2807,7 +2824,7 @@ msgid ""
 "as when iterating over the :meth:`__await__` return value, described above."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2518
+#: ../Doc/reference/datamodel.rst:2534
 msgid ""
 "Raises the specified exception in the coroutine.  This method delegates to "
 "the :meth:`~generator.throw` method of the iterator that caused the "
@@ -2818,7 +2835,7 @@ msgid ""
 "caught in the coroutine, it propagates back to the caller."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2529
+#: ../Doc/reference/datamodel.rst:2545
 msgid ""
 "Causes the coroutine to clean itself up and exit.  If the coroutine is "
 "suspended, this method first delegates to the :meth:`~generator.close` "
@@ -2828,50 +2845,50 @@ msgid ""
 "is marked as having finished executing, even if it was never started."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2537
+#: ../Doc/reference/datamodel.rst:2553
 msgid ""
 "Coroutine objects are automatically closed using the above process when they "
 "are about to be destroyed."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2543
+#: ../Doc/reference/datamodel.rst:2559
 msgid "Asynchronous Iterators"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2545
+#: ../Doc/reference/datamodel.rst:2561
 msgid ""
 "An *asynchronous iterable* is able to call asynchronous code in its "
 "``__aiter__`` implementation, and an *asynchronous iterator* can call "
 "asynchronous code in its ``__anext__`` method."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2549
+#: ../Doc/reference/datamodel.rst:2565
 msgid ""
 "Asynchronous iterators can be used in an :keyword:`async for` statement."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2553
+#: ../Doc/reference/datamodel.rst:2569
 msgid "Must return an *asynchronous iterator* object."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2557
+#: ../Doc/reference/datamodel.rst:2573
 msgid ""
 "Must return an *awaitable* resulting in a next value of the iterator.  "
 "Should raise a :exc:`StopAsyncIteration` error when the iteration is over."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2560
+#: ../Doc/reference/datamodel.rst:2576
 msgid "An example of an asynchronous iterable object::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2579
+#: ../Doc/reference/datamodel.rst:2595
 msgid ""
 "Starting with CPython 3.5.2, ``__aiter__`` can directly return :term:"
 "`asynchronous iterators <asynchronous iterator>`.  Returning an :term:"
 "`awaitable` object will result in a :exc:`PendingDeprecationWarning`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2585
+#: ../Doc/reference/datamodel.rst:2601
 msgid ""
 "The recommended way of writing backwards compatible code in CPython 3.5.x is "
 "to continue returning awaitables from ``__aiter__``.  If you want to avoid "
@@ -2879,61 +2896,61 @@ msgid ""
 "following decorator can be used::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2604
+#: ../Doc/reference/datamodel.rst:2620
 msgid "Example::"
 msgstr "Exemples ::"
 
-#: ../Doc/reference/datamodel.rst:2615
+#: ../Doc/reference/datamodel.rst:2631
 msgid ""
 "Starting with CPython 3.6, the :exc:`PendingDeprecationWarning` will be "
 "replaced with the :exc:`DeprecationWarning`. In CPython 3.7, returning an "
 "awaitable from ``__aiter__`` will result in a :exc:`RuntimeError`."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2622
+#: ../Doc/reference/datamodel.rst:2638
 msgid "Asynchronous Context Managers"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2624
+#: ../Doc/reference/datamodel.rst:2640
 msgid ""
 "An *asynchronous context manager* is a *context manager* that is able to "
 "suspend execution in its ``__aenter__`` and ``__aexit__`` methods."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2627
+#: ../Doc/reference/datamodel.rst:2643
 msgid ""
 "Asynchronous context managers can be used in an :keyword:`async with` "
 "statement."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2631
+#: ../Doc/reference/datamodel.rst:2647
 msgid ""
 "This method is semantically similar to the :meth:`__enter__`, with only "
 "difference that it must return an *awaitable*."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2636
+#: ../Doc/reference/datamodel.rst:2652
 msgid ""
 "This method is semantically similar to the :meth:`__exit__`, with only "
 "difference that it must return an *awaitable*."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2639
+#: ../Doc/reference/datamodel.rst:2655
 msgid "An example of an asynchronous context manager class::"
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2652
+#: ../Doc/reference/datamodel.rst:2668
 msgid "Footnotes"
 msgstr "Notes"
 
-#: ../Doc/reference/datamodel.rst:2653
+#: ../Doc/reference/datamodel.rst:2669
 msgid ""
 "It *is* possible in some cases to change an object's type, under certain "
 "controlled conditions. It generally isn't a good idea though, since it can "
 "lead to some very strange behaviour if it is handled incorrectly."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2657
+#: ../Doc/reference/datamodel.rst:2673
 msgid ""
 "The :meth:`__hash__`, :meth:`__iter__`, :meth:`__reversed__`, and :meth:"
 "`__contains__` methods have special handling for this; others will still "
@@ -2941,7 +2958,7 @@ msgid ""
 "``None`` is not callable."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2662
+#: ../Doc/reference/datamodel.rst:2678
 msgid ""
 "\"Does not support\" here means that the class has no such method, or the "
 "method returns ``NotImplemented``.  Do not set the method to ``None`` if you "
@@ -2949,7 +2966,7 @@ msgid ""
 "instead have the opposite effect of explicitly *blocking* such fallback."
 msgstr ""
 
-#: ../Doc/reference/datamodel.rst:2668
+#: ../Doc/reference/datamodel.rst:2684
 msgid ""
 "For operands of the same type, it is assumed that if the non-reflected "
 "method (such as :meth:`__add__`) fails the operation is not supported, which "
