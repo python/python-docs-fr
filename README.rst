@@ -231,18 +231,18 @@ Run a test build locally
 Synchronize translation with Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll need the ``transifex-client``, ``pomerge``, and ``poindent``
-from Pypi, and you'll need to configure ``tx`` via ``tx init``, and then:
+You'll need the ``transifex-client`` and ``poindent``
+from Pypi.
+
+You'll need to configure ``tx`` via ``tx init`` if not already done.
+
+You should work on a separate ``transifex`` branch.
 
 .. code-block:: bash
 
    tx pull
-   pomerge --from .tx/*.po .tx/**/*.po --to *.po **/*.po
    poindent --modified
-
-Now you should review and commit the pull, then push:
-
-.. code-block:: bash
-
-   pomerge --from *.po **/*.po --to .tx/*.po .tx/**/*.po
+   git commit -m "tx pull"
+   git checkout 3.6
+   git merge transifex -Xours
    tx push -t
