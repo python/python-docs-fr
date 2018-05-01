@@ -69,6 +69,7 @@ merge: $(VENV)/bin/sphinx-build
 ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
 	$(error "You're merging from a different branch")
 endif
+	(cd $(CPYTHON_CLONE)/Doc; rm -f build/NEWS)
 	(cd $(CPYTHON_CLONE); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
 	find $(CPYTHON_CLONE)/pot/ -name '*.pot' |\
 	    while read -r POT;\
@@ -77,7 +78,10 @@ endif
 	        mkdir -p "$$(dirname "$$PO")";\
 	        if [ -f "$$PO" ];\
 	        then\
-	            msgmerge --backup=off --force-po -U "$$PO" "$$POT";\
+	            case "$$POT" in\
+	            *whatsnew*) msgmerge --backup=off --force-po --no-fuzzy-matching -U "$$PO" "$$POT" ;;\
+	            *)          msgmerge --backup=off --force-po -U "$$PO" "$$POT" ;;\
+	            esac\
 	        else\
 	            msgcat -o "$$PO" "$$POT";\
 	        fi\
