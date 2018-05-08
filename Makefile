@@ -90,4 +90,4 @@ endif
 
 .PHONY: fuzzy
 fuzzy:
-	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c ^msgid) $$file; done | grep -v ^0 | sort -gr
+	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c '#, fuzzy') $$file; done | grep -v ^0 | sort -gr
