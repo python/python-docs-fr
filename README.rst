@@ -39,7 +39,8 @@ You can either contribute on `transifex/python-doc/public
 issue on this repository, or by editing the ``po`` files.
 
 To modify those files you first have to fork this project and follow
-github instructions to clone it.
+github instructions to clone it. Once you start working on a file,
+please open an issue to let everybody know you work on it.
 
 Next, to edit the files, you can use an editor of your choice, there's many:
 
