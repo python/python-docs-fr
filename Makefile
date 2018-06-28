@@ -19,7 +19,7 @@ LANGUAGE := fr
 VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
-BRANCH = $(shell git describe --contains --all HEAD)
+BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 JOBS = 1
 
 
@@ -67,7 +67,7 @@ todo:
 .PHONY: merge
 merge: upgrade_venv
 ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
-	$(error "You're merging from a different branch")
+	$(error "You're merging from a different branch:" "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" vs "$(BRANCH)")
 endif
 	(cd $(CPYTHON_CLONE)/Doc; rm -f build/NEWS)
 	(cd $(CPYTHON_CLONE); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
