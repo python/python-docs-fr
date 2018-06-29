@@ -20,14 +20,14 @@ VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
-JOBS = 1
+JOBS = 4
 
 
 .PHONY: all
 all: $(VENV)/bin/sphinx-build $(VENV)/bin/blurb $(SPHINX_CONF)
 	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
 	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
-	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0' $(MODE)
+	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
 $(SPHINX_CONF):
