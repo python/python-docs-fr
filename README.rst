@@ -32,7 +32,7 @@ Contributing to the Translation
 How to Contribute
 ~~~~~~~~~~~~~~~~~
 
-You contribute using:
+You can contribute using:
 
 - github (preferred solution)
 - `transifex <https://www.transifex.com/python-doc/public/>`_
