@@ -52,9 +52,9 @@ where you have the rights to do modifications.
 To modify po files you'll need to synchronize the project files to
 your computer by using ``git``: https://help.github.com/articles/set-up-git/.
 
-Once the project ``git clone``ed, you'll be able to modify the files
-containing the translations, those are ``.po`` files and can be
-modified using various tools:
+Once the project files are synchronized to your computer, you'll be
+able to modify them, those are ``.po`` files and can be modified using
+various tools:
 
 - `poedit <http://www.poedit.net/>`_ (recommended)
 - gted
