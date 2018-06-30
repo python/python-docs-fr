@@ -32,16 +32,31 @@ Contributing to the Translation
 How to Contribute
 ~~~~~~~~~~~~~~~~~
 
-You can either contribute on `transifex/python-doc/public
-<https://www.transifex.com/python-doc/public/>`_, or by simply openning an
-issue on this repository, or by editing the ``po`` files.
+You contribute using:
 
-To modify those files you first have to fork this project and follow
-github instructions to clone it.
+- github (preferred solution)
+- `transifex <https://www.transifex.com/python-doc/public/>`_
+- Or just by opening `an issue on github <https://github.com/python/python-docs-fr/issues>`_
 
-Next, to edit the files, you can use an editor of your choice, there's many:
 
-- Highly recommended: `poedit <http://www.poedit.net/>`_
+Contributing using Github
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You'll first need a `github account <https://github.com/join>`_.
+
+Then you'll need to fork the project by clicking the ``Fork`` button
+on `python-docs-fr <https://github.com/python/python-docs-fr>`_. This
+creates a copy of the whole project on your github account: a place
+where you have the rights to do modifications.
+
+To modify po files you'll need to synchronize the project files to
+your computer by using ``git``: https://help.github.com/articles/set-up-git/.
+
+Once the project ``git clone``ed, you'll be able to modify the files
+containing the translations, those are ``.po`` files and can be
+modified using various tools:
+
+- `poedit <http://www.poedit.net/>`_ (recommended)
 - gted
 - gtranslator
 - lokalize
@@ -53,12 +68,13 @@ Next, to edit the files, you can use an editor of your choice, there's many:
 Before commiting, you should use `grammalecte
 <https://www.dicollecte.org/>`_ to check for your translations.
 
-Finally, once your contribution is done, do a ``pull request`` so we
-can review and merge it.
+After commiting (this is just "naming the modification"), synchronize
+the file back to github using ``git push``.
 
-Please write your issues and pull requests in english for consistency
-with the python github organization and because non-french people may
-receive github notifications about our activity.
+And now, from your github project, a buttun should appear "Create a
+pull requests", this is asking us, the main project, to pull your
+modifications. This step may take some time as we'll review your
+modifications before accepting them, and we may ask for modifications.
 
 
 What to translate
@@ -86,8 +102,9 @@ Where to get help
 
 The coordinator for this translation is `mdk <https://mdk.fr/>`_.
 
-Feel free to ask your questions on ``#python-fr`` on `freenode
-<https://webchat.freenode.net/>`_.
+Feel free to ask your questions on the ``#python-fr`` channel on `freenode
+<https://webchat.freenode.net/>`_ (does not require registration) or the
+`AFPy traductions mailing list <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
 Translation Resources
