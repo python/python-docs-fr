@@ -71,8 +71,8 @@ Before commiting, you should use `grammalecte
 After commiting (this is just "naming the modification"), synchronize
 the file back to github using ``git push``.
 
-And now, from your github project, a buttun should appear "Create a
-pull requests", this is asking us, the main project, to pull your
+And now, from your github project, a buttun should appear "Compare &
+pull request", this is asking us, the main project, to pull your
 modifications. This step may take some time as we'll review your
 modifications before accepting them, and we may ask for modifications.
 
