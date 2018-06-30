@@ -3,9 +3,8 @@ French Translation of the Python Documentation
 
 **Translated: 29%**
 
-See the `README.rst file on master
-<https://github.com/python/python-docs-fr/blob/master/README.rst>`_
-for more informations.
+This is the 3.6 branch, we're no longer translating on it, see the 3.7
+branch.
 
 
 Documentation Contribution Agreement
