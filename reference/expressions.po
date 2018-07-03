@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-28 15:29+0200\n"
-"PO-Revision-Date: 2018-06-17 10:55+0200\n"
+"PO-Revision-Date: 2018-07-03 20:44+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -293,16 +293,16 @@ msgstr ""
 "bloc le plus imbriqué était atteint."
 
 #: ../Doc/reference/expressions.rst:186
-#, fuzzy
 msgid ""
 "However, aside from the iterable expression in the leftmost :keyword:`for` "
 "clause, the comprehension is executed in a separate implicitly nested scope. "
 "This ensures that names assigned to in the target list don't \"leak\" into "
 "the enclosing scope."
 msgstr ""
-"Notez que la compréhension est exécutée dans une portée séparée, les noms "
-"assignés dans la liste cible ne pouvant pas \"fuir\" en dehors de cette "
-"portée."
+"Cependant, à part l'expression de l'itérable dans la clause :keyword:`for` "
+"la plus à gauche, la compréhension est exécutée dans une portée séparée, "
+"implicitement imbriquée. Ceci assure que les noms assignés dans la liste "
+"cible ne \"fuient\" pas en dehors de cette portée."
 
 #: ../Doc/reference/expressions.rst:190
 msgid ""
@@ -313,6 +313,13 @@ msgid ""
 "enclosing scope as they may depend on the values obtained from the leftmost "
 "iterable. For example: ``[x*y for x in range(10) for y in range(x, x+10)]``."
 msgstr ""
+"L'expression de l'itérable dans la clause :keyword:`for` la plus à gauche "
+"est évaluée directement dans la portée englobante puis passée en tant "
+"qu'argument à la portée implicite imbriquée. Les clauses :keyword:`for` "
+"suivantes et les filtres conditionnels de la clause :keyword:`for` la plus à "
+"gauche ne peuvent pas être évalués dans la portée englobante car ils peuvent "
+"dépendre de valeurs obtenues à partir de l'itérable le plus à gauche. Par "
+"exemple : ``[x*y for x in range(10) for y in range(x, x+10)]``."
 
 #: ../Doc/reference/expressions.rst:197
 msgid ""
@@ -322,6 +329,11 @@ msgid ""
 "`DeprecationWarning` when compiled, in Python 3.8+ they will emit :exc:"
 "`SyntaxError`)."
 msgstr ""
+"Pour assurer que le résultat de la compréhension soit un conteneur du type "
+"approprié, les expressions ``yield`` et ``yield from`` sont interdites dans "
+"la portée implicite imbriquée (dans Python 3.7, de telles expressions lèvent "
+"un :exc:`DeprecationWarning` à la compilation, dans Python 3.8 et suivants, "
+"elles lèveront une  :exc:`SyntaxError`)."
 
 #: ../Doc/reference/expressions.rst:202
 msgid ""
@@ -349,11 +361,13 @@ msgstr ""
 
 #: ../Doc/reference/expressions.rst:214
 msgid "Asynchronous comprehensions were introduced."
-msgstr ""
+msgstr "Les compréhensions asynchrones ont été introduites."
 
 #: ../Doc/reference/expressions.rst:217 ../Doc/reference/expressions.rst:371
 msgid "``yield`` and ``yield from`` deprecated in the implicitly nested scope."
 msgstr ""
+"``yield`` et ``yield from`` sont obsolètes dans la portée implicite "
+"imbriquée."
 
 #: ../Doc/reference/expressions.rst:224
 msgid "List displays"
@@ -523,7 +537,6 @@ msgstr ""
 "parenthèses au lieu de crochets ou d'accolades."
 
 #: ../Doc/reference/expressions.rst:337
-#, fuzzy
 msgid ""
 "Variables used in the generator expression are evaluated lazily when the :"
 "meth:`~generator.__next__` method is called for the generator object (in the "
@@ -539,12 +552,14 @@ msgstr ""
 "Les variables utilisées dans une expression générateur sont évaluées "
 "paresseusement, au moment où la méthode :meth:`~generator.__next__` de "
 "l'objet générateur est appelée (de la même manière que pour les générateurs "
-"classiques). Cependant,  la clause :keyword:`for` la plus à gauche est "
-"immédiatement évaluée, de manière à ce qu'une erreur dans cette partie "
-"puisse être vue avant tout autre erreur dans le code qui gère l'expression "
-"générateur. Les clauses :keyword:`for` suivantes ne peuvent pas être "
-"évaluées immédiatement car elles peuvent dépendre de la précédente boucle :"
-"keyword:`for`. Par exemple,  ``(x*y for x in range(10) for y in truc(x))``."
+"classiques). Cependant, l'expression de l'itérable dans la clause :keyword:"
+"`for` la plus à gauche est immédiatement évaluée, de manière à ce qu'une "
+"erreur dans cette partie soit signalée à l'endroit où l'expression "
+"génératrice est définie plutôt qu'à l'endroit où la première valeur est "
+"récupérée. Les clauses :keyword:`for` suivantes ne peuvent pas être évaluées "
+"dans la portée implicite imbriquée car elles peuvent dépendre de valeurs "
+"obtenues à partir de boucles :keyword:`for` plus à gauche. Par exemple,  "
+"``(x*y for x in range(10) for y in range(x, x+10))``."
 
 #: ../Doc/reference/expressions.rst:348
 msgid ""
@@ -564,7 +579,6 @@ msgid ""
 msgstr ""
 
 #: ../Doc/reference/expressions.rst:357
-#, fuzzy
 msgid ""
 "If a generator expression contains either :keyword:`async for` clauses or :"
 "keyword:`await` expressions it is called an :dfn:`asynchronous generator "
@@ -572,19 +586,15 @@ msgid ""
 "asynchronous generator object, which is an asynchronous iterator (see :ref:"
 "`async-iterators`)."
 msgstr ""
-"Depuis Python 3.6, si le générateur apparaît dans une fonction :keyword:"
-"`async def`, alors la clause :keyword:`async for` et les expressions :"
-"keyword:`await` sont permises comme pour une compréhension asynchrone. Si "
-"une expression générateur contient soit des clauses :keyword:`async for`, "
-"soit des expressions :keyword:`await`, alors on l'appelle :dfn:`expression "
-"générateur asynchrone`. Une expression générateur asynchrone produit un "
-"nouvel objet générateur asynchrone qui est un itérateur asynchrone (voir :"
-"ref:`async-iterators`)."
+"Si une expression générateur contient  une ou des expressions :keyword:"
+"`async for` ou :keyword:`await`, elle est appelée :dfn:`expression "
+"générateur asynchrone <asynchronous generator expression>`. Une expression "
+"générateur asynchrone produit un nouvel objet générateur asynchrone qui est "
+"un itérateur asynchrone (voir :ref:`async-iterators`)."
 
 #: ../Doc/reference/expressions.rst:363
-#, fuzzy
 msgid "Asynchronous generator expressions were introduced."
-msgstr "Méthodes des générateurs-itérateurs asynchrones"
+msgstr "les expressions générateurs asynchrones ont été introduites."
 
 #: ../Doc/reference/expressions.rst:366
 msgid ""
@@ -592,6 +602,10 @@ msgid ""
 "in :keyword:`async def` coroutines.  Starting with 3.7, any function can use "
 "asynchronous generator expressions."
 msgstr ""
+"Avant Python 3.7, les expressions générateurs asynchrones ne pouvaient "
+"apparaître que dans les coroutines :keyword:`async def`. À partir de la "
+"version 3.7, toute fonction peut utiliser des expressions générateurs "
+"asynchrones."
 
 #: ../Doc/reference/expressions.rst:378
 msgid "Yield expressions"
@@ -622,12 +636,20 @@ msgid ""
 "emit :exc:`DeprecationWarning` when compiled, in Python 3.8+ they will emit :"
 "exc:`SyntaxError`).."
 msgstr ""
+"En raison des effets de bords sur la portée contenant, les expressions "
+"``yield`` ne sont pas autorisées dans la portée implicite utilisée dans "
+"l'implémentation des compréhensions et des expressions générateurs (dans "
+"Python 3.7, de telles expressions lèvent un :exc:`DeprecationWarning` à la "
+"compilation ; à partir de Python 3.8, elles lèveront une :exc:`SyntaxError`)."
 
 #: ../Doc/reference/expressions.rst:408
 msgid ""
 "Yield expressions deprecated in the implicitly nested scopes used to "
 "implement comprehensions and generator expressions."
 msgstr ""
+"Les expressions `yield` sont obsolètes dans la portée implicite imbriquée "
+"utilisée dans l'implémentation des compréhensions et des expressions "
+"générateurs."
 
 #: ../Doc/reference/expressions.rst:412
 msgid ""
