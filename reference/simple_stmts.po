@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:6
 msgid "Simple statements"
-msgstr ""
+msgstr "Les instructions simples"
 
 #: ../Doc/reference/simple_stmts.rst:10
 msgid ""
@@ -29,7 +29,7 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:35
 msgid "Expression statements"
-msgstr ""
+msgstr "Les expressions"
 
 #: ../Doc/reference/simple_stmts.rst:41
 msgid ""
@@ -39,12 +39,20 @@ msgid ""
 "uses of expression statements are allowed and occasionally useful.  The "
 "syntax for an expression statement is:"
 msgstr ""
+"Les expressions sont utilisées (généralement de manière interactive) comme "
+"instructions pour calculer et écrire des valeurs, appeler une procédure (une "
+"fonction dont le résultat renvoyé n'a pas d'importance ; en Python, les "
+"procédures renvoient la valeur ``None``). D'autres utilisations des "
+"expressions sont autorisées et parfois utiles. La syntaxe pour une "
+"expression en tant qu'instruction est :"
 
 #: ../Doc/reference/simple_stmts.rst:50
 msgid ""
 "An expression statement evaluates the expression list (which may be a single "
 "expression)."
 msgstr ""
+"Ce genre d'instruction évalue la liste d'expressions (qui peut se limiter à "
+"une seule expression)."
 
 #: ../Doc/reference/simple_stmts.rst:62
 msgid ""
@@ -57,13 +65,15 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:72
 msgid "Assignment statements"
-msgstr ""
+msgstr "Les assignations"
 
 #: ../Doc/reference/simple_stmts.rst:82
 msgid ""
 "Assignment statements are used to (re)bind names to values and to modify "
 "attributes or items of mutable objects:"
 msgstr ""
+"Les assignations sont utilisées pour (re-)lier des noms à des valeurs et "
+"modifier des attributs ou des éléments d'objets muables :"
 
 #: ../Doc/reference/simple_stmts.rst:95 ../Doc/reference/simple_stmts.rst:267
 msgid ""
@@ -78,6 +88,10 @@ msgid ""
 "tuple) and assigns the single resulting object to each of the target lists, "
 "from left to right."
 msgstr ""
+"Une assignation évalue la liste d'expressions (gardez en mémoire que ce peut "
+"être une simple expression ou une liste dont les éléments sont séparés par "
+"des virgules, cette dernière produisant un n-uplet) et assigne l'unique "
+"objet résultant à chaque liste cible, de la gauche vers la droite."
 
 #: ../Doc/reference/simple_stmts.rst:109
 msgid ""
@@ -89,6 +103,13 @@ msgid ""
 "exceptions raised are given with the definition of the object types (see "
 "section :ref:`types`)."
 msgstr ""
+"Une assignation est définie récursivement en fonction de la forme de la "
+"cible (une liste). Quand la cible est une partie d'un objet muable (une "
+"référence à un attribut, une sélection ou une tranche), l'objet muable doit "
+"effectuer l'assignation au final et décider de sa validité, voire lever une "
+"exception si l'assignation n'est pas acceptable. Les règles suivies par les "
+"différents types et les exceptions levées sont données dans les définitions "
+"des types d'objets (voir la section :ref:`types`)."
 
 #: ../Doc/reference/simple_stmts.rst:118
 msgid ""
@@ -112,10 +133,12 @@ msgstr ""
 msgid ""
 "Assignment of an object to a single target is recursively defined as follows."
 msgstr ""
+"L'assignation d'un objet vers une cible unique est définie récursivement "
+"comme suit."
 
 #: ../Doc/reference/simple_stmts.rst:128
 msgid "If the target is an identifier (name):"
-msgstr ""
+msgstr "Si la cible est une variable (un nom) :"
 
 #: ../Doc/reference/simple_stmts.rst:132
 msgid ""
@@ -134,6 +157,10 @@ msgid ""
 "count for the object previously bound to the name to reach zero, causing the "
 "object to be deallocated and its destructor (if it has one) to be called."
 msgstr ""
+"Le lien du nom est modifié si le nom était déjà lié. Ceci peut faire que le "
+"compteur de références de l'objet auquel le nom était précédemment lié tombe "
+"à zéro, entrainant la dé-allocation de l'objet et l'appel de son destructeur "
+"(s'il existe)."
 
 #: ../Doc/reference/simple_stmts.rst:143
 msgid ""
@@ -152,6 +179,12 @@ msgid ""
 "if it cannot perform the assignment, it raises an exception (usually but not "
 "necessarily :exc:`AttributeError`)."
 msgstr ""
+"Si la cible est une référence à un attribut : l'expression primaire de la "
+"référence est évaluée. Elle doit produire un objet avec des attributs que "
+"l'on peut assigner : si ce n'est pas le cas, une :exc:`TypeError` est levée. "
+"Python demande alors à cet objet d'assigner l'attribut donné ; si ce n'est "
+"pas possible, une exception est levée (habituellement, mais pas "
+"nécessairement, :exc:`AttributeError`)."
 
 #: ../Doc/reference/simple_stmts.rst:159
 msgid ""
@@ -164,12 +197,24 @@ msgid ""
 "to a class attribute, the LHS creates a new instance attribute as the target "
 "of the assignment::"
 msgstr ""
+"Note : si l'objet est une instance de classe et que la référence à "
+"l'attribut apparaît des deux côtés de l'opérateur d'assignation, "
+"l'expression \"à droite\", ``a.x`` peut accéder soit à l'attribut d'instance "
+"ou (si cet attribut d'instance n'existe pas) à l'attribut de classe. "
+"L'expression cible \"à gauche\" ``a.x`` est toujours définie comme un "
+"attribut d'instance, en le créant si nécessaire. Ainsi, les deux occurrences "
+"de ``a.x`` ne font pas nécessairement référence au même attribut : si "
+"l'expression \"à droite\" fait référence à un attribut de classe, "
+"l'expression \"à gauche\" crée un nouvel attribut d'instance comme cible de "
+"l'assignation ::"
 
 #: ../Doc/reference/simple_stmts.rst:173
 msgid ""
 "This description does not necessarily apply to descriptor attributes, such "
 "as properties created with :func:`property`."
 msgstr ""
+"Cette description ne s'applique pas nécessairement aux attributs des "
+"descripteurs, telles que les propriétés créées avec :func:`property`."
 
 #: ../Doc/reference/simple_stmts.rst:180
 msgid ""
@@ -199,6 +244,12 @@ msgid ""
 "the same key value, or insert a new key/value pair (if no key with the same "
 "value existed)."
 msgstr ""
+"Si la primaire est un objet tableau de correspondances (tel qu'un "
+"dictionnaire), la sélection doit être d'un type compatible avec le type des "
+"clés ; Python demande alors au tableau de correspondances de créer un couple "
+"clé-valeur qui associe la sélection à l'objet assigné. Ceci peut remplacer "
+"une correspondance déjà existante pour une clé donnée ou insérer un nouveau "
+"couple clé-valeur."
 
 #: ../Doc/reference/simple_stmts.rst:208
 msgid ""
@@ -221,6 +272,9 @@ msgid ""
 "same as for expressions, and invalid syntax is rejected during the code "
 "generation phase, causing less detailed error messages."
 msgstr ""
+"Dans l'implémentation actuelle, la syntaxe pour les cibles est similaire à "
+"celle des expressions. Toute syntaxe invalide est rejetée pendant la phase "
+"de génération de code, ce qui produit des messages d'erreurs moins détaillés."
 
 #: ../Doc/reference/simple_stmts.rst:226
 msgid ""
@@ -233,13 +287,15 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:240
 msgid "Augmented assignment statements"
-msgstr ""
+msgstr "Les assignations augmentées"
 
 #: ../Doc/reference/simple_stmts.rst:258
 msgid ""
 "Augmented assignment is the combination, in a single statement, of a binary "
 "operation and an assignment statement:"
 msgstr ""
+"Une assignation augmentée est la combinaison, dans une seule instruction, "
+"d'une opération binaire et d'une assignation :"
 
 #: ../Doc/reference/simple_stmts.rst:270
 msgid ""
@@ -249,6 +305,11 @@ msgid ""
 "operands, and assigns the result to the original target.  The target is only "
 "evaluated once."
 msgstr ""
+"Une assignation augmentée évalue la cible (qui, au contraire des "
+"assignations normales, ne peut pas être un dépaquetage) et la liste "
+"d'expressions, effectue l'opération binaire (spécifique au type "
+"d'assignation) sur les deux opérandes et assigne le résultat à la cible "
+"originale. La cible n'est évaluée qu'une seule fois."
 
 #: ../Doc/reference/simple_stmts.rst:275
 msgid ""
@@ -258,6 +319,12 @@ msgid ""
 "operation is performed *in-place*, meaning that rather than creating a new "
 "object and assigning that to the target, the old object is modified instead."
 msgstr ""
+"Une assignation augmentée comme ``x += 1`` peut être ré-écrite en ``x = x + "
+"1`` pour obtenir un effet similaire, mais pas exactement équivalent. Dans la "
+"version augmentée. ``x`` n'est évalué qu'une seule fois. Aussi, lorsque "
+"c'est possible, l'opération concrète est effectuée *sur place*, c'est-à-dire "
+"que plutôt que de créer un nouvel objet et l'assigner à la cible, c'est le "
+"vieil objet qui est modifié."
 
 #: ../Doc/reference/simple_stmts.rst:281
 msgid ""
@@ -267,6 +334,12 @@ msgid ""
 "possible *in-place* behavior, the binary operation performed by augmented "
 "assignment is the same as the normal binary operations."
 msgstr ""
+"À l'exception de l'assignation de tuples et de cibles multiples dans une "
+"seule instruction, l'assignation effectuée par une assignation augmentée est "
+"traitée de la même manière qu'une assignation normale. De même, à "
+"l'exception du comportement possible *sur place*, l'opération binaire "
+"effectuée par assignation augmentée est la même que les opérations binaires "
+"normales."
 
 #: ../Doc/reference/simple_stmts.rst:287
 msgid ""
@@ -274,25 +347,31 @@ msgid ""
 "class and instance attributes <attr-target-note>` applies as for regular "
 "assignments."
 msgstr ""
+"Pour les cibles qui sont des références à des attributs, la même :ref:`mise "
+"en garde sur les attributs de classe et d'instances <attr-target-note>` "
+"s'applique que pour les assignations normales."
 
 #: ../Doc/reference/simple_stmts.rst:294
 msgid "The :keyword:`assert` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`assert`"
 
 #: ../Doc/reference/simple_stmts.rst:300
 msgid ""
 "Assert statements are a convenient way to insert debugging assertions into a "
 "program:"
 msgstr ""
+"Les instructions ``assert`` sont une manière pratique d'insérer des tests de "
+"débogage au sein d'un programme :"
 
 #: ../Doc/reference/simple_stmts.rst:306
 msgid "The simple form, ``assert expression``, is equivalent to ::"
-msgstr ""
+msgstr "La forme la plus simple, ``assert expression``, est équivalente à ::"
 
 #: ../Doc/reference/simple_stmts.rst:311
 msgid ""
 "The extended form, ``assert expression1, expression2``, is equivalent to ::"
 msgstr ""
+"La forme étendue, ``assert expression1, expression2``, est équivalente à ::"
 
 #: ../Doc/reference/simple_stmts.rst:320
 msgid ""
@@ -305,16 +384,27 @@ msgid ""
 "unnecessary to include the source code for the expression that failed in the "
 "error message; it will be displayed as part of the stack trace."
 msgstr ""
+"Ces équivalences supposent que :const:`__debug__` et :exc:`AssertionError` "
+"font référence aux variables natives ainsi nommées. Dans l'implémentation "
+"actuelle, la variable native :const:`__debug__` vaut ``True`` dans des "
+"circonstances normales, ``False`` quand les optimisations sont demandées "
+"(ligne de commande avec l'option -O). Le générateur de code actuel ne "
+"produit aucun code pour une instruction assert quand vous demandez les "
+"optimisations à la compilation. Notez qu'il est superflu d'inclure le code "
+"source dans le message d'erreur pour l'expression qui a échoué : il est "
+"affiché dans la pile d'appels."
 
 #: ../Doc/reference/simple_stmts.rst:329
 msgid ""
 "Assignments to :const:`__debug__` are illegal.  The value for the built-in "
 "variable is determined when the interpreter starts."
 msgstr ""
+"Assigner vers  :const:`__debug__` est illégal. La valeur de cette variable "
+"native est déterminée au moment où l'interpréteur démarre."
 
 #: ../Doc/reference/simple_stmts.rst:336
 msgid "The :keyword:`pass` statement"
-msgstr ""
+msgstr "L'instruction  :keyword:`pass`"
 
 #: ../Doc/reference/simple_stmts.rst:345
 msgid ""
@@ -322,6 +412,10 @@ msgid ""
 "happens. It is useful as a placeholder when a statement is required "
 "syntactically, but no code needs to be executed, for example::"
 msgstr ""
+":keyword:`pass` est une opération vide --- quand elle est exécutée, rien ne "
+"se passe. Elle est utile comme bouche-trou lorsqu'une instruction est "
+"syntaxiquement requise mais qu'aucun code ne doit être exécuté. Par "
+"exemple ::"
 
 #: ../Doc/reference/simple_stmts.rst:357
 msgid "The :keyword:`del` statement"
@@ -332,12 +426,17 @@ msgid ""
 "Deletion is recursively defined very similar to the way assignment is "
 "defined. Rather than spelling it out in full details, here are some hints."
 msgstr ""
+"La suppression est récursivement définie de la même manière que "
+"l'assignation. Plutôt que de détailler cela de manière approfondie, voici "
+"quelques indices."
 
 #: ../Doc/reference/simple_stmts.rst:370
 msgid ""
 "Deletion of a target list recursively deletes each target, from left to "
 "right."
 msgstr ""
+"La suppression d'une liste cible (*target_list* dans la grammaire ci-dessus) "
+"supprime récursivement chaque cible, de la gauche vers la droite."
 
 #: ../Doc/reference/simple_stmts.rst:376
 msgid ""
@@ -360,6 +459,10 @@ msgid ""
 "to assignment of an empty slice of the right type (but even this is "
 "determined by the sliced object)."
 msgstr ""
+"La suppression d'une référence à un attribut, une sélection ou une tranche "
+"est passée à l'objet primaire concerné : la suppression d'une tranche est en "
+"général équivalente à l'assignation d'une tranche vide du type adéquat (mais "
+"ceci est au final déterminé par l'objet que l'on tranche)."
 
 #: ../Doc/reference/simple_stmts.rst:397
 msgid "The :keyword:`print` statement"
@@ -414,25 +517,32 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:457
 msgid "The :keyword:`return` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`return`"
 
 #: ../Doc/reference/simple_stmts.rst:467
 msgid ""
 ":keyword:`return` may only occur syntactically nested in a function "
 "definition, not within a nested class definition."
 msgstr ""
+":keyword:`return` ne peut être placée qu'à l'intérieur d'une définition de "
+"fonction, pas à l'intérieur d'une définition de classe."
 
 #: ../Doc/reference/simple_stmts.rst:470
 msgid ""
 "If an expression list is present, it is evaluated, else ``None`` is "
 "substituted."
 msgstr ""
+"Si une liste d'expressions (*expression_list* dans la grammaire ci-dessus) "
+"est présente, elle est évaluée, sinon ``None`` est utilisée comme valeur par "
+"défaut."
 
 #: ../Doc/reference/simple_stmts.rst:472
 msgid ""
 ":keyword:`return` leaves the current function call with the expression list "
 "(or ``None``) as return value."
 msgstr ""
+":keyword:`return` quitte l'appel à la fonction courante avec la liste "
+"d'expressions (ou ``None``) comme valeur de retour."
 
 #: ../Doc/reference/simple_stmts.rst:477
 msgid ""
@@ -440,6 +550,9 @@ msgid ""
 "a :keyword:`finally` clause, that :keyword:`finally` clause is executed "
 "before really leaving the function."
 msgstr ""
+"Quand :keyword:`return` fait sortir d'une instruction :keyword:`try` avec "
+"une clause :keyword:`finally`, cette clause :keyword:`finally` est exécutée "
+"avant de réellement quitter la fonction."
 
 #: ../Doc/reference/simple_stmts.rst:481
 msgid ""
@@ -496,6 +609,8 @@ msgid ""
 "For full details of :keyword:`yield` semantics, refer to the :ref:"
 "`yieldexpr` section."
 msgstr ""
+"Pour tous les détails sur la sémantique de :keyword:`yield`, reportez-vous à "
+"la section :ref:`yieldexpr`."
 
 #: ../Doc/reference/simple_stmts.rst:532
 msgid ""
@@ -513,10 +628,12 @@ msgid ""
 "The proposal for adding generators and the :keyword:`yield` statement to "
 "Python."
 msgstr ""
+"La proposition d'ajouter à Python des générateurs et l'instruction :keyword:"
+"`yield`."
 
 #: ../Doc/reference/simple_stmts.rst:545
 msgid ":pep:`342` - Coroutines via Enhanced Generators"
-msgstr ""
+msgstr ":pep:`342` - Coroutines *via* des générateurs améliorés"
 
 #: ../Doc/reference/simple_stmts.rst:545
 msgid ""
@@ -581,10 +698,13 @@ msgid ""
 "`exceptions`, and information about handling exceptions is in section :ref:"
 "`try`."
 msgstr ""
+"Des informations complémentaires sur les exceptions sont disponibles dans la "
+"section :ref:`exceptions` et sur la gestion des exceptions dans la section :"
+"ref:`try`."
 
 #: ../Doc/reference/simple_stmts.rst:601
 msgid "The :keyword:`break` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`break`"
 
 #: ../Doc/reference/simple_stmts.rst:612
 msgid ""
@@ -592,18 +712,25 @@ msgid ""
 "keyword:`while` loop, but not nested in a function or class definition "
 "within that loop."
 msgstr ""
+"Une instruction :keyword:`break` ne peut apparaître qu'à l'intérieur d'une "
+"boucle :keyword:`for` ou :keyword:`while`, mais pas dans une définition de "
+"fonction ou de classe à l'intérieur de cette boucle."
 
 #: ../Doc/reference/simple_stmts.rst:618
 msgid ""
 "It terminates the nearest enclosing loop, skipping the optional :keyword:"
 "`else` clause if the loop has one."
 msgstr ""
+"Elle termine la boucle la plus imbriquée, shuntant l'éventuelle clause :"
+"keyword:`else` de la boucle."
 
 #: ../Doc/reference/simple_stmts.rst:623
 msgid ""
 "If a :keyword:`for` loop is terminated by :keyword:`break`, the loop control "
 "target keeps its current value."
 msgstr ""
+"Si une boucle :keyword:`for` est terminée par un :keyword:`break`, la cible "
+"qui contrôle la boucle garde sa valeur."
 
 #: ../Doc/reference/simple_stmts.rst:628
 msgid ""
@@ -611,10 +738,13 @@ msgid ""
 "a :keyword:`finally` clause, that :keyword:`finally` clause is executed "
 "before really leaving the loop."
 msgstr ""
+"Quand :keyword:`break` passe le contrôle en dehors d'une instruction :"
+"keyword:`try` qui comporte une clause :keyword:`finally`, cette clause :"
+"keyword:`finally` est exécutée avant de quitter la boucle."
 
 #: ../Doc/reference/simple_stmts.rst:636
 msgid "The :keyword:`continue` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`continue`"
 
 #: ../Doc/reference/simple_stmts.rst:648
 msgid ""
@@ -623,6 +753,11 @@ msgid ""
 "or :keyword:`finally` clause within that loop.  It continues with the next "
 "cycle of the nearest enclosing loop."
 msgstr ""
+"L'instruction :keyword:`continue` ne peut apparaître qu'à l'intérieur d'une "
+"boucle :keyword:`for` ou :keyword:`while`, mais pas dans une définition de "
+"fonction ou de classe ni dans une clause :keyword:`finally`, à l'intérieur "
+"de cette boucle. Elle fait continuer le flot d'exécution au prochain cycle "
+"de la boucle la plus imbriquée."
 
 #: ../Doc/reference/simple_stmts.rst:653
 msgid ""
@@ -630,10 +765,14 @@ msgid ""
 "with a :keyword:`finally` clause, that :keyword:`finally` clause is executed "
 "before really starting the next loop cycle."
 msgstr ""
+"Quand :keyword:`continue` passe le contrôle en dehors d'une instruction :"
+"keyword:`try` qui comporte une clause :keyword:`finally`, cette clause :"
+"keyword:`finally` est exécutée avant de commencer le cycle suivant de la "
+"boucle."
 
 #: ../Doc/reference/simple_stmts.rst:662
 msgid "The :keyword:`import` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`import`"
 
 #: ../Doc/reference/simple_stmts.rst:682
 msgid ""
@@ -815,6 +954,21 @@ msgid ""
 "``pkg.subpkg2.mod``. The specification for relative imports is contained "
 "within :pep:`328`."
 msgstr ""
+"Quand vous spécifiez les modules à importer, vous n'avez pas besoin de "
+"spécifier les noms absolus des modules. Quand un module ou un paquet est "
+"contenu dans un autre paquet, il est possible d'effectuer une importation "
+"relative à l'intérieur du même paquet de plus haut niveau sans avoir à "
+"mentionner le nom du paquet. En utilisant des points en entête du module ou "
+"du paquet spécifié après :keyword:`from`, vous pouvez spécifier combien de "
+"niveaux vous souhaitez remonter dans la hiérarchie du paquet courant sans "
+"spécifier de nom exact. Un seul point en tête signifie le paquet courant où "
+"se situe le module qui effectue l'importation. Deux points signifient de "
+"remonter d'un niveau. Trois points, remonter de deux niveaux et ainsi de "
+"suite. Ainsi, si vous exécutez ``from . import mod`` dans un module du "
+"paquet ``pkg``, vous importez finalement ``pkg.mod``. Et si vous exécutez "
+"``from ..souspkg2 import mod`` depuis ``pkg.souspkg1``, vous importez "
+"finalement ``pkg.souspkg2.mod``. La spécification des importations relatives "
+"se situe dans la  :pep:`328`."
 
 #: ../Doc/reference/simple_stmts.rst:854
 msgid ""
@@ -824,7 +978,7 @@ msgstr ""
 
 #: ../Doc/reference/simple_stmts.rst:861
 msgid "Future statements"
-msgstr ""
+msgstr "L'instruction future"
 
 #: ../Doc/reference/simple_stmts.rst:865
 msgid ""
@@ -841,22 +995,24 @@ msgid ""
 "A future statement must appear near the top of the module.  The only lines "
 "that can appear before a future statement are:"
 msgstr ""
+"Une instruction *future* doit apparaître en haut du module. Les seules "
+"lignes autorisées avant une instruction *future* sont :"
 
 #: ../Doc/reference/simple_stmts.rst:883
 msgid "the module docstring (if any),"
-msgstr ""
+msgstr "la chaîne de documentation du module (si elle existe),"
 
 #: ../Doc/reference/simple_stmts.rst:884
 msgid "comments,"
-msgstr ""
+msgstr "des commentaires,"
 
 #: ../Doc/reference/simple_stmts.rst:885
 msgid "blank lines, and"
-msgstr ""
+msgstr "des lignes vides et"
 
 #: ../Doc/reference/simple_stmts.rst:886
 msgid "other future statements."
-msgstr ""
+msgstr "d'autres instructions *future*."
 
 #: ../Doc/reference/simple_stmts.rst:888
 msgid ""
@@ -876,6 +1032,13 @@ msgid ""
 "case the compiler may need to parse the module differently.  Such decisions "
 "cannot be pushed off until runtime."
 msgstr ""
+"Une instruction *future* est reconnue et traitée spécialement au moment de "
+"la compilation : les modifications à la sémantique des constructions de base "
+"sont souvent implémentées en générant un code différent. Il peut même "
+"arriver qu'une nouvelle fonctionnalité ait une syntaxe incompatible (tel "
+"qu'un nouveau mot réservé) ; dans ce cas, le compilateur a besoin d'analyser "
+"le module de manière différente. De telles décisions ne peuvent pas être "
+"différées au moment de l'exécution."
 
 #: ../Doc/reference/simple_stmts.rst:901
 msgid ""
@@ -883,6 +1046,9 @@ msgid ""
 "defined, and raises a compile-time error if a future statement contains a "
 "feature not known to it."
 msgstr ""
+"Pour une version donnée, le compilateur sait quelles fonctionnalités ont été "
+"définies et lève une erreur à la compilation si une instruction *future* "
+"contient une fonctionnalité qui lui est inconnue."
 
 #: ../Doc/reference/simple_stmts.rst:905
 msgid ""
@@ -890,22 +1056,30 @@ msgid ""
 "is a standard module :mod:`__future__`, described later, and it will be "
 "imported in the usual way at the time the future statement is executed."
 msgstr ""
+"La sémantique à l'exécution est la même que pour toute autre instruction "
+"d'importation : il existe un module standard :mod:`__future__`, décrit plus "
+"loin, qui est importé comme les autres au moment ou l'instruction *future* "
+"est exécutée."
 
 #: ../Doc/reference/simple_stmts.rst:909
 msgid ""
 "The interesting runtime semantics depend on the specific feature enabled by "
 "the future statement."
 msgstr ""
+"La sémantique particulière à l'exécution dépend des fonctionnalités "
+"apportées par l'instruction *future*."
 
 #: ../Doc/reference/simple_stmts.rst:912
 msgid "Note that there is nothing special about the statement::"
-msgstr ""
+msgstr "Notez que l'instruction suivante est tout à fait normale ::"
 
 #: ../Doc/reference/simple_stmts.rst:916
 msgid ""
 "That is not a future statement; it's an ordinary import statement with no "
 "special semantics or syntax restrictions."
 msgstr ""
+"Ce n'est pas une instruction *future* ; c'est une instruction d'importation "
+"ordinaire qui n'a aucune sémantique particulière ou restriction de syntaxe."
 
 #: ../Doc/reference/simple_stmts.rst:919
 msgid ""
@@ -925,18 +1099,24 @@ msgid ""
 "and the script includes a future statement, it will be in effect in the "
 "interactive session started after the script is executed."
 msgstr ""
+"Une instruction *future* entrée à l'invite de l'interpréteur interactif est "
+"effective pour le reste de la session de l'interpréteur. Si l'interpréteur "
+"est démarré avec l'option  :option:`-i`, qu'un nom de script est passé pour "
+"être exécuté et que ce script contient une instruction *future*, elle est "
+"effective pour la session interactive qui démarre après l'exécution du "
+"script."
 
 #: ../Doc/reference/simple_stmts.rst:934
 msgid ":pep:`236` - Back to the __future__"
-msgstr ":pep:`236` - Back to the __future__"
+msgstr ":pep:`236` -- retour vers le __future__"
 
 #: ../Doc/reference/simple_stmts.rst:935
 msgid "The original proposal for the __future__ mechanism."
-msgstr ""
+msgstr "La proposition originale pour le mécanisme de __future__."
 
 #: ../Doc/reference/simple_stmts.rst:941
 msgid "The :keyword:`global` statement"
-msgstr ""
+msgstr "L'instruction :keyword:`global`"
 
 #: ../Doc/reference/simple_stmts.rst:950
 msgid ""
@@ -946,12 +1126,20 @@ msgid ""
 "variable without :keyword:`global`, although free variables may refer to "
 "globals without being declared global."
 msgstr ""
+"L'instruction :keyword:`global` est une déclaration qui couvre l'ensemble du "
+"bloc de code courant. Elle signifie que les noms (*identifier* dans la "
+"grammaire ci-dessus) listés doivent être interprétés comme globaux. Il est "
+"impossible d'assigner une variable globale sans :keyword:`global`, mais "
+"rappelez-vous que les variables libres peuvent faire référence à des "
+"variables globales sans avoir été déclarées en tant que telles."
 
 #: ../Doc/reference/simple_stmts.rst:956
 msgid ""
 "Names listed in a :keyword:`global` statement must not be used in the same "
 "code block textually preceding that :keyword:`global` statement."
 msgstr ""
+"Les noms listés dans l'instruction :keyword:`global` ne doivent pas être "
+"utilisés, dans le même bloc de code, avant l'instruction :keyword:`global`."
 
 #: ../Doc/reference/simple_stmts.rst:959
 msgid ""
