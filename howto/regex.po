@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:5
 msgid "Regular Expression HOWTO"
-msgstr ""
+msgstr "Guide des Expressions régulières"
 
 #: ../Doc/howto/regex.rst:7
 msgid "A.M. Kuchling <amk@amk.ca>"
@@ -34,6 +34,10 @@ msgid ""
 "Python with the :mod:`re` module.  It provides a gentler introduction than "
 "the corresponding section in the Library Reference."
 msgstr ""
+"Ce document est un guide d'introduction à l'utilisation des expressions "
+"régulières en Python avec le module :mod:`re`. Il fournit une introduction "
+"plus abordable que la section correspondante dans le guide de référence des "
+"bibliothèques."
 
 #: ../Doc/howto/regex.rst:24
 msgid "Introduction"
@@ -51,6 +55,18 @@ msgid ""
 "match for the pattern anywhere in this string?\".  You can also use REs to "
 "modify a string or to split it apart in various ways."
 msgstr ""
+"Les expressions régulières (appelées RE, ou regexes, ou motifs regex) sont "
+"essentiellement un petit langage de programmation hautement spécialisé "
+"embarqué dans Python et dont la manipulation est rendue possible par "
+"l'utilisation du module :mod:`re`. En utilisant ce petit langage, vous "
+"spécifiez les règles pour l'ensemble des chaînes des caractères possibles "
+"pour lesquelles vous voulez une correspondance; cet ensemble contient des "
+"phrases en Anglais, ou des adresses de courriel, ou des commandes TeX, ou "
+"tout ce que vous voulez. Vous pouvez ensuite poser des questions tel que "
+"\"Est-ce que cette chaîne de caractères correspond au motif ?\", ou \"Y-a-"
+"t'il une correspondance pour un motif dans le chaîne de caractères ?\". Vous "
+"pouvez aussi utiliser les RE pour modifier une chaîne de caractères ou la "
+"découper de différentes façons."
 
 #: ../Doc/howto/regex.rst:35
 msgid ""
@@ -62,6 +78,13 @@ msgid ""
 "requires that you have a good understanding of the matching engine's "
 "internals."
 msgstr ""
+"Les motifs d'expressions régulières sont compilés en **bytecodes** qui sont "
+"ensuite exécutés par un moteur de correspondance écrit en C. Pour une "
+"utilisation plus poussée, il peut s'avérer nécessaire de s'intéresser à la "
+"manière dont le moteur exécute la RE afin d'écrire une expression dont le "
+"**bytecode** est plus rapide. L'optimisation n'est pas traitée dans ce "
+"document, parce qu'elle nécessite d'avoir une bonne compréhension des "
+"mécanismes internes du moteur de correspondance."
 
 #: ../Doc/howto/regex.rst:42
 msgid ""
@@ -73,10 +96,18 @@ msgid ""
 "be slower than an elaborate regular expression, it will also probably be "
 "more understandable."
 msgstr ""
+"Le langage d'expressions régulières est relativement petit et restreint donc "
+"toutes les tâches de manipulation de chaînes de caractères ne peuvent pas "
+"être réalisées à l'aide d'expressions régulières. Il y a aussi des tâches "
+"qui *peuvent* être réalisées à l'aide d'expressions régulières mais qui ont "
+"tendance à produire des expressions régulières très compliquées. Dans ces "
+"cas, il vous sera plus utile d'écrire du code Python pour réaliser le "
+"traitement; même si le code Python sera plus lent qu'une expression "
+"régulière élaborée, il sera probablement plus compréhensible."
 
 #: ../Doc/howto/regex.rst:51
 msgid "Simple Patterns"
-msgstr ""
+msgstr "Motifs simples"
 
 #: ../Doc/howto/regex.rst:53
 msgid ""
@@ -84,6 +115,10 @@ msgid ""
 "Since regular expressions are used to operate on strings, we'll begin with "
 "the most common task: matching characters."
 msgstr ""
+"Nous commencerons par étudier les expressions régulières les plus simples. "
+"Dans la mesure où les expressions régulières sont utilisées pour manipuler "
+"des chaînes de caractères, nous commencerons par les tâches les plus "
+"communes: la correspondance de caractères ."
 
 #: ../Doc/howto/regex.rst:57
 msgid ""
@@ -91,10 +126,13 @@ msgid ""
 "expressions (deterministic and non-deterministic finite automata), you can "
 "refer to almost any textbook on writing compilers."
 msgstr ""
+"Pour une explication détaillée sur la technologie sous-jacente des "
+"expressions régulières (automate d'état déterministe et non-déterministe), "
+"référez-vous à n'importe quel manuel sur l'écriture de compilateurs."
 
 #: ../Doc/howto/regex.rst:63
 msgid "Matching Characters"
-msgstr ""
+msgstr "Caractères correspondants"
 
 #: ../Doc/howto/regex.rst:65
 msgid ""
@@ -103,6 +141,11 @@ msgid ""
 "can enable a case-insensitive mode that would let this RE match ``Test`` or "
 "``TEST`` as well; more about this later.)"
 msgstr ""
+"La plupart des lettres ou caractères vont correspondre à eux-mêmes. Par "
+"exemple, l'expression régulière ``test`` correspond à la chaîne de caractère "
+"``test`` précisément. (Vous pouvez activer le mode non-sensible à la casse "
+"qui permet à cette RE de correspondre à ``Test`` ou ``TEST`` également; plus "
+"à ce sujet dans la suite.) "
 
 #: ../Doc/howto/regex.rst:70
 msgid ""
@@ -113,12 +156,20 @@ msgid ""
 "this document is devoted to discussing various metacharacters and what they "
 "do."
 msgstr ""
+"Il y a des exceptions à cette règle; certains caractères sont des :dfn:"
+"`metacharacters` spéciaux et ne correspondent pas à eux-mêmes. Au lieu de "
+"cela, ils signalent que certaines choses non ordinaires doivent "
+"correspondre, ou affectent d'autre portions de la RE en les répétant ou en "
+"changeant leur sens. Une grande partie de ce document est consacrée au "
+"fonctionnement de ces métacaractères."
 
 #: ../Doc/howto/regex.rst:76
 msgid ""
 "Here's a complete list of the metacharacters; their meanings will be "
 "discussed in the rest of this HOWTO."
 msgstr ""
+"Voici une liste complète des méta-caractères; leurs sens sera décrit dans la "
+"suite de ce guide."
 
 #: ../Doc/howto/regex.rst:83
 msgid ""
@@ -131,6 +182,16 @@ msgid ""
 "characters.  If you wanted to match only lowercase letters, your RE would be "
 "``[a-z]``."
 msgstr ""
+"Les premiers méta-caractères que nous étudions sont ``[`` et ``]``. Ils sont "
+"utilisés pour spécifier une classe de caractères, qui forme un ensemble de "
+"caractères dont vous souhaitez trouver la correspondance. Les caractères "
+"peuvent être listés individuellement, ou une plage de caractères peut être "
+"indiquée en fournissant deux caractères séparés par un `'-'``. Par exemple, "
+"``[abc]`` correspondra à n'importe quel caractère parmi ``a``, ``b``, ou "
+"``c``; ce qui est équivalent à ``[a-c]``, qui utilise une plage pour "
+"exprimer le même ensemble de caractères. Si vous voulez trouver une "
+"correspondance avec uniquement les lettres en minuscule, votre RE sera ``[a-"
+"z]``."
 
 #: ../Doc/howto/regex.rst:92
 msgid ""
@@ -139,6 +200,10 @@ msgid ""
 "is usually a metacharacter, but inside a character class it's stripped of "
 "its special nature."
 msgstr ""
+"Les méta-caractères ne sont pas actifs dans les classes. Par exemple, ``[akm"
+"$]`` correspondra à n'importe quel caractère parmi ``'a'``, ``'k'``, "
+"``'m'``, ou ``'$'``; ``'$'`` est habituellement un méta-caractère mais dans "
+"une classe de caractères, il est dépourvu de son caractère spécial."
 
 #: ../Doc/howto/regex.rst:97
 msgid ""
@@ -148,6 +213,12 @@ msgid ""
 "match the ``'^'`` character.  For example, ``[^5]`` will match any character "
 "except ``'5'``."
 msgstr ""
+"Vous pouvez trouvez une correspondance avec les caractères non listés dans "
+"une classe en complimentant (:dfn:`complementing`) l'ensemble. Ceci est "
+"indiqué en incluant un ``'^'`` en tant que premier caractère de la classe; "
+"``'^'`` en dehors d'une classe de caractères correspondra au caractère "
+"``'^'``. Par exemple, ``[^5]`` correspondra à tout les caractères, sauf "
+"``[^5]``."
 
 #: ../Doc/howto/regex.rst:102
 msgid ""
@@ -158,6 +229,14 @@ msgid ""
 "need to match a ``[`` or  ``\\``, you can precede them with a backslash to "
 "remove their special meaning: ``\\[`` or ``\\\\``."
 msgstr ""
+"Le méta-caractère qui est probablement le plus important est le "
+"**backslash**, ``\\``. Comme dans les chaînes de caractères en Python, le "
+"**backslash** peut être suivi par différents caractères pour signaler "
+"différentes séquences spéciales. Il est aussi utilisé pour échapper tout les "
+"méta-caractères afin d'en trouver les correspondances dans les motifs; par "
+"exemple, si vous devait trouver une correspondance pour ``[`` ou  ``\\`, "
+"vous pouvais les précéder avec un **backslash** pour supprimer leur "
+"caractères spécial : ``\\[`` ou ``\\\\``."
 
 #: ../Doc/howto/regex.rst:109
 msgid ""
@@ -165,6 +244,10 @@ msgid ""
 "sets of characters that are often useful, such as the set of digits, the set "
 "of letters, or the set of anything that isn't whitespace."
 msgstr ""
+"Certaines séquences spéciales commençant par ``'\\'`` représentent des "
+"ensembles de caractères prédéfinis qui sont souvent utiles, tels que "
+"l'ensemble des chiffres, l'ensemble des lettres, ou l'ensemble des "
+"caractères qui ne sont pas des séparateurs."
 
 #: ../Doc/howto/regex.rst:114
 msgid ""
@@ -176,6 +259,14 @@ msgid ""
 "in a string pattern by supplying the :const:`re.ASCII` flag when compiling "
 "the regular expression."
 msgstr ""
+"Prenons un exemple: ``\\w`` correspond à n'importe quel caractères "
+"alphanumérique. Si le motif **regex** est exprimé en octets, il est "
+"équivalent à la classe ``[a-zA-Z0-9_]``. Si le motif **regex** est une "
+"chaîne de caractères, ``\\w`` correspondra à tout les caractères identifiés "
+"comme lettre dans le base de données Unicode fourni par le module :mod:"
+"`unicodedata`. Vous pouvez utiliser la définition plus restrictive de ``"
+"\\w`` dans un motif de chaîne de caractères en spécifiant le fanion :const:"
+"`re.ASCII` lors de la compilation de l'expression régulière."
 
 #: ../Doc/howto/regex.rst:122
 msgid ""
@@ -185,6 +276,13 @@ msgid ""
 "Standard Library reference.  In general, the Unicode versions match any "
 "character that's in the appropriate category in the Unicode database."
 msgstr ""
+"La liste de séquences spéciales suivante est incomplète. Pour une liste "
+"complète de séquences et définitions de classe étendue pour des motifs de "
+"chaînes de caractère s Unicode, reportez-vous à la dernière partie de la "
+"référence :ref:`Syntaxe d'Expressions Régulières <re-syntax>` de la "
+"librairie standard. En général, les versions d'Unicode trouve une "
+"correspondance avec n'importe quel caractère présent dans le catégorie "
+"appropriée de la base de données Unicode. "
 
 #: ../Doc/howto/regex.rst:130
 msgid "``\\d``"
@@ -193,6 +291,8 @@ msgstr "``\\d``"
 #: ../Doc/howto/regex.rst:130
 msgid "Matches any decimal digit; this is equivalent to the class ``[0-9]``."
 msgstr ""
+"Correspond à n'importe quel caractère numérique ; ceci est équivalent à la "
+"classe ``[0-9]``."
 
 #: ../Doc/howto/regex.rst:133
 msgid "``\\D``"
@@ -202,6 +302,8 @@ msgstr "``\\D``"
 msgid ""
 "Matches any non-digit character; this is equivalent to the class ``[^0-9]``."
 msgstr ""
+"Correspond à n'importe caractère non numérique; ceci est équivalent à la "
+"classe ``[^0-9]``."
 
 #: ../Doc/howto/regex.rst:137
 msgid "``\\s``"
@@ -212,6 +314,8 @@ msgid ""
 "Matches any whitespace character; this is equivalent to the class ``[ \\t\\n"
 "\\r\\f\\v]``."
 msgstr ""
+"Correspond à n'importe caractères d'espacement; ceci est équivalent à la "
+"classe ``[ \\t\\n\\r\\f\\v]``."
 
 #: ../Doc/howto/regex.rst:141
 msgid "``\\S``"
@@ -222,6 +326,8 @@ msgid ""
 "Matches any non-whitespace character; this is equivalent to the class ``[^ "
 "\\t\\n\\r\\f\\v]``."
 msgstr ""
+"Correspond à n'importe caractère autre que d'espacement; ceci est équivalent "
+"à la classe ``[^ \\t\\n\\r\\f\\v]``."
 
 #: ../Doc/howto/regex.rst:145
 msgid "``\\w``"
@@ -232,6 +338,8 @@ msgid ""
 "Matches any alphanumeric character; this is equivalent to the class ``[a-zA-"
 "Z0-9_]``."
 msgstr ""
+"Correspond à n'importe caractère alphanumérique; ceci est équivalent à la "
+"classe ``[a-zA-Z0-9_]``."
 
 #: ../Doc/howto/regex.rst:149
 msgid "``\\W``"
@@ -242,6 +350,8 @@ msgid ""
 "Matches any non-alphanumeric character; this is equivalent to the class "
 "``[^a-zA-Z0-9_]``."
 msgstr ""
+"Correspond à n'importe caractère non-alphanumérique; ceci est équivalent à "
+"la classe ``[^a-zA-Z0-9_]``."
 
 #: ../Doc/howto/regex.rst:151
 msgid ""
@@ -249,6 +359,9 @@ msgid ""
 "``[\\s,.]`` is a character class that will match any whitespace character, "
 "or ``','`` or ``'.'``."
 msgstr ""
+"Ces séquences peuvent être incluses dans une classe de caractères. Par "
+"exemple, ``[\\s,.]`` est une classe de caractères qui correspond à tous les "
+"caractères d'espace, ou ``','`` ou ``'.'``. "
 
 #: ../Doc/howto/regex.rst:155
 msgid ""
@@ -260,7 +373,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:162
 msgid "Repeating Things"
-msgstr ""
+msgstr "Répetitions"
 
 #: ../Doc/howto/regex.rst:164
 msgid ""
@@ -306,11 +419,11 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:191
 msgid "Step"
-msgstr ""
+msgstr "Etape"
 
 #: ../Doc/howto/regex.rst:191
 msgid "Matched"
-msgstr ""
+msgstr "Correspond"
 
 #: ../Doc/howto/regex.rst:191
 msgid "Explanation"
@@ -326,7 +439,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:193
 msgid "The ``a`` in the RE matches."
-msgstr ""
+msgstr "Le ``a`` dans la RE correspondante."
 
 #: ../Doc/howto/regex.rst:195
 msgid "2"
@@ -355,6 +468,8 @@ msgid ""
 "The engine tries to match ``b``, but the current position is at the end of "
 "the string, so it fails."
 msgstr ""
+"Le moteur essaye de trouver une correspondance avec ``b`` mais la position "
+"courante est à la fin de la chaîne de caractères et échoue donc."
 
 #: ../Doc/howto/regex.rst:204
 msgid "4"
@@ -453,7 +568,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:259
 msgid "Using Regular Expressions"
-msgstr ""
+msgstr "Utilisation des Expressions Régulières"
 
 #: ../Doc/howto/regex.rst:261
 msgid ""
@@ -465,7 +580,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:268
 msgid "Compiling Regular Expressions"
-msgstr ""
+msgstr "Compilations des Expressions Régulières"
 
 #: ../Doc/howto/regex.rst:270
 msgid ""
@@ -500,7 +615,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:297
 msgid "The Backslash Plague"
-msgstr ""
+msgstr "Le Maudit Backslash"
 
 #: ../Doc/howto/regex.rst:299
 msgid ""
@@ -544,7 +659,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:317
 msgid "Escaped backslash for :func:`re.compile`"
-msgstr ""
+msgstr "**backslash** échappé pour :func:`re.compile`"
 
 #: ../Doc/howto/regex.rst:319 ../Doc/howto/regex.rst:339
 msgid "``\"\\\\\\\\section\"``"
@@ -579,7 +694,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:335
 msgid "Raw string"
-msgstr ""
+msgstr "Chaîne de caractères brute"
 
 #: ../Doc/howto/regex.rst:337
 msgid "``\"ab*\"``"
@@ -612,11 +727,15 @@ msgid ""
 "the most significant ones will be covered here; consult the :mod:`re` docs "
 "for a complete listing."
 msgstr ""
+"Une fois que nous avons un objet représentant une expression régulière "
+"compilée, qu'en faisons-nous ? Les objets motifs ont plusieurs méthodes et "
+"attributs. Seuls les plus significatifs seront couverts ici; consultez la "
+"documentation :mod:`re` pour la liste complète."
 
 #: ../Doc/howto/regex.rst:354 ../Doc/howto/regex.rst:412
 #: ../Doc/howto/regex.rst:1029
 msgid "Method/Attribute"
-msgstr ""
+msgstr "Méthode/Attribut"
 
 #: ../Doc/howto/regex.rst:354 ../Doc/howto/regex.rst:412
 #: ../Doc/howto/regex.rst:1029
@@ -710,7 +829,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:414
 msgid "Return the string matched by the RE"
-msgstr ""
+msgstr "Retourne la chaîne de caractères correspondant à la RE"
 
 #: ../Doc/howto/regex.rst:416
 msgid "``start()``"
@@ -718,7 +837,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:416
 msgid "Return the starting position of the match"
-msgstr ""
+msgstr "Retourne la position de début de correspondance"
 
 #: ../Doc/howto/regex.rst:418
 msgid "``end()``"
@@ -726,7 +845,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:418
 msgid "Return the ending position of the match"
-msgstr ""
+msgstr "Retourne la position de fin de correspondance"
 
 #: ../Doc/howto/regex.rst:420
 msgid "``span()``"
@@ -803,7 +922,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:511
 msgid "Compilation Flags"
-msgstr ""
+msgstr "Fanion de Compilation"
 
 #: ../Doc/howto/regex.rst:513
 msgid ""
@@ -881,6 +1000,8 @@ msgstr ""
 msgid ""
 "Enable verbose REs, which can be organized more cleanly and understandably."
 msgstr ""
+"Activer les RE verbeuses, qui peuvent être organisées de manière plus "
+"propres et compréhensibles."
 
 #: ../Doc/howto/regex.rst:550
 msgid ""
@@ -916,6 +1037,8 @@ msgid ""
 "(``^`` and ``$`` haven't been explained yet;  they'll be introduced in "
 "section :ref:`more-metacharacters`.)"
 msgstr ""
+"(``^`` et ``$`` n'ont pas encore été expliqués; ils seront introduit dans le "
+"section :ref:`more-metacharacters`.)"
 
 #: ../Doc/howto/regex.rst:582
 msgid ""
@@ -980,10 +1103,14 @@ msgid ""
 "this section, we'll cover some new metacharacters, and how to use groups to "
 "retrieve portions of the text that was matched."
 msgstr ""
+"Jusqu'à présent nous avons seulement couvert une partie des fonctionnalités "
+"des expressions régulières. Dans cette section, nous couvrirons quelques "
+"nouveaux méta-caractères et comment utiliser les groupes pour récupérer des "
+"portions de textes correspondante."
 
 #: ../Doc/howto/regex.rst:656
 msgid "More Metacharacters"
-msgstr ""
+msgstr "Plus de Méta-caratères"
 
 #: ../Doc/howto/regex.rst:658
 msgid ""
@@ -1005,7 +1132,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:677
 msgid "``|``"
-msgstr ""
+msgstr "``|``"
 
 #: ../Doc/howto/regex.rst:670
 msgid ""
@@ -1024,7 +1151,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:693
 msgid "``^``"
-msgstr ""
+msgstr "``^``"
 
 #: ../Doc/howto/regex.rst:680
 msgid ""
@@ -1125,7 +1252,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:759
 msgid "Grouping"
-msgstr ""
+msgstr "Regroupement"
 
 #: ../Doc/howto/regex.rst:761
 msgid ""
@@ -1363,7 +1490,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:966
 msgid "The pattern to match this is quite simple:"
-msgstr ""
+msgstr "Le motif de correspondance est plutôt simple: "
 
 #: ../Doc/howto/regex.rst:968
 msgid "``.*[.].*$``"
@@ -1469,6 +1596,8 @@ msgstr ""
 #: ../Doc/howto/regex.rst:1031
 msgid "Split the string into a list, splitting it wherever the RE matches"
 msgstr ""
+"Découpe la chaîne de caractère en liste, la découpant partout où la RE "
+"correspond"
 
 #: ../Doc/howto/regex.rst:1034
 msgid "``sub()``"
@@ -1479,6 +1608,8 @@ msgid ""
 "Find all substrings where the RE matches, and replace them with a different "
 "string"
 msgstr ""
+"Rechercher toutes les sous-chaînes de caractères où correspond la RE et les "
+"substituer par une chaîne de caractères différente "
 
 #: ../Doc/howto/regex.rst:1037
 msgid "``subn()``"
@@ -1537,7 +1668,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:1098
 msgid "Search and Replace"
-msgstr ""
+msgstr "Recherche et Substitution"
 
 #: ../Doc/howto/regex.rst:1100
 msgid ""
@@ -1635,7 +1766,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:1197
 msgid "Common Problems"
-msgstr ""
+msgstr "Problèmes courants"
 
 #: ../Doc/howto/regex.rst:1199
 msgid ""
@@ -1771,7 +1902,7 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:1311
 msgid "Using re.VERBOSE"
-msgstr ""
+msgstr "Utilisez re.VERBOSE"
 
 #: ../Doc/howto/regex.rst:1313
 msgid ""
@@ -1801,11 +1932,11 @@ msgstr ""
 
 #: ../Doc/howto/regex.rst:1339
 msgid "This is far more readable than::"
-msgstr ""
+msgstr "Ceci est beaucoup plus lisible que::"
 
 #: ../Doc/howto/regex.rst:1345
 msgid "Feedback"
-msgstr ""
+msgstr "Retour"
 
 #: ../Doc/howto/regex.rst:1347
 msgid ""
@@ -1814,6 +1945,10 @@ msgid ""
 "encountered that weren't covered here?  If so, please send suggestions for "
 "improvements to the author."
 msgstr ""
+"Les expressions régulières sont un sujet compliqué. Est-ce que ce document "
+"vous a aidé à les comprendre ? Des parties ne sont pas claires, ou des "
+"problèmes que vous avez rencontrés ne sont pas traités ici ? Si tel est le "
+"cas, merci d'envoyer vos suggestions d'améliorations à l'auteur."
 
 #: ../Doc/howto/regex.rst:1352
 msgid ""
