@@ -58,36 +58,40 @@ You'll need to fork the `python-docs-fr
 button. This creates a copy of the whole project on your github
 account: a place where you have the rights to do modifications.
 
-Step by steps::
+Step by steps:
+
+.. code-block:: bash
 
     # Git clone your github fork using ssh (replace JulienPalard):
-    $ git clone git@github.com:JulienPalard/python-docs-fr.git
+    git clone git@github.com:JulienPalard/python-docs-fr.git
 
     # Go to the cloned directory:
-    $ cd python-docs-fr/
+    cd python-docs-fr/
 
     # Add the upstream (the public repository) using HTTPS (won't ask for password):
-    $ git remote add upstream https://github.com/python/python-docs-fr.git
+    git remote add upstream https://github.com/python/python-docs-fr.git
 
 
-Now you're ready to start a work session, each time you'll start a new task, start here::
+Now you're ready to start a work session, each time you'll start a new task, start here:
+
+.. code-block:: bash
 
     # To work, we'll need a branch, based on an up-to-date (freshly fetched)
     # upstream/3.7 branch, let's say we'll work on glossary so we name
     # the branch "glossary":
-    $ git fetch upstream
-    $ git checkout -b glossary upstream/3.7
+    git fetch upstream
+    git checkout -b glossary upstream/3.7
 
     # You can now work on the file, typically using poedit,
     # then commit your work with a nice explicit message:
-    $ git commit -a -m "Working on glossary."
+    git commit -a -m "Working on glossary."
 
     # Then push your modifications to your github clone,
     # as they are ephemeral branches, let's not configure git to track them all,
     # "origin HEAD" is a "special" syntax to say "Push on origin,
     # on a branch with the same name as the local one",
     # it's nice as it's exactly what we want:
-    $ git push origin HEAD
+    git push origin HEAD
 
     # Now you can open the pull request on github, just go to
     # https://github.com/python/python-docs-fr/ and a nice "Compare & pull request"
@@ -96,10 +100,10 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     # Now someone is reviewing your modifications, and you'll want to fix their
     # findings, get back to your branch
     # (in case you started something else on another branch):
-    $ git checkout glossary
+    git checkout glossary
     # Fix the issues, then commit again:
-    $ git commit -a -m "glossary: small fixes."
-    $ git push origin HEAD
+    git commit -a -m "glossary: small fixes."
+    git push origin HEAD
 
 
 You may have noted that this looks like a triangle, with a missing segment:
@@ -227,11 +231,15 @@ Simplify git diffs
 
 Git diffs are often crowded with useless line number changes, like:
 
+.. code-block:: diff
+
     -#: ../Doc/library/signal.rst:406
     +#: ../Doc/library/signal.rst:408
 
 To tell git they are not usefull information, you can do the following
 after ensuring ``~/.local/bin/`` is in your ``PATH``.
+
+.. code-block:: bash
 
     cat <<EOF > ~/.local/bin/podiff
     #!/bin/sh
@@ -254,7 +262,9 @@ like::
   ├── python-docs-fr/
   └── cpython/
 
-To clone CPython you may use::
+To clone CPython you may use:
+
+.. code-block:: bash
 
   git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
 
