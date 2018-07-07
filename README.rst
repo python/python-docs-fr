@@ -42,39 +42,81 @@ You can contribute using:
 Contributing using Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll first need a `github account <https://github.com/join>`_.
+Prerequisites:
 
-Then you'll need to fork the project by clicking the ``Fork`` button
-on `python-docs-fr <https://github.com/python/python-docs-fr>`_. This
-creates a copy of the whole project on your github account: a place
-where you have the rights to do modifications.
+- A `github account <https://github.com/join>`_.
+- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for windows, see
+  https://gitforwindows.org/).
+- A ``.po`` file editor (Use `poedit <https://poedit.net/>`_
+  if you don't already have one).
 
-To modify po files you'll need to synchronize the project files to
-your computer by using ``git``: https://help.github.com/articles/set-up-git/.
 
-Once the project files are synchronized to your computer, you'll be
-able to modify them, those are ``.po`` files and can be modified using
-various tools:
+Let's start:
 
-- `poedit <http://www.poedit.net/>`_ (recommended)
-- gted
-- gtranslator
-- lokalize
-- betterpoeditor
-- vim or emacs with an appropriate mode
-- Vé on Android
-- Probably many others
+You'll need to fork the `python-docs-fr
+<https://github.com/python/python-docs-fr>`_ clicking its ``Fork``
+button. This creates a copy of the whole project on your github
+account: a place where you have the rights to do modifications.
+
+Step by steps::
+
+    # Git clone your github fork using ssh (replace JulienPalard):
+    $ git clone git@github.com:JulienPalard/python-docs-fr.git
+
+    # Go to the cloned directory:
+    $ cd python-docs-fr/
+
+    # Add the upstream (the public repository) using HTTPS (won't ask for password):
+    $ git remote add upstream https://github.com/python/python-docs-fr.git
+
+
+Now you're ready to start a work session, each time you'll start a new task, start here::
+
+    # To work, we'll need a branch, based on an up-to-date (freshly fetched)
+    # upstream/3.7 branch, let's say we'll work on glossary so we name
+    # the branch "glossary":
+    $ git fetch upstream
+    $ git checkout -b glossary upstream/3.7
+
+    # You can now work on the file, typically using poedit,
+    # then commit your work with a nice explicit message:
+    $ git commit -a -m "Working on glossary."
+
+    # Then push your modifications to your github clone,
+    # as they are ephemeral branches, let's not configure git to track them all,
+    # "origin HEAD" is a "special" syntax to say "Push on origin,
+    # on a branch with the same name as the local one",
+    # it's nice as it's exactly what we want:
+    $ git push origin HEAD
+
+    # Now you can open the pull request on github, just go to
+    # https://github.com/python/python-docs-fr/ and a nice "Compare & pull request"
+    # button should appear after a few seconds telling you can ask for a pull request.
+
+    # Now someone is reviewing your modifications, and you'll want to fix their
+    # findings, get back to your branch
+    # (in case you started something else on another branch):
+    $ git checkout glossary
+    # Fix the issues, then commit again:
+    $ git commit -a -m "glossary: small fixes."
+    $ git push origin HEAD
+
+
+You may have noted that this looks like a triangle, with a missing segment:
+
+- You're fetching from upstream (public common repo on github)
+- You're pushing to origin (your clone on github)
+
+So yes it's the work of someone to add the last segment, from your
+origin to the public upstream, to "close the loop", that's the role of
+the people who merges pull requests after proofreading them.
+
+You may also have noted you never ever commit on a version branch
+(``3.6``, ``3.7``, ...), only pull from them, consider them read-only
+you'll avoid problems.
 
 Before commiting, you should use `grammalecte
 <https://www.dicollecte.org/>`_ to check for your translations.
-
-After commiting (this is just "naming the modification"), synchronize
-the file back to github using ``git push``.
-
-And now, from your github project, a buttun should appear "Compare &
-pull request", this is asking us, the main project, to pull your
-modifications. This step may take some time as we'll review your
-modifications before accepting them, and we may ask for modifications.
 
 
 What to translate
