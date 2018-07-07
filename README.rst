@@ -58,7 +58,7 @@ You'll need to fork the `python-docs-fr
 button. This creates a copy of the whole project on your github
 account: a place where you have the rights to do modifications.
 
-Step by steps:
+Step by step:
 
 .. code-block:: bash
 
