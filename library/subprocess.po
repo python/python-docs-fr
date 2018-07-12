@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-28 15:29+0200\n"
-"PO-Revision-Date: 2018-07-07 12:38+0200\n"
+"PO-Revision-Date: 2018-07-12 22:29+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../Doc/library/subprocess.rst:2
 msgid ":mod:`subprocess` --- Subprocess management"
@@ -186,6 +186,8 @@ msgid ""
 "Added the *text* parameter, as a more understandable alias of "
 "*universal_newlines*. Added the *capture_output* parameter."
 msgstr ""
+"Ajout du paramètre *text*, qui agit comme un alias plus compréhensible de "
+"*universal_newlines*. Ajout du paramètre *capture_output*."
 
 #: ../Doc/library/subprocess.rst:113
 msgid ""
@@ -446,7 +448,7 @@ msgstr "Ajout des paramètres *encoding* et *errors*."
 
 #: ../Doc/library/subprocess.rst:293
 msgid "Added the *text* parameter as an alias for *universal_newlines*."
-msgstr ""
+msgstr "Ajout du paramètre *text* comme alias de *universal_newlines*."
 
 #: ../Doc/library/subprocess.rst:298
 msgid ""
@@ -788,6 +790,11 @@ msgid ""
 "Otherwise when *close_fds* is false, file descriptors obey their inheritable "
 "flag as described in :ref:`fd_inheritance`."
 msgstr ""
+"Si *close_fds* est vrai, tous les descripteurs de fichier excepté :const:"
+"`0`,  :const:`1` et  :const:`2` seront fermés avant que le processus enfant "
+"soit exécuté. Sinon, quand *close_fds* est faux, les descripteurs de "
+"fichiers obéissent à leur option héréditaire décrite dans ref:"
+"`fd_inheritance`."
 
 #: ../Doc/library/subprocess.rst:471
 msgid ""
@@ -795,6 +802,10 @@ msgid ""
 "child process unless explicitly passed in the ``handle_list`` element of :"
 "attr:`STARTUPINFO.lpAttributeList`, or by standard handle redirection."
 msgstr ""
+"Sur Windows, si *close_fds* est vrai, alors aucun gestionnaire ne sera "
+"hérité par le processus enfant sauf si explicitement passé dans l'élément "
+"``handle_list`` de :attr:`STARTUPINFO.lpAttributeList, ou par redirection de "
+"gestionnaire."
 
 #: ../Doc/library/subprocess.rst:475
 msgid ""
@@ -810,6 +821,10 @@ msgid ""
 "const:`True` when redirecting the standard handles. It's now possible to set "
 "*close_fds* to :const:`True` when redirecting the standard handles."
 msgstr ""
+"Sur Windows, la valeur par défaut de *close_fds* a été changée de :const:"
+"`False` à :const:`True` lors d'une redirection de gestionnaires standards. "
+"Il est maintenant possible de donner la valeur :const:`True` à *close_fds* "
+"lors d'une redirection de gestionnaires standards."
 
 #: ../Doc/library/subprocess.rst:484
 msgid ""
@@ -916,6 +931,7 @@ msgstr "Ajout d'*encoding* et *errors*."
 #: ../Doc/library/subprocess.rst:535
 msgid "*text* was added as a more readable alias for *universal_newlines*."
 msgstr ""
+"*text* a été ajouté comme un alias plus lisible de *universal_newlines*."
 
 #: ../Doc/library/subprocess.rst:538
 msgid ""
@@ -1444,20 +1460,25 @@ msgid ""
 "``STARTUPINFOEX``, see `UpdateProcThreadAttribute <https://msdn.microsoft."
 "com/en-us/library/windows/desktop/ms686880(v=vs.85).aspx>`__."
 msgstr ""
+"Un dictionnaire des attributs supplémentaires pour la création de processus "
+"comme donné dans ``STARTUPINFOEX``, voir `UpdateProcThreadAttribute <https://"
+"msdn.microsoft.com/en-us/library/windows/desktop/ms686880(v=vs.85).aspx>`__."
 
 #: ../Doc/library/subprocess.rst:844
 msgid "Supported attributes:"
-msgstr ""
+msgstr "Attributs supportés :"
 
 #: ../Doc/library/subprocess.rst:862
 msgid "**handle_list**"
-msgstr ""
+msgstr "**handle_list**"
 
 #: ../Doc/library/subprocess.rst:847
 msgid ""
 "Sequence of handles that will be inherited. *close_fds* must be true if non-"
 "empty."
 msgstr ""
+"La séquence des gestionnaires qui seront hérités du parent. *close_fds* doit "
+"être vrai si la séquence est non-vide."
 
 #: ../Doc/library/subprocess.rst:850
 msgid ""
@@ -1466,6 +1487,10 @@ msgid ""
 "class:`OSError` will be raised with Windows error "
 "``ERROR_INVALID_PARAMETER`` (87)."
 msgstr ""
+"Les gestionnaires doivent être temporairement héritables par :func:`os."
+"set_handle_inheritable` quand passés au constructeur :class:`Popen`, sinon :"
+"class:`OSError` sera soulevée avec l'erreur Windows "
+"``ERROR_INVALID_PARAMETER`` (87)."
 
 #: ../Doc/library/subprocess.rst:857
 msgid ""
@@ -1475,6 +1500,13 @@ msgid ""
 "system`.  This also applies to standard handle redirection, which "
 "temporarily creates inheritable handles."
 msgstr ""
+"Dans un processus multithreadé, faire preuve de prudence pour éviter de "
+"faire fuiter les gestionnaires qui sont marqués comme héritables lors de la "
+"combinaison de cette fonctionnalité avec les appels concurrents à d'autres "
+"fonctions de création de processus qui héritent de tous les gestionnaires, "
+"comme :func:`os.system`. Ceci s'applique aussi à la redirection de "
+"gestionnaires standards, ce qui créé temporairement des gestionnaires "
+"héritables."
 
 #: ../Doc/library/subprocess.rst:867
 msgid "Windows Constants"
@@ -1601,6 +1633,13 @@ msgid ""
 "appropriate for applications that \"talk\" directly to hardware or that "
 "perform brief tasks that should have limited interruptions."
 msgstr ""
+"Un paramètre ``creationflags`` de :class:`Popen`pour spécifier qu'un nouveau "
+"processus aura la priorité temps-réel. Vous ne devriez presque jamais "
+"utiliser REALTIME_PRIORITY_CLASS, car cela interrompt les fils d'exécutions "
+"système qui gèrent les événements souris, clavier, et la vidange de disque "
+"d'arrière-plan. Cette classe peut-être appropriée pour les applications qui "
+"\"parlent\" directement au matériel ou qui effectuent des tâches brèves qui "
+"devraient avoir des interruptions limitées. "
 
 #: ../Doc/library/subprocess.rst:962
 msgid ""
@@ -1627,6 +1666,11 @@ msgid ""
 "process gets the default error mode. This feature is particularly useful for "
 "multithreaded shell applications that run with hard errors disabled."
 msgstr ""
+"Un paramètre ``creationflags`` de :class:`Popen` pour spécifier qu'un "
+"nouveau processus n'hérite pas du mode d'erreur du processus appelant. À la "
+"place, le nouveau processus acquiert le mode d'erreur par défaut. Cette "
+"fonctionnalité est particulièrement utile pour les applications *shell* "
+"multithreadées qui s'exécutent avec les erreurs irréversibles désactivées."
 
 #: ../Doc/library/subprocess.rst:987
 msgid ""
