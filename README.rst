@@ -258,6 +258,8 @@ All those snippets are to run from the root of a ``python-docs-fr``
 clone, and some expect to find an up-to-date CPython clone near to it,
 like::
 
+.. code-block:: bash
+
   ~/
   ├── python-docs-fr/
   └── cpython/
