@@ -1,7 +1,7 @@
 French Translation of the Python Documentation
 ==============================================
 
-**Translated: 28%**
+**Translated: 29%**
 
 Documentation Contribution Agreement
 ------------------------------------
