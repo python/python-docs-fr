@@ -1,5 +1,5 @@
-French Translation of the Python Documentation
-==============================================
+French Translation of the Python Documentation 🇫🇷
+=================================================
 
 **Translated: 28%**
 
