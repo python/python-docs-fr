@@ -24,27 +24,17 @@ JOBS = 4
 
 
 .PHONY: all
-all: $(VENV)/bin/sphinx-build $(VENV)/bin/blurb $(SPHINX_CONF)
-	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
-	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
-	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
+all: $(SPHINX_CONF)
+	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
+	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
+	sed -i.old 's#python-docs-theme#git+https://github.com/python/python-docs-theme.git#' $(CPYTHON_CLONE)/Doc/Makefile
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
+	mv $(CPYTHON_CLONE)/Doc/Makefile.old $(CPYTHON_CLONE)/Doc/Makefile
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qaEW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
 $(SPHINX_CONF):
-	git clone --depth 1 --no-single-branch https://github.com/python/cpython.git $(CPYTHON_CLONE)
-
-
-$(VENV)/bin/activate:
-	mkdir -p $(VENV)
-	$(PYTHON) -m venv $(VENV)
-
-
-$(VENV)/bin/sphinx-build: $(VENV)/bin/activate
-	. $(VENV)/bin/activate; python3 -m pip install sphinx
-
-
-$(VENV)/bin/blurb: $(VENV)/bin/activate
-	. $(VENV)/bin/activate; python3 -m pip install blurb
+	git clone --depth 1 --no-single-branch --branch $(BRANCH) https://github.com/python/cpython.git $(CPYTHON_CLONE)
 
 
 .PHONY: upgrade_venv

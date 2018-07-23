@@ -1,7 +1,7 @@
 French Translation of the Python Documentation
 ==============================================
 
-**Translated: 28%**
+**Translated: 29%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -83,7 +83,27 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     git checkout -b glossary upstream/3.7
 
     # You can now work on the file, typically using poedit,
-    # then commit your work with a nice explicit message:
+    poedit directory/file.po
+
+    # After writing your changes to disk, check for correctness:
+    make
+
+    # Sphinx will tell you if there is any syntax error in the files
+    # you modified. Note that in the French Translation, we try to keep Sphinx
+    # warnings to zero.
+
+    # you may want to check if there are semantic errors.
+    # Open the translated file in your browser to check how it renders.
+    # Don't forget to verify the typography. The French conventions are not
+    # the English ones, especially for punctuation.
+    # Also, Grammalecte, a browser plugin avaliable in your browser store,
+    # is your friend even if, because of the technical words that appear
+    # everywhere in the documentation, it points out many false positive.
+    exo-open ../cpython/Doc/build/html/directory/file.html
+
+    # When everything is clear (syntax errors from Sphinx, html rendering,
+    # semantics, typography),
+    # you can commit your work with a nice explicit message:
     git commit -a -m "Working on glossary."
 
     # Then push your modifications to your github clone,
@@ -205,8 +225,8 @@ parameter                  paramètre
 prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
-return                     renvoie, donne (On évite
-                           "retourne" qui pourrait porter à confusion.
+return                     renvoie, donne (on évite
+                           "retourne" qui pourrait porter à confusion).
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
 socket                     *socket*
@@ -257,6 +277,8 @@ Maintenance
 All those snippets are to run from the root of a ``python-docs-fr``
 clone, and some expect to find an up-to-date CPython clone near to it,
 like::
+
+.. code-block:: bash
 
   ~/
   ├── python-docs-fr/
