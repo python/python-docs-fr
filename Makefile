@@ -25,10 +25,12 @@ JOBS = 4
 
 .PHONY: all
 all: $(SPHINX_CONF)
-	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
-	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
+	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
+	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
+	sed -i.old 's#python-docs-theme#git+https://github.com/python/python-docs-theme.git#' $(CPYTHON_CLONE)/Doc/Makefile
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-q -j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
+	mv $(CPYTHON_CLONE)/Doc/Makefile.old $(CPYTHON_CLONE)/Doc/Makefile
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qaEW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
 $(SPHINX_CONF):
