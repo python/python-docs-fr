@@ -27,7 +27,7 @@ JOBS = 4
 all: $(VENV)/bin/sphinx-build $(VENV)/bin/blurb $(SPHINX_CONF)
 	mkdir -p $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/
 	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/Doc/locales/$(LANGUAGE)/LC_MESSAGES
-	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
+	. $(VENV)/bin/activate; $(MAKE) -C $(CPYTHON_CLONE)/Doc/ SPHINXOPTS='-q -j$(JOBS) -D locale_dirs=locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
 $(SPHINX_CONF):
