@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../Doc/c-api/buffer.rst:11
 msgid "Buffer Protocol"
-msgstr ""
+msgstr "Protocole tampon"
 
 #: ../Doc/c-api/buffer.rst:18
 msgid ""
@@ -29,6 +29,12 @@ msgid ""
 "party libraries may define their own types for special purposes, such as "
 "image processing or numeric analysis."
 msgstr ""
+"Certains objets disponibles en Python enveloppent l'accès à un tableau de "
+"mémoire sous-jacente ou zone tampon ou simplement tampon (*buffer* en "
+"anglais). De tels objets incluent le built-in :class:`bytes` et :class:"
+"`bytearray`, et quelques types d'extension comme :class:`array.array`. Les "
+"bibliothèques tierces peuvent définir leurs propres types à des fins "
+"spéciales, telles que le traitement d'image ou l'analyse numérique."
 
 #: ../Doc/c-api/buffer.rst:24
 msgid ""
@@ -37,12 +43,18 @@ msgid ""
 "then desirable, in some situations, to access that buffer directly and "
 "without intermediate copying."
 msgstr ""
+"Alors que chacun de ces types a sa propre sémantique, ils partagent la "
+"caractéristique commune d'être soutenus par un tampon de mémoire important.  "
+"Il est donc souhaitable, dans certains cas, d'accéder à cette mémoire "
+"directement sans l'étape intermédiaire de copie."
 
 #: ../Doc/c-api/buffer.rst:29
 msgid ""
 "Python provides such a facility at the C level in the form of the :ref:"
 "`buffer protocol <bufferobjects>`.  This protocol has two sides:"
 msgstr ""
+"Python fournit une telle facilité au niveau du C sous la forme de :ref:"
+"`protocole tampon <bufferobjects>`.  Ce protocole comporte deux aspects :"
 
 #: ../Doc/c-api/buffer.rst:34
 msgid ""
@@ -50,12 +62,19 @@ msgid ""
 "objects of that type to expose information about their underlying buffer. "
 "This interface is described in the section :ref:`buffer-structs`;"
 msgstr ""
+"du côté producteur, un type peut exporter une \"interface tampon\" qui "
+"permet aux objets de ce type d'exposer des informations concernant leur "
+"tampon sous-jacent. Cette interface est décrite dans la section :ref:`buffer-"
+"structs` ;"
 
 #: ../Doc/c-api/buffer.rst:38
 msgid ""
 "on the consumer side, several means are available to obtain a pointer to the "
 "raw underlying data of an object (for example a method parameter)."
 msgstr ""
+"du côté consommateur, plusieurs moyens sont disponibles pour obtenir un "
+"pointeur vers les données sous-jacentes brutes d'un objet (par exemple un "
+"paramètre de méthode)."
 
 #: ../Doc/c-api/buffer.rst:41
 msgid ""
@@ -64,6 +83,10 @@ msgid ""
 "example, the elements exposed by an :class:`array.array` can be multi-byte "
 "values."
 msgstr ""
+"Des objets simples tels que :class:`bytes` et :class:`bytearray` exposent "
+"leur tampon sous-jacent dans un format orienté octet. D'autres formes sont "
+"possibles ; par exemple, les éléments exposés par un :class:`array.array` "
+"peuvent être des valeurs multi-octets."
 
 #: ../Doc/c-api/buffer.rst:45
 msgid ""
@@ -76,22 +99,35 @@ msgid ""
 "objects to selectively allow or reject exporting of read-write and read-only "
 "buffers."
 msgstr ""
+"Un exemple de consommateur de l'interface tampon est la méthode :meth:`~ io."
+"BufferedIOBase.write` des objets fichiers : tout objet qui peut exporter une "
+"série d'octets à travers l'interface tampon peut être écrit dans un fichier. "
+"Alors que :meth:`write` n'a besoin que d'un accès  lecture au contenu "
+"interne de l'objet qui lui est passé, d'autres méthodes telles que :meth:`~ "
+"io.BufferedIOBase.readinto` nécessitent un accès écriture au contenu de leur "
+"argument. L'interface buffer permet aux objets d'autoriser ou de rejeter "
+"sélectivement l'exportation de buffers en mode lecture-écriture et en mode "
+"lecture seule."
 
 #: ../Doc/c-api/buffer.rst:53
 msgid ""
 "There are two ways for a consumer of the buffer interface to acquire a "
 "buffer over a target object:"
 msgstr ""
+"Un consommateur de l'interface tampon peut acquérir un tampon sur un objet "
+"cible de deux manières :"
 
 #: ../Doc/c-api/buffer.rst:56
 msgid "call :c:func:`PyObject_GetBuffer` with the right parameters;"
-msgstr ""
+msgstr "appelez :c:func:`PyObject_GetBuffer` avec les paramètres appropriés ;"
 
 #: ../Doc/c-api/buffer.rst:58
 msgid ""
 "call :c:func:`PyArg_ParseTuple` (or one of its siblings) with one of the "
 "``y*``, ``w*`` or ``s*`` :ref:`format codes <arg-parsing>`."
 msgstr ""
+"appelez :c:func:`PyArg_ParseTuple` (ou l'un de ses fonctions sœurs) avec "
+"l'un des ``y*``, ``w*`` ou ``s*``  :ref:`format codes <arg-parsing>`."
 
 #: ../Doc/c-api/buffer.rst:61
 msgid ""
@@ -99,6 +135,9 @@ msgid ""
 "isn't needed anymore.  Failure to do so could lead to various issues such as "
 "resource leaks."
 msgstr ""
+"Dans les deux cas, :c:func:`PyBuffer_Release` doit être appelée quand le "
+"tampon n'est plus nécessaire. Ne pas le faire peut conduire à divers "
+"problèmes tels que des fuites de ressources."
 
 #: ../Doc/c-api/buffer.rst:69
 msgid "Buffer structure"
@@ -115,6 +154,15 @@ msgid ""
 "operating system library, or it could be used to pass around structured data "
 "in its native, in-memory format."
 msgstr ""
+"Les structures buffer (ou simplement les \"buffers\") sont utiles pour "
+"exposer les données binaires d'un autre objet au programmeur Python. Elles "
+"peuvent également être utilisées comme un mécanisme de découpage sans copie. "
+"En utilisant leur capacité à référencer un bloc de mémoire, il est possible "
+"d'exposer toutes les données au programmeur Python assez facilement. La "
+"mémoire peut être un grand tableau constant dans une extension C, il peut "
+"s'agir d'un bloc brut de mémoire à manipuler avant de passer à une "
+"bibliothèque de système d'exploitation ou être utilisé pour transmettre des "
+"données structurées dans son format natif en mémoire."
 
 #: ../Doc/c-api/buffer.rst:80
 msgid ""
@@ -124,6 +172,12 @@ msgid ""
 "buffer is needed, a :ref:`memoryview <memoryview-objects>` object can be "
 "created."
 msgstr ""
+"Contrairement à la plupart des types de données exposés par l'interpréteur "
+"Python, les tampons ne sont pas de simples pointeurs vers :c:type:`PyObject` "
+"mais plutôt des structures C simples. Cela leur permet d'être créés et "
+"copiés très simplement. lorsque vous avez besoin d'une enveloppe générique "
+"(*wrapper* en anglais) pour un tampon, un objet :ref:`memoryview <memoryview-"
+"objects>` peut être créé."
 
 #: ../Doc/c-api/buffer.rst:86
 msgid ""
