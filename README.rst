@@ -326,13 +326,14 @@ from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
 
-You should work on a separate ``transifex`` branch.
-
 .. code-block:: bash
 
-   tx pull
+   pomerge --from-files **/*.po
+   tx pull -f
+   pomerge --to-files **/*.po
+   pomerge --from-files **/*.po
+   git checkout -- .
+   pomerge --to-files **/*.po
    poindent --modified
    git commit -m "tx pull"
-   git checkout 3.6
-   git merge transifex -Xours
-   tx push -t
+   tx push -t -f
