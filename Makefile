@@ -42,6 +42,10 @@ upgrade_venv: $(VENV)/bin/activate
 	. $(VENV)/bin/activate; python3 -m pip install --upgrade sphinx blurb
 
 
+$(VENV)/bin/activate:
+	python3 -m venv $(VENV)
+
+
 .PHONY: progress
 progress:
 	@python3 -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
