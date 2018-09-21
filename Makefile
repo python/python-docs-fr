@@ -19,7 +19,7 @@ LANGUAGE := fr
 VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
-BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
+BRANCH = 3.7
 JOBS = 4
 
 
