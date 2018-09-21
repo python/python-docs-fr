@@ -24,10 +24,9 @@ JOBS = 4
 
 
 .PHONY: all
-all: $(SPHINX_CONF)
+all: $(SPHINX_CONF) $(VENV)/bin/activate
 	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
 	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qaEW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
@@ -36,12 +35,11 @@ $(SPHINX_CONF):
 
 
 .PHONY: upgrade_venv
-upgrade_venv: $(VENV)/bin/activate
-	. $(VENV)/bin/activate; python3 -m pip install --upgrade sphinx blurb
+upgrade_venv:
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 
 
-$(VENV)/bin/activate:
-	python3 -m venv $(VENV)
+$(VENV)/bin/activate: upgrade_venv
 
 
 .PHONY: progress
