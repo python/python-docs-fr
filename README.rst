@@ -211,6 +211,7 @@ bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
 debugging                  débogage
+deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
