@@ -19,17 +19,17 @@ LANGUAGE := fr
 VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
-BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
+BRANCH = 3.7
 JOBS = 4
 
 
 .PHONY: all
-all: $(SPHINX_CONF)
+all: $(SPHINX_CONF) $(VENV)/bin/activate
+ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
+	$(warning "Your ../cpython checkout is on the wrong branch, got $(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD) expected $(BRANCH)")
+endif
 	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
-	ln -nfs $(shell readlink -f .) $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
-	sed -i.old 's#python-docs-theme#git+https://github.com/python/python-docs-theme.git#' $(CPYTHON_CLONE)/Doc/Makefile
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
-	mv $(CPYTHON_CLONE)/Doc/Makefile.old $(CPYTHON_CLONE)/Doc/Makefile
+	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qaEW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
@@ -38,12 +38,11 @@ $(SPHINX_CONF):
 
 
 .PHONY: upgrade_venv
-upgrade_venv: $(VENV)/bin/activate
-	. $(VENV)/bin/activate; python3 -m pip install --upgrade sphinx blurb
+upgrade_venv:
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 
 
-$(VENV)/bin/activate:
-	python3 -m venv $(VENV)
+$(VENV)/bin/activate: upgrade_venv
 
 
 .PHONY: progress
