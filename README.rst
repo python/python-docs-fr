@@ -237,6 +237,7 @@ socket                     *socket*
 statement                  instruction
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
+expression				         expression
 ========================== ===========================================
 
 
