@@ -219,7 +219,7 @@ identifier                 identifiant
 immutable                  immuable
 interpreter                interpréteur
 library                    bibliothèque
-list comprehension         liste en compréhension (liste en intension est
+list comprehension         liste en compréhension (liste en intensions est
                            valide, mais nous ne l'utilisons pas)
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
@@ -237,6 +237,7 @@ socket                     *socket*
 statement                  instruction
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
+expression				   expression
 ========================== ===========================================
 
 
