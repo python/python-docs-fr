@@ -199,6 +199,10 @@ For consistency in our translations, here are some propositions and
 reminders for frequent terms you'll have to translate, don't hesitate
 to open an issue if you disagree.
 
+To easily find how a term is already translated in our documentation,
+you may use
+`find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
+
 ========================== ===========================================
 Term                       Proposed Translation
 ========================== ===========================================
