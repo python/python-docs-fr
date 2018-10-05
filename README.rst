@@ -4,7 +4,7 @@ French Translation of the Python Documentation
 .. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
   :target: https://travis-ci.org/python/python-docs-fr
 
-**Translated: 29%**
+**Translated: 31%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -199,6 +199,10 @@ For consistency in our translations, here are some propositions and
 reminders for frequent terms you'll have to translate, don't hesitate
 to open an issue if you disagree.
 
+To easily find how a term is already translated in our documentation,
+you may use
+`find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
+
 ========================== ===========================================
 Term                       Proposed Translation
 ========================== ===========================================
@@ -211,6 +215,7 @@ bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
 debugging                  débogage
+deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
@@ -236,6 +241,7 @@ socket                     *socket*
 statement                  instruction
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
+expression				         expression
 ========================== ===========================================
 
 
