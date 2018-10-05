@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-28 15:29+0200\n"
-"PO-Revision-Date: 2018-10-05 11:32+0200\n"
+"PO-Revision-Date: 2018-10-05 14:35+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -2882,7 +2882,7 @@ msgstr ""
 
 #: ../Doc/library/multiprocessing.rst:1900
 msgid "Proxy Objects"
-msgstr ""
+msgstr "Objets *proxy*"
 
 #: ../Doc/library/multiprocessing.rst:1902
 msgid ""
@@ -2890,6 +2890,9 @@ msgid ""
 "(presumably) in a different process.  The shared object is said to be the "
 "*referent* of the proxy.  Multiple proxy objects may have the same referent."
 msgstr ""
+"Un *proxy* est un objet qui *référence* un objet partagé appartenant "
+"(supposément) à un processus différent. L'objet partagé est appelé le "
+"*référent* du *proxy*. Plusieurs *proxies* peuvent avoir un même référent."
 
 #: ../Doc/library/multiprocessing.rst:1906
 msgid ""
@@ -2898,6 +2901,10 @@ msgid ""
 "available through the proxy).  In this way, a proxy can be used just like "
 "its referent can:"
 msgstr ""
+"Un *proxy* possède des méthodes qui appellent les méthodes correspondantes "
+"du référent (bien que toutes les méthodes du référent ne soient pas "
+"nécessairement accessibles à travers le *proxy*). De cette manière, un "
+"*proxy* peut être utilisé comme le serait sont référent :"
 
 #: ../Doc/library/multiprocessing.rst:1924
 msgid ""
@@ -2905,6 +2912,8 @@ msgid ""
 "of the referent, whereas applying :func:`repr` will return the "
 "representation of the proxy."
 msgstr ""
+"Notez qu'appliquer :func:`str` à un *proxy* renvoie la représentation du "
+"référent, alors que :func:`repr` renvoie celle du *proxy*."
 
 #: ../Doc/library/multiprocessing.rst:1928
 msgid ""
@@ -2913,10 +2922,17 @@ msgid ""
 "`multiprocessing-proxy_objects`.  This permits nesting of these managed "
 "lists, dicts, and other :ref:`multiprocessing-proxy_objects`:"
 msgstr ""
+"Une fonctionnalité importantes des objets *proxy* est qu'ils sont "
+"sérialisables et peuvent donc être échangés entre les processus. Ainsi, un "
+"référent peut contenir des :ref:`multiprocessing-proxy_objects`. Cela permet "
+"d'imbriquer des listes et dictionnaires gérés ainsi que d'autres :ref:"
+"`multiprocessing-proxy_objects` :"
 
 #: ../Doc/library/multiprocessing.rst:1944
 msgid "Similarly, dict and list proxies may be nested inside one another::"
 msgstr ""
+"De même, les *proxies* de listes et dictionnaires peuvent être imbriqués "
+"dans d'autres ::"
 
 #: ../Doc/library/multiprocessing.rst:1957
 msgid ""
@@ -2928,6 +2944,14 @@ msgid ""
 "through the manager and so to effectively modify such an item, one could re-"
 "assign the modified value to the container proxy::"
 msgstr ""
+"Si des objets standards (non-*proxyfiés*) :class:`list` ou :class:`dict` "
+"sont contenus dans un référent, les modifications sur ces valeurs mutables "
+"ne seront pas propagées à travers le gestionnaire parce que le *proxy* n'a "
+"aucun moyen de savoir quand les valeurs contenues sont modifiées. Cependant, "
+"stocker une valeur dans un conteneur *proxy* (qui déclenche un appel à "
+"``__setitem__`` sur le *proxy*) propage bien la modification à travers le "
+"gestionnaire et modifie effectivement l'élément, il est ainsi possible de "
+"réassigner la valeur modifiée au conteneur *proxy* ::"
 
 #: ../Doc/library/multiprocessing.rst:1976
 msgid ""
@@ -2935,38 +2959,49 @@ msgid ""
 "`multiprocessing-proxy_objects` for most use cases but also demonstrates a "
 "level of control over the synchronization."
 msgstr ""
+"Cette approche est peut-être moins pratique que d'utiliser des :ref:"
+"`multiprocessing-proxy_objects` imbriqués pour la majorité des cas "
+"d'utilisation, mais démontre aussi un certain niveau de contrôle sur la "
+"synchronisation."
 
 #: ../Doc/library/multiprocessing.rst:1982
 msgid ""
 "The proxy types in :mod:`multiprocessing` do nothing to support comparisons "
 "by value.  So, for instance, we have:"
 msgstr ""
+"Les types de *proxy* de :mod:`multiprocessing` n'implémentent rien pour la "
+"comparaison par valeurs. Par exemple, on a :"
 
 #: ../Doc/library/multiprocessing.rst:1990
 msgid ""
 "One should just use a copy of the referent instead when making comparisons."
 msgstr ""
+"Il faut à la place simplement utiliser une copie du référent pour faire les "
+"comparaisons."
 
 #: ../Doc/library/multiprocessing.rst:1994
 msgid "Proxy objects are instances of subclasses of :class:`BaseProxy`."
 msgstr ""
+"Les objets *proxy* sont des instances de sous-classes de :class:`BaseProxy`."
 
 #: ../Doc/library/multiprocessing.rst:1998
 msgid "Call and return the result of a method of the proxy's referent."
-msgstr ""
+msgstr "Appelle et renvoie le résultat d'une méthode du référent du *proxy*."
 
 #: ../Doc/library/multiprocessing.rst:2000
 msgid ""
 "If ``proxy`` is a proxy whose referent is ``obj`` then the expression ::"
 msgstr ""
+"Si ``proxy`` est un *proxy* sont le référent est ``obj``, alors "
+"l'expression ::"
 
 #: ../Doc/library/multiprocessing.rst:2004
 msgid "will evaluate the expression ::"
-msgstr ""
+msgstr "s'évalue comme ::"
 
 #: ../Doc/library/multiprocessing.rst:2008
 msgid "in the manager's process."
-msgstr ""
+msgstr "dans le processus du gestionnaire."
 
 #: ../Doc/library/multiprocessing.rst:2010
 msgid ""
@@ -2974,6 +3009,9 @@ msgid ""
 "new shared object -- see documentation for the *method_to_typeid* argument "
 "of :meth:`BaseManager.register`."
 msgstr ""
+"La valeur renvoyée sera une copie du résultat de l'appel ou un *proxy* sur "
+"un nouvel objet partagé -- voir l'a documentation de l'argument "
+"*method_to_typeid* de :meth:`BaseManager.register`."
 
 #: ../Doc/library/multiprocessing.rst:2014
 msgid ""
@@ -2982,58 +3020,71 @@ msgid ""
 "then this is converted into a :exc:`RemoteError` exception and is raised by :"
 "meth:`_callmethod`."
 msgstr ""
+"Si une exception est levée par l'appel, elle est relayée par :meth:"
+"`_callmethod`. Si une autre exception est levée par le processus du "
+"gestionnaire, elle est convertie en une :exc:`RemoteError` et est levée par :"
+"meth:`_callmethod`."
 
 #: ../Doc/library/multiprocessing.rst:2019
 msgid ""
 "Note in particular that an exception will be raised if *methodname* has not "
 "been *exposed*."
 msgstr ""
+"Notez en particulier qu'une exception est levée si *methodname* n'est pas "
+"*exposée*."
 
 #: ../Doc/library/multiprocessing.rst:2022
 msgid "An example of the usage of :meth:`_callmethod`:"
-msgstr ""
+msgstr "Un exemple d'utilisation de :meth:`_callmethod` :"
 
 #: ../Doc/library/multiprocessing.rst:2038
 msgid "Return a copy of the referent."
-msgstr ""
+msgstr "Renvoie une copie du référent."
 
 #: ../Doc/library/multiprocessing.rst:2040
 msgid "If the referent is unpicklable then this will raise an exception."
-msgstr ""
+msgstr "Si le référent n'est pas sérialisable, une exception est levée."
 
 #: ../Doc/library/multiprocessing.rst:2044
 msgid "Return a representation of the proxy object."
-msgstr ""
+msgstr "Renvoie la représentation de l'objet *proxy*."
 
 #: ../Doc/library/multiprocessing.rst:2048
 msgid "Return the representation of the referent."
-msgstr ""
+msgstr "Renvoie la représentation du référent."
 
 #: ../Doc/library/multiprocessing.rst:2052
 msgid "Cleanup"
-msgstr ""
+msgstr "Nettoyage"
 
 #: ../Doc/library/multiprocessing.rst:2054
 msgid ""
 "A proxy object uses a weakref callback so that when it gets garbage "
 "collected it deregisters itself from the manager which owns its referent."
 msgstr ""
+"Un *proxy* utilise un *callback* sous une référence faible de façon à ce que "
+"quand il est collecté par le ramasse-miettes, il se désenregistre auprès du "
+"gestionnaire qui possède le référent."
 
 #: ../Doc/library/multiprocessing.rst:2057
 msgid ""
 "A shared object gets deleted from the manager process when there are no "
 "longer any proxies referring to it."
 msgstr ""
+"Un objet partagé est supprimé par le processus gestionnaire quand plus aucun "
+"*proxy* ne le référence."
 
 #: ../Doc/library/multiprocessing.rst:2062
 msgid "Process Pools"
-msgstr ""
+msgstr "Bassins de processus"
 
 #: ../Doc/library/multiprocessing.rst:2067
 msgid ""
 "One can create a pool of processes which will carry out tasks submitted to "
 "it with the :class:`Pool` class."
 msgstr ""
+"On peut créer un bassin de processus qui exécuteront les tâches qui lui "
+"seront soumises avec la classe :class:`Pool`."
 
 #: ../Doc/library/multiprocessing.rst:2072
 msgid ""
@@ -3041,18 +3092,26 @@ msgid ""
 "jobs can be submitted.  It supports asynchronous results with timeouts and "
 "callbacks and has a parallel map implementation."
 msgstr ""
+"Un objet *process pool* qui contrôle un bassin de processus *workers* auquel "
+"sont soumises des tâches. Il supporte les résultats asynchrones avec des "
+"*timeouts* et des *callabacks*  et possède une implémentation parallèle de "
+"*map*."
 
 #: ../Doc/library/multiprocessing.rst:2076
 msgid ""
 "*processes* is the number of worker processes to use.  If *processes* is "
 "``None`` then the number returned by :func:`os.cpu_count` is used."
 msgstr ""
+"*processes* est le nombre de processus *workers* à utiliser. Si *processes* "
+"est ``None``, le nombre renvoyé par :func:`os.cpu_count` est utilisé."
 
 #: ../Doc/library/multiprocessing.rst:2079
 msgid ""
 "If *initializer* is not ``None`` then each worker process will call "
 "``initializer(*initargs)`` when it starts."
 msgstr ""
+"Si *initializer* n'est pas ``None``, chaque processus *worker* appellera "
+"``initializer(*initargs)`` en démarrant."
 
 #: ../Doc/library/multiprocessing.rst:2082
 msgid ""
@@ -3061,6 +3120,11 @@ msgid ""
 "unused resources to be freed. The default *maxtasksperchild* is ``None``, "
 "which means worker processes will live as long as the pool."
 msgstr ""
+"*maxtasksperchild* est le nombre de tâches qu'un processus *worker* peut "
+"accomplir avant de se fermer et d'être remplacé par un *worker* frais, pour "
+"permettre aux ressources inutilisées d'être libérées. Par défaut "
+"*maxtasksperchild* est ``None``, ce qui signifie que le *worker* vit aussi "
+"longtemps que le bassin."
 
 #: ../Doc/library/multiprocessing.rst:2087
 msgid ""
@@ -3069,16 +3133,22 @@ msgid ""
 "`multiprocessing.Pool` or the :meth:`Pool` method of a context object.  In "
 "both cases *context* is set appropriately."
 msgstr ""
+"*context* peut être utilisé pour préciser le contexte utilisé pour démarrer "
+"les processus *workers*. Habituellement un bassin est créé à l'aide de la "
+"fonction :func:`multiprocessing.Pool` ou de la méthode :meth:`Pool` d'un "
+"objet de contexte. Dans les deux cas *context* est réglé de façon appropriée."
 
 #: ../Doc/library/multiprocessing.rst:2093
 msgid ""
 "Note that the methods of the pool object should only be called by the "
 "process which created the pool."
 msgstr ""
+"Notez que les méthodes de l'objet *pool* ne doivent être appelées que par le "
+"processus qui l'a créé."
 
 #: ../Doc/library/multiprocessing.rst:2096
 msgid "*maxtasksperchild*"
-msgstr ""
+msgstr "*maxtasksperchild*"
 
 #: ../Doc/library/multiprocessing.rst:2099
 msgid "*context*"
@@ -3094,6 +3164,14 @@ msgid ""
 "one. The *maxtasksperchild* argument to the :class:`Pool` exposes this "
 "ability to the end user."
 msgstr ""
+"Les processus *workers* à l'intérieur d'une :class:`Pool` vivent par défaut "
+"aussi longtemps que la queue de travail du bassin. Un modèle fréquent chez "
+"d'autres systèmes (tels qu'Apache, *mod_wsgi*, etc.) pour libérer les "
+"ressources détenues par les *workers* est d'autoriser un *worker* dans le "
+"bassin à accomplir seulement une certaine charge de travail avant de se "
+"fermer, se retrouvant nettoyé et remplacé par un nouvelle processus "
+"fraîchement lancé. L'argument *maxtasksperchild* de :class:`Pool` expose "
+"cette fonctionnalité à l'utilisateur final."
 
 #: ../Doc/library/multiprocessing.rst:2114
 msgid ""
@@ -3102,10 +3180,15 @@ msgid ""
 "suited for performing work in parallel. Additionally, *func* is only "
 "executed in one of the workers of the pool."
 msgstr ""
+"Appelle *func* avec les arguments *args* et les arguments nommés *kwds*. "
+"Bloque jusqu'à ce que que le résultat soit prêt. En raison de ce blocage, :"
+"meth:`apply_async` est préférable pour exécuter du travail en parallèle. De "
+"plus, *func* est exécutée sur un seul des *workers* du bassin."
 
 #: ../Doc/library/multiprocessing.rst:2121
 msgid "A variant of the :meth:`apply` method which returns a result object."
 msgstr ""
+"Une variante de la méthode :meth:`apply` qui renvoie un objet résultat."
 
 #: ../Doc/library/multiprocessing.rst:2123
 #: ../Doc/library/multiprocessing.rst:2148
@@ -3115,6 +3198,10 @@ msgid ""
 "that is unless the call failed, in which case the *error_callback* is "
 "applied instead."
 msgstr ""
+"Si *callback* est précisé alors ce doit être un *callable* qui accepte un "
+"seul argument. Quand le résultat est prêt, *callback* est appelé avec ce "
+"résultat, si l'appel n'échoue pas auquel cas *error_callback* est appelé à "
+"la place."
 
 #: ../Doc/library/multiprocessing.rst:2128
 #: ../Doc/library/multiprocessing.rst:2153
@@ -3123,6 +3210,9 @@ msgid ""
 "a single argument.  If the target function fails, then the *error_callback* "
 "is called with the exception instance."
 msgstr ""
+"Si *error_callback* est précisé alors ce doit être un *callable* qui accepte "
+"un seul argument. Si la fonction cible échoue, alors *error_callback* est "
+"appelé avec l'instance de l'exception."
 
 #: ../Doc/library/multiprocessing.rst:2132
 #: ../Doc/library/multiprocessing.rst:2157
@@ -3130,12 +3220,17 @@ msgid ""
 "Callbacks should complete immediately since otherwise the thread which "
 "handles the results will get blocked."
 msgstr ""
+"Les *callbacks* doivent se terminer immédiatement, autrement le fil "
+"d'exécution qui gère les résultats se retrouverait bloqué."
 
 #: ../Doc/library/multiprocessing.rst:2137
 msgid ""
 "A parallel equivalent of the :func:`map` built-in function (it supports only "
 "one *iterable* argument though).  It blocks until the result is ready."
 msgstr ""
+"Un équivalent parallèle à la fonction *built-in* :func:`map` (qui ne "
+"supporte cependant qu'un *itérable* en argument). Elle bloque jusqu'à ce que "
+"le résultat soit prêt."
 
 #: ../Doc/library/multiprocessing.rst:2140
 msgid ""
@@ -3143,14 +3238,17 @@ msgid ""
 "the process pool as separate tasks.  The (approximate) size of these chunks "
 "can be specified by setting *chunksize* to a positive integer."
 msgstr ""
+"La méthode découpe l'itérable en un nombre de morceaux qu'elle envoie au "
+"bassin de processus comme des tâches séparées. La taille (approximative) de "
+"ces morceaux peut être précisée en passant à *chunksize* un entier positif."
 
 #: ../Doc/library/multiprocessing.rst:2146
 msgid "A variant of the :meth:`.map` method which returns a result object."
-msgstr ""
+msgstr "Une variante de la méthode :meth:`.map` qui renvoie un objet résultat."
 
 #: ../Doc/library/multiprocessing.rst:2162
 msgid "A lazier version of :meth:`map`."
-msgstr ""
+msgstr "Une version paresseuse de :meth:`map`."
 
 #: ../Doc/library/multiprocessing.rst:2164
 msgid ""
@@ -3158,6 +3256,10 @@ msgid ""
 "method.  For very long iterables using a large value for *chunksize* can "
 "make the job complete **much** faster than using the default value of ``1``."
 msgstr ""
+"L'argument *chunksize* est le même que celui utilisé par la méthode :meth:`."
+"map`. Pour de très longs itérables, utiliser une grande valeur pour "
+"*chunksize* peut faire s'exécuter la tâche **beaucoup** plus rapidement "
+"qu'en utilisant la valeur par défaut de ``1``."
 
 #: ../Doc/library/multiprocessing.rst:2169
 msgid ""
@@ -3166,6 +3268,10 @@ msgid ""
 "``next(timeout)`` will raise :exc:`multiprocessing.TimeoutError` if the "
 "result cannot be returned within *timeout* seconds."
 msgstr ""
+"Aussi, si *chucksize* vaut ``1`` alors la méthode :meth:`!next` de "
+"l'itérateur renvoyé par :meth:`imap` prend un paramètre optionnel "
+"*timeout* : ``next(timeout)`` lève une :exc:`multiprocessing.TimeoutError` "
+"si le résultat ne peut pas être renvoyé avant *timeout* secondes."
 
 #: ../Doc/library/multiprocessing.rst:2176
 msgid ""
@@ -3173,18 +3279,25 @@ msgid ""
 "returned iterator should be considered arbitrary.  (Only when there is only "
 "one worker process is the order guaranteed to be \"correct\".)"
 msgstr ""
+"Identique à :meth:`imap` si ce n'est que l'ordre des résultats de "
+"l'itérateur renvoyé doit être considéré comme arbitraire. (L'ordre n'est "
+"garanti que quand il n'y a qu'un *worker*.)"
 
 #: ../Doc/library/multiprocessing.rst:2182
 msgid ""
 "Like :meth:`map` except that the elements of the *iterable* are expected to "
 "be iterables that are unpacked as arguments."
 msgstr ""
+"Semblable à :meth:`map` à l'exception que les éléments d'*iterable* doivent "
+"être des itérables qui seront dépaquetés comme arguments pour la fonction."
 
 #: ../Doc/library/multiprocessing.rst:2185
 msgid ""
 "Hence an *iterable* of ``[(1,2), (3, 4)]`` results in ``[func(1,2), "
 "func(3,4)]``."
 msgstr ""
+"Par conséquent un *iterable* ``[(1,2), (3, 4)]`` donnera pour résultat "
+"``[func(1,2), func(3,4)]``."
 
 #: ../Doc/library/multiprocessing.rst:2192
 msgid ""
@@ -3192,12 +3305,17 @@ msgid ""
 "*iterable* of iterables and calls *func* with the iterables unpacked. "
 "Returns a result object."
 msgstr ""
+"Une combinaison de :meth:`starmap` et :meth:`map_async` qui itère sur "
+"*iterable* (composé d'itérables) et appelle *func* pour chaque itérable "
+"dépaqueté. Renvoie l'objet résultat."
 
 #: ../Doc/library/multiprocessing.rst:2200
 msgid ""
 "Prevents any more tasks from being submitted to the pool.  Once all the "
 "tasks have been completed the worker processes will exit."
 msgstr ""
+"Empêche de nouvelles tâches d'être envoyées à la *pool*. Les processus "
+"*workers* se terminent une fois que toutes les tâches ont été complétées."
 
 #: ../Doc/library/multiprocessing.rst:2205
 msgid ""
@@ -3205,12 +3323,17 @@ msgid ""
 "When the pool object is garbage collected :meth:`terminate` will be called "
 "immediately."
 msgstr ""
+"Stoppe immédiatement les processus *workers* sans finaliser les travaux "
+"courants. Quand l'objet *pool* est collecté par le ramasse-miettes, sa "
+"méthode :meth:`terminate` est appelée immédiatement."
 
 #: ../Doc/library/multiprocessing.rst:2211
 msgid ""
 "Wait for the worker processes to exit.  One must call :meth:`close` or :meth:"
 "`terminate` before using :meth:`join`."
 msgstr ""
+"Attend que les processus *workers* se terminent. Il est nécessaire "
+"d'appeler :meth:`close` ou :meth:`terminate` avant d'utiliser :meth:`join`."
 
 #: ../Doc/library/multiprocessing.rst:2214
 msgid ""
@@ -3218,12 +3341,18 @@ msgid ""
 "`typecontextmanager`.  :meth:`~contextmanager.__enter__` returns the pool "
 "object, and :meth:`~contextmanager.__exit__` calls :meth:`terminate`."
 msgstr ""
+"Les bassins de *workers* supportent maintenant le protocole des "
+"gestionnaires de contexte -- voir :ref:`typecontextmanager`. :meth:"
+"`~contextmanager.__enter__` renvoie l'objet *pool* et :meth:`~contextmanager."
+"__exit__` appelle :meth:`terminate`."
 
 #: ../Doc/library/multiprocessing.rst:2222
 msgid ""
 "The class of the result returned by :meth:`Pool.apply_async` and :meth:`Pool."
 "map_async`."
 msgstr ""
+"La classe des résultats renvoyés par :meth:`Pool.apply_async` et :meth:`Pool."
+"map_async`."
 
 #: ../Doc/library/multiprocessing.rst:2227
 msgid ""
@@ -3232,24 +3361,32 @@ msgid ""
 "TimeoutError` is raised.  If the remote call raised an exception then that "
 "exception will be reraised by :meth:`get`."
 msgstr ""
+"Renvoie le résultat quand il arrive. Si *timeout* n'est pas ``None`` et que "
+"le résultat n'arrive pas avant *timeout* secondes, une :exc:`multiprocessing."
+"TimeoutError` est levée. Si l'appel distance lève une exception, alors elle "
+"est relayée par :meth:`get`."
 
 #: ../Doc/library/multiprocessing.rst:2234
 msgid "Wait until the result is available or until *timeout* seconds pass."
 msgstr ""
+"Attend que le résultat soit disponible ou que *timeout* secondes s'écoulent."
 
 #: ../Doc/library/multiprocessing.rst:2238
 msgid "Return whether the call has completed."
-msgstr ""
+msgstr "Renvoie ``True`` ou ``False`` suivant si la tâche est accomplie."
 
 #: ../Doc/library/multiprocessing.rst:2242
 msgid ""
 "Return whether the call completed without raising an exception.  Will raise :"
 "exc:`AssertionError` if the result is not ready."
 msgstr ""
+"Renvoie ``True`` ou ``False`` suivant si la tâche est accomplie sans lever "
+"d'exception. Lève une :exc:`AssertionError` si le résultat n'est pas prêt."
 
 #: ../Doc/library/multiprocessing.rst:2245
 msgid "The following example demonstrates the use of a pool::"
 msgstr ""
+"Les exemples suivants présentent l'utilisation d'un bassin de *workers* ::"
 
 #: ../Doc/library/multiprocessing.rst:2272
 msgid "Listeners and Clients"
