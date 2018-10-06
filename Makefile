@@ -39,16 +39,10 @@ $(SPHINX_CONF):
 
 .PHONY: upgrade_venv
 upgrade_venv:
-ifdef VIRTUAL_ENV
-	$(error "Trying to create a venv while being in a venv. Please deactivate from your venv first.")
-endif
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 
 
 $(VENV)/bin/activate:
-ifdef VIRTUAL_ENV
-	$(error "Trying to create a venv while being in a venv. Please deactivate from your venv first.")
-endif
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 
 
