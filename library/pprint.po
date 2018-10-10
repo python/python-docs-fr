@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-10 11:27+0200\n"
-"PO-Revision-Date: 2018-10-10 18:20+0200\n"
+"PO-Revision-Date: 2018-10-10 22:03+0200\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -130,6 +130,13 @@ msgid ""
 "within a scope).  *indent*, *width*, *depth* and *compact* will be passed to "
 "the :class:`PrettyPrinter` constructor as formatting parameters."
 msgstr ""
+"Affiche la représentation formatée de *object* sur *stream*, suivie d’un "
+"retour à la ligne. Si *stream* vaut ``None``, ``sys.stdout``est alors "
+"utilisé. Cela peut être utilisé dans l’interpréteur interactif de Python au "
+"lieu de la fonction :func:`print` pour inspecter les valeurs (vous pouvez "
+"même réassigner ``print = pprint.pprint`` pour une utilisation au sein de sa "
+"portée). *indent*, *width*, *depth* et *compact* sont passés au constructeur "
+"de classe :class:`PrettyPrinter` comme paramètres de formatage."
 
 #: ../Doc/library/pprint.rst:121
 msgid ""
@@ -137,14 +144,17 @@ msgid ""
 "can be used to reconstruct the value using :func:`eval`.  This always "
 "returns ``False`` for recursive objects."
 msgstr ""
+"Détermine si la représentation formatée de *object* est « lisible », ou s’il "
+"peut être utilisé pour recomposer sa valeur en utilisant la fonction :func:"
+"`eval`. Cela retourne toujours ``False`` pour les objets récursifs."
 
 #: ../Doc/library/pprint.rst:131
 msgid "Determine if *object* requires a recursive representation."
-msgstr ""
+msgstr "Détermine si *object* requiert une représentation récursive."
 
 #: ../Doc/library/pprint.rst:134
 msgid "One more support function is also defined:"
-msgstr ""
+msgstr "Une dernière fonction de support est définie ainsi:"
 
 #: ../Doc/library/pprint.rst:138
 msgid ""
@@ -153,26 +163,36 @@ msgid ""
 "the recursive reference will be represented as ``<Recursion on typename with "
 "id=number>``.  The representation is not otherwise formatted."
 msgstr ""
+"Retourne une représentation de *object* sous forme de chaîne de caractère, "
+"celle-ci est protégée contre les structures de données récursives. Si la "
+"représentation de *object* affiche une entrée récursive, celle-ci sera "
+"représentée telle que ``<Recursion on typename with id=number>``. Autrement, "
+"la représentation de l’objet n’est pas formatée."
 
 #: ../Doc/library/pprint.rst:150
 msgid "PrettyPrinter Objects"
-msgstr ""
+msgstr "Les Objets PrettyPrinter"
 
 #: ../Doc/library/pprint.rst:152
 msgid ":class:`PrettyPrinter` instances have the following methods:"
 msgstr ""
+"Les instances de la classe :class:`PrettyPrinter` ont les méthodes suivantes:"
 
 #: ../Doc/library/pprint.rst:157
 msgid ""
 "Return the formatted representation of *object*.  This takes into account "
 "the options passed to the :class:`PrettyPrinter` constructor."
 msgstr ""
+"Retourne la représentation formatée de *object*. Cela prend en compte les "
+"options passées au constructeur de la classe :class:`PrettyPrinter`."
 
 #: ../Doc/library/pprint.rst:163
 msgid ""
 "Print the formatted representation of *object* on the configured stream, "
 "followed by a newline."
 msgstr ""
+"Affiche sur le flux configuré la représentation formatée de *object*, suivit "
+"d’une fin de ligne."
 
 #: ../Doc/library/pprint.rst:166
 msgid ""
@@ -181,6 +201,10 @@ msgid ""
 "more efficient since new :class:`PrettyPrinter` objects don't need to be "
 "created."
 msgstr ""
+"Les méthodes suivantes fournissent les implémentations pour les fonctions "
+"correspondantes de mêmes noms. L’utilisation de ces méthodes sur une "
+"instance est légèrement plus efficace, car les nouveaux objets :class:"
+"`PrettyPrinter` n’ont pas besoin d’être créés."
 
 #: ../Doc/library/pprint.rst:176
 msgid ""
@@ -190,10 +214,15 @@ msgid ""
 "class:`PrettyPrinter` is set and the object is deeper than allowed, this "
 "returns ``False``."
 msgstr ""
+"Détermine si la représentation formatée de *object* est « lisible », ou s’il "
+"peut être utilisé pour recomposer sa valeur en utilisant la fonction :func:"
+"`eval`. Cela retourne toujours ``False`` pour les objets récursifs. Si le "
+"paramètre *depth* de la classe :class:`PrettyPrinter` est initialisé et que "
+"l’objet est plus « profond » que permis, cela retourne ``False``."
 
 #: ../Doc/library/pprint.rst:185
 msgid "Determine if the object requires a recursive representation."
-msgstr ""
+msgstr "Détermine si l’objet nécessite une représentation récursive."
 
 #: ../Doc/library/pprint.rst:187
 msgid ""
@@ -201,6 +230,9 @@ msgid ""
 "objects are converted to strings.  The default implementation uses the "
 "internals of the :func:`saferepr` implementation."
 msgstr ""
+"Cette méthode est fournie sous forme de *hook* pour permettre aux sous-"
+"classes de modifier la façon dont les objets sont convertis en chaînes. "
+"L’implémentation par défaut est celle de la fonction :func:`saferepr`."
 
 #: ../Doc/library/pprint.rst:194
 msgid ""
@@ -219,6 +251,21 @@ msgid ""
 "the current level; recursive calls should be passed a value less than that "
 "of the current call."
 msgstr ""
+"Retourne trois valeurs: la version formatée de *object* sous forme de chaîne "
+"de caractères, une option indiquant si le résultat est « lisible », et une "
+"option indiquant si une récursion a été détectée. Le premier argument est "
+"l’objet à représenter. Le second est un dictionnaire qui contient l’ :fun:"
+"ìd` des objets (conteneurs directs ou indirects de *objet* qui affectent sa "
+"représentation) qui font partie du contexte de représentation courant tel "
+"que les clés; si un objet doit être représenté, mais l’a déjà été dans ce "
+"contexte, le troisième argument retourne ``True``. Des appels récursifs à la "
+"méthode :meth:`.format` doivent ajouter des entrés additionnelles aux "
+"conteneurs de ce dictionnaire. Le troisième argument *maxlevels*, donne la "
+"limite maximale de récursivité; la valeur par défaut est ``0``. Cet argument "
+"doit être passé non modifié pour des appels non récursifs. Le quatrième "
+"argument, *level*, donne le niveau de récursivité courant; les appels "
+"récursifs doivent être passés à une valeur inférieure à celle de l’appel "
+"courant."
 
 #: ../Doc/library/pprint.rst:212
 msgid "Example"
@@ -230,19 +277,29 @@ msgid ""
 "parameters, let's fetch information about a project from `PyPI <https://pypi."
 "org>`_::"
 msgstr ""
+"Pour illustrer quelques cas pratiques de l’utilisation de la fonction :func:"
+"`pprint`et de ses paramètres, allons chercher des informations sur un projet "
+"`PyPI <https://pypi.org>`_ : ::"
 
 #: ../Doc/library/pprint.rst:225
 msgid "In its basic form, :func:`pprint` shows the whole object::"
 msgstr ""
+"Dans sa forme basique, la fonction :func:`pprint` affiche l’intégralité de "
+"l’objet : ::"
 
 #: ../Doc/library/pprint.rst:279
 msgid ""
 "The result can be limited to a certain *depth* (ellipsis is used for deeper "
 "contents)::"
 msgstr ""
+"Le résultat peut être limité à une certaine profondeur en initialisant "
+"*depth*. (Ellipsis est utilisé pour des contenus plus « profonds ») : ::"
 
 #: ../Doc/library/pprint.rst:313
 msgid ""
 "Additionally, maximum character *width* can be suggested. If a long object "
 "cannot be split, the specified width will be exceeded::"
 msgstr ""
+"De plus, une valeur maximale de caractères sur une ligne peut être "
+"configurée en initialisant le paramètre *width*. Si un long objet ne peut "
+"être scindé, la valeur donnée à *width* sera outrepassée : ::"
