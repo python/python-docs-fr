@@ -31,6 +31,14 @@ msgid ""
 "see the PEP for why this was added to Python. (See also :pep:`3141` and the :"
 "mod:`numbers` module regarding a type hierarchy for numbers based on ABCs.)"
 msgstr ""
+"Le module fournit l'infrastructure pour définir les :term:`classes de bases "
+"abstraites <abstract base class>` (*Abstract Base Class* ou *ABC* en "
+"anglais) en Python, tel qu'indiqué dans la :pep:`3119`; voir la PEP pour la "
+"raison de son ajout à Python. (Voir également la :pep:`3141` et le module :"
+"mod:`numbers` pour ce qui concerne la hiérarchie de types pour les nombres "
+"basés sur les classes de base abstraites). Par la suite nous utiliserons "
+"l'abréviation ABC (*Abstract Base Class*) pour désigner une classe de base "
+"abstraite."
 
 #: ../Doc/library/abc.rst:20
 msgid ""
@@ -40,6 +48,12 @@ msgid ""
 "class or instance provides a particular interface, for example, is it "
 "hashable or a mapping."
 msgstr ""
+"Le module :mod:`collections` possède certaines classes concrètes qui "
+"dérivent d'ABC. Celles-ci peuvent, bien sur, être elles-mêmes dérivées. De "
+"plus, le sous-module :mod:`collections.abc` possède des ABC qui peuvent être "
+"utilisées pour tester si une classe ou une instance fournit une interface "
+"spécifique. Par exemple, est-elle hachable ou un tableau associatif "
+"(*mapping* en anglais) ?"
 
 #: ../Doc/library/abc.rst:27
 msgid "This module provides the following classes:"
@@ -47,7 +61,7 @@ msgstr "Le module fournit les classes suivantes :"
 
 #: ../Doc/library/abc.rst:31
 msgid "Metaclass for defining Abstract Base Classes (ABCs)."
-msgstr ""
+msgstr "Métaclasse pour définir des classes de base abstraites (ABC)."
 
 #: ../Doc/library/abc.rst:33
 msgid ""
@@ -60,35 +74,53 @@ msgid ""
 "will method implementations defined by the registering ABC be callable (not "
 "even via :func:`super`). [#]_"
 msgstr ""
+"Utilisez cette métaclasse pour créer une ABC. Il est possible d'hériter "
+"d'une ABC directement, cette classe de base abstraite fonctionne alors comme "
+"une classe *mixin*. Vous pouvez également enregistrer une classe concrète "
+"sans lien (même une classe native) et des ABC comme \"sous-classes virtuelles"
+"\" -- celles-ci et leur descendantes seront considérées comme des sous-"
+"classes de la classe de base abstraite par la fonction native :func:"
+"`issubclass`, mais les ABC enregistrées n'apparaitront pas dans leur ordre "
+"de résolution des méthodes (*MRO* pour *Method Resolution Order* en "
+"anglais). Les implémentations de méthodes définies par l'ABC ne seront pas "
+"appelable (pas même via :func:`super`). [#]_"
 
 #: ../Doc/library/abc.rst:42
 msgid ""
 "Classes created with a metaclass of :class:`ABCMeta` have the following "
 "method:"
 msgstr ""
+"Les classes dont la métaclasse est :class:`ABCMeta` possèdent les méthodes "
+"suivantes :"
 
 #: ../Doc/library/abc.rst:46
 msgid ""
 "Register *subclass* as a \"virtual subclass\" of this ABC. For example::"
 msgstr ""
+"Enregistrer *subclass* en tant que sous-classe virtuelle de cette ABC. Par "
+"exemple : ::"
 
 #: ../Doc/library/abc.rst:59
 msgid "Returns the registered subclass, to allow usage as a class decorator."
 msgstr ""
+"Renvoie la sous-classe enregistrée pour permettre l'utilisation en tant que "
+"décorateur de classe."
 
 #: ../Doc/library/abc.rst:62
 msgid ""
 "To detect calls to :meth:`register`, you can use the :func:`get_cache_token` "
 "function."
 msgstr ""
+"Pour détecter les appels à :meth:`register`, vous pouvez utiliser la "
+"fonction :func:`get_cache_token`."
 
 #: ../Doc/library/abc.rst:66
 msgid "You can also override this method in an abstract base class:"
-msgstr ""
+msgstr "Vous pouvez également redéfinir cette méthode dans une ABC :"
 
 #: ../Doc/library/abc.rst:70
 msgid "(Must be defined as a class method.)"
-msgstr "(Doit être définie en temps que méthode de classe.)"
+msgstr "(Doit être définie en tant que méthode de classe.)"
 
 #: ../Doc/library/abc.rst:72
 msgid ""
@@ -98,6 +130,12 @@ msgid ""
 "of the ABC.  (This class method is called from the :meth:`__subclasscheck__` "
 "method of the ABC.)"
 msgstr ""
+"Vérifie si *subclass* est considérée comme une sous-classe de cette ABC. "
+"Cela signifie que vous pouvez personnaliser le comportement de "
+"``issubclass`` sans nécessiter d'appeler :meth:`register` pour chacune des "
+"classes que vous souhaitez considérer comme sous-classe de l'ABC. (Cette "
+"méthode de classe est appelée par la méthode :meth:`__subclasscheck__` de la "
+"classe de base abstraite)."
 
 #: ../Doc/library/abc.rst:78
 msgid ""
@@ -107,11 +145,19 @@ msgid ""
 "even if it would normally be one.  If it returns ``NotImplemented``, the "
 "subclass check is continued with the usual mechanism."
 msgstr ""
+"Cette méthode doit renvoyer ``True``, ``False`` ou ``NotImplemented``. Si "
+"elle renvoie ``True``, *subclass* est considérée comme sous-classe de cette "
+"ABC. Si elle renvoie ``False``, la *subclass* n'est pas considérée une sous-"
+"classe de cette ABC même si elle l'aurait été en temps normal. Si elle "
+"renvoie ``NotImplemented``, la vérification d'appartenance à la sous-classe "
+"continue via le mécanisme habituel."
 
 #: ../Doc/library/abc.rst:88
 msgid ""
 "For a demonstration of these concepts, look at this example ABC definition::"
 msgstr ""
+"Pour une illustration de ces concepts, voir cet exemple de définition de "
+"ABC : ::"
 
 #: ../Doc/library/abc.rst:117
 msgid ""
@@ -121,6 +167,11 @@ msgid ""
 "also part of the ``MyIterable`` abstract base class, but it does not have to "
 "be overridden in non-abstract derived classes."
 msgstr ""
+"L'ABC ``MyIterable`` définit la méthode d'itération :meth:`~iterator."
+"__iter__` comme méthode abstraite. L'implémentation qui lui est donnée ici "
+"peut être appelée depuis les sous-classes. La méthode :meth:`get_iterator` "
+"fait également partie de la classe de base abstraite ``MyIterable``, mais "
+"elle n'a pas à être redéfinie dans les classes dérivées non-abstraites."
 
 #: ../Doc/library/abc.rst:123
 msgid ""
@@ -129,6 +180,11 @@ msgid ""
 "__dict__` (or in that of one of its base classes, accessed via the :attr:"
 "`~class.__mro__` list) is considered a ``MyIterable`` too."
 msgstr ""
+"La méthode de classe :meth:`__subclasshook__` définie ici dit que toute "
+"classe qui possède la méthode :meth:`~iterator.__iter__` dans son :attr:"
+"`~object.__dict__` (ou dans une de ses classes de base, accédée via la "
+"liste :attr:`~class.__mro__`) est considérée également comme un "
+"``MyIterable``."
 
 #: ../Doc/library/abc.rst:128
 msgid ""
@@ -138,6 +194,12 @@ msgid ""
 "meth:`__getitem__`).  Note that this will not make ``get_iterator`` "
 "available as a method of ``Foo``, so it is provided separately."
 msgstr ""
+"Enfin, la dernière ligne fait de ``Foo`` une sous-classe virtuelle de "
+"``MyIterable``, même si cette classe ne définit pas de méthode :meth:"
+"`~iterator.__iter__` (elle utilise l'ancien protocole d'itération qui se "
+"définit en termes de :meth:`__len__` et :meth:`__getitem__`). A noter que "
+"cela ne rendra pas le ``get_iterator`` de ``MyIterable`` disponible comme "
+"une méthode de ``Foo``, ``get_iterator`` est donc implémenté séparément."
 
 #: ../Doc/library/abc.rst:137
 msgid ""
@@ -159,7 +221,7 @@ msgstr ""
 
 #: ../Doc/library/abc.rst:152
 msgid "A decorator indicating abstract methods."
-msgstr "Un décorateur marquant les méthodes abstraites."
+msgstr "Un décorateur marquant les méthodes comme abstraites."
 
 #: ../Doc/library/abc.rst:154
 msgid ""
@@ -170,6 +232,13 @@ msgid ""
 "the normal 'super' call mechanisms.  :func:`abstractmethod` may be used to "
 "declare abstract methods for properties and descriptors."
 msgstr ""
+"Utiliser ce décorateur nécessite que la métaclasse de la classe soit :class:"
+"`ABCMeta` ou soit dérivée de celle-ci. Une classe qui possède une méta-"
+"classe dérivée de :class:`ABCMeta` ne peut pas être instanciée à moins que "
+"toutes ses méthodes et propriétés abstraites soient redéfinies. Les méthodes "
+"abstraites peuvent être appelées en utilisant n'importe quel des mécanismes "
+"d'appel à 'super'. :func:`abstractmethod` peut être utilisée pour déclarer "
+"des méthodes abstraites pour les propriétés et descripteurs."
 
 #: ../Doc/library/abc.rst:161
 msgid ""
@@ -179,6 +248,12 @@ msgid ""
 "regular inheritance; \"virtual subclasses\" registered with the ABC's :meth:"
 "`register` method are not affected."
 msgstr ""
+"Python ne gère pas l'ajout dynamique de méthodes abstraites à une classe, il "
+"n'est pas non plus possible de modifier l'état d'abstraction d'une méthode "
+"ou d'une classe une fois celle-ci créée. :func:`abstractmethod` n'affecte "
+"que les sous-classes dérivées utilisant l'héritage classique. Les \"sous-"
+"classes virtuelles\" enregistrées avec la méthode :meth:`register` de l'ABC "
+"ne sont pas affectées."
 
 #: ../Doc/library/abc.rst:167
 msgid ""
@@ -186,6 +261,9 @@ msgid ""
 "descriptors, it should be applied as the innermost decorator, as shown in "
 "the following usage examples::"
 msgstr ""
+"Quand le décorateur :func:`abstractmethod` est utilisé en même temps que "
+"d'autres descripteurs de méthodes, il doit être appliqué en tant que "
+"décorateur le plus interne. Voir les exemples d'utilisation suivants : ::"
 
 #: ../Doc/library/abc.rst:201
 msgid ""
@@ -195,6 +273,11 @@ msgid ""
 "of the methods used to compose the descriptor are abstract. For example, "
 "Python's built-in property does the equivalent of::"
 msgstr ""
+"Afin d'interagir correctement avec le mécanisme de classe de base abstraite, "
+"un descripteur doit s'identifier comme abstrait en utilisant :attr:"
+"`__isabstractmethod__`. En général, cet attribut doit être ``True`` si au "
+"moins une des méthodes faisant partie du descripteur est abstraite. Par "
+"exemple, la propriété native de python fait l'équivalent de : ::"
 
 #: ../Doc/library/abc.rst:216
 msgid ""
@@ -204,47 +287,68 @@ msgid ""
 "point for a super-call in a framework that uses cooperative multiple-"
 "inheritance."
 msgstr ""
+"Contrairement aux méthodes abstraites Java, ces méthodes abstraites peuvent "
+"être implémentées. Cette implémentation peut être appelée via le mécanisme :"
+"func:`super` depuis la classe qui la redéfinit. C'est typiquement utile pour "
+"y appeler *super* et ainsi coopérer correctement dans un environnement "
+"utilisant de l'héritage multiple."
 
 #: ../Doc/library/abc.rst:226
 msgid ""
 "A subclass of the built-in :func:`classmethod`, indicating an abstract "
 "classmethod. Otherwise it is similar to :func:`abstractmethod`."
 msgstr ""
+"Sous-classe du décorateur natif :func:`classmethod` qui indique une méthode "
+"de classe ( ``classmethod`` ) abstraite. En dehors de cela, est similaire à :"
+"func:`abstractmethod`."
 
 #: ../Doc/library/abc.rst:229
 msgid ""
 "This special case is deprecated, as the :func:`classmethod` decorator is now "
 "correctly identified as abstract when applied to an abstract method::"
 msgstr ""
+"Ce cas spécial est obsolète car le décorateur :func:`classmethod` est "
+"désormais correctement identifié comme abstrait quand il est appliqué à une "
+"méthode abstraite : ::"
 
 #: ../Doc/library/abc.rst:240
 msgid ""
 "It is now possible to use :class:`classmethod` with :func:`abstractmethod`, "
 "making this decorator redundant."
 msgstr ""
+"Il est désormais possible d'utiliser :class:`classmethod` avec :func:"
+"`abstractmethod`, cela rend ce décorateur redondant."
 
 #: ../Doc/library/abc.rst:247
 msgid ""
 "A subclass of the built-in :func:`staticmethod`, indicating an abstract "
 "staticmethod. Otherwise it is similar to :func:`abstractmethod`."
 msgstr ""
+"Sous-classe du décorateur natif :func:`classmethod` qui indique une méthode "
+"statique ( ``staticmethod`` ) abstraite. En dehors de cela, est similaire à :"
+"func:`abstractmethod`."
 
 #: ../Doc/library/abc.rst:250
 msgid ""
 "This special case is deprecated, as the :func:`staticmethod` decorator is "
 "now correctly identified as abstract when applied to an abstract method::"
 msgstr ""
+"Ce cas spécial est obsolète car le décorateur :func:`staticmethod` est "
+"désormais correctement identifié comme abstrait quand appliqué à une méthode "
+"abstraite : ::"
 
 #: ../Doc/library/abc.rst:261
 msgid ""
 "It is now possible to use :class:`staticmethod` with :func:`abstractmethod`, "
 "making this decorator redundant."
 msgstr ""
+"Il est désormais possible d'utiliser :class:`staticmethod` avec :func:"
+"`abstractmethod`, cela rend ce décorateur redondant."
 
 #: ../Doc/library/abc.rst:268
 msgid ""
 "A subclass of the built-in :func:`property`, indicating an abstract property."
-msgstr ""
+msgstr "Sous-classe de :func:`property`, qui indique une propriété abstraite."
 
 #: ../Doc/library/abc.rst:271
 msgid ""
@@ -260,6 +364,9 @@ msgid ""
 "This special case is deprecated, as the :func:`property` decorator is now "
 "correctly identified as abstract when applied to an abstract method::"
 msgstr ""
+"Ce cas spécial est obsolète car le décorateur :func:`property` est désormais "
+"correctement identifié comme abstrait quand appliqué à une méthode "
+"abstraite : ::"
 
 #: ../Doc/library/abc.rst:287
 msgid ""
@@ -267,12 +374,18 @@ msgid ""
 "write abstract property by appropriately marking one or more of the "
 "underlying methods as abstract::"
 msgstr ""
+"L'exemple ci-dessus définit une propriété en lecture seule. Vous pouvez "
+"également définir une propriété en lecture-écriture abstraite en indiquant "
+"une ou plusieurs des méthodes sous-jacentes comme abstraite : ::"
 
 #: ../Doc/library/abc.rst:301
 msgid ""
 "If only some components are abstract, only those components need to be "
 "updated to create a concrete property in a subclass::"
 msgstr ""
+"Si seuls certains composants sont abstraits, seuls ces composants abstraits "
+"nécessitent d'être mis à jour pour créer une propriété concrète dans une "
+"sous-classe : ::"
 
 #: ../Doc/library/abc.rst:310
 msgid ""
@@ -280,14 +393,17 @@ msgid ""
 "`property.setter` and :meth:`property.deleter` with :func:`abstractmethod`, "
 "making this decorator redundant."
 msgstr ""
+"Il est désormais possible d'utiliser :class:`property`, :meth:`property."
+"getter`, :meth:`property.setter` et :meth:`property.deleter` avec :func:"
+"`abstractmethod`, ce qui rend ce décorateur redondant."
 
 #: ../Doc/library/abc.rst:316
 msgid "The :mod:`abc` module also provides the following functions:"
-msgstr ""
+msgstr "Le module :mod:`abc` fournit également la fonction suivante :"
 
 #: ../Doc/library/abc.rst:320
 msgid "Returns the current abstract base class cache token."
-msgstr ""
+msgstr "Renvoie le jeton de cache ( *cache token*) de l'ABC."
 
 #: ../Doc/library/abc.rst:322
 msgid ""
@@ -295,6 +411,10 @@ msgid ""
 "the current version of the abstract base class cache for virtual subclasses. "
 "The token changes with every call to :meth:`ABCMeta.register` on any ABC."
 msgstr ""
+"Le jeton est un objet opaque (qui implémente le test d'égalité) qui "
+"identifie la version actuelle du cache de l'ABC pour les sous-classes "
+"virtuelles. Le jeton change avec chaque appel à :meth:`ABCMeta.register` sur "
+"n'importe quelle ABC."
 
 #: ../Doc/library/abc.rst:330
 msgid "Footnotes"
@@ -305,3 +425,5 @@ msgid ""
 "C++ programmers should note that Python's virtual base class concept is not "
 "the same as C++'s."
 msgstr ""
+"Les développeurs C++ noteront que le concept Python de classe de base "
+"virtuelle ( *virtual base class* ) n'est pas le même que celui de C++."

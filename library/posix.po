@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../Doc/library/posix.rst:2
 msgid ":mod:`posix` --- The most common POSIX system calls"
-msgstr ""
+msgstr ":mod:`posix` --- Les appels système POSIX les plus courants"
 
 #: ../Doc/library/posix.rst:10
 msgid ""
@@ -26,6 +26,9 @@ msgid ""
 "standardized by the C Standard and the POSIX standard (a thinly disguised "
 "Unix interface)."
 msgstr ""
+"Ce module permet d'accéder aux fonctionnalités du système d'exploitation "
+"normalisés par le Standard C et le Standard POSIX (une interface Unix "
+"habilement déguisée)."
 
 #: ../Doc/library/posix.rst:16
 msgid ""
@@ -39,16 +42,28 @@ msgid ""
 "such as automatically calling :func:`~os.putenv` when an entry in ``os."
 "environ`` is changed."
 msgstr ""
+"**Ne pas importer ce module directement.**  À la place, importer le module :"
+"mod:`os`, qui fournit une version *portable* de cette interface. Sous Unix, "
+"le module :mod:`os` fournit un sur-ensemble de l'interface :mod:`posix`.  "
+"Sous les systèmes d'exploitation non Unix le module :mod:`posix` n'est pas "
+"disponible, mais un sous ensemble est toujours disponible via l'interface :"
+"mod:`os`. Une fois que :mod:`os` est importé, il n'y a aucune perte de "
+"performance à l'utiliser à la place de :mod:`posix`.  De plus, :mod:`os` "
+"fournit des fonctionnalités supplémentaires, telles que l'appel automatique "
+"de :func:`~os.putenv` lorsqu'une entrée dans ``os.environ`` est modifiée."
 
 #: ../Doc/library/posix.rst:25
 msgid ""
 "Errors are reported as exceptions; the usual exceptions are given for type "
 "errors, while errors reported by the system calls raise :exc:`OSError`."
 msgstr ""
+"Les erreurs sont signalées comme des exceptions; les exceptions habituelles "
+"sont données pour les erreurs de type, tandis que les erreurs signalées par "
+"les appels système lèvent une erreur :exc:`OSError`."
 
 #: ../Doc/library/posix.rst:32
 msgid "Large File Support"
-msgstr ""
+msgstr "Prise en charge de gros fichiers"
 
 #: ../Doc/library/posix.rst:40
 msgid ""
@@ -58,6 +73,11 @@ msgid ""
 "accomplished by defining the relevant size and offset types as 64-bit "
 "values. Such files are sometimes referred to as :dfn:`large files`."
 msgstr ""
+"De nombreux systèmes d'exploitation (y compris AIX, HP-UX, Irix et Solaris) "
+"prennent en charge les fichiers d'une taille supérieure à 2 Go malgré que le "
+"compilateur C utilise des types :c:type:`int` et :c:type:`long` d'une "
+"longueur de 32 bit. Ceci est généralement accompli en définissant un nouveau "
+"type  de 64 bit. Ces fichiers sont parfois appelés fichiers volumineux."
 
 #: ../Doc/library/posix.rst:46
 msgid ""
@@ -68,20 +88,31 @@ msgid ""
 "enable this mode. For example, it is enabled by default with recent versions "
 "of Irix, but with Solaris 2.6 and 2.7 you need to do something like::"
 msgstr ""
+"La prise en charge des fichiers volumineux dans Python est activée lorsque "
+"la taille de :c:type:`off_t` est supérieure à :c:type:`long` et que le type :"
+"c:type:`long long` est disponible et est au moins aussi grand que :c:type:"
+"`off_t`. Il peut-être nécessaire de configurer et compiler Python avec "
+"certaines options pour activer ce mode. Par exemple, il est activé par "
+"défaut avec les versions récentes d'Irix, mais avec Solaris 2.6 et 2.7 vous "
+"avez besoin de faire quelque chose comme::"
 
 #: ../Doc/library/posix.rst:56
 msgid "On large-file-capable Linux systems, this might work::"
 msgstr ""
+"Sur les systèmes Linux capable de supporter les fichiers volumineux, cela "
+"pourrait fonctionner:"
 
 #: ../Doc/library/posix.rst:65
 msgid "Notable Module Contents"
-msgstr ""
+msgstr "Contenu du Module"
 
 #: ../Doc/library/posix.rst:67
 msgid ""
 "In addition to many functions described in the :mod:`os` module "
 "documentation, :mod:`posix` defines the following data item:"
 msgstr ""
+"En plus des nombreuses fonctions décrites dans la documentation du module :"
+"mod:`os`, :mod:`posix` possède les éléments suivants:"
 
 #: ../Doc/library/posix.rst:72
 msgid ""
@@ -90,6 +121,11 @@ msgid ""
 "example, ``environ[b'HOME']`` (``environ['HOME']`` on Windows) is the "
 "pathname of your home directory, equivalent to ``getenv(\"HOME\")`` in C."
 msgstr ""
+"Un dictionnaire représentant les variables d'environnement au moment où "
+"l'interpréteur à été lancé. Les clés et les valeurs sont des `bytes` sous "
+"Unix et des `str` sous Windows. Par exemple, ``environ[b'HOME']`` "
+"(``environ['HOME']`` dans Windows) est le chemin de votre dossier "
+"utilisateur, équivalent à ``getenv(\"HOME\")`` en C."
 
 #: ../Doc/library/posix.rst:77
 msgid ""
@@ -99,10 +135,16 @@ msgid ""
 "variable assignments and export statements to the command string for :func:"
 "`~os.system` or :func:`~os.popen`."
 msgstr ""
+"Modifier ce dictionnaire n'affecte pas les variables d'environnements "
+"fournis par :func:`~os.execv`, :func:`~os.popen` ou :func:`~os.system`; Si "
+"vous avez besoin de changer l'environnement, passer le paramètre ``environ`` "
+"à :func:`~os.execve` ou ajouter les assignations de variables et les "
+"*export* à la commande à exécuter via :func:`~os.system` ou :func:`~os."
+"popen`."
 
 #: ../Doc/library/posix.rst:83
 msgid "On Unix, keys and values are bytes."
-msgstr ""
+msgstr "Sous Unix, les clés et les valeurs sont des octets."
 
 #: ../Doc/library/posix.rst:88
 msgid ""
@@ -112,3 +154,8 @@ msgid ""
 "module version of this is recommended over direct access to the :mod:`posix` "
 "module."
 msgstr ""
+"Le module :mod:`os` fournit une implémentation alternative à ``environ`` qui "
+"met à jour l'environnement en cas de modification. Notez également que la "
+"mise à jour de :data:`os.environ` rendra ce dictionnaire obsolète. Il est "
+"recommandé d'utiliser le module :mod:`os` au lieu du module :mod:`posix` "
+"dans ce cas-ci."

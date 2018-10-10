@@ -19,6 +19,8 @@ msgstr ""
 #: ../Doc/library/asynchat.rst:2
 msgid ":mod:`asynchat` --- Asynchronous socket command/response handler"
 msgstr ""
+":mod:`asynchat` --- Gestionnaire d'interfaces de connexion (*socket*) "
+"commande/réponse asynchrones"
 
 #: ../Doc/library/asynchat.rst:10
 msgid "**Source code:** :source:`Lib/asynchat.py`"
@@ -29,6 +31,8 @@ msgid ""
 "This module exists for backwards compatibility only.  For new code we "
 "recommend using :mod:`asyncio`."
 msgstr ""
+"Ce module n'existe que pour des raisons de rétrocompatibilité. Pour du code "
+"nouveau, l'utilisation de :mod:`asyncio` est recommandée."
 
 #: ../Doc/library/asynchat.rst:19
 msgid ""
@@ -44,6 +48,18 @@ msgid ""
 "class:`asynchat.async_chat` channel objects as it receives incoming "
 "connection requests."
 msgstr ""
+"Ce module s'appuie sur l'infrastructure de :mod:`asyncore`, en simplifiant "
+"les clients et serveurs asynchrones et en rendant plus facile la gestion de "
+"protocoles dont les éléments finissent par une chaine arbitraire, ou sont de "
+"longueur variable. :mod:`asynchat` définit une classe abstraite :class:"
+"`async_chat` dont vous héritez, et qui fournit des implémentations des "
+"méthodes :meth:`collect_incoming_data` et :meth:`found_terminator`. Il "
+"utilise la même boucle asynchrone que :mod:`asyncore`, et deux types de "
+"canaux, :class:`asyncore.dispatcher` et :class:`asynchat.async_chat`, qui "
+"peuvent être librement mélangés dans la carte des canaux. Habituellement, un "
+"canal de serveur :class:`asyncore.dispatcher` génère de nouveaux canaux "
+"d'objets :class:`asynchat.async_chat` à la réception de requêtes de "
+"connexion."
 
 #: ../Doc/library/asynchat.rst:34
 msgid ""
@@ -53,6 +69,12 @@ msgid ""
 "methods. The :class:`asyncore.dispatcher` methods can be used, although not "
 "all make sense in a message/response context."
 msgstr ""
+"Cette classe est une sous-classe abstraite de :class:`asyncore.dispatcher`. "
+"Pour en faire un usage pratique, vous devez créer une classe héritant de :"
+"class:`async_chat`, et implémentant des méthodes :meth:"
+"`collect_incoming_data` et :meth:`found_terminator` sensées. Les méthodes "
+"de  :class:`asyncore.dispatcher` peuvent être utilisées, même si toutes "
+"n'ont pas de sens dans un contexte de messages/réponse."
 
 #: ../Doc/library/asynchat.rst:41
 msgid ""
@@ -62,20 +84,28 @@ msgid ""
 "`async_chat` object's methods are called by the event-processing framework "
 "with no action on the part of the programmer."
 msgstr ""
+"Comme :class:`asyncore.dispatcher`, :class:`async_chat` définit un ensemble "
+"d’événements générés par une analyse de l'état des interfaces de connexion "
+"(*socket* en anglais) après un appel à :c:func:`select`. Une fois que la "
+"boucle de scrutation (*polling* en anglais) a été lancée, les méthodes des "
+"objets :class:`async_chat` sont appelées par le *framework* de traitement "
+"d’événements sans que le programmeur n'ait à le spécifier."
 
 #: ../Doc/library/asynchat.rst:47
 msgid ""
 "Two class attributes can be modified, to improve performance, or possibly "
 "even to conserve memory."
 msgstr ""
+"Deux attributs de classe peuvent être modifiés, pour améliorer la "
+"performance, ou potentiellement pour économiser de la mémoire."
 
 #: ../Doc/library/asynchat.rst:53
 msgid "The asynchronous input buffer size (default ``4096``)."
-msgstr ""
+msgstr "La taille du tampon d'entrées asynchrones (``4096`` par défaut)."
 
 #: ../Doc/library/asynchat.rst:58
 msgid "The asynchronous output buffer size (default ``4096``)."
-msgstr ""
+msgstr "La taille du tampon de sorties asynchrones (``4096`` par défaut)."
 
 #: ../Doc/library/asynchat.rst:60
 msgid ""
@@ -99,6 +129,10 @@ msgid ""
 "data that the channel receives asynchronously. The methods are described "
 "below."
 msgstr ""
+"Pour construire une sous classe fonctionnelle de :class:`async_chat` pour "
+"vos méthodes d'entrées :meth:`collect_incoming_data` et :meth:"
+"`found_terminator` doivent gérer la donnée que le canal reçoit de manière "
+"asynchrone. Ces méthodes sont décrites ci-dessous."
 
 #: ../Doc/library/asynchat.rst:81
 msgid ""
@@ -112,6 +146,8 @@ msgid ""
 "default method, which must be overridden, raises a :exc:"
 "`NotImplementedError` exception."
 msgstr ""
+"Appelé avec *data* contenant une quantité arbitraire de données. La méthode "
+"par défaut, qui doit être écrasée, lève une :exc:`NotImplementedError`."
 
 #: ../Doc/library/asynchat.rst:94
 msgid ""
@@ -126,10 +162,14 @@ msgid ""
 "raises a :exc:`NotImplementedError` exception. The buffered input data "
 "should be available via an instance attribute."
 msgstr ""
+"Appelée quand le flux de donné corresponds à la condition de fin décrite "
+"par :meth:`set_terminator`. La méthode par défaut, qui doit être écrasée, "
+"lève une :exc:`NotImplementedError`. Les données entrantes mise en tampon "
+"devraient être disponible via un attribut de l'instance."
 
 #: ../Doc/library/asynchat.rst:108
 msgid "Returns the current terminator for the channel."
-msgstr ""
+msgstr "Renvoie le terminateur courant pour le canal."
 
 #: ../Doc/library/asynchat.rst:113
 msgid ""
@@ -153,6 +193,9 @@ msgid ""
 "may be any of three types of value, corresponding to three different ways to "
 "handle incoming protocol data."
 msgstr ""
+"Définit le marqueur de fin que le canal doit reconnaître. ``term`` peut être "
+"n'importe lequel des trois types de valeurs, correspondant aux trois "
+"différentes manières de gérer les données entrantes."
 
 #: ../Doc/library/asynchat.rst:134
 msgid "term"
@@ -171,6 +214,8 @@ msgid ""
 "Will call :meth:`found_terminator` when the string is found in the input "
 "stream"
 msgstr ""
+"Appellera :meth:`found_terminator` quand la chaîne est trouvée dans le flux "
+"d'entré"
 
 #: ../Doc/library/asynchat.rst:139
 msgid "*integer*"
@@ -181,6 +226,8 @@ msgid ""
 "Will call :meth:`found_terminator` when the indicated number of characters "
 "have been received"
 msgstr ""
+"Appellera :meth:`found_terminator` quand le nombre de caractère indiqué à "
+"été reçu"
 
 #: ../Doc/library/asynchat.rst:143
 msgid "``None``"
@@ -195,10 +242,12 @@ msgid ""
 "Note that any data following the terminator will be available for reading by "
 "the channel after :meth:`found_terminator` is called."
 msgstr ""
+"Notez que toute donnée située après le marqueur de fin sera accessible en "
+"lecture par le canal après que :meth:`found_terminator` ai été appelé."
 
 #: ../Doc/library/asynchat.rst:154
 msgid "asynchat Example"
-msgstr "Exemple asynchat"
+msgstr "Exemple *asynchat*"
 
 #: ../Doc/library/asynchat.rst:156
 msgid ""
@@ -209,6 +258,12 @@ msgid ""
 "end of the HTTP headers, and a flag indicates that the headers are being "
 "read."
 msgstr ""
+"L'exemple partiel suivant montre comment des requêtes HTTP peuvent être lues "
+"avec :class:`async_chat`. Un serveur web pourrait créer un objet :class:"
+"`http_request_handler` pour chaque connections lient entrantes. Notez que "
+"initialement, le marqueur de fin du canal est défini pour reconnaître les "
+"lignes vides à la fin des entêtes HTTP, et une option indique que les "
+"entêtes sont en train d'être lues."
 
 #: ../Doc/library/asynchat.rst:163
 msgid ""
@@ -217,6 +272,10 @@ msgid ""
 "`` header is used to set a numeric terminator to read the right amount of "
 "data from the channel."
 msgstr ""
+"Une fois que les entêtes ont été lues, si la requête est de type *POST* (ce "
+"qui indique que davantage de données sont présent dans dans le flux entrant) "
+"alors l'entête ``Content-Length:`` est utilisé pour définir un marqueur de "
+"fin numérique pour lire la bonne quantité de donné depuis le canal."
 
 #: ../Doc/library/asynchat.rst:168
 msgid ""
@@ -224,3 +283,7 @@ msgid ""
 "marshalled, after setting the channel terminator to ``None`` to ensure that "
 "any extraneous data sent by the web client are ignored. ::"
 msgstr ""
+"La méthode :meth:`handle_request` est appelée une fois que toutes les "
+"données pertinentes ont été rassemblées, après avoir définit le marqueur de "
+"fin à ``None`` pour s'assurer que toute données étrangères envoyées par le "
+"client web sont ignorées. ::"
