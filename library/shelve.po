@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../Doc/library/shelve.rst:2
 msgid ":mod:`shelve` --- Python object persistence"
-msgstr ""
+msgstr ":mod:`shelve` --- Objet Python persistant"
 
 #: ../Doc/library/shelve.rst:10
 msgid "**Source code:** :source:`Lib/shelve.py`"
@@ -33,6 +33,12 @@ msgid ""
 "and objects containing lots of shared  sub-objects.  The keys are ordinary "
 "strings."
 msgstr ""
+"Un *shelf* est un objet persistant, dictionnaire-compatible. La différence "
+"avec les bases de données *dbm* est que les valeurs (pas les clés !) dans un "
+"*shelf* peuvent être des objets Python arbitraires --- n'importe quoi que le "
+"module :mod:`pickle` peut gérer. Cela inclut la plupart des instances de "
+"classe, des types de données récursives, et les objets contenant beaucoup de "
+"sous-objets partagés. Les clés sont des chaînes de caractères ordinaires."
 
 #: ../Doc/library/shelve.rst:23
 msgid ""
@@ -68,6 +74,18 @@ msgid ""
 "determine which accessed entries are mutable, nor which ones were actually "
 "mutated)."
 msgstr ""
+"À cause de la sémantique Python, un *shelf* ne peut pas savoir lorsqu'une "
+"entrée modifiable de dictionnaire persistant est modifiée. Par défaut les "
+"objets modifiés sont écrits *seulement* lorsqu'ils sont assignés à une "
+"*shelf* (voir :ref:`shelve-example`). Si le paramètre optionnel *writeback* "
+"est mis à ``True``, toutes les entrées déjà accédées sont aussi mises en "
+"cache en mémoire, et ré-écrites sur :meth:`~Shelf.sync` et :meth:`~Shelf."
+"close` ; cela peut faciliter la modification des entrées modifiables dans le "
+"dictionnaire persistant, mais, si vous accédez à beaucoup d'entrées, cela "
+"peut consommer beaucoup de mémoire cache, et cela peut rendre l'opération de "
+"fermeture très lente puisque toutes les entrées déjà accédées sont ré-"
+"écrites (il n'y a aucun moyen de savoir quelles entrées déjà accédées sont "
+"mutables, ni lesquelles ont été vraiment modifiées)."
 
 #: ../Doc/library/shelve.rst:47
 msgid ""
@@ -81,6 +99,9 @@ msgid ""
 "to load a shelf from an untrusted source.  Like with pickle, loading a shelf "
 "can execute arbitrary code."
 msgstr ""
+"Puisque le module :mod:`shelve` utilise en arrière plan :mod:`pickle`, il "
+"n'est pas sûr de charger un *shelf* depuis une source non fiable. Comme avec "
+"*pickle*, charger un *shelf* peut exécuter du code arbitraire."
 
 #: ../Doc/library/shelve.rst:56
 msgid ""
@@ -97,7 +118,7 @@ msgstr ""
 
 #: ../Doc/library/shelve.rst:63
 msgid "Two additional methods are supported:"
-msgstr ""
+msgstr "Deux méthodes supplémentaires sont supportées :"
 
 #: ../Doc/library/shelve.rst:67
 msgid ""
@@ -106,12 +127,18 @@ msgid ""
 "dictionary on disk, if feasible.  This is called automatically when the "
 "shelf is closed with :meth:`close`."
 msgstr ""
+"Réécrit toutes les entrées dans le cache si le *shelf* a été ouvert avec "
+"*writeback* passé à :const:`True`. Vide le cache et synchronise le "
+"dictionnaire persistant sur le disque, si faisable. Elle est appelée "
+"automatiquement quand le *shelf* est fermé avec :meth:`close`."
 
 #: ../Doc/library/shelve.rst:74
 msgid ""
 "Synchronize and close the persistent *dict* object.  Operations on a closed "
 "shelf will fail with a :exc:`ValueError`."
 msgstr ""
+"Synchronise et ferme l'objet *dict* persistant. Les opérations sur un "
+"*shelf* fermé échouent avec une :exc:`ValueError`."
 
 #: ../Doc/library/shelve.rst:80
 msgid ""
@@ -119,10 +146,13 @@ msgid ""
 ">`_ with widely supported storage formats and having the speed of native "
 "dictionaries."
 msgstr ""
+"`Recette pour un dictionnaire persistant <https://code.activestate.com/"
+"recipes/576642/>`_ avec un large panel de formats de stockage et ayant la "
+"vitesse des dictionnaires natifs."
 
 #: ../Doc/library/shelve.rst:86
 msgid "Restrictions"
-msgstr ""
+msgstr "Limites"
 
 #: ../Doc/library/shelve.rst:93
 msgid ""
@@ -144,6 +174,13 @@ msgid ""
 "this differs across Unix versions and requires knowledge about the database "
 "implementation used."
 msgstr ""
+"Le module :mod:`shelve` ne gère pas l'accès *concurrent* en lecture/écriture "
+"sur les objets stockés (les accès simultanés en lecture sont sûrs). "
+"Lorsqu'un programme a un *shelf* ouvert en écriture, aucun autre programme "
+"ne doit l'avoir ouvert en écriture ou lecture. Le verrouillage des fichier "
+"Unix peut être utilisé pour résoudre ce problème, mais cela dépend de la "
+"version Unix et nécessite des connaissances à propos de l'implémentation de "
+"la base de données utilisée."
 
 #: ../Doc/library/shelve.rst:111
 msgid ""
@@ -165,6 +202,11 @@ msgid ""
 "times. This allows natural operations on mutable entries, but can consume "
 "much more memory and make sync and close take a long time."
 msgstr ""
+"Si le paramètre *writeback* est ``True``, l'objet garde en cache toutes les "
+"entrées accédées et les écrit dans le *dict* aux moments de synchronisation "
+"et de fermeture. Cela permet des opérations naturelles sur les entrées "
+"modifiables, mais peut consommer beaucoup plus de mémoire et rendre les "
+"temps de synchronisation et de fermeture très longs."
 
 #: ../Doc/library/shelve.rst:129
 msgid ""
@@ -197,6 +239,8 @@ msgid ""
 "To summarize the interface (``key`` is a string, ``data`` is an arbitrary "
 "object)::"
 msgstr ""
+"Pour résumer l'interface (``key`` est une chaîne de caractère, ``data`` est "
+"un objet arbitraire) ::"
 
 #: ../Doc/library/shelve.rst:189
 msgid "Module :mod:`anydbm`"
@@ -226,7 +270,7 @@ msgstr ""
 
 #: ../Doc/library/shelve.rst:199
 msgid "Module :mod:`dbm`"
-msgstr ""
+msgstr "Module :mod:`dbm`"
 
 #: ../Doc/library/shelve.rst:199
 msgid "Standard Unix database interface."
@@ -250,11 +294,11 @@ msgstr ""
 
 #: ../Doc/library/shelve.rst:208
 msgid "Module :mod:`pickle`"
-msgstr ""
+msgstr "Module :mod:`pickle`"
 
 #: ../Doc/library/shelve.rst:208
 msgid "Object serialization used by :mod:`shelve`."
-msgstr ""
+msgstr "Sérialisation d'objet utilisé par :mod:`shelve`."
 
 #: ../Doc/library/shelve.rst:210
 msgid "Module :mod:`cPickle`"

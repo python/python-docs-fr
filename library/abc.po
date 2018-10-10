@@ -31,6 +31,14 @@ msgid ""
 "see the PEP for why this was added to Python. (See also :pep:`3141` and the :"
 "mod:`numbers` module regarding a type hierarchy for numbers based on ABCs.)"
 msgstr ""
+"Le module fournit l'infrastructure pour définir les :term:`classes de bases "
+"abstraites <abstract base class>` (*Abstract Base Class* ou *ABC* en "
+"anglais) en Python, tel qu'indiqué dans la :pep:`3119`; voir la PEP pour la "
+"raison de son ajout à Python. (Voir également la :pep:`3141` et le module :"
+"mod:`numbers` pour ce qui concerne la hiérarchie de types pour les nombres "
+"basés sur les classes de base abstraites). Par la suite nous utiliserons "
+"l'abréviation ABC (*Abstract Base Class*) pour désigner une classe de base "
+"abstraite."
 
 #: ../Doc/library/abc.rst:21
 msgid ""
@@ -47,7 +55,7 @@ msgstr ""
 
 #: ../Doc/library/abc.rst:32
 msgid "Metaclass for defining Abstract Base Classes (ABCs)."
-msgstr ""
+msgstr "Métaclasse pour définir des classes de base abstraites (ABC)."
 
 #: ../Doc/library/abc.rst:34
 msgid ""
@@ -60,25 +68,39 @@ msgid ""
 "will method implementations defined by the registering ABC be callable (not "
 "even via :func:`super`). [#]_"
 msgstr ""
+"Utilisez cette métaclasse pour créer une ABC. Il est possible d'hériter "
+"d'une ABC directement, cette classe de base abstraite fonctionne alors comme "
+"une classe *mixin*. Vous pouvez également enregistrer une classe concrète "
+"sans lien (même une classe native) et des ABC comme \"sous-classes virtuelles"
+"\" -- celles-ci et leur descendantes seront considérées comme des sous-"
+"classes de la classe de base abstraite par la fonction native :func:"
+"`issubclass`, mais les ABC enregistrées n'apparaitront pas dans leur ordre "
+"de résolution des méthodes (*MRO* pour *Method Resolution Order* en "
+"anglais). Les implémentations de méthodes définies par l'ABC ne seront pas "
+"appelable (pas même via :func:`super`). [#]_"
 
 #: ../Doc/library/abc.rst:43
 msgid ""
 "Classes created with a metaclass of :class:`ABCMeta` have the following "
 "method:"
 msgstr ""
+"Les classes dont la métaclasse est :class:`ABCMeta` possèdent les méthodes "
+"suivantes :"
 
 #: ../Doc/library/abc.rst:47
 msgid ""
 "Register *subclass* as a \"virtual subclass\" of this ABC. For example::"
 msgstr ""
+"Enregistrer *subclass* en tant que sous-classe virtuelle de cette ABC. Par "
+"exemple : ::"
 
 #: ../Doc/library/abc.rst:60
 msgid "You can also override this method in an abstract base class:"
-msgstr ""
+msgstr "Vous pouvez également redéfinir cette méthode dans une ABC :"
 
 #: ../Doc/library/abc.rst:64
 msgid "(Must be defined as a class method.)"
-msgstr "(Doit être définie en temps que méthode de classe.)"
+msgstr "(Doit être définie en tant que méthode de classe.)"
 
 #: ../Doc/library/abc.rst:66
 msgid ""
@@ -88,6 +110,12 @@ msgid ""
 "of the ABC.  (This class method is called from the :meth:`__subclasscheck__` "
 "method of the ABC.)"
 msgstr ""
+"Vérifie si *subclass* est considérée comme une sous-classe de cette ABC. "
+"Cela signifie que vous pouvez personnaliser le comportement de "
+"``issubclass`` sans nécessiter d'appeler :meth:`register` pour chacune des "
+"classes que vous souhaitez considérer comme sous-classe de l'ABC. (Cette "
+"méthode de classe est appelée par la méthode :meth:`__subclasscheck__` de la "
+"classe de base abstraite)."
 
 #: ../Doc/library/abc.rst:72
 msgid ""
@@ -97,11 +125,19 @@ msgid ""
 "even if it would normally be one.  If it returns ``NotImplemented``, the "
 "subclass check is continued with the usual mechanism."
 msgstr ""
+"Cette méthode doit renvoyer ``True``, ``False`` ou ``NotImplemented``. Si "
+"elle renvoie ``True``, *subclass* est considérée comme sous-classe de cette "
+"ABC. Si elle renvoie ``False``, la *subclass* n'est pas considérée une sous-"
+"classe de cette ABC même si elle l'aurait été en temps normal. Si elle "
+"renvoie ``NotImplemented``, la vérification d'appartenance à la sous-classe "
+"continue via le mécanisme habituel."
 
 #: ../Doc/library/abc.rst:82
 msgid ""
 "For a demonstration of these concepts, look at this example ABC definition::"
 msgstr ""
+"Pour une illustration de ces concepts, voir cet exemple de définition de "
+"ABC : ::"
 
 #: ../Doc/library/abc.rst:112
 msgid ""
@@ -111,6 +147,11 @@ msgid ""
 "also part of the ``MyIterable`` abstract base class, but it does not have to "
 "be overridden in non-abstract derived classes."
 msgstr ""
+"L'ABC ``MyIterable`` définit la méthode d'itération :meth:`~iterator."
+"__iter__` comme méthode abstraite. L'implémentation qui lui est donnée ici "
+"peut être appelée depuis les sous-classes. La méthode :meth:`get_iterator` "
+"fait également partie de la classe de base abstraite ``MyIterable``, mais "
+"elle n'a pas à être redéfinie dans les classes dérivées non-abstraites."
 
 #: ../Doc/library/abc.rst:118
 msgid ""
@@ -119,6 +160,11 @@ msgid ""
 "__dict__` (or in that of one of its base classes, accessed via the :attr:"
 "`~class.__mro__` list) is considered a ``MyIterable`` too."
 msgstr ""
+"La méthode de classe :meth:`__subclasshook__` définie ici dit que toute "
+"classe qui possède la méthode :meth:`~iterator.__iter__` dans son :attr:"
+"`~object.__dict__` (ou dans une de ses classes de base, accédée via la "
+"liste :attr:`~class.__mro__`) est considérée également comme un "
+"``MyIterable``."
 
 #: ../Doc/library/abc.rst:123
 msgid ""
@@ -128,6 +174,12 @@ msgid ""
 "meth:`__getitem__`).  Note that this will not make ``get_iterator`` "
 "available as a method of ``Foo``, so it is provided separately."
 msgstr ""
+"Enfin, la dernière ligne fait de ``Foo`` une sous-classe virtuelle de "
+"``MyIterable``, même si cette classe ne définit pas de méthode :meth:"
+"`~iterator.__iter__` (elle utilise l'ancien protocole d'itération qui se "
+"définit en termes de :meth:`__len__` et :meth:`__getitem__`). A noter que "
+"cela ne rendra pas le ``get_iterator`` de ``MyIterable`` disponible comme "
+"une méthode de ``Foo``, ``get_iterator`` est donc implémenté séparément."
 
 #: ../Doc/library/abc.rst:130
 msgid "It also provides the following decorators:"
@@ -135,7 +187,7 @@ msgstr ""
 
 #: ../Doc/library/abc.rst:134
 msgid "A decorator indicating abstract methods."
-msgstr "Un décorateur marquant les méthodes abstraites."
+msgstr "Un décorateur marquant les méthodes comme abstraites."
 
 #: ../Doc/library/abc.rst:136
 msgid ""
@@ -154,10 +206,16 @@ msgid ""
 "regular inheritance; \"virtual subclasses\" registered with the ABC's :meth:"
 "`register` method are not affected."
 msgstr ""
+"Python ne gère pas l'ajout dynamique de méthodes abstraites à une classe, il "
+"n'est pas non plus possible de modifier l'état d'abstraction d'une méthode "
+"ou d'une classe une fois celle-ci créée. :func:`abstractmethod` n'affecte "
+"que les sous-classes dérivées utilisant l'héritage classique. Les \"sous-"
+"classes virtuelles\" enregistrées avec la méthode :meth:`register` de l'ABC "
+"ne sont pas affectées."
 
 #: ../Doc/library/abc.rst:150 ../Doc/library/abc.rst:179
 msgid "Usage::"
-msgstr ""
+msgstr "Utilisation ::"
 
 #: ../Doc/library/abc.rst:160
 msgid ""
@@ -167,11 +225,16 @@ msgid ""
 "point for a super-call in a framework that uses cooperative multiple-"
 "inheritance."
 msgstr ""
+"Contrairement aux méthodes abstraites Java, ces méthodes abstraites peuvent "
+"être implémentées. Cette implémentation peut être appelée via le mécanisme :"
+"func:`super` depuis la classe qui la redéfinit. C'est typiquement utile pour "
+"y appeler *super* et ainsi coopérer correctement dans un environnement "
+"utilisant de l'héritage multiple."
 
 #: ../Doc/library/abc.rst:170
 msgid ""
 "A subclass of the built-in :func:`property`, indicating an abstract property."
-msgstr ""
+msgstr "Sous-classe de :func:`property`, qui indique une propriété abstraite."
 
 #: ../Doc/library/abc.rst:172
 msgid ""
@@ -197,3 +260,5 @@ msgid ""
 "C++ programmers should note that Python's virtual base class concept is not "
 "the same as C++'s."
 msgstr ""
+"Les développeurs C++ noteront que le concept Python de classe de base "
+"virtuelle ( *virtual base class* ) n'est pas le même que celui de C++."
