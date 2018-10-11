@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-28 15:29+0200\n"
-"PO-Revision-Date: 2018-10-09 23:24+0200\n"
+"PO-Revision-Date: 2018-10-11 23:37+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -813,6 +813,14 @@ msgid ""
 "individual files are treated, most of those attributes may be varied on a "
 "per-compilation or per-link basis."
 msgstr ""
+"L'idée de base derrière une classe abstraite de compilateur est que chaque "
+"instance peut être utilisée pour toutes les étapes de compilation/lien dans "
+"la construction d'un seul projet.  Ainsi, les attributs communs à toutes ces "
+"étapes de compilation et de liaison ( ce qui inclue les répertoires, les "
+"macros à définir, les bibliothèques à relier, etc.) sont des attributs de "
+"l'instance du compilateur.  Pour tenir compte des variations dans la façon "
+"dont chaque fichier est traité, la plupart de ces attributs peuvent être "
+"modifiés en fonction de chaque compilation ou de chaque lien."
 
 #: ../Doc/distutils/apiref.rst:384
 msgid ""
@@ -824,12 +832,22 @@ msgid ""
 "subclasses directly - use the :func:`distutils.CCompiler.new_compiler` "
 "factory function instead."
 msgstr ""
+"Le constructeur de chaque sous-classe crée une instance de l'objet *Compiler*. "
+"Les paramètres sont *verbose* (affiche plus d'information à l'exécution), "
+"*dry_run* (ne pas exécuter les étapes) et *force* (tout reconstruire, "
+"indépendamment des dépendances). Tous ces paramètres ont la valeur par "
+"défaut ``0`` (désactivé). Notez que vous ne voulez probablement pas "
+"instancier directement la classe :class:`CCompiler` ou une de ses sous-"
+"classes. Utilisez plutôt la fonction génératrice :func:`distutils.CCompiler."
+"new_compiler`."
 
 #: ../Doc/distutils/apiref.rst:391
 msgid ""
 "The following methods allow you to manually alter compiler options for  the "
 "instance of the Compiler class."
 msgstr ""
+"Les méthodes suivantes vous permettent de modifier manuellement les options "
+"du compilateur de l'instance de la classe *Compiler*."
 
 #: ../Doc/distutils/apiref.rst:397
 msgid ""
@@ -837,6 +855,10 @@ msgid ""
 "The compiler is instructed to search directories in the order in which they "
 "are supplied by successive calls to :meth:`add_include_dir`."
 msgstr ""
+"Ajoute *dir* à la liste des répertoires qui seront recherchés pour les "
+"fichiers d'en-tête. Le compilateur est chargé de rechercher les répertoires "
+"dans l'ordre dans lequel ils sont fournis par des appels successifs à :meth:"
+"`add_include_dir`."
 
 #: ../Doc/distutils/apiref.rst:404
 msgid ""
@@ -846,6 +868,12 @@ msgid ""
 "`set_include_dirs`. This does not affect any list of standard include "
 "directories that the compiler may search by default."
 msgstr ""
+"Affecte la liste des répertoires qui seront recherchés à la valeur de *dirs* "
+"(une liste de chaînes). Remplace tous les appels précédents à :meth:"
+"`add_include_dir` ; les appels suivants vers :meth:`add_include_dir` "
+"s'ajoutent à la liste transmise par :meth:`set_include_dirs`. Ceci n'affecte "
+"pas la liste des répertoires d'inclusion standard que le compilateur peut "
+"rechercher par défaut."
 
 #: ../Doc/distutils/apiref.rst:413
 msgid ""
@@ -855,6 +883,11 @@ msgid ""
 "actual filename will be inferred by the linker, the compiler, or the "
 "compiler class (depending on the platform)."
 msgstr ""
+"Ajoute *libname* à la liste des bibliothèques qui seront incluses dans tous "
+"les liens gérés par l'objet compilateur.  Notez que *libname* ne *doit pas "
+"être* le nom d'un fichier contenant une bibliothèque, mais le nom de la "
+"bibliothèque elle-même : le nom du fichier sera déduit par l'éditeur de "
+"liens, le compilateur ou la classe de compilation (selon la plate-forme)."
 
 #: ../Doc/distutils/apiref.rst:419
 msgid ""
@@ -863,6 +896,11 @@ msgid ""
 "perfectly valid to duplicate library names; the linker will be instructed to "
 "link against libraries as many times as they are mentioned."
 msgstr ""
+"L'éditeur de liens est chargé de lier les bibliothèques dans l'ordre dans "
+"lequel elles sont fournies à :meth:`add_library` et/ou :meth:"
+"`set_libraries`.  Il est parfaitement valide de dupliquer les noms de "
+"bibliothèques ; l'éditeur de liens est chargé de créer des liens avec les "
+"bibliothèques autant de fois qu'ils sont mentionnés."
 
 #: ../Doc/distutils/apiref.rst:427
 msgid ""
@@ -870,6 +908,10 @@ msgid ""
 "compiler object to *libnames* (a list of strings).  This does not affect any "
 "standard system libraries that the linker may include by default."
 msgstr ""
+"Affecte la liste des bibliothèques à inclure dans tous les liens gérés par "
+"l'objet compilateur avec la valeur de *libnames* (une liste des chaînes de "
+"caractères).  Ceci n'affecte pas les bibliothèques système standard que "
+"l'éditeur de liens peut inclure par défaut."
 
 #: ../Doc/distutils/apiref.rst:434
 msgid ""
@@ -878,6 +920,11 @@ msgid ""
 "be instructed to search for libraries in the order they are supplied to :"
 "meth:`add_library_dir` and/or :meth:`set_library_dirs`."
 msgstr ""
+"Ajoute *dir* à la liste des répertoires qui seront recherchés pour les "
+"bibliothèques spécifiées dans :meth:`add_library` et :meth:`set_libraries`.  "
+"L'éditeur de liens est chargé de rechercher les bibliothèques dans l'ordre "
+"dans lequel elles sont fournies à :meth:`add_library_dir` et/ou :meth:"
+"`set_library_dirs`."
 
 #: ../Doc/distutils/apiref.rst:442
 msgid ""
@@ -885,12 +932,18 @@ msgid ""
 "This does not affect any standard library search path that the linker may "
 "search by default."
 msgstr ""
+"Affecte la liste des répertoires de recherche de bibliothèque avec la valeur "
+"de *dirs* (une liste de chaînes de caractères).  Cela n'affecte pas le "
+"chemin de recherche standard de la bibliothèque que l'éditeur de liens peut "
+"rechercher par défaut."
 
 #: ../Doc/distutils/apiref.rst:449
 msgid ""
 "Add *dir* to the list of directories that will be searched for shared "
 "libraries at runtime."
 msgstr ""
+"Ajoute *dir* à la liste des répertoires qui seront recherchés par les "
+"bibliothèques partagées au moment de l'exécution."
 
 #: ../Doc/distutils/apiref.rst:455
 msgid ""
@@ -898,6 +951,10 @@ msgid ""
 "*dirs* (a list of strings).  This does not affect any standard search path "
 "that the runtime linker may search by default."
 msgstr ""
+"Affecte la liste des répertoires pour rechercher les bibliothèques partagées "
+"au moment de l'exécution à la valeur de *dirs* (une liste des chaînes de "
+"caractères).  Ceci n'affecte aucun chemin de recherche standard que "
+"l'éditeur de liens d'exécution peut rechercher par défaut."
 
 #: ../Doc/distutils/apiref.rst:462
 msgid ""
@@ -906,6 +963,10 @@ msgid ""
 "supplied, then the macro will be defined without an explicit value and the "
 "exact outcome depends on the compiler used."
 msgstr ""
+"Définit une macro de préprocesseur pour toutes les compilations pilotées par "
+"cet objet compilateur. Le paramètre optionnel *value* doit être une chaîne "
+"de caractères ; s'il n'est pas fourni, alors la macro sera définie sans "
+"valeur explicite et le résultat exact dépend du compilateur utilisé."
 
 #: ../Doc/distutils/apiref.rst:472
 msgid ""
@@ -916,6 +977,12 @@ msgid ""
 "per-compilation basis (ie. in the call to :meth:`compile`), then that takes "
 "precedence."
 msgstr ""
+"Désaffecte une macro de préprocesseur pour toutes les compilations gérées "
+"par cet objet compilateur.  Si la même macro est définie par :meth:"
+"`define_macro` et non définie par :meth:`undefine_macro`, le dernier appel "
+"est prioritaire (y compris les redéfinitions multiples).  Si la macro est "
+"redéfinie/non définie par compilation (c'est-à-dire dans l'appel à :meth:"
+"`compile`), alors elle prévaut."
 
 #: ../Doc/distutils/apiref.rst:482
 msgid ""
@@ -923,6 +990,10 @@ msgid ""
 "named library files or the output of \"resource compilers\") to be included "
 "in every link driven by this compiler object."
 msgstr ""
+"Ajoute *objet* à la liste des fichiers objets (ou analogues, tels que les "
+"fichiers de bibliothèque explicitement nommés ou la sortie des "
+"\"compilateurs de ressources\") à inclure dans chaque lien qui est géré par "
+"ce compilateur d'objets."
 
 #: ../Doc/distutils/apiref.rst:489
 msgid ""
@@ -930,12 +1001,19 @@ msgid ""
 "*objects*.  This does not affect any standard object files that the linker "
 "may include by default (such as system libraries)."
 msgstr ""
+"Définit la liste des fichiers objets (ou analogues) à inclure dans chaque "
+"lien à la valeur de *objects*.  Ceci n'affecte pas les fichiers d'objets "
+"standard que l'éditeur de liens peut inclure par défaut (comme les "
+"bibliothèques système)."
 
 #: ../Doc/distutils/apiref.rst:493
 msgid ""
 "The following methods implement methods for autodetection of compiler  "
 "options, providing some functionality similar to GNU :program:`autoconf`."
 msgstr ""
+"Les méthodes suivantes implémentent des méthodes pour l'auto-détection des "
+"options du compilateur, fournissant des fonctionnalités similaires à celles "
+"du programme GNU :program:`autoconf`."
 
 #: ../Doc/distutils/apiref.rst:499
 msgid ""
@@ -943,6 +1021,9 @@ msgid ""
 "attributes :attr:`language_map` (a dictionary), and  :attr:`language_order` "
 "(a list) to do the job."
 msgstr ""
+"Détecte la langue d'un fichier donné, ou d'une liste de fichiers. Utilise "
+"les attributs d'instance :attr:`language_map` (un dictionnaire), et :attr:"
+"`language_order` (une liste) pour faire le travail."
 
 #: ../Doc/distutils/apiref.rst:506
 msgid ""
@@ -951,6 +1032,11 @@ msgid ""
 "debugging version (if that makes sense on the current platform).  Return "
 "``None`` if *lib* wasn't found in any of the specified directories."
 msgstr ""
+"Recherche dans la liste des répertoires spécifiés un fichier de bibliothèque "
+"statique ou partagé *lib* et renvoie le chemin complet vers ce fichier. Si "
+"*debug* est vrai, recherche une version de débogage (si cela a du sens sur "
+"la plate-forme actuelle). Renvoie ``None`` si *lib* n'a pas été trouvé dans "
+"l'un des répertoires spécifiés."
 
 #: ../Doc/distutils/apiref.rst:514
 msgid ""
@@ -959,24 +1045,33 @@ msgid ""
 "environment by providing additional include files and paths and libraries "
 "and paths."
 msgstr ""
+"Renvoie un booléen indiquant si *funcname* est supporté sur la plate-forme "
+"courante.  Les arguments optionnels peuvent être utilisés pour enrichir "
+"l'environnement de compilation en fournissant des fichiers, des répertoires de fichiers, des bibliothèques, des répertoires de bibliothèques supplémentaires"
 
 #: ../Doc/distutils/apiref.rst:522
 msgid ""
 "Return the compiler option to add *dir* to the list of directories searched "
 "for libraries."
 msgstr ""
+"Renvoie l'option compilateur pour ajouter *dir* à la liste des répertoires "
+"recherchés pour les bibliothèques."
 
 #: ../Doc/distutils/apiref.rst:528
 msgid ""
 "Return the compiler option to add *lib* to the list of libraries linked into "
 "the shared library or executable."
 msgstr ""
+"Renvoie l'option compilateur pour ajouter *lib* à la liste des bibliothèques "
+"liées à la bibliothèque partagée ou à l'exécutable."
 
 #: ../Doc/distutils/apiref.rst:534
 msgid ""
 "Return the compiler option to add *dir* to the list of directories searched "
 "for runtime libraries."
 msgstr ""
+"Renvoie l'option compilateur pour ajouter *dir* à la liste des répertoires "
+"recherchés par les bibliothèques d'exécution."
 
 #: ../Doc/distutils/apiref.rst:540
 msgid ""
@@ -985,6 +1080,11 @@ msgid ""
 "specified here depends on the compiler class (via the 'executables' class "
 "attribute), but most will have:"
 msgstr ""
+"Définit les exécutables (et leurs options) qui seront exécutés pour "
+"effectuer les différentes étapes de compilation.  L'ensemble exact des "
+"exécutables qui peuvent être spécifiés ici dépend de la classe du "
+"compilateur (via l'attribut de classe *executables*), mais la plupart "
+"utilise :"
 
 #: ../Doc/distutils/apiref.rst:546
 msgid "attribute"
@@ -996,7 +1096,7 @@ msgstr "*compiler*"
 
 #: ../Doc/distutils/apiref.rst:548
 msgid "the C/C++ compiler"
-msgstr ""
+msgstr "Le compilateur C/C++"
 
 #: ../Doc/distutils/apiref.rst:550
 msgid "*linker_so*"
@@ -1005,6 +1105,8 @@ msgstr "*linker_so*"
 #: ../Doc/distutils/apiref.rst:550
 msgid "linker used to create shared objects and libraries"
 msgstr ""
+"L'éditeur de liens utilisé pour la création d'objets ou de bibliothèques "
+"partagées."
 
 #: ../Doc/distutils/apiref.rst:553
 msgid "*linker_exe*"
@@ -1012,7 +1114,7 @@ msgstr "*linker_exe*"
 
 #: ../Doc/distutils/apiref.rst:553
 msgid "linker used to create binary executables"
-msgstr ""
+msgstr "L'éditeur de lien utilisé pour créer des exécutables binaires."
 
 #: ../Doc/distutils/apiref.rst:555
 msgid "*archiver*"
@@ -1020,7 +1122,7 @@ msgstr "*archiver*"
 
 #: ../Doc/distutils/apiref.rst:555
 msgid "static library creator"
-msgstr ""
+msgstr "créateur de bibliothèque statique"
 
 #: ../Doc/distutils/apiref.rst:558
 msgid ""
