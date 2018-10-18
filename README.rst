@@ -239,6 +239,7 @@ simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
 socket                     *socket*
 statement                  instruction
+subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
 expression				         expression
