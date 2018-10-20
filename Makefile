@@ -20,6 +20,7 @@ VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
 BRANCH = 3.7
+COMMIT =
 JOBS = 4
 
 
@@ -34,7 +35,8 @@ endif
 
 
 $(SPHINX_CONF):
-	git clone --depth 1 --no-single-branch --branch $(BRANCH) https://github.com/python/cpython.git $(CPYTHON_CLONE)
+	git clone --depth 1 --branch $(BRANCH) https://github.com/python/cpython.git $(CPYTHON_CLONE)
+	[ -n "$(COMMIT)" ] && i=1; while ! $$(git -C $(CPYTHON_CLONE) checkout $(COMMIT)); do i=$$((i * 2)); git -C $(CPYTHON_CLONE) fetch --depth $$i; done
 
 
 .PHONY: upgrade_venv
