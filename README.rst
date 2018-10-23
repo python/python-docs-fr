@@ -166,6 +166,31 @@ translate untranslated ones (find them using ``make todo``)..
   title.
 
 
+The case of "::"
+~~~~~~~~~~~~~~~~
+
+From the reStructuredText point of view, ``::`` glued at the end of a
+word means "output ``:`` and introduce a code block", but a ``::``
+after a space means "Just introduce a code block".
+
+So in english rst, we see either ``blah blah::`` or ``blah blah. ::``.
+
+In french, we're putting a no-break space before our columns, like:
+``Et voilà :``.
+
+Using no-break space in rst is natural, you'll simply write ``Et
+voilà ::``, as the ``::`` is not precedded by a normal space it
+will output the column and introduce the code block, you're done.
+
+If you don't know how to type a no-break space there's a trick,
+translate column column by space, column, space, column column. the
+"space column" will render your space and your column as french needs,
+and the trailing "space column column" will output nothing and
+introduce the code block. No it does not magically inserts a no-break
+space, so it's still not really valid french. Yes, better learn how to
+type no-break space.
+
+
 Where to get help
 ~~~~~~~~~~~~~~~~~
 
