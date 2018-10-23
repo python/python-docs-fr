@@ -143,7 +143,7 @@ You may also have noted you never ever commit on a version branch
 you'll avoid problems.
 
 Before commiting, you should use `grammalecte
-<https://www.dicollecte.org/>`_ to check for your translations.
+<https://grammalecte.net/>`_ to check for your translations.
 
 
 What to translate
