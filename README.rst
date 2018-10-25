@@ -74,6 +74,11 @@ Step by step:
     # Add the upstream (the public repository) using HTTPS (won't ask for password):
     git remote add upstream https://github.com/python/python-docs-fr.git
 
+All the translations must be made on the latest release.
+We never translate on an oldest version, by example, the latest python release
+is python 3.7, we don't want to translate directly on the python 3.5 release.
+If needed translations would be backported on the oldest versions by the 
+`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
 
 Now you're ready to start a work session, each time you'll start a new task, start here:
 
