@@ -21,13 +21,13 @@ PYTHON := $(shell which python3)
 MODE := autobuild-dev-html
 BRANCH = 3.7
 COMMIT =
-JOBS = 4
+JOBS = auto
 
 
 .PHONY: all
 all: $(SPHINX_CONF) $(VENV)/bin/activate
 ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
-	$(warning "Your ../cpython checkout is on the wrong branch, got $(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD) expected $(BRANCH)")
+	$(warning "Your ../cpython checkout may be on the wrong branch, got $(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD) expected $(BRANCH)")
 endif
 	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
 	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
