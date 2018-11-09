@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 17:52+0200\n"
-"PO-Revision-Date: 2018-10-04 16:39+0200\n"
+"PO-Revision-Date: 2018-10-24 23:16+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.2\n"
 
 #: ../Doc/faq/design.rst:3
 msgid "Design and History FAQ"
@@ -408,7 +408,7 @@ msgstr ""
 
 #: ../Doc/faq/design.rst:218
 msgid "As Guido said:"
-msgstr ""
+msgstr "Comme l'a dit Guido :"
 
 #: ../Doc/faq/design.rst:220
 msgid ""
@@ -418,6 +418,12 @@ msgid ""
 "problem. Compare the easy with which we rewrite a formula like x*(a+b) into "
 "x*a + x*b to the clumsiness of doing the same thing using a raw OO notation."
 msgstr ""
+"(a) Pour certaines opérations, la notation en préfixe se lit mieux que celle "
+"en suffixe -- les opérations de préfixe (et infixe !) ont une longue "
+"tradition en mathématiques qui aime les notations où les visuels aident le "
+"mathématicien à réfléchir sur un problème. Comparez la facilité avec "
+"laquelle nous réécrivons une formule comme x*(a+b) en x*a + x*b à la "
+"lourdeur de faire la même chose avec une notation brute OO."
 
 #: ../Doc/faq/design.rst:227
 msgid ""
@@ -430,10 +436,19 @@ msgid ""
 "mapping has a get() or keys() method, or something that isn't a file has a "
 "write() method."
 msgstr ""
+"(b) Quand je lis du code qui dit len(x) *je sais* qu'il demande la longueur "
+"de quelque chose. Cela me dit deux choses : le résultat est un entier, et "
+"l'argument est une sorte de conteneur. Au contraire, quand je lis x.len(), "
+"je dois déjà savoir que x est une sorte de conteneur implémentant une "
+"interface ou héritant d'une classe qui a un len() standard. Voyez la la "
+"confusion qui arrive parfois quand une classe qui n'implémente pas une "
+"interface de dictionnaire a une méthode get() ou key(), ou quand un objet "
+"qui n'est pas un fichier implémente une méthode write()."
 
 #: ../Doc/faq/design.rst:254
 msgid "https://mail.python.org/pipermail/python-3000/2006-November/004643.html"
 msgstr ""
+"https://mail.python.org/pipermail/python-3000/2006-November/004643.html"
 
 #: ../Doc/faq/design.rst:240
 msgid "Why is join() a string method instead of a list or tuple method?"
@@ -680,6 +695,11 @@ msgid ""
 "full Python language. For compiling to Java you can consider `VOC <https://"
 "voc.readthedocs.io>`_."
 msgstr ""
+"`Cython <http://cython.org/>`_ compile une version modifiée de Python avec "
+"des annotations optionnelles en extensions C. `Nuitka <http://www.nuitka.net/"
+">`_ est un nouveau compilateur de Python vers C++, visant à supporter le "
+"langage Python entièrement. Pour compiler en Java, vous pouvez regarder "
+"`VOC <https://voc.readthedocs.io>`_."
 
 #: ../Doc/faq/design.rst:383
 msgid "How does Python manage memory?"
@@ -1034,6 +1054,11 @@ msgid ""
 "by accident. It also invalidates an important invariant of dictionaries: "
 "every value in ``d.keys()`` is usable as a key of the dictionary."
 msgstr ""
+"Autoriser les listes en tant que clés, mais indiquer à l'utilisateur de ne "
+"pas les modifier. Cela permettrait un ensemble de bogues difficiles à suivre "
+"dans les programmes lorsque vous avez oublié ou modifié une liste par "
+"accident. Cela casse également un impératif importante des dictionnaires: "
+"chaque valeur de ``d.keys()`` est utilisable comme clé du dictionnaire."
 
 #: ../Doc/faq/design.rst:544
 msgid ""
@@ -1044,6 +1069,13 @@ msgid ""
 "read-only -- and again, self-referential objects could cause an infinite "
 "loop."
 msgstr ""
+"Marquer les listes comme étant en lecture seule une fois qu'elles sont "
+"utilisées comme clé de dictionnaire. Le problème est que ce n'est pas "
+"seulement l'objet de niveau supérieur qui pourrait changer sa valeur; vous "
+"pourriez utiliser un tuple contenant une liste comme clé.  Utiliser n'importe "
+"quoi comme une clé dans un dictionnaire nécessiterait de marquer tous les "
+"objets accessibles à partir de là comme en lecture seule -- et encore une fois, "
+"les objets se faisant référence pourraient provoquer une boucle infinie."
 
 #: ../Doc/faq/design.rst:550
 msgid ""
@@ -1081,7 +1113,7 @@ msgstr ""
 
 #: ../Doc/faq/design.rst:590
 msgid "Why doesn't list.sort() return the sorted list?"
-msgstr ""
+msgstr "Pourquoi list.sort() ne renvoie pas la liste triée ?"
 
 #: ../Doc/faq/design.rst:592
 msgid ""
@@ -1092,6 +1124,12 @@ msgid ""
 "when you need a sorted copy but also need to keep the unsorted version "
 "around."
 msgstr ""
+"Dans les situations où la performance est importante, faire une copie de la "
+"liste juste pour la trier serait un gaspillage. Par conséquent, :meth:`list."
+"sort` trie la liste en place. Afin de vous le rappeler, il ne retourne pas "
+"la liste triée.  De cette façon, vous ne serez pas dupé en écrasant "
+"accidentellement une liste lorsque vous avez besoin d’une copie triée, mais "
+"vous devrez également garder sous la main la version non triée."
 
 #: ../Doc/faq/design.rst:598
 msgid ""
@@ -1100,10 +1138,16 @@ msgid ""
 "it and returns it.  For example, here's how to iterate over the keys of a "
 "dictionary in sorted order::"
 msgstr ""
+"Si vous souhaitez retourner une nouvelle liste, utilisez plutôt la fonction "
+"intégrée :func:`sorted`.  Cette fonction crée une nouvelle liste à partir "
+"d’un itérable fourni, la trie et la retourne.  Par exemple, voici comment "
+"itérer sur les clefs d’un dictionnaire dans l’ordre trié::"
 
 #: ../Doc/faq/design.rst:608
 msgid "How do you specify and enforce an interface spec in Python?"
 msgstr ""
+"Comment spécifiez-vous et appliquez-vous une spécification d’interface en "
+"Python?"
 
 #: ../Doc/faq/design.rst:610
 msgid ""
