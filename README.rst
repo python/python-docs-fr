@@ -77,7 +77,7 @@ Step by step:
 All the translations must be made on the latest release.
 We never translate on an oldest version, by example, the latest python release
 is python 3.7, we don't want to translate directly on the python 3.5 release.
-If needed translations would be backported on the oldest versions by the 
+If needed translations would be backported on the oldest versions by the
 `documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
 
 Now you're ready to start a work session, each time you'll start a new task, start here:
@@ -93,22 +93,6 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     # You can now work on the file, typically using poedit,
     poedit directory/file.po
 
-    # After writing your changes to disk, check for correctness:
-    make
-
-    # Sphinx will tell you if there is any syntax error in the files
-    # you modified. Note that in the French Translation, we try to keep Sphinx
-    # warnings to zero.
-
-    # you may want to check if there are semantic errors.
-    # Open the translated file in your browser to check how it renders.
-    # Don't forget to verify the typography. The French conventions are not
-    # the English ones, especially for punctuation.
-    # Also, Grammalecte, a browser plugin avaliable in your browser store,
-    # is your friend even if, because of the technical words that appear
-    # everywhere in the documentation, it points out many false positive.
-    exo-open ../cpython/Doc/build/html/directory/file.html
-
     # When everything is clear (syntax errors from Sphinx, html rendering,
     # semantics, typography),
     # you can commit your work with a nice explicit message:
@@ -121,7 +105,8 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     # it's nice as it's exactly what we want:
     git push origin HEAD
 
-    # Now you can open the pull request on github, just go to
+    # The previous command will print you a link to open a PR on github.
+    # If you missed it, just go to
     # https://github.com/python/python-docs-fr/ and a nice "Compare & pull request"
     # button should appear after a few seconds telling you can ask for a pull request.
 
@@ -316,7 +301,7 @@ Maintenance
 
 All those snippets are to run from the root of a ``python-docs-fr``
 clone, and some expect to find an up-to-date CPython clone near to it,
-like::
+like:
 
 .. code-block:: bash
 
