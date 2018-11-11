@@ -346,7 +346,7 @@ Run a test build locally
 Synchronize translation with Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll need the ``transifex-client`` and ``poindent``
+You'll need the ``transifex-client`` and ``powrap``
 from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
@@ -359,6 +359,6 @@ You'll need to configure ``tx`` via ``tx init`` if not already done.
    pomerge --from-files **/*.po
    git checkout -- .
    pomerge --to-files **/*.po
-   poindent --modified
+   powrap --modified
    git commit -m "tx pull"
    tx push -t -f
