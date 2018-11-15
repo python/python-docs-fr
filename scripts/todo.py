@@ -1,60 +1,55 @@
 #!/bin/python3
 
-import os
-from glob import glob
+import statistics
+
+from pathlib import Path
 
 try:
     import polib
+    import requests
 except ImportError:
-    print("Sorry, you need to install `polib` to be able to run make todo.")
+    print("You need to install polib and requests to be able to run make todo.")
     exit(1)
 
-working_dir = os.path.dirname(os.path.realpath(__file__))
 
-po_files = []
-for po_file in glob("**/*.po"):
-    po_files.append(po_file)
-for po_file in glob("*.po"):
-    po_files.append(po_file)
+def main():
+    issues = requests.get(
+        "https://api.github.com/repos/python/python-docs-fr/issues"
+    ).json()
+    reservations = {
+        issue["title"].split()[-1]: issue["user"]["login"] for issue in issues
+    }
+
+    po_files = list(Path(".").glob("**/*.po"))
+
+    po_files_per_directory = {
+        path.parent.name: set(path.parent.glob("*.po")) for path in po_files
+    }
+
+    for directory, po_files in sorted(po_files_per_directory.items()):
+        print("\n\n# " + directory)
+        folder_stats = []
+        for po_file in sorted(po_files):
+            stats = polib.pofile(po_file)
+            po_file_stat = stats.percent_translated()
+            if po_file_stat == 100:
+                folder_stats.append(po_file_stat)
+                continue
+            print(
+                f"{po_file.name:<30}",
+                f"{len(stats.translated_entries()):3d} / {len(stats):3d}",
+                f"({po_file_stat:5.1f}% translated)",
+                f"{len(stats.fuzzy_entries())} fuzzy" if stats.fuzzy_entries() else "",
+                f"Réservé par {reservations[str(po_file)]}"
+                if str(po_file) in reservations
+                else "",
+            )
+            folder_stats.append(po_file_stat)
+        # TODO: Have the percentage printed next to the folder name
+        print("\n{}% done.".format(round(statistics.mean(folder_stats), 2)))
 
 
-all_po_files = {
-    'c-api/': [entry for entry in po_files if 'c-api/' in entry],
-    'distributing/': [entry for entry in po_files if 'distributing/' in entry],
-    'distutils/': [entry for entry in po_files if 'distutils/' in entry],
-    'extending/': [entry for entry in po_files if 'extending/' in entry],
-    'faq/': [entry for entry in po_files if 'faq/' in entry],
-    'howto/': [entry for entry in po_files if 'howto/' in entry],
-    'install/': [entry for entry in po_files if 'install/' in entry],
-    'installing/': [entry for entry in po_files if 'installing/' in entry],
-    'library/': [entry for entry in po_files if 'library/' in entry],
-    'reference/': [entry for entry in po_files if 'reference/' in entry],
-    'tutorial/': [entry for entry in po_files if 'tutorial/' in entry],
-    'using/': [entry for entry in po_files if 'using/' in entry],
-    'whatsnew/': [entry for entry in po_files if 'whatsnew/' in entry],
-    '.': [entry for entry in po_files if '/' not in entry]
-}
-
-unfinished_po_files = {
-    'c-api/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['c-api/'] if polib.pofile(entry).percent_translated() is not 100],
-    'distributing/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['distributing/'] if polib.pofile(entry).percent_translated() is not 100],
-    'distutils/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['distutils/'] if polib.pofile(entry).percent_translated() is not 100],
-    'extending/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['extending/'] if polib.pofile(entry).percent_translated() is not 100],
-    'faq/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['faq/'] if polib.pofile(entry).percent_translated() is not 100],
-    'howto/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['howto/'] if polib.pofile(entry).percent_translated() is not 100],
-    'install/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['install/'] if polib.pofile(entry).percent_translated() is not 100],
-    'installing/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['installing/'] if polib.pofile(entry).percent_translated() is not 100],
-    'library/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['library/'] if polib.pofile(entry).percent_translated() is not 100],
-    'reference/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['reference/'] if polib.pofile(entry).percent_translated() is not 100],
-    'tutorial/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['tutorial/'] if polib.pofile(entry).percent_translated() is not 100],
-    'using/': [[entry, polib.pofile(entry).percent_translated(),w len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['using/'] if polib.pofile(entry).percent_translated() is not 100],
-    'whatsnew/': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['whatsnew/'] if polib.pofile(entry).percent_translated() is not 100],
-    '.': [[entry, polib.pofile(entry).percent_translated(), len(polib.pofile(entry).untranslated_entries()), len(polib.pofile(entry).translated_entries()), len(polib.pofile(entry).fuzzy_entries())] for entry in all_po_files['.'] if polib.pofile(entry).percent_translated() is not 100],
-}
-
-for key, content in unfinished_po_files.items():
-    if content:
-        print("\n\n" + key)
-        for item in content:
-            print(f"{item[0]:<35} -> {item[1]:5.1f}% translated, {item[2]} entries are not translated,"
-                  f" {item[3]:5.1f} entries are translated, {item[4]:5.1f} entries are Fuzzy.".format())
+if __name__ == '__main__':
+    # TODO: Add PR handling
+    # TODO: Add total from all folders
+    main()
