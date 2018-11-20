@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-17 21:38+0100\n"
-"PO-Revision-Date: 2018-11-12 22:20+0100\n"
+"PO-Revision-Date: 2018-11-20 23:16+0100\n"
 "Last-Translator: Lowic Mangin <louis.gabriel@orange.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -613,10 +613,10 @@ msgid ""
 msgstr ""
 "Les éléments de base des tests unitaires sont les :dfn:`test cases` --- Des "
 "scénarios uniques qui sont mis en place et exécutés pour vérifier qu'ils "
-"sont corrects.  Dans :mod:`unittest`, les cas de test sont représentés par "
-"des instances de :class:`unittest.TestCase`. Pour créer vos propres cas de "
-"test, vous devez écrire des sous-classes de :class:`TestCase` ou utiliser :"
-"class:`FunctionTestCase`."
+"sont corrects.  Dans :mod:`unittest`, les scénarios de test sont représentés "
+"par des instances de :class:`unittest.TestCase`. Pour créer vos propres "
+"scénarios de test, vous devez écrire des sous-classes de :class:`TestCase` "
+"ou utiliser :class:`FunctionTestCase`."
 
 #: ../Doc/library/unittest.rst:347
 msgid ""
@@ -626,7 +626,7 @@ msgid ""
 msgstr ""
 "Le code de test d'une instance de :class:`TestCase` doit être entièrement "
 "autonome, de sorte qu'il puisse être exécuté soit de manière isolée, soit en "
-"combinaison arbitraire avec un nombre quelconque d'autres cas de test."
+"combinaison arbitraire avec un nombre quelconque d'autres scénarios de test."
 
 #: ../Doc/library/unittest.rst:351
 msgid ""
@@ -947,8 +947,8 @@ msgid ""
 "Mark the test as an expected failure.  If the test fails it will be "
 "considered a success.  If the test passes, it will be considered a failure."
 msgstr ""
-"Marque le test comme étant un échec prévu.  Si le test échoue lors de son "
-"exécution, il n'est pas considéré comme étant en échec."
+"Marque le test comme étant un erreur attendue.  Si le test échoue lors de "
+"son exécution, il n'est pas considéré comme étant en échec."
 
 #: ../Doc/library/unittest.rst:593
 msgid "This exception is raised to skip a test."
@@ -985,7 +985,7 @@ msgid ""
 "test method using the :meth:`~TestCase.subTest` context manager."
 msgstr ""
 "Lorsque certains de vos tests ne diffèrent que par de très petites "
-"différences. Par exemple certains paramètres. *unittest* vous permet de les "
+"différences, par exemple certains paramètres; *unittest* vous permet de les "
 "distinguer en utilisant le gestionnaire de contexte :meth:`~TestCase."
 "subTest` dans le corps d'une méthode de test."
 
@@ -1017,7 +1017,7 @@ msgstr "Cette section décrit en détail l'API de :mod:`unittest`."
 
 #: ../Doc/library/unittest.rst:676
 msgid "Test cases"
-msgstr "Cas de tests"
+msgstr "Scénarios de tests"
 
 #: ../Doc/library/unittest.rst:680
 msgid ""
@@ -1028,6 +1028,13 @@ msgid ""
 "drive the tests, and methods that the test code can use to check for and "
 "report various kinds of failure."
 msgstr ""
+"Les instances de la classe :class:`TestCase` représentent des tests logiques "
+"unitaires dans l'univers :mod:`unittest`. Cette classe est conçue pour être "
+"utilisée comme classe de base. Les scénarios de tests sont à implémenter en "
+"héritant de cette classe. La classe implémente l'interface nécessaire au "
+"lanceur de test pour lui permettre de les exécuter ainsi que les méthodes "
+"que le code de test peut utiliser pour vérifier et signaler les différents "
+"types d'erreurs."
 
 #: ../Doc/library/unittest.rst:687
 msgid ""
@@ -1035,6 +1042,10 @@ msgid ""
 "named *methodName*. In most uses of :class:`TestCase`, you will neither "
 "change the *methodName* nor reimplement the default ``runTest()`` method."
 msgstr ""
+"Chaque instance de la classe :class:`TestCase` exécutera une seule méthode "
+"de base : La méthode nommée *methodName* . Dans la plupart des utilisations "
+"de la classe :class:`TestCase`, vous n'avez pas à changer le nom de la "
+"méthode, ni à réimplémenter la méthode ``runTest()``."
 
 #: ../Doc/library/unittest.rst:692
 msgid ""
@@ -1042,6 +1053,9 @@ msgid ""
 "*methodName*. This makes it easier to experiment with :class:`TestCase` from "
 "the interactive interpreter."
 msgstr ""
+"La classe :class:`TestCase` peut désormais être utilisée sans passer de "
+"paramètre *methodName*. Cela facilite l'usage de :class:`TestCase` dans "
+"l'interpréteur interactif."
 
 #: ../Doc/library/unittest.rst:697
 msgid ""
@@ -1050,10 +1064,15 @@ msgid ""
 "and report failures, and some inquiry methods allowing information about the "
 "test itself to be gathered."
 msgstr ""
+"Les instances de la classe :class:`TestCase` fournissent trois groupes de "
+"méthodes : un groupe utilisé pour exécuter le test, un autre utilisé par "
+"l'implémentation du test pour vérifier les conditions et signaler les "
+"échecs, et quelques méthodes de recherche permettant de recueillir des "
+"informations sur le test lui-même."
 
 #: ../Doc/library/unittest.rst:702
 msgid "Methods in the first group (running the test) are:"
-msgstr ""
+msgstr "Les méthodes du premier groupe (exécution du test) sont :"
 
 #: ../Doc/library/unittest.rst:706
 msgid ""
@@ -1062,6 +1081,11 @@ msgid ""
 "`SkipTest`, any exception raised by this method will be considered an error "
 "rather than a test failure. The default implementation does nothing."
 msgstr ""
+"Méthode appelée pour réaliser la mise en place du test. Elle est exécutée "
+"immédiatement avant l'appel de la méthode de test ; à l'exception de :exc:"
+"`AssertionError` ou :exc:`SkipTest`, toute exception levée par cette méthode "
+"est considérée une erreur et non pas comme un échec du test. "
+"L'implémentation par défaut ne fait rien."
 
 #: ../Doc/library/unittest.rst:714
 msgid ""
@@ -1075,6 +1099,16 @@ msgid ""
 "the :meth:`setUp` succeeds, regardless of the outcome of the test method. "
 "The default implementation does nothing."
 msgstr ""
+"Méthode appelée immédiatement après l'appel de la méthode de test et "
+"l'enregistrement du résultat.  Elle est appelée même si la méthode de test a "
+"levé une exception, de sorte que l'implémentation dans les sous-classes de "
+"contrôles d'état interne à la classe doit être fait avec précaution.  Toute "
+"exception, autre que :exc:`AssertionError` ou :exc:`SkipTest`, levée par "
+"cette méthode est considérée comme une erreur supplémentaire plutôt que "
+"comme un échec du test (augmentant ainsi le nombre total des erreurs "
+"signalées). Cette méthode est appelée uniquement si l'exécution de :meth:"
+"`setUp` est réussie quel que soit le résultat de la méthode de test. "
+"L'implémentation par défaut ne fait rien."
 
 #: ../Doc/library/unittest.rst:727
 msgid ""
@@ -1082,10 +1116,13 @@ msgid ""
 "``setUpClass`` is called with the class as the only argument and must be "
 "decorated as a :func:`classmethod`::"
 msgstr ""
+"Méthode de classe appelée avant l'exécution des tests dans la classe en "
+"question. ``setUpClass`` est appelé avec la classe comme seul argument et "
+"doit être décoré comme une  :func:`classmethod` : ::"
 
 #: ../Doc/library/unittest.rst:735 ../Doc/library/unittest.rst:750
 msgid "See `Class and Module Fixtures`_ for more details."
-msgstr ""
+msgstr "Voir `Class and Module Fixtures`_ pour plus de détails."
 
 #: ../Doc/library/unittest.rst:742
 msgid ""
@@ -1093,6 +1130,9 @@ msgid ""
 "``tearDownClass`` is called with the class as the only argument and must be "
 "decorated as a :meth:`classmethod`::"
 msgstr ""
+"Méthode de classe appelée après l'exécution des tests de la classe en "
+"question. ``tearDownClass`` est appelé avec la classe comme seul argument et "
+"doit être décoré comme une :meth:`classmethod` : ::"
 
 #: ../Doc/library/unittest.rst:757
 msgid ""
@@ -1101,23 +1141,35 @@ msgid ""
 "object is created (by calling the :meth:`defaultTestResult` method) and "
 "used. The result object is returned to :meth:`run`'s caller."
 msgstr ""
+"Exécute le test, en collectant le résultat dans l'objet :class:`TestResult` "
+"passé comme *result*.  Si *result* est omis ou vaut ``None``, un objet "
+"temporaire de résultat est créé (en appelant la méthode :meth:"
+"`defaultTestResult`) et utilisé. L'objet résultat est renvoyé à l'appelant "
+"de :meth:`run`."
 
 #: ../Doc/library/unittest.rst:763
 msgid ""
 "The same effect may be had by simply calling the :class:`TestCase` instance."
 msgstr ""
+"Le même effet peut être obtenu en appelant simplement l'instance :class:"
+"`TestCase`."
 
 #: ../Doc/library/unittest.rst:766
 msgid ""
 "Previous versions of ``run`` did not return the result. Neither did calling "
 "an instance."
 msgstr ""
+"Les versions précédentes de ``run`` ne renvoyaient pas le résultat. Pas plus "
+"que l'appel d'une instance."
 
 #: ../Doc/library/unittest.rst:772
 msgid ""
 "Calling this during a test method or :meth:`setUp` skips the current test.  "
 "See :ref:`unittest-skipping` for more information."
 msgstr ""
+"Appeler cette fonction pendant l'exécution d'une méthode de test ou de :meth:"
+"`setUp` permet d'ignorer le test en cours.  Voir :ref:`unittest-skipping` "
+"pour plus d'informations."
 
 #: ../Doc/library/unittest.rst:780
 msgid ""
@@ -1125,16 +1177,22 @@ msgid ""
 "subtest.  *msg* and *params* are optional, arbitrary values which are "
 "displayed whenever a subtest fails, allowing you to identify them clearly."
 msgstr ""
+"Renvoie un gestionnaire de contexte qui exécute le bloc de code du contexte "
+"comme un sous-test. *msg* et *params* sont des valeurs optionnelles et "
+"arbitraires qui sont affichées chaque fois qu'un sous-test échoue, "
+"permettant de les identifier clairement."
 
 #: ../Doc/library/unittest.rst:785
 msgid ""
 "A test case can contain any number of subtest declarations, and they can be "
 "arbitrarily nested."
 msgstr ""
+"Un scénario de test peut contenir un nombre quelconque de déclarations de "
+"sous-test, et elles peuvent être imbriquées librement."
 
 #: ../Doc/library/unittest.rst:788
 msgid "See :ref:`subtests` for more information."
-msgstr ""
+msgstr "Voir :ref:`subtests` pour plus d'informations."
 
 #: ../Doc/library/unittest.rst:795
 msgid ""
@@ -1142,6 +1200,9 @@ msgid ""
 "by the test to be propagated to the caller, and can be used to support "
 "running tests under a debugger."
 msgstr ""
+"Lance le test sans collecter le résultat.  Ceci permet aux exceptions levées "
+"par le test d'être propagées à l'appelant, et donc peut être utilisé pour "
+"exécuter des tests sous un débogueur."
 
 #: ../Doc/library/unittest.rst:801
 msgid ""
@@ -1149,6 +1210,10 @@ msgid ""
 "report failures.  The following table lists the most commonly used methods "
 "(see the tables below for more assert methods):"
 msgstr ""
+"La classe :class:`TestCase` fournit plusieurs méthodes d'assertion pour "
+"vérifier et signaler les échecs.  Le tableau suivant énumère les méthodes "
+"les plus couramment utilisées (voir les tableaux ci-dessous pour plus de "
+"méthodes d'assertion) :"
 
 #: ../Doc/library/unittest.rst:806 ../Doc/library/unittest.rst:928
 #: ../Doc/library/unittest.rst:1120 ../Doc/library/unittest.rst:1247
@@ -1158,12 +1223,12 @@ msgstr "Méthode"
 #: ../Doc/library/unittest.rst:806 ../Doc/library/unittest.rst:928
 #: ../Doc/library/unittest.rst:1120
 msgid "Checks that"
-msgstr ""
+msgstr "Vérifie que"
 
 #: ../Doc/library/unittest.rst:806 ../Doc/library/unittest.rst:928
 #: ../Doc/library/unittest.rst:1120 ../Doc/library/unittest.rst:1247
 msgid "New in"
-msgstr ""
+msgstr "Disponible en"
 
 #: ../Doc/library/unittest.rst:808
 msgid ":meth:`assertEqual(a, b) <TestCase.assertEqual>`"
@@ -1287,6 +1352,12 @@ msgid ""
 "`assertRaisesRegex`, :meth:`assertWarns`, :meth:`assertWarnsRegex` only when "
 "they are used as a context manager."
 msgstr ""
+"Toutes les méthodes *assert* prennent en charge un argument *msg* qui, s'il "
+"est spécifié, est utilisé comme message d'erreur en cas d'échec (voir aussi :"
+"data:`longMessage`). Notez que l'argument mot-clé *msg* peut être passé à :"
+"meth:`assertRaises`, :meth:`assertRaisesRegex`, :meth:`assertWarns`, :meth:"
+"`assertWarnsRegex`, seulement quand elles sont utilisées comme gestionnaire "
+"de contexte."
 
 #: ../Doc/library/unittest.rst:853
 msgid ""
