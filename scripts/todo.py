@@ -17,7 +17,7 @@ def main():
         "https://api.github.com/repos/python/python-docs-fr/issues"
     ).json()
     reservations = {
-        issue["title"].split()[-1]: issue["user"]["login"] for issue in issues
+        issue["title"].split()[-1].lower(): issue["user"]["login"] for issue in issues
     }
 
     po_files = [file for file in Path(".").glob("**/*.po") if ".git/" not in str(file)]
