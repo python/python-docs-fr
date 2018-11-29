@@ -46,7 +46,7 @@ def main():
                 )
                 + (
                     f", réservé par {reservations[str(po_file)]}"
-                    if str(po_file) in reservations
+                    if str(po_file).lower() in reservations
                     else ""
                 )
             )
