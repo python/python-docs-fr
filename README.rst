@@ -4,7 +4,7 @@ French Translation of the Python Documentation
 .. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
   :target: https://travis-ci.org/python/python-docs-fr
 
-**Translated: 33%**
+**Translated: 35%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -236,6 +236,7 @@ e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
 identifier                 identifiant
 immutable                  immuable
+installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
 list comprehension         liste en compréhension (liste en intension est
