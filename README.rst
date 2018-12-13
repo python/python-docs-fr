@@ -239,7 +239,7 @@ immutable                  immuable
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
-list comprehension         liste en compréhension (liste en intension est
+list comprehension         liste en compréhension (liste en intention est
                            valide, mais nous ne l'utilisons pas)
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
