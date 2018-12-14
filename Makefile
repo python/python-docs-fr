@@ -18,7 +18,7 @@ SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
 LANGUAGE := fr
 VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
-MODE := autobuild-dev-html
+MODE := html
 BRANCH = 3.7
 COMMIT =
 JOBS = auto
@@ -31,12 +31,12 @@ ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all 
 endif
 	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
 	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qaEW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
 
 
 $(SPHINX_CONF):
 	git clone --depth 1 --branch $(BRANCH) https://github.com/python/cpython.git $(CPYTHON_CLONE)
-	[ -n "$(COMMIT)" ] && i=1; while ! $$(git -C $(CPYTHON_CLONE) checkout $(COMMIT)); do i=$$((i * 2)); git -C $(CPYTHON_CLONE) fetch --depth $$i; done
+	[ -n "$(COMMIT)" ] && (i=1; while ! $$(git -C $(CPYTHON_CLONE) checkout $(COMMIT)); do i=$$((i * 2)); git -C $(CPYTHON_CLONE) fetch --depth $$i; done) || true
 
 
 .PHONY: upgrade_venv
@@ -57,7 +57,7 @@ progress:
 
 .PHONY: todo
 todo:
-	for file in *.po */*.po; do echo $$(msgattrib --untranslated $$file | grep ^msgid | sed 1d | wc -l ) $$file; done | grep -v ^0 | sort -gr
+	python3 scripts/todo.py
 
 
 .PHONY: merge
