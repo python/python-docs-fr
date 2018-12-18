@@ -59,7 +59,6 @@ progress:
 todo:
 	potodo --github python/python-docs-fr
 
-
 .PHONY: merge
 merge: upgrade_venv
 ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
@@ -86,4 +85,4 @@ endif
 
 .PHONY: fuzzy
 fuzzy:
-	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c '#, fuzzy') $$file; done | grep -v ^0 | sort -gr
+	potodo --github python/python-docs-fr -f
