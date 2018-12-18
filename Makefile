@@ -57,7 +57,7 @@ progress:
 
 .PHONY: todo
 todo:
-	python3 scripts/todo.py
+	potodo --github python/python-docs-fr
 
 
 .PHONY: merge
