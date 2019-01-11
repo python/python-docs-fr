@@ -57,8 +57,7 @@ progress:
 
 .PHONY: todo
 todo:
-	python3 scripts/todo.py
-
+	potodo --github python/python-docs-fr
 
 .PHONY: merge
 merge: upgrade_venv
@@ -86,4 +85,4 @@ endif
 
 .PHONY: fuzzy
 fuzzy:
-	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c '#, fuzzy') $$file; done | grep -v ^0 | sort -gr
+	potodo --github python/python-docs-fr -f
