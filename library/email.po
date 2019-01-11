@@ -16,11 +16,11 @@ msgstr ""
 
 #: ../Doc/library/email.rst:2
 msgid ":mod:`email` --- An email and MIME handling package"
-msgstr ""
+msgstr ":mod:`email` --- Un paquet de gestion des emails et MIME"
 
 #: ../Doc/library/email.rst:11
 msgid "**Source code:** :source:`Lib/email/__init__.py`"
-msgstr ""
+msgstr "**Code source:** :source:`Lib/email/__init__.py`"
 
 #: ../Doc/library/email.rst:15
 msgid ""
@@ -32,6 +32,8 @@ msgid ""
 "well as such MIME-related RFCs as :rfc:`2045`, :rfc:`2046`, :rfc:`2047`, :"
 "rfc:`2183`, and :rfc:`2231`."
 msgstr ""
+"Le paquet :mod:`email` est une bibliothèque pour gérer les emails. Il n'est spécifiquement *pas* conçu pour faire des envois d'emails vers SMTP (:rfc:`2821), NNTP, ou autres serveurs ; ce sont des fonctions de modules comme :mod:`smtplib` and :mod:`nntplib`. Le paquet :mod:`email` tente de respecter les RFC autant que possible, supportant :rfc:`5233` et :rfc:`6532`, ainsi que les RFCs en rapport avec les MIME comme :rfc:`2045`, :rfc:`2046`, :rfc:`2047`, :rfc:`2183`, et :rfc:`2231`."
+
 
 #: ../Doc/library/email.rst:23
 msgid ""
@@ -39,6 +41,7 @@ msgid ""
 "components, plus a fourth component that controls the behavior of the other "
 "components."
 msgstr ""
+"Ce paquet peut être divisé entre trois composants majeurs, et un quatrième composant qui contrôle le comportement des trois autres."
 
 #: ../Doc/library/email.rst:27
 msgid ""
@@ -52,6 +55,7 @@ msgid ""
 "model is a tree structure of objects that all provide the :class:`~email."
 "message.EmailMessage` API."
 msgstr ""
+"Le composant central du paquet est un \"modèle d'objet\" qui représente les messages. Une application intéragit avec le paquet, dans un premier temps, à travers l'interface de modèle d'objet définie dans le sous-module :mod:`~email.message`. L'application peut utiliser cette API pour poser des questions à propos d'un mail existant, pour créer un nouvel email, ou ajouter ou retirer des sous-composants d'email qui utilisent la même interface de modèle d'objet. Suivant la nature des messages et leurs sous-composants MIME, le modèle d'objet d'email est une structure en arborescence d'objets qui fournit tout à l'API de :class:`~email.message.EmailMessage`."
 
 #: ../Doc/library/email.rst:37
 msgid ""
@@ -64,6 +68,7 @@ msgid ""
 "but this usage is discouraged as it is too easy to end up with messages that "
 "are not valid in one way or another.)"
 msgstr ""
+"Les deux autres composants majeurs de ce paquet sont l'analyseur (:mod:`~email.parser`) et le generateur (:mod:`~email.generator`). L'analyseur prends la version sérializée d'un email (un flux d'octets) et le convertit en une arborescence d'objets :class:`~email.message.EmailMessage`. Le générateur prends un object :class:`~email.message.EmailMessage` et le retransforme en un flux d'octets sérializée. (L'analyseur et le générateur gère aussi des suites de caractères textuels, mais cette utilisation est déconseillée car il est très facile de finir avec des messages invalides d'une manière ou d'une autre.)"
 
 #: ../Doc/library/email.rst:46
 msgid ""
@@ -79,6 +84,7 @@ msgid ""
 "from disk, but to serialize it using standard SMTP settings when sending it "
 "to an email server."
 msgstr ""
+"Le composant de contrôle est le module :mod:`~email.policy`.  chaque :class:`~email.message.EmailMessage`, chaque :mod:`~email.generator`, et chaque :mod:`~email.parser` possède un objet associé :mod:`~email.policy` qui contrôle son comportement. Habituellement une application n'a besoin de spécifier la politique que quand un :class:`~email.message.EmailMessage` est créé, soit en instanciant directement un :class:`~email.message.EmailMessage` pour créer un nouvel email, ou en analysant un flux entrant en utilisant un :mod:`~email.parser`. Mais la politique peut être changée quand le message est serializé en utilisant un :mod:`~email.generator`. Cela permet, par exemple, d'analyser un message email générique du disque, mais de le sérializer en utilisant les réglages SMTP standarts SMTP quand envoyés vers un serveur d'email."
 
 #: ../Doc/library/email.rst:58
 msgid ""
@@ -96,6 +102,7 @@ msgid ""
 "modern internet software (not just email), this will be a familiar concept "
 "to many programmers."
 msgstr ""
+"Le packet email fait son maximum pour cacher les détails des différents RFCs gouvernants de l'application. Conceptuellement, l'application devrait être capable de traiter l'email comme une arborescence structurée de texte unicode et de pièces jointes binaires, sans avoir à se préoccuper de leur réprensation sérializée.  Dans la pratique, cependant, il est souvent nécessaire d'être conscient d'au moins quelques règles gouvernant les messages MIME et leurs structures, en particulier les noms et natures des \"types de contenus\" et comment ils identifient les documents à plusieurs parties. Pour la plupart, cette connaissance devrait seulement être nécessaire pour des applications plus complexes, et même là, il devrait être question des structures de haut niveau et non des détails sur la manière dont elles sont représentées. Vu que les types de contenus MIME sont couramment utilisés dans les logiciels internet modernes (et non uniquement les emails), ce sera un concept familier à de multiples programmeurs."
 
 #: ../Doc/library/email.rst:71
 msgid ""
@@ -106,6 +113,7 @@ msgid ""
 "mod:`~email.policy` controls, which completes the treatment of the main "
 "components of the library."
 msgstr ""
+"La section suivante décrit les fonctionnalités du paquet :mod:`email`. Nous commençons avec le modèle d'objet :mod:`~email.message`, qui est la principale interface qu'une application utilisera, et continueront avec les composants :mod:`~email.parser` et :mod:`~email.generator`. Ensuite, nous couvrirons les contrôles :mod:`~email.policy`, qui complètent le traitement des principaux composants de la librairie."
 
 #: ../Doc/library/email.rst:78
 msgid ""
@@ -118,12 +126,14 @@ msgid ""
 "messages, but also document their extensibility APIs, which will be of "
 "interest to advanced applications."
 msgstr ""
+"Les trois prochaines sections couvrent les exceptions que le paquet peut rencontrer et les imperfections (non-respect des RFCs) que l':mod:`~email.parser` pourrait détecter.  Ensuite nous couvrons les sous-composants :mod:`~email.headerregistry` et :mod:`~email.contentmanager`, qui fournissent des outils pour faire des manipulations plus détaillées des en-têtes et puissances, respectivement. Les deux composants contiennent des fonctionnalités pertinentes pour traiter et produire des messages qui sortent de l'ordinaire, mais aussi documenter leurs APIs d'extensibilité, ce qui se montrera d'un grand intérêt pour les applications avancées "
 
 #: ../Doc/library/email.rst:87
 msgid ""
 "Following those is a set of examples of using the fundamental parts of the "
 "APIs covered in the preceding sections."
 msgstr ""
+"Ci-dessous se trouve un ensemble d'exemples d'utilisations des éléments fundamentaux des APIs couvertes dans les sections précédentes."
 
 #: ../Doc/library/email.rst:90
 msgid ""
@@ -137,67 +147,70 @@ msgid ""
 "relevant for applications that are still using the :mod:`~email.policy."
 "compat32` API for backward compatibility reasons."
 msgstr ""
+"L'élément précédent représente l'API moderne (tolérant l'unicode) du packet email. Les sections restantes, commençant par la classe :class:`~email.message.Message`, couvrent l'API héritée :data:`~email.policy.compat32` qui traite beaucoup plus directement des détails sur la manière dont les emails sont representés. L'API :data:`~email.policy.compat32` ne cache *pas* les détails des RFCs de l'application, mais pour les applications qui requièrent d'opérer à ce niveau, elle peut être un outil pratique. Cette documentation est aussi pertinante pour les applications qui utilisent toujours l'API :mod:`~email.policy.compat32` pour des raisons de rétrocompatibilité."
 
 #: ../Doc/library/email.rst:100
 msgid ""
 "Docs reorganized and rewritten to promote the new :class:`~email.message."
 "EmailMessage`/:class:`~email.policy.EmailPolicy` API."
 msgstr ""
+"Documents réorganisés et réécrits pour promouvoir la nouvelle API :class:`~email.message.EmailMessage`/:class:`~email.policy.EmailPolicy`."
 
 #: ../Doc/library/email.rst:105
 msgid "Contents of the :mod:`email` package documentation:"
-msgstr ""
+msgstr "Contenus de la documentation du paquet :mod:`email` :"
 
 #: ../Doc/library/email.rst:120
 msgid "Legacy API:"
-msgstr ""
+msgstr "API héritée :"
 
 #: ../Doc/library/email.rst:136
 msgid "Module :mod:`smtplib`"
-msgstr ""
+msgstr "Module :mod:`smtplib`"
 
 #: ../Doc/library/email.rst:136
 msgid "SMTP (Simple Mail Transport Protocol) client"
-msgstr ""
+msgstr "Client SMTP (Simple Mail Transport Protocol)"
 
 #: ../Doc/library/email.rst:139
 msgid "Module :mod:`poplib`"
-msgstr ""
+msgstr "Module :mod:`poplib`"
 
 #: ../Doc/library/email.rst:139
 msgid "POP (Post Office Protocol) client"
-msgstr ""
+msgstr "Client POP (Post Office Protocol)"
 
 #: ../Doc/library/email.rst:142
 msgid "Module :mod:`imaplib`"
-msgstr ""
+msgstr "Module :mod:`imaplib`"
 
 #: ../Doc/library/email.rst:142
 msgid "IMAP (Internet Message Access Protocol) client"
-msgstr ""
+msgstr "Client IMAP (Internet Message Access Protocol)"
 
 #: ../Doc/library/email.rst:145
 msgid "Module :mod:`nntplib`"
-msgstr ""
+msgstr "Module :mod:`nntplib`"
 
 #: ../Doc/library/email.rst:145
 msgid "NNTP (Net News Transport Protocol) client"
-msgstr ""
+msgstr "Client NNTP (Net News Transport Protocol)"
 
 #: ../Doc/library/email.rst:149
 msgid "Module :mod:`mailbox`"
-msgstr ""
+msgstr "Module :mod:`mailbox`"
 
 #: ../Doc/library/email.rst:148
 msgid ""
 "Tools for creating, reading, and managing collections of messages on disk "
 "using a variety standard formats."
 msgstr ""
+"Outils pour créer, lire, et gérer des de messages sur des disques utilisant des formats standarts variés."
 
 #: ../Doc/library/email.rst:151
 msgid "Module :mod:`smtpd`"
-msgstr ""
+msgstr "Module :mod:`smtpd`"
 
 #: ../Doc/library/email.rst:152
 msgid "SMTP server framework (primarily useful for testing)"
-msgstr ""
+msgstr "Framework pour serveur SMTP (principalement utile pour tester)"
