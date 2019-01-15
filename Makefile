@@ -55,7 +55,7 @@ progress:
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
-$(VENV)/bin/potodo:
+$(VENV)/bin/potodo: $(VENV)/bin/activate
 	$(VENV)/bin/pip install potodo
 
 .PHONY: todo
