@@ -55,9 +55,12 @@ progress:
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
+$(VENV)/bin/potodo: $(VENV)/bin/activate
+	$(VENV)/bin/pip install potodo
+
 .PHONY: todo
-todo:
-	potodo --github python/python-docs-fr
+todo: $(VENV)/bin/potodo
+	$(VENV)/bin/potodo --github python/python-docs-fr
 
 .PHONY: merge
 merge: upgrade_venv
@@ -84,5 +87,5 @@ endif
 
 
 .PHONY: fuzzy
-fuzzy:
-	potodo --github python/python-docs-fr -f
+fuzzy: $(VENV)/bin/potodo
+	$(VENV)/bin/potodo --github python/python-docs-fr -f
