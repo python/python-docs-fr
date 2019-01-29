@@ -55,10 +55,12 @@ progress:
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
-.PHONY: todo
-todo:
-	python3 scripts/todo.py
+$(VENV)/bin/potodo: $(VENV)/bin/activate
+	$(VENV)/bin/pip install potodo
 
+.PHONY: todo
+todo: $(VENV)/bin/potodo
+	$(VENV)/bin/potodo --github python/python-docs-fr
 
 .PHONY: merge
 merge: upgrade_venv
@@ -85,5 +87,5 @@ endif
 
 
 .PHONY: fuzzy
-fuzzy:
-	for file in *.po */*.po; do echo $$(msgattrib --only-fuzzy --no-obsolete "$$file" | grep -c '#, fuzzy') $$file; done | grep -v ^0 | sort -gr
+fuzzy: $(VENV)/bin/potodo
+	$(VENV)/bin/potodo --github python/python-docs-fr -f
