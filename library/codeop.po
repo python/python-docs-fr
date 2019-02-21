@@ -16,11 +16,11 @@ msgstr ""
 
 #: ../Doc/library/codeop.rst:2
 msgid ":mod:`codeop` --- Compile Python code"
-msgstr ""
+msgstr ":mod:`codeop` — Compilation de code Python"
 
 #: ../Doc/library/codeop.rst:10
 msgid "**Source code:** :source:`Lib/codeop.py`"
-msgstr ""
+msgstr "**Code source :** :source:`Lib/codeop.py`"
 
 #: ../Doc/library/codeop.rst:14
 msgid ""
@@ -30,32 +30,44 @@ msgid ""
 "include such a loop in your program you probably want to use the :mod:`code` "
 "module instead."
 msgstr ""
+"Le module :mod:`codeop` fournit des outils permettant d'émuler une boucle de "
+"lecture-évaluation-affichage (en anglais *read-eval-print-loop* ou REPL), "
+"comme dans le module :mod:`code`.  Par conséquent, ce module n'est pas "
+"destiné à être utilisé directement ; pour inclure un REPL dans un programme, "
+"il est préférable d'utiliser le module :mod:`code`."
 
 #: ../Doc/library/codeop.rst:20
 msgid "There are two parts to this job:"
-msgstr ""
+msgstr "Cette tâche se divise en deux parties :"
 
 #: ../Doc/library/codeop.rst:22
 msgid ""
 "Being able to tell if a line of input completes a Python  statement: in "
 "short, telling whether to print '``>>>``' or '``...``' next."
 msgstr ""
+"Pouvoir affirmer qu'une ligne d'entrée est une instruction complète, ou "
+"achève une instruction : en bref, savoir s'il faut afficher « ``>>>`` » ou "
+"« ``...`` » à sa suite."
 
 #: ../Doc/library/codeop.rst:25
 msgid ""
 "Remembering which future statements the user has entered, so  subsequent "
 "input can be compiled with these in effect."
 msgstr ""
+"Conserver les instructions déjà entrées par l'utilisateur, afin que les "
+"entrées suivantes puissent êtres compilées avec elles."
 
 #: ../Doc/library/codeop.rst:28
 msgid ""
 "The :mod:`codeop` module provides a way of doing each of these things, and a "
 "way of doing them both."
 msgstr ""
+"Le module :mod:`codeop` fournit un moyen d'effectuer ces deux parties, "
+"individuellement ou simultanément."
 
 #: ../Doc/library/codeop.rst:31
 msgid "To do just the former:"
-msgstr ""
+msgstr "Pour ne faire que la première partie :"
 
 #: ../Doc/library/codeop.rst:35
 msgid ""
@@ -65,6 +77,11 @@ msgid ""
 "``'<input>'``. Returns ``None`` if *source* is *not* valid Python code, but "
 "is a prefix of valid Python code."
 msgstr ""
+"Essaye de compiler *source*, qui doit être une chaîne de caractères "
+"représentant du code Python valide et renvoie un objet code le cas échéant. "
+"Dans ce cas, l'attribut de nom de fichier de l'objet code renvoyé sera "
+"*filename* (``'<input>'`` par défaut). Renvoie ``None`` si *source* n'est "
+"*pas* du code Python valide, mais un *début* de code Python valide."
 
 #: ../Doc/library/codeop.rst:41
 msgid ""
@@ -72,6 +89,9 @@ msgid ""
 "`SyntaxError` is raised if there is invalid Python syntax, and :exc:"
 "`OverflowError` or :exc:`ValueError` if there is an invalid literal."
 msgstr ""
+"En cas de problème avec *source*, une exception est levée ; :exc:"
+"`SyntaxError` si la syntaxe Python est incorrecte, et :exc:`OverflowError` "
+"ou :exc:`ValueError` si un littéral invalide est rencontré."
 
 #: ../Doc/library/codeop.rst:45
 msgid ""
@@ -79,6 +99,9 @@ msgid ""
 "(``'single'``, the default) or as an :term:`expression` (``'eval'``).  Any "
 "other value will cause :exc:`ValueError` to  be raised."
 msgstr ""
+"L'argument *symbol* détermine si *source* est compilée comme une instruction "
+"(``'single'``, par défaut) ou comme une :term:`expression` (``'eval'``).  "
+"Toute autre valeur lèvera :exc:`ValueError`."
 
 #: ../Doc/library/codeop.rst:51
 msgid ""
@@ -88,6 +111,12 @@ msgid ""
 "backslash followed by two newlines may be followed by arbitrary garbage. "
 "This will be fixed once the API for the parser is better."
 msgstr ""
+"Il est possible (quoique improbable) que l'analyseur s'arrête avant "
+"d'atteindre la fin du code source ; dans ce cas, les symboles venant après "
+"peuvent être ignorés au lieu de provoquer une erreur. Par exemple, une barre "
+"oblique inverse suivie de deux retours à la ligne peut être suivie par de la "
+"mémoire non-initialisée. Ceci sera corrigé quand l'interface de l'analyseur "
+"aura été améliorée."
 
 #: ../Doc/library/codeop.rst:60
 msgid ""
@@ -97,6 +126,11 @@ msgid ""
 "the instance 'remembers' and compiles all subsequent program texts with the "
 "statement in force."
 msgstr ""
+"Les instances de cette classe ont des méthodes :meth:`__call__` de signature "
+"identique à la fonction native :func:`compile`, à la différence près que si "
+"l'instance compile du code source contenant une instruction :mod:"
+"`__future__`, l'instance s'en « souviendra » et compilera tous les codes "
+"sources suivants avec cette instruction activée."
 
 #: ../Doc/library/codeop.rst:69
 msgid ""
@@ -105,3 +139,8 @@ msgid ""
 "program text containing a ``__future__`` statement, the instance 'remembers' "
 "and compiles all subsequent program texts with the statement in force."
 msgstr ""
+"Les instances de cette classe ont des méthodes :meth:`__call__` de signature "
+"identique à la fonction :func:`compile_command`, à la différence près que si "
+"l'instance compile du code source contenant une instruction ``__future__``, "
+"l'instance s'en « souviendra » et compilera tous les codes sources suivants "
+"avec cette instruction activée."

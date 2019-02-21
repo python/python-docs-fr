@@ -1,7 +1,10 @@
 French Translation of the Python Documentation
 ==============================================
 
-**Translated: 28%**
+.. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
+  :target: https://travis-ci.org/python/python-docs-fr
+
+**Translated: 36%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -71,6 +74,11 @@ Step by step:
     # Add the upstream (the public repository) using HTTPS (won't ask for password):
     git remote add upstream https://github.com/python/python-docs-fr.git
 
+All the translations must be made on the latest release.
+We never translate on an oldest version, by example, the latest python release
+is python 3.7, we don't want to translate directly on the python 3.5 release.
+If needed translations would be backported on the oldest versions by the
+`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
 
 Now you're ready to start a work session, each time you'll start a new task, start here:
 
@@ -83,7 +91,11 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     git checkout -b glossary upstream/3.7
 
     # You can now work on the file, typically using poedit,
-    # then commit your work with a nice explicit message:
+    poedit directory/file.po
+
+    # When everything is clear (syntax errors from Sphinx, html rendering,
+    # semantics, typography),
+    # you can commit your work with a nice explicit message:
     git commit -a -m "Working on glossary."
 
     # Then push your modifications to your github clone,
@@ -93,7 +105,8 @@ Now you're ready to start a work session, each time you'll start a new task, sta
     # it's nice as it's exactly what we want:
     git push origin HEAD
 
-    # Now you can open the pull request on github, just go to
+    # The previous command will print you a link to open a PR on github.
+    # If you missed it, just go to
     # https://github.com/python/python-docs-fr/ and a nice "Compare & pull request"
     # button should appear after a few seconds telling you can ask for a pull request.
 
@@ -120,7 +133,7 @@ You may also have noted you never ever commit on a version branch
 you'll avoid problems.
 
 Before commiting, you should use `grammalecte
-<https://www.dicollecte.org/>`_ to check for your translations.
+<https://grammalecte.net/>`_ to check for your translations.
 
 
 What to translate
@@ -141,6 +154,31 @@ translate untranslated ones (find them using ``make todo``)..
   (typically if it's Wikipedia and the article has a translation). If
   no translation of the target exists, do not translate the
   title.
+
+
+The case of "::"
+~~~~~~~~~~~~~~~~
+
+From the reStructuredText point of view, ``::`` glued at the end of a
+word means "output ``:`` and introduce a code block", but a ``::``
+after a space means "Just introduce a code block".
+
+So in english rst, we see either ``blah blah::`` or ``blah blah. ::``.
+
+In french, we're putting a no-break space before our columns, like:
+``Et voilà :``.
+
+Using no-break space in rst is natural, you'll simply write ``Et
+voilà ::``, as the ``::`` is not precedded by a normal space it
+will output the column and introduce the code block, you're done.
+
+If you don't know how to type a no-break space there's a trick,
+translate column column by space, column, space, column column. the
+"space column" will render your space and your column as french needs,
+and the trailing "space column column" will output nothing and
+introduce the code block. No it does not magically inserts a no-break
+space, so it's still not really valid french. Yes, better learn how to
+type no-break space.
 
 
 Where to get help
@@ -176,6 +214,10 @@ For consistency in our translations, here are some propositions and
 reminders for frequent terms you'll have to translate, don't hesitate
 to open an issue if you disagree.
 
+To easily find how a term is already translated in our documentation,
+you may use
+`find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
+
 ========================== ===========================================
 Term                       Proposed Translation
 ========================== ===========================================
@@ -188,11 +230,13 @@ bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
 debugging                  débogage
+deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
 identifier                 identifiant
 immutable                  immuable
+installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
 list comprehension         liste en compréhension (liste en intension est
@@ -205,14 +249,16 @@ parameter                  paramètre
 prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
-return                     renvoie, donne (On évite
-                           "retourne" qui pourrait porter à confusion.
+return                     renvoie, donne (on évite
+                           "retourne" qui pourrait porter à confusion).
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
 socket                     *socket*
 statement                  instruction
+subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
+expression				         expression
 ========================== ===========================================
 
 
@@ -256,7 +302,9 @@ Maintenance
 
 All those snippets are to run from the root of a ``python-docs-fr``
 clone, and some expect to find an up-to-date CPython clone near to it,
-like::
+like:
+
+.. code-block:: bash
 
   ~/
   ├── python-docs-fr/
@@ -299,18 +347,19 @@ Run a test build locally
 Synchronize translation with Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll need the ``transifex-client`` and ``poindent``
+You'll need the ``transifex-client`` and ``powrap``
 from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
 
-You should work on a separate ``transifex`` branch.
-
 .. code-block:: bash
 
-   tx pull
-   poindent --modified
+   pomerge --from-files **/*.po
+   tx pull -f
+   pomerge --to-files **/*.po
+   pomerge --from-files **/*.po
+   git checkout -- .
+   pomerge --to-files **/*.po
+   powrap --modified
    git commit -m "tx pull"
-   git checkout 3.6
-   git merge transifex -Xours
-   tx push -t
+   tx push -t -f
