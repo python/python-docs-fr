@@ -4,7 +4,7 @@ French Translation of the Python Documentation
 .. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
   :target: https://travis-ci.org/python/python-docs-fr
 
-**Translated: 36%**
+**Translated: 38%**
 
 Documentation Contribution Agreement
 ------------------------------------
