@@ -352,6 +352,17 @@ from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
 
+First propagate known translations locally:
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po --to-files **/*.po
+   powrap --modified
+   git commit -m "Propagating known translations."
+
+
+Then pull from transifex:
+
 .. code-block:: bash
 
    pomerge --from-files **/*.po
