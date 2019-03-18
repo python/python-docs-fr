@@ -4,7 +4,7 @@ French Translation of the Python Documentation
 .. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
   :target: https://travis-ci.org/python/python-docs-fr
 
-**Translated: 38%**
+**Translated: 39%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -351,6 +351,17 @@ You'll need the ``transifex-client`` and ``powrap``
 from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
+
+First propagate known translations locally:
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po --to-files **/*.po
+   powrap --modified
+   git commit -m "Propagating known translations."
+
+
+Then pull from transifex:
 
 .. code-block:: bash
 
