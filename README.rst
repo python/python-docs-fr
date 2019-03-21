@@ -84,6 +84,11 @@ Now you're ready to start a work session, each time you'll start a new task, sta
 
 .. code-block:: bash
 
+    # First, you need to find a file to work on. You can use `potodo <https://github.com/seluj78/potodo>`.
+    # Install it and then run the command `potodo` in your cloned fork.
+    # From the list it spits out, you can choose any file that is not reserved. We recommend not starting
+    # with a file from `c-api as` it is very technical.
+
     # To work, we'll need a branch, based on an up-to-date (freshly fetched)
     # upstream/3.7 branch, let's say we'll work on glossary so we name
     # the branch "glossary":
