@@ -80,14 +80,19 @@ is python 3.7, we don't want to translate directly on the python 3.5 release.
 If needed translations would be backported on the oldest versions by the
 `documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
 
+First, you need to find a file to work on. You can use `potodo
+<https://github.com/seluj78/potodo>`.  Install it (``pip install
+potodo`` in a venv) and then run the command `potodo` in your cloned
+fork.  From the list it spits out, you can choose any file that is not
+reserved. We recommend not starting with a file from ``c-api` as it is
+very technical.
+
+Once you've choosen a file, please open an issue telling you're
+working on it, to block someone from working on it.
+
 Now you're ready to start a work session, each time you'll start a new task, start here:
 
 .. code-block:: bash
-
-    # First, you need to find a file to work on. You can use `potodo <https://github.com/seluj78/potodo>`.
-    # Install it and then run the command `potodo` in your cloned fork.
-    # From the list it spits out, you can choose any file that is not reserved. We recommend not starting
-    # with a file from `c-api as` it is very technical.
 
     # To work, we'll need a branch, based on an up-to-date (freshly fetched)
     # upstream/3.7 branch, let's say we'll work on glossary so we name
