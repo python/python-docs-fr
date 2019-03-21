@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-17 21:38+0100\n"
+"POT-Creation-Date: 2019-03-11 12:59+0100\n"
 "PO-Revision-Date: 2019-02-25 23:27+0100\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -283,7 +283,7 @@ msgstr ""
 "Windows."
 
 #: ../Doc/library/sys.rst:166 ../Doc/library/sys.rst:657
-#: ../Doc/library/sys.rst:1330 ../Doc/library/sys.rst:1477
+#: ../Doc/library/sys.rst:1330 ../Doc/library/sys.rst:1494
 msgid ":ref:`Availability <availability>`: Windows."
 msgstr ":ref:`Disponibilité <availability>` : Windows."
 
@@ -1527,11 +1527,11 @@ msgstr ""
 "représentation interne des entiers de Python.  Les attributs sont en lecture "
 "seule."
 
-#: ../Doc/library/sys.rst:815 ../Doc/library/sys.rst:1404
+#: ../Doc/library/sys.rst:815 ../Doc/library/sys.rst:1421
 msgid "Attribute"
 msgstr "Attribut"
 
-#: ../Doc/library/sys.rst:815 ../Doc/library/sys.rst:1404
+#: ../Doc/library/sys.rst:815 ../Doc/library/sys.rst:1421
 msgid "Explanation"
 msgstr "Explication"
 
@@ -2468,28 +2468,37 @@ msgstr ""
 
 #: ../Doc/library/sys.rst:1351
 msgid ""
-"The character encoding is platform-dependent.  Under Windows, if the stream "
-"is interactive (that is, if its :meth:`isatty` method returns ``True``), the "
-"console codepage is used, otherwise the ANSI code page.  Under other "
-"platforms, the locale encoding is used (see :meth:`locale."
-"getpreferredencoding`)."
+"The character encoding is platform-dependent.  Non-Windows platforms use the "
+"locale encoding (see :meth:`locale.getpreferredencoding()`)."
 msgstr ""
-"L'encodage des caractères dépend de la plate-forme. Sous Windows, si le flux "
-"est interactif (c'est-à-dire si sa méthode :meth:`isatty` donne ``True``), "
-"l'encodage de la console est utilisée, sinon un encodage Windows.  Sous "
-"d'autres plateformes, l'encodage local est utilisé (voir :meth:`locale."
-"getpreferredencoding`)."
 
-#: ../Doc/library/sys.rst:1356
+#: ../Doc/library/sys.rst:1355
 msgid ""
-"Under all platforms though, you can override this value by setting the :"
-"envvar:`PYTHONIOENCODING` environment variable before starting Python."
+"On Windows, UTF-8 is used for the console device.  Non-character devices "
+"such as disk files and pipes use the system locale encoding (i.e. the ANSI "
+"codepage).  Non-console character devices such as NUL (i.e. where isatty() "
+"returns True) use the value of the console input and output codepages at "
+"startup, respectively for stdin and stdout/stderr. This defaults to the "
+"system locale encoding if the process is not initially attached to a console."
 msgstr ""
-"Sous toutes les plates-formes cependant, vous pouvez remplacer cette valeur "
-"en définissant la variable d'environnement :envvar:`PYTHONIOENCODING` avant "
-"de démarrer Python."
 
-#: ../Doc/library/sys.rst:1359
+#: ../Doc/library/sys.rst:1364
+msgid ""
+"The special behaviour of the console can be overridden by setting the "
+"environment variable PYTHONLEGACYWINDOWSSTDIO before starting Python. In "
+"that case, the console codepages are used as for any other character device."
+msgstr ""
+
+#: ../Doc/library/sys.rst:1369
+msgid ""
+"Under all platforms, you can override the character encoding by setting the :"
+"envvar:`PYTHONIOENCODING` environment variable before starting Python or by "
+"using the new :option:`-X` ``utf8`` command line option and :envvar:"
+"`PYTHONUTF8` environment variable.  However, for the Windows console, this "
+"only applies when :envvar:`PYTHONLEGACYWINDOWSSTDIO` is also set."
+msgstr ""
+
+#: ../Doc/library/sys.rst:1376
 msgid ""
 "When interactive, ``stdout`` and ``stderr`` streams are line-buffered. "
 "Otherwise, they are block-buffered like regular text files.  You can "
@@ -2500,7 +2509,7 @@ msgstr ""
 "fichiers textes classiques. Vous pouvez remplacer cette valeur avec "
 "l'option :option:`-u` en ligne de commande."
 
-#: ../Doc/library/sys.rst:1365
+#: ../Doc/library/sys.rst:1382
 msgid ""
 "To write or read binary data from/to the standard streams, use the "
 "underlying binary :data:`~io.TextIOBase.buffer` object.  For example, to "
@@ -2511,7 +2520,7 @@ msgstr ""
 "pour écrire des octets sur :data:`stdout`, utilisez ``sys.stdout.buffer."
 "write(b'abc')``."
 
-#: ../Doc/library/sys.rst:1369
+#: ../Doc/library/sys.rst:1386
 msgid ""
 "However, if you are writing a library (and do not control in which context "
 "its code will be executed), be aware that the standard streams may be "
@@ -2523,7 +2532,7 @@ msgstr ""
 "remplacés par des objets de type fichier tel un :class:`io.StringIO` qui "
 "n'ont pas l'attribut :attr:`~io.BufferedIOBase.buffer`."
 
-#: ../Doc/library/sys.rst:1379
+#: ../Doc/library/sys.rst:1396
 msgid ""
 "These objects contain the original values of ``stdin``, ``stderr`` and "
 "``stdout`` at the start of the program.  They are used during finalization, "
@@ -2535,7 +2544,7 @@ msgstr ""
 "pendant la finalisation, et peuvent être utiles pour écrire dans le vrai "
 "flux standard, peu importe si l'objet ``sys.std*`` a été redirigé."
 
-#: ../Doc/library/sys.rst:1384
+#: ../Doc/library/sys.rst:1401
 msgid ""
 "It can also be used to restore the actual files to known working file "
 "objects in case they have been overwritten with a broken object.  However, "
@@ -2547,7 +2556,7 @@ msgstr ""
 "cependant la bonne façon de faire serait de sauvegarder explicitement les "
 "flux avant de les remplacer et ainsi pouvoir les restaurer."
 
-#: ../Doc/library/sys.rst:1390
+#: ../Doc/library/sys.rst:1407
 msgid ""
 "Under some conditions ``stdin``, ``stdout`` and ``stderr`` as well as the "
 "original values ``__stdin__``, ``__stdout__`` and ``__stderr__`` can be "
@@ -2560,7 +2569,7 @@ msgstr ""
 "Windows qui ne sont pas connectées à une console, ou les applications Python "
 "démarrées avec :program:`pythonw`."
 
-#: ../Doc/library/sys.rst:1398
+#: ../Doc/library/sys.rst:1415
 msgid ""
 "A :term:`struct sequence` holding information about the thread "
 "implementation."
@@ -2568,52 +2577,52 @@ msgstr ""
 "Une :term:`struct sequence` contenant des informations sur l'implémentation "
 "des fils d'exécution."
 
-#: ../Doc/library/sys.rst:1406
+#: ../Doc/library/sys.rst:1423
 msgid ":const:`name`"
 msgstr ":const:`name`"
 
-#: ../Doc/library/sys.rst:1406
+#: ../Doc/library/sys.rst:1423
 msgid "Name of the thread implementation:"
 msgstr "Nom de l'implémentation des fils d'exécution :"
 
-#: ../Doc/library/sys.rst:1408
+#: ../Doc/library/sys.rst:1425
 msgid "``'nt'``: Windows threads"
 msgstr "``'nt'``: Fils d'exécution Windows"
 
-#: ../Doc/library/sys.rst:1409
+#: ../Doc/library/sys.rst:1426
 msgid "``'pthread'``: POSIX threads"
 msgstr "``'pthread'``: Fils d'exécution POSIX"
 
-#: ../Doc/library/sys.rst:1410
+#: ../Doc/library/sys.rst:1427
 msgid "``'solaris'``: Solaris threads"
 msgstr "``'solaris'``: Fils d'exécution Solaris"
 
-#: ../Doc/library/sys.rst:1412
+#: ../Doc/library/sys.rst:1429
 msgid ":const:`lock`"
 msgstr ":const:`lock`"
 
-#: ../Doc/library/sys.rst:1412
+#: ../Doc/library/sys.rst:1429
 msgid "Name of the lock implementation:"
 msgstr "Nom de l'implémentation du système de verrou :"
 
-#: ../Doc/library/sys.rst:1414
+#: ../Doc/library/sys.rst:1431
 msgid "``'semaphore'``: a lock uses a semaphore"
 msgstr "``'semaphore'``: Verrou utilisant une sémaphore"
 
-#: ../Doc/library/sys.rst:1415
+#: ../Doc/library/sys.rst:1432
 msgid "``'mutex+cond'``: a lock uses a mutex and a condition variable"
 msgstr ""
 "``'mutex+cond'``: Un verrou utilisant un *mutex* et une *condition variable*"
 
-#: ../Doc/library/sys.rst:1417
+#: ../Doc/library/sys.rst:1434
 msgid "``None`` if this information is unknown"
 msgstr "``None`` si cette information n'est pas connue"
 
-#: ../Doc/library/sys.rst:1419
+#: ../Doc/library/sys.rst:1436
 msgid ":const:`version`"
 msgstr ":const:`version`"
 
-#: ../Doc/library/sys.rst:1419
+#: ../Doc/library/sys.rst:1436
 msgid ""
 "Name and version of the thread library. It is a string, or ``None`` if this "
 "information is unknown."
@@ -2621,7 +2630,7 @@ msgstr ""
 "Nom et version de l'implémentation des fils d'exécution, c'est une chaîne, "
 "ou ``None`` si ces informations sont inconnues."
 
-#: ../Doc/library/sys.rst:1428
+#: ../Doc/library/sys.rst:1445
 msgid ""
 "When this variable is set to an integer value, it determines the maximum "
 "number of levels of traceback information printed when an unhandled "
@@ -2635,7 +2644,7 @@ msgstr ""
 "est égale ou inférieure à ``0``, la pile d'appels n'est pas affichée, seul "
 "seuls le type et la valeur de l'exception sont le sont."
 
-#: ../Doc/library/sys.rst:1436
+#: ../Doc/library/sys.rst:1453
 msgid ""
 "A string containing the version number of the Python interpreter plus "
 "additional information on the build number and compiler used.  This string "
@@ -2650,7 +2659,7 @@ msgstr ""
 "utilisez plutôt :data:`version_info` et les fonctions fournies par le "
 "module :mod:`platform`."
 
-#: ../Doc/library/sys.rst:1445
+#: ../Doc/library/sys.rst:1462
 msgid ""
 "The C API version for this interpreter.  Programmers may find this useful "
 "when debugging version conflicts between Python and extension modules."
@@ -2659,7 +2668,7 @@ msgstr ""
 "trouver cette information utile en déboguant des conflits de versions entre "
 "Python et des modules d'extension."
 
-#: ../Doc/library/sys.rst:1451
+#: ../Doc/library/sys.rst:1468
 msgid ""
 "A tuple containing the five components of the version number: *major*, "
 "*minor*, *micro*, *releaselevel*, and *serial*.  All values except "
@@ -2677,11 +2686,11 @@ msgstr ""
 "attributs sont aussi accessibles par leur nom, ainsi ``sys.version_info[0]`` "
 "est équivalent à ``sys.version_info.major``, et ainsi de suite."
 
-#: ../Doc/library/sys.rst:1459
+#: ../Doc/library/sys.rst:1476
 msgid "Added named component attributes."
 msgstr "Ajout des attributs nommés."
 
-#: ../Doc/library/sys.rst:1464
+#: ../Doc/library/sys.rst:1481
 msgid ""
 "This is an implementation detail of the warnings framework; do not modify "
 "this value.  Refer to the :mod:`warnings` module for more information on the "
@@ -2691,7 +2700,7 @@ msgstr ""
 "Ne modifiez pas cette valeur.  Reportez-vous au module :mod:`warnings` pour "
 "plus d'informations sur le gestionnaire d'avertissements."
 
-#: ../Doc/library/sys.rst:1471
+#: ../Doc/library/sys.rst:1488
 #, fuzzy
 msgid ""
 "The version number used to form registry keys on Windows platforms. This is "
@@ -2707,7 +2716,7 @@ msgstr ""
 "d'information, et la modifier n'a aucun effet sur les clés de registre "
 "utilisées par Python. Disponibilité: Windows."
 
-#: ../Doc/library/sys.rst:1482
+#: ../Doc/library/sys.rst:1499
 msgid ""
 "A dictionary of the various implementation-specific flags passed through "
 "the :option:`-X` command-line option.  Option names are either mapped to "
@@ -2718,7 +2727,7 @@ msgstr ""
 "correspondent soit leur valeur, si elle est donnée explicitement, soit à :"
 "const:`True`. Exemple:"
 
-#: ../Doc/library/sys.rst:1498
+#: ../Doc/library/sys.rst:1515
 msgid ""
 "This is a CPython-specific way of accessing options passed through :option:`-"
 "X`.  Other implementations may export them through other means, or not at "
@@ -2728,11 +2737,11 @@ msgstr ""
 "l'option :option:`-X`.  D'autres implémentations pourraient les exposer par "
 "d'autres moyens, ou pas du tout."
 
-#: ../Doc/library/sys.rst:1506
+#: ../Doc/library/sys.rst:1523
 msgid "Citations"
 msgstr "Citations"
 
-#: ../Doc/library/sys.rst:1507
+#: ../Doc/library/sys.rst:1524
 msgid ""
 "ISO/IEC 9899:1999.  \"Programming languages -- C.\"  A public draft of this "
 "standard is available at http://www.open-std.org/jtc1/sc22/wg14/www/docs/"
@@ -2741,6 +2750,27 @@ msgstr ""
 "ISO/IEC 9899:1999.  \"Programming languages -- C.\"  A public draft of this "
 "standard is available at http://www.open-std.org/jtc1/sc22/wg14/www/docs/"
 "n1256.pdf\\ ."
+
+#~ msgid ""
+#~ "The character encoding is platform-dependent.  Under Windows, if the "
+#~ "stream is interactive (that is, if its :meth:`isatty` method returns "
+#~ "``True``), the console codepage is used, otherwise the ANSI code page.  "
+#~ "Under other platforms, the locale encoding is used (see :meth:`locale."
+#~ "getpreferredencoding`)."
+#~ msgstr ""
+#~ "L'encodage des caractères dépend de la plate-forme. Sous Windows, si le "
+#~ "flux est interactif (c'est-à-dire si sa méthode :meth:`isatty` donne "
+#~ "``True``), l'encodage de la console est utilisée, sinon un encodage "
+#~ "Windows.  Sous d'autres plateformes, l'encodage local est utilisé (voir :"
+#~ "meth:`locale.getpreferredencoding`)."
+
+#~ msgid ""
+#~ "Under all platforms though, you can override this value by setting the :"
+#~ "envvar:`PYTHONIOENCODING` environment variable before starting Python."
+#~ msgstr ""
+#~ "Sous toutes les plates-formes cependant, vous pouvez remplacer cette "
+#~ "valeur en définissant la variable d'environnement :envvar:"
+#~ "`PYTHONIOENCODING` avant de démarrer Python."
 
 #~ msgid "Availability: Windows"
 #~ msgstr "Disponibilité : Windows"
