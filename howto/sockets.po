@@ -24,7 +24,7 @@ msgstr "Auteur"
 
 #: ../Doc/howto/sockets.rst:7
 msgid "Gordon McMillan"
-msgstr ""
+msgstr "Gordon McMillan"
 
 #: ../Doc/howto/sockets.rst:None
 msgid "Abstract"
@@ -55,6 +55,16 @@ msgid ""
 "blocking sockets. But I'll start by talking about blocking sockets. You'll "
 "need to know how they work before dealing with non-blocking sockets."
 msgstr ""
+"Je ne vais parler que des *sockets* INET (i.e. IPv4), mais elles "
+"représentent au moins 99% des *sockets* utilisées. Et je ne parlerai que des "
+"*sockets* STREAM (i.e. TCP) — à moins que vous ne sachiez vraiment ce que "
+"vous faites (auquel cas ce HOWTO n'est pas pour vous !), vous obtiendrez un "
+"meilleur comportement et de meilleures performances avec une *socket* STREAM "
+"que tout autre. Je vais essayer d'éclaircir le mystère de ce qu'est une "
+"*socket*, ainsi que quelques conseils sur la façon de travailler avec des "
+"*sockets* bloquantes et non bloquantes. Mais je vais commencer par parler du "
+"blocage des *sockets*. Vous aurez besoin de savoir comment elles "
+"fonctionnent avant de traiter les *sockets* non bloquantes."
 
 #: ../Doc/howto/sockets.rst:31
 msgid ""
@@ -120,6 +130,12 @@ msgid ""
 "machine.  ``s.bind(('', 80))`` specifies that the socket is reachable by any "
 "address the machine happens to have."
 msgstr ""
+"Quelques remarques : nous avons utilisé ``socket.gethostname()`` pour que la "
+"*socket* soit visible par le monde extérieur.  Si nous avions utilisé ``s."
+"bind((('localhost', 80))``ou ``s.bind((('127.0.0.0.1', 80))`` nous aurions "
+"encore une *socket* \"serveur\", mais qui ne serait visible que sur la même "
+"machine.  ``s.bind('', 80)]`` spécifie que la *socket* est accessible par "
+"toute adresse que la machine possède."
 
 #: ../Doc/howto/sockets.rst:87
 msgid ""
@@ -127,6 +143,9 @@ msgid ""
 "known\" services (HTTP, SNMP etc). If you're playing around, use a nice high "
 "number (4 digits)."
 msgstr ""
+"Une deuxième chose à noter : les ports à faible nombre sont généralement "
+"réservés aux services \"bien connus\" (HTTP, SNMP, etc.). Si vous "
+"expérimentez, utilisez un nombre suffisamment élevé (4 chiffres)."
 
 #: ../Doc/howto/sockets.rst:91
 msgid ""
@@ -135,6 +154,10 @@ msgid ""
 "outside connections. If the rest of the code is written properly, that "
 "should be plenty."
 msgstr ""
+"Enfin, l'argument ``listen`` indique à la bibliothèque de *sockets* que nous "
+"voulons qu'elle mette en file d'attente jusqu'à 5 requêtes de connexion (le "
+"maximum normal) avant de refuser les connexions externes. Si le reste du "
+"code est écrit correctement, cela devrait suffire."
 
 #: ../Doc/howto/sockets.rst:95
 msgid ""
@@ -170,6 +193,12 @@ msgid ""
 "a shortcut around a couple of layers of network code and be quite a bit "
 "faster."
 msgstr ""
+"Si vous avez besoin d'un communication rapide entre deux processus sur une "
+"même machine, vous devriez regarder dans les *pipes* ou la mémoire "
+"partagée.  Si vous décidez d'utiliser les sockets AF_INET, liez la *socket* "
+"\"serveur\" à ``'localhost'``. Sur la plupart des plates-formes, cela "
+"prendra un raccourci au travers de quelques couches de code réseau et sera "
+"un peu plus rapide."
 
 #: ../Doc/howto/sockets.rst:129
 msgid ""
@@ -229,6 +258,10 @@ msgid ""
 "request, then reads a reply.  That's it. The socket is discarded. This means "
 "that a client can detect the end of the reply by receiving 0 bytes."
 msgstr ""
+"Un protocole comme HTTP utilise une *socket* pour un seul transfert. Le "
+"client envoie une demande, puis lit une réponse. C'est tout. La *socket* est "
+"mise au rebut. Cela signifie qu'un client peut détecter la fin de la réponse "
+"en recevant 0 octet."
 
 #: ../Doc/howto/sockets.rst:169
 msgid ""
@@ -243,12 +276,26 @@ msgid ""
 "they are* (much better), *or end by shutting down the connection*. The "
 "choice is entirely yours, (but some ways are righter than others)."
 msgstr ""
+"Mais si vous prévoyez de réutiliser votre *socket* pour d'autres transferts, "
+"vous devez réaliser que il n'y a pas de* ::abbr:`EOT (End of Transfer)` sur "
+"une *socket*.* Je répète : si une *socket* ``send`` ou ``recv` retourne "
+"après avoir manipulé 0 octets, la connexion a été interrompue.  Si la "
+"connexion n'a *pas* été interrompue, vous pouvez attendre sur un ``recv`` "
+"pour toujours, car la *socket* ne vous dira pas qu'il n'y a plus rien à lire "
+"(pour le moment).  Maintenant, si vous y réfléchissez un peu, vous allez "
+"réaliser une vérité fondamentale sur les *sockets* : *les messages doivent "
+"être de longueur fixe* (beurk), *ou être délimités* (haussement d'épaules), "
+"*ou indiquer de quelle longueur ils sont* (beaucoup mieux), *ou terminer en "
+"coupant la connexion*. Le choix est entièrement le vôtre, (mais certaines "
+"façons sont plus justes que d'autres)."
 
 #: ../Doc/howto/sockets.rst:180
 msgid ""
 "Assuming you don't want to end the connection, the simplest solution is a "
 "fixed length message::"
 msgstr ""
+"En supposant que vous ne vouliez pas terminer la connexion, la solution la "
+"plus simple est un message de longueur fixe : ::"
 
 #: ../Doc/howto/sockets.rst:217
 msgid ""
@@ -300,7 +347,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:252
 msgid "Binary Data"
-msgstr ""
+msgstr "Données Binaire"
 
 #: ../Doc/howto/sockets.rst:254
 msgid ""
@@ -326,7 +373,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:272
 msgid "Disconnecting"
-msgstr ""
+msgstr "Déconnexion"
 
 #: ../Doc/howto/sockets.rst:274
 msgid ""
@@ -383,13 +430,19 @@ msgstr ""
 msgid "Non-blocking Sockets"
 msgstr ""
 
+# Je ne sais pas traduire "inside-out" dans ce contexte
 #: ../Doc/howto/sockets.rst:315
+#, fuzzy
 msgid ""
 "If you've understood the preceding, you already know most of what you need "
 "to know about the mechanics of using sockets. You'll still use the same "
 "calls, in much the same ways. It's just that, if you do it right, your app "
 "will be almost inside-out."
 msgstr ""
+"Si vous avez compris ce qui précède, vous savez déjà tout ce que vous devez "
+"savoir sur la mécanique de l'utilisation des *sockets*. Vous utiliserez "
+"toujours les mêmes appels, de la même façon. C'est juste que, si vous le "
+"faites bien, votre application sera presque \"\"."
 
 #: ../Doc/howto/sockets.rst:320
 msgid ""
@@ -400,6 +453,13 @@ msgid ""
 "the exact same idea. You do this after creating the socket, but before using "
 "it. (Actually, if you're nuts, you can switch back and forth.)"
 msgstr ""
+"En Python, vous utilisez ``socket.setblocking(0)`` pour la rendre non-"
+"bloquante. En C, c'est plus complexe, (pour commencer, vous devrez choisir "
+"entre la version BSD ``O_NONBLOCK`` et la version Posix presque impossible à "
+"distinguer ``O_NDELAY``, qui est complètement différente de "
+"``TCP_NODELAY``), mais c'est exactement la même idée. Vous le faites après "
+"avoir créé la *socket*, mais avant de l'utiliser. (En fait, si vous êtes "
+"fou, vous pouvez alterner.)"
 
 #: ../Doc/howto/sockets.rst:327
 msgid ""
@@ -421,6 +481,9 @@ msgid ""
 "but it's close enough to the C version that if you understand ``select`` in "
 "Python, you'll have little trouble with it in C::"
 msgstr ""
+"En C, implémenter ``select`` est assez complexe. En Python, c'est du gâteau, "
+"mais c'est assez proche de la version C que si vous comprenez ``select`` en "
+"Python, vous aurez peu de problèmes avec lui en C : ::"
 
 #: ../Doc/howto/sockets.rst:347
 msgid ""
@@ -449,6 +512,13 @@ msgid ""
 "nothing.  (Actually, any reasonably healthy socket will return as writable - "
 "it just means outbound network buffer space is available.)"
 msgstr ""
+"Si une *socket* se trouve dans la liste des sorties lisibles, vous pouvez "
+"être certain qu'un ``recv`` sur cette *socket* retournera *quelque chose*. "
+"Même chose pour la liste des sorties éditables. Vous pourrez envoyer "
+"*quelque chose*. Peut-être pas tout ce que vous voudrez, mais *quelque "
+"chose* est mieux que rien.  (En fait, n'importe quelle *socket* "
+"raisonnablement saine retournera en écriture — cela signifie simplement que "
+"l'espace tampon réseau sortant est disponible)."
 
 #: ../Doc/howto/sockets.rst:366
 msgid ""
@@ -458,6 +528,12 @@ msgid ""
 "it in the potential_writers list. If it shows up in the writable list, you "
 "have a decent chance that it has connected."
 msgstr ""
+"Si vous avez une *socket* \"serveur\", mettez-la dans la liste lecteurs "
+"potentiels. Si elle apparaît dans la liste lisible, votre ``accept`` "
+"fonctionnera (presque certainement). Si vous avez créé une nouvelle *socket* "
+"pour ``connect`` à quelqu'un d'autre, mettez-la dans la liste éditeurs "
+"potentiels. Si elle apparaît dans la liste éditable, vous avez une bonne "
+"chance qu'elle se soit connecté."
 
 #: ../Doc/howto/sockets.rst:372
 msgid ""
@@ -467,6 +543,11 @@ msgid ""
 "problem of determining whether the other end is done, or just busy with "
 "something else."
 msgstr ""
+"En fait, ``select`` peut être pratique même avec des *sockets* bloquantes. "
+"C'est une façon de déterminer si vous allez bloquer — la *socket* redevient "
+"lisible lorsqu'il y a quelque chose dans les tampons. Cependant, cela n'aide "
+"pas encore à déterminer si l'autre extrémité a terminé, ou si elle est "
+"simplement occupée par autre chose."
 
 #: ../Doc/howto/sockets.rst:377
 msgid ""
@@ -476,3 +557,9 @@ msgid ""
 "differently on Windows. In fact, on Windows I usually use threads (which "
 "work very, very well) with my sockets."
 msgstr ""
+"**Alerte de portabilité** : Sous Unix, ``select`` fonctionne aussi bien avec "
+"les *sockets* qu'avec les fichiers. N'essayez pas cela sous Windows. Sous "
+"Windows, ``select`` ne fonctionne qu'avec les *sockets*. Notez également "
+"qu'en C, la plupart des options de *sockets* les plus avancées se font "
+"différemment sous Windows. En fait, sous Windows, j'utilise habituellement "
+"des fils d'exécution (qui fonctionnent très, très bien) avec mes *sockets*."
