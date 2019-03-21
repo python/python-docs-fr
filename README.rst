@@ -4,7 +4,7 @@ French Translation of the Python Documentation
 .. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
   :target: https://travis-ci.org/python/python-docs-fr
 
-**Translated: 38%**
+**Translated: 39%**
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -79,6 +79,15 @@ We never translate on an oldest version, by example, the latest python release
 is python 3.7, we don't want to translate directly on the python 3.5 release.
 If needed translations would be backported on the oldest versions by the
 `documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+
+First, you need to find a file to work on. You can use `potodo <https://github.com/seluj78/potodo>`.
+Install it (``pip install potodo`` in a venv) and then run the command
+`potodo` in your cloned fork. 
+From the list it spits out, you can choose any file that is not
+reserved. We recommend not starting with a file from ``c-api`` as it is very technical.
+
+Once you've choosen a file, please open an issue telling you're
+working on it, to block someone from working on it.
 
 Now you're ready to start a work session, each time you'll start a new task, start here:
 
@@ -351,6 +360,17 @@ You'll need the ``transifex-client`` and ``powrap``
 from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
+
+First propagate known translations locally:
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po --to-files **/*.po
+   powrap --modified
+   git commit -m "Propagating known translations."
+
+
+Then pull from transifex:
 
 .. code-block:: bash
 
