@@ -79,7 +79,7 @@ Step by step:
 Next, you need to find a file to work on.
 You can use `potodo <https://github.com/seluj78/potodo>`, a tool made to find ``po`` to do.
 Install it using pip (``pip install potodo``) in a ``python3.7`` environement.
-Then run the command `potodo` in your cloned fork.
+Then run the command ``potodo`` in your cloned fork.
 From the list returned by the command, you can choose any file that is not reserved.
 
 **We recommend not starting with a file from ``c-api`` as it is very technical.**
@@ -91,25 +91,25 @@ Now you're ready to start a work session. Each time you'll start a new file, sta
 .. code-block:: bash
 
     # To work, we'll need a branch, based on an up-to-date (freshly fetched)
-    # upstream/3.7 branch. We will name our branch `library-sys` but you shall name yours
+    # upstream/3.7 branch. We will name our branch "library-sys" but you shall name yours
     # whatever you want. Usually you'll name a branch based on the file you're working on.
-    # For example, If you're working on `library/venv.po` you can name your branch `library-venv`
+    # For example, If you're working on "library/venv.po" you can name your branch "library-venv"
     
     # Update your local version to the latest
     git fetch upstream
-    # Create a new branch named `library-sys` based on `upstream/3.7`
+    # Create a new branch named "library-sys" based on "upstream/3.7"
     git checkout -b library-sys upstream/3.7
 
     # You can now work on the file, typically using poedit,
-    # Of course, replace `library/sys.po` by the file you've chose earlier
+    # Of course, replace "library/sys.po" by the file you've chose earlier
     poedit library/sys.po
 
-    # When you are done translating, you can run `pospell <https://github.com/JulienPalard/pospell>`.
+    # When you are done translating, you can run pospell (pip install pospell).
     # This tool was made to check if you don't have any french mistakes.
-    # You can run the following command: `pospell -p dict -l fr_FR **/*.po to check all files
-    # or replace `**/*.po` by your specific file (recommended).
+    # You can run the following command: pospell -p dict -l fr_FR **/*.po to check all files
+    # or replace **/*.po by your specific file (recommended).
 
-    # You can then run `powrap <https://github.com/JulienPalard/powrap>` which will rewrap
+    # You can then run powrap (pip install powrap) which will rewrap
     # You modified file to the correct line length of `80`.
     # Run this command: `powrap **/*.po` or replace `**/*.po` with your modified file.
 
