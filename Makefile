@@ -77,7 +77,7 @@ verifs: powrap pospell
 
 .PHONY: powrap
 powrap: $(VENV)/bin/powrap
-	$(VENV)/bin/powrap --check --quiet **/*.po
+	$(VENV)/bin/powrap --check --quiet *.po */*.po
 
 .PHONY: pospell
 pospell: $(VENV)/bin/pospell
