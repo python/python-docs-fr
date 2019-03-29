@@ -81,7 +81,7 @@ powrap: $(VENV)/bin/powrap
 
 .PHONY: pospell
 pospell: $(VENV)/bin/pospell
-	$(VENV)/bin/pospell -p dict -l fr_FR **/*.po
+	$(VENV)/bin/pospell -p dict -l fr_FR *.po */*.po
 
 .PHONY: merge
 merge: upgrade_venv
