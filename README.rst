@@ -1,10 +1,14 @@
 French Translation of the Python Documentation
 ==============================================
 
-.. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
-  :target: https://travis-ci.org/python/python-docs-fr
+|build| |progression|
 
-**Translated: 39%**
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
+   :target: https://travis-ci.org/python/python-docs-fr
+   :width: 45%
+
+.. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
+   :width: 45%
 
 Documentation Contribution Agreement
 ------------------------------------
