@@ -4,6 +4,9 @@
 #
 # - make  # Automatically build an html local version
 # - make todo  # To list remaining tasks
+# - make verifs # To check for correctness: wrapping, spelling
+# - make powrap # To check for wrapping
+# - make pospell # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
@@ -42,6 +45,7 @@ $(SPHINX_CONF):
 .PHONY: upgrade_venv
 upgrade_venv:
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
+	$(VENV)/bin/pip install -U potodo powrap pospell
 
 
 $(VENV)/bin/activate: $(SPHINX_CONF)
@@ -58,9 +62,26 @@ progress:
 $(VENV)/bin/potodo: $(VENV)/bin/activate
 	$(VENV)/bin/pip install potodo
 
+$(VENV)/bin/powrap: $(VENV)/bin/activate
+	$(VENV)/bin/pip install powrap
+
+$(VENV)/bin/pospell: $(VENV)/bin/activate
+	$(VENV)/bin/pip install pospell
+
 .PHONY: todo
 todo: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo --github python/python-docs-fr
+
+.PHONY: verifs
+verifs: powrap pospell
+
+.PHONY: powrap
+powrap: $(VENV)/bin/powrap
+	$(VENV)/bin/powrap --check --quiet *.po */*.po
+
+.PHONY: pospell
+pospell: $(VENV)/bin/pospell
+	$(VENV)/bin/pospell -p dict -l fr_FR *.po */*.po
 
 .PHONY: merge
 merge: upgrade_venv
