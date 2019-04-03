@@ -1,10 +1,14 @@
 French Translation of the Python Documentation
 ==============================================
 
-.. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
-  :target: https://travis-ci.org/python/python-docs-fr
+|build| |progression|
 
-**Translated: 39%**
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
+   :target: https://travis-ci.org/python/python-docs-fr
+   :width: 45%
+
+.. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
+   :width: 45%
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -94,7 +98,7 @@ Now you're ready to start a work session. Each time you'll start a new file, sta
     # upstream/3.7 branch. We will name our branch "library-sys" but you shall name yours
     # whatever you want. Usually you'll name a branch based on the file you're working on.
     # For example, If you're working on "library/venv.po" you can name your branch "library-venv"
-    
+
     # Update your local version to the latest
     git fetch upstream
     # Create a new branch named "library-sys" based on "upstream/3.7"
@@ -270,7 +274,8 @@ list comprehension         liste en compréhension (liste en intension est
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
 mutable                    muable
-namespace                  *namespace*, espace de noms
+namespace                  espace de nommage
+                           (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
 prompt                     invite
 raise                      lever
