@@ -14,7 +14,7 @@ pip install pyhub-pr
 
 git add -A
 
-git commit -m "Merged upstream pot files into this branch"
+git commit -m "merge pot files."
 
 git push --set-upstream origin make-merge-$CPYTHON_LATEST_SHA
 
