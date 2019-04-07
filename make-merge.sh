@@ -10,7 +10,7 @@ sed -i "s/COMMIT=[a-z0-9]*/COMMIT=$CPYTHON_LATEST_SHA/" .travis.yml
 
 make merge
 
-pip install pyhub-pr
+pip install -U pyhub-pr
 
 git add -A
 
