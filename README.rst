@@ -186,6 +186,22 @@ translate untranslated ones (find them using ``make todo``)..
   title.
 
 
+The case of "---"
+~~~~~~~~~~~~~~~~~
+
+The english version uses a thing named `smartquotes
+<http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, that
+tries to be smart, works in english, but soon causes issues in other
+languages. So we desactivated it.
+
+Smartquotes is also responsible for the transformation of ``--`` to
+en-dash (``–``), ``---`` to em-dash (``—``), and `...` to `…`.
+
+As we don't have smartquotes we'll also have to "translate" those
+manually, so if you see ``---`` in english, you have to translate it
+to ``—`` in french.
+
+
 The case of "::"
 ~~~~~~~~~~~~~~~~
 
@@ -209,6 +225,32 @@ and the trailing "space column column" will output nothing and
 introduce the code block. No it does not magically inserts a no-break
 space, so it's still not really valid french. Yes, better learn how to
 type no-break space.
+
+
+How to input em-dash, ellipsis, french quotes, or no-break spaces?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It really depends on your OS and your keyboard sadly. On Linux you can
+use a `Compose Key <https://en.wikipedia.org/wiki/Compose_key>`_, it's
+easy to configure either using your graphical keyboard configuration
+tool or via ``dpkg-reconfigure keyboard-configuration`. On Windows you
+can use `wincompose <https://github.com/SamHocevar/wincompose>`_.
+
+With a compose key (I use ``alt-gr``, you can also use ``caps lock``)
+you can use the following compositions:
+
+- Compose ``<`` ``<`` gives ``«``
+- Compose ``>`` ``>`` gives ``»``
+- Compose space space gives an no-break space
+- Compose ``.`` ``.`` ``.`` gives ``…``
+
+As you noted, almost all compositions are easy to remember, so you can
+try others and they should just work:
+
+- Compose ``C`` ``=`` gives ``€``
+- Compose ``1`` ``2`` gives ``½``
+- Compose ``'`` ``E`` gives ``É``
+- … …
 
 
 Where to get help
