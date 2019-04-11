@@ -1,10 +1,14 @@
 French Translation of the Python Documentation
 ==============================================
 
-.. image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
-  :target: https://travis-ci.org/python/python-docs-fr
+|build| |progression|
 
-**Translated: 36%**
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
+   :target: https://travis-ci.org/python/python-docs-fr
+   :width: 45%
+
+.. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
+   :width: 45%
 
 Documentation Contribution Agreement
 ------------------------------------
@@ -54,10 +58,10 @@ Prerequisites:
   if you don't already have one).
 
 
-Let's start:
+Getting Started:
 
 You'll need to fork the `python-docs-fr
-<https://github.com/python/python-docs-fr>`_ clicking its ``Fork``
+<https://github.com/python/python-docs-fr>`_ source repository by clicking its ``Fork``
 button. This creates a copy of the whole project on your github
 account: a place where you have the rights to do modifications.
 
@@ -65,40 +69,59 @@ Step by step:
 
 .. code-block:: bash
 
-    # Git clone your github fork using ssh (replace JulienPalard):
-    git clone git@github.com:JulienPalard/python-docs-fr.git
+    # Clone your github fork with `git` using ssh or https:
+    git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
 
-    # Go to the cloned directory:
+    # Go into the cloned directory:
     cd python-docs-fr/
 
     # Add the upstream (the public repository) using HTTPS (won't ask for password):
+    # This is so git knows what/where the upstream is.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
-All the translations must be made on the latest release.
-We never translate on an oldest version, by example, the latest python release
-is python 3.7, we don't want to translate directly on the python 3.5 release.
-If needed translations would be backported on the oldest versions by the
-`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+Next, you need to find a file to work on.
+You can use `potodo <https://github.com/seluj78/potodo>`, a tool made to find ``po`` to do.
+Install it using pip (``pip install potodo``) in a ``python3.7`` environement.
+Then run the command ``potodo`` in your cloned fork.
+From the list returned by the command, you can choose any file that is not reserved.
 
-Now you're ready to start a work session, each time you'll start a new task, start here:
+**We recommend not starting with a file from ``c-api`` as it is very technical.**
+
+Once you've choosen a file to work one, please open an `issue on github <https://github.com/python/python-docs-fr>` in the format of `I'm working on FOLDER/FILE.po`. This is done to update ``potodo`` as it checks the github API for reserved ``.po`` files in issues and pull requests.
+
+Now you're ready to start a work session. Each time you'll start a new file, start here:
 
 .. code-block:: bash
 
     # To work, we'll need a branch, based on an up-to-date (freshly fetched)
-    # upstream/3.7 branch, let's say we'll work on glossary so we name
-    # the branch "glossary":
+    # upstream/3.7 branch. We will name our branch "library-sys" but you shall name yours
+    # whatever you want. Usually you'll name a branch based on the file you're working on.
+    # For example, If you're working on "library/venv.po" you can name your branch "library-venv"
+
+    # Update your local version to the latest
     git fetch upstream
-    git checkout -b glossary upstream/3.7
+    # Create a new branch named "library-sys" based on "upstream/3.7"
+    git checkout -b library-sys upstream/3.7
 
     # You can now work on the file, typically using poedit,
-    poedit directory/file.po
+    # Of course, replace "library/sys.po" by the file you've chose earlier
+    poedit library/sys.po
 
-    # When everything is clear (syntax errors from Sphinx, html rendering,
-    # semantics, typography),
+    # When you are done translating, you can run pospell (pip install pospell).
+    # This tool was made to check if you don't have any french mistakes.
+    # You can run the following command: pospell -p dict -l fr_FR **/*.po to check all files
+    # or replace **/*.po by your specific file (recommended).
+
+    # You can then run powrap (pip install powrap) which will rewrap
+    # You modified file to the correct line length of `80`.
+    # Run this command: `powrap **/*.po` or replace `**/*.po` with your modified file.
+
+    # When everything powrap and pospell passes without errors,
     # you can commit your work with a nice explicit message:
-    git commit -a -m "Working on glossary."
+    git commit -a -m "Working on library/sys.po."
 
-    # Then push your modifications to your github clone,
+    # Then push your modifications to your github fork,
     # as they are ephemeral branches, let's not configure git to track them all,
     # "origin HEAD" is a "special" syntax to say "Push on origin,
     # on a branch with the same name as the local one",
@@ -136,6 +159,13 @@ Before commiting, you should use `grammalecte
 <https://grammalecte.net/>`_ to check for your translations.
 
 
+All the translations must be made on the latest release.
+We never translate on an oldest version. For example, if the latest python release
+is Python 3.7, we don't want to translate directly on the python 3.5 release.
+If needed translations would be backported on the oldest versions by the
+`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+
+
 What to translate
 ~~~~~~~~~~~~~~~~~
 
@@ -154,6 +184,22 @@ translate untranslated ones (find them using ``make todo``)..
   (typically if it's Wikipedia and the article has a translation). If
   no translation of the target exists, do not translate the
   title.
+
+
+The case of "---"
+~~~~~~~~~~~~~~~~~
+
+The english version uses a thing named `smartquotes
+<http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, that
+tries to be smart, works in english, but soon causes issues in other
+languages. So we desactivated it.
+
+Smartquotes is also responsible for the transformation of ``--`` to
+en-dash (``–``), ``---`` to em-dash (``—``), and `...` to `…`.
+
+As we don't have smartquotes we'll also have to "translate" those
+manually, so if you see ``---`` in english, you have to translate it
+to ``—`` in french.
 
 
 The case of "::"
@@ -179,6 +225,32 @@ and the trailing "space column column" will output nothing and
 introduce the code block. No it does not magically inserts a no-break
 space, so it's still not really valid french. Yes, better learn how to
 type no-break space.
+
+
+How to input em-dash, ellipsis, french quotes, or no-break spaces?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It really depends on your OS and your keyboard sadly. On Linux you can
+use a `Compose Key <https://en.wikipedia.org/wiki/Compose_key>`_, it's
+easy to configure either using your graphical keyboard configuration
+tool or via ``dpkg-reconfigure keyboard-configuration`. On Windows you
+can use `wincompose <https://github.com/SamHocevar/wincompose>`_.
+
+With a compose key (I use ``alt-gr``, you can also use ``caps lock``)
+you can use the following compositions:
+
+- Compose ``<`` ``<`` gives ``«``
+- Compose ``>`` ``>`` gives ``»``
+- Compose space space gives an no-break space
+- Compose ``.`` ``.`` ``.`` gives ``…``
+
+As you noted, almost all compositions are easy to remember, so you can
+try others and they should just work:
+
+- Compose ``C`` ``=`` gives ``€``
+- Compose ``1`` ``2`` gives ``½``
+- Compose ``'`` ``E`` gives ``É``
+- … …
 
 
 Where to get help
@@ -244,7 +316,8 @@ list comprehension         liste en compréhension (liste en intension est
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
 mutable                    muable
-namespace                  *namespace*, espace de noms
+namespace                  espace de nommage
+                           (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
 prompt                     invite
 raise                      lever
@@ -351,6 +424,17 @@ You'll need the ``transifex-client`` and ``powrap``
 from Pypi.
 
 You'll need to configure ``tx`` via ``tx init`` if not already done.
+
+First propagate known translations locally:
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po --to-files **/*.po
+   powrap --modified
+   git commit -m "Propagating known translations."
+
+
+Then pull from transifex:
 
 .. code-block:: bash
 
