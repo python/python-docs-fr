@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-21 09:48+0100\n"
-"PO-Revision-Date: 2019-03-21 22:58+0100\n"
+"PO-Revision-Date: 2019-04-19 18:11+0200\n"
 "Last-Translator: Antoine Wecxsteen\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -305,12 +305,16 @@ msgid ""
 "Why do lambdas defined in a loop with different values all return the same "
 "result?"
 msgstr ""
+"Pourquoi des expressions lambda définies dans une boucle avec des valeurs "
+"différentes retournent-elles le même résultat ?"
 
 #: ../Doc/faq/programming.rst:210
 msgid ""
 "Assume you use a for loop to define a few different lambdas (or even plain "
 "functions), e.g.::"
 msgstr ""
+"Supposons que l'on utilise une boucle itérative pour définir des expressions "
+"lambda (voire même des fonctions) différentes, e.g :"
 
 #: ../Doc/faq/programming.rst:217
 msgid ""
@@ -319,6 +323,9 @@ msgid ""
 "``1``, ``4``, ``9``, and ``16``.  However, when you actually try you will "
 "see that they all return ``16``::"
 msgstr ""
+"Le code précédent créé une liste de 5 expressions lambda qui calculent "
+"chacune ``x**2``. En les exécutant, on pourrait s'attendre à obtenir  ``0``, "
+"``1``, ``4``, ``9`` et ``16``. Elles renvoient en réalité ``16`` :"
 
 #: ../Doc/faq/programming.rst:227
 msgid ""
@@ -328,12 +335,21 @@ msgid ""
 "the functions now return ``4**2``, i.e. ``16``.  You can also verify this by "
 "changing the value of ``x`` and see how the results of the lambdas change::"
 msgstr ""
+"Ceci s'explique par le fait que ``x`` n'est pas une variable locale aux "
+"expressions, mais est définie dans le contexte appelant. Elle est lue à "
+"l'appel de l'expression lambda – et non au moment où  cette expression est "
+"définie. À la fin de la boucle, ``x`` vaut ``4``, donc toutes les fonctions "
+"renvoient ``4*2``, i.e. ``16``.  Ceci se vérifie également en changeant la "
+"valeur de ``x`` et en voyant comment les résultats sont modifiés :"
 
 #: ../Doc/faq/programming.rst:237
 msgid ""
 "In order to avoid this, you need to save the values in variables local to "
 "the lambdas, so that they don't rely on the value of the global ``x``::"
 msgstr ""
+"Pour éviter ce phénomène, les valeurs doivent être stockées dans des "
+"variables locales aux expressions lambda pour que celles-ci ne se basent "
+"plus sur la variable globale ``x`` :"
 
 #: ../Doc/faq/programming.rst:244
 msgid ""
@@ -343,16 +359,24 @@ msgid ""
 "the first lambda, ``1`` in the second, ``2`` in the third, and so on. "
 "Therefore each lambda will now return the correct result::"
 msgstr ""
+"Dans ce code, ``n=x`` créé une nouvelle variable ``n``, locale à "
+"l'expression. Cette variable est évaluée quand l'expression est définie donc "
+"``n`` a la même valeur que ``x`` à ce moment. La valeur de ``n`` sera donc "
+"``0`` dans la première lambda, ``1`` dans la deuxième, ``2`` dans la "
+"troisième et ainsi de suite. Chaque expression lambda renverra donc le "
+"résultat correct :"
 
 #: ../Doc/faq/programming.rst:255
 msgid ""
 "Note that this behaviour is not peculiar to lambdas, but applies to regular "
 "functions too."
 msgstr ""
+"Ce comportement n'est pas propre aux expressions lambda, mais s'applique "
+"aussi aux fonctions normales."
 
 #: ../Doc/faq/programming.rst:260
 msgid "How do I share global variables across modules?"
-msgstr ""
+msgstr "Comment partager des variables globales entre modules ?"
 
 #: ../Doc/faq/programming.rst:262
 msgid ""
@@ -363,28 +387,37 @@ msgid ""
 "each module, any changes made to the module object get reflected "
 "everywhere.  For example:"
 msgstr ""
+"La manière standard de partager des informations entre modules d'un même "
+"programme est de créer un module spécial (souvent appelé config ou cfg) et "
+"de l'importer dans tous les modules de l'application ; le module devient "
+"accessible depuis l'espace de nom global. Vu qu'il n'y a qu'une instance de "
+"chaque module, tout changement dans l'instance est propagé partout. Par "
+"exemple :"
 
 #: ../Doc/faq/programming.rst:268
 msgid "config.py::"
-msgstr ""
+msgstr "config.py :"
 
 #: ../Doc/faq/programming.rst:272
 msgid "mod.py::"
-msgstr ""
+msgstr "mod.py :"
 
 #: ../Doc/faq/programming.rst:277
 msgid "main.py::"
-msgstr ""
+msgstr "main.py :"
 
 #: ../Doc/faq/programming.rst:283
 msgid ""
 "Note that using a module is also the basis for implementing the Singleton "
 "design pattern, for the same reason."
 msgstr ""
+"Pour les mêmes raisons, l'utilisation d'un module est aussi à la base de "
+"l'implémentation du patron Singleton."
 
 #: ../Doc/faq/programming.rst:288
 msgid "What are the \"best practices\" for using import in a module?"
 msgstr ""
+"Quelles sont les « bonnes pratiques » pour utiliser import dans un module ?"
 
 #: ../Doc/faq/programming.rst:290
 msgid ""
@@ -392,6 +425,9 @@ msgid ""
 "importer's namespace, and makes it much harder for linters to detect "
 "undefined names."
 msgstr ""
+"De manière générale, il ne faut pas faire ``from modulename import *``. Ceci "
+"encombre l'espace de noms de l'importateur et rend la détection de noms non-"
+"définis beaucoup plus ardue aux analyseurs de code."
 
 #: ../Doc/faq/programming.rst:294
 msgid ""
@@ -400,30 +436,42 @@ msgid ""
 "is in scope. Using one import per line makes it easy to add and delete "
 "module imports, but using multiple imports per line uses less screen space."
 msgstr ""
+"Les modules doivent être importés en haut d'un fichier. Ceci pour dire "
+"afficher clairement les autres modules dont le code à besoin et éviter de se "
+"demander si le module est dans le contexte. Faire un seul import par ligne "
+"rend l'ajout et la suppression d'un import de module plus aisé, mais "
+"importer plusieurs modules sur une même ligne prend moins d'espace."
 
 #: ../Doc/faq/programming.rst:299
 msgid "It's good practice if you import modules in the following order:"
-msgstr ""
+msgstr "Il est recommandé d'importer les modules dans l'ordre suivant :"
 
 #: ../Doc/faq/programming.rst:301
 msgid "standard library modules -- e.g. ``sys``, ``os``, ``getopt``, ``re``"
 msgstr ""
+"les modules de la bibliothèque standard -- e.g. ``sys``, ``os``, ``getopt``, "
+"``re``"
 
 #: ../Doc/faq/programming.rst:302
 msgid ""
 "third-party library modules (anything installed in Python's site-packages "
 "directory) -- e.g. mx.DateTime, ZODB, PIL.Image, etc."
 msgstr ""
+"les modules externes (tout ce qui est installé dans le dossier *site-"
+"packages* de Python) -- e.g. mx.DateTime, ZODB, PIL.Image, etc."
 
 #: ../Doc/faq/programming.rst:304
 msgid "locally-developed modules"
-msgstr ""
+msgstr "les modules développés en local"
 
 #: ../Doc/faq/programming.rst:306
 msgid ""
 "It is sometimes necessary to move imports to a function or class to avoid "
 "problems with circular imports.  Gordon McMillan says:"
 msgstr ""
+"Il est parfois nécessaire de déplacer des imports dans une fonction ou une "
+"classe pour éviter les problèmes d'imports circulaires. Comme le dit Gordon "
+"McMillan :"
 
 #: ../Doc/faq/programming.rst:309
 msgid ""
@@ -433,6 +481,12 @@ msgid ""
 "That's because names in the 1st are not yet available, because the first "
 "module is busy importing the 2nd."
 msgstr ""
+"Il n'y a pas de problème avec les imports circulaires tant que les deux "
+"modules utilisent la forme \"import <module>\" . Ça pose problème si le "
+"second module cherche à récupérer un nom du premier module (\"from module "
+"import name\") et que l'import est dans l'espace de noms du fichier. Les "
+"noms du premier module ne sont en effet pas encore disponibles car le "
+"premier module est occupé à importer le second."
 
 #: ../Doc/faq/programming.rst:315
 msgid ""
@@ -441,6 +495,10 @@ msgid ""
 "called, the first module will have finished initializing, and the second "
 "module can do its import."
 msgstr ""
+"Dans ce cas, si le second module n'est utilisé que dans une fonction, "
+"l'import peut facilement être déplacé dans cette fonction. Au moment où "
+"l'import sera appelé , le premier module aura fini de s'initialiser et le "
+"second pourra faire son import."
 
 #: ../Doc/faq/programming.rst:320
 msgid ""
@@ -450,6 +508,11 @@ msgid ""
 "importing the correct modules in the corresponding platform-specific code is "
 "a good option."
 msgstr ""
+"Il peut parfois être nécessaire de bouger des imports de modules hors de "
+"l'espace de noms du module si ces modules dépendent de la machine. Dans ce "
+"cas de figure, il est parfois impossible d'importer tous les modules au "
+"début du fichier. Dans ce cas, faire l'import des bons modules dans le code "
+"correspondant est une bonne façon de faire."
 
 #: ../Doc/faq/programming.rst:325
 msgid ""
@@ -464,16 +527,30 @@ msgid ""
 "only a couple of dictionary lookups.  Even if the module name has gone out "
 "of scope, the module is probably available in :data:`sys.modules`."
 msgstr ""
+"Les imports ne devraient être déplacés dans un espace local, comme dans la "
+"définition d'une fonction, que si cela est nécessaire pour résoudre un "
+"problème tel qu'éviter des dépendances circulaires ou réduire le temps "
+"d'initialisation d'un module. Cette technique est particulièrement utile si "
+"la majorité des imports est superflue selon le flux d'exécution du "
+"programme. Il est également pertinent de déplacer des imports dans une "
+"fonction si le module n'est utilisé qu'au sein de cette fonction. Le premier "
+"chargement d'un module peut être coûteux à cause du coût fixe "
+"d'initialisation d'un module, mais charger un module plusieurs fois est "
+"virtuellement gratuit, cela ne coûte que quelques recherches dans un "
+"dictionnaire. Même si le nom du module est sorti du contexte, le module est "
+"probablement disponible dans :data:`sys.modules`."
 
 #: ../Doc/faq/programming.rst:338
 msgid "Why are default values shared between objects?"
-msgstr ""
+msgstr "Pourquoi les arguments par défaut sont partagés entre les objets ?"
 
 #: ../Doc/faq/programming.rst:340
 msgid ""
 "This type of bug commonly bites neophyte programmers.  Consider this "
 "function::"
 msgstr ""
+"C'est un problème que rencontrent souvent le programmeurs néophytes. "
+"Examinons la fonction suivante ::"
 
 #: ../Doc/faq/programming.rst:347
 msgid ""
@@ -481,6 +558,9 @@ msgid ""
 "The second time, ``mydict`` contains two items because when ``foo()`` begins "
 "executing, ``mydict`` starts out with an item already in it."
 msgstr ""
+"Au premier appel de cette fonction, ``mydict`` ne contient qu'un seul "
+"élément. Au deuxième appel, ``mydict`` contient deux éléments car quand "
+"``foo()`` commence son exécution, ``mydict`` contient déjà un élément."
 
 #: ../Doc/faq/programming.rst:351
 msgid ""
@@ -490,6 +570,11 @@ msgid ""
 "dictionary in this example, subsequent calls to the function will refer to "
 "this changed object."
 msgstr ""
+"On est souvent amené à croire qu'un appel de fonction créé des nouveau "
+"objets pour les les valeurs par défaut. Ce n'est pas le cas. Les valeurs par "
+"défaut ne sont créées une et une seule fois, au moment où la fonction est "
+"définie. Si l'objet est modifié, comme le dictionnaire dans cet exemple, les "
+"appels suivants à cette fonction font référence à l'objet ainsi modifié."
 
 #: ../Doc/faq/programming.rst:356
 msgid ""
@@ -497,6 +582,10 @@ msgid ""
 "``None``, are safe from change. Changes to mutable objects such as "
 "dictionaries, lists, and class instances can lead to confusion."
 msgstr ""
+"Par définition, les objets immuables comme les nombres, les chaînes de "
+"caractères, les tuples et ``None`` ne sont pas modifiés. Les changements sur "
+"des objets muables comme les dictionnaires, les listes et les instances de "
+"classe peuvent porter à confusion."
 
 #: ../Doc/faq/programming.rst:360
 msgid ""
@@ -505,10 +594,15 @@ msgid ""
 "inside the function, check if the parameter is ``None`` and create a new "
 "list/dictionary/whatever if it is.  For example, don't write::"
 msgstr ""
+"À cause de cette fonctionnalité, il vaut mieux ne pas utiliser d'objets "
+"muables pour . Il vaut mieux utiliser ``None`` comme valeur par défaut à "
+"l'intérieur de la fonction, vérifier si le paramètre est à ``None`` et créer "
+"une nouvelle liste/dictionnaire/autre le cas échéant. Par exemple, il ne "
+"faut pas écrire ::"
 
 #: ../Doc/faq/programming.rst:368
 msgid "but::"
-msgstr ""
+msgstr "mais plutôt ::"
 
 #: ../Doc/faq/programming.rst:374
 msgid ""
@@ -518,17 +612,25 @@ msgid ""
 "value is requested again.  This is called \"memoizing\", and can be "
 "implemented like this::"
 msgstr ""
+"Cette fonctionnalité a une utilité. Il est courant de mettre en cache les "
+"paramètres et la valeur de retour de chacun des appels d'une fonction "
+"coûteuse à exécuter, et de renvoyer la valeur stockée en cache si le même "
+"appel est ré-effectué. C'est la technique dite de « mémoïsation », qui "
+"s'implémente de la manière suivante ::"
 
 #: ../Doc/faq/programming.rst:389
 msgid ""
 "You could use a global variable containing a dictionary instead of the "
 "default value; it's a matter of taste."
 msgstr ""
+"Il est possible d'utiliser une variable globale contenant un dictionnaire à "
+"la place de la valeur par défaut ; ce n'est qu'une question de goût."
 
 #: ../Doc/faq/programming.rst:394
 msgid ""
 "How can I pass optional or keyword parameters from one function to another?"
 msgstr ""
+"Comment passer des paramètres optionnels ou nommés d'une fonction à l'autre ?"
 
 #: ../Doc/faq/programming.rst:396
 msgid ""
@@ -537,10 +639,15 @@ msgid ""
 "tuple and the keyword arguments as a dictionary.  You can then pass these "
 "arguments when calling another function by using ``*`` and ``**``::"
 msgstr ""
+"Il faut récupérer les arguments en utilisant les sélecteurs ``*`` et ``**`` "
+"dans la liste des paramètres de la fonction ; ceci donne les arguments "
+"positionnels sous la forme d'un tuple et les arguments nommés sous forme de "
+"dictionnaire. Ces arguments peuvent être passés à une autre fonction en "
+"utilisant ``*`` et ``**`` ::"
 
 #: ../Doc/faq/programming.rst:415
 msgid "What is the difference between arguments and parameters?"
-msgstr ""
+msgstr "Quelle est la différence entre les arguments et les paramètres ?"
 
 #: ../Doc/faq/programming.rst:417
 msgid ""
@@ -550,20 +657,27 @@ msgid ""
 "of arguments a function can accept.  For example, given the function "
 "definition::"
 msgstr ""
+"Les :term:`paramètres <parameter>` sont les noms qui apparaissent dans une "
+"définition de fonction, alors que les :term:`arguments <argument>` sont les "
+"valeurs qui sont réellement passées à une fonction lors de l'appel de celle-"
+"ci. Les paramètres définissent les types d'argument qu'une fonction accepte. "
+"Ainsi, avec la définition de fonction suivante ::"
 
 #: ../Doc/faq/programming.rst:425
 msgid ""
 "*foo*, *bar* and *kwargs* are parameters of ``func``.  However, when calling "
 "``func``, for example::"
 msgstr ""
+"*foo*, *bar* et *kwargs* sont des paramètres de ``func``. Mais à l'appel de "
+"``func`` avec, par exemple ::"
 
 #: ../Doc/faq/programming.rst:430
 msgid "the values ``42``, ``314``, and ``somevar`` are arguments."
-msgstr ""
+msgstr "les valeurs ``42``, ``314``, et ``somevar`` sont des arguments."
 
 #: ../Doc/faq/programming.rst:434
 msgid "Why did changing list 'y' also change list 'x'?"
-msgstr ""
+msgstr "Pourquoi modifier la liste 'y' modifie aussi la liste 'x' ?"
 
 #: ../Doc/faq/programming.rst:436
 msgid "If you wrote code like::"
@@ -573,10 +687,12 @@ msgstr "Si vous avez écrit du code comme : ::"
 msgid ""
 "you might be wondering why appending an element to ``y`` changed ``x`` too."
 msgstr ""
+"vous vous demandez peut-être pourquoi ajouter un élément à ``y`` a aussi "
+"changé ``x``."
 
 #: ../Doc/faq/programming.rst:448
 msgid "There are two factors that produce this result:"
-msgstr ""
+msgstr "Il y a deux raisons qui conduisent à ce comportement :"
 
 #: ../Doc/faq/programming.rst:450
 msgid ""
@@ -585,11 +701,17 @@ msgid ""
 "the same object ``x`` refers to.  This means that there is only one object "
 "(the list), and both ``x`` and ``y`` refer to it."
 msgstr ""
+"Les variable ne sont que des noms qui font référence à des objets. La ligne "
+"``y = x`` ne crée pas une copie de la liste -- elle crée une nouvelle "
+"variable ``y`` qui pointe sur le même objet que ``x``. Ceci signifie qu'il "
+"n'existe qu'un seul objet (la liste) auquel ``x`` et ``y`` font référence."
 
 #: ../Doc/faq/programming.rst:454
 msgid ""
 "Lists are :term:`mutable`, which means that you can change their content."
 msgstr ""
+"Les listes sont des  :term:`muable`, ce qui signifie que leur contenu peut "
+"être modifié."
 
 #: ../Doc/faq/programming.rst:456
 msgid ""
@@ -597,10 +719,14 @@ msgid ""
 "has changed from ``[]`` to ``[10]``.  Since both the variables refer to the "
 "same object, using either name accesses the modified value ``[10]``."
 msgstr ""
+"Après l'appel de :meth:`~list.append`, le contenu de l'objet muable est "
+"passé de ``[]`` à ``[10]``. Vu que les deux variables font référence au même "
+"objet, il est possible d'accéder à la valeur modifiée ``[10]`` avec chacun "
+"des noms."
 
 #: ../Doc/faq/programming.rst:460
 msgid "If we instead assign an immutable object to ``x``::"
-msgstr ""
+msgstr "Si au contraire, on affecte un objet immuable à ``x`` ::"
 
 #: ../Doc/faq/programming.rst:470
 msgid ""
@@ -612,6 +738,14 @@ msgid ""
 "objects (the ints ``6`` and ``5``) and two variables that refer to them "
 "(``x`` now refers to ``6`` but ``y`` still refers to ``5``)."
 msgstr ""
+"on observe que ``x`` et ``y``ne sont ici plus égales. Les entiers sont des :"
+"term:`immuables`, et ``x = x + 1`` ne change pas l'entier ``5`` en "
+"incrémentant sa valeur. Au contraire, un nouvel objet est créé (l'entier "
+"``6``) et affecté à ``x`` (c'est à dire qu'on change l'objet auquel fait "
+"référence ``x``). Après cette affectation on a deux objets (les entiers "
+"``6`` et ``5``) et deux variables auxquelles qui font référence à ces deux "
+"objets (``x`` fait désormais référence à ``6`` mais ``y`` fait toujours "
+"référence à ``5`)."
 
 #: ../Doc/faq/programming.rst:478
 msgid ""
@@ -624,6 +758,14 @@ msgid ""
 "copy of ``y``, you'll instead end up with ``None``, which will likely cause "
 "your program to generate an easily diagnosed error."
 msgstr ""
+"Certaines opérations (par exemple, ``y.append(10)`` et ``y.sort()``) "
+"modifient l'objet, alors que des opérations identiques en apparence (par "
+"exemple ``y = y + [10]`` et ``sorted(y)``) créent un nouvel objet. En "
+"général, en Python, une méthode qui modifie un objet renvoie ``None`` (c'est "
+"même systématique dans la bibliothèque standard) pour éviter la confusion "
+"entre les deux opérations. Donc écrire par erreur ``y.sort()`` en pensant "
+"obtenir une copie triée de ``y`` donne ``None``, ce qui conduit très souvent "
+"le programme à générer une erreur facile à diagnostiquer."
 
 #: ../Doc/faq/programming.rst:487
 msgid ""
@@ -634,10 +776,16 @@ msgid ""
 "mutates ``a_list``, whereas ``some_tuple += (1, 2, 3)`` and ``some_int += "
 "1`` create new objects)."
 msgstr ""
+"Il existe cependant une classe d'opérations qui se comporte différemment "
+"selon le type : les opérateurs d'affectation incrémentaux. Par exemple, ``"
+"+=`` modifie les listes mais pas les n-uplets ni les entiers (``a_list += "
+"[1, 2, 3]`` équivaut à ``a_list.extend([1, 2, 3])`` et modifie ``a_list``, "
+"alors que ``some_tuple += (1, 2, 3)`` et ``some_int += 1`` créent de "
+"nouveaux objets)."
 
 #: ../Doc/faq/programming.rst:494
 msgid "In other words:"
-msgstr ""
+msgstr "En d'autres termes :"
 
 #: ../Doc/faq/programming.rst:496
 msgid ""
@@ -645,6 +793,9 @@ msgid ""
 "etc.), we can use some specific operations to mutate it and all the "
 "variables that refer to it will see the change."
 msgstr ""
+"Sur un objet muable (:class:`list`, :class:`dict`, :class:`set` etc), il est "
+"possible d'appliquer des opérations qui modifient cet objet et toutes les "
+"variables qui y font référence verront le changement."
 
 #: ../Doc/faq/programming.rst:499
 msgid ""
@@ -653,16 +804,24 @@ msgid ""
 "but operations that transform that value into a new value always return a "
 "new object."
 msgstr ""
+"Sur un objet immuable (:class:`str`, :class:`int`, :class:`tuple` etc), "
+"toutes les variables qui y font référence renvoient la même valeur, mais les "
+"opérations qui transforment cette valeur en une nouvelle valeur renvoient "
+"toujours un nouvel objet."
 
 #: ../Doc/faq/programming.rst:504
 msgid ""
 "If you want to know if two variables refer to the same object or not, you "
 "can use the :keyword:`is` operator, or the built-in function :func:`id`."
 msgstr ""
+"L'opérateur :keyword:`is` ou la fonction native :func:`id` permettent de "
+"savoir si deux variables font référence au même objet."
 
 #: ../Doc/faq/programming.rst:509
 msgid "How do I write a function with output parameters (call by reference)?"
 msgstr ""
+"Comment écrire une fonction qui modifie ses paramètres ? (passage par "
+"référence)"
 
 #: ../Doc/faq/programming.rst:511
 msgid ""
@@ -671,21 +830,26 @@ msgid ""
 "argument name in the caller and callee, and so no call-by-reference per se.  "
 "You can achieve the desired effect in a number of ways."
 msgstr ""
+"En Python, les arguments sont passés par copie. Vu qu'une copie créé des "
+"références à des objets, il n'y pas de lien entre un argument dans l'appel "
+"de la fonction et sa définition, et donc pas de passage par référence en "
+"soi. Il y a cependant plusieurs façon d'en émuler un."
 
 #: ../Doc/faq/programming.rst:516
 msgid "By returning a tuple of the results::"
-msgstr ""
+msgstr "En renvoyant un n-uplet de résultats ::"
 
 #: ../Doc/faq/programming.rst:527
 msgid "This is almost always the clearest solution."
-msgstr ""
+msgstr "C'est presque toujours la meilleure solution."
 
 #: ../Doc/faq/programming.rst:529
 msgid ""
 "By using global variables.  This isn't thread-safe, and is not recommended."
 msgstr ""
-"En utilisant des variables globales. Ce qui n'est pas *thread-safe*, et "
-"n'est donc pas recommandé."
+"En utilisant des variables globales. Cette approche ne fonctionne pas dans "
+"des contextes à plusieurs fils d'exécution (pas *thread-safe*), et n'est "
+"donc pas recommandée."
 
 #: ../Doc/faq/programming.rst:531
 msgid "By passing a mutable (changeable in-place) object::"
@@ -701,14 +865,12 @@ msgstr "Ou regrouper les valeurs dans une instance de classe ::"
 
 #: ../Doc/faq/programming.rst:567
 msgid "There's almost never a good reason to get this complicated."
-msgstr ""
-"Il n'y a pratiquement jamais de bonne raison de faire quelque chose d'aussi "
-"compliqué."
+msgstr "Faire quelque chose d'aussi compliqué est rarement une bonne idée."
 
 #: ../Doc/faq/programming.rst:569
 msgid "Your best choice is to return a tuple containing the multiple results."
 msgstr ""
-"Votre meilleure option est de renvoyer un *tuple* contenant les multiples "
+"Votre meilleure option est de renvoyer un n-uplet contenant les différents "
 "résultats."
 
 #: ../Doc/faq/programming.rst:573
@@ -722,8 +884,8 @@ msgid ""
 "returns a function ``f(x)`` that computes the value ``a*x+b``.  Using nested "
 "scopes::"
 msgstr ""
-"Vous avez deux choix : vous pouvez utiliser les portées imbriquées ou vous "
-"pouvez utiliser des objets appelables. Par exemple, supposons que vous "
+"Vous avez deux possibilités : vous pouvez utiliser les portées imbriquées ou "
+"vous pouvez utiliser des objets appelables. Par exemple, supposons que vous "
 "vouliez définir ``linear(a, b)`` qui renvoie une fonction ``f(x)`` qui "
 "calcule la valeur ``a*x+b``. En utilisant les portées imbriquées : ::"
 
@@ -771,16 +933,15 @@ msgid ""
 "In general, try :func:`copy.copy` or :func:`copy.deepcopy` for the general "
 "case. Not all objects can be copied, but most can."
 msgstr ""
-"En général, essayez :func:`copy.copy` ou :func:`copy.deepcopy` pour le cas "
-"général. Tout les objets ne peuvent pas être copiés, mais la plupart le "
-"peuvent."
+"En général, essayez :func:`copy.copy` ou :func:`copy.deepcopy`. Tout les "
+"objets ne peuvent pas être copiés, mais la plupart le peuvent."
 
 #: ../Doc/faq/programming.rst:637
 msgid ""
 "Some objects can be copied more easily.  Dictionaries have a :meth:`~dict."
 "copy` method::"
 msgstr ""
-"Certains objets peuvent être copiés plus facilement. Les Dictionnaires ont "
+"Certains objets peuvent être copiés plus facilement. Les dictionnaires ont "
 "une méthode :meth:`~dict.copy` ::"
 
 #: ../Doc/faq/programming.rst:642
@@ -789,7 +950,7 @@ msgstr "Les séquences peuvent être copiées via la syntaxe des tranches ::"
 
 #: ../Doc/faq/programming.rst:648
 msgid "How can I find the methods or attributes of an object?"
-msgstr "Comment puis-je trouver les méthodes ou les attribues d'un objet?"
+msgstr "Comment trouver les méthodes ou les attributs d'un objet ?"
 
 #: ../Doc/faq/programming.rst:650
 msgid ""
@@ -803,7 +964,7 @@ msgstr ""
 
 #: ../Doc/faq/programming.rst:656
 msgid "How can my code discover the name of an object?"
-msgstr "Comment mon code peut il découvrir le nom d'un objet?"
+msgstr "Comment un code peut-il obtenir le nom d'un objet ?"
 
 #: ../Doc/faq/programming.rst:658
 msgid ""
@@ -812,11 +973,11 @@ msgid ""
 "``def`` and ``class`` statements, but in that case the value is a callable. "
 "Consider the following code::"
 msgstr ""
-"De façon générale, il ne peut pas, par ce que les objets n'ont pas "
-"réellement de noms. Essentiellement, l'assignation attache un nom à une "
-"valeur; C'est vrai aussi pour les instructions ``def`` et ``class``, à la "
-"différence que dans ce cas la valeur est appelable. Par exemple, dans le "
-"code suivant : ::"
+"C'est impossible en général, parce qu'un objet n'a pas de nom à proprement "
+"parler. Schématiquement, l'affectation fait correspondre un nom à une "
+"valeur ; c'est vrai aussi pour les instructions ``def`` et ``class``, sa "
+"que, dans ce cas, la valeur est appelable. Par exemple, dans le code "
+"suivant : ::"
 
 #: ../Doc/faq/programming.rst:674
 msgid ""
@@ -825,10 +986,10 @@ msgid ""
 "instance of class A.  However, it is impossible to say whether the "
 "instance's name is a or b, since both names are bound to the same value."
 msgstr ""
-"Le fait que la classe ait un nom est discutable, bien qu'elles soit liée à "
-"deux noms, et qu'elle soit appelée via le nom B, l'instance crée déclare "
-"tout de même être une instance de la classe A. De même Il est impossible de "
-"dire si le nom de l'instance est a ou b, les deux noms sont attachés à la "
+"Affirmer que la classe ait un nom est discutable. Bien qu'elle soit liée à "
+"deux noms, et qu'elle soit appelée via le nom B, l'instance créée déclare "
+"tout de même être une instance de la classe A. De même, Il est impossible de "
+"dire si le nom de l'instance est a ou b, les deux noms étant attachés à la "
 "même valeur."
 
 #: ../Doc/faq/programming.rst:679
@@ -838,10 +999,10 @@ msgid ""
 "introspective programs, this is usually an indication that a change of "
 "approach might be beneficial."
 msgstr ""
-"De façon général, il ne devrait pas être nécessaire pour votre application "
-"de \"connaître le nom\" d'une valeur particulière. À moins que vous soyez "
-"délibérément en train d'écrire un programme introspectif, c'est souvent une "
-"indication qu'un changement d'approche pourrait être bénéfique."
+"De façon générale, une application ne devrait pas avoir besoin de « "
+"connaître le nom » d'une valeur particulière. À moins d'être délibérément en "
+"train d'écrire un programme introspectif, c'est souvent l'indication qu'un "
+"changement d'approche serait bénéfique."
 
 #: ../Doc/faq/programming.rst:684
 msgid ""
@@ -849,7 +1010,7 @@ msgid ""
 "to this question:"
 msgstr ""
 "Sur *comp.lang.python*, Fredrik Lundh a donné un jour une excellente "
-"analogie pour répondre à cette question:"
+"analogie pour répondre à cette question :"
 
 #: ../Doc/faq/programming.rst:687
 msgid ""
@@ -858,8 +1019,8 @@ msgid ""
 "so the only way to find out what it's called is to ask all your neighbours "
 "(namespaces) if it's their cat (object)..."
 msgstr ""
-"C'est pareil que trouver le nom du chat qui traîne devant votre porte : Le "
-"chat (objet) ne peux pas vous dire lui même son nom, et il s'en moque un peu "
+"C'est pareil que trouver le nom du chat qui traîne devant votre porte : le "
+"chat (objet) ne peut pas vous dire lui-même son nom, et il s'en moque un peu "
 "-- alors le meilleur moyen de savoir comment il s'appelle est de demander à "
 "tous vos voisins (espaces de nommage) si c'est leur chat (objet)…."
 
@@ -868,8 +1029,8 @@ msgid ""
 "....and don't be surprised if you'll find that it's known by many names, or "
 "no name at all!"
 msgstr ""
-"…et ne soyez pas surpris si vous découvrez qu'il est connus sous plusieurs "
-"noms différents, ou pas de nom du tout!"
+"…et ne soyez pas surpris si vous découvrez qu'il est connu sous plusieurs "
+"noms différents, ou pas de nom du tout !"
 
 #: ../Doc/faq/programming.rst:697
 msgid "What's up with the comma operator's precedence?"
@@ -878,7 +1039,7 @@ msgstr "Qu'en est-il de la précédence de l'opérateur virgule ?"
 #: ../Doc/faq/programming.rst:699
 msgid "Comma is not an operator in Python.  Consider this session::"
 msgstr ""
-"La virgule n'est pas un opérateur en Python. Observez la session suivante ::"
+"La virgule n'est pas un opérateur en Python. Observez le code suivant ::"
 
 #: ../Doc/faq/programming.rst:704
 msgid ""
@@ -886,8 +1047,8 @@ msgid ""
 "above is evaluated as if you had entered::"
 msgstr ""
 "Comme la virgule n'est pas un opérateur, mais un séparateur entre deux "
-"expression, l'expression ci dessus, est évaluée de la même façon que si vous "
-"aviez écrit ::"
+"expressions, l'expression ci-dessus, est évaluée de la même façon que si "
+"vous aviez écrit ::"
 
 #: ../Doc/faq/programming.rst:709
 msgid "not::"
@@ -899,9 +1060,9 @@ msgid ""
 "They are not truly operators but syntactic delimiters in assignment "
 "statements."
 msgstr ""
-"Ceci est vrai pour tous les opérateurs d'assignations (``=``, ``+=`` etc). "
-"Ce ne sont pas vraiment des opérateurs mais des délimiteurs syntaxiques dans "
-"les instructions d'assignation."
+"Ceci est vrai pour tous les opérateurs d'assignation (``=``, ``+=`` etc). Ce "
+"ne sont pas vraiment des opérateurs mais plutôt des délimiteurs syntaxiques "
+"dans les instructions d'assignation."
 
 #: ../Doc/faq/programming.rst:718
 msgid "Is there an equivalent of C's \"?:\" ternary operator?"
@@ -909,13 +1070,15 @@ msgstr "Existe-t-il un équivalent à l'opérateur ternaire \"?:\" du C ?"
 
 #: ../Doc/faq/programming.rst:720
 msgid "Yes, there is. The syntax is as follows::"
-msgstr "Oui, il y en a un. Sa syntaxe est la suivante : ::"
+msgstr "Oui. Sa syntaxe est la suivante : ::"
 
 #: ../Doc/faq/programming.rst:727
 msgid ""
 "Before this syntax was introduced in Python 2.5, a common idiom was to use "
 "logical operators::"
 msgstr ""
+"Avant l'introduction de cette syntaxe dans Python 2.5, il était courant "
+"d'utiliser les opérateurs de logique ::"
 
 #: ../Doc/faq/programming.rst:732
 msgid ""
@@ -923,6 +1086,9 @@ msgid ""
 "has a false boolean value.  Therefore, it is always better to use the ``... "
 "if ... else ...`` form."
 msgstr ""
+"Cet idiome est dangereux, car il donne un résultat erroné quand *on_true* à "
+"la valeur booléenne fausse. Il faut donc toujours utiliser la forme ``... "
+"if ... else ...``."
 
 #: ../Doc/faq/programming.rst:738
 msgid "Is it possible to write obfuscated one-liners in Python?"
@@ -931,17 +1097,17 @@ msgstr ""
 "en Python ?"
 
 #: ../Doc/faq/programming.rst:740
-#, fuzzy
 msgid ""
 "Yes.  Usually this is done by nesting :keyword:`lambda` within :keyword:`!"
 "lambda`.  See the following three examples, due to Ulf Bartelt::"
 msgstr ""
-"Oui. Cela est généralement réalisé en imbriquant les :keyword:`lambda` dans "
-"des :keyword:`lambda`. Observez les trois exemples suivants de Ulf Bartelt ::"
+"Oui. C'est souvent le cas en imbriquant des :keyword:`lambda` dans des :"
+"keyword:`lambda`. Par exemple les trois morceaux de code suivants, créés par "
+"Ulf Bartelt ::"
 
 #: ../Doc/faq/programming.rst:767
 msgid "Don't try this at home, kids!"
-msgstr "Les enfants, ne faîtes pas ça chez vous !"
+msgstr "Les enfants, ne faites pas ça chez vous !"
 
 #: ../Doc/faq/programming.rst:773
 msgid "What does the slash(/) in the parameter list of a function mean?"
@@ -977,7 +1143,7 @@ msgstr "Nombres et chaînes de caractères"
 
 #: ../Doc/faq/programming.rst:809
 msgid "How do I specify hexadecimal and octal integers?"
-msgstr "Comment puis-je écrire des entiers hexadécimaux ou octaux ?"
+msgstr "Comment écrire des entiers hexadécimaux ou octaux ?"
 
 #: ../Doc/faq/programming.rst:811
 msgid ""
@@ -986,8 +1152,8 @@ msgid ""
 "octal value \"10\" (8 in decimal), type::"
 msgstr ""
 "Pour écrire un entier octal, faites précéder la valeur octale par un zéro, "
-"puis un \"o\" majuscule ou minuscule. Par exemple assigner la valeur octale "
-"\"10\" (8 en décimal) à la variable \"a\", tapez ::"
+"puis un \"o\" majuscule ou minuscule. Par exemple pour affecter la valeur "
+"octale \"10\" (8 en décimal) à la variable \"a\", tapez ::"
 
 #: ../Doc/faq/programming.rst:819
 msgid ""
@@ -995,7 +1161,7 @@ msgid ""
 "zero, and then a lower or uppercase \"x\".  Hexadecimal digits can be "
 "specified in lower or uppercase.  For example, in the Python interpreter::"
 msgstr ""
-"L'hexadécimal est tout aussi simple, faîtes précéder le nombre hexadécimal "
+"L'hexadécimal est tout aussi simple, faites précéder le nombre hexadécimal "
 "par un zéro, puis un \"x\" majuscule ou minuscule. Les nombres hexadécimaux "
 "peuvent être écrit en majuscules ou en minuscules. Par exemple, dans "
 "l'interpréteur Python ::"
@@ -1009,7 +1175,7 @@ msgid ""
 "It's primarily driven by the desire that ``i % j`` have the same sign as "
 "``j``. If you want that, and also want::"
 msgstr ""
-"Cela est principalement due à la volonté que ``i % j`` ait le même signe que "
+"Cela est principalement dû à la volonté que ``i % j`` ait le même signe que "
 "j. Si vous voulez cela, vous voulez aussi : ::"
 
 #: ../Doc/faq/programming.rst:839
@@ -1019,7 +1185,7 @@ msgid ""
 "``i % j`` have the same sign as ``i``."
 msgstr ""
 "alors la division entière doit renvoyer l'entier inférieur. Le C demande "
-"aussi à ce que cette égalité soit vérifiée, et donc les compilateur qui "
+"aussi à ce que cette égalité soit vérifiée, et donc les compilateurs qui "
 "tronquent ``i // j`` ont besoin que ``i % j`` ait le même signe que ``i``."
 
 #: ../Doc/faq/programming.rst:843
@@ -1032,13 +1198,13 @@ msgid ""
 msgstr ""
 "Il y a peu de cas d'utilisation réels pour ``i%j`` quand ``j`` est négatif. "
 "Quand ``j`` est positif, il y en a beaucoup, et dans pratiquement tous, il "
-"est plus utile que ``i % j`` soit ``>=0``. Si l'horloge dit *10h* "
-"maintenant, que disait-elle il y a 200 heures? ``-190%12 == 2`` est utile; "
-"``-192 % 12 == -10`` est un bug qui attends pour mordre."
+"est plus utile que ``i % j`` soit ``>=0``. Si l'horloge affiche *10h* "
+"maintenant, qu'affichait-elle il y a 200 heures ? ``-190 % 12 == 2`` est "
+"utile; ``-190 % 12 == -10`` est un bogue en puissance."
 
 #: ../Doc/faq/programming.rst:851
 msgid "How do I convert a string to a number?"
-msgstr "Comment puis-je convertir une chaine de caractère en nombre?"
+msgstr "Comment convertir une chaîne de caractère en nombre?"
 
 #: ../Doc/faq/programming.rst:853
 msgid ""
@@ -1059,13 +1225,12 @@ msgid ""
 "interpreted using Python's rules: a leading '0o' indicates octal, and '0x' "
 "indicates a hex number."
 msgstr ""
-"Par défaut, ces fonctions interprètent les nombre en tant que décimaux, de "
-"telles façons que ``int('0144') == 144`` et ``int('0x144')`` lève une :exc:"
-"`ValueError`. ``int(string, base)`` prends la base depuis laquelle il faut "
-"convertir dans le second argument, optionnel, donc ``int('0x144', 16) == "
-"324``. Si la base donnée est 0, le nombre est interprété selon les règles "
-"Python: un préfixe ``0o`` indique de l'octal, et ``0x`` indique de "
-"l'hexadécimal."
+"Par défaut, ces fonctions interprètent les nombres comme des décimaux, de "
+"telle façons que ``int('0144') == 144`` et ``int('0x144')`` lève une :exc:"
+"`ValueError`. ``int(string, base)`` prend la base dans laquelle convertir "
+"dans le second argument (optionnel), donc ``int('0x144', 16) == 324``. Si la "
+"base donnée est 0, le nombre est interprété selon les règles Python : un "
+"préfixe ``0o`` indique de l'octal, et ``0x`` indique de l'hexadécimal."
 
 #: ../Doc/faq/programming.rst:863
 msgid ""
@@ -1077,9 +1242,9 @@ msgid ""
 "directory."
 msgstr ""
 "N'utilisez pas la fonction native :func:`eval` si tout ce que vous avez "
-"besoin est de convertir des chaines en nombres. :func:`eval` sera "
-"significativement plus lent et implique des risque de sécurité: quelqu'un "
-"pourrait vous envoyez une expression Python pouvant avoir des effets de bord "
+"besoin est de convertir des chaînes de caractères en nombres. :func:`eval` "
+"est beaucoup plus lent et pose des problèmes de sécurité : quelqu'un "
+"pourrait vous envoyer une expression Python pouvant avoir des effets de bord "
 "indésirables. Par exemple, quelqu'un pourrait passer ``__import__('os')."
 "system(\"rm -rf $HOME\")`` ce qui aurait pour effet d'effacer votre "
 "répertoire d’accueil."
@@ -1091,13 +1256,13 @@ msgid ""
 "does not allow leading '0' in a decimal number (except '0')."
 msgstr ""
 ":func:`eval` a aussi pour effet d'interpréter les nombres comme comme des "
-"expression Python, ainsi ``eval('09')`` produit une erreur de syntaxe par ce "
-"que Python ne permet pas les '0' en tête d'un nombre décimal (à l'exception "
-"du nombre '0')."
+"expressions Python. Ainsi ``eval('09')`` produit une erreur de syntaxe, "
+"parce que Python ne permet pas les '0' en tête d'un nombre décimal (à "
+"l'exception du nombre '0')."
 
 #: ../Doc/faq/programming.rst:876
 msgid "How do I convert a number to a string?"
-msgstr "Comment convertir un nombre en chaine de caractère?"
+msgstr "Comment convertir un nombre en chaîne de caractères ?"
 
 #: ../Doc/faq/programming.rst:878
 msgid ""
@@ -1108,10 +1273,17 @@ msgid ""
 "``\"{:04d}\".format(144)`` yields ``'0144'`` and ``\"{:.3f}\"."
 "format(1.0/3.0)`` yields ``'0.333'``."
 msgstr ""
+"Pour transformer, par exemple, le nombre 144 en la chaîne de caractères "
+"'144', il faut utiliser la fonction native :func:`str`. Pour obtenir la "
+"représentation hexadécimale ou octale, il faut utiliser les fonctions "
+"natives :func:`hex` ou :func:`oct`. Pour des représentations non-"
+"conventionnelles, se référer au sections :ref:`f-strings` et :ref:"
+"`formatstrings`, e.g. ``\"{:04d}\".format(144)`` produit ``'0144'`` et ``"
+"\"{:.3f}\".format(1.0/3.0)`` produit ``'0.333'``."
 
 #: ../Doc/faq/programming.rst:887
 msgid "How do I modify a string in place?"
-msgstr "Comment modifier une chaine de caractère \"en place\"?"
+msgstr "Comment modifier une chaîne de caractère « en place » ?"
 
 #: ../Doc/faq/programming.rst:889
 msgid ""
@@ -1121,16 +1293,22 @@ msgid ""
 "unicode data, try using an :class:`io.StringIO` object or the :mod:`array` "
 "module::"
 msgstr ""
+"C'est impossible car les chaînes de caractères ne sont pas des objets "
+"muables. Dans la plupart des cas, il faut tout simplement construire une "
+"nouvelle chaîne à partir des morceaux désirés de l'ancienne. Si toutefois "
+"vous avez besoin d'un objet capable de modifier de la donnée unicode « en "
+"place », essayez d'utiliser un objet :class:`io.StringIO` ou le module :mod:"
+"`array` ::"
 
 #: ../Doc/faq/programming.rst:919
 msgid "How do I use strings to call functions/methods?"
 msgstr ""
-"Comment utiliser des chaines de caractères pour appeler des fonctions/"
+"Comment utiliser des chaînes de caractères pour appeler des fonctions/"
 "méthodes?"
 
 #: ../Doc/faq/programming.rst:921
 msgid "There are various techniques."
-msgstr "Il y a différentes techniques."
+msgstr "Il y a plusieurs façons de faire."
 
 #: ../Doc/faq/programming.rst:923
 msgid ""
@@ -1140,9 +1318,9 @@ msgid ""
 "a case construct::"
 msgstr ""
 "La meilleure est d'utiliser un dictionnaire qui fait correspondre les "
-"chaines de caractères à des fonctions. Le principal avantage de cette "
-"technique est que les chaines n'ont pas besoin d'être égales aux noms de "
-"fonctions. C'est aussi la principale façon d'imiter la construction \"case"
+"chaînes de caractères à des fonctions. Le principal avantage de cette "
+"technique est que les chaînes n'ont pas besoin d'être égales aux noms de "
+"fonctions. C'est aussi la façon principale d'imiter la construction \"case"
 "\" ::"
 
 #: ../Doc/faq/programming.rst:938
@@ -1160,13 +1338,14 @@ msgstr ""
 #: ../Doc/faq/programming.rst:946
 msgid "This is used in several places in the standard library, like this::"
 msgstr ""
-"Ceci est utilisé dans plusieurs endroit de la bibliothèque standard, de "
+"Ceci est utilisé à plusieurs reprises dans la bibliothèque standard, de "
 "cette façon ::"
 
 #: ../Doc/faq/programming.rst:959
 msgid "Use :func:`locals` or :func:`eval` to resolve the function name::"
 msgstr ""
-"Utilisez :func:`locals` ou :func:`eval` pour résoudre le nom de fonction ::"
+"Utilisez :func:`locals` ou :func:`eval` pour résoudre le nom de la "
+"fonction ::"
 
 #: ../Doc/faq/programming.rst:972
 msgid ""
@@ -1174,9 +1353,9 @@ msgid ""
 "control over the contents of the string, someone could pass a string that "
 "resulted in an arbitrary function being executed."
 msgstr ""
-"Note: En utilisant :func:`eval` est lent est dangereux. Si vous n'avez pas "
-"un contrôle absolu sur le contenu de la chaine de caractère, quelqu'un peut "
-"passer une chaine de caractère pouvant résulter en l'exécution de code "
+"Note : Utiliser :func:`eval` est lent est dangereux. Si vous n'avez pas un "
+"contrôle absolu sur le contenu de la chaîne de caractères, quelqu'un peut "
+"passer une chaîne de caractères pouvant résulter en l'exécution de code "
 "arbitraire."
 
 #: ../Doc/faq/programming.rst:977
@@ -1185,7 +1364,7 @@ msgid ""
 "strings?"
 msgstr ""
 "Existe-t-il un équivalent à la fonction ``chomp()`` de Perl, pour retirer "
-"les caractères de fin de ligne d'une chaine de caractère ?"
+"les caractères de fin de ligne d'une chaîne de caractères ?"
 
 #: ../Doc/faq/programming.rst:979
 msgid ""
@@ -1195,11 +1374,11 @@ msgid ""
 "empty lines at the end, the line terminators for all the blank lines will be "
 "removed::"
 msgstr ""
-"Vous pouvez utiliser ``S.rstrip(\"\\r\\n\")`` pour retirer toute occurrence "
-"de tout marqueur de fin de ligne, à la fin d'une chaîne de caractère ``S``, "
-"sans en retirer aucun espace. Si la chaîne ``S`` représente plus d'une "
-"ligne, avec plusieurs lignes vides, les marqueurs de fin de de lignes de "
-"chaque lignes vides seront retirés : ::"
+"Vous pouvez utiliser ``S.rstrip(\"\\r\\n\")`` pour retirer toutes les "
+"occurrences de tout marqueur de fin de ligne à la fin d'une chaîne de "
+"caractère ``S``, sans en enlever aucune espace. Si la chaîne ``S`` "
+"représente plus d'une ligne, avec plusieurs lignes vides, les marqueurs de "
+"fin de de ligne de chaque ligne vide seront retirés : ::"
 
 #: ../Doc/faq/programming.rst:991
 msgid ""
@@ -1226,11 +1405,11 @@ msgid ""
 "parameter which is useful if the line uses something other than whitespace "
 "as a separator."
 msgstr ""
-"Pour une simple analyse de chaine, l'approche la plus simple est "
+"Pour une simple analyse de chaîne, l'approche la plus simple est "
 "généralement de découper la ligne en mots délimités par des espaces, en "
-"utilisant la méthode :meth:`~str.split` des objets chaine de caractères, et "
-"ensuite de convertir les chaines de décimales en valeurs numériques en "
-"utilisant la fonction :func:`int` ou :func:`float`, ``split()`` supporte un "
+"utilisant la méthode :meth:`~str.split` des objets chaîne de caractères, et "
+"ensuite de convertir les chaînes de décimaux en valeurs numériques en "
+"utilisant la fonction :func:`int` ou :func:`float`, ``split()`` possède un "
 "paramètre optionnel \"sep\" qui est utile si la ligne utilise autre chose "
 "que des espaces comme séparateur."
 
@@ -1239,7 +1418,7 @@ msgid ""
 "For more complicated input parsing, regular expressions are more powerful "
 "than C's :c:func:`sscanf` and better suited for the task."
 msgstr ""
-"Pour les analyses plus compliquées, les expressions rationnelles sont plus "
+"Pour des analyses plus compliquées, les expressions régulières sont plus "
 "puissantes que la fonction :c:func:`sscanf` de C et mieux adaptées à la "
 "tâche."
 
@@ -1254,29 +1433,34 @@ msgstr "Regardez :ref:`unicode-howto`."
 
 #: ../Doc/faq/programming.rst:1017
 msgid "Performance"
-msgstr ""
+msgstr "Performances"
 
 #: ../Doc/faq/programming.rst:1020
 msgid "My program is too slow. How do I speed it up?"
-msgstr ""
+msgstr "Mon programme est trop lent. Comment l'accélérer ?"
 
 #: ../Doc/faq/programming.rst:1022
 msgid ""
 "That's a tough one, in general.  First, here are a list of things to "
 "remember before diving further:"
 msgstr ""
+"Question difficile, en général. Avant, tout, il faut garder en tête les "
+"points suivants avant d'aller plus loin :"
 
 #: ../Doc/faq/programming.rst:1025
 msgid ""
 "Performance characteristics vary across Python implementations.  This FAQ "
 "focusses on :term:`CPython`."
 msgstr ""
+"Les performances varient en fonction des implémentations de Python. Cette "
+"FAQ ne traite que de :term:`CPython`."
 
 #: ../Doc/faq/programming.rst:1027
 msgid ""
 "Behaviour can vary across operating systems, especially when talking about I/"
 "O or multi-threading."
 msgstr ""
+"Les comportements peuvent différer d'un système d'exploitation à l'autre"
 
 #: ../Doc/faq/programming.rst:1029
 msgid ""
@@ -1386,11 +1570,11 @@ msgstr ""
 
 #: ../Doc/faq/programming.rst:1104
 msgid "Sequences (Tuples/Lists)"
-msgstr "Sequences (Tuples/Lists)"
+msgstr "Séquences (n-uplets / listes)"
 
 #: ../Doc/faq/programming.rst:1107
 msgid "How do I convert between tuples and lists?"
-msgstr "Comment convertir les listes en tuples et inversement?"
+msgstr "Comment convertir les listes en n-uplets et inversement ?"
 
 #: ../Doc/faq/programming.rst:1109
 msgid ""
@@ -1408,10 +1592,10 @@ msgid ""
 "you aren't sure that an object is already a tuple."
 msgstr ""
 "Par exemple ``tuple([1, 2, 3])`` renvoi ``(1, 2, 3)`` et ``tuple('abc')`` "
-"renvoi ``('a', 'b', 'c')``. Si l'argument est un tuple, cela ne crée pas une "
-"copie, mais renvoi le même objet, ce qui fait de :func:`tuple` un fonction "
-"économique à appeler quand vous ne savez pas si votre objet est déjà un "
-"tuple."
+"renvoie ``('a', 'b', 'c')``. Si l'argument est un tuple, cela ne crée pas "
+"une copie, mais renvoie le même objet, ce qui fait de :func:`tuple` une "
+"fonction économique à appeler quand vous ne savez pas si votre objet est "
+"déjà un tuple."
 
 #: ../Doc/faq/programming.rst:1117
 msgid ""
@@ -1428,7 +1612,7 @@ msgstr ""
 
 #: ../Doc/faq/programming.rst:1124
 msgid "What's a negative index?"
-msgstr "Qu'est-ce qu'un indexe négatif?"
+msgstr "Qu'est-ce qu'un index négatif?"
 
 #: ../Doc/faq/programming.rst:1126
 msgid ""
@@ -1439,10 +1623,10 @@ msgid ""
 "``seq[len(seq)-n]``."
 msgstr ""
 "Les séquences Python sont indexées avec des nombres positifs aussi bien que "
-"négatifs. Pour les nombres positifs, 0 est le premier index, 1 est le "
-"second, et ainsi de suite. Pour les indexes négatifs, ``-1`` est le dernier "
-"index, ``-2`` est le pénultième (avant dernier), et ainsi de suite. On peut "
-"aussi dire que ``seq[-n]`` est équivalent à ``seq[len(seq)-n]``."
+"négatifs. Pour les nombres positifs, 0 est le premier indice, 1 est le "
+"deuxième, et ainsi de suite. Pour les indices négatifs, ``-1`` est le "
+"dernier index, ``-2`` est le pénultième (avant-dernier), et ainsi de suite. "
+"On peut aussi dire que ``seq[-n]`` est équivalent à ``seq[len(seq)-n]``."
 
 #: ../Doc/faq/programming.rst:1131
 msgid ""
@@ -1450,20 +1634,20 @@ msgid ""
 "all of the string except for its last character, which is useful for "
 "removing the trailing newline from a string."
 msgstr ""
-"Utiliser des indexes négatifs peut être très pratique. Par exemple "
-"``S[:-1]`` indique la chaine entière a l'exception du dernier caractère, ce "
-"qui est pratique pour retirer un caractère de fin de ligne en fin d'une "
-"chaine."
+"Utiliser des indices négatifs peut être très pratique. Par exemple "
+"``S[:-1]`` représente la chaîne tout entière à l'exception du dernier "
+"caractère, ce qui est pratique pour retirer un caractère de fin de ligne à "
+"la fin d'une chaîne."
 
 #: ../Doc/faq/programming.rst:1137
 msgid "How do I iterate over a sequence in reverse order?"
-msgstr "Comment itérer à rebours sur une séquence?"
+msgstr "Comment itérer à rebours sur une séquence ?"
 
 #: ../Doc/faq/programming.rst:1139
 msgid ""
 "Use the :func:`reversed` built-in function, which is new in Python 2.4::"
 msgstr ""
-"Utilisez la fonction embarquée :func:`reversed`, qui est apparue en Python "
+"Utilisez la fonction native :func:`reversed`, qui est apparue en Python "
 "2.4 ::"
 
 #: ../Doc/faq/programming.rst:1144
@@ -1471,8 +1655,8 @@ msgid ""
 "This won't touch your original sequence, but build a new copy with reversed "
 "order to iterate over."
 msgstr ""
-"Cela ne modifiera pas votre séquence initiale, mais construira à la place "
-"une copie en ordre inverse pour itérer dessus."
+"Cela ne modifiera pas la séquence initiale, mais construira à la place une "
+"copie en ordre inverse pour itérer dessus."
 
 #: ../Doc/faq/programming.rst:1147
 msgid "With Python 2.3, you can use an extended slice syntax::"
@@ -1485,12 +1669,12 @@ msgstr "Comment retirer les doublons d'une liste?"
 #: ../Doc/faq/programming.rst:1156
 msgid "See the Python Cookbook for a long discussion of many ways to do this:"
 msgstr ""
-"Lisez le Python Cookbook pour trouver une longue discussion sur les "
-"nombreuses façons de faire cela:"
+"Lisez le « livre de recettes » Python pour trouver une longue discussion sur "
+"les nombreuses approches possibles :"
 
 #: ../Doc/faq/programming.rst:1158
 msgid "https://code.activestate.com/recipes/52560/"
-msgstr ""
+msgstr "https://code.activestate.com/recipes/52560/"
 
 #: ../Doc/faq/programming.rst:1160
 msgid ""
@@ -1498,7 +1682,7 @@ msgid ""
 "the list, deleting duplicates as you go::"
 msgstr ""
 "Si changer l'ordre de la liste ne vous dérange pas, commencez par trier "
-"celle ci, puis parcourez la d'un bout à l'autre, en supprimant les doublons "
+"celle-ci, puis parcourez-la d'un bout à l'autre, en supprimant les doublons "
 "trouvés en chemin ::"
 
 #: ../Doc/faq/programming.rst:1172
@@ -1515,12 +1699,12 @@ msgid ""
 "This converts the list into a set, thereby removing duplicates, and then "
 "back into a list."
 msgstr ""
-"Ceci convertis la liste en un ensemble, ce qui supprime automatiquement les "
+"Ceci convertit la liste en un ensemble, ce qui supprime automatiquement les "
 "doublons, puis la transforme à nouveau en liste."
 
 #: ../Doc/faq/programming.rst:1182
 msgid "How do you make an array in Python?"
-msgstr "Comment construire un tableau en Python?"
+msgstr "Comment construire un tableau en Python ?"
 
 #: ../Doc/faq/programming.rst:1184
 msgid "Use a list::"
@@ -1532,7 +1716,7 @@ msgid ""
 "primary difference is that a Python list can contain objects of many "
 "different types."
 msgstr ""
-"Les listes ont un cout équivalent à celui des tableau C ou Pascal; la "
+"Les listes ont un coût équivalent à celui des tableaux C ou Pascal ; la "
 "principale différence est qu'une liste Python peut contenir des objets de "
 "différents types."
 
@@ -1546,15 +1730,15 @@ msgstr ""
 "Le module ``array`` fournit  des méthodes pour créer des tableaux de types "
 "fixes dans une représentation compacte, mais ils sont plus lents à indexer "
 "que les listes. Notez aussi que l'extension ``Numeric`` et d'autres, "
-"fournissent différentes structures de types tableaux, avec des "
+"fournissent différentes structures de type tableaux, avec des "
 "caractéristiques différentes."
 
 #: ../Doc/faq/programming.rst:1196
 msgid ""
 "To get Lisp-style linked lists, you can emulate cons cells using tuples::"
 msgstr ""
-"Pour obtenir des listes chainées de type Lisp, vous pouvez émuler les *cons "
-"cells* en utilisant des tuples ::"
+"Pour obtenir des listes chaînées de type Lisp, vous pouvez émuler les *cons "
+"cells* en utilisant des n-uplets ::"
 
 #: ../Doc/faq/programming.rst:1200
 msgid ""
@@ -1567,7 +1751,7 @@ msgstr ""
 "qu'un tuple. Ici la version équivalente au *car* de Lisp est "
 "``lisp_list[0]`` et l'équivalent à *cdr* est ``list_lip[1]``. Ne faites ceci "
 "que si vous êtes réellement sûr d'en avoir besoin, cette méthode est en "
-"générale bien plus lente que les listes Python."
+"général bien plus lente que les listes Python."
 
 #: ../Doc/faq/programming.rst:1209
 msgid "How do I create a multidimensional list?"
@@ -1595,7 +1779,7 @@ msgid ""
 "containing 3 references to the same list of length two.  Changes to one row "
 "will show in all rows, which is almost certainly not what you want."
 msgstr ""
-"La raison en est que dupliquer une liste en utilisant ``*`` ne crée pas de "
+"La raison est que dupliquer une liste en utilisant ``*`` ne crée pas de "
 "copies, cela crée seulement des références aux objets existants. Le ``*3`` "
 "crée une liste contenant trois références à la même liste de longueur deux. "
 "Un changement dans une colonne apparaîtra donc dans toutes les colonnes. Ce "
