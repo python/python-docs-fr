@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.67\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-02 22:11+0200\n"
-"PO-Revision-Date: 2019-05-09 19:53+0200\n"
+"PO-Revision-Date: 2019-05-09 22:14+0200\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,8 @@ msgid ""
 "To :class:`Complex`, :class:`Real` adds the operations that work on real "
 "numbers."
 msgstr ""
+":class:`Real` ajoute les opérations qui fonctionnent sur les nombres réels "
+"à :class:`Complex`."
 
 #: ../Doc/library/numbers.rst:51
 msgid ""
@@ -91,12 +93,17 @@ msgid ""
 "func:`round`, :func:`math.floor`, :func:`math.ceil`, :func:`divmod`, ``//``, "
 "``%``, ``<``, ``<=``, ``>``, and ``>=``."
 msgstr ""
+"En bref, celles-ci sont: une conversion à class:`float`, :func:`math."
+"trunc`, :func:`round`, :func:`math.floor`, :func:`math.ceil`, :func:"
+"`divmod`, ``//``, ``%``, ``<``, ``<=``, ``>``, et ``>=``."
 
 #: ../Doc/library/numbers.rst:55
 msgid ""
 "Real also provides defaults for :func:`complex`, :attr:`~Complex.real`, :"
 "attr:`~Complex.imag`, and :meth:`~Complex.conjugate`."
 msgstr ""
+"Réel fournit également des valeurs par défaut pour :func:`complex`, :attr:"
+"`~Complex.real`, :attr:`~Complex.imag`, et :meth:`~Complex.conjugate`."
 
 #: ../Doc/library/numbers.rst:61
 msgid ""
@@ -104,6 +111,9 @@ msgid ""
 "`~Rational.denominator` properties, which should be in lowest terms. With "
 "these, it provides a default for :func:`float`."
 msgstr ""
+"Sous-classe :class:`Real` et ajoute les propriétés :attr:`~Rational."
+"numerator` et :attr:`~Rational.denominator`qui doivent être au plus bas. "
+"Avec ceelles-ci, il fournit une valeur par défaut pour  :func:`float`."
 
 #: ../Doc/library/numbers.rst:68 ../Doc/library/numbers.rst:72
 msgid "Abstract."
@@ -116,10 +126,15 @@ msgid ""
 "`~Rational.denominator`.  Adds abstract methods for ``**`` and bit-string "
 "operations: ``<<``, ``>>``, ``&``, ``^``, ``|``, ``~``."
 msgstr ""
+"Souc-classe :class:`Rational` et ajoute une conversion en :class:`int`. "
+"Fournit des valeurs par défaut pour :func:`float`, :attr:`~Rational."
+"numerator`, et :attr:`~Rational.denominator`. Ajoute des méthodes abstraites "
+"pour ``**`` et les opérations de chaînes de bits: ``<<``, ``>>``, ``&``, "
+"``^``, ``|``, ``~``."
 
 #: ../Doc/library/numbers.rst:84
 msgid "Notes for type implementors"
-msgstr ""
+msgstr "Notes pour les développeurs de types"
 
 #: ../Doc/library/numbers.rst:86
 msgid ""
@@ -128,10 +143,14 @@ msgid ""
 "the real numbers. For example, :class:`fractions.Fraction` implements :func:"
 "`hash` as follows::"
 msgstr ""
+"Les développeurs doivent veiller à ce que les nombres soient égaux et à ce "
+"qu'ils soient hachés aux mêmes valeurs. Cela peut être subtil s'il y a deux "
+"extensions différentes des nombres réels. Par exemple, :class:`fractions."
+"Fraction`implémente :func:`hash` comme suit::"
 
 #: ../Doc/library/numbers.rst:105
 msgid "Adding More Numeric ABCs"
-msgstr ""
+msgstr "Ajouter plus d'ABC numériques"
 
 #: ../Doc/library/numbers.rst:107
 msgid ""
@@ -139,10 +158,13 @@ msgid ""
 "poor hierarchy if it precluded the possibility of adding those. You can add "
 "``MyFoo`` between :class:`Complex` and :class:`Real` with::"
 msgstr ""
+"Il existe bien sûr davantage d’ABC possibles pour les nombres , et cette "
+"hiérarchie serait médiocre si elle excluait la possibilité d'en ajouter. "
+"Vous pouvez ajouter ``MyFoo`` entre :class:`Complex` et :class:`Real` avec::"
 
 #: ../Doc/library/numbers.rst:119
 msgid "Implementing the arithmetic operations"
-msgstr ""
+msgstr "Implémentation des opérations arithmétiques"
 
 #: ../Doc/library/numbers.rst:121
 msgid ""
@@ -152,6 +174,12 @@ msgid ""
 "there. For subtypes of :class:`Integral`, this means that :meth:`__add__` "
 "and :meth:`__radd__` should be defined as::"
 msgstr ""
+"Nous voulons implémenter les opérations arithmétiques de sorte que les "
+"opérations en mode mixte appellent une implémentation dont l'auteur connaît "
+"les types des deux arguments, ou convertissent chacun dans le type natif les "
+"plus proches et en effectuent l'opération. Pour les sous-types de :class:"
+"`Integral`, cela signifie que :meth:`__add__` et :meth:`__radd__` devrait "
+"être défini comme suit::"
 
 #: ../Doc/library/numbers.rst:152
 msgid ""
@@ -161,10 +189,16 @@ msgid ""
 "an instance of ``A``, which is a subtype of :class:`Complex` (``a : A <: "
 "Complex``), and ``b : B <: Complex``. I'll consider ``a + b``:"
 msgstr ""
+"Il existe 5 cas différents pour une opération de type mixte sur des sous-"
+"classes de :class:`Complex`. Je me référerai au code ci-dessus qui ne se "
+"réfère pas à ``MyIntegral`` et ``OtherTypeIKnowAbout`` comme \"expression "
+"standard\". ``a`` est une instance de ``A``, qui est un sous-type de :class:"
+"`Complex` (``a : A <: Complex``), et ``b : B <: Complex``. Je considére ``a "
+"+ b``:"
 
 #: ../Doc/library/numbers.rst:159
 msgid "If ``A`` defines an :meth:`__add__` which accepts ``b``, all is well."
-msgstr ""
+msgstr "Si ``A`` définit un :meth:`__add__` qui accepte ``b``, tout va bien."
 
 #: ../Doc/library/numbers.rst:161
 msgid ""
@@ -174,18 +208,27 @@ msgid ""
 "`NotImplemented` from :meth:`__add__`. (Or ``A`` may not implement :meth:"
 "`__add__` at all.)"
 msgstr ""
+"Si ``A`` revient au code standard, et qu'il renvoie une valeur de :meth:"
+"`__add__`, nous manquons la possibilité que ``B`` définisse un :meth:"
+"`__radd__` plus intelligent, donc le standard devrait retourner :const:"
+"`NotImplemented' de :meth:`__add__`. (Ou ``A`' ne peut pas mettre en œuvre :"
+"meth:`__add__` du tout.)"
 
 #: ../Doc/library/numbers.rst:167
 msgid ""
 "Then ``B``'s :meth:`__radd__` gets a chance. If it accepts ``a``, all is "
 "well."
 msgstr ""
+"Alors :meth:`__radd__` de ``B`` a une chance. si elle accepte ``a``, tout va "
+"bien."
 
 #: ../Doc/library/numbers.rst:169
 msgid ""
 "If it falls back to the boilerplate, there are no more possible methods to "
 "try, so this is where the default implementation should live."
 msgstr ""
+"S'il retombe dans le code standard, il n'y a plus de méthodes possibles à "
+"essayer, c'est donc ici que l'implémentation par défaut intervient."
 
 #: ../Doc/library/numbers.rst:172
 msgid ""
@@ -193,6 +236,9 @@ msgid ""
 "because it was implemented with knowledge of ``A``, so it can handle those "
 "instances before delegating to :class:`Complex`."
 msgstr ""
+"Si ``B < : A```, Python essaie ``B.__radd__`` avant ``A.__add__``. C'est "
+"valable, parce qu'il a été implémenté avec la connaissance de ``A``, donc il "
+"peut gérer ces instances avant de déléguer à :class:``Complex``."
 
 #: ../Doc/library/numbers.rst:177
 msgid ""
@@ -200,6 +246,9 @@ msgid ""
 "then the appropriate shared operation is the one involving the built in :"
 "class:`complex`, and both :meth:`__radd__` s land there, so ``a+b == b+a``."
 msgstr ""
+"Si ``A < : Complexe```et ``B < : Real``` sans autres informations, alors "
+"l'opération partagée appropriée est celle impliquant :class:`complex`, et "
+"les deux :meth:`__radd__` résultants, donc ``a+b == b+a``."
 
 #: ../Doc/library/numbers.rst:182
 msgid ""
@@ -208,3 +257,7 @@ msgid ""
 "reverse instances of any given operator. For example, :class:`fractions."
 "Fraction` uses::"
 msgstr ""
+"Comme la plupart des opérations sur un type donné seront très similaires, il "
+"peut être utile de définir une fonction d'aide qui génère les instances "
+"résultantes et inverses d'un opérateur donné. Par exemple, :class:`fractions."
+"Fraction` utilise::"
