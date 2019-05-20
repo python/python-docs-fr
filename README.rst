@@ -52,7 +52,7 @@ Contributing using Github
 Prerequisites:
 
 - A `github account <https://github.com/join>`_.
-- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for windows, see
+- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for Windows, see
   https://gitforwindows.org/).
 - A ``.po`` file editor (Use `poedit <https://poedit.net/>`_
   if you don't already have one).
