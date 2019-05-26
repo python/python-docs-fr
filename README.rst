@@ -82,7 +82,7 @@ Step by step:
 
 Next, you need to find a file to work on.
 You can use `potodo <https://github.com/seluj78/potodo>`, a tool made to find ``po`` to do.
-Install it using pip (``pip install potodo``) in a ``python3.7`` environement.
+Install it using pip (``pip install potodo``) in a ``python3.6`` (or more) environement.
 Then run the command ``potodo`` in your cloned fork.
 From the list returned by the command, you can choose any file that is not reserved.
 
