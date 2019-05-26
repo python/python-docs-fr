@@ -157,20 +157,88 @@ manquant :
 - Vous poussez sur *origin* (votre clone sur Github)
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre fichier au public en amont, pour "boucler la boucle ", c'est le rôle
+de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le rôle
 des personnes qui *fusionnent* les pull request après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version(``3.6``, ``3.7``, ...), seulement les récupé les
+branche de version (``3.6``, ``3.7``, ...), seulement les récupé les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
-Avant de valider, vous devez utiliser `grammalecte
+Avant de valider, vous devriez utiliser `grammalecte
 <https://grammalecte.net/>`_ pour vérifier vos traductions.
 
 
 Toutes les traductions doivent être faites sur la dernière version.
-Nous ne traduisons jamais sur une version plus ancienne. Par exemple, si la dernière version de python
-est Python 3.7, nous ne voulons pas traduire directement sur la version python 3.5.
-Si nécessaire, les traductions seraient rétroportées sur les versions les plus anciennes par la fonction
-Équipe de documentation <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
+si la dernière version de python est Python 3.7, nous ne voulons pas
+traduire directement sur la version python 3.5.
+Si nécessaire, les traductions seraient rétroportées sur les versions
+les plus anciennes par l'`équipe de documentation
+<https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
+
+
+Que traduire
+~~~~~~~~~~~~
+
+Vous pouvez commencer par des tâches faciles comme réviser les entrées
+*fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
+*fuzzy* l'aide de `make fuzzy`).
+
+Vous pouvez également relire les entrées déjà traduites, et enfin
+traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
+`make todo`)...
+
+- Ne traduisez pas le contenu de ``:ref :...`` et ``:term :...``.
+- Mettez les mots anglais, si vous devez les utiliser, en *italique*
+  (entourés par des astérisques).
+- ``::`` à la fin de certains paragraphes doivent être traduits en `` :
+  ::``  en français pour placer l'espace avant la colonne.
+- Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
+  (typiquement si c'est Wikipédia et que l'article a une traduction). Si
+  aucune traduction de la cible n'existe, ne traduisez pas le titre.
+
+Le cas de "---"
+~~~~~~~~~~~~~~~
+
+La version anglaise utilise une chose nommée `smartquotes
+<http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
+essaie d'être intelligent, qui fonctionne en anglais, mais cause
+rapidement des problèmes dans d'autres langues.
+Nous l'avons donc désactivé.
+
+Les *smartquotes* sont également responsable de la transformation de
+``--`` en en-dash (``-``), de ``-----`` en em-dash (``—``), et de
+`...`en `…`.
+
+Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire" cela
+manuellement, donc si vous voyez ``---`` en anglais, vous devez le transformer
+en ``—`` en français.
+
+Le cas de ":: :"
+~~~~~~~~~~~~~~~~
+
+Du point de vue du *reStructuredText*, ``::``` collé à la fin d'un mot
+signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``.
+après un espace signifie "Juste Introduire un bloc de code".
+
+Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
+"bla bla. ::".
+
+En français, nous mettons un espace insécable devant nos colonnes, comme :
+"Et voilà :".
+
+L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
+écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
+il affichera la colonne et introduira le bloc de code, et c'est bon.
+
+Si vous ne savez pas comment taper un espace insécable, il y a un truc.
+Traduisez `deux-points deux-points` par
+`espace deux-points espace deux-points deux-points`.  La balise
+`espace deux-points` donnera un rendu votre espace et votre deux-points comme
+le français l'exige, et la `deux-points deux-points espace` qui
+suit n'affichera rien et introduira le bloc de code. Non, il n'insère
+pas magiquement un espace insécable donc ce n'est toujours pas
+vraiment du français valide. Oui, il vaut mieux apprendre à taper
+les espaces insécables.
+
