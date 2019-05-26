@@ -68,7 +68,7 @@ où vous avez le droit de faire des modifications.
 
 Étape par étape :
 
-.. code bloc:: bash
+.. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
     git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
@@ -104,7 +104,7 @@ et les *pull requests*.
 Vous êtes maintenant prêt à commencer une session de travail. Chaque
 fois que vous commencerez un nouveau fichier, commencez ainsi :
 
-.. code bloc:: bash
+.. code-block:: bash
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour (fraîchement récupérée)
     # de la branche upstream/3.7. Nous appellerons notre branche "library-sys" mais vous pouvez appeller la vôtre
@@ -151,6 +151,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git commit -a -m "glossaire : petites corrections".
     git push origin HEAD
 
+
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
 segment manquant :
 
@@ -162,7 +163,7 @@ de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.6``, ``3.7``, ...), seulement les récupé les
+branche de version (``3.6``, ``3.7``, ...), seulement les récupéré les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
@@ -194,7 +195,7 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
 - Mettez les mots anglais, si vous devez les utiliser, en *italique*
   (entourés par des astérisques).
 - ``::`` à la fin de certains paragraphes doivent être traduits en `` :
-  ::``  en français pour placer l'espace avant la colonne.
+  ::`` en français pour placer l'espace avant les deux-points.
 - Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
   (typiquement si c'est Wikipédia et que l'article a une traduction). Si
   aucune traduction de la cible n'existe, ne traduisez pas le titre.
@@ -204,24 +205,24 @@ Le cas de "---"
 
 La version anglaise utilise une chose nommée `smartquotes
 <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
-essaie d'être intelligent, qui fonctionne en anglais, mais cause
+essaie d'être intelligente, qui fonctionne en anglais, mais cause
 rapidement des problèmes dans d'autres langues.
 Nous l'avons donc désactivé.
 
-Les *smartquotes* sont également responsable de la transformation de
-``--`` en en-dash (``-``), de ``-----`` en em-dash (``—``), et de
-`...`en `…`.
+Les *smartquotes* sont également responsables de la transformation de
+``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
+``...`` en ``…``.
 
 Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
 cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
 transformer en ``—`` en français.
 
 Le cas de "::"
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 Du point de vue du *reStructuredText*, ``::`` collé à la fin d'un mot
 signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``
-après un espace signifie "Introduit juste un bloc de code".
+après un espace signifie "introduit juste un bloc de code".
 
 Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
 "bla bla. ::".
@@ -231,13 +232,13 @@ En français, nous mettons un espace insécable devant nos deux-points, comme :
 
 L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
 écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
-il affichera la colonne et introduira le bloc de code, et c'est bon.
+il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
-Si vous ne savez pas comment taper un espace insécable, il y a un truc.
-Traduisez `deux-points deux-points` par
-`espace deux-points espace deux-points deux-points`.  La balise
-`espace deux-points` donnera un rendu votre espace et votre deux-points comme
-le français l'exige, et la `deux-points deux-points espace` qui
+Si vous ne savez pas comment taper un espace insécable, il y a une astuce.
+Traduisez ``deux-points deux-points`` par
+``espace deux-points espace deux-points deux-points``. La balise
+``espace deux-points`` donnera un rendu de votre espace et vos deux-points
+comme le français l'exige, et la ``espace deux-points deux-points`` qui
 suit n'affichera rien et introduira le bloc de code. Non, il n'insère
 pas magiquement un espace insécable donc ce n'est toujours pas
 vraiment du français valide. Oui, il vaut mieux apprendre à taper
@@ -264,7 +265,7 @@ compositions suivantes :
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
 à retenir, vous pouvez donc essayer les autres et elles devraient juste
-fonctioner :
+fonctionner :
 
 - Composer ``C`` ``=`` donne ``€``
 - Composer ``1`` ``2`` donne ``½``
@@ -278,7 +279,7 @@ Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
 
 N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 <https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
-`liste de diffusion des traductions de l'AFPy  <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+`liste de diffusion des traductions de l'AFPy <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
 Ressources de traduction
@@ -349,7 +350,7 @@ statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
-expression				   expression
+expression				         expression
 ========================== ===========================================
 
 Historique du projet
