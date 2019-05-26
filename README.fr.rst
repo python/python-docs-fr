@@ -84,21 +84,22 @@ où vous avez le droit de faire des modifications.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler.
-Vous pouvez utiliser `potodo <https://github.com/seluj78/potodo>`_, un outil fait pour trouver des fichiers ``po``
-à traduire.
+Vous pouvez utiliser `potodo <https://github.com/seluj78/potodo>`_, un outil
+fait pour trouver des fichiers ``po`` à traduire.
 Installez-le à l'aide de pip (``pip install potodo``) dans un environnement
 ``python3.6`` ou plus.
 Lancez ensuite la commande ``potodo`` dans votre clone local.
-Vous pouvez choisir n'importe quel fichier non réservé dans la liste renvoyée
-par la commande.
+Vous pouvez choisir n'importe quel fichier non réservé dans la liste
+renvoyée par la commande.
 
-**Nous vous recommandons de ne pas commencer avec un fichier de ``c-api`` car c'est très technique.**
+**Nous vous recommandons de ne pas commencer avec un fichier de ``c-api``
+car c'est très technique.**
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur github <https://github.com/python/python-docs-fr>`_ dans
 le format `Je travaille sur RÉPERTOIRE/FICHIER.po`. Ceci permet à ``potodo``
-de détecter via l'API github les fichiers ``.po`` réservés dans les tickets et
-les *pull requests*.
+de détecter via l'API github les fichiers ``.po`` réservés dans les tickets
+et les *pull requests*.
 
 Vous êtes maintenant prêt à commencer une session de travail. Chaque
 fois que vous commencerez un nouveau fichier, commencez ainsi :
@@ -150,15 +151,15 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git commit -a -m "glossaire : petites corrections".
     git push origin HEAD
 
-Vous avez peut-être remarqué que cela ressemble à un triangle, avec un segment
-manquant :
+Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
+segment manquant :
 
 - Vous récupérez depuis *upstream* (le dépôt commun public sur Github)
 - Vous poussez sur *origin* (votre clone sur Github)
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le rôle
-des personnes qui *fusionnent* les pull request après les avoir relues.
+de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le
+rôle des personnes qui *fusionnent* les pull request après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
 branche de version (``3.6``, ``3.7``, ...), seulement les récupé les
@@ -211,9 +212,9 @@ Les *smartquotes* sont également responsable de la transformation de
 ``--`` en en-dash (``-``), de ``-----`` en em-dash (``—``), et de
 `...`en `…`.
 
-Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire" cela
-manuellement, donc si vous voyez ``---`` en anglais, vous devez le transformer
-en ``—`` en français.
+Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
+cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
+transformer en ``—`` en français.
 
 Le cas de ":: :"
 ~~~~~~~~~~~~~~~~
@@ -242,3 +243,223 @@ pas magiquement un espace insécable donc ce n'est toujours pas
 vraiment du français valide. Oui, il vaut mieux apprendre à taper
 les espaces insécables.
 
+Comment saisir des em-dash, des ellipses, des guillemets français, ou des
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+espaces insécables ?
+~~~~~~~~~~~~~~~~~~~~
+
+Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
+Sous Linux, vous pouvez utilisez une `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_, c'est
+facile à configurer à l'aide de l'outil graphique de configuration de votre
+clavier ou via ``dpkg-reconfigure keyboard-configuration``. Sous Windows, vous
+pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
+
+Avec une touche de composition (personnellement j'utilise ``alt-gr``,
+vous pouvez aussi utiliser ``verr maj 🔒``), vous pouvez utiliser les
+compositions suivantes :
+
+- Composer ``<`` ``<`` donne ``«``
+- Composer ``>`` ``>`` donne ``»``
+- Composer space space donne an no-break space
+- Composer ``.`` ``.`` ``.`` donne ``…``
+
+Comme vous l'avez noté, presque toutes les compositions sont faciles
+à retenir, vous pouvez donc essayer les autres et elles devraient juste
+fonctioner :
+
+- Composer ``C`` ``=`` donne ``€``
+- Composer ``1`` ``2`` donne ``½``
+- Composer ``'`` ``E`` donne ``É``
+- … …
+
+Où obtenir de l'aide
+~~~~~~~~~~~~~~~~~~~~
+
+Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
+
+N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
+<https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou la sur la
+`liste de diffusion des traductions de l'AFPy  <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+
+
+Ressources de traduction
+------------------------
+
+- `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
+- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode.
+- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_.
+- La `liste de diffusion doc-sig
+  <https://mail.python.org/mailman/listinfo/doc-sig>`_.
+- Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
+- Les `Glossaires et Dictionnaires de traduc.org
+  <https://traduc.org/Glossaires_et_dictionnaires>`_
+- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
+  déjà traduits.
+- `deepl.com/translator <https://www.deepl.com>`_
+
+
+Glossaire
+---------
+
+Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
+rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
+si vous n'êtes pas d'accord.
+
+Pour trouver facilement comment un terme est déjà traduit dans notre documentation,
+vous pouvez utiliser
+`find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
+
+========================== ===========================================
+Terme                      Traduction proposée
+========================== ===========================================
+-like                      -compatible
+abstract data type         type abstrait
+argument                   argument (Don't mix with parameter)
+backslash                  antislash, *backslash*
+bound                      lier
+bug                        bogue, *bug*
+built-in                   native
+call stack                 pile d'appels
+debugging                  débogage
+deep copy                  copie récursive (préféré), ou copie profonde.
+double quote               guillemet
+e.g.                       e.g. (pour *exempli gratia*)
+garbage collector          ramasse-miettes
+identifier                 identifiant
+immutable                  immuable
+installer                  installateur
+interpreter                interpréteur
+library                    bibliothèque
+list comprehension         liste en compréhension (liste en intension est
+                           valide, mais nous ne l'utilisons pas)
+little-endian, big-endian  `petit-boutiste, gros-boutiste
+                           <https://fr.wikipedia.org/wiki/Endianness>`_
+mutable                    muable
+namespace                  espace de nommage
+                           (sauf pour le XML où c'est espace de noms)
+parameter                  paramètre
+prompt                     invite
+raise                      lever
+regular expression         expression rationnelle, expression régulière
+return                     renvoie, donne (on évite
+                           "retourne" qui pourrait porter à confusion).
+simple quote               guillemet simple, apostrophe (apostrophe
+                           is to glue, guillemet is to surround)
+socket                     *socket*
+statement                  instruction
+subprocess                 sous-processus
+thread                     fil d'exécution
+underscore                 tiret bas, *underscore*
+expression				   expression
+========================== ===========================================
+
+Historique du projet
+--------------------
+
+Ce projet a été lancé `vers 2012
+<https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b6b5a4804d5f519ce3ea341e027c>`_
+par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
+est devenue la traduction officielle de la documentation Python en français
+grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+
+Simplifier les diffs git
+------------------------
+
+Les diffs git sont souvent encombrés de changements inutiles de numéros
+de ligne, comme :
+
+.. code-block:: diff
+
+    -#: ../Doc/library/signal.rst:406
+    +#: ../Doc/library/signal.rst:408
+
+Pour dire à git que ce ne sont pas des informations utiles, vous pouvez faire
+ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
+``PATH``.
+
+.. code-block:: bash
+
+    cat <<EOF > ~/.local/bin/podiff
+    #!/bin/sh
+    grep -v '^#:' "\$1"
+    EOF
+
+    chmod a+x ~/.local/bin/podiff
+
+    git config diff.podiff.textconv podiff
+
+Maintenance
+-----------
+
+Tous ces snippets doivent être exécutés à partir de la racine d'un clone de
+``python-docs-fr``, et certains s'attendent à trouver un clone de CPython à
+jour à proximité, comme :
+
+.. code-block:: bash
+
+  ~/
+  ├── python-docs-fr/
+  └── cpython/
+
+  Pour cloner CPython, vous pouvez utiliser :
+
+.. code-block:: bash
+
+  git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
+
+Ceci évite de télécharger tout l'historique (inutile pour générer la
+documentation) mais récupère néanmoins toutes les branches.
+
+Fusionner les fichiers *pot* de CPython
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make merge
+
+
+Trouver les chaînes de caractères *fuzzy*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make fuzzy
+
+
+Lancer un *build* en local
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make
+
+Synchroniser la traduction avec Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous aurez besoin de ``transifex-client`` et ``powrap``,
+de PyPI.
+
+Vous devrez configurer ``tx`` via ``tx init`` si ce n'est déjà fait.
+
+Propagez d'abord les traductions connues localement :
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po --to-files **/*.po
+   powrap --modified
+   git commit -m "Propagating known translations."
+
+
+Ensuite récupérez les changements depuis Transifex :
+
+.. code-block:: bash
+
+   pomerge --from-files **/*.po
+   tx pull -f
+   pomerge --to-files **/*.po
+   pomerge --from-files **/*.po
+   git checkout -- .
+   pomerge --to-files **/*.po
+   powrap --modified
+   git commit -m "tx pull"
+   tx push -t -f

@@ -81,7 +81,7 @@ Step by step:
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Next, you need to find a file to work on.
-You can use `potodo <https://github.com/seluj78/potodo>`, a tool made to find ``po`` to do.
+You can use `potodo <https://github.com/seluj78/potodo>`_, a tool made to find ``po`` to do.
 Install it using pip (``pip install potodo``) in a ``python3.7`` environement.
 Then run the command ``potodo`` in your cloned fork.
 From the list returned by the command, you can choose any file that is not reserved.
@@ -165,7 +165,7 @@ All the translations must be made on the latest release.
 We never translate on an oldest version. For example, if the latest python release
 is Python 3.7, we don't want to translate directly on the python 3.5 release.
 If needed translations would be backported on the oldest versions by the
-`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 
 What to translate
