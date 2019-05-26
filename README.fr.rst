@@ -42,9 +42,9 @@ Comment contribuer
 
 Vous pouvez contribuer en utilisant :
 
-- github (solution préférée)
+- Github (solution préférée)
 - `transifex <https://www.transifex.com/python-doc/public/>`_
-- Ou simplement en ouvrant `un ticket sur github <https://github.com/python/python-docs-fr/issues>`_
+- Ou simplement en ouvrant `un ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 
 
 Contribuer en utilisant Github
@@ -52,7 +52,7 @@ Contribuer en utilisant Github
 
 Prérequis :
 
-- Un compte `github <https://github.com/join>`_.
+- Un compte `Github <https://github.com/join>`_.
 - ``git`` `installé <https://help.github.com/articles/set-up-git/>`_ (pour Windows, voir
   https://gitforwindows.org/).
 - Un éditeur de fichier ``.po`` (Utilisez `poedit <https://poedit.net/>`_
@@ -63,14 +63,14 @@ Commencer :
 
 Vous aurez besoin de forker le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son boutton
-``Fork``. Ceci crée une copie du projet sur votre compte github : un endroit
+``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
 où vous avez le droit de faire des modifications.
 
 Étape par étape :
 
 .. code bloc:: bash
 
-    # Clonez votre fork github avec `git` en utilisant ssh :
+    # Clonez votre fork Github avec `git` en utilisant ssh :
     git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
     *OU* HTTPS :
     git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
@@ -96,9 +96,9 @@ renvoyée par la commande.
 car c'est très technique.**
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
-ouvrir un `ticket sur github <https://github.com/python/python-docs-fr>`_ dans
+ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr>`_ dans
 le format ``Je travaille sur RÉPERTOIRE/FICHIER.po``. Ceci permet à ``potodo``
-de détecter via l'API github les fichiers ``.po`` réservés dans les tickets
+de détecter via l'API Github les fichiers ``.po`` réservés dans les tickets
 et les *pull requests*.
 
 Vous êtes maintenant prêt à commencer une session de travail. Chaque
@@ -159,7 +159,7 @@ segment manquant :
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
 de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le
-rôle des personnes qui *fusionnent* les pull request après les avoir relues.
+rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
 branche de version (``3.6``, ``3.7``, ...), seulement les récupé les
