@@ -97,7 +97,7 @@ car c'est très technique.**
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur github <https://github.com/python/python-docs-fr>`_ dans
-le format `Je travaille sur RÉPERTOIRE/FICHIER.po`. Ceci permet à ``potodo``
+le format ``Je travaille sur RÉPERTOIRE/FICHIER.po``. Ceci permet à ``potodo``
 de détecter via l'API github les fichiers ``.po`` réservés dans les tickets
 et les *pull requests*.
 
@@ -216,17 +216,17 @@ Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
 cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
 transformer en ``—`` en français.
 
-Le cas de ":: :"
+Le cas de "::"
 ~~~~~~~~~~~~~~~~
 
-Du point de vue du *reStructuredText*, ``::``` collé à la fin d'un mot
-signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``.
-après un espace signifie "Juste Introduire un bloc de code".
+Du point de vue du *reStructuredText*, ``::`` collé à la fin d'un mot
+signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``
+après un espace signifie "Introduit juste un bloc de code".
 
 Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
 "bla bla. ::".
 
-En français, nous mettons un espace insécable devant nos colonnes, comme :
+En français, nous mettons un espace insécable devant nos deux-points, comme :
 "Et voilà :".
 
 L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
@@ -243,10 +243,9 @@ pas magiquement un espace insécable donc ce n'est toujours pas
 vraiment du français valide. Oui, il vaut mieux apprendre à taper
 les espaces insécables.
 
-Comment saisir des em-dash, des ellipses, des guillemets français, ou des
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-espaces insécables ?
-~~~~~~~~~~~~~~~~~~~~
+Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
 Sous Linux, vous pouvez utilisez une `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_, c'est
@@ -278,7 +277,7 @@ Où obtenir de l'aide
 Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
 
 N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
-<https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou la sur la
+<https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
 `liste de diffusion des traductions de l'AFPy  <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
@@ -286,15 +285,15 @@ Ressources de traduction
 ------------------------
 
 - `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode.
-- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_.
+- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
+- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
 - La `liste de diffusion doc-sig
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_.
+  <https://mail.python.org/mailman/listinfo/doc-sig>`_
 - Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
 - Les `Glossaires et Dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
 - `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
-  déjà traduits.
+  déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
 
 
