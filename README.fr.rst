@@ -70,15 +70,16 @@ où vous avez le droit de faire des modifications.
 
 .. code bloc:: bash
 
-    # Clonez votre fork github avec `git` en utilisant ssh ou https :
+    # Clonez votre fork github avec `git` en utilisant ssh :
     git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    *OU* HTTPS :
     git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
 
     # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
     # Ajoutez le dépot upstream (le dépôt public) en utilisant HTTPS (git
-    # ne demandera pas de mot de passe ainsi) :
+    # ne demandera pas de mot de passe ainsi) :
     # Ceci permet à git de savoir quoi/où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
@@ -105,24 +106,71 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 .. code bloc:: bash
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour (fraîchement récupérée)
-    # de la branche upstream/3.7. Nous appellerons notre branche "library-sys" mais vous appellerez la vôtre
-    # ce que vous voulez. Habituellement, vous nommerez une branche en fonction du fichier sur lequel vous travaillez.
+    # de la branche upstream/3.7. Nous appellerons notre branche "library-sys" mais vous pouvez appeller la vôtre
+    # ce que vous voulez. En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
     # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre branche "library-venv".
 
-    # Mettez à jour votre version locale à la dernière version
+    # Mettez à jour votre version locale
     git fetch upstream
-    # Créer une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
+    # Créez une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
     git checkout -b library-sys upstream/3.7
 
     # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit,
     # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
-    bibliothèque poedit/sys.po
+    poedit library/sys.po
 
     # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier tous les fichiers
-    # ou remplacez **/*.po par votre fichier spécifique (recommandé).
+    # ou remplacez **/*.po par le fichier que vous traduisez (recommandé).
 
-    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va ré-envelopper
-    # Vous avez modifié le fichier à la longueur de ligne correcte de `80'.
-    # Exécutez cette commande : `powrap **/*.
+    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va refformater
+    # le fichier que avez vous avez modifié à la longueur de ligne correcte de `80`.
+    # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
+    # que vous traduisez
+
+    # Poussez ensuite vos modifications sur votre fork Github,
+    # comme ce sont des branches éphémères, ne configurons pas git pour les suivre toutes,
+    # "origin HEAD" est une syntaxe "spéciale" pour dire "pousse sur origin,
+    # sur une branche du même nom que la branch locale",
+    # c'est pratique car c'est exactement ce que nous voulons :
+    git push origin HEAD
+
+    # La commande précédente vous affichera un lien pour ouvrir une pull request sur Github.
+    # Si vous l'avez manqué, allez simplement
+    # https://github.com/python/python-docs-fr/ et une joli boutton "Compare & pull request"
+    # devrait apparaître au bout de quelques secondes vous indiquant que vous pouvez demander
+    # une pull request
+
+    # À partir de là, Quelqu'un passera en revue vos modifications, et vous voudrez probablement
+    # corriger les erreurs qu'ils auront trouvé, alors retournez sur votre branche
+    # (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
+    git checkout glossary
+    # Réglez les problèmes, puis commitez à nouveau :
+    git commit -a -m "glossaire : petites corrections".
+    git push origin HEAD
+
+Vous avez peut-être remarqué que cela ressemble à un triangle, avec un segment
+manquant :
+
+- Vous récupérez depuis *upstream* (le dépôt commun public sur Github)
+- Vous poussez sur *origin* (votre clone sur Github)
+
+Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
+de votre fichier au public en amont, pour "boucler la boucle ", c'est le rôle
+des personnes qui *fusionnent* les pull request après les avoir relues.
+
+Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
+branche de version(``3.6``, ``3.7``, ...), seulement les récupé les
+modifications à partir d'elles. Considérez-les comme étant en lecture seule,
+vous éviterez les problèmes.
+
+Avant de valider, vous devez utiliser `grammalecte
+<https://grammalecte.net/>`_ pour vérifier vos traductions.
+
+
+Toutes les traductions doivent être faites sur la dernière version.
+Nous ne traduisons jamais sur une version plus ancienne. Par exemple, si la dernière version de python
+est Python 3.7, nous ne voulons pas traduire directement sur la version python 3.5.
+Si nécessaire, les traductions seraient rétroportées sur les versions les plus anciennes par la fonction
+Équipe de documentation <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
