@@ -52,7 +52,7 @@ Contributing using Github
 Prerequisites:
 
 - A `github account <https://github.com/join>`_.
-- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for windows, see
+- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for Windows, see
   https://gitforwindows.org/).
 - A ``.po`` file editor (Use `poedit <https://poedit.net/>`_
   if you don't already have one).
@@ -81,8 +81,10 @@ Step by step:
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Next, you need to find a file to work on.
+
 You can use `potodo <https://github.com/seluj78/potodo>`_, a tool made to find ``po`` to do.
-Install it using pip (``pip install potodo``) in a ``python3.7`` environement.
+Install it using pip (``pip install potodo``) in a ``python3.6`` (or more) environement.
+
 Then run the command ``potodo`` in your cloned fork.
 From the list returned by the command, you can choose any file that is not reserved.
 
