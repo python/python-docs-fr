@@ -81,14 +81,19 @@ Step by step:
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Next, you need to find a file to work on.
-You can use `potodo <https://github.com/seluj78/potodo>`, a tool made to find ``po`` to do.
+
+You can use `potodo <https://github.com/seluj78/potodo>`_, a tool made to find ``po`` to do.
 Install it using pip (``pip install potodo``) in a ``python3.6`` (or more) environement.
+
 Then run the command ``potodo`` in your cloned fork.
 From the list returned by the command, you can choose any file that is not reserved.
 
 **We recommend not starting with a file from ``c-api`` as it is very technical.**
 
-Once you've choosen a file to work one, please open an `issue on github <https://github.com/python/python-docs-fr>` in the format of `I'm working on FOLDER/FILE.po`. This is done to update ``potodo`` as it checks the github API for reserved ``.po`` files in issues and pull requests.
+Once you've choosen a file to work one, please open an
+`issue on github <https://github.com/python/python-docs-fr>`_ in the format of
+`I'm workingon FOLDER/FILE.po`. This is done to update ``potodo`` as it checks
+the github API for reserved ``.po`` files in issues and pull requests.
 
 Now you're ready to start a work session. Each time you'll start a new file, start here:
 
