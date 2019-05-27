@@ -22,8 +22,8 @@ fournir vos améliorations à la documentation de Python ou à la traduction
 de la documentation de Python pour le bénéfice de la PSF sous licence CC0
 (disponible à l'adresse
 https://creativecommons.org/publicdomain/zero/1.0/legalcode). En retour, vous
-pouvez demander de la reconnaissance publique pour la partie de la documentation
-que vous avez contribué à traduire et si votre traduction est acceptée par la
+pouvez demander à ce que votre contribution à la documentattion soit
+publiquement reconnue, et si votre traduction est acceptée par la
 PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant une
 annotation appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
 rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
@@ -61,7 +61,7 @@ Prérequis :
 
 Commencer :
 
-Vous aurez besoin de forker le dépôt des sources `python-docs-fr
+Vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
 ``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
 où vous avez le droit de faire des modifications.
@@ -181,8 +181,8 @@ les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 
-Que traduire
-~~~~~~~~~~~~
+Que traduire ?
+~~~~~~~~~~~~~~
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
@@ -273,8 +273,8 @@ fonctionner :
 - Composer ``'`` ``E`` donne ``É``
 - … …
 
-Où obtenir de l'aide
-~~~~~~~~~~~~~~~~~~~~
+Où obtenir de l'aide ?
+~~~~~~~~~~~~~~~~~~~~~~
 
 Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
 
@@ -392,9 +392,9 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 Maintenance
 -----------
 
-Tous ces snippets doivent être exécutés à partir de la racine d'un clone de
-``python-docs-fr``, et certains s'attendent à trouver un clone de CPython à
-jour à proximité, comme :
+Toutes ces commandes doivent être exécutées à partir de la racine d'un clone
+de ``python-docs-fr``, et certains s'attendent à trouver un clone de CPython
+à jour à proximité, comme :
 
 .. code-block:: bash
 
