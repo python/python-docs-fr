@@ -438,7 +438,7 @@ Synchroniser la traduction avec Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous aurez besoin de ``transifex-client`` et ``powrap``,
-de PyPI.
+depuis PyPI.
 
 Vous devrez configurer ``tx`` via ``tx init`` si ce n'est déjà fait.
 
