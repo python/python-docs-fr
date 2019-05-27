@@ -402,7 +402,7 @@ de ``python-docs-fr``, et certains s'attendent à trouver un clone de CPython
   ├── python-docs-fr/
   └── cpython/
 
-  Pour cloner CPython, vous pouvez utiliser :
+Pour cloner CPython, vous pouvez utiliser :
 
 .. code-block:: bash
 
