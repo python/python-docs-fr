@@ -72,7 +72,7 @@ où vous avez le droit de faire des modifications.
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
     git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
-    *OU* HTTPS :
+    # *OU* HTTPS :
     git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
 
     # Allez dans le répertoire cloné :
@@ -106,10 +106,12 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
 .. code-block:: bash
 
-    # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour (fraîchement récupérée)
-    # de la branche upstream/3.7. Nous appellerons notre branche "library-sys" mais vous pouvez appeller la vôtre
-    # ce que vous voulez. En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
-    # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre branche "library-venv".
+    # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
+    # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
+    # "library-sys" mais vous pouvez appeller la vôtre ce que vous voulez.
+    # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
+    # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
+    # branche "library-venv".
 
     # Mettez à jour votre version locale
     git fetch upstream
@@ -122,30 +124,29 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
-    # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier tous les fichiers
-    # ou remplacez **/*.po par le fichier que vous traduisez (recommandé).
+    # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
+    # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
 
-    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va refformater
-    # le fichier que avez vous avez modifié à la longueur de ligne correcte de `80`.
+    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va refformater le fichier
+    # que avez vous avez modifié à la longueur de ligne correcte de `80`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
 
     # Poussez ensuite vos modifications sur votre fork Github,
-    # comme ce sont des branches éphémères, ne configurons pas git pour les suivre toutes,
-    # "origin HEAD" est une syntaxe "spéciale" pour dire "pousse sur origin,
+    # comme ce sont des branches éphémères, ne configurons pas git pour les suivre
+    # toutes, "origin HEAD" est une syntaxe "spéciale" pour dire "pousse sur origin,
     # sur une branche du même nom que la branch locale",
     # c'est pratique car c'est exactement ce que nous voulons :
     git push origin HEAD
 
-    # La commande précédente vous affichera un lien pour ouvrir une pull request sur Github.
-    # Si vous l'avez manqué, allez simplement
-    # https://github.com/python/python-docs-fr/ et une joli boutton "Compare & pull request"
-    # devrait apparaître au bout de quelques secondes vous indiquant que vous pouvez demander
-    # une pull request
+    # La commande précédente vous affichera un lien pour ouvrir une pull request sur
+    # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
+    # et une joli boutton "Compare & pull request" devrait apparaître au bout de quelques secondes
+    # vous indiquant que vous pouvez demander une pull request
 
-    # À partir de là, Quelqu'un passera en revue vos modifications, et vous voudrez probablement
-    # corriger les erreurs qu'ils auront trouvé, alors retournez sur votre branche
-    # (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
+    # À partir de là, Quelqu'un passera en revue vos modifications, et vous voudrez
+    # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
+    #  branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "glossaire : petites corrections".
