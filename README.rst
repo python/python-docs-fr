@@ -231,7 +231,7 @@ Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
 En français, nous mettons un espace insécable devant nos deux-points, comme :
 "Et voilà :".
 
-L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
+L'utilisation de l'espace insécable en rst est naturelle, vous n'aurez qu'à
 écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
 il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
