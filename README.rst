@@ -17,15 +17,15 @@ Accord de Contribution à la Documentation
 NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
 est maintenue grâce à un réseau mondial de bénévoles. En publiant ce projet
 sur Transifex, Github, et d'autres endroits publics, et vous invitant
-à participer, ceci est un accord qui stipule que vous acceptez de
-fournir vos améliorations à la documentation de Python ou à la traduction
-de la documentation de Python pour le bénéfice de la PSF sous licence CC0
-(disponible à l'adresse
+à participer, la PSF vous enjoint à accepter cet accord qui stipule que vous
+acceptez de fournir vos améliorations à la documentation de Python ou à la
+traduction de la documentation de Python pour le bénéfice de la PSF sous licence
+CC0 (disponible à l'adresse
 https://creativecommons.org/publicdomain/zero/1.0/legalcode). En retour, vous
 pouvez demander à ce que votre contribution à la documentattion soit
 publiquement reconnue, et si votre traduction est acceptée par la
-PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant une
-annotation appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
+PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant
+une modification appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
 rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
 à incorporer votre contribution textuelle, votre participation à la communauté
 Python est bienvenue et appréciée.
