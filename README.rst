@@ -24,7 +24,7 @@ de la documentation de Python pour le bénéfice de la PSF sous licence CC0
 https://creativecommons.org/publicdomain/zero/1.0/legalcode). En retour, vous
 pouvez demander de la reconnaissance publique pour la partie de la documentation
 que vous avez contribué à traduire et si votre traduction est acceptée par la
-PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un patch incluant une
+PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant une
 annotation appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
 rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
 à incorporer votre contribution textuelle, votre participation à la communauté
@@ -42,7 +42,7 @@ Comment contribuer
 
 Vous pouvez contribuer en utilisant :
 
-- Github (solution préférée)
+- Github (solution recommandée)
 - `transifex <https://www.transifex.com/python-doc/public/>`_
 - Ou simplement en ouvrant `un ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 
@@ -62,7 +62,7 @@ Prérequis :
 Commencer :
 
 Vous aurez besoin de forker le dépôt des sources `python-docs-fr
-<https://github.com/python/python-docs-fr>`_ en cliquant sur son boutton
+<https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
 ``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
 où vous avez le droit de faire des modifications.
 
@@ -127,7 +127,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
     # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
 
-    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va refformater le fichier
+    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
     # que avez vous avez modifié à la longueur de ligne correcte de `80`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
@@ -141,10 +141,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
     # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
-    # et une joli boutton "Compare & pull request" devrait apparaître au bout de quelques secondes
+    # et un joli bouton "Compare & pull request" devrait apparaître au bout de quelques secondes
     # vous indiquant que vous pouvez demander une pull request
 
-    # À partir de là, Quelqu'un passera en revue vos modifications, et vous voudrez
+    # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
     # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
     #  branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
@@ -160,11 +160,11 @@ segment manquant :
 - Vous poussez sur *origin* (votre clone sur Github)
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre *origin* au *upstream* public, pour "boucler la boucle ". C'est le
+de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.6``, ``3.7``, ...), seulement les récupéré les
+branche de version (``3.6``, ``3.7``, ...), seulement récupéré les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
@@ -223,25 +223,25 @@ Le cas de "::"
 
 Du point de vue du *reStructuredText*, ``::`` collé à la fin d'un mot
 signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``
-après un espace signifie "introduit juste un bloc de code".
+après une espace signifie "introduit juste un bloc de code".
 
 Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
 "bla bla. ::".
 
-En français, nous mettons un espace insécable devant nos deux-points, comme :
+En français, nous mettons une espace insécable devant nos deux-points, comme :
 "Et voilà :".
 
 L'utilisation de l'espace insécable en rst est naturelle, vous n'aurez qu'à
 écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
 il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
-Si vous ne savez pas comment taper un espace insécable, il y a une astuce.
+Si vous ne savez pas comment taper une espace insécable, il y a une astuce.
 Traduisez ``deux-points deux-points`` par
 ``espace deux-points espace deux-points deux-points``. La balise
 ``espace deux-points`` donnera un rendu de votre espace et vos deux-points
 comme le français l'exige, et la ``espace deux-points deux-points`` qui
 suit n'affichera rien et introduira le bloc de code. Non, il n'insère
-pas magiquement un espace insécable donc ce n'est toujours pas
+pas magiquement une espace insécable donc ce n'est toujours pas
 vraiment du français valide. Oui, il vaut mieux apprendre à taper
 les espaces insécables.
 
@@ -292,7 +292,7 @@ Ressources de traduction
 - La `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_
 - Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
-- Les `Glossaires et Dictionnaires de traduc.org
+- Les `Glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
 - `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
   déjà traduit
