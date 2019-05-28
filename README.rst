@@ -22,7 +22,7 @@ acceptez de fournir vos améliorations à la documentation de Python ou à la
 traduction de la documentation de Python pour le bénéfice de la PSF sous licence
 CC0 (disponible à l'adresse
 https://creativecommons.org/publicdomain/zero/1.0/legalcode). En retour, vous
-pouvez demander à ce que votre contribution à la documentattion soit
+pouvez demander à ce que votre contribution à la documentation soit
 publiquement reconnue, et si votre traduction est acceptée par la
 PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant
 une modification appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
@@ -55,7 +55,7 @@ Prérequis :
 - Un compte `Github <https://github.com/join>`_.
 - ``git`` `installé <https://help.github.com/articles/set-up-git/>`_ (pour Windows, voir
   https://gitforwindows.org/).
-- Un éditeur de fichier ``.po`` (Utilisez `poedit <https://poedit.net/>`_
+- Un éditeur de fichier ``.po`` (utilisez `poedit <https://poedit.net/>`_
   si vous n'en avez pas déjà un).
 
 
@@ -93,7 +93,7 @@ Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée par la commande.
 
 **Nous vous recommandons de ne pas commencer avec un fichier de ``c-api``
-car c'est très technique.**
+car c'est une partie très technique.**
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr>`_ dans
@@ -108,7 +108,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
     # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
-    # "library-sys" mais vous pouvez appeller la vôtre ce que vous voulez.
+    # "library-sys" mais vous pouvez appeller la vôtre comme vous voulez.
     # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
     # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
     # branche "library-venv".
@@ -118,7 +118,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Créez une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
     git checkout -b library-sys upstream/3.7
 
-    # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit,
+    # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
     # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
@@ -146,7 +146,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
     # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
-    #  branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
+    # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "glossaire : petites corrections".
@@ -208,7 +208,7 @@ La version anglaise utilise une chose nommée `smartquotes
 <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
 essaie d'être intelligente, qui fonctionne en anglais, mais cause
 rapidement des problèmes dans d'autres langues.
-Nous l'avons donc désactivé.
+Nous l'avons donc désactivée.
 
 Les *smartquotes* sont également responsables de la transformation de
 ``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
@@ -239,7 +239,7 @@ Si vous ne savez pas comment taper une espace insécable, il y a une astuce.
 Traduisez ``deux-points deux-points`` par
 ``espace deux-points espace deux-points deux-points``. La balise
 ``espace deux-points`` donnera un rendu de votre espace et vos deux-points
-comme le français l'exige, et la ``espace deux-points deux-points`` qui
+comme le français l'exige, et la balise ``espace deux-points deux-points`` qui
 suit n'affichera rien et introduira le bloc de code. Non, il n'insère
 pas magiquement une espace insécable donc ce n'est toujours pas
 vraiment du français valide. Oui, il vaut mieux apprendre à taper
@@ -265,7 +265,7 @@ compositions suivantes :
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
-à retenir, vous pouvez donc essayer les autres et elles devraient juste
+à retenir, vous pouvez donc essayer les autres et elles devraient tout simplement
 fonctionner :
 
 - Composer ``C`` ``=`` donne ``€``
@@ -360,7 +360,7 @@ Historique du projet
 Ce projet a été lancé `vers 2012
 <https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b6b5a4804d5f519ce3ea341e027c>`_
 par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
-est devenue la traduction officielle de la documentation Python en français
+est devenu la traduction officielle de la documentation Python en français
 grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
 
 Simplifier les diffs git
