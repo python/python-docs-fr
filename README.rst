@@ -446,7 +446,7 @@ Propagez d'abord les traductions connues localement :
 
 .. code-block:: bash
 
-   pomerge --from-files **/*.po --to-files **/*.po
+   pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
    powrap --modified
    git commit -m "Propagating known translations."
 
@@ -455,12 +455,11 @@ Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
-   pomerge --from-files **/*.po
    tx pull -f
-   pomerge --to-files **/*.po
    pomerge --from-files **/*.po
    git checkout -- .
-   pomerge --to-files **/*.po
+   pomerge --to-files --no-overwrite --mark-as-fuzzy **/*.po
    powrap --modified
+   git add -p
    git commit -m "tx pull"
-   tx push -t -f
+   tx push -t -f --no-interactive
