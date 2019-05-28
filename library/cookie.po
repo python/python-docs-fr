@@ -48,6 +48,13 @@ msgid ""
 "comes to Cookie handling.  As a result, the parsing rules used are a bit "
 "less strict."
 msgstr ""
+"Auparavant, le module appliquait strictement les règles d'analyse décrites "
+"dans les spécifications :rfc:`2109` et :rfc:`2068`. Entre temps, il a été "
+"découvert que Internet Explorer 3.0 ne suit pas les règles liées aux "
+"caractères précisées dans ces spécifications. De plus, plusieurs navigateurs "
+"et serveurs dans leur versions récentes ont assoupli les règles d'analyse "
+"quant à la gestion des témoins. En conséquence, les règles d'analyse "
+"utilisées sont un peu moins strictes que les spécifications initiales."
 
 #: ../Doc/library/cookie.rst:29
 msgid ""
@@ -62,12 +69,17 @@ msgid ""
 "cookie data comes from a browser you should always prepare for invalid data "
 "and catch :exc:`CookieError` on parsing."
 msgstr ""
+"Quand un témoin invalide est rencontré, l'exception :exc:`CookieError` est "
+"levée. Si les données du témoin proviennent d'un navigateur il faut "
+"impérativement gérer les données invalides en attrapant :exc:`CookieError`."
 
 #: ../Doc/library/cookie.rst:43
 msgid ""
 "Exception failing because of :rfc:`2109` invalidity: incorrect attributes, "
 "incorrect :mailheader:`Set-Cookie` header, etc."
 msgstr ""
+"Exception levée pour cause d'incompatibilité avec la :rfc:`2109`. Exemples : "
+"attributs incorrects, en-tête ``Set-Cookie`` incorrect, etc."
 
 #: ../Doc/library/cookie.rst:49
 msgid ""
@@ -76,10 +88,15 @@ msgid ""
 "value, the value is first converted to a :class:`Morsel` containing the key "
 "and the value."
 msgstr ""
+"Cette classe définit un dictionnaire dont les clés sont des chaines de "
+"caractères et dont les valeurs sont des instances de :class:`Morsel`. Notez "
+"qu'à l'assignation d'une valeur à une clé, la valeur est transformée en :"
+"class:`Morsel` contenant la clé et la valeur."
 
 #: ../Doc/library/cookie.rst:53
 msgid "If *input* is given, it is passed to the :meth:`load` method."
 msgstr ""
+"Si l'argument *input* est donné, il est passé à la méthode :meth:`load`."
 
 #: ../Doc/library/cookie.rst:58
 msgid ""
@@ -138,15 +155,15 @@ msgstr ""
 
 #: ../Doc/library/cookie.rst:98
 msgid ":rfc:`2109` - HTTP State Management Mechanism"
-msgstr ""
+msgstr ":rfc:`2109` - HTTP State Management Mechanism"
 
 #: ../Doc/library/cookie.rst:99
 msgid "This is the state management specification implemented by this module."
-msgstr ""
+msgstr "Spécification de gestion d'états implantée par ce module."
 
 #: ../Doc/library/cookie.rst:105
 msgid "Cookie Objects"
-msgstr ""
+msgstr "Objets *Cookie*"
 
 #: ../Doc/library/cookie.rst:110
 msgid ""
@@ -167,6 +184,10 @@ msgid ""
 "In general, it should be the case that :meth:`value_encode` and :meth:"
 "`value_decode` are inverses on the range of *value_decode*."
 msgstr ""
+"Généralement, les méthodes :meth:`value_encode` et :meth:`value_decode` "
+"doivent être inverses l'une de l'autre, c'est-à-dire qu'en envoyant la "
+"sortie de l'un dans l'entrée de l'autre la valeur finale doit être égale à "
+"la valeur initiale."
 
 #: ../Doc/library/cookie.rst:127
 msgid ""
@@ -175,6 +196,10 @@ msgid ""
 "is used to join the headers together, and is by default the combination "
 "``'\\r\\n'`` (CRLF)."
 msgstr ""
+"Renvoie une représentation textuelle compatible avec les en-têtes HTTP. "
+"*attrs et *header* sont envoyés à la méthode :meth:`output` de chaque "
+"classe :class:`Morsel`. *sep* est le séparateur à utiliser pour joindre les "
+"valeurs d'en-têtes. Sa valeur par défaut est ``'\\r\\n'`` (CRLF)."
 
 #: ../Doc/library/cookie.rst:132
 msgid ""
@@ -187,11 +212,14 @@ msgid ""
 "Return an embeddable JavaScript snippet, which, if run on a browser which "
 "supports JavaScript, will act the same as if the HTTP headers was sent."
 msgstr ""
+"Renvoie un extrait de code JavaScript qui, lorsque exécuté par un navigateur "
+"qui supporte le JavaScript, va fonctionner de la même manière que si les en-"
+"têtes HTTP avaient été envoyés."
 
 #: ../Doc/library/cookie.rst:142 ../Doc/library/cookie.rst:224
 #: ../Doc/library/cookie.rst:232
 msgid "The meaning for *attrs* is the same as in :meth:`output`."
-msgstr ""
+msgstr "*attrs* a la même signification que dans la méthode :meth:`output`."
 
 #: ../Doc/library/cookie.rst:147
 msgid ""
@@ -199,20 +227,28 @@ msgid ""
 "found there as :class:`Morsel`\\ s. If it is a dictionary, it is equivalent "
 "to::"
 msgstr ""
+"Si *rawdata* est une chaine de caractères, l'analyser comme étant un "
+"``HTTP_COOKIE`` et ajouter les valeurs trouvées en tant que :class:`Morsel`"
+"\\ s. S'il s'agit d'un dictionnaire, cela est équivalent à ::"
 
 #: ../Doc/library/cookie.rst:157
 msgid "Morsel Objects"
-msgstr ""
+msgstr "Objets *Morsel*"
 
 #: ../Doc/library/cookie.rst:162
 msgid "Abstract a key/value pair, which has some :rfc:`2109` attributes."
 msgstr ""
+"Abstraction de paire clé / valeur, accompagnée d'attributs provenant de la "
+"spécification :rfc:`2109`."
 
 #: ../Doc/library/cookie.rst:164
 msgid ""
 "Morsels are dictionary-like objects, whose set of keys is constant --- the "
 "valid :rfc:`2109` attributes, which are"
 msgstr ""
+"Les objets *Morsel* sont des objets compatibles dictionnaire, dont "
+"l'ensemble des clés est fixe et égal aux attributs :rfc:`2109` valides, qui "
+"sont"
 
 #: ../Doc/library/cookie.rst:167
 msgid "``expires``"
@@ -252,6 +288,9 @@ msgid ""
 "in HTTP requests, and is not accessible through JavaScript. This is intended "
 "to mitigate some forms of cross-site scripting."
 msgstr ""
+"L'attribut :attr:`httponly` spécifie que le témoin transféré dans les "
+"requêtes HTTP n'est pas accessible par le biais de JavaScript. Il s'agit "
+"d'une contremesure à certaines attaques de scripts inter-sites (*XSS*)."
 
 #: ../Doc/library/cookie.rst:180
 msgid "The keys are case-insensitive."
@@ -263,23 +302,23 @@ msgstr ""
 
 #: ../Doc/library/cookie.rst:188
 msgid "The value of the cookie."
-msgstr ""
+msgstr "La valeur du témoin."
 
 #: ../Doc/library/cookie.rst:193
 msgid "The encoded value of the cookie --- this is what should be sent."
-msgstr ""
+msgstr "La valeur codée du témoin. C'est celle qui doit être transférée."
 
 #: ../Doc/library/cookie.rst:198
 msgid "The name of the cookie."
-msgstr ""
+msgstr "Le nom du témoin."
 
 #: ../Doc/library/cookie.rst:203
 msgid "Set the *key*, *value* and *coded_value* attributes."
-msgstr ""
+msgstr "Assigne les attributs *key*, *value* et *coded_value*."
 
 #: ../Doc/library/cookie.rst:208
 msgid "Whether *K* is a member of the set of keys of a :class:`Morsel`."
-msgstr ""
+msgstr "Renvoie si *K* est membre des clés d'un :class:`Morsel`."
 
 #: ../Doc/library/cookie.rst:213
 msgid ""
@@ -288,18 +327,27 @@ msgid ""
 "given, in which case it should be a list of attributes to use. *header* is "
 "by default ``\"Set-Cookie:\"``."
 msgstr ""
+"Renvoie une représentation textuelle du *Morsel* compatible avec les en-"
+"têtes HTTP. Par défaut, tous les attributs sont inclus, à moins que *attrs* "
+"ne soit renseigné. Dans ce cas la valeur doit être une liste d'attributs à "
+"utiliser. Par défaut, *header* a la valeur ``\"Set-Cookie:\"``."
 
 #: ../Doc/library/cookie.rst:221
 msgid ""
 "Return an embeddable JavaScript snippet, which, if run on a browser which "
 "supports JavaScript, will act the same as if the HTTP header was sent."
 msgstr ""
+"Renvoie un extrait de code JavaScript qui, lorsque exécuté par un navigateur "
+"qui supporte le JavaScript, va fonctionner de la même manière que si les en-"
+"têtes HTTP avaient été envoyés."
 
 #: ../Doc/library/cookie.rst:229
 msgid ""
 "Return a string representing the Morsel, without any surrounding HTTP or "
 "JavaScript."
 msgstr ""
+"Renvoie une chaine de caractères représentant le *Morsel*, nettoyé de son "
+"contexte HTTP ou JavaScript."
 
 #: ../Doc/library/cookie.rst:238
 msgid "Example"

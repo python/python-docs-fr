@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:7
 msgid "Gordon McMillan"
-msgstr ""
+msgstr "Gordon McMillan"
 
 #: ../Doc/howto/sockets.rst:0
 msgid "Abstract"
@@ -118,6 +118,12 @@ msgid ""
 "machine.  ``s.bind(('', 80))`` specifies that the socket is reachable by any "
 "address the machine happens to have."
 msgstr ""
+"Quelques remarques : nous avons utilisé ``socket.gethostname()`` pour que le "
+"connecteur soit visible par le monde extérieur. Si nous avions utilisé ``s."
+"bind((('localhost', 80))`` ou ``s.bind((('127.0.0.0.1', 80))`` nous aurions "
+"encore un connecteur \"serveur\", mais qui ne serait visible que sur la "
+"machine même. ``s.bind('', 80)]`` spécifie que le socket est accessible par "
+"toute adresse que la machine possède."
 
 #: ../Doc/howto/sockets.rst:91
 msgid ""
@@ -125,6 +131,9 @@ msgid ""
 "known\" services (HTTP, SNMP etc). If you're playing around, use a nice high "
 "number (4 digits)."
 msgstr ""
+"Une deuxième chose à noter : les ports dont le numéro est petit sont "
+"généralement réservés aux services \"bien connus\" (HTTP, SNMP, etc.). Si "
+"vous expérimentez, utilisez un nombre suffisamment élevé (4 chiffres)."
 
 #: ../Doc/howto/sockets.rst:95
 msgid ""
@@ -133,6 +142,10 @@ msgid ""
 "outside connections. If the rest of the code is written properly, that "
 "should be plenty."
 msgstr ""
+"Enfin, l'argument ``listen`` indique à la bibliothèque de connecteurs que "
+"nous voulons qu'elle mette en file d'attente jusqu'à 5 requêtes de connexion "
+"(le maximum normal) avant de refuser les connexions externes. Si le reste du "
+"code est écrit correctement, cela devrait suffire."
 
 #: ../Doc/howto/sockets.rst:99
 msgid ""
@@ -158,7 +171,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:125
 msgid "IPC"
-msgstr ""
+msgstr "Communication Entre Processus"
 
 #: ../Doc/howto/sockets.rst:127
 msgid ""
@@ -227,6 +240,10 @@ msgid ""
 "request, then reads a reply.  That's it. The socket is discarded. This means "
 "that a client can detect the end of the reply by receiving 0 bytes."
 msgstr ""
+"Un protocole comme HTTP utilise un connecteur pour un seul transfert. Le "
+"client envoie une demande, puis lit une réponse. C'est tout. Le connecteur "
+"est mis au rebut. Cela signifie qu'un client peut détecter la fin de la "
+"réponse en recevant 0 octet."
 
 #: ../Doc/howto/sockets.rst:172
 msgid ""
@@ -241,12 +258,27 @@ msgid ""
 "they are* (much better), *or end by shutting down the connection*. The "
 "choice is entirely yours, (but some ways are righter than others)."
 msgstr ""
+"Mais si vous prévoyez de réutiliser votre connecteur pour d'autres "
+"transferts, vous devez réaliser que il n'y a *pas* d':abbr:`EOT (End of "
+"Transfer)` sur un connecteur. Je répète : si un connecteur ``send`` ou "
+"``recv`` retourne après avoir manipulé 0 octets, la connexion a été "
+"interrompue. Si la connexion n'a *pas* été interrompue, vous pouvez attendre "
+"sur un ``recv`` pour toujours, car le connecteur ne vous dira pas qu'il n'y "
+"a plus rien à lire (pour le moment). Maintenant, si vous y réfléchissez un "
+"peu, vous allez vous rendre compte d'une vérité fondamentale sur les "
+"connecteurs : *les messages doivent être de longueur fixe* (beurk), *ou être "
+"délimités* (haussement d'épaules), *ou indiquer de quelle longueur ils sont* "
+"(beaucoup mieux), *ou terminer en coupant la connexion*. Le choix est "
+"entièrement de votre côté, (mais certaines façons sont plus justes que "
+"d'autres)."
 
 #: ../Doc/howto/sockets.rst:183
 msgid ""
 "Assuming you don't want to end the connection, the simplest solution is a "
 "fixed length message::"
 msgstr ""
+"En supposant que vous ne vouliez pas terminer la connexion, la solution la "
+"plus simple est un message de longueur fixe ::"
 
 #: ../Doc/howto/sockets.rst:220
 msgid ""
@@ -298,7 +330,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:255
 msgid "Binary Data"
-msgstr ""
+msgstr "Données binaires"
 
 #: ../Doc/howto/sockets.rst:257
 msgid ""
@@ -324,7 +356,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:275
 msgid "Disconnecting"
-msgstr ""
+msgstr "Déconnexion"
 
 #: ../Doc/howto/sockets.rst:277
 msgid ""
@@ -388,6 +420,10 @@ msgid ""
 "calls, in much the same ways. It's just that, if you do it right, your app "
 "will be almost inside-out."
 msgstr ""
+"Si vous avez compris ce qui précède, vous savez déjà tout ce que vous devez "
+"savoir sur la mécanique de l'utilisation des connecteurs. Vous utiliserez "
+"toujours les mêmes appels, de la même façon. C'est juste que, si vous le "
+"faites bien, votre application sera presque dans la poche."
 
 #: ../Doc/howto/sockets.rst:323
 msgid ""
@@ -398,6 +434,13 @@ msgid ""
 "the exact same idea. You do this after creating the socket, but before using "
 "it. (Actually, if you're nuts, you can switch back and forth.)"
 msgstr ""
+"En Python, vous utilisez ``socket.setblocking(0)`` pour le rendre non-"
+"bloquant. En C, c'est plus complexe, (pour commencer, vous devez choisir "
+"entre la version BSD ``O_NONBLOCK`` et la version Posix presque impossible à "
+"distinguer ``O_NDELAY``, qui est complètement différente de "
+"``TCP_NODELAY``), mais c'est exactement la même idée. Vous le faites après "
+"avoir créé le connecteur mais avant de l'utiliser (en fait, si vous êtes "
+"fou, vous pouvez alterner)."
 
 #: ../Doc/howto/sockets.rst:330
 msgid ""
@@ -411,7 +454,7 @@ msgstr ""
 
 #: ../Doc/howto/sockets.rst:337
 msgid "Use ``select``."
-msgstr ""
+msgstr "Utiliser ``select``."
 
 #: ../Doc/howto/sockets.rst:339
 msgid ""
@@ -419,6 +462,9 @@ msgid ""
 "but it's close enough to the C version that if you understand ``select`` in "
 "Python, you'll have little trouble with it in C::"
 msgstr ""
+"En C, implémenter ``select`` est assez complexe. En Python, c'est du gâteau, "
+"mais c'est assez proche de la version C ; aussi, si vous comprenez "
+"``select`` en Python, vous aurez peu de problèmes avec lui en C ::"
 
 #: ../Doc/howto/sockets.rst:350
 msgid ""
@@ -447,6 +493,14 @@ msgid ""
 "nothing.  (Actually, any reasonably healthy socket will return as writable - "
 "it just means outbound network buffer space is available.)"
 msgstr ""
+"Si un connecteur se trouve dans la liste des sorties que vous pouvez lire, "
+"vous pouvez être pratiquement certain qu'un ``recv`` sur ce connecteur "
+"retournera *quelque chose*. Même chose pour la liste des sorties sur "
+"lesquelles vous pouvez écrire. Vous pourrez envoyer *quelque chose*. Peut-"
+"être pas tout ce que vous voudrez, mais *quelque chose* est mieux que rien. "
+"(En fait, n'importe quel connecteur raisonnablement sain retournera en "
+"écriture — cela signifie simplement que l'espace tampon réseau sortant est "
+"disponible)."
 
 #: ../Doc/howto/sockets.rst:369
 msgid ""
@@ -456,6 +510,13 @@ msgid ""
 "it in the potential_writers list. If it shows up in the writable list, you "
 "have a decent chance that it has connected."
 msgstr ""
+"Si vous avez un connecteur \"serveur\", mettez-le dans la liste des lecteurs "
+"potentiels. Si il apparaît dans la liste des sorties que vous pouvez lire, "
+"votre ``accept`` fonctionnera (presque certainement). Si vous avez créé un "
+"nouveau connecteur pour ``connect`` à quelqu'un d'autre, mettez-le dans la "
+"liste des éditeurs potentiels. Si il apparaît dans la liste des sorties sur "
+"lesquelles vous pouvez écrire, vous avez une bonne chance qu'il se soit "
+"connecté."
 
 #: ../Doc/howto/sockets.rst:375
 msgid ""
@@ -474,6 +535,11 @@ msgid ""
 "problem of determining whether the other end is done, or just busy with "
 "something else."
 msgstr ""
+"En fait, ``select`` peut être pratique même avec des connecteurs bloquants. "
+"C'est une façon de déterminer si vous allez bloquer — le socket redevient "
+"lisible lorsqu'il y a quelque chose dans les tampons. Cependant, cela n'aide "
+"pas encore à déterminer si l'autre extrémité a terminé, ou si elle est "
+"simplement occupée par autre chose."
 
 #: ../Doc/howto/sockets.rst:386
 msgid ""
