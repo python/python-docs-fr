@@ -1093,6 +1093,11 @@ msgid ""
 "by accident. It also invalidates an important invariant of dictionaries: "
 "every value in ``d.keys()`` is usable as a key of the dictionary."
 msgstr ""
+"Autoriser les listes en tant que clés, mais indiquer à l'utilisateur de ne "
+"pas les modifier. Cela permettrait un ensemble de bogues difficiles à suivre "
+"dans les programmes lorsque vous avez oublié ou modifié une liste par "
+"accident. Cela casse également un impératif important des dictionnaires : "
+"chaque valeur de ``d.keys()`` est utilisable comme clé du dictionnaire."
 
 #: ../Doc/faq/design.rst:564
 msgid ""
@@ -1103,6 +1108,14 @@ msgid ""
 "read-only -- and again, self-referential objects could cause an infinite "
 "loop."
 msgstr ""
+"Marquer les listes comme étant en lecture seule une fois qu'elles sont "
+"utilisées comme clé de dictionnaire. Le problème est que ce n'est pas "
+"seulement l'objet de niveau supérieur qui pourrait changer sa valeur; vous "
+"pourriez utiliser un tuple contenant une liste comme clé.  Utiliser "
+"n'importe quoi comme une clé dans un dictionnaire nécessiterait de marquer "
+"tous les objets accessibles à partir de là comme en lecture seule -- et "
+"encore une fois, les objets se faisant référence pourraient provoquer une "
+"boucle infinie."
 
 #: ../Doc/faq/design.rst:570
 msgid ""
@@ -1113,6 +1126,13 @@ msgid ""
 "dictionary (or other hash based structure), remain fixed while the object is "
 "in the dictionary (or other structure). ::"
 msgstr ""
+"Il y a un truc pour contourner ceci si vous en avez besoin, mais utilisez-le "
+"à vos risques et périls. Vous pouvez encapsuler une structure mutable à "
+"l'intérieur d'une instance de classe qui a à la fois une méthode :meth:"
+"`__eq__` et :meth:`__hash__`. Vous devez ensuite vous assurer que la valeur "
+"de hachage pour tous ces objets *wrapper* qui résident dans un dictionnaire "
+"(ou une autre structure basée sur le hachage), restent fixes pendant que "
+"l'objet est dans le dictionnaire (ou une autre structure). ::"
 
 #: ../Doc/faq/design.rst:594
 msgid ""
@@ -1120,6 +1140,9 @@ msgid ""
 "members of the list may be unhashable and also by the possibility of "
 "arithmetic overflow."
 msgstr ""
+"Notez que le calcul de hachage peut être compliqué car il est possible que "
+"certains membres de la liste peuvent être impossible à hacher et aussi par "
+"la possibilité de débordement arithmétique."
 
 #: ../Doc/faq/design.rst:598
 msgid ""
@@ -1129,6 +1152,11 @@ msgid ""
 "not.  If you fail to meet these restrictions dictionaries and other hash "
 "based structures will misbehave."
 msgstr ""
+"De plus, il faut toujours que, si ``o1 == o2`` (par exemple ``o1.__eq__(o2) "
+"vaut True``) alors ``hash(o1) == hash(o2)`` (par exemple, ``o1.__hash__() == "
+"o2.__hash__()``), que l’objet se trouve dans un dictionnaire ou pas. Si vous "
+"ne remplissez pas ces conditions, les dictionnaires et autres structures "
+"basées sur le hachage se comporteront mal."
 
 #: ../Doc/faq/design.rst:603
 msgid ""
@@ -1137,10 +1165,15 @@ msgid ""
 "you are prepared to think hard about the requirements and the consequences "
 "of not meeting them correctly.  Consider yourself warned."
 msgstr ""
+"Dans le cas de *ListWrapper*, chaque fois que l'objet *wrapper* est dans un "
+"dictionnaire, la liste encapsulée ne doit pas changer pour éviter les "
+"anomalies. Ne faites pas cela à moins que vous n’ayez pensé aux potentielles "
+"conséquences de ne pas satisfaire entièrement ces conditions. Vous avez été "
+"prévenus."
 
 #: ../Doc/faq/design.rst:610
 msgid "Why doesn't list.sort() return the sorted list?"
-msgstr ""
+msgstr "Pourquoi ``list.sort()`` ne renvoie pas la liste triée ?"
 
 #: ../Doc/faq/design.rst:612
 msgid ""
@@ -1151,6 +1184,12 @@ msgid ""
 "when you need a sorted copy but also need to keep the unsorted version "
 "around."
 msgstr ""
+"Dans les situations où la performance est importante, faire une copie de la "
+"liste juste pour la trier serait un gaspillage. Par conséquent, :meth:`list."
+"sort` trie la liste en place. Afin de vous le rappeler, il ne retourne pas "
+"la liste triée.  De cette façon, vous ne serez pas dupés en écrasant "
+"accidentellement une liste lorsque vous avez besoin d’une copie triée, mais "
+"vous devrez également garder sous la main la version non triée."
 
 #: ../Doc/faq/design.rst:618
 msgid ""
@@ -1159,10 +1198,16 @@ msgid ""
 "it and returns it.  For example, here's how to iterate over the keys of a "
 "dictionary in sorted order::"
 msgstr ""
+"Si vous souhaitez retourner une nouvelle liste, utilisez plutôt la fonction "
+"native :func:`sorted`.  Cette fonction crée une nouvelle liste à partir d’un "
+"itérable fourni, la trie et la retourne.  Par exemple, voici comment itérer "
+"sur les clefs d’un dictionnaire dans l’ordre trié ::"
 
 #: ../Doc/faq/design.rst:628
 msgid "How do you specify and enforce an interface spec in Python?"
 msgstr ""
+"Comment spécifiez-vous et appliquez-vous une spécification d’interface en "
+"Python ?"
 
 #: ../Doc/faq/design.rst:630
 msgid ""
@@ -1171,6 +1216,10 @@ msgid ""
 "module.  Many feel that compile-time enforcement of interface specifications "
 "helps in the construction of large programs."
 msgstr ""
+"Une spécification d'interface pour un module fourni par des langages tels "
+"que C++ et Java décrit les prototypes pour les méthodes et les fonctions du "
+"module. Beaucoup estiment que la vérification au moment de la compilation "
+"des spécifications d'interface aide à la construction de grands programmes."
 
 #: ../Doc/faq/design.rst:635
 msgid ""
@@ -1181,6 +1230,13 @@ msgid ""
 "`~collections.abc.Iterable`, :class:`~collections.abc.Container`, and :class:"
 "`~collections.abc.MutableMapping`."
 msgstr ""
+"Python 2.6 ajoute un module :mod:`abc` qui vous permet de définir des "
+"classes de base abstraites (ABCs). Vous pouvez ensuite utiliser :func:"
+"`isinstance` et :func:`issubclass` pour vérifier si une instance ou une "
+"classe implémente une ABC particulière. Le module :mod:`collections.abc` "
+"définit un ensemble d'ABCs utiles telles que :class:`~collections.abc."
+"Iterable`, :class:`~collections.abc.Container` et :class:`collections.abc."
+"MutableMapping`."
 
 #: ../Doc/faq/design.rst:642
 msgid ""
@@ -1188,6 +1244,10 @@ msgid ""
 "obtained by an appropriate test discipline for components.  There is also a "
 "tool, PyChecker, which can be used to find problems due to subclassing."
 msgstr ""
+"Pour Python, la plupart des avantages des spécifications d'interface peuvent "
+"être obtenus par une discipline de test appropriée pour les composants. Il "
+"existe aussi un outil, PyChecker, qui peut être utilisé pour trouver des "
+"problèmes d'héritage."
 
 #: ../Doc/faq/design.rst:646
 msgid ""
@@ -1200,6 +1260,15 @@ msgid ""
 "be used to construct exhaustive test suites that exercise every line of code "
 "in a module."
 msgstr ""
+"Une bonne suite de tests pour un module peut à la fois fournir un test de "
+"non régression et servir de spécification d'interface de module ainsi qu'un "
+"ensemble d'exemples. De nombreux modules Python peuvent être exécutés en "
+"tant que script pour fournir un simple « auto-test ». Même les modules qui "
+"utilisent des interfaces externes complexes peuvent souvent être testés "
+"isolément à l'aide d'émulations triviales embryonnaires de l'interface "
+"externe. Les modules :mod:`doctest` et :mod:`UnitTest` ou des frameworks de "
+"test tiers peuvent être utilisés pour construire des suites de tests "
+"exhaustives qui éprouvent chaque ligne de code dans un module."
 
 #: ../Doc/faq/design.rst:654
 msgid ""
@@ -1211,6 +1280,15 @@ msgid ""
 "test that your :meth:`append` implementation will actually do this "
 "correctly, but it's trivial to check this property in a test suite."
 msgstr ""
+"Une discipline de test appropriée peut aider à construire des applications "
+"complexes de grande taille en Python aussi bien que le feraient des "
+"spécifications d'interface. En fait, c'est peut être même mieux parce qu'une "
+"spécification d'interface ne peut pas tester certaines propriétés d'un "
+"programme. Par exemple, la méthode :meth:`Append` est censée ajouter de "
+"nouveaux éléments à la fin d'une liste « sur place » ; une spécification "
+"d'interface ne peut pas tester que votre implémentation de :meth:`append` va "
+"réellement le faire correctement, mais il est trivial de vérifier cette "
+"propriété dans une suite de tests."
 
 #: ../Doc/faq/design.rst:662
 msgid ""
@@ -1220,6 +1298,12 @@ msgid ""
 "before you write any of the actual code.  Of course Python allows you to be "
 "sloppy and not write test cases at all."
 msgstr ""
+"L'écriture des suites de tests est très utile, et vous voudrez peut-être "
+"concevoir votre code de manière à le rendre facilement testable. Une "
+"technique de plus en plus populaire, le développement dirigé par les tests, "
+"requiert d'écrire d'abord des éléments de la suite de tests, avant d'écrire "
+"le code réel. Bien sûr, Python vous permet d'être laxiste et de ne pas "
+"écrire de test du tout."
 
 #: ../Doc/faq/design.rst:670
 msgid "Why is there no goto?"
@@ -1250,6 +1334,8 @@ msgstr ""
 #: ../Doc/faq/design.rst:692
 msgid "Why can't raw strings (r-strings) end with a backslash?"
 msgstr ""
+"Pourquoi les chaînes de caractères brutes (r-strings) ne peuvent-elles pas "
+"se terminer par un *backslash* ?"
 
 #: ../Doc/faq/design.rst:694
 msgid ""
@@ -1257,6 +1343,9 @@ msgid ""
 "unpaired backslash at the end escapes the closing quote character, leaving "
 "an unterminated string."
 msgstr ""
+"Plus précisément, elles ne peuvent pas se terminer par un nombre impair de "
+"*backslashes* : le *backslash* non appairé à la fin échappe le caractère de "
+"guillemet final, laissant une chaîne non terminée."
 
 #: ../Doc/faq/design.rst:698
 msgid ""
@@ -1267,17 +1356,30 @@ msgid ""
 "pass on the string quote character by escaping it with a backslash.  These "
 "rules work well when r-strings are used for their intended purpose."
 msgstr ""
+"Les chaînes brutes ont été conçues pour faciliter la création de données "
+"pour les processeurs de texte (principalement les moteurs d'expressions "
+"régulières) qui veulent faire leur propre traitement d'échappement "
+"d'*antislashes*. Ces processeurs considèrent un *antislash* de fin non-"
+"appairé comme une erreur, alors les chaînes brutes ne le permettent pas. En "
+"retour, elles vous permettent de transmettre le caractère de citation de la "
+"chaîne en l'échappant avec un *antislash*. Ces règles fonctionnent bien "
+"lorsque les chaînes brutes sont utilisées pour leur but premier."
 
 #: ../Doc/faq/design.rst:705
 msgid ""
 "If you're trying to build Windows pathnames, note that all Windows system "
 "calls accept forward slashes too::"
 msgstr ""
+"Si vous essayez de construire des chemins d'accès Windows, notez que tous "
+"les appels système Windows acceptent également les *slashes* \"classiques"
+"\" ::"
 
 #: ../Doc/faq/design.rst:710
 msgid ""
 "If you're trying to build a pathname for a DOS command, try e.g. one of ::"
 msgstr ""
+"Si vous essayez de construire un chemin d'accès pour une commande DOS, "
+"essayez par exemple l'un de ceux-là ::"
 
 #: ../Doc/faq/design.rst:718
 msgid "Why doesn't Python have a \"with\" statement for attribute assignments?"
@@ -1328,7 +1430,7 @@ msgstr ""
 
 #: ../Doc/faq/design.rst:741
 msgid "For instance, take the following incomplete snippet::"
-msgstr ""
+msgstr "Prenons par exemple l'extrait incomplet suivant ::"
 
 #: ../Doc/faq/design.rst:747
 msgid ""
@@ -1338,6 +1440,11 @@ msgid ""
 "variable named \"x\", will it be used inside the with block?  As you see, "
 "the dynamic nature of Python makes such choices much harder."
 msgstr ""
+"L'extrait suppose que \"a\" doit avoir un attribut membre appelé \"x\". "
+"Néanmoins, il n'y a rien en Python qui en informe l'interpréteur. Que se "
+"passe-t-il si \"a\" est, disons, un entier ? Si une variable globale nommée "
+"\"x\" existe, sera-t-elle utilisée dans le bloc ``with`` ?  Comme vous "
+"voyez, la nature dynamique du Python rend ces choix beaucoup plus difficiles."
 
 #: ../Doc/faq/design.rst:753
 msgid ""
@@ -1345,10 +1452,13 @@ msgid ""
 "code volume) can, however, easily be achieved in Python by assignment.  "
 "Instead of::"
 msgstr ""
+"L'avantage principal de ``with`` et des fonctionnalités de langage "
+"similaires (réduction du volume de code) peut, cependant, être facilement "
+"réalisé en Python par assignation.  Au lieu de ::"
 
 #: ../Doc/faq/design.rst:760
 msgid "write this::"
-msgstr ""
+msgstr "écrivez ceci ::"
 
 #: ../Doc/faq/design.rst:767
 msgid ""
@@ -1356,20 +1466,27 @@ msgid ""
 "bindings are resolved at run-time in Python, and the second version only "
 "needs to perform the resolution once."
 msgstr ""
+"Cela a également pour effet secondaire d'augmenter la vitesse d'exécution "
+"car les liaisons de noms sont résolues au moment de l'exécution en Python, "
+"et la deuxième version n'a besoin d'exécuter la résolution qu'une seule fois."
 
 #: ../Doc/faq/design.rst:773
 msgid "Why are colons required for the if/while/def/class statements?"
 msgstr ""
+"Pourquoi les deux-points sont-ils nécessaires pour les déclarations ``if/"
+"while/def/class`` ?"
 
 #: ../Doc/faq/design.rst:775
 msgid ""
 "The colon is required primarily to enhance readability (one of the results "
 "of the experimental ABC language).  Consider this::"
 msgstr ""
+"Le deux-points est principalement nécessaires pour améliorer la lisibilité "
+"(l'un des résultats du langage expérimental ABC).  Considérez ceci ::"
 
 #: ../Doc/faq/design.rst:781
 msgid "versus ::"
-msgstr ""
+msgstr "versus ::"
 
 #: ../Doc/faq/design.rst:786
 msgid ""
@@ -1377,6 +1494,9 @@ msgid ""
 "colon sets off the example in this FAQ answer; it's a standard usage in "
 "English."
 msgstr ""
+"Remarquez comment le deuxième est un peu plus facile à lire.  Remarquez "
+"aussi comment un deux-points introduit l'exemple dans cette réponse à la "
+"FAQ ; c'est un usage standard en anglais."
 
 #: ../Doc/faq/design.rst:789
 msgid ""
@@ -1385,16 +1505,23 @@ msgid ""
 "needs to be increased instead of having to do a more elaborate parsing of "
 "the program text."
 msgstr ""
+"Une autre raison mineure est que les deux-points facilitent la tâche des "
+"éditeurs avec coloration syntaxique ; ils peuvent rechercher les deux-points "
+"pour décider quand l'indentation doit être augmentée au lieu d'avoir à faire "
+"une analyse plus élaborée du texte du programme."
 
 #: ../Doc/faq/design.rst:795
 msgid "Why does Python allow commas at the end of lists and tuples?"
 msgstr ""
+"Pourquoi Python permet-il les virgules à la fin des listes et des tuples ?"
 
 #: ../Doc/faq/design.rst:797
 msgid ""
 "Python lets you add a trailing comma at the end of lists, tuples, and "
 "dictionaries::"
 msgstr ""
+"Python vous permet d'ajouter une virgule à la fin des listes, des tuples et "
+"des dictionnaires ::"
 
 #: ../Doc/faq/design.rst:808
 msgid "There are several reasons to allow this."
@@ -1407,12 +1534,19 @@ msgid ""
 "remember to add a comma to the previous line.  The lines can also be "
 "reordered without creating a syntax error."
 msgstr ""
+"Lorsque vous avez une valeur littérale pour une liste, un tuple ou un "
+"dictionnaire réparti sur plusieurs lignes, il est plus facile d'ajouter plus "
+"d'éléments parce que vous n'avez pas besoin de vous rappeler d'ajouter une "
+"virgule à la ligne précédente.  Les lignes peuvent aussi être réorganisées "
+"sans créer une erreur de syntaxe."
 
 #: ../Doc/faq/design.rst:815
 msgid ""
 "Accidentally omitting the comma can lead to errors that are hard to "
 "diagnose. For example::"
 msgstr ""
+"L'omission accidentelle de la virgule peut entraîner des erreurs difficiles "
+"à diagnostiquer, par exemple ::"
 
 #: ../Doc/faq/design.rst:825
 msgid ""
@@ -1420,9 +1554,13 @@ msgid ""
 "\"fee\", \"fiefoo\" and \"fum\".  Always adding the comma avoids this source "
 "of error."
 msgstr ""
+"Cette liste a l'air d'avoir quatre éléments, mais elle en contient en fait "
+"trois : \"*fee*\", \"*fiefoo*\" et \"*fum*\". Toujours ajouter la virgule "
+"permet d'éviter cette source d'erreur."
 
 #: ../Doc/faq/design.rst:828
 msgid ""
 "Allowing the trailing comma may also make programmatic code generation "
 "easier."
 msgstr ""
+"Permettre la virgule de fin peut également faciliter la génération de code."
