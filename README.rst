@@ -1,5 +1,5 @@
-French Translation of the Python Documentation
-==============================================
+Traduction française de la documentation Python
+===============================================
 
 |build| |progression|
 
@@ -10,293 +10,308 @@ French Translation of the Python Documentation
 .. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
    :width: 45%
 
-Documentation Contribution Agreement
-------------------------------------
 
-NOTE REGARDING THE LICENSE FOR TRANSLATIONS: Python's documentation is
-maintained using a global network of volunteers. By posting this
-project on Transifex, Github, and other public places, and inviting
-you to participate, we are proposing an agreement that you will
-provide your improvements to Python's documentation or the translation
-of Python's documentation for the PSF's use under the CC0 license
-(available at
-https://creativecommons.org/publicdomain/zero/1.0/legalcode). In
-return, you may publicly claim credit for the portion of the
-translation you contributed and if your translation is accepted by the
-PSF, you may (but are not required to) submit a patch including an
-appropriate annotation in the Misc/ACKS or TRANSLATORS file. Although
-nothing in this Documentation Contribution Agreement obligates the PSF
-to incorporate your textual contribution, your participation in the
-Python community is welcomed and appreciated.
+Accord de Contribution à la Documentation
+-----------------------------------------
 
-You signify acceptance of this agreement by submitting your work to
-the PSF for inclusion in the documentation.
+NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
+est maintenue grâce à un réseau mondial de bénévoles. En publiant ce projet
+sur Transifex, Github, et d'autres endroits publics, et vous invitant
+à participer, la PSF vous enjoint à accepter cet accord qui stipule que vous
+acceptez de fournir vos améliorations à la documentation de Python ou à la
+traduction de la documentation de Python pour le bénéfice de la PSF sous licence
+CC0 (disponible à l'adresse
+https://creativecommons.org/publicdomain/zero/1.0/legalcode). En retour, vous
+pouvez demander à ce que votre contribution à la documentation soit
+publiquement reconnue, et si votre traduction est acceptée par la
+PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant
+une modification appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
+rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
+à incorporer votre contribution textuelle, votre participation à la communauté
+Python est bienvenue et appréciée.
+
+En soumettant votre travail à la PSF pour inclusion dans la documentation,
+vous signifiez votre acceptation de cet accord.
 
 
-Contributing to the Translation
--------------------------------
+Contribuer à la traduction
+--------------------------
 
-How to Contribute
-~~~~~~~~~~~~~~~~~
+Comment contribuer
+~~~~~~~~~~~~~~~~~~
 
-You can contribute using:
+Vous pouvez contribuer en utilisant :
 
-- github (preferred solution)
+- Github (solution recommandée)
 - `transifex <https://www.transifex.com/python-doc/public/>`_
-- Or just by opening `an issue on github <https://github.com/python/python-docs-fr/issues>`_
+- Ou simplement en ouvrant `un ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 
 
-Contributing using Github
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Contribuer en utilisant Github
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Prerequisites:
+Prérequis :
 
-- A `github account <https://github.com/join>`_.
-- ``git`` `installed <https://help.github.com/articles/set-up-git/>`_ (for Windows, see
+- Un compte `Github <https://github.com/join>`_.
+- ``git`` `installé <https://help.github.com/articles/set-up-git/>`_ (pour Windows, voir
   https://gitforwindows.org/).
-- A ``.po`` file editor (Use `poedit <https://poedit.net/>`_
-  if you don't already have one).
+- Un éditeur de fichier ``.po`` (utilisez `poedit <https://poedit.net/>`_
+  si vous n'en avez pas déjà un).
 
 
-Getting Started:
+Commencer :
 
-You'll need to fork the `python-docs-fr
-<https://github.com/python/python-docs-fr>`_ source repository by clicking its ``Fork``
-button. This creates a copy of the whole project on your github
-account: a place where you have the rights to do modifications.
+Vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
+<https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
+``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
+où vous avez le droit de faire des modifications.
 
-Step by step:
+Étape par étape :
 
 .. code-block:: bash
 
-    # Clone your github fork with `git` using ssh or https:
+    # Clonez votre fork Github avec `git` en utilisant ssh :
     git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    # *OU* HTTPS :
     git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
 
-    # Go into the cloned directory:
+    # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
-    # Add the upstream (the public repository) using HTTPS (won't ask for password):
-    # This is so git knows what/where the upstream is.
+    # Ajoutez le dépot upstream (le dépôt public) en utilisant HTTPS (git
+    # ne demandera pas de mot de passe ainsi) :
+    # Ceci permet à git de savoir quoi/où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
-Next, you need to find a file to work on.
+Ensuite, vous devez trouver un fichier sur lequel travailler.
+Vous pouvez utiliser `potodo <https://github.com/seluj78/potodo>`_, un outil
+fait pour trouver des fichiers ``po`` à traduire.
+Installez-le à l'aide de pip (``pip install potodo``) dans un environnement
+``python3.6`` ou plus.
+Lancez ensuite la commande ``potodo`` dans votre clone local.
+Vous pouvez choisir n'importe quel fichier non réservé dans la liste
+renvoyée par la commande.
 
-You can use `potodo <https://github.com/seluj78/potodo>`_, a tool made to find ``po`` to do.
-Install it using pip (``pip install potodo``) in a ``python3.6`` (or more) environement.
+**Nous vous recommandons de ne pas commencer avec un fichier de ``c-api``
+car c'est une partie très technique.**
 
-Then run the command ``potodo`` in your cloned fork.
-From the list returned by the command, you can choose any file that is not reserved.
+Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
+ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr>`_ dans
+le format ``Je travaille sur RÉPERTOIRE/FICHIER.po``. Ceci permet à ``potodo``
+de détecter via l'API Github les fichiers ``.po`` réservés dans les tickets
+et les *pull requests*.
 
-**We recommend not starting with a file from ``c-api`` as it is very technical.**
-
-Once you've choosen a file to work one, please open an
-`issue on github <https://github.com/python/python-docs-fr>`_ in the format of
-`I'm workingon FOLDER/FILE.po`. This is done to update ``potodo`` as it checks
-the github API for reserved ``.po`` files in issues and pull requests.
-
-Now you're ready to start a work session. Each time you'll start a new file, start here:
+Vous êtes maintenant prêt à commencer une session de travail. Chaque
+fois que vous commencerez un nouveau fichier, commencez ainsi :
 
 .. code-block:: bash
 
-    # To work, we'll need a branch, based on an up-to-date (freshly fetched)
-    # upstream/3.7 branch. We will name our branch "library-sys" but you shall name yours
-    # whatever you want. Usually you'll name a branch based on the file you're working on.
-    # For example, If you're working on "library/venv.po" you can name your branch "library-venv"
+    # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
+    # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
+    # "library-sys" mais vous pouvez appeller la vôtre comme vous voulez.
+    # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
+    # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
+    # branche "library-venv".
 
-    # Update your local version to the latest
+    # Mettez à jour votre version locale
     git fetch upstream
-    # Create a new branch named "library-sys" based on "upstream/3.7"
+    # Créez une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
     git checkout -b library-sys upstream/3.7
 
-    # You can now work on the file, typically using poedit,
-    # Of course, replace "library/sys.po" by the file you've chose earlier
+    # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
+    # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
-    # When you are done translating, you can run pospell (pip install pospell).
-    # This tool was made to check if you don't have any french mistakes.
-    # You can run the following command: pospell -p dict -l fr_FR **/*.po to check all files
-    # or replace **/*.po by your specific file (recommended).
+    # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
+    # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
+    # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
+    # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
 
-    # You can then run powrap (pip install powrap) which will rewrap
-    # You modified file to the correct line length of `80`.
-    # Run this command: `powrap **/*.po` or replace `**/*.po` with your modified file.
+    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
+    # que avez vous avez modifié à la longueur de ligne correcte de `80`.
+    # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
+    # que vous traduisez
 
-    # When everything powrap and pospell passes without errors,
-    # you can commit your work with a nice explicit message:
-    git commit -a -m "Working on library/sys.po."
-
-    # Then push your modifications to your github fork,
-    # as they are ephemeral branches, let's not configure git to track them all,
-    # "origin HEAD" is a "special" syntax to say "Push on origin,
-    # on a branch with the same name as the local one",
-    # it's nice as it's exactly what we want:
+    # Poussez ensuite vos modifications sur votre fork Github,
+    # comme ce sont des branches éphémères, ne configurons pas git pour les suivre
+    # toutes, "origin HEAD" est une syntaxe "spéciale" pour dire "pousse sur origin,
+    # sur une branche du même nom que la branch locale",
+    # c'est pratique car c'est exactement ce que nous voulons :
     git push origin HEAD
 
-    # The previous command will print you a link to open a PR on github.
-    # If you missed it, just go to
-    # https://github.com/python/python-docs-fr/ and a nice "Compare & pull request"
-    # button should appear after a few seconds telling you can ask for a pull request.
+    # La commande précédente vous affichera un lien pour ouvrir une pull request sur
+    # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
+    # et un joli bouton "Compare & pull request" devrait apparaître au bout de quelques secondes
+    # vous indiquant que vous pouvez demander une pull request
 
-    # Now someone is reviewing your modifications, and you'll want to fix their
-    # findings, get back to your branch
-    # (in case you started something else on another branch):
+    # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
+    # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
+    # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
-    # Fix the issues, then commit again:
-    git commit -a -m "glossary: small fixes."
+    # Réglez les problèmes, puis commitez à nouveau :
+    git commit -a -m "glossaire : petites corrections".
     git push origin HEAD
 
 
-You may have noted that this looks like a triangle, with a missing segment:
+Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
+segment manquant :
 
-- You're fetching from upstream (public common repo on github)
-- You're pushing to origin (your clone on github)
+- Vous récupérez depuis *upstream* (le dépôt commun public sur Github)
+- Vous poussez sur *origin* (votre clone sur Github)
 
-So yes it's the work of someone to add the last segment, from your
-origin to the public upstream, to "close the loop", that's the role of
-the people who merges pull requests after proofreading them.
+Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
+de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
+rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
-You may also have noted you never ever commit on a version branch
-(``3.6``, ``3.7``, ...), only pull from them, consider them read-only
-you'll avoid problems.
+Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
+branche de version (``3.6``, ``3.7``, ...), seulement récupéré les
+modifications à partir d'elles. Considérez-les comme étant en lecture seule,
+vous éviterez les problèmes.
 
-Before commiting, you should use `grammalecte
-<https://grammalecte.net/>`_ to check for your translations.
-
-
-All the translations must be made on the latest release.
-We never translate on an oldest version. For example, if the latest python release
-is Python 3.7, we don't want to translate directly on the python 3.5 release.
-If needed translations would be backported on the oldest versions by the
-`documentation team <https://www.python.org/dev/peps/pep-8015/#documentation-team>`.
+Avant de valider, vous devriez utiliser `grammalecte
+<https://grammalecte.net/>`_ pour vérifier vos traductions.
 
 
-What to translate
-~~~~~~~~~~~~~~~~~
-
-You can start with easy tasks like reviewing fuzzy entries to help
-keeping the documentation up to date (find them using ``make fuzzy``).
-
-You can also proofread already translated entries, and finally
-translate untranslated ones (find them using ``make todo``)..
-
-- Do not translate content of ``:ref:...`` and ``:term:...``
-- Put english words, if you have to use them, in *italics* (surrounded
-  by stars).
-- ``::`` at the end of some paragraphs have to be translated to `` :
-  ::`` in French to place the space before the column.
-- If you translate a link title, please translate the link too
-  (typically if it's Wikipedia and the article has a translation). If
-  no translation of the target exists, do not translate the
-  title.
+Toutes les traductions doivent être faites sur la dernière version.
+Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
+si la dernière version de python est Python 3.7, nous ne voulons pas
+traduire directement sur la version python 3.5.
+Si nécessaire, les traductions seraient rétroportées sur les versions
+les plus anciennes par l'`équipe de documentation
+<https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 
-The case of "---"
-~~~~~~~~~~~~~~~~~
+Que traduire ?
+~~~~~~~~~~~~~~
 
-The english version uses a thing named `smartquotes
-<http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, that
-tries to be smart, works in english, but soon causes issues in other
-languages. So we desactivated it.
+Vous pouvez commencer par des tâches faciles comme réviser les entrées
+*fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
+*fuzzy* l'aide de `make fuzzy`).
 
-Smartquotes is also responsible for the transformation of ``--`` to
-en-dash (``–``), ``---`` to em-dash (``—``), and `...` to `…`.
+Vous pouvez également relire les entrées déjà traduites, et enfin
+traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
+`make todo`)...
 
-As we don't have smartquotes we'll also have to "translate" those
-manually, so if you see ``---`` in english, you have to translate it
-to ``—`` in french.
+- Ne traduisez pas le contenu de ``:ref :...`` et ``:term :...``.
+- Mettez les mots anglais, si vous devez les utiliser, en *italique*
+  (entourés par des astérisques).
+- ``::`` à la fin de certains paragraphes doivent être traduits en `` :
+  ::`` en français pour placer l'espace avant les deux-points.
+- Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
+  (typiquement si c'est Wikipédia et que l'article a une traduction). Si
+  aucune traduction de la cible n'existe, ne traduisez pas le titre.
+
+Le cas de "---"
+~~~~~~~~~~~~~~~
+
+La version anglaise utilise une chose nommée `smartquotes
+<http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
+essaie d'être intelligente, qui fonctionne en anglais, mais cause
+rapidement des problèmes dans d'autres langues.
+Nous l'avons donc désactivée.
+
+Les *smartquotes* sont également responsables de la transformation de
+``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
+``...`` en ``…``.
+
+Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
+cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
+transformer en ``—`` en français.
+
+Le cas de "::"
+~~~~~~~~~~~~~~
+
+Du point de vue du *reStructuredText*, ``::`` collé à la fin d'un mot
+signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``
+après une espace signifie "introduit juste un bloc de code".
+
+Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
+"bla bla. ::".
+
+En français, nous mettons une espace insécable devant nos deux-points, comme :
+"Et voilà :".
+
+L'utilisation de l'espace insécable en rst est naturelle, vous n'aurez qu'à
+écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
+il affichera les deux-points et introduira le bloc de code, et c'est bon.
+
+Si vous ne savez pas comment taper une espace insécable, il y a une astuce.
+Traduisez ``deux-points deux-points`` par
+``espace deux-points espace deux-points deux-points``. La balise
+``espace deux-points`` donnera un rendu de votre espace et vos deux-points
+comme le français l'exige, et la balise ``espace deux-points deux-points`` qui
+suit n'affichera rien et introduira le bloc de code. Non, il n'insère
+pas magiquement une espace insécable donc ce n'est toujours pas
+vraiment du français valide. Oui, il vaut mieux apprendre à taper
+les espaces insécables.
+
+Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-The case of "::"
-~~~~~~~~~~~~~~~~
+Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
+Sous Linux, vous pouvez utilisez une `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_, c'est
+facile à configurer à l'aide de l'outil graphique de configuration de votre
+clavier ou via ``dpkg-reconfigure keyboard-configuration``. Sous Windows, vous
+pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
-From the reStructuredText point of view, ``::`` glued at the end of a
-word means "output ``:`` and introduce a code block", but a ``::``
-after a space means "Just introduce a code block".
+Avec une touche de composition (personnellement j'utilise ``alt-gr``,
+vous pouvez aussi utiliser ``verr maj 🔒``), vous pouvez utiliser les
+compositions suivantes :
 
-So in english rst, we see either ``blah blah::`` or ``blah blah. ::``.
+- Composer ``<`` ``<`` donne ``«``
+- Composer ``>`` ``>`` donne ``»``
+- Composer espace espace donne une espace insécable
+- Composer ``.`` ``.`` ``.`` donne ``…``
 
-In french, we're putting a no-break space before our columns, like:
-``Et voilà :``.
+Comme vous l'avez noté, presque toutes les compositions sont faciles
+à retenir, vous pouvez donc essayer les autres et elles devraient tout simplement
+fonctionner :
 
-Using no-break space in rst is natural, you'll simply write ``Et
-voilà ::``, as the ``::`` is not precedded by a normal space it
-will output the column and introduce the code block, you're done.
-
-If you don't know how to type a no-break space there's a trick,
-translate column column by space, column, space, column column. the
-"space column" will render your space and your column as french needs,
-and the trailing "space column column" will output nothing and
-introduce the code block. No it does not magically inserts a no-break
-space, so it's still not really valid french. Yes, better learn how to
-type no-break space.
-
-
-How to input em-dash, ellipsis, french quotes, or no-break spaces?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It really depends on your OS and your keyboard sadly. On Linux you can
-use a `Compose Key <https://en.wikipedia.org/wiki/Compose_key>`_, it's
-easy to configure either using your graphical keyboard configuration
-tool or via ``dpkg-reconfigure keyboard-configuration`. On Windows you
-can use `wincompose <https://github.com/SamHocevar/wincompose>`_.
-
-With a compose key (I use ``alt-gr``, you can also use ``caps lock``)
-you can use the following compositions:
-
-- Compose ``<`` ``<`` gives ``«``
-- Compose ``>`` ``>`` gives ``»``
-- Compose space space gives an no-break space
-- Compose ``.`` ``.`` ``.`` gives ``…``
-
-As you noted, almost all compositions are easy to remember, so you can
-try others and they should just work:
-
-- Compose ``C`` ``=`` gives ``€``
-- Compose ``1`` ``2`` gives ``½``
-- Compose ``'`` ``E`` gives ``É``
+- Composer ``C`` ``=`` donne ``€``
+- Composer ``1`` ``2`` donne ``½``
+- Composer ``'`` ``E`` donne ``É``
 - … …
 
+Où obtenir de l'aide ?
+~~~~~~~~~~~~~~~~~~~~~~
 
-Where to get help
-~~~~~~~~~~~~~~~~~
+Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
 
-The coordinator for this translation is `mdk <https://mdk.fr/>`_.
-
-Feel free to ask your questions on the ``#python-fr`` channel on `freenode
-<https://webchat.freenode.net/>`_ (does not require registration) or the
-`AFPy traductions mailing list <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
+<https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
+`liste de diffusion des traductions de l'AFPy <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
-Translation Resources
----------------------
+Ressources de traduction
+------------------------
 
 - `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-- IRC channel `#python-fr <http://irc.lc/freenode/python-fr>`_ on freenode.
-- The `liste traductions <http://lists.afpy.org/mailman/listinfo/traductions>`_.
-- The `doc-sig mailing list
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_.
-- `Glossaire traduc.org <http://glossaire.traduc.org>`_
-- `Glossaires et Dictionnaires of traduc.org
+- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
+- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
+- La `liste de diffusion doc-sig
+  <https://mail.python.org/mailman/listinfo/doc-sig>`_
+- Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
+- Les `Glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
-- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, as it's
-  already translated.
+- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
+  déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
 
 
-Glossary
---------
+Glossaire
+---------
 
-For consistency in our translations, here are some propositions and
-reminders for frequent terms you'll have to translate, don't hesitate
-to open an issue if you disagree.
+Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
+rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
+si vous n'êtes pas d'accord.
 
-To easily find how a term is already translated in our documentation,
-you may use
+Pour trouver facilement comment un terme est déjà traduit dans notre documentation,
+vous pouvez utiliser
 `find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
 
 ========================== ===========================================
-Term                       Proposed Translation
+Terme                      Traduction proposée
 ========================== ===========================================
 -like                      -compatible
 abstract data type         type abstrait
@@ -339,29 +354,29 @@ underscore                 tiret bas, *underscore*
 expression				         expression
 ========================== ===========================================
 
+Historique du projet
+--------------------
 
-Project History
----------------
+Ce projet a été lancé `vers 2012
+<https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b6b5a4804d5f519ce3ea341e027c>`_
+par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
+est devenu la traduction officielle de la documentation Python en français
+grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
 
-This project was started `around 2012
-<https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b5a4804d5f519ce3ea341e027c>`_
-by `afpy <https://www.afpy.org/>`_ members, in 2017 this project
-became the official french Python documentation translation thanks to
-`PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+Simplifier les diffs git
+------------------------
 
-
-Simplify git diffs
-------------------
-
-Git diffs are often crowded with useless line number changes, like:
+Les diffs git sont souvent encombrés de changements inutiles de numéros
+de ligne, comme :
 
 .. code-block:: diff
 
     -#: ../Doc/library/signal.rst:406
     +#: ../Doc/library/signal.rst:408
 
-To tell git they are not usefull information, you can do the following
-after ensuring ``~/.local/bin/`` is in your ``PATH``.
+Pour dire à git que ce ne sont pas des informations utiles, vous pouvez faire
+ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
+``PATH``.
 
 .. code-block:: bash
 
@@ -374,13 +389,12 @@ after ensuring ``~/.local/bin/`` is in your ``PATH``.
 
     git config diff.podiff.textconv podiff
 
-
 Maintenance
 -----------
 
-All those snippets are to run from the root of a ``python-docs-fr``
-clone, and some expect to find an up-to-date CPython clone near to it,
-like:
+Toutes ces commandes doivent être exécutées à partir de la racine d'un clone
+de ``python-docs-fr``, et certains s'attendent à trouver un clone de CPython
+à jour à proximité, comme :
 
 .. code-block:: bash
 
@@ -388,49 +402,47 @@ like:
   ├── python-docs-fr/
   └── cpython/
 
-To clone CPython you may use:
+Pour cloner CPython, vous pouvez utiliser :
 
 .. code-block:: bash
 
   git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
 
-This avoids to download the whole history (not usefull to build
-documentation) but still fetches all branches.
+Ceci évite de télécharger tout l'historique (inutile pour générer la
+documentation) mais récupère néanmoins toutes les branches.
 
-
-Merge pot files from CPython
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fusionner les fichiers *pot* de CPython
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   make merge
 
 
-Find fuzzy strings
-~~~~~~~~~~~~~~~~~~
+Trouver les chaînes de caractères *fuzzy*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   make fuzzy
 
 
-Run a test build locally
-~~~~~~~~~~~~~~~~~~~~~~~~
+Lancer un *build* en local
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   make
 
+Synchroniser la traduction avec Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Synchronize translation with Transifex
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Vous aurez besoin de ``transifex-client`` et ``powrap``,
+depuis PyPI.
 
-You'll need the ``transifex-client`` and ``powrap``
-from Pypi.
+Vous devrez configurer ``tx`` via ``tx init`` si ce n'est déjà fait.
 
-You'll need to configure ``tx`` via ``tx init`` if not already done.
-
-First propagate known translations locally:
+Propagez d'abord les traductions connues localement :
 
 .. code-block:: bash
 
@@ -439,7 +451,7 @@ First propagate known translations locally:
    git commit -m "Propagating known translations."
 
 
-Then pull from transifex:
+Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
