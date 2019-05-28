@@ -261,7 +261,7 @@ compositions suivantes :
 
 - Composer ``<`` ``<`` donne ``«``
 - Composer ``>`` ``>`` donne ``»``
-- Composer space space donne an no-break space
+- Composer espace espace donne une espace insécable
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
