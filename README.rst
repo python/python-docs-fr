@@ -265,8 +265,8 @@ compositions suivantes :
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
-à retenir, vous pouvez donc essayer les autres et elles devraient tout simplement
-fonctionner :
+à retenir, vous pouvez donc essayer les autres et elles devraient tout
+simplement fonctionner :
 
 - Composer ``C`` ``=`` donne ``€``
 - Composer ``1`` ``2`` donne ``½``
