@@ -265,8 +265,8 @@ compositions suivantes :
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
-à retenir, vous pouvez donc essayer les autres et elles devraient tout simplement
-fonctionner :
+à retenir, vous pouvez donc essayer les autres et elles devraient tout
+simplement fonctionner :
 
 - Composer ``C`` ``=`` donne ``€``
 - Composer ``1`` ``2`` donne ``½``
@@ -326,6 +326,7 @@ deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 garbage collector          ramasse-miettes
+getter                     accesseur
 identifier                 identifiant
 immutable                  immuable
 installer                  installateur
@@ -343,6 +344,7 @@ prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (on évite
+setter                     mutateur
                            "retourne" qui pourrait porter à confusion).
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
