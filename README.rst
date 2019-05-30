@@ -344,8 +344,8 @@ prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (on évite
-setter                     mutateur
                            "retourne" qui pourrait porter à confusion).
+setter                     mutateur
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
 socket                     *socket*
