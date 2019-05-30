@@ -6,17 +6,18 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-10 11:27+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2019-05-23 20:58+0200\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: ../Doc/howto/cporting.rst:7
 msgid "Porting Extension Modules to Python 3"
-msgstr ""
+msgstr "Portage des modules d'extension vers Python 3"
 
 #: ../Doc/howto/cporting.rst:0
 msgid "author"
@@ -38,6 +39,12 @@ msgid ""
 "obvious on the C level.  This document endeavors to document "
 "incompatibilities and how they can be worked around."
 msgstr ""
+"Changer le C-API n'était pas l'un des objectifs de Python 3, cependant les "
+"nombreux changements de niveau Python ont rendu impossible de laisser l'API "
+"de Python 2 comme elle était. Certains changements tels que l'unification :"
+"func:`int` et :func:`long` sont plus apparents au niveau C. Ce document "
+"s'efforce de documenter les incompatibilités et la façon dont elles peuvent "
+"être contournées."
 
 #: ../Doc/howto/cporting.rst:23
 msgid "Conditional compilation"
@@ -48,26 +55,33 @@ msgid ""
 "The easiest way to compile only some code for Python 3 is to check if :c:"
 "macro:`PY_MAJOR_VERSION` is greater than or equal to 3. ::"
 msgstr ""
+"La façon la plus simple de compiler seulement un certain type de code pour "
+"Python 3 est de vérifier si :c:macro:`PY_MAJOR_VERSION` est supérieur ou "
+"égal à 3. ::"
 
 #: ../Doc/howto/cporting.rst:32
 msgid ""
 "API functions that are not present can be aliased to their equivalents "
 "within conditional blocks."
 msgstr ""
+"Les fonctions API qui sont absentes peuvent être aliasées à leurs "
+"équivalents dans des blocs conditionnels."
 
 #: ../Doc/howto/cporting.rst:37
 msgid "Changes to Object APIs"
-msgstr ""
+msgstr "Modifications apportées aux API des objets"
 
 #: ../Doc/howto/cporting.rst:39
 msgid ""
 "Python 3 merged together some types with similar functions while cleanly "
 "separating others."
 msgstr ""
+"Python 3 a fusionné certains types avec des fonctions identiques tout en en "
+"séparant de façon propre, d'autres."
 
 #: ../Doc/howto/cporting.rst:44
 msgid "str/unicode Unification"
-msgstr ""
+msgstr "Unification str/unicode"
 
 #: ../Doc/howto/cporting.rst:46
 msgid ""
@@ -83,10 +97,23 @@ msgid ""
 "shows best practices with regards to :c:type:`PyUnicode`, :c:type:"
 "`PyString`, and :c:type:`PyBytes`. ::"
 msgstr ""
+"Le type:func:`str' de Python 3 est équivalent au type:func:`unicode' de "
+"Python 2 ; les fonctions C sont appelées ``PyUnicode_*'' pour les deux. "
+"L'ancien type de chaîne 8 bits est devenu :func:`bytes', avec des fonctions "
+"C appelées ``PyBytes_*``. Python 2.6 et les versions ultérieures fournissent "
+"un en-tête de compatibilité, :fichier:`bytesobject.h`, mappant les noms "
+"``PyBytes`` aux noms ``PyString``. Pour une plus grande compatibilité avec "
+"Python 3, :c:type:`PyUnicode` devrait être utilisé pour les données "
+"textuelles et :c:type:`PyBytes` pour les données binaires. Il est également "
+"important de se rappeler que :c:type:`PyBytes' et :c:type:`PyUnicode' dans "
+"Python 3 ne sont pas interchangeables comme :c:type:`PyString' et :c:type:"
+"`PyUnicode' le sont dans Python 2. L'exemple suivant montre les meilleures "
+"pratiques concernant :c:type:`PyUnicode`, :c:type:`PyString`, et :c:type:"
+"`PyBytes`. ::"
 
 #: ../Doc/howto/cporting.rst:95
 msgid "long/int Unification"
-msgstr ""
+msgstr "Unification long/int"
 
 #: ../Doc/howto/cporting.rst:97
 msgid ""
@@ -95,10 +122,14 @@ msgid ""
 "Python 2 was removed.  In the C-API, ``PyInt_*`` functions are replaced by "
 "their ``PyLong_*`` equivalents."
 msgstr ""
+"Python 3 n'a qu'un type d'entier, :func:`int`. Mais il correspond au type :"
+"func:`long` de python 2— le type :func:`int` utilisé dans Python 2 a été "
+"supprimé.Dans l'API-C, les fonctions ``PyInt_**`` sont remplacées par leurs "
+"équivalents ``PyLong_*``."
 
 #: ../Doc/howto/cporting.rst:104
 msgid "Module initialization and state"
-msgstr ""
+msgstr "Initialisation et état du module"
 
 #: ../Doc/howto/cporting.rst:106
 msgid ""
@@ -108,10 +139,16 @@ msgid ""
 "in both Python 2 and Python 3 is tricky.  The following simple example "
 "demonstrates how. ::"
 msgstr ""
+"Python 3 a remanié son système d'initialisation des modules d'extension "
+"(Voir :pep:`3121`.).Au lieu de stocker les états de module dans les "
+"variables globales, les états doivent être stockés dans une structure "
+"spécifique à l'interpréteur. Créer des modules qui ont un fonctionnement "
+"correct en Python 2 et aussi Python 3 est délicat. L'exemple simple suivant "
+"montre comment. ::"
 
 #: ../Doc/howto/cporting.rst:197
 msgid "CObject replaced with Capsule"
-msgstr ""
+msgstr "CObject remplacé par Capsule"
 
 #: ../Doc/howto/cporting.rst:199
 msgid ""
@@ -122,6 +159,13 @@ msgid ""
 "APIs relied on undefined behavior in C. (For further reading on the "
 "rationale behind Capsules, please see :issue:`5630`.)"
 msgstr ""
+"L'objet :c:type:`Capsule' a été introduit dans Python 3.1 et 2.7 pour "
+"remplacer :c:type:`CObject'. Les objets C étaient utiles, mais l'API :c:type:"
+"`CObject' posait des soucis : elle ne permettait pas la distinction entre "
+"les objets C valides, ce qui permettait aux objets C assortis incorrectement "
+"de planter l'interpréteur, et certaines des API s'appuyaient sur un "
+"comportement indéfini en C. (Pour plus de détails sur la logique de "
+"Capsules, veuillez consulter :Issue:`5630')."
 
 #: ../Doc/howto/cporting.rst:206
 msgid ""
@@ -133,6 +177,14 @@ msgid ""
 "support both CObjects and Capsules. (Note that Python 3.0 is no longer "
 "supported, and it is not recommended for production use.)"
 msgstr ""
+"Si vous utilisez actuellement les objets C, et que vous voulez migrer vers "
+"la version 3.1 ou plus récente, vous devrez passer à Capsules. :c:type:"
+"`CObject' est déprécié dans 3.1 et 2.7 et est supprimé dans Python 3.2.Si "
+"vous ne supportez que les versions 2.7, ou 3.1 et supérieures, vous pouvez "
+"simplement passer à :c:type:`Capsule`.Si vous avez besoin de supporter "
+"Python 3.0, ou des versions de Python antérieures à 2.7, vous devrez "
+"supporter CObjects et Capsules. (Notez que Python 3.0 n'est plus supporté, "
+"et qu'il n'est pas recommandé pour une utilisation en production)."
 
 #: ../Doc/howto/cporting.rst:216
 msgid ""
