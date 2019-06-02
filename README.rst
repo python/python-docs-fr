@@ -325,10 +325,12 @@ debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
+export                     exportation
 garbage collector          ramasse-miettes
 getter                     accesseur
 identifier                 identifiant
 immutable                  immuable
+import                     importation
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
