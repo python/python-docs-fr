@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-23 16:48+0200\n"
-"PO-Revision-Date: 2019-06-02 17:52+0200\n"
+"PO-Revision-Date: 2019-06-02 13:13+0200\n"
 "Last-Translator: Mathieu Dupuy <deronnax@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -274,7 +274,6 @@ msgid "It can handle any Unicode code point."
 msgstr "Il peut gérer n'importe quel point de code Unicode."
 
 #: ../Doc/howto/unicode.rst:138
-#, fuzzy
 msgid ""
 "A Unicode string is turned into a sequence of bytes that contains embedded "
 "zero bytes only where they represent the null character (U+0000). This means "
@@ -282,11 +281,11 @@ msgid ""
 "sent through protocols that can't handle zero bytes for anything other than "
 "end-of-string markers."
 msgstr ""
-"Une chaîne Unicode est transformée en une séquence d'octets ne contenant "
-"aucun octet *zéro*.  Cela évite les problèmes d'*endianness* et signifie que "
-"les chaînes UTF-8 peuvent être traitées par des fonctions C telles que "
-"``strcpy()`` et envoyées via des protocoles qui ne peuvent pas gérer les "
-"octets *zéro*."
+"Une chaîne Unicode est transformée en une séquence d’octets qui contient des "
+"octets zéro uniquement lorsqu’ils représentent le caractère nul (U+000000). "
+"Cela signifie que les chaînes UTF-8 peuvent être traitées par des fonctions "
+"C telles que ``strcpy()`` et envoyées par des protocoles pour qui les octets "
+"zéro signifient forcément la fin de chaîne."
 
 #: ../Doc/howto/unicode.rst:143
 msgid "A string of ASCII text is also valid UTF-8 text."
@@ -319,6 +318,12 @@ msgid ""
 "oriented encodings, like UTF-16 and UTF-32, where the sequence of bytes "
 "varies depending on the hardware on which the string was encoded."
 msgstr ""
+"UTF-8 est un encodage orienté octets. L'encodage spécifie que chaque "
+"caractère est représenté par une séquence spécifique d'un ou plusieurs "
+"octets. Ceci permet d'éviter les problèmes d'ordre des octets qui peuvent "
+"survenir avec les encodages orientés entiers (*integer*) ou orientés mots "
+"processeurs (*words*), comme UTF-16 et UTF-32, où la séquence des octets "
+"varie en fonction du matériel sur lequel la chaîne a été encodée."
 
 #: ../Doc/howto/unicode.rst:157 ../Doc/howto/unicode.rst:513
 #: ../Doc/howto/unicode.rst:734
@@ -387,17 +392,19 @@ msgstr ""
 
 #: ../Doc/howto/unicode.rst:183
 msgid "Python's Unicode Support"
-msgstr ""
+msgstr "Prise en charge Unicode de Python"
 
 #: ../Doc/howto/unicode.rst:185
 msgid ""
 "Now that you've learned the rudiments of Unicode, we can look at Python's "
 "Unicode features."
 msgstr ""
+"Maintenant que vous avez appris les rudiments de l'Unicode, nous pouvons "
+"regarder les fonctionnalités Unicode de Python."
 
 #: ../Doc/howto/unicode.rst:189
 msgid "The String Type"
-msgstr ""
+msgstr "Le Type *String*"
 
 #: ../Doc/howto/unicode.rst:191
 msgid ""
@@ -406,17 +413,24 @@ msgid ""
 "``'unicode rocks!'``, or the triple-quoted string syntax is stored as "
 "Unicode."
 msgstr ""
+"\"Depuis Python 3.0, le type :class:`str` du langage contient des caractères "
+"Unicode, c'est-à-dire n'importe quelle chaîne créée à l'aide de ``\"unicode "
+"déchire !\"``, ``'unicode déchire !'`` ou la syntaxe à triples guillemets "
+"est enregistrée comme Unicode."
 
 #: ../Doc/howto/unicode.rst:195
 msgid ""
 "The default encoding for Python source code is UTF-8, so you can simply "
 "include a Unicode character in a string literal::"
 msgstr ""
+"L'encodage par défaut pour le code source Python est UTF-8, il est donc "
+"facile d'inclure des caractères Unicode dans une chaîne littérale : ::"
 
 #: ../Doc/howto/unicode.rst:205
 msgid ""
 "Side note: Python 3 also supports using Unicode characters in identifiers::"
 msgstr ""
+"Note : Python 3 sait gérer les caractères Unicode dans les identifiants : ::"
 
 #: ../Doc/howto/unicode.rst:211
 msgid ""
@@ -425,6 +439,12 @@ msgid ""
 "string literals. (Depending on your system, you may see the actual capital-"
 "delta glyph instead of a \\u escape.) ::"
 msgstr ""
+"Si vous ne pouvez pas entrer un caractère particulier dans votre éditeur ou "
+"si vous voulez garder le code source uniquement en ASCII pour une raison "
+"quelconque, vous pouvez également utiliser des séquences d'échappement dans "
+"les littéraux de chaîne (en fonction de votre système, il se peut que vous "
+"voyez le glyphe réel du *delta majuscule* au lieu d'une séquence "
+"d'échappement ``\\u...``) : ::"
 
 #: ../Doc/howto/unicode.rst:223
 msgid ""
@@ -432,6 +452,10 @@ msgid ""
 "of :class:`bytes`.  This method takes an *encoding* argument, such as "
 "``UTF-8``, and optionally an *errors* argument."
 msgstr ""
+"De plus, une chaîne de caractères peut être créée en utilisant la méthode :"
+"func:`~bytes.decode` de la classe :class:`bytes`.  Cette méthode prend un "
+"argument *encoding*, ``UTF-8`` par exemple, et optionnellement un argument "
+"*errors*."
 
 #: ../Doc/howto/unicode.rst:227
 msgid ""
@@ -443,6 +467,14 @@ msgid ""
 "``'backslashreplace'`` (inserts a ``\\xNN`` escape sequence). The following "
 "examples show the differences::"
 msgstr ""
+"L'argument *errors* détermine la réponse lorsque la chaîne en entrée ne peut "
+"pas être convertie selon les règles de l'encodage. Les valeurs légales pour "
+"cet argument sont ``'strict'`` (\"strict\" : lève une exception :exc:"
+"`UnicodeDecodeError`) , ``'replace'`` (\"remplacer\" : utilise ``U+FFFD``, "
+"``REPLACEMENT CARACTER``), ``'ignore'`` (\"ignorer\" : n'inclut pas le "
+"caractère dans le résultat Unicode) ou ``'backslashreplace'`` (\"remplacer "
+"avec antislash\" : insère une séquence d’échappement ``\\xNN``). Les "
+"exemples suivants illustrent les différences : ::"
 
 #: ../Doc/howto/unicode.rst:247
 msgid ""
@@ -452,6 +484,12 @@ msgid ""
 "names; for example, ``'latin-1'``, ``'iso_8859_1'`` and ``'8859``' are all "
 "synonyms for the same encoding."
 msgstr ""
+"Les encodages sont spécifiés sous forme de chaînes de caractères contenant "
+"le nom de l'encodage. Python est livré avec une centaine d'encodages "
+"différents ; voir la référence de la bibliothèque Python sur les :ref:"
+"`encodages standards <standard-encodings>` pour une liste. Certains "
+"encodages ont plusieurs noms ; par exemple, ``'latin-1'``, ``'iso_8859_1'`` "
+"et ``'8859'`` sont tous synonymes du même encodage."
 
 #: ../Doc/howto/unicode.rst:253
 msgid ""
@@ -461,10 +499,15 @@ msgid ""
 "built-in :func:`ord` function that takes a one-character Unicode string and "
 "returns the code point value::"
 msgstr ""
+"Des chaînes Unicode à un caractère peuvent également être créées avec la "
+"fonction intégrée :func:`chr`, qui prend des entiers et renvoie une chaîne "
+"Unicode de longueur 1 qui contient le point de code correspondant. "
+"L'opération inverse est la fonction intégrée :func:`ord` qui prend une "
+"chaîne Unicode d'un caractère et renvoie la valeur du point de code : ::"
 
 #: ../Doc/howto/unicode.rst:265
 msgid "Converting to Bytes"
-msgstr ""
+msgstr "Conversion en octets"
 
 #: ../Doc/howto/unicode.rst:267
 msgid ""
@@ -472,6 +515,9 @@ msgid ""
 "returns a :class:`bytes` representation of the Unicode string, encoded in "
 "the requested *encoding*."
 msgstr ""
+"La méthode inverse de :meth:`bytes.decode` est :meth:`str.encode`, qui "
+"renvoie une représentation :class:`bytes` de la chaîne Unicode, codée dans "
+"l’encodage *encoding* demandé."
 
 #: ../Doc/howto/unicode.rst:271
 msgid ""
@@ -483,10 +529,17 @@ msgid ""
 "``backslashreplace`` (inserts a ``\\uNNNN`` escape sequence) and "
 "``namereplace`` (inserts a ``\\N{...}`` escape sequence)."
 msgstr ""
+"Le paramètre *errors* est le même que le paramètre de la méthode :meth:"
+"`~bytes.decode` mais possède quelques gestionnaires supplémentaires. En plus "
+"de ``'strict'``, ``'ignore'`` et ``'remplace'`` (qui dans ce cas insère un "
+"point d'interrogation au lieu du caractère non codable), il y a aussi "
+"``'xmlcharrefreplace'`` (insère une référence XML), ``backslashreplace`` "
+"(insère une séquence ``\\uNNNN``) et ``namereplace`` (insère une séquence ``"
+"\\N{...}``)."
 
 #: ../Doc/howto/unicode.rst:279
 msgid "The following example shows the different results::"
-msgstr ""
+msgstr "L'exemple suivant montre les différents résultats : ::"
 
 #: ../Doc/howto/unicode.rst:300
 msgid ""
@@ -497,10 +550,17 @@ msgid ""
 "is comfortable, and writing new encodings is a specialized task, so the "
 "module won't be covered in this HOWTO."
 msgstr ""
+"Les routines de bas niveau pour enregistrer et accéder aux encodages "
+"disponibles se trouvent dans le module :mod:`codecs`. L'implémentation de "
+"nouveaux encodages nécessite également de comprendre le module :mod:"
+"`codecs`. Cependant, les fonctions d'encodage et de décodage renvoyées par "
+"ce module sont généralement de trop bas-niveau pour être confortables  et "
+"l'écriture de nouveaux encodages est une tâche très spécialisée, donc le "
+"module ne sera pas couvert dans ce HOWTO."
 
 #: ../Doc/howto/unicode.rst:309
 msgid "Unicode Literals in Python Source Code"
-msgstr ""
+msgstr "Littéraux Unicode dans le code source Python"
 
 #: ../Doc/howto/unicode.rst:311
 msgid ""
@@ -509,6 +569,10 @@ msgid ""
 "code point.  The ``\\U`` escape sequence is similar, but expects eight hex "
 "digits, not four::"
 msgstr ""
+"Dans le code source Python, des points de code Unicode spécifiques peuvent "
+"être écrits en utilisant la séquence d'échappement ``\\u``, suivie de quatre "
+"chiffres hexadécimaux donnant le point de code.  La séquence d'échappement ``"
+"\\U`` est similaire, mais attend huit chiffres hexadécimaux, pas quatre ::"
 
 #: ../Doc/howto/unicode.rst:323
 msgid ""
@@ -518,6 +582,13 @@ msgid ""
 "language.  You can also assemble strings using the :func:`chr` built-in "
 "function, but this is even more tedious."
 msgstr ""
+"L'utilisation de séquences d'échappement pour des points de code supérieurs "
+"à 127 est acceptable à faible dose, mais devient gênante si vous utilisez "
+"beaucoup de caractères accentués, comme c'est le cas dans un programme avec "
+"des messages en français ou dans une autre langue utilisant des lettres "
+"accentuées.  Vous pouvez également assembler des chaînes de caractères à "
+"l'aide de la fonction intégrée :func:`chr`, mais c'est encore plus "
+"fastidieux."
 
 #: ../Doc/howto/unicode.rst:329
 msgid ""
@@ -526,6 +597,10 @@ msgid ""
 "which would display the accented characters naturally, and have the right "
 "characters used at runtime."
 msgstr ""
+"Idéalement, vous devriez être capable d'écrire des littéraux dans l'encodage "
+"naturel de votre langue.  Vous pourriez alors éditer le code source de "
+"Python avec votre éditeur favori qui affiche les caractères accentués "
+"naturellement, et a les bons caractères utilisés au moment de l'exécution."
 
 #: ../Doc/howto/unicode.rst:334
 msgid ""
@@ -534,6 +609,10 @@ msgid ""
 "including a special comment as either the first or second line of the source "
 "file::"
 msgstr ""
+"Python considère que le code source est écrit en UTF-8 par défaut, mais vous "
+"pouvez utiliser presque n'importe quel encodage si vous déclarez l'encodage "
+"utilisé.  Cela se fait en incluant un commentaire spécial sur la première ou "
+"la deuxième ligne du fichier source ::"
 
 #: ../Doc/howto/unicode.rst:344
 msgid ""
@@ -543,16 +622,24 @@ msgid ""
 "special; they have no significance to Python but are a convention.  Python "
 "looks for ``coding: name`` or ``coding=name`` in the comment."
 msgstr ""
+"La syntaxe s'inspire de la notation d'Emacs pour spécifier les variables "
+"locales à un fichier. *Emacs* supporte de nombreuses variables différentes, "
+"mais Python ne gère que *coding*.  Les symboles ``-*-`` indiquent à Emacs "
+"que le commentaire est spécial ; ils n'ont aucune signification pour Python "
+"mais sont une convention.  Python cherche ``coding: name`` ou "
+"``coding=name`` dans le commentaire."
 
 #: ../Doc/howto/unicode.rst:350
 msgid ""
 "If you don't include such a comment, the default encoding used will be UTF-8 "
 "as already mentioned.  See also :pep:`263` for more information."
 msgstr ""
+"Si vous n'incluez pas un tel commentaire, l'encodage par défaut est UTF-8 "
+"comme déjà mentionné.  Voir aussi la :pep:`263` pour plus d'informations."
 
 #: ../Doc/howto/unicode.rst:355
 msgid "Unicode Properties"
-msgstr ""
+msgstr "Propriétés Unicode"
 
 #: ../Doc/howto/unicode.rst:357
 msgid ""
@@ -563,16 +650,25 @@ msgid ""
 "fractions such as one-third and four-fifths, etc.).  There are also display-"
 "related properties, such as how to use the code point in bidirectional text."
 msgstr ""
+"La spécification Unicode inclut une base de données d'informations sur les "
+"points de code. Pour chaque point de code défini, l'information comprend le "
+"nom du caractère, sa catégorie, la valeur numérique s'il y a lieu (pour les "
+"caractères représentant des concepts numériques tels que les chiffres "
+"romains, les fractions telles qu'un tiers et quatre cinquièmes, etc.). Il "
+"existe également des propriétés liées à l'affichage, telles que "
+"l'utilisation du point de code dans un texte bidirectionnel."
 
 #: ../Doc/howto/unicode.rst:365
 msgid ""
 "The following program displays some information about several characters, "
 "and prints the numeric value of one particular character::"
 msgstr ""
+"Le programme suivant affiche des informations sur plusieurs caractères et "
+"affiche la valeur numérique d'un caractère particulier ::"
 
 #: ../Doc/howto/unicode.rst:379
 msgid "When run, this prints:"
-msgstr ""
+msgstr "Si vous l'exécutez, cela affiche :"
 
 #: ../Doc/howto/unicode.rst:390
 msgid ""
@@ -586,10 +682,20 @@ msgid ""
 "unicode.org/reports/tr44/#General_Category_Values>`_ for a list of category "
 "codes."
 msgstr ""
+"Les codes de catégorie sont des abréviations décrivant la nature du "
+"caractère. Celles-ci sont regroupées en catégories telles que « Lettre », "
+"« Nombre », « Ponctuation » ou « Symbole », qui sont à leur tour divisées en "
+"sous-catégories.  Pour prendre par exemple les codes de la sortie ci-dessus, "
+"``'Ll'`` signifie « Lettre, minuscules », ``'No'`` signifie « Nombre, "
+"autre », ``'Mn'`` est « Marque, non-espaçant », et ``'So'`` est « Symbole, "
+"autre ».  Voir la section `Valeurs générales des catégories de la "
+"documentation de la base de données de caractères Unicode <http://www."
+"unicode.org/reports/tr44/#General_Category_Values>`_ (ressource en anglais) "
+"pour une liste de codes de catégories."
 
 #: ../Doc/howto/unicode.rst:401
 msgid "Comparing Strings"
-msgstr ""
+msgstr "Comparaison de chaînes de caractères"
 
 #: ../Doc/howto/unicode.rst:403
 msgid ""
@@ -600,6 +706,14 @@ msgid ""
 "point for 'COMBINING CIRCUMFLEX ACCENT'.  These will produce the same output "
 "when printed, but one is a string of length 1 and the other is of length 2."
 msgstr ""
+"Unicode ajoute une certaine complication à la comparaison des chaînes de "
+"caractères, car le même jeu de caractères peut être représenté par "
+"différentes séquences de points de code.  Par exemple, une lettre comme "
+"« ê » peut être représentée comme un point de code unique ``U+00EA``, ou "
+"comme ``U+0065 U+0302``, qui est le point de code pour « e » suivi d'un "
+"point de code pour ``COMBINING CIRCUMFLEX ACCENT``.  Celles-ci produisent le "
+"même résultat lorsqu'elles sont affichées, mais l'une est une chaîne de "
+"caractères de longueur 1 et l'autre de longueur 2."
 
 #: ../Doc/howto/unicode.rst:411
 msgid ""
@@ -609,6 +723,12 @@ msgid ""
 "handling for characters such as the German letter 'ß' (code point U+00DF), "
 "which becomes the pair of lowercase letters 'ss'."
 msgstr ""
+"Un outil pour une comparaison insensible à la casse est la méthode :meth:"
+"`~str.casefold` qui convertit une chaîne en une forme insensible à la casse "
+"suivant un algorithme décrit par le standard Unicode.  Cet algorithme a un "
+"traitement spécial pour les caractères tels que la lettre allemande "
+"« *ß* » (point de code ``U+00DF``), qui devient la paire de lettres "
+"minuscules « *ss* »."
 
 #: ../Doc/howto/unicode.rst:424
 msgid ""
@@ -619,10 +739,17 @@ msgid ""
 "that won't falsely report inequality if two strings use combining characters "
 "differently:"
 msgstr ""
+"Un deuxième outil est la fonction :mod:`unicodedata` du module :func:"
+"`~unicodedata.normalize` du module qui convertit les chaînes de caractères "
+"en l'une de plusieurs formes normales, où les lettres suivies d'un caractère "
+"de combinaison sont remplacées par des caractères simples. :func:`normalize` "
+"peut être utilisée pour effectuer des comparaisons qui ne rapportent pas "
+"faussement les inégalités si deux chaînes utilisent différents caractères de "
+"combinaison :"
 
 #: ../Doc/howto/unicode.rst:447
 msgid "When run, this outputs:"
-msgstr ""
+msgstr "Si vous l'exécutez, cela affiche :"
 
 #: ../Doc/howto/unicode.rst:456
 msgid ""
@@ -630,10 +757,15 @@ msgid ""
 "string giving the desired normalization form, which can be one of 'NFC', "
 "'NFKC', 'NFD', and 'NFKD'."
 msgstr ""
+"Le premier argument de la fonction :func:`~unicodedata.normalize` est une "
+"chaîne de caractères donnant la forme de normalisation désirée, qui peut "
+"être une de celles-ci : ``'NFC'``, ``'NFKC'``, ``'NFD'`` et ``'NFKD'``."
 
 #: ../Doc/howto/unicode.rst:460
 msgid "The Unicode Standard also specifies how to do caseless comparisons::"
 msgstr ""
+"La norme Unicode spécifie également comment faire des comparaisons "
+"insensibles à la casse ::"
 
 #: ../Doc/howto/unicode.rst:476
 msgid ""
@@ -642,10 +774,14 @@ msgid ""
 "string, so the result needs to be normalized again. See section 3.13 of the "
 "Unicode Standard for a discussion and an example.)"
 msgstr ""
+"Ceci affiche ``True``.  (Pourquoi :func:`NFD` est-il invoqué deux fois ?  "
+"Parce qu'il y a quelques caractères qui font que :meth:`casefold` renvoie "
+"une chaîne non normalisée, donc le résultat doit être normalisé à nouveau. "
+"Voir la section 3.13 du standard Unicode pour une discussion et un exemple)."
 
 #: ../Doc/howto/unicode.rst:483
 msgid "Unicode Regular Expressions"
-msgstr ""
+msgstr "Expressions régulières Unicode"
 
 #: ../Doc/howto/unicode.rst:485
 msgid ""
@@ -656,12 +792,21 @@ msgid ""
 "characters ``[0-9]`` in bytes but in strings will match any character that's "
 "in the ``'Nd'`` category."
 msgstr ""
+"Les expressions régulières gérées par le module :mod:`re` peuvent être "
+"fournies sous forme de chaîne d'octets ou de texte.  Certaines séquences de "
+"caractères spéciaux telles que ``\\d`` et ``\\w`` ont des significations "
+"différentes selon que le motif est fourni en octets ou en texte.  Par "
+"exemple, ``\\d``` correspond aux caractères ``[0-9]`` en octets mais dans "
+"les chaînes de caractères correspond à tout caractère de la catégorie "
+"``'Nd'``."
 
 #: ../Doc/howto/unicode.rst:492
 msgid ""
 "The string in this example has the number 57 written in both Thai and Arabic "
 "numerals::"
 msgstr ""
+"Dans cet exemple, la chaîne contient le nombre 57 écrit en chiffres arabes "
+"et thaïlandais ::"
 
 #: ../Doc/howto/unicode.rst:502
 msgid ""
@@ -669,6 +814,9 @@ msgid ""
 "you supply the :const:`re.ASCII` flag to :func:`~re.compile`, ``\\d+`` will "
 "match the substring \"57\" instead."
 msgstr ""
+"Une fois exécuté, ``\\d+`` correspond aux chiffres thaïlandais et les "
+"affiche.  Si vous fournissez le drapeau :const:`re.ASCII` à :func:`~re."
+"compile`, ``\\d+`` correspond cette fois à la chaîne \"57\"."
 
 #: ../Doc/howto/unicode.rst:506
 msgid ""
@@ -676,36 +824,48 @@ msgid ""
 "``[a-zA-Z0-9_]`` in bytes or if :const:`re.ASCII` is supplied, and ``\\s`` "
 "will match either Unicode whitespace characters or ``[ \\t\\n\\r\\f\\v]``."
 msgstr ""
+"De même, ``\\w`` correspond à une grande variété de caractères Unicode mais "
+"seulement ``[a-zA-Z0-9_]`` en octets (ou si :const:`re.ASCII` est fourni) et "
+"``\\s`` correspond soit aux caractères blancs Unicode soit aux caractères "
+"``[ \\t\\n\\r\\f\\v]``."
 
 #: ../Doc/howto/unicode.rst:517
 msgid "Some good alternative discussions of Python's Unicode support are:"
 msgstr ""
+"Quelques bonnes discussions alternatives sur la gestion d'Unicode par Python "
+"sont :"
 
 #: ../Doc/howto/unicode.rst:519
 msgid ""
 "`Processing Text Files in Python 3 <http://python-notes.curiousefficiency."
 "org/en/latest/python3/text_file_processing.html>`_, by Nick Coghlan."
 msgstr ""
+"`Processing Text Files in Python 3 <http://python-notes.curiousefficiency."
+"org/en/latest/python3/text_file_processing.html>`_, par Nick Coghlan."
 
 #: ../Doc/howto/unicode.rst:520
 msgid ""
 "`Pragmatic Unicode <https://nedbatchelder.com/text/unipain.html>`_, a PyCon "
 "2012 presentation by Ned Batchelder."
 msgstr ""
+"`Pragmatic Unicode <https://nedbatchelder.com/text/unipain.html>`_, une "
+"présentation PyCon 2012 par Ned Batchelder."
 
 #: ../Doc/howto/unicode.rst:522
 msgid ""
 "The :class:`str` type is described in the Python library reference at :ref:"
 "`textseq`."
 msgstr ""
+"Le type :class:`str` est décrit dans la référence de la bibliothèque Python "
+"à :ref:`textseq`."
 
 #: ../Doc/howto/unicode.rst:525
 msgid "The documentation for the :mod:`unicodedata` module."
-msgstr ""
+msgstr "La documentation du module :mod:`unicodedata`."
 
 #: ../Doc/howto/unicode.rst:527
 msgid "The documentation for the :mod:`codecs` module."
-msgstr ""
+msgstr "La documentation du module :mod:`codecs`."
 
 #: ../Doc/howto/unicode.rst:529
 msgid ""
@@ -715,6 +875,12 @@ msgid ""
 "Python 2's Unicode features (where the Unicode string type is called "
 "``unicode`` and literals start with ``u``)."
 msgstr ""
+"Marc-André Lemburg a fait une présentation intitulée `« Python et "
+"Unicode » (diapositives PDF) <https://downloads.egenix.com/python/Unicode-"
+"EPC2002-Talk.pdf>`_ à EuroPython 2002.  Les diapositives sont un excellent "
+"aperçu de la conception des fonctionnalités Unicode de Python 2 (où le type "
+"de chaîne Unicode est appelé ``unicode`` et commence littéralement par "
+"``u``)."
 
 #: ../Doc/howto/unicode.rst:537
 msgid "Reading and Writing Unicode Data"
