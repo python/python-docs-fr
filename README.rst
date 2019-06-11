@@ -42,9 +42,8 @@ Comment contribuer
 
 Vous pouvez contribuer en utilisant :
 
-- Github (solution recommandée)
-- `transifex <https://www.transifex.com/python-doc/public/>`_
-- Ou simplement en ouvrant `un ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
+- Des *pull requests* Github (solution recommandée)
+- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_
 
 
 Contribuer en utilisant Github
@@ -126,18 +125,25 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
     # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
+    pospell library/sys.po
 
     # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
     # que avez vous avez modifié à la longueur de ligne correcte de `80`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
+    powrap library/sys.po
 
-    # Poussez ensuite vos modifications sur votre fork Github,
-    # comme ce sont des branches éphémères, ne configurons pas git pour les suivre
-    # toutes, "origin HEAD" est une syntaxe "spéciale" pour dire "pousse sur origin,
-    # sur une branche du même nom que la branch locale",
-    # c'est pratique car c'est exactement ce que nous voulons :
-    git push origin HEAD
+    # C'est le moment de git add et git commit
+    git add -p  # C'est l'occasion de se relire, mais git add -u c'est bien aussi
+    # ou même git add library/sys.po
+
+    git commit -m "Working on library/sys.po"  # Ou un autre message plus inspiré :)
+
+    # Poussez ensuite vos modifications sur votre fork Github.
+    # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
+    # branche est liée à votre fork Github (et donc qu'un futur `git pull` sache quoi
+    # tirer)
+    git push -u origin
 
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
     # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
@@ -148,9 +154,11 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
     # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
+    git pull  # pour rapatrier les modifications que vous auriez accepté
+              # sur l'interface web.
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "glossaire : petites corrections".
-    git push origin HEAD
+    git push
 
 
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
