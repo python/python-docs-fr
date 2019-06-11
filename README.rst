@@ -141,7 +141,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Poussez ensuite vos modifications sur votre fork Github.
     # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-    # branche est liée à votre fork githib (et donc qu'un futur `git pull` sache quoi
+    # branche est liée à votre fork Github (et donc qu'un futur `git pull` sache quoi
     # tirer)
     git push -u origin
 
@@ -154,7 +154,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
     # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
-    git pull  # pour rappatrier les modifications que vous auriez accepté
+    git pull  # pour rapatrier les modifications que vous auriez accepté
               # sur l'interface web.
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "glossaire : petites corrections".
