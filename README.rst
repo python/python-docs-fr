@@ -229,38 +229,68 @@ transformer en ``—`` en français.
 Le cas de "::"
 ~~~~~~~~~~~~~~
 
-Du point de vue du *reStructuredText*, ``::`` collé à la fin d'un mot
-signifie "affiche ``:`` et introduit un bloc de code", mais un ``::``
-après une espace signifie "introduit juste un bloc de code".
+Du point de vue du *reStructuredText*, qui est le langage de sphynx, l'outil de
+ documentation :
 
-Donc, dans un fichier rst anglais, nous voyons soit "bla bla::", soit
-"bla bla. ::".
+- ``::`` collé à la fin d'un mot signifie
+"affiche ``:`` et introduit un bloc de code", mais un ``::`` après une espace
+signifie "introduit juste un bloc de code".
+
+Donc, dans un fichier rst anglais, 'rst' est le format de fichier du langage
+*reStructuredText*, un format de fichier enrichi, nous voyons soit "bla bla::",
+soit "bla bla. ::".
 
 En français, nous mettons une espace insécable devant nos deux-points, comme :
 "Et voilà :".
 
 L'utilisation de l'espace insécable en rst est naturelle, vous n'aurez qu'à
-écrire ``Et voilà ::``. Comme le ``::`` n'est pas précédé d'un espace normal,
+écrire ``Et voilà ::``. Le ``::`` n'est pas précédé d'un espace normal,
 il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
-Si vous ne savez pas comment taper une espace insécable, il y a une astuce.
-Traduisez ``deux-points deux-points`` par
-``espace deux-points espace deux-points deux-points``. La balise
-``espace deux-points`` donnera un rendu de votre espace et vos deux-points
+Si vous ne savez pas comment taper une espace insécable, il y a une astuce :
+lisez celle de la touche Compose dans la section suivante ; sinon :
+
+=> Traduisez ``deux-points deux-points`` par
+``espace deux-points espace deux-points deux-points``.
+
+La balise ``espace deux-points`` donnera un rendu de votre espace et vos deux-points
 comme le français l'exige, et la balise ``espace deux-points deux-points`` qui
-suit n'affichera rien et introduira le bloc de code. Non, il n'insère
-pas magiquement une espace insécable donc ce n'est toujours pas
-vraiment du français valide. Oui, il vaut mieux apprendre à taper
-les espaces insécables.
+suit n'affichera rien et introduira le bloc de code.
+
+Ce qui donnera le visuel suivant : `` : ::``
+
+Non ! il n'insère pas magiquement une espace insécable donc ce n'est toujours pas
+vraiment du français valide.
+
+Oui ! il vaut mieux apprendre à taper les espaces insécables.
 
 Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
-Sous Linux, vous pouvez utilisez une `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_, c'est
-facile à configurer à l'aide de l'outil graphique de configuration de votre
-clavier ou via ``dpkg-reconfigure keyboard-configuration``. Sous Windows, vous
+
+=> Sous Linux/Unix/*BSD (tel OpenBSD), vous pouvez utilisez une
+`Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
+c'est facile à configurer à l'aide de l'outil graphique de configuration de votre
+clavier ou via ``dpkg-reconfigure keyboard-configuration``
+(pour Ubuntu ou Debian et distributions assimilées)
+
+À minima, vous pouvez configurer votre fichier '~/.Xmodmap' pour ajouter l'équivalent de :
+``# key Compose
+keycode 115 = Multi_key``.
+Utilisez ``xdev`` pour connaitre la bonne correspondance de la touche que vous
+voulez assigner !
+
+Ensuite, dans votre fichier '~/.xsession', ajoutez :
+``# Gestion des touches clavier
+xmodmap $HOME/.Xmodmap``
+
+Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller modifier
+dans les paramètres > clavier > Disposition : puis 'Touche composée'.
+Pour finir, redémarrez votre session.
+
+=> Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
 Avec une touche de composition (personnellement j'utilise ``alt-gr``,
@@ -363,7 +393,7 @@ statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
-expression				         expression
+expression                       expression
 ========================== ===========================================
 
 Historique du projet
