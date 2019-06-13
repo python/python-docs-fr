@@ -229,12 +229,10 @@ transformer en ``—`` en français.
 Le cas de "::"
 ~~~~~~~~~~~~~~
 
-Du point de vue du *reStructuredText*, qui est le langage de sphynx, l'outil de
- documentation :
+Du point de vue du *reStructuredText*, qui est le langage de sphynx, l'outil de documentation :
 
-- ``::`` collé à la fin d'un mot signifie
-"affiche ``:`` et introduit un bloc de code", mais un ``::`` après une espace
-signifie "introduit juste un bloc de code".
+=> ``::`` collé à la fin d'un mot signifie "affiche ``:`` et introduit un bloc de code",
+mais un ``::`` après une espace signifie "introduit juste un bloc de code".
 
 Donc, dans un fichier rst anglais, 'rst' est le format de fichier du langage
 *reStructuredText*, un format de fichier enrichi, nous voyons soit "bla bla::",
@@ -277,7 +275,9 @@ clavier ou via ``dpkg-reconfigure keyboard-configuration``
 (pour Ubuntu ou Debian et distributions assimilées)
 
 À minima, vous pouvez configurer votre fichier '~/.Xmodmap' pour ajouter l'équivalent de :
+
 .. code-block:: shell
+
     # key Compose
     keycode 115 = Multi_key
 
@@ -285,7 +285,9 @@ Utilisez ``xdev`` pour connaitre la bonne correspondance de la touche que vous
 voulez assigner !
 
 Ensuite, dans votre fichier '~/.xsession', ajoutez :
+
 .. code-block:: shell
+
     # Gestion des touches clavier
     xmodmap $HOME/.Xmodmap
 
