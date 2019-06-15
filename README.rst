@@ -281,6 +281,7 @@ clavier ou via ``dpkg-reconfigure keyboard-configuration``
     # key Compose
     keycode 115 = Multi_key
 
+
 Utilisez ``xdev`` pour connaitre la bonne correspondance de la touche que vous
 voulez assigner !
 
@@ -290,6 +291,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
 
     # Gestion des touches clavier
     xmodmap $HOME/.Xmodmap
+
 
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller modifier
 dans les paramètres > clavier > Disposition : puis 'Touche composée'.
