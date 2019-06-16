@@ -235,7 +235,7 @@ Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la docume
 mais un ``::`` après une espace signifie "introduit juste un bloc de code".
 
 Donc, dans du *rst*, en anglais,
-*reStructuredText*, un format de fichier enrichi, nous voyons soit "bla bla::",
+nous voyons soit "bla bla::",
 soit "bla bla. ::".
 
 En français, nous mettons une espace insécable devant nos deux-points, comme :
