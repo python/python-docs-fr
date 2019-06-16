@@ -229,7 +229,7 @@ transformer en ``—`` en français.
 Le cas de "::"
 ~~~~~~~~~~~~~~
 
-Du point de vue du *reStructuredText*, qui est le langage de sphynx, l'outil de documentation :
+Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la documentation :
 
 => ``::`` collé à la fin d'un mot signifie "affiche ``:`` et introduit un bloc de code",
 mais un ``::`` après une espace signifie "introduit juste un bloc de code".
