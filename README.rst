@@ -234,7 +234,7 @@ Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la docume
 => ``::`` collé à la fin d'un mot signifie "affiche ``:`` et introduit un bloc de code",
 mais un ``::`` après une espace signifie "introduit juste un bloc de code".
 
-Donc, dans un fichier rst anglais, 'rst' est le format de fichier du langage
+Donc, dans du *rst*, en anglais,
 *reStructuredText*, un format de fichier enrichi, nous voyons soit "bla bla::",
 soit "bla bla. ::".
 
