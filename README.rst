@@ -350,7 +350,7 @@ return                     renvoie, donne (on évite
 setter                     mutateur
 simple quote               guillemet simple, apostrophe (apostrophe
                            is to glue, guillemet is to surround)
-socket                     *socket*
+socket                     connecteur ou interface de connexion
 statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
