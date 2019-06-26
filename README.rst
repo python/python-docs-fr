@@ -370,6 +370,7 @@ deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 e.g.                       e.g. (pour *exempli gratia*)
 export                     exportation
+expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
 identifier                 identifiant
@@ -399,7 +400,6 @@ statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
-expression                 expression
 ========================== ===========================================
 
 Historique du projet
