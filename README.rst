@@ -368,6 +368,7 @@ call stack                 pile d'appels
 debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
+deprecated                 obsolète
 e.g.                       e.g. (pour *exempli gratia*)
 export                     exportation
 expression                 expression
