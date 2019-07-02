@@ -503,11 +503,11 @@ Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
-   tx pull -f
+   tx pull -f --parallel
    pomerge --from-files **/*.po
    git checkout -- .
-   pomerge --to-files --no-overwrite --mark-as-fuzzy **/*.po
+   pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
    powrap --modified
    git add -p
    git commit -m "tx pull"
-   tx push -t -f --no-interactive
+   tx push -t -f --no-interactive --parallel
