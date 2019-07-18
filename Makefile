@@ -70,7 +70,7 @@ $(VENV)/bin/pospell: $(VENV)/bin/activate
 
 .PHONY: todo
 todo: $(VENV)/bin/potodo
-	$(VENV)/bin/potodo --github python/python-docs-fr
+	$(VENV)/bin/potodo
 
 .PHONY: verifs
 verifs: powrap pospell
