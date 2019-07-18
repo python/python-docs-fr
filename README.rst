@@ -121,6 +121,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
+    # Configurez poedit pour "ne pas preserver le formatage des
+    # fichiers existants" (décochez la case), et indiquez une longueur
+    # de ligne maximum de 79 caractères.
+
     # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
@@ -128,7 +132,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     pospell library/sys.po
 
     # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
-    # que avez vous avez modifié à la longueur de ligne correcte de `80`.
+    # que avez vous avez modifié à la longueur de ligne correcte de `79`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
     powrap library/sys.po
