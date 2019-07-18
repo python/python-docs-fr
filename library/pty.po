@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-02 22:11+0200\n"
+"POT-Creation-Date: 2019-05-23 16:48+0200\n"
 "PO-Revision-Date: 2018-09-28 19:18+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -72,26 +72,54 @@ msgstr ""
 "slave)``, pour le maître et pour l'esclave respectivement."
 
 #: ../Doc/library/pty.rst:44
+#, fuzzy
 msgid ""
 "Spawn a process, and connect its controlling terminal with the current "
 "process's standard io. This is often used to baffle programs which insist on "
-"reading from the controlling terminal."
+"reading from the controlling terminal. It is expected that the process "
+"spawned behind the pty will eventually terminate, and when it does *spawn* "
+"will return."
 msgstr ""
 "Crée un nouveau processus et connecte son terminal aux entrées/sorties "
 "standard du processus courant.  C'est typiquement utilisé pour duper les "
 "programmes insistant sur le fait de lire depuis leur terminal."
 
-#: ../Doc/library/pty.rst:48
+#: ../Doc/library/pty.rst:50
 msgid ""
-"The functions *master_read* and *stdin_read* should be functions which read "
-"from a file descriptor. The defaults try to read 1024 bytes each time they "
-"are called."
+"The functions *master_read* and *stdin_read* are passed a file descriptor "
+"which they should read from, and they should always return a byte string. In "
+"order to force spawn to return before the child process exits an :exc:"
+"`OSError` should be thrown."
 msgstr ""
-"Les fonctions *master_read* et *stdin_read* doivent être des fonctions "
-"lisant sur un descripteur de fichier. Par défaut elles lisent 1024 octets à "
-"chaque fois qu'elles sont appelées."
 
-#: ../Doc/library/pty.rst:52
+#: ../Doc/library/pty.rst:55
+msgid ""
+"The default implementation for both functions will read and return up to "
+"1024 bytes each time the function is called. The *master_read* callback is "
+"passed the pseudoterminal’s master file descriptor to read output from the "
+"child process, and *stdin_read* is passed file descriptor 0, to read from "
+"the parent process's standard input."
+msgstr ""
+
+#: ../Doc/library/pty.rst:61
+msgid ""
+"Returning an empty byte string from either callback is interpreted as an end-"
+"of-file (EOF) condition, and that callback will not be called after that. If "
+"*stdin_read* signals EOF the controlling terminal can no longer communicate "
+"with the parent process OR the child process. Unless the child process will "
+"quit without any input, *spawn* will then loop forever. If *master_read* "
+"signals EOF the same behavior results (on linux at least)."
+msgstr ""
+
+#: ../Doc/library/pty.rst:68
+msgid ""
+"If both callbacks signal EOF then *spawn* will probably never return, unless "
+"*select* throws an error on your platform when passed three empty lists. "
+"This is a bug, documented in `issue 26228 <https://bugs.python.org/"
+"issue26228>`_."
+msgstr ""
+
+#: ../Doc/library/pty.rst:73
 msgid ""
 ":func:`spawn` now returns the status value from :func:`os.waitpid` on the "
 "child process."
@@ -99,11 +127,11 @@ msgstr ""
 ":func:`spawn` renvoie maintenant la valeur renvoyée par :func:`os.waitpid` "
 "sur le processus fils."
 
-#: ../Doc/library/pty.rst:57
+#: ../Doc/library/pty.rst:78
 msgid "Example"
 msgstr "Exemple"
 
-#: ../Doc/library/pty.rst:61
+#: ../Doc/library/pty.rst:82
 msgid ""
 "The following program acts like the Unix command :manpage:`script(1)`, using "
 "a pseudo-terminal to record all input and output of a terminal session in a "
@@ -112,3 +140,12 @@ msgstr ""
 "Le programme suivant se comporte comme la commande Unix :manpage:"
 "`script(1)`, utilisant un pseudo-terminal pour enregistrer toutes les "
 "entrées et sorties d'une session dans un fichier *typescript*. ::"
+
+#~ msgid ""
+#~ "The functions *master_read* and *stdin_read* should be functions which "
+#~ "read from a file descriptor. The defaults try to read 1024 bytes each "
+#~ "time they are called."
+#~ msgstr ""
+#~ "Les fonctions *master_read* et *stdin_read* doivent être des fonctions "
+#~ "lisant sur un descripteur de fichier. Par défaut elles lisent 1024 octets "
+#~ "à chaque fois qu'elles sont appelées."
