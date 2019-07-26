@@ -363,7 +363,7 @@ Terme                      Traduction proposée
 ========================== ===========================================
 -like                      -compatible
 abstract data type         type abstrait
-argument                   argument (Don't mix with parameter)
+argument                   argument (à ne pas confondre avec *paramètre*)
 backslash                  antislash, *backslash*
 bound                      lier
 bug                        bogue, *bug*
@@ -373,11 +373,14 @@ debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
 deprecated                 obsolète
-e.g.                       e.g. (pour *exempli gratia*)
+e.g.                       p. ex. (on n'utilise pas l'anglicisme «e.g.», 
+                           lui-même issu du latin *exempli gratia*)
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme «i.e»,
+                           lui-même issu du latin *id est*)
 identifier                 identifiant
 immutable                  immuable
 import                     importation
