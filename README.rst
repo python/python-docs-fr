@@ -11,7 +11,7 @@ Traduction française de la documentation Python
    :width: 45%
 
 
-Accord de Contribution à la Documentation
+Accord de contribution à la documentation
 -----------------------------------------
 
 NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
@@ -26,7 +26,7 @@ pouvez demander à ce que votre contribution à la documentation soit
 publiquement reconnue, et si votre traduction est acceptée par la
 PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant
 une modification appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
-rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
+rien dans le présent *accord de contribution* à la documentation n'oblige la PSF
 à incorporer votre contribution textuelle, votre participation à la communauté
 Python est bienvenue et appréciée.
 
@@ -42,8 +42,8 @@ Comment contribuer
 
 Vous pouvez contribuer en utilisant :
 
-- Des *pull requests* Github (solution recommandée)
-- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_
+- Des *pull requests* Github (solution recommandée).
+- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
 Contribuer en utilisant Github
@@ -70,22 +70,22 @@ où vous avez le droit de faire des modifications.
 .. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
-    git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
     # *OU* HTTPS :
-    git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    git clone https://github.com:VOTRE_NOM_DE_COMPTE/python-docs-fr.git
 
     # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
     # Ajoutez le dépot upstream (le dépôt public) en utilisant HTTPS (git
     # ne demandera pas de mot de passe ainsi) :
-    # Ceci permet à git de savoir quoi/où est *upstream*
+    # Ceci permet à *git* de savoir quoi/où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler.
 Vous pouvez utiliser `potodo <https://github.com/seluj78/potodo>`_, un outil
 fait pour trouver des fichiers ``po`` à traduire.
-Installez-le à l'aide de pip (``pip install potodo``) dans un environnement
+Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
 ``python3.6`` ou plus.
 Lancez ensuite la commande ``potodo`` dans votre clone local.
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
@@ -107,7 +107,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
     # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
-    # "library-sys" mais vous pouvez appeller la vôtre comme vous voulez.
+    # «library-sys» mais vous pouvez appeller la vôtre comme vous voulez.
     # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
     # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
     # branche "library-venv".
@@ -125,13 +125,13 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # fichiers existants" (décochez la case), et indiquez une longueur
     # de ligne maximum de 79 caractères.
 
-    # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
+    # Quand vous avez fini de traduire, vous pouvez lancer *pospell* (pip install pospell).
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
     # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
-    pospell library/sys.po
+    pospell -p dict library/sys.po
 
-    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
+    # Vous pouvez ensuite lancer *powrap* (pip install powrap) qui va reformater le fichier
     # que avez vous avez modifié à la longueur de ligne correcte de `79`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
@@ -176,7 +176,7 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.6``, ``3.7``, ...), seulement récupéré les
+branche de version (``3.6``, ``3.7``, etc.), seulement récupéré les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
@@ -210,8 +210,8 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
 - ``::`` à la fin de certains paragraphes doivent être traduits en `` :
   ::`` en français pour placer l'espace avant les deux-points.
 - Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
-  (typiquement si c'est Wikipédia et que l'article a une traduction). Si
-  aucune traduction de la cible n'existe, ne traduisez pas le titre.
+  (surtout si c'est un lien Wikipédia et que l'article a une traduction).
+  Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 
 Le cas de "---"
 ~~~~~~~~~~~~~~~
@@ -226,7 +226,7 @@ Les *smartquotes* sont également responsables de la transformation de
 ``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
 ``...`` en ``…``.
 
-Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
+Comme nous n'avons pas de *smartquotes*, nous devrons également «traduire»
 cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
 transformer en ``—`` en français.
 
@@ -271,7 +271,7 @@ Comment saisir des em-dash, des ellipses, des guillemets français, ou des espac
 
 Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux/Unix/*BSD (tel OpenBSD), vous pouvez utilisez une
+=> Sous Linux/Unix/\*BSD (tel OpenBSD), vous pouvez utilisez une
 `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 c'est facile à configurer à l'aide de l'outil graphique de configuration de votre
 clavier ou via ``dpkg-reconfigure keyboard-configuration``
@@ -345,6 +345,8 @@ Ressources de traduction
 - `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
   déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
+- `https://jacques-andre.fr/faqtypo/lessons.pdf`_, résumé succint de typographie,
+  utile pour apprendre le bon usage des majuscules, des espaces, etc.
 
 
 Glossaire
@@ -369,6 +371,7 @@ bound                      lier
 bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
+connection                 connexion (et non *connection*)
 debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde.
 double quote               guillemet
@@ -391,10 +394,12 @@ list comprehension         liste en compréhension (liste en intension est
                            valide, mais nous ne l'utilisons pas)
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
+mixin type                 type de mélange
 mutable                    muable
 namespace                  espace de nommage
                            (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
+pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
