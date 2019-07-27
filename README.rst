@@ -107,22 +107,22 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
     # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
-    # «library-sys» mais vous pouvez appeller la vôtre comme vous voulez.
+    # « library-sys » mais vous pouvez appeller la vôtre comme vous voulez.
     # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
-    # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
-    # branche "library-venv".
+    # Par exemple, si vous travaillez sur « library/venv.po », vous pouvez nommer votre
+    # branche « library-venv ».
 
     # Mettez à jour votre version locale
     git fetch upstream
-    # Créez une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
+    # Créez une nouvelle branche nommée « library-sys » basée sur « upstream/3.7 ».
     git checkout -b library-sys upstream/3.7
 
     # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
-    # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
+    # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
-    # Configurez poedit pour "ne pas preserver le formatage des
-    # fichiers existants" (décochez la case), et indiquez une longueur
+    # Configurez poedit pour « ne pas preserver le formatage des
+    # fichiers existants » (décochez la case), et indiquez une longueur
     # de ligne maximum de 79 caractères.
 
     # Quand vous avez fini de traduire, vous pouvez lancer *pospell* (pip install pospell).
@@ -151,7 +151,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
     # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
-    # et un joli bouton "Compare & pull request" devrait apparaître au bout de quelques secondes
+    # et un joli bouton « Compare & pull request » devrait apparaître au bout de quelques secondes
     # vous indiquant que vous pouvez demander une pull request
 
     # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
@@ -172,7 +172,7 @@ segment manquant :
 - Vous poussez sur *origin* (votre clone sur Github)
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
+de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
@@ -213,8 +213,9 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
   (surtout si c'est un lien Wikipédia et que l'article a une traduction).
   Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 
-Le cas de "---"
-~~~~~~~~~~~~~~~
+
+Le cas de « --- »
+~~~~~~~~~~~~~~~~~
 
 La version anglaise utilise une chose nommée `smartquotes
 <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
@@ -226,29 +227,30 @@ Les *smartquotes* sont également responsables de la transformation de
 ``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
 ``...`` en ``…``.
 
-Comme nous n'avons pas de *smartquotes*, nous devrons également «traduire»
+Comme nous n'avons pas de *smartquotes*, nous devrons également « traduire »
 cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
 transformer en ``—`` en français.
 
-Le cas de "::"
-~~~~~~~~~~~~~~
+
+Le cas de « :: »
+~~~~~~~~~~~~~~~~
 
 Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la documentation :
 
-=> ``::`` collé à la fin d'un mot signifie "affiche ``:`` et introduit un bloc de code",
-mais un ``::`` après une espace signifie "introduit juste un bloc de code".
+=> ``::`` collé à la fin d'un mot signifie « affiche ``:`` et introduit un bloc de code »,
+mais un ``::`` après une espace signifie « introduit juste un bloc de code ».
 
-Donc, dans du *rst*, en anglais, nous voyons soit "bla bla::", soit "bla bla. ::".
+Donc, dans du *rst*, en anglais, nous voyons soit « bla bla:: », soit « bla bla. :: ».
 
 En français, nous mettons une espace insécable devant nos deux-points, comme :
-"Et voilà :".
+« Et voilà : ».
 
 L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
 écrire ``Et voilà ::``. Le ``::`` n'est pas précédé d'un espace normal,
 il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
 Si vous ne savez pas comment taper une espace insécable, il y a une astuce :
-lisez celle de la touche Compose dans la section suivante ; sinon :
+lisez celle de la touche *compose* dans la section suivante ; sinon :
 
 => Traduisez ``deux-points deux-points`` par
 ``espace deux-points espace deux-points deux-points``.
@@ -267,7 +269,6 @@ Oui ! il vaut mieux apprendre à taper les espaces insécables.
 
 Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
 
@@ -307,8 +308,8 @@ Avec une touche de composition (personnellement j'utilise ``alt-gr``,
 vous pouvez aussi utiliser ``verr maj 🔒``), vous pouvez utiliser les
 compositions suivantes :
 
-- Composer ``<`` ``<`` donne ``«``
-- Composer ``>`` ``>`` donne ``»``
+- Composer ``<`` ``<`` donne ``« ``
+- Composer ``>`` ``>`` donne `` »``
 - Composer espace espace donne une espace insécable
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
@@ -320,6 +321,7 @@ simplement fonctionner :
 - Composer ``1`` ``2`` donne ``½``
 - Composer ``'`` ``E`` donne ``É``
 - … …
+
 
 Où obtenir de l'aide ?
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -339,13 +341,13 @@ Ressources de traduction
 - La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
 - La `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_
-- Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
-- Les `Glossaires et dictionnaires de traduc.org
+- Le `glossaire traduc.org <http://glossaire.traduc.org>`_
+- Les `glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_
 - `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
   déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
-- `https://jacques-andre.fr/faqtypo/lessons.pdf`_, résumé succint de typographie,
+- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_, résumé succint de typographie,
   utile pour apprendre le bon usage des majuscules, des espaces, etc.
 
 
@@ -360,9 +362,9 @@ Pour trouver facilement comment un terme est déjà traduit dans notre documenta
 vous pouvez utiliser
 `find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
 
-========================== ===========================================
+========================== ===============================================
 Terme                      Traduction proposée
-========================== ===========================================
+========================== ===============================================
 -like                      -compatible
 abstract data type         type abstrait
 argument                   argument (à ne pas confondre avec *paramètre*)
@@ -371,18 +373,20 @@ bound                      lier
 bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
-connection                 connexion (et non *connection*)
 debugging                  débogage
-deep copy                  copie récursive (préféré), ou copie profonde.
+deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
 deprecated                 obsolète
-e.g.                       p. ex. (on n'utilise pas l'anglicisme «e.g.», 
-                           lui-même issu du latin *exempli gratia*)
+-like                      -compatible
+e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. », 
+                           lui-même issu du latin *exempli gratia*).
+                           On utilise une insécable pour éviter les
+                           retours à la ligne malheureux.
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
-i.e.                       c.-à-d. (on n'utilise pas l'anglicisme «i.e»,
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
                            lui-même issu du latin *id est*)
 identifier                 identifiant
 immutable                  immuable
@@ -403,17 +407,17 @@ pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
-return                     renvoie, donne (on évite
-                           "retourne" qui pourrait porter à confusion).
+return                     renvoie, donne (on évite « retourne » qui
+                           pourrait porter à confusion).
 setter                     mutateur
-simple quote               guillemet simple, apostrophe (apostrophe
-                           is to glue, guillemet is to surround)
+simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
 statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
-========================== ===========================================
+========================== ===============================================
+
 
 Historique du projet
 --------------------
@@ -423,6 +427,7 @@ Ce projet a été lancé `vers 2012
 par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
 est devenu la traduction officielle de la documentation Python en français
 grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+
 
 Simplifier les diffs git
 ------------------------
@@ -450,6 +455,7 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
     git config diff.podiff.textconv podiff
 
+
 Maintenance
 -----------
 
@@ -471,6 +477,7 @@ Pour cloner CPython, vous pouvez utiliser :
 
 Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
+
 
 Fusionner les fichiers *pot* de CPython
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -494,6 +501,7 @@ Lancer un *build* en local
 .. code-block:: bash
 
   make
+
 
 Synchroniser la traduction avec Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
