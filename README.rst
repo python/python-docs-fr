@@ -336,19 +336,20 @@ N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 Ressources de traduction
 ------------------------
 
-- `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
-- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
-- La `liste de diffusion doc-sig
+- canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
+- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
+- la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_
-- Le `glossaire traduc.org <http://glossaire.traduc.org>`_
-- Les `glossaires et dictionnaires de traduc.org
-  <https://traduc.org/Glossaires_et_dictionnaires>`_
-- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
-  déjà traduit
+- les `glossaires et dictionnaires de traduc.org
+  <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
+  `Grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
+  de l'Office québécois de la langue française
+- le fichier `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, car
+  il est déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
-- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_, résumé succint de typographie,
-  utile pour apprendre le bon usage des majuscules, des espaces, etc.
+- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
+  résumé succint de typographie, utile pour apprendre le bon usage des majuscules,
+  des espaces, etc.
 
 
 Glossaire
