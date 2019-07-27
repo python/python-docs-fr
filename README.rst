@@ -336,15 +336,15 @@ N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 Ressources de traduction
 ------------------------
 
-- canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
+- le canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
 - la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
 - la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_
 - les `glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
-  `Grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
+  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
   de l'Office québécois de la langue française
-- le fichier `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, car
+- le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_, car
   il est déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
@@ -381,8 +381,9 @@ deprecated                 obsolète
 -like                      -compatible
 e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. », 
                            lui-même issu du latin *exempli gratia*).
-                           On utilise une insécable pour éviter les
-                           retours à la ligne malheureux.
+                           On sépare les deux mots par  une espace
+                           insécable pour éviter les retours à la ligne
+                           malheureux.
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
