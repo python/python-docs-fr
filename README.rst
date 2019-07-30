@@ -121,7 +121,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
-    # Configurez poedit pour « ne pas preserver le formatage des
+    # Configurez poedit pour « ne pas préserver le formatage des
     # fichiers existants » (décochez la case), et indiquez une longueur
     # de ligne maximum de 79 caractères.
 
@@ -129,7 +129,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
     # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
-    pospell -p dict library/sys.po
+    # Une liste blanche de certains termes techniques ou de noms propres, comme « Guido »,
+    # « C99 » ou « sérialisable », est stockée dans le fichier « dict » à la racine du projet.
+    # Vous pouvez bien sûr y ajouter une entrée si nécessaire.
+    # pospell -p dict library/sys.po
 
     # Vous pouvez ensuite lancer *powrap* (pip install powrap) qui va reformater le fichier
     # que avez vous avez modifié à la longueur de ligne correcte de `79`.
@@ -141,7 +144,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git add -p  # C'est l'occasion de se relire, mais git add -u c'est bien aussi
     # ou même git add library/sys.po
 
-    git commit -m "Working on library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
     # Poussez ensuite vos modifications sur votre fork Github.
     # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
@@ -152,10 +155,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
     # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
     # et un joli bouton « Compare & pull request » devrait apparaître au bout de quelques secondes
-    # vous indiquant que vous pouvez demander une pull request
+    # vous indiquant que vous pouvez demander une pull request.
 
     # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
-    # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
+    # probablement corriger les erreurs qu'ils auront trouvé. Retournez alors sur votre
     # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
     git pull  # pour rapatrier les modifications que vous auriez accepté
