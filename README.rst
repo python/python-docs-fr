@@ -11,7 +11,7 @@ Traduction française de la documentation Python
    :width: 45%
 
 
-Accord de Contribution à la Documentation
+Accord de contribution à la documentation
 -----------------------------------------
 
 NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
@@ -26,7 +26,7 @@ pouvez demander à ce que votre contribution à la documentation soit
 publiquement reconnue, et si votre traduction est acceptée par la
 PSF, vous pouvez (mais vous n'êtes pas obligé) soumettre un correctif incluant
 une modification appropriée dans le fichier Misc/ACKS ou TRANSLATORS. Bien que
-rien dans le présent Accord de Contribution à la Documentation n'oblige la PSF
+rien dans le présent *accord de contribution* à la documentation n'oblige la PSF
 à incorporer votre contribution textuelle, votre participation à la communauté
 Python est bienvenue et appréciée.
 
@@ -42,8 +42,8 @@ Comment contribuer
 
 Vous pouvez contribuer en utilisant :
 
-- Des *pull requests* Github (solution recommandée)
-- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_
+- Des *pull requests* Github (solution recommandée).
+- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
 Contribuer en utilisant Github
@@ -70,22 +70,22 @@ où vous avez le droit de faire des modifications.
 .. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
-    git clone git@github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    git clone git@github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
     # *OU* HTTPS :
-    git clone https://github.com:YOUR_GITHUB_USERNAME/python-docs-fr.git
+    git clone https://github.com/VOTRE_NOM_DE_COMPTE/python-docs-fr.git
 
     # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
     # Ajoutez le dépot upstream (le dépôt public) en utilisant HTTPS (git
     # ne demandera pas de mot de passe ainsi) :
-    # Ceci permet à git de savoir quoi/où est *upstream*
+    # Ceci permet à *git* de savoir quoi/où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler.
 Vous pouvez utiliser `potodo <https://github.com/seluj78/potodo>`_, un outil
 fait pour trouver des fichiers ``po`` à traduire.
-Installez-le à l'aide de pip (``pip install potodo``) dans un environnement
+Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
 ``python3.6`` ou plus.
 Lancez ensuite la commande ``potodo`` dans votre clone local.
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
@@ -107,31 +107,34 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
     # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
-    # "library-sys" mais vous pouvez appeller la vôtre comme vous voulez.
+    # « library-sys » mais vous pouvez appeller la vôtre comme vous voulez.
     # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
-    # Par exemple, si vous travaillez sur "library/venv.po", vous pouvez nommer votre
-    # branche "library-venv".
+    # Par exemple, si vous travaillez sur « library/venv.po », vous pouvez nommer votre
+    # branche « library-venv ».
 
     # Mettez à jour votre version locale
     git fetch upstream
-    # Créez une nouvelle branche nommée "library-sys" basée sur "upstream/3.7".
+    # Créez une nouvelle branche nommée « library-sys » basée sur « upstream/3.7 ».
     git checkout -b library-sys upstream/3.7
 
     # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
-    # Bien sûr, remplacez "library/sys.po" par le fichier que vous avez choisi précédemment
+    # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment
     poedit library/sys.po
 
-    # Configurez poedit pour "ne pas preserver le formatage des
-    # fichiers existants" (décochez la case), et indiquez une longueur
+    # Configurez poedit pour « ne pas préserver le formatage des
+    # fichiers existants » (décochez la case), et indiquez une longueur
     # de ligne maximum de 79 caractères.
 
-    # Quand vous avez fini de traduire, vous pouvez lancer pospell (pip install pospell).
+    # Quand vous avez fini de traduire, vous pouvez lancer *pospell* (pip install pospell).
     # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
     # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
     # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
-    pospell library/sys.po
+    # Une liste blanche de certains termes techniques ou de noms propres, comme « Guido »,
+    # « C99 » ou « sérialisable », est stockée dans le fichier « dict » à la racine du projet.
+    # Vous pouvez bien sûr y ajouter une entrée si nécessaire.
+    # pospell -p dict library/sys.po
 
-    # Vous pouvez ensuite lancer powrap (pip install powrap) qui va reformater le fichier
+    # Vous pouvez ensuite lancer *powrap* (pip install powrap) qui va reformater le fichier
     # que avez vous avez modifié à la longueur de ligne correcte de `79`.
     # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
     # que vous traduisez
@@ -141,7 +144,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git add -p  # C'est l'occasion de se relire, mais git add -u c'est bien aussi
     # ou même git add library/sys.po
 
-    git commit -m "Working on library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
     # Poussez ensuite vos modifications sur votre fork Github.
     # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
@@ -151,11 +154,11 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
     # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/
-    # et un joli bouton "Compare & pull request" devrait apparaître au bout de quelques secondes
-    # vous indiquant que vous pouvez demander une pull request
+    # et un joli bouton « Compare & pull request » devrait apparaître au bout de quelques secondes
+    # vous indiquant que vous pouvez demander une pull request.
 
     # À partir de là, quelqu'un passera en revue vos modifications, et vous voudrez
-    # probablement corriger les erreurs qu'ils auront trouvé, alors retournez sur votre
+    # probablement corriger les erreurs qu'ils auront trouvé. Retournez alors sur votre
     # branche (au cas où vous auriez commencé quelque chose d'autre sur une autre branche) :
     git checkout glossary
     git pull  # pour rapatrier les modifications que vous auriez accepté
@@ -172,11 +175,11 @@ segment manquant :
 - Vous poussez sur *origin* (votre clone sur Github)
 
 Donc oui, c'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
+de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.6``, ``3.7``, ...), seulement récupéré les
+branche de version (``3.6``, ``3.7``, etc.), seulement récupéré les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
@@ -210,11 +213,12 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
 - ``::`` à la fin de certains paragraphes doivent être traduits en `` :
   ::`` en français pour placer l'espace avant les deux-points.
 - Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
-  (typiquement si c'est Wikipédia et que l'article a une traduction). Si
-  aucune traduction de la cible n'existe, ne traduisez pas le titre.
+  (surtout si c'est un lien Wikipédia et que l'article a une traduction).
+  Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 
-Le cas de "---"
-~~~~~~~~~~~~~~~
+
+Le cas de « --- »
+~~~~~~~~~~~~~~~~~
 
 La version anglaise utilise une chose nommée `smartquotes
 <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_, qui
@@ -226,29 +230,30 @@ Les *smartquotes* sont également responsables de la transformation de
 ``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
 ``...`` en ``…``.
 
-Comme nous n'avons pas de *smartquotes*, nous devrons également "traduire"
+Comme nous n'avons pas de *smartquotes*, nous devrons également « traduire »
 cela manuellement, donc si vous voyez ``---`` en anglais, vous devez le
 transformer en ``—`` en français.
 
-Le cas de "::"
-~~~~~~~~~~~~~~
+
+Le cas de « :: »
+~~~~~~~~~~~~~~~~
 
 Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la documentation :
 
-=> ``::`` collé à la fin d'un mot signifie "affiche ``:`` et introduit un bloc de code",
-mais un ``::`` après une espace signifie "introduit juste un bloc de code".
+=> ``::`` collé à la fin d'un mot signifie « affiche ``:`` et introduit un bloc de code »,
+mais un ``::`` après une espace signifie « introduit juste un bloc de code ».
 
-Donc, dans du *rst*, en anglais, nous voyons soit "bla bla::", soit "bla bla. ::".
+Donc, dans du *rst*, en anglais, nous voyons soit « bla bla:: », soit « bla bla. :: ».
 
 En français, nous mettons une espace insécable devant nos deux-points, comme :
-"Et voilà :".
+« Et voilà : ».
 
 L'utilisation de l'espace insécable en *rst* est naturelle, vous n'aurez qu'à
 écrire ``Et voilà ::``. Le ``::`` n'est pas précédé d'un espace normal,
 il affichera les deux-points et introduira le bloc de code, et c'est bon.
 
 Si vous ne savez pas comment taper une espace insécable, il y a une astuce :
-lisez celle de la touche Compose dans la section suivante ; sinon :
+lisez celle de la touche *compose* dans la section suivante ; sinon :
 
 => Traduisez ``deux-points deux-points`` par
 ``espace deux-points espace deux-points deux-points``.
@@ -268,10 +273,9 @@ Oui ! il vaut mieux apprendre à taper les espaces insécables.
 Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 Malheureusement, cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux/Unix/*BSD (tel OpenBSD), vous pouvez utilisez une
+=> Sous Linux/Unix/\*BSD (tel OpenBSD), vous pouvez utilisez une
 `Touche de composition <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 c'est facile à configurer à l'aide de l'outil graphique de configuration de votre
 clavier ou via ``dpkg-reconfigure keyboard-configuration``
@@ -307,8 +311,8 @@ Avec une touche de composition (personnellement j'utilise ``alt-gr``,
 vous pouvez aussi utiliser ``verr maj 🔒``), vous pouvez utiliser les
 compositions suivantes :
 
-- Composer ``<`` ``<`` donne ``«``
-- Composer ``>`` ``>`` donne ``»``
+- Composer ``<`` ``<`` donne ``« ``
+- Composer ``>`` ``>`` donne `` »``
 - Composer espace espace donne une espace insécable
 - Composer ``.`` ``.`` ``.`` donne ``…``
 
@@ -320,6 +324,7 @@ simplement fonctionner :
 - Composer ``1`` ``2`` donne ``½``
 - Composer ``'`` ``E`` donne ``É``
 - … …
+
 
 Où obtenir de l'aide ?
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -334,17 +339,20 @@ N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 Ressources de traduction
 ------------------------
 
-- `Le Grand Dictionnaire Terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-- Canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
-- La `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
-- La `liste de diffusion doc-sig
+- le canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
+- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
+- la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_
-- Le `Glossaire traduc.org <http://glossaire.traduc.org>`_
-- Les `Glossaires et dictionnaires de traduc.org
-  <https://traduc.org/Glossaires_et_dictionnaires>`_
-- `glossary.po <https://docs.python.org/fr/3/glossary.html>`_, comme c'est
-  déjà traduit
+- les `glossaires et dictionnaires de traduc.org
+  <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
+  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
+  de l'Office québécois de la langue française
+- le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_, car
+  il est déjà traduit
 - `deepl.com/translator <https://www.deepl.com>`_
+- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
+  résumé succint de typographie, utile pour apprendre le bon usage des majuscules,
+  des espaces, etc.
 
 
 Glossaire
@@ -358,26 +366,33 @@ Pour trouver facilement comment un terme est déjà traduit dans notre documenta
 vous pouvez utiliser
 `find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
 
-========================== ===========================================
+========================== ===============================================
 Terme                      Traduction proposée
-========================== ===========================================
+========================== ===============================================
 -like                      -compatible
 abstract data type         type abstrait
-argument                   argument (Don't mix with parameter)
+argument                   argument (à ne pas confondre avec *paramètre*)
 backslash                  antislash, *backslash*
 bound                      lier
 bug                        bogue, *bug*
 built-in                   native
 call stack                 pile d'appels
 debugging                  débogage
-deep copy                  copie récursive (préféré), ou copie profonde.
+deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
 deprecated                 obsolète
-e.g.                       e.g. (pour *exempli gratia*)
+-like                      -compatible
+e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. », 
+                           lui-même issu du latin *exempli gratia*).
+                           On sépare les deux mots par  une espace
+                           insécable pour éviter les retours à la ligne
+                           malheureux.
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
+                           lui-même issu du latin *id est*)
 identifier                 identifiant
 immutable                  immuable
 import                     importation
@@ -388,24 +403,26 @@ list comprehension         liste en compréhension (liste en intension est
                            valide, mais nous ne l'utilisons pas)
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
+mixin type                 type de mélange
 mutable                    muable
 namespace                  espace de nommage
                            (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
+pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
 regular expression         expression rationnelle, expression régulière
-return                     renvoie, donne (on évite
-                           "retourne" qui pourrait porter à confusion).
+return                     renvoie, donne (on évite « retourne » qui
+                           pourrait porter à confusion).
 setter                     mutateur
-simple quote               guillemet simple, apostrophe (apostrophe
-                           is to glue, guillemet is to surround)
+simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
 statement                  instruction
 subprocess                 sous-processus
 thread                     fil d'exécution
 underscore                 tiret bas, *underscore*
-========================== ===========================================
+========================== ===============================================
+
 
 Historique du projet
 --------------------
@@ -415,6 +432,7 @@ Ce projet a été lancé `vers 2012
 par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
 est devenu la traduction officielle de la documentation Python en français
 grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+
 
 Simplifier les diffs git
 ------------------------
@@ -442,6 +460,7 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
     git config diff.podiff.textconv podiff
 
+
 Maintenance
 -----------
 
@@ -463,6 +482,7 @@ Pour cloner CPython, vous pouvez utiliser :
 
 Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
+
 
 Fusionner les fichiers *pot* de CPython
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -486,6 +506,7 @@ Lancer un *build* en local
 .. code-block:: bash
 
   make
+
 
 Synchroniser la traduction avec Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
