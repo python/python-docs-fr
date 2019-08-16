@@ -215,7 +215,10 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
 - Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
   (surtout si c'est un lien Wikipédia et que l'article a une traduction).
   Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
-
+- Les guillemets français ``«`` et ``»`` ne sont pas identiques aux 
+  guillemets anglais ``"``. Cependant, Python utilise les guillemets
+  anglais comme délimiteurs de chaîne de caractères. Il convient donc de 
+  traduire les guillemets mais pas les délimiteurs de chaîne. 
 
 Le cas de « --- »
 ~~~~~~~~~~~~~~~~~
@@ -269,6 +272,28 @@ vraiment du français valide.
 
 Oui ! il vaut mieux apprendre à taper les espaces insécables.
 
+
+Utilisation du futur
+~~~~~~~~~~~~~~~~~~~~
+
+Dans la description du comportement de Python (au sens large, c'est-à-dire 
+l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
+originale utilise souvent le futur : « if you do this, il will produce that … ».
+En français, l'utlisation du présent convient tout à fait et le présent est 
+souvent plus facile à lire : « si vous faites ceci, il se produit cela … ».
+On ne conserve le futur que si la deuxième proposition se situe réellement
+dans le futur (par exemple, on peut penser qu'un processus de compilation n'est
+pas immédiat) ou pour des raisons de concordance des temps.
+
+Traduction de *should*
+~~~~~~~~~~~~~~~~~~~~~~
+
+La version originale est très polie envers le lecteur ; elle lui intime
+rarement des obligations, préférant employer « you should ». Cependant, en
+français, il est d'usage d'être plus direct pour être correctement compris :
+« vous devez ». *Vous devriez* est en effet généralement compris comme quelque
+chose dont l'on peut de temps en temps se passer, alors que c'est très
+rarement le cas pour les « you should » de cette documentation.
 
 Comment saisir des em-dash, des ellipses, des guillemets français, ou des espaces insécables ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -339,17 +364,20 @@ N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 Ressources de traduction
 ------------------------
 
-- le canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode
-- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_
+- le canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode ;
+- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
 - la `liste de diffusion doc-sig
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_
+  <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - les `glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
   `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-  de l'Office québécois de la langue française
+  de l'Office québécois de la langue française ;
 - le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_, car
-  il est déjà traduit
-- `deepl.com/translator <https://www.deepl.com>`_
+  il est déjà traduit ;
+- le `guide stylistique pour le français de localisation des produits Sun
+  <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
+  beaucoup de conseils pour éviter une traduction trop mot à mot ;
+- `deepl.com/translator <https://www.deepl.com>`_ ;
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
   résumé succint de typographie, utile pour apprendre le bon usage des majuscules,
   des espaces, etc.
