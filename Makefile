@@ -45,7 +45,7 @@ $(SPHINX_CONF):
 .PHONY: upgrade_venv
 upgrade_venv:
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
-	$(VENV)/bin/pip install -U potodo powrap pospell
+	$(VENV)/bin/pip install -U pip potodo powrap pospell
 
 
 $(VENV)/bin/activate: $(SPHINX_CONF)
@@ -109,4 +109,4 @@ endif
 
 .PHONY: fuzzy
 fuzzy: $(VENV)/bin/potodo
-	$(VENV)/bin/potodo --github python/python-docs-fr -f
+	$(VENV)/bin/potodo -f
