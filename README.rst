@@ -3,7 +3,7 @@ Traduction française de la documentation Python
 
 |build| |progression|
 
-.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.7
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.8
    :target: https://travis-ci.org/python/python-docs-fr
    :width: 45%
 
@@ -106,7 +106,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 .. code-block:: bash
 
     # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
-    # (fraîchement récupérée) de la branche upstream/3.7. Nous appellerons notre branche
+    # (fraîchement récupérée) de la branche upstream/3.8. Nous appellerons notre branche
     # « library-sys » mais vous pouvez appeller la vôtre comme vous voulez.
     # En général, vous nommez une branche en fonction du fichier sur lequel vous travaillez.
     # Par exemple, si vous travaillez sur « library/venv.po », vous pouvez nommer votre
@@ -114,8 +114,8 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # Mettez à jour votre version locale
     git fetch upstream
-    # Créez une nouvelle branche nommée « library-sys » basée sur « upstream/3.7 ».
-    git checkout -b library-sys upstream/3.7
+    # Créez une nouvelle branche nommée « library-sys » basée sur « upstream/3.8 ».
+    git checkout -b library-sys upstream/3.8
 
     # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
     # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment
@@ -179,7 +179,7 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.6``, ``3.7``, etc.), seulement récupéré les
+branche de version (``3.7``, ``3.8``, etc.), seulement récupéré les
 modifications à partir d'elles. Considérez-les comme étant en lecture seule,
 vous éviterez les problèmes.
 
@@ -189,7 +189,7 @@ Avant de valider, vous devriez utiliser `grammalecte
 
 Toutes les traductions doivent être faites sur la dernière version.
 Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
-si la dernière version de python est Python 3.7, nous ne voulons pas
+si la dernière version de python est Python 3.8, nous ne voulons pas
 traduire directement sur la version python 3.5.
 Si nécessaire, les traductions seraient rétroportées sur les versions
 les plus anciennes par l'`équipe de documentation
@@ -215,10 +215,10 @@ traduire celles qui ne sont pas traduites (trouvez-les à l'aide de
 - Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
   (surtout si c'est un lien Wikipédia et que l'article a une traduction).
   Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
-- Les guillemets français ``«`` et ``»`` ne sont pas identiques aux 
+- Les guillemets français ``«`` et ``»`` ne sont pas identiques aux
   guillemets anglais ``"``. Cependant, Python utilise les guillemets
-  anglais comme délimiteurs de chaîne de caractères. Il convient donc de 
-  traduire les guillemets mais pas les délimiteurs de chaîne. 
+  anglais comme délimiteurs de chaîne de caractères. Il convient donc de
+  traduire les guillemets mais pas les délimiteurs de chaîne.
 
 Le cas de « --- »
 ~~~~~~~~~~~~~~~~~
@@ -276,10 +276,10 @@ Oui ! il vaut mieux apprendre à taper les espaces insécables.
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
 
-Dans la description du comportement de Python (au sens large, c'est-à-dire 
+Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
 originale utilise souvent le futur : « if you do this, il will produce that … ».
-En français, l'utlisation du présent convient tout à fait et le présent est 
+En français, l'utlisation du présent convient tout à fait et le présent est
 souvent plus facile à lire : « si vous faites ceci, il se produit cela … ».
 On ne conserve le futur que si la deuxième proposition se situe réellement
 dans le futur (par exemple, on peut penser qu'un processus de compilation n'est
@@ -410,7 +410,7 @@ deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
 deprecated                 obsolète
 -like                      -compatible
-e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. », 
+e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            lui-même issu du latin *exempli gratia*).
                            On sépare les deux mots par  une espace
                            insécable pour éviter les retours à la ligne
