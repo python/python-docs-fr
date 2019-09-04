@@ -22,7 +22,7 @@ LANGUAGE := fr
 VENV := ~/.venvs/python-docs-i18n/
 PYTHON := $(shell which python3)
 MODE := html
-BRANCH = 3.7
+BRANCH = 3.8
 COMMIT =
 JOBS = auto
 
