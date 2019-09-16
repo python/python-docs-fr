@@ -415,6 +415,9 @@ e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            On sépare les deux mots par  une espace
                            insécable pour éviter les retours à la ligne
                            malheureux.
+et al.                     et autres, `à accorder
+                           <https://fr.wikipedia.org/wiki/Et_al.>`_ 
+                           suivant le contexte
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
