@@ -230,7 +230,7 @@ rapidement des problèmes dans d'autres langues.
 Nous l'avons donc désactivée.
 
 Les *smartquotes* sont également responsables de la transformation de
-``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
+``--`` en *en-dash* (``–``), de ``---`` en *em-dash* (``—``), et de
 ``...`` en ``…``.
 
 Comme nous n'avons pas de *smartquotes*, nous devrons également « traduire »
