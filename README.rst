@@ -91,6 +91,8 @@ Lancez ensuite la commande ``potodo`` dans votre clone local.
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée par la commande.
 
+Alternativement lancez `tox -e potodo`.
+
 **Nous vous recommandons de ne pas commencer avec un fichier de ``c-api``
 car c'est une partie très technique.**
 
@@ -416,7 +418,7 @@ e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            insécable pour éviter les retours à la ligne
                            malheureux.
 et al.                     et autres, `à accorder
-                           <https://fr.wikipedia.org/wiki/Et_al.>`_ 
+                           <https://fr.wikipedia.org/wiki/Et_al.>`_
                            suivant le contexte
 export                     exportation
 expression                 expression
@@ -538,6 +540,20 @@ Lancer un *build* en local
 
   make
 
+Lancer les tests avec tox
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pour lancer `powrap` et `pospell` avec les bonnes options :
+
+.. code-block:: bash
+
+  tox
+
+`tox` peut aussi être utilisé pour lancer `potodo` :
+
+.. code-block:: bash
+
+  tox -e potodo
 
 Synchroniser la traduction avec Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
