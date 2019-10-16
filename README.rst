@@ -230,7 +230,7 @@ rapidement des problèmes dans d'autres langues.
 Nous l'avons donc désactivée.
 
 Les *smartquotes* sont également responsables de la transformation de
-``--`` en *en-dash* (``-``), de ``-----`` en *em-dash* (``—``), et de
+``--`` en *en-dash* (``–``), de ``---`` en *em-dash* (``—``), et de
 ``...`` en ``…``.
 
 Comme nous n'avons pas de *smartquotes*, nous devrons également « traduire »
@@ -415,6 +415,9 @@ e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            On sépare les deux mots par  une espace
                            insécable pour éviter les retours à la ligne
                            malheureux.
+et al.                     et autres, `à accorder
+                           <https://fr.wikipedia.org/wiki/Et_al.>`_ 
+                           suivant le contexte
 export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
