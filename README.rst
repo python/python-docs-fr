@@ -133,7 +133,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     powrap -m
 
     # Quand vous avez fini de traduire, vous pouvez lancer *make verifs*
-    # (si vous ne le faites pas, ce sera fait automatiquement par
+    # (si vous ne le faites pas, ce sera fait automatiquement
     # sur github, pas d'inquiétude).
 
     # Pour l'orthographe, une liste blanche de certains termes techniques ou
