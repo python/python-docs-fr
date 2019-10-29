@@ -118,27 +118,29 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git checkout -b library-sys upstream/3.8
 
     # Vous pouvez maintenant travailler sur le fichier, typiquement en utilisant poedit.
-    # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment
-    poedit library/sys.po
-
+    # Bien sûr, remplacez « library/sys.po » par le fichier que vous avez choisi
+    # précédemment.
     # Configurez poedit pour « ne pas préserver le formatage des
     # fichiers existants » (décochez la case), et indiquez une longueur
     # de ligne maximum de 79 caractères.
 
-    # Quand vous avez fini de traduire, vous pouvez lancer *pospell* (pip install pospell).
-    # Cet outil a été conçu pour vérifier si vous n'avez pas d'erreurs de français.
-    # Vous pouvez exécuter la commande suivante : pospell -p dict -l fr_FR **/*.po pour vérifier
-    # tous les fichiers ou remplacer **/*.po par le fichier que vous traduisez (recommandé).
-    # Une liste blanche de certains termes techniques ou de noms propres, comme « Guido »,
-    # « C99 » ou « sérialisable », est stockée dans le fichier « dict » à la racine du projet.
-    # Vous pouvez bien sûr y ajouter une entrée si nécessaire.
-    # pospell -p dict library/sys.po
+    poedit library/sys.po
 
-    # Vous pouvez ensuite lancer *powrap* (pip install powrap) qui va reformater le fichier
-    # que avez vous avez modifié à la longueur de ligne correcte de `79`.
-    # Exécutez cette commande : `powrap **/*.po`, ou remplacez `**/*.po` par le fichier
-    # que vous traduisez
-    powrap library/sys.po
+    # Si vous n'utilisez pas poedit, vous pouvez utiliser *powrap* (pip install powrap)
+    # qui va reformater correctement le fichier que avez vous avez modifié.
+    # Exécutez cette commande : `powrap -m` (reformater tous les fichiers modifiés),
+    # ou `powrap library/sys.po` (un fichier en particulier) :
+    powrap -m
+
+    # Quand vous avez fini de traduire, vous pouvez lancer *make verifs*
+    # (si vous ne le faites pas, ce sera fait automatiquement
+    # sur github, pas d'inquiétude).
+
+    # Pour l'orthographe, une liste blanche de certains termes techniques ou
+    # de noms propres, comme « Guido », « C99 » ou « sérialisable », est
+    # stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
+    # bien sûr y ajouter une entrée si nécessaire.
+    make verifs
 
     # C'est le moment de git add et git commit
     git add -p  # C'est l'occasion de se relire, mais git add -u c'est bien aussi
@@ -416,7 +418,7 @@ e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            insécable pour éviter les retours à la ligne
                            malheureux.
 et al.                     et autres, `à accorder
-                           <https://fr.wikipedia.org/wiki/Et_al.>`_ 
+                           <https://fr.wikipedia.org/wiki/Et_al.>`_
                            suivant le contexte
 export                     exportation
 expression                 expression
