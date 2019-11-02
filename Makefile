@@ -77,11 +77,11 @@ verifs: powrap pospell
 
 .PHONY: powrap
 powrap: $(VENV)/bin/powrap
-	$(VENV)/bin/powrap --check --quiet *.po */*.po
+	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
 .PHONY: pospell
 pospell: $(VENV)/bin/pospell
-	$(VENV)/bin/pospell -p dict -l fr_FR *.po */*.po
+	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
 
 .PHONY: merge
 merge: upgrade_venv
