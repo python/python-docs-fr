@@ -406,6 +406,7 @@ backslash                  antislash, *backslash*
 bound                      lier
 bug                        bogue, *bug*
 built-in                   native
+callback                   fonction de rappel
 call stack                 pile d'appels
 debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde
