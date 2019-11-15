@@ -9,9 +9,6 @@ install:
   - pospell --version
   - powrap --version
 script:
-  - CHANGED_FILES="$(git diff --name-only $TRAVIS_COMMIT_RANGE | grep '\.po$';:)"
-  - echo "$(printf "%s\n" "$CHANGED_FILES" | wc -l) files changed."
-  - echo "$CHANGED_FILES" | sed 's/^/- /'
-  - '[ -n "$CHANGED_FILES" ] && powrap --check --quiet $CHANGED_FILES' || echo "Nothing to check"
-  - '[ -n "$CHANGED_FILES" ] && pospell -p dict -l fr_FR $CHANGED_FILES' || echo "Nothing to check"
-  - '[ -n "$CHANGED_FILES" ] && make CPYTHON_CLONE=/tmp/cpython/ COMMIT=4d1abedce9422473af2ac78047e55cde73208208' || echo "Nothing to build"
+  - powrap --check --quiet *.po **/*.po
+  - pospell -p dict -l fr_FR *.po **/*.po
+  - make CPYTHON_CLONE=/tmp/cpython/ COMMIT=4d1abedce9422473af2ac78047e55cde73208208
