@@ -88,9 +88,8 @@ verifs: powrap pospell
 powrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
-# Find recursively all .po files NOT in hidden folders
 SRCS = $(shell git diff --name-only $(BRANCH) | grep .po)
-# foo/bar.po => $(POS)/foo/bar/po.out
+# foo/bar.po => $(POS)/foo/bar.po.out
 DESTS = $(addprefix $(POS)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: pospell
