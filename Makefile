@@ -25,7 +25,9 @@ MODE := html
 BRANCH = 3.8
 COMMIT =
 JOBS = auto
+POS = .pospell/
 
+SHELL := /bin/bash
 
 .PHONY: all
 all: $(SPHINX_CONF) $(VENV)/bin/activate
@@ -86,9 +88,23 @@ verifs: powrap pospell
 powrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
+# Find recursively all .po files NOT in hidden folders
+SRCS = $(shell git diff --name-only $(BRANCH) | grep .po)
+# foo/bar.po => $(POS)/foo/bar/po.out
+DESTS = $(addprefix $(POS)/,$(addsuffix .out,$(SRCS)))
+
 .PHONY: pospell
-pospell: $(VENV)/bin/pospell
-	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
+pospell: $(VENV)/bin/pospell $(DESTS) 
+
+$(POS)/%.po.out: %.po dict
+	@echo "Checking $<..."
+	@mkdir -p $(shell dirname $@)
+	@set -o pipefail;\
+	$(VENV)/bin/pospell -p dict -l fr_FR $< | tee $@;\
+	EXIT=$$?;\
+	if [ "$$EXIT" -ne "0" ];\
+	then touch $<;\
+	fi
 
 .PHONY: merge
 merge: upgrade_venv
@@ -117,3 +133,8 @@ endif
 .PHONY: fuzzy
 fuzzy: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo -f
+
+.PHONY: clean
+clean:
+	rm -rf $(POS)
+
