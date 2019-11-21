@@ -80,7 +80,7 @@ todo: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo
 
 .PHONY: verifs
- verifs: wrap spell
+verifs: wrap spell
 
 .PHONY: wrap
 wrap: $(VENV)/bin/powrap
