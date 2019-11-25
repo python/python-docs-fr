@@ -457,6 +457,7 @@ subprocess                 sous-processus
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 underscore                 tiret bas, *underscore*
+whitespace                 caractère d'espacement
 ========================== ===============================================
 
 
