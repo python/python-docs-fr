@@ -25,12 +25,12 @@ où vous avez le droit de faire des modifications.
     git clone git@github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # *OU* HTTPS :
-    git clone https://github.com/VOTRE_NOM_DE_COMPTE/python-docs-fr.git
+    git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
-    # Ajoutez le dépôt public (nommé upstream)
+    # Ajoutez le dépôt officiel (nommé upstream)
     # Ceci permet à *git* de savoir quoi/où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
@@ -39,7 +39,7 @@ Ensuite, vous devez trouver un fichier sur lequel travailler
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_ dans
-le format ``Je travaille sur RÉPERTOIRE/FICHIER.po``.
+le format ``Je travaille sur DOSSIER/FICHIER.po``.
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
@@ -97,7 +97,7 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # et un joli bouton « Compare & pull request » devrait apparaître au bout de
     # quelques secondes vous indiquant que vous pouvez demander une pull request.
 
-    # À partir de là, quelqu'un passera en revue vos modifications, et fera desvous voudrez
+    # À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
     # suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
     # contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
     # sur une autre branche) :
@@ -170,7 +170,7 @@ Utilisation du futur
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
 originale utilise souvent le futur : « if you do this, il will produce that … ».
-En français, l'utlisation du présent convient tout à fait et le présent est
+En français, l'utilisation du présent convient tout à fait et le présent est
 souvent plus facile à lire : « si vous faites ceci, il se produit cela … ».
 On ne conserve le futur que si la deuxième proposition se situe réellement
 dans le futur (par exemple, on peut penser qu'un processus de compilation n'est
@@ -257,7 +257,7 @@ Le cas de « --- », « -- »,  « ... » :
 La version anglaise utilise une chose nommée
 `smartquotes <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_,
 qui fonctionne en anglais, mais cause des problèmes dans d'autres langues.
-Nous l'avons donc désactivée.
+Nous l'avons donc désactivée dans la version française.
 
 Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
@@ -265,7 +265,7 @@ Les *smartquotes* sont normalement responsables de la transformation de
 
 => Si vous voyez :
 | « -- » ou « --- » : faites « Compose » + « - » ×3
-| « ... » : faites « Compose » + « - » ×3
+| « ... » : faites « Compose » + « . » ×3
 
 Le cas de « "…" » :
 ~~~~~~~~~~~~~~~~~~~
@@ -308,7 +308,7 @@ Potodo
 Pogrep
 ~~~~~~
 
-| Permet de rechercher dans la documention des termes. Utiles si on a un doute
+| Permet de rechercher dans la documentation des termes. Utile si on a un doute
   sur comment traduire un terme ou chercher la traduction d'un terme dans
   d'autres fichiers.
 | Installez-le à l'aide de *pip* (``pip install pogrep``) dans un
@@ -425,6 +425,7 @@ subprocess                 sous-processus
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 underscore                 tiret bas, *underscore*
+whitespace                 caractère d'espacement
 ========================== ===============================================
 
 Simplifier les diffs git
