@@ -5,7 +5,7 @@ Prérequis
 ---------
 
 - Un compte `Github <https://github.com/join>`_.
-- ``git`` `installé <https://help.github.com/articles/set-up-git/>`_ (pour Windows, voir
+- Un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_.
   https://gitforwindows.org/).
 - Un éditeur de fichier ``.po`` (comme `poedit <https://poedit.net/>`_).
 
@@ -66,12 +66,13 @@ suivez cette procédure :
     git checkout -b library-sys upstream/3.8
 
     # Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
-    # N'oubliez pas de configurer poedit pour passer à la ligne à 79 caractères.
-    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
-    # Vous pouvez également saisir votre nom/email si vous le souhaitez dans ces mêmes
-    # Préférences -> Général.
-    # Remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
-    poedit library/sys.po
+    # N'oubliez pas de configurer votre nom et votre email dans Poedit.
+    # (Édition -> Préférences -> Général)
+    # Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
+    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
+    #
+    # Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
+    # poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
     # Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
     # qui va reformater correctement le fichier que avez vous avez modifié.
@@ -96,7 +97,7 @@ suivez cette procédure :
 
     # Poussez ensuite vos modifications sur votre fork Github.
     # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-    # branche est liée à votre fork Github (et donc que vos futurs `git pull` et 
+    # branche est liée à votre fork Github (et donc que vos futurs `git pull` et
     # `git push` sachent quoi tirer)
     git push -u origin
 
@@ -114,7 +115,7 @@ suivez cette procédure :
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
-    git commit -a -m "sys : corrections".
+    git commit -a -m "prise en compte des remarques"
     git push
 
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
@@ -144,7 +145,7 @@ Que traduire ?
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
 à traduire.
-Une fois installé, utiliser la commande ``potodo`` dans votre clone local.
+Une fois installé, utilisez la commande ``potodo`` dans votre clone local.
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée par la commande.
 
@@ -156,11 +157,13 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* l'aide de `make fuzzy`).
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
-idée,et passer ensuite à la traduction de celles qui ne sont pas traduites.
+idée, et passer ensuite à la traduction de celles qui ne sont pas traduites.
 Vous pouvez les trouver à l'aide de `make todo`...
 
-Si vous traduisez un titre de lien, veuillez traduire le lien aussi.
-(surtout si c'est un lien Wikipédia et que l'article a une traduction).
+Vous pouvez aussi « traduire » des liens hypertextes
+(par exemple s'il s'agit d'un lien vers un article de Wikipédia qui possède une
+traduction).
+Modifiez le lien et sa description dans ce cas.
 Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 
 Dans les fichiers, ne traduisez pas le contenu des balises telles que
@@ -177,12 +180,13 @@ Utilisation du futur
 
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
-originale utilise souvent le futur : « if you do this, il will produce that … ».
-En français, l'utilisation du présent convient tout à fait et le présent est
-souvent plus facile à lire : « si vous faites ceci, il se produit cela … ».
-On ne conserve le futur que si la deuxième proposition se situe réellement
-dans le futur (par exemple, on peut penser qu'un processus de compilation n'est
-pas immédiat) ou pour des raisons de concordance des temps.
+originale utilise souvent le futur : « if you do this, il will produce
+that … ». En français, l'utilisation du présent convient tout à fait et le
+présent est souvent plus facile à lire : « si vous faites ceci, il se
+produit cela … ». On ne conserve le futur que si la deuxième proposition
+se situe réellement dans le futur (par exemple, on peut penser qu'un
+processus de compilation n'est pas immédiat) ou pour des raisons de
+concordance des temps.
 
 Traduction de *should*
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -220,7 +224,7 @@ simplement fonctionner :
 - :kbd:`Compose C =` donne ``€``
 - :kbd:`Compose 1 2` donne ``½``
 - :kbd:`Compose ' E` donne ``É``
-- … … 
+- … …
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -362,7 +366,9 @@ Ressources de traduction
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- `deepl.com/translator <https://www.deepl.com>`_ ;
+- Wikipedia : En allant sur l'article d'un sujet sur la version anglaise
+  de Wikipedia, puis en basculant sur la version francaise pour voir
+  comment le sujet es traduit.
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
   résumé succint de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
