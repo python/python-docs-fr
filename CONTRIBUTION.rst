@@ -343,7 +343,13 @@ Powrap
 Ressources de traduction
 -------------------------
 
-- le canal IRC `#python-fr <http://irc.lc/freenode/python-fr>`_ sur freenode ;
+- les canaux IRC sur freenode :
+  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_
+  Communauté python autour de la documentation française.
+  - `#python-fr <http://irc.lc/freenode/python-fr>`_
+  Communauté python française.
+  - `#python-doc <http://irc.lc/freenode/python-fr>`_
+  Communauté python autour de la documentation anglaise.
 - la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
 - la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
