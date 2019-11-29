@@ -82,10 +82,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # bien sûr y ajouter une entrée si nécessaire.
     make verifs
 
-    # C'est le moment de git add et git commit
-    # C'est l'occasion de se relire avec l'option -p ou -u.
+    # C'est le moment d'ajouter le fichier à commit
     git add library/sys.po
 
+    # Et de commit
     git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
     # Poussez ensuite vos modifications sur votre fork Github.
