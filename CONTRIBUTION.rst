@@ -63,8 +63,10 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     git checkout -b library-sys upstream/3.8
 
     # Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
-    # N'oubliez pas de configurer poedit pour passer à la ligne à 79 caractères.
-    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
+    # N'oubliez pas de configurer votre nomet votre email dans Poedit.
+    # Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
+    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
+    #
     # Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
     poedit library/sys.po  # ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
