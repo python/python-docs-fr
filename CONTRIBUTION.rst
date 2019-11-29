@@ -1,8 +1,8 @@
 Guide de contribution à la documention via GitHub.
 ===================================================
 
-Prérequis :
-------------
+Prérequis
+---------
 
 - Un compte `Github <https://github.com/join>`_.
 - ``git`` `installé <https://help.github.com/articles/set-up-git/>`_ (pour Windows, voir
@@ -35,19 +35,22 @@ où vous avez le droit de faire des modifications.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler
-(pour vous aiguillez vous pouvez vous rendre à `Que traduire ?`_).
+(pour vous aiguillez vous pouvez vous rendre à `Que traduire ?`_ et lire
+les explications concernant `potodo`_ qui vous permettra de voir ce qui a
+déjà été traduit et ce qui ne l'a pas été).
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
-ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_ dans
-le format ``Je travaille sur DOSSIER/FICHIER.po``.
+ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
+en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
+(par exemple «Je travaille sur library/csv.po»).
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
 N'hésitez pas non plus à vous équiper de quelques outils pour vous aider dans
 votre traduction (voir `Outils utiles pour la traduction`_)
 
-Vous êtes maintenant prêt à commencer une session de travail. Chaque
-fois que vous commencerez un nouveau fichier, commencez ainsi :
+Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
+suivez cette procédure :
 
 .. code-block:: bash
 
@@ -58,14 +61,16 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
 
     # On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
     # fichier sur lequel on travaille. Par exemple, si vous travaillez sur
-    # « library/venv.po », vous pouvez nommer votre branche « library-venv ».
+    # « library/sys.po », vous pouvez nommer votre branche « library-sys ».
     # Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
     git checkout -b library-sys upstream/3.8
 
     # Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
     # N'oubliez pas de configurer poedit pour passer à la ligne à 79 caractères.
     # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
-    # Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
+    # Vous pouvez également saisir votre nom/email si vous le souhaitez dans ces mêmes
+    # Préférences -> Général.
+    # Remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
     poedit library/sys.po
 
     # Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
@@ -78,18 +83,21 @@ fois que vous commencerez un nouveau fichier, commencez ainsi :
     # de noms propres, comme « Guido », « C99 » ou « sérialisable », est
     # stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
     # bien sûr y ajouter une entrée si nécessaire.
+    # La commande suivante va lancer les vérifications nécessaires.
     make verifs
 
     # C'est le moment de git add et git commit
-    # C'est l'occasion de se relire avec l'option -p ou -u.
+    # git add va permettre de déplacer nos modifications dans l'index de Git en
+    # attendant d'être déplacée dans le dépôt local.
     git add library/sys.po
 
+    # Puis on bascule les modifications dans le dépôt local avec un commit.
     git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
     # Poussez ensuite vos modifications sur votre fork Github.
     # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-    # branche est liée à votre fork Github (et donc qu'un futur `git pull` sache quoi
-    # tirer)
+    # branche est liée à votre fork Github (et donc que vos futurs `git pull` et 
+    # `git push` sachent quoi tirer)
     git push -u origin
 
     # La commande précédente vous affichera un lien pour ouvrir une pull request sur
@@ -360,9 +368,8 @@ Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
 rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
 si vous n'êtes pas d'accord.
 
-Pour trouver facilement comment un terme est déjà traduit dans notre documentation,
-vous pouvez utiliser
-`find_in_po.py <https://gist.github.com/JulienPalard/c430ac23446da2081060ab17bf006ac1>`_.
+Pour trouver facilement comment un terme est déjà traduit dans notre
+documentation, vous pouvez utiliser `pogrep`_.
 
 ========================== ===============================================
 Terme                      Traduction proposée
