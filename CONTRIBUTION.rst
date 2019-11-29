@@ -208,19 +208,19 @@ clavier. C'est à l'utilisateur de définir la touche de composition.
 Avec une touche de composition, vous pouvez utiliser les
 compositions suivantes :
 
-- Composer ``<`` ``<`` donne «
-- Composer ``>`` ``>`` donne »
-- Composer espace espace donne une espace insécable
-- Composer ``.`` ``.`` ``.`` donne ``…``
+- :kbd:`Compose < <` donne «
+- :kbd:`Compose > >` donne »
+- :kbd:`Compose SPACE SPACE` donne une espace insécable
+- :kbd:`Compose . . .` donne ``…``
 
 Comme vous l'avez noté, presque toutes les compositions sont faciles
 à retenir, vous pouvez donc essayer les autres et elles devraient tout
 simplement fonctionner :
 
-- Composer ``C`` ``=`` donne ``€``
-- Composer ``1`` ``2`` donne ``½``
-- Composer ``'`` ``E`` donne ``É``
-- … …
+- :kbd:`Compose C =` donne ``€``
+- :kbd:`Compose 1 2` donne ``½``
+- :kbd:`Compose ' E` donne ``É``
+- … … 
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,8 +272,8 @@ Les *smartquotes* sont normalement responsables de la transformation de
 ``...`` en *ellipses* ``…``.
 
 => Si vous voyez :
-| « -- » ou « --- » : faites « Compose » + « - » ×3
-| « ... » : faites « Compose » + « . » ×3
+| « -- » ou « --- » : faites :kbd:`Compose - - -`
+| « ... » : faites :kbd:`Compose . . .`
 
 Le cas de « "…" » :
 ~~~~~~~~~~~~~~~~~~~
@@ -284,7 +284,7 @@ anglais comme délimiteurs de chaîne de caractères. Il convient donc de
 traduire les guillemets mais pas les délimiteurs de chaîne.
 
 => Si vous voyez :
-| « "…" » : faites « Compose » + « << » ×2 ou « >> » ×2
+| « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
 ~~~~~~~~~~~~~~~~
@@ -300,7 +300,7 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 => Traduisez ``mot deux-points deux-points`` par
 ``mot espace-insécable deux-points deux-points``.
 
-Pour saisir une espace insécable faites : « Compose » + « espace » ×2
+Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
 
 Outils utiles pour la traduction
 --------------------------------
