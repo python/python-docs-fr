@@ -366,9 +366,9 @@ Ressources de traduction
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- Wikipedia : En allant sur l'article d'un sujet sur la version anglaise
-  de Wikipedia, puis en basculant sur la version francaise pour voir
-  comment le sujet es traduit.
+- Wikipédia : En allant sur l'article d'un sujet sur la version anglaise
+  de Wikipédia, puis en basculant sur la version francaise pour voir
+  comment le sujet est traduit.
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
   résumé succint de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
