@@ -13,6 +13,6 @@ script:
   - 'CHANGED_FILES="$(git diff --name-only $TRAVIS_COMMIT_RANGE | grep "\.po$")" ;:'
   - 'printf "%s files changed.\n" "$(printf "%s" "$CHANGED_FILES" | grep -c "po$")" ;:'
   - '[ -n "$CHANGED_FILES" ] && printf -- "- %s\n" $CHANGED_FILES ;:'
-  - 'powrap --check --quiet *.po */*.po'
-  - 'pospell -p dict -l fr_FR *.po */*.po'
+  - '[ -n "$CHANGED_FILES" ] && powrap --check --quiet $CHANGED_FILES || :'
+  - '[ -n "$CHANGED_FILES" ] && pospell -p dict -l fr_FR $CHANGED_FILES || :'
   - 'make CPYTHON_CLONE=/tmp/cpython/ COMMIT=4d1abedce9422473af2ac78047e55cde73208208'
