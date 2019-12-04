@@ -5,8 +5,8 @@
 # - make  # Automatically build an html local version
 # - make todo  # To list remaining tasks
 # - make verifs # To check for correctness: wrapping, spelling
-# - make powrap # To check for wrapping
-# - make pospell # To check for spelling
+# - make wrap # To check for wrapping
+# - make spell # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
@@ -80,14 +80,14 @@ todo: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo
 
 .PHONY: verifs
-verifs: powrap pospell
+verifs: wrap spell
 
-.PHONY: powrap
-powrap: $(VENV)/bin/powrap
+.PHONY: wrap
+wrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
-.PHONY: pospell
-pospell: $(VENV)/bin/pospell
+.PHONY: spell
+spell: $(VENV)/bin/pospell
 	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
 
 .PHONY: merge
