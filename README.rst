@@ -46,7 +46,7 @@ Vous pouvez contribuer :
 - ou en envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 Un guide pour contribuer au projet via Github se trouve dans
-`CONTRIBUTION.rst
+`CONTRIBUTING.rst
 <https://github.com/python/python-docs-fr/blob/README/CONTRIBUTING.rst>`_.
 
 
