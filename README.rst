@@ -14,7 +14,7 @@ Traduction française de la documentation Python
 Accord de contribution à la documentation
 -----------------------------------------
 
-NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
+NOTE CONCERNANT LA LICENCE POUR LES TRADUCTIONS : La documentation de Python
 est maintenue grâce à un réseau mondial de bénévoles. En publiant ce projet
 sur Transifex, Github, et d'autres endroits publics, et vous invitant
 à participer, la PSF vous enjoint à accepter cet accord qui stipule que vous
@@ -33,34 +33,40 @@ Python est bienvenue et appréciée.
 En soumettant votre travail à la PSF pour inclusion dans la documentation,
 vous signifiez votre acceptation de cet accord.
 
+
 Contribuer à la traduction
 --------------------------
 
 Comment contribuer
 ~~~~~~~~~~~~~~~~~~
 
-Vous pouvez contribuer en utilisant :
+Vous pouvez contribuer en utilisant :
 
 - En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 - Des *pull requests* Github (solution recommandée).
 
-Un guide pour contribuer via Github `se trouve ici 
-<https://github.com/python/python-docs-fr/CONTRIBUTION.rst>`_  :
+Un guide pour contribuer via Github `se trouve ici
+<https://github.com/python/python-docs-fr/CONTRIBUTION.rst>`_.
+
 
 Où obtenir de l'aide ?
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Le coordinateur de cette traduction est `mdk <https://mdk.fr/>`_.
+Le coordinateur de cette traduction est `Julien Palard <https://mdk.fr/>`_.
 
 N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
 <https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
 `liste de diffusion des traductions de l'AFPy <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
+
 Historique du projet
 --------------------
 
-Ce projet a été lancé `vers 2012
-<https://github.com/AFPy/python_doc_fr/commit/b77bdff59036b6b6b5a4804d5f519ce3ea341e027c>`_
-par des membres de l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet
-est devenu la traduction officielle de la documentation Python en français
-grâce à la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+Ce projet a été lancé `vers 2000
+<https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ puis
+repris `vers 2012 <https://github.com/AFPy/python_doc_fr>`_ par
+l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet est devenu la
+traduction officielle de la documentation Python en français grâce à
+la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_. `Jules Lasne
+<https://github.com/Seluj78>`_ à publié fin 2019 une `vidéo de
+l'histore du repo <https://youtu.be/azXmvpEJMhU>`_.
