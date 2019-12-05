@@ -40,12 +40,13 @@ Contribuer à la traduction
 Comment contribuer
 ~~~~~~~~~~~~~~~~~~
 
-Vous pouvez contribuer en utilisant :
+Vous pouvez contribuer :
 
-- En envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
-- Des *pull requests* Github (solution recommandée).
+- en proposant des *pull requests* Github (solution recommandée),
+- ou en envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
-Un guide pour contribuer via Github `se trouve ici
+Un guide pour contribuer au projet via Github se trouve dans
+`CONTRIBUTION.rst
 <https://github.com/python/python-docs-fr/CONTRIBUTION.rst>`_.
 
 
