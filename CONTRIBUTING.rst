@@ -6,7 +6,6 @@ Prérequis
 
 - Un compte `Github <https://github.com/join>`_.
 - Un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_.
-  https://gitforwindows.org/).
 - Un éditeur de fichier ``.po`` (comme `poedit <https://poedit.net/>`_).
 
 Instructions :
