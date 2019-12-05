@@ -56,7 +56,7 @@ Où obtenir de l'aide ?
 Le coordinateur de cette traduction est `Julien Palard <https://mdk.fr/>`_.
 
 N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
-<https://webchat.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
+<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
 `liste de diffusion des traductions de l'AFPy <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 
