@@ -47,7 +47,7 @@ Vous pouvez contribuer :
 
 Un guide pour contribuer au projet via Github se trouve dans
 `CONTRIBUTION.rst
-<https://github.com/python/python-docs-fr/CONTRIBUTION.rst>`_.
+<https://github.com/python/python-docs-fr/blob/README/CONTRIBUTION.rst>`_.
 
 
 Où obtenir de l'aide ?
