@@ -51,64 +51,94 @@ votre traduction (voir `Outils utiles pour la traduction`_)
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
 
+
+Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
+(fraîchement récupérée) de la branche upstream/3.8. On met donc à jour notre
+version locale.
+
 .. code-block:: bash
 
-    # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
-    # (fraîchement récupérée) de la branche upstream/3.8. On met donc à jour notre
-    # version locale.
     git fetch upstream
 
-    # On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
-    # fichier sur lequel on travaille. Par exemple, si vous travaillez sur
-    # « library/sys.po », vous pouvez nommer votre branche « library-sys ».
-    # Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
+
+On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
+fichier sur lequel on travaille. Par exemple, si vous travaillez sur
+« library/sys.po », vous pouvez nommer votre branche « library-sys ».
+Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
+
+.. code-block:: bash
+
     git checkout -b library-sys upstream/3.8
 
-    # Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
-    # N'oubliez pas de configurer votre nom et votre email dans Poedit.
-    # (Édition -> Préférences -> Général)
-    # Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
-    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
-    #
-    # Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
-    # poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
-    # Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
-    # qui va reformater correctement le fichier que avez vous avez modifié.
-    # Exécutez `powrap -m` (reformater tous les fichiers modifiés)
-    # ou `powrap library/sys.po` (un fichier en particulier) :
+Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
+N'oubliez pas de configurer votre nom et votre email dans Poedit.
+(Édition -> Préférences -> Général)
+Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
+(Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
+
+Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
+poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
+
+Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
+qui va reformater correctement le fichier que avez vous avez modifié.
+Exécutez `powrap -m` (reformater tous les fichiers modifiés)
+ou `powrap library/sys.po` (un fichier en particulier) :
+
+.. code-block:: bash
+
     powrap -m
 
-    # Pour l'orthographe, une liste blanche de certains termes techniques ou
-    # de noms propres, comme « Guido », « C99 » ou « sérialisable », est
-    # stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
-    # bien sûr y ajouter une entrée si nécessaire.
-    # La commande suivante va lancer les vérifications nécessaires.
+
+Pour l'orthographe, une liste blanche de certains termes techniques ou
+de noms propres, comme « Guido », « C99 » ou « sérialisable », est
+stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
+bien sûr y ajouter une entrée si nécessaire.
+La commande suivante va lancer les vérifications nécessaires.
+
+.. code-block:: bash
+
     make verifs
 
-    # C'est le moment de git add et git commit
-    # git add va permettre de déplacer nos modifications dans l'index de Git en
-    # attendant d'être déplacée dans le dépôt local.
+
+C'est le moment de git add et git commit
+git add va permettre de déplacer nos modifications dans l'index de Git en
+attendant d'être déplacée dans le dépôt local.
+
+.. code-block:: bash
+
     git add library/sys.po
 
-    # Puis on bascule les modifications dans le dépôt local avec un commit.
+
+Puis on bascule les modifications dans le dépôt local avec un commit.
+
+.. code-block:: bash
+
     git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
-    # Poussez ensuite vos modifications sur votre fork Github.
-    # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-    # branche est liée à votre fork Github (et donc que vos futurs `git pull` et
-    # `git push` sachent quoi tirer)
+
+Poussez ensuite vos modifications sur votre fork Github.
+Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
+branche est liée à votre fork Github (et donc que vos futurs `git pull` et
+`git push` sachent quoi tirer)
+
+.. code-block:: bash
+
     git push -u origin
 
-    # La commande précédente vous affichera un lien pour ouvrir une pull request sur
-    # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
-    # et un joli bouton « Compare & pull request » devrait apparaître au bout de
-    # quelques secondes vous indiquant que vous pouvez demander une pull request.
 
-    # À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
-    # suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
-    # contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
-    # sur une autre branche) :
+La commande précédente vous affichera un lien pour ouvrir une pull request sur
+Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
+et un joli bouton « Compare & pull request » devrait apparaître au bout de
+quelques secondes vous indiquant que vous pouvez demander une pull request.
+
+À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
+suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
+contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
+sur une autre branche) :
+
+.. code-block:: bash
+
     git checkout library/sys
     git pull  # pour rapatrier les modifications que vous auriez accepté
               # sur l'interface web.
@@ -116,6 +146,7 @@ suivez cette procédure :
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "prise en compte des remarques"
     git push
+
 
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
 segment manquant :
