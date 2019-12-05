@@ -19,8 +19,7 @@
 CPYTHON_CLONE := $(realpath ../cpython/)
 SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
 LANGUAGE := fr
-CWD := $(shell pwd)
-VENV := $(CWD)/venv/
+VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
 BRANCH = 3.8
