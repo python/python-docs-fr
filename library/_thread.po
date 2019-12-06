@@ -30,6 +30,13 @@ msgid ""
 "provided. The :mod:`threading` module provides an easier to use and higher-"
 "level threading API built on top of this module."
 msgstr ""
+"Ce module fournit les primitives de bas niveau pour travailler avec de "
+"multiples fils d'exécution (aussi appelés :dfn:`light-weight processes` ou :"
+"dfn:`tasks`) — plusieurs fils d'exécution de contrôle partagent leur espace "
+"de données global. Pour la synchronisation, de simples verrous (aussi "
+"appelés des :dfn:`mutexes` ou des :dfn:`binary semaphores`) sont fournis. Le "
+"module :mod:`threading` fournit une API de fils d'exécution de haut niveau, "
+"plus facile à utiliser et construite à partir de ce module."
 
 #: ../Doc/library/_thread.rst:26
 msgid ""
@@ -78,6 +85,8 @@ msgid ""
 "Raise the :exc:`SystemExit` exception.  When not caught, this will cause the "
 "thread to exit silently."
 msgstr ""
+"Lève une exception :exc:`SystemExit`. Quand elle n'est pas interceptée, le "
+"fil d'exécution se terminera silencieusement."
 
 #: ../Doc/library/_thread.rst:80
 msgid ""
@@ -141,6 +150,10 @@ msgid ""
 "(only one thread at a time can acquire a lock --- that's their reason for "
 "existence)."
 msgstr ""
+"Sans aucun argument optionnel, cette méthode acquiert le verrou "
+"inconditionnellement, et si nécessaire attend jusqu'à ce qu'il soit relâché "
+"par un autre fil d'exécution (un seul fil d'exécution à la fois peut "
+"acquérir le verrou — c'est leur raison d'être)."
 
 #: ../Doc/library/_thread.rst:129
 msgid ""
@@ -149,6 +162,10 @@ msgid ""
 "immediately without waiting, while if it is nonzero, the lock is acquired "
 "unconditionally as above."
 msgstr ""
+"Si l'argument *waitflag*, un entier, est présent, l'action dépend de sa "
+"valeur : si elle est de zéro, le verrou est seulement acquis s'il peut être "
+"acquis immédiatement, sans attendre, sinon le verrou est acquis "
+"inconditionnellement comme ci-dessus."
 
 #: ../Doc/library/_thread.rst:134
 msgid ""
@@ -157,12 +174,18 @@ msgid ""
 "*timeout* argument specifies an unbounded wait.  You cannot specify a "
 "*timeout* if *waitflag* is zero."
 msgstr ""
+"Si l'argument *timeout*, en virgule flottante, est présent et positif, il "
+"spécifie le temps d'attente maximum en secondes avant de renvoyer. Un "
+"argument *timeout* négatif spécifie une attente illimitée. Vous ne pouvez "
+"pas spécifier un *timeout* si *waitflag* est à zéro."
 
 #: ../Doc/library/_thread.rst:139
 msgid ""
 "The return value is ``True`` if the lock is acquired successfully, ``False`` "
 "if not."
 msgstr ""
+"La valeur renvoyée est ``True`` si le verrou est acquis avec succès, sinon "
+"``False``."
 
 #: ../Doc/library/_thread.rst:142
 msgid "The *timeout* parameter is new."
@@ -171,24 +194,31 @@ msgstr "Le paramètre *timeout* est nouveau."
 #: ../Doc/library/_thread.rst:145
 msgid "Lock acquires can now be interrupted by signals on POSIX."
 msgstr ""
+"Le verrou acquis peut maintenant être interrompu par des signaux sur POSIX."
 
 #: ../Doc/library/_thread.rst:151
 msgid ""
 "Releases the lock.  The lock must have been acquired earlier, but not "
 "necessarily by the same thread."
 msgstr ""
+"Relâche le verrou. Le verrou doit avoir été acquis plus tôt, mais pas "
+"nécessairement par le même fil d'exécution."
 
 #: ../Doc/library/_thread.rst:157
 msgid ""
 "Return the status of the lock: ``True`` if it has been acquired by some "
 "thread, ``False`` if not."
 msgstr ""
+"Renvoie le statut du verrou : ``True`` s'il a été acquis par certains fils "
+"d'exécution, sinon ``False``."
 
 #: ../Doc/library/_thread.rst:160
 msgid ""
 "In addition to these methods, lock objects can also be used via the :keyword:"
 "`with` statement, e.g.::"
 msgstr ""
+"En plus de ces méthodes, les objets verrous peuvent aussi être utilisés via "
+"l'instruction :keyword:`with`, e.g. : ::"
 
 #: ../Doc/library/_thread.rst:170
 msgid "**Caveats:**"
@@ -200,12 +230,18 @@ msgid ""
 "exception will be received by an arbitrary thread.  (When the :mod:`signal` "
 "module is available, interrupts always go to the main thread.)"
 msgstr ""
+"Les fils d'exécution interagissent étrangement avec les interruptions : "
+"l'exception :exc:`KeyboardInterrupt` sera reçue par un fil d'exécution "
+"arbitraire. (Quand le module :mod:`signal` est disponible, les interruptions "
+"vont toujours au fil d'exécution principal)."
 
 #: ../Doc/library/_thread.rst:178
 msgid ""
 "Calling :func:`sys.exit` or raising the :exc:`SystemExit` exception is "
 "equivalent to calling :func:`_thread.exit`."
 msgstr ""
+"Appeler la fonction :func:`sys.exit` ou lever l'exception :exc:`SystemExit` "
+"est équivalent à appeler la fonction :func:`_thread.exit`."
 
 #: ../Doc/library/_thread.rst:181
 msgid ""
@@ -213,6 +249,9 @@ msgid ""
 "the :exc:`KeyboardInterrupt` exception will happen after the lock has been "
 "acquired."
 msgstr ""
+"Il n'est pas possible d'interrompre la méthode :meth:`acquire` sur un verrou "
+"— l'exception :exc:`KeyboardInterrupt` surviendra après que le verrou a été "
+"acquis."
 
 #: ../Doc/library/_thread.rst:184
 msgid ""
@@ -220,6 +259,10 @@ msgid ""
 "survive.  On most systems, they are killed without executing :keyword:"
 "`try` ... :keyword:`finally` clauses or executing object destructors."
 msgstr ""
+"Quand le fil d'exécution principal s'arrête, il est défini par le système si "
+"les autres fils d'exécution survivent. Sur beaucoup de systèmes, ils sont "
+"tués sans l'exécution des clauses :keyword:`try`… :keyword:`finally` ou "
+"l'exécution des destructeurs d'objets."
 
 #: ../Doc/library/_thread.rst:189
 msgid ""
@@ -227,3 +270,6 @@ msgid ""
 "that :keyword:`try` ... :keyword:`finally` clauses are honored), and the "
 "standard I/O files are not flushed."
 msgstr ""
+"Quand le fil d'exécution principal s'arrête, il ne fait pas son nettoyage "
+"habituel (excepté que les clauses :keyword:`try`… :keyword:`finally` sont "
+"honorées) et les fichiers d'entrée/sortie standards ne sont pas nettoyés."
