@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../Doc/howto/cporting.rst:7
 msgid "Porting Extension Modules to Python 3"
-msgstr ""
+msgstr "Portage des modules d'extension vers Python 3"
 
 #: ../Doc/howto/cporting.rst:9
 msgid "Benjamin Peterson"
@@ -36,6 +36,12 @@ msgid ""
 "obvious on the C level.  This document endeavors to document "
 "incompatibilities and how they can be worked around."
 msgstr ""
+"Changer l'API C n'était pas l'un des objectifs de Python 3, cependant les "
+"nombreux changements au niveau Python ont rendu impossible de garder l'API "
+"de Python 2 comme elle était. Certains changements tels que l'unification "
+"de :func:`int` et :func:`long` sont plus apparents au niveau C. Ce document "
+"s'efforce de documenter les incompatibilités et la façon dont elles peuvent "
+"être contournées."
 
 #: ../Doc/howto/cporting.rst:23
 msgid "Conditional compilation"
@@ -46,26 +52,33 @@ msgid ""
 "The easiest way to compile only some code for Python 3 is to check if :c:"
 "macro:`PY_MAJOR_VERSION` is greater than or equal to 3. ::"
 msgstr ""
+"La façon la plus simple de compiler seulement une section de code pour "
+"Python 3 est de vérifier si :c:macro:`PY_MAJOR_VERSION` est supérieur ou "
+"égal à 3. ::"
 
 #: ../Doc/howto/cporting.rst:32
 msgid ""
 "API functions that are not present can be aliased to their equivalents "
 "within conditional blocks."
 msgstr ""
+"Les fonctions manquantes dans l'API peuvent être remplacées par des alias à "
+"leurs équivalents dans des blocs conditionnels."
 
 #: ../Doc/howto/cporting.rst:37
 msgid "Changes to Object APIs"
-msgstr ""
+msgstr "Modifications apportées aux API des objets"
 
 #: ../Doc/howto/cporting.rst:39
 msgid ""
 "Python 3 merged together some types with similar functions while cleanly "
 "separating others."
 msgstr ""
+"Python 3 a fusionné certains types avec des fonctions identiques tout en "
+"séparant de façon propre, d'autres."
 
 #: ../Doc/howto/cporting.rst:44
 msgid "str/unicode Unification"
-msgstr ""
+msgstr "Unification de *str* et *unicode*"
 
 #: ../Doc/howto/cporting.rst:46
 msgid ""
@@ -81,10 +94,23 @@ msgid ""
 "shows best practices with regards to :c:type:`PyUnicode`, :c:type:"
 "`PyString`, and :c:type:`PyBytes`. ::"
 msgstr ""
+"Le type :func:`str` de Python 3 est l'équivalent de :func:`unicode` sous "
+"Python 2 ; Les fonctions C sont appelées ``PyUnicode_*`` pour les deux "
+"versions. L'ancien type de chaîne de caractères de 8 bits est devenue :func:"
+"`bytes`, avec des fonctions C nommées ``PyBytes_*``. Python 2.6 et toutes "
+"les versions supérieures fournissent un en-tête de compatibilité, :file:"
+"`bytesobject.h`, faisant correspondre les noms ``PyBytes`` aux ``PyString``. "
+"Pour une meilleure compatibilité avec Python 3, :c:type:`PyUnicode` doit "
+"être utilisé seulement pour des données textuelles et :c:type:`PyBytes` pour "
+"des données binaires. Il est important de noter que :c:type:`PyBytes` et :c:"
+"type:`PyUnicode` en Python 3 ne sont pas remplaçables contrairement à :c:"
+"type:`PyString` et :c:type:`PyUnicode` dans Python 2. L'exemple suivant "
+"montre l'utilisation optimale de :c:type:`PyUnicode`, :c:type:`PyString`, "
+"et :c:type:`PyBytes`. ::"
 
 #: ../Doc/howto/cporting.rst:95
 msgid "long/int Unification"
-msgstr ""
+msgstr "Unification de *long* et *int*"
 
 #: ../Doc/howto/cporting.rst:97
 msgid ""
@@ -96,7 +122,7 @@ msgstr ""
 
 #: ../Doc/howto/cporting.rst:104
 msgid "Module initialization and state"
-msgstr ""
+msgstr "Initialisation et état du module"
 
 #: ../Doc/howto/cporting.rst:106
 msgid ""
@@ -106,10 +132,16 @@ msgid ""
 "in both Python 2 and Python 3 is tricky.  The following simple example "
 "demonstrates how. ::"
 msgstr ""
+"Python 3 a remanié son système d'initialisation des modules d'extension "
+"(Voir :pep:`3121`.). Au lieu de stocker les états de module dans les "
+"variables globales, les états doivent être stockés dans une structure "
+"spécifique à l'interpréteur. Créer des modules qui ont un fonctionnement "
+"correct en Python 2 et Python 3 est délicat. L'exemple suivant montre "
+"comment. ::"
 
 #: ../Doc/howto/cporting.rst:197
 msgid "CObject replaced with Capsule"
-msgstr ""
+msgstr "CObject remplacé par Capsule"
 
 #: ../Doc/howto/cporting.rst:199
 msgid ""
@@ -120,6 +152,13 @@ msgid ""
 "APIs relied on undefined behavior in C. (For further reading on the "
 "rationale behind Capsules, please see :issue:`5630`.)"
 msgstr ""
+"L'objet :c:type:`Capsule` a été introduit dans Python 3.1 et 2.7 pour "
+"remplacer :c:type:`CObject`. Le type :c:type:`CObject` était utile, mais son "
+"API posait des soucis : elle ne permettait pas la distinction entre les "
+"objets C valides, ce qui permettait aux objets C assortis incorrectement de "
+"planter l'interpréteur, et certaines des API s'appuyaient sur un "
+"comportement indéfini en C. (Pour plus de détails sur la logique de "
+"Capsules, veuillez consulter :issue:`5630`)."
 
 #: ../Doc/howto/cporting.rst:206
 msgid ""
@@ -131,6 +170,14 @@ msgid ""
 "support both CObjects and Capsules. (Note that Python 3.0 is no longer "
 "supported, and it is not recommended for production use.)"
 msgstr ""
+"Si vous utilisez actuellement CObjects et que vous voulez migrer vers la "
+"version 3.1 ou plus récente, vous devrez passer à Capsules. :c:type:"
+"`CObject` est déprécié dans 3.1 et 2.7 et est supprimé dans Python 3.2. Si "
+"vous ne gérez que les versions 2.7, ou 3.1 et supérieures, vous pouvez "
+"simplement passer à :c:type:`Capsule`. Si vous avez besoin de gérer Python "
+"3.0, ou des versions de Python antérieures à 2.7, vous devez gérer CObjects "
+"et Capsules. (Notez que Python 3.0 n'est plus maintenu, et qu'il n'est pas "
+"recommandé pour une utilisation en production)."
 
 #: ../Doc/howto/cporting.rst:216
 msgid ""
@@ -140,6 +187,11 @@ msgid ""
 "automatically use Capsules in versions of Python with Capsules, and switch "
 "to CObjects when Capsules are unavailable."
 msgstr ""
+"L'exemple suivant d'en-tête de fichier :file:`capsulethunk.h` peut résoudre "
+"le problème. Il suffit d'écrire votre code dans l'API :c:type:`Capsule` et "
+"d'inclure ce fichier d'en-tête après :file:`Python.h`. Votre code utilisera "
+"automatiquement Capsules dans les versions de Python avec Capsules, et "
+"passera à CObjects lorsque les Capsules ne sont pas disponibles."
 
 #: ../Doc/howto/cporting.rst:223
 msgid ""
@@ -148,10 +200,15 @@ msgid ""
 "the simulated :c:type:`Capsule` objects created by :file:`capsulethunk.h` "
 "behave slightly differently from real Capsules.  Specifically:"
 msgstr ""
+":file:`capsulethunk.h` reproduit le fonctionnement de Capsules en utilisant "
+"CObjects. Cependant, :c:type:`CObject` ne permet pas de stocker le \"nom\" "
+"de la capsule. Les objets simulés :c:type:`Capsule` créés par :file:"
+"`capsulethunk.h` se comportent légèrement différemment des véritables "
+"Capsules. Ainsi :"
 
 #: ../Doc/howto/cporting.rst:228
 msgid "The name parameter passed in to :c:func:`PyCapsule_New` is ignored."
-msgstr ""
+msgstr "Le paramètre *name* passé à :c:func:`PyCapsule_New` est ignoré."
 
 #: ../Doc/howto/cporting.rst:230
 msgid ""
@@ -159,10 +216,13 @@ msgid ""
 "`PyCapsule_GetPointer` is ignored, and no error checking of the name is "
 "performed."
 msgstr ""
+"Le paramètre *name* passé à :c:func:`PyCapsule_IsValid` et :c:func:"
+"`PyCapsule_GetPointer` est ignoré et il n'y a pas de vérification d'erreur "
+"du nom."
 
 #: ../Doc/howto/cporting.rst:234
 msgid ":c:func:`PyCapsule_GetName` always returns NULL."
-msgstr ""
+msgstr ":c:func:`PyCapsule_GetName` renvoie toujours un NULL."
 
 #: ../Doc/howto/cporting.rst:236
 msgid ""
@@ -171,6 +231,11 @@ msgid ""
 "`PyCapsule_SetName` was deemed preferable to silent failure here.  If this "
 "is inconvenient, feel free to modify your local copy as you see fit.)"
 msgstr ""
+":c:func:`PyCapsule_SetName` lève toujours une exception et renvoie un échec. "
+"Note : Puisqu'il n'y a aucun moyen de stocker un nom dans un CObject, "
+"l'échec verbeux de :c:func:`PyCapsule_SetName` a été jugé préférable à un "
+"échec non-verbeux dans ce cas. Si cela ne vous convenait pas, vous pouvez "
+"modifier votre copie locale selon vos besoins."
 
 #: ../Doc/howto/cporting.rst:243
 msgid ""
@@ -178,10 +243,13 @@ msgid ""
 "source:`Doc/includes/capsulethunk.h`.  We also include it here for your "
 "convenience:"
 msgstr ""
+"Vous pouvez trouver :file:`capsulethunk.h` dans la distribution source de "
+"Python comme :source:`Doc/includes/capsulethunk.h`. Nous l'incluons ici pour "
+"votre confort :"
 
 #: ../Doc/howto/cporting.rst:252
 msgid "Other options"
-msgstr ""
+msgstr "Autres options"
 
 #: ../Doc/howto/cporting.rst:254
 msgid ""
@@ -189,3 +257,7 @@ msgid ""
 "<http://cython.org/>`_.  It translates a Python-like language to C.  The "
 "extension modules it creates are compatible with Python 3 and Python 2."
 msgstr ""
+"Si vous écrivez un nouveau module d'extension, vous pouvez envisager "
+"d'utiliser `Cython <http://cython.org/>`_. Il traduit un langage de type "
+"Python en C. Les modules d'extension qu'il crée sont compatibles avec Python "
+"3 et Python 2."
