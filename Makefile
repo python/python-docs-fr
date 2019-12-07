@@ -16,7 +16,7 @@
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
-CPYTHON_CLONE := ../cpython/
+CPYTHON_CLONE := $(realpath ../cpython/)
 SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
 LANGUAGE := fr
 VENV := $(shell pwd)/venv/
@@ -36,7 +36,7 @@ endif
 	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' \
-	  $(MODE) && echo "Build success, files in $(CPYTHON_CLONE)Doc/build/$(MODE), run 'make serve' or 'python3 -m http.server -d $(CPYTHON_CLONE)Doc/build/$(MODE)' to see them."
+	  $(MODE) && echo "Build success, open file://$(CPYTHON_CLONE)/Doc/build/html/index.html or run 'make serve' to see them."
 
 
 .PHONY: serve
