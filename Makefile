@@ -22,26 +22,30 @@ LANGUAGE := fr
 VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
-BRANCH = 3.8
-COMMIT =
-JOBS = auto
+BRANCH := 3.8
+COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
+WORKTREE := $(VENV)/worktree-$(COMMIT)/
+JOBS := auto
 
 
 .PHONY: all
-all: $(SPHINX_CONF) $(VENV)/bin/activate
-ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
-	$(warning "Your ../cpython checkout may be on the wrong branch, got $(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD) expected $(BRANCH)")
-endif
-	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
-	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
+all: $(WORKTREE)
+	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
+	cp --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
+	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' \
-	  $(MODE) && echo "Build success, open file://$(CPYTHON_CLONE)/Doc/build/html/index.html or run 'make serve' to see them."
+	  $(MODE) && echo "Build success, open file://$(WORKTREE)/Doc/build/html/index.html or run 'make serve' to see them."
+
+
+$(WORKTREE): $(VENV)/bin/activate $(SPHINX_CONF)
+	git -C $(CPYTHON_CLONE) worktree prune
+	git -C $(CPYTHON_CLONE) fetch https://github.com/python/cpython
+	git -C $(CPYTHON_CLONE) worktree add $(WORKTREE)/ $(COMMIT)
 
 
 .PHONY: serve
 serve:
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ serve
+	$(MAKE) -C $(WORKTREE)/Doc/ serve
 
 
 $(SPHINX_CONF):
