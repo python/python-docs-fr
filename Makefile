@@ -16,19 +16,30 @@
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
-CPYTHON_PATH := $(realpath ../cpython/)
-LANGUAGE := fr
-UPSTREAM := https://github.com/python/cpython
-VENV := $(shell pwd)/venv/
-PYTHON := $(shell which python3)
-MODE := html
-BRANCH := 3.8
+# Configuration
+
+# The version of poutils we use (Hardcoding it allows for pip to skip
+# hitting internet if it's already installed).
+POUTILS_VERSION := 0.1.2
 
 # The CPYTHON_CURRENT_COMMIT is the commit, in the cpython repository,
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
 CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
+
+CPYTHON_PATH := $(realpath ../cpython/)
+
+LANGUAGE := fr
+BRANCH := 3.8
+
+
+# Internal variables
+
+UPSTREAM := https://github.com/python/cpython
+VENV := $(shell pwd)/venv/
+PYTHON := $(shell which python3)
+MODE := html
 WORKTREES := $(VENV)/worktrees/
 WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
@@ -80,7 +91,7 @@ setup: venv
 .PHONY: venv
 venv:
 	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	$(VENV)/bin/pip install -q -U pip poutils==0.1.2
+	$(VENV)/bin/pip install -q -U pip poutils==$(POUTILS_VERSION)
 
 
 .PHONY: serve
