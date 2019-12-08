@@ -16,51 +16,75 @@
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
-CPYTHON_CLONE := $(realpath ../cpython/)
-SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
+CPYTHON_PATH := $(realpath ../cpython/)
 LANGUAGE := fr
+UPSTREAM := https://github.com/python/cpython
 VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
 BRANCH := 3.8
-COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
-WORKTREE := $(VENV)/worktree-$(COMMIT)/
+
+# The CPYTHON_CURRENT_COMMIT is the commit, in the cpython repository,
+# from which we generated our po files.  We use it here so when we
+# test build, we're building with the .rst files that generated our
+# .po files.
+CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
+WORKTREE := $(VENV)/worktrees/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
 
 
 .PHONY: all
-all: $(WORKTREE)
+all: setup
 	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
 	cp --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
-	  SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' \
+	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
+	  SPHINXOPTS='-qW -j$(JOBS)   \
+	  -D locale_dirs=../locales   \
+	  -D language=$(LANGUAGE)     \
+	  -D gettext_compact=0        \
+	  -D latex_engine=xelatex     \
+	  -D latex_elements.inputenc= \
+	  -D latex_elements.fontenc=' \
 	  $(MODE) && echo "Build success, open file://$(WORKTREE)/Doc/build/html/index.html or run 'make serve' to see them."
 
 
-$(WORKTREE): $(VENV)/bin/activate $(SPHINX_CONF)
-	git -C $(CPYTHON_CLONE) worktree prune
-	git -C $(CPYTHON_CLONE) fetch https://github.com/python/cpython
-	git -C $(CPYTHON_CLONE) worktree add $(WORKTREE)/ $(COMMIT)
+.PHONY: setup
+setup: venv
+	# Setup the main clone
+	if ! [ -d $(CPYTHON_PATH) ]; then \
+	    git clone --depth 16 --branch $(BRANCH) $(UPSTREAM) $(CPYTHON_PATH); \
+	fi
+
+	# Setup the current worktree
+	if ! [ -d $(WORKTREE) ]; then                                                        \
+	    rm -fr $(VENV)/worktrees;                                                        \
+	    git -C $(CPYTHON_PATH) worktree prune;                                           \
+	    mkdir -p $(VENV)/worktrees;                                                      \
+	    if [ -n "$(CPYTHON_CURRENT_COMMIT)" ];                                           \
+	    then                                                                             \
+	        depth=32;                                                                    \
+	        while ! git -C $(CPYTHON_PATH) rev-parse $(CPYTHON_CURRENT_COMMIT);          \
+	        do                                                                           \
+	            depth=$$((depth * 2));                                                   \
+	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM);                \
+	        done                                                                         \
+	    else                                                                             \
+	        git -C $(CPYTHON_PATH) fetch --depth 1 $(UPSTREAM);                          \
+	    fi;                                                                              \
+	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
+	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
+	fi
+
+
+.PHONY: venv
+venv:
+	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
+	$(VENV)/bin/pip install -q -U pip poutils==0.1.2
 
 
 .PHONY: serve
 serve:
 	$(MAKE) -C $(WORKTREE)/Doc/ serve
-
-
-$(SPHINX_CONF):
-	git clone --depth 1 --branch $(BRANCH) https://github.com/python/cpython.git $(CPYTHON_CLONE)
-	[ -n "$(COMMIT)" ] && (i=1; while ! $$(git -C $(CPYTHON_CLONE) checkout $(COMMIT)); do i=$$((i * 2)); git -C $(CPYTHON_CLONE) fetch --depth $$i; done) || true
-
-
-.PHONY: upgrade_venv
-upgrade_venv:
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
-	$(VENV)/bin/pip install -U pip potodo powrap pospell
-
-
-$(VENV)/bin/activate: $(SPHINX_CONF)
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
 
 
 .PHONY: progress
@@ -70,41 +94,36 @@ progress:
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
-$(VENV)/bin/potodo: $(VENV)/bin/activate
-	$(VENV)/bin/pip install potodo
-
-$(VENV)/bin/powrap: $(VENV)/bin/activate
-	$(VENV)/bin/pip install powrap
-
-$(VENV)/bin/pospell: $(VENV)/bin/activate
-	$(VENV)/bin/pip install pospell
-
 .PHONY: todo
-todo: $(VENV)/bin/potodo
+todo: venv
 	$(VENV)/bin/potodo
+
+.PHONY: wrap
+wrap: venv
+	$(VENV)/bin/powrap --check --quiet *.po **/*.po
+
+.PHONY: spell
+spell: venv
+	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
+
+.PHONY: fuzzy
+fuzzy: venv
+	$(VENV)/bin/potodo -f
 
 .PHONY: verifs
 verifs: wrap spell
 
-.PHONY: wrap
-wrap: $(VENV)/bin/powrap
-	$(VENV)/bin/powrap --check --quiet *.po **/*.po
-
-.PHONY: spell
-spell: $(VENV)/bin/pospell
-	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
-
 .PHONY: merge
 merge: upgrade_venv
-ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
-	$(error "You're merging from a different branch:" "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" vs "$(BRANCH)")
+ifneq "$(shell cd $(CPYTHON_PATH) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
+	$(error "You're merging from a different branch:" "$(shell cd $(CPYTHON_PATH) 2>/dev/null && git describe --contains --all HEAD)" vs "$(BRANCH)")
 endif
-	(cd $(CPYTHON_CLONE)/Doc; rm -f build/NEWS)
-	(cd $(CPYTHON_CLONE); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
-	find $(CPYTHON_CLONE)/pot/ -name '*.pot' |\
+	(cd $(CPYTHON_PATH)/Doc; rm -f build/NEWS)
+	(cd $(CPYTHON_PATH); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+	find $(CPYTHON_PATH)/pot/ -name '*.pot' |\
 	    while read -r POT;\
 	    do\
-	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_CLONE)/pot/##; s#\.pot\$$#.po#")";\
+	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_PATH)/pot/##; s#\.pot\$$#.po#")";\
 	        mkdir -p "$$(dirname "$$PO")";\
 	        if [ -f "$$PO" ];\
 	        then\
@@ -117,7 +136,7 @@ endif
 	        fi\
 	    done
 
-
-.PHONY: fuzzy
-fuzzy: $(VENV)/bin/potodo
-	$(VENV)/bin/potodo -f
+.PHONY: clean
+clean:
+	rm -fr venv
+	find -name '*.mo' -delete
