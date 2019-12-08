@@ -29,7 +29,8 @@ BRANCH := 3.8
 # test build, we're building with the .rst files that generated our
 # .po files.
 CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
-WORKTREE := $(VENV)/worktrees/$(CPYTHON_CURRENT_COMMIT)/
+WORKTREES := $(VENV)/worktrees/
+WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
 
 
@@ -57,9 +58,9 @@ setup: venv
 
 	# Setup the current worktree
 	if ! [ -d $(WORKTREE) ]; then                                                        \
-	    rm -fr $(VENV)/worktrees;                                                        \
+	    rm -fr $(WORKTREES);                                                             \
 	    git -C $(CPYTHON_PATH) worktree prune;                                           \
-	    mkdir -p $(VENV)/worktrees;                                                      \
+	    mkdir -p $(WORKTREES);                                                           \
 	    if [ -n "$(CPYTHON_CURRENT_COMMIT)" ];                                           \
 	    then                                                                             \
 	        depth=32;                                                                    \
@@ -114,16 +115,15 @@ fuzzy: venv
 verifs: wrap spell
 
 .PHONY: merge
-merge: upgrade_venv
-ifneq "$(shell cd $(CPYTHON_PATH) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
-	$(error "You're merging from a different branch:" "$(shell cd $(CPYTHON_PATH) 2>/dev/null && git describe --contains --all HEAD)" vs "$(BRANCH)")
-endif
-	(cd $(CPYTHON_PATH)/Doc; rm -f build/NEWS)
-	(cd $(CPYTHON_PATH); $(VENV)/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
-	find $(CPYTHON_PATH)/pot/ -name '*.pot' |\
+merge: setup
+	git -C $(CPYTHON_PATH) fetch $(UPSTREAM)
+	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(BRANCH)
+	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
+	(cd $(WORKTREES)/$(BRANCH); $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
 	    while read -r POT;\
 	    do\
-	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_PATH)/pot/##; s#\.pot\$$#.po#")";\
+	        PO="./$$(echo "$$POT" | sed "s#$(WORKTREES)/$(BRANCH)/pot/##; s#\.pot\$$#.po#")";\
 	        mkdir -p "$$(dirname "$$PO")";\
 	        if [ -f "$$PO" ];\
 	        then\
@@ -135,6 +135,8 @@ endif
 	            msgcat -o "$$PO" "$$POT";\
 	        fi\
 	    done
+	rm -fr $(WORKTREES)/$(BRANCH)
+	git -C $(CPYTHON_PATH) worktree prune
 
 .PHONY: clean
 clean:
