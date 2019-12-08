@@ -128,7 +128,9 @@ verifs: wrap spell
 .PHONY: merge
 merge: setup
 	git -C $(CPYTHON_PATH) fetch $(UPSTREAM)
-	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(BRANCH)
+	rm -fr $(WORKTREES)/$(BRANCH)
+	git -C $(CPYTHON_PATH) worktree prune
+	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(word 1,$(shell git -C $(CPYTHON_PATH) remote -v | grep python/cpython))/$(BRANCH)
 	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
 	(cd $(WORKTREES)/$(BRANCH); $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
 	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
@@ -146,6 +148,7 @@ merge: setup
 	            msgcat -o "$$PO" "$$POT";\
 	        fi\
 	    done
+	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
 
