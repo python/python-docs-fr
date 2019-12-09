@@ -410,6 +410,10 @@ Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
 rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
 si vous n'êtes pas d'accord.
 
+Dans un souci de lisibilité et en accord avec la préconisation de l'Académie
+française, nous utilisons le masculin pour indiquer un genre neutre. Par
+exemple : l'utilisateur ou le lecteur.
+
 Pour trouver facilement comment un terme est déjà traduit dans notre
 documentation, vous pouvez utiliser `pogrep`_.
 
