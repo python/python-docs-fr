@@ -25,7 +25,7 @@ MODE := html
 BRANCH = 3.8
 COMMIT =
 JOBS = auto
-POS = .pospell/
+POSPELL_TMP_DIR = .pospell/
 
 SHELL := /bin/bash
 
@@ -88,14 +88,14 @@ verifs: wrap spell
 wrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
-SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po')
-# foo/bar.po => $(POS)/foo/bar.po.out
-DESTS = $(addprefix $(POS)/,$(addsuffix .out,$(SRCS)))
+SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
+# foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
+DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: spell
 spell: $(VENV)/bin/pospell $(DESTS) 
 
-$(POS)/%.po.out: %.po dict
+$(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Checking $<..."
 	@mkdir -p $(shell dirname $@)
 	@set -o pipefail;\
@@ -135,5 +135,5 @@ fuzzy: $(VENV)/bin/potodo
 
 .PHONY: clean
 clean:
-	rm -rf $(POS)
+	rm -rf $(POSPELL_TMP_DIR)
 
