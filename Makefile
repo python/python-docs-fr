@@ -88,7 +88,7 @@ verifs: wrap spell
 wrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
-SRCS = $(shell git diff --name-only $(BRANCH) | grep .po)
+SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po')
 # foo/bar.po => $(POS)/foo/bar.po.out
 DESTS = $(addprefix $(POS)/,$(addsuffix .out,$(SRCS)))
 
