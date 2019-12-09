@@ -4,23 +4,18 @@
 #
 # - make  # Automatically build an html local version
 # - make todo  # To list remaining tasks
-# - make verifs # To check for correctness: wrapping, spelling
-# - make wrap # To check for wrapping
-# - make spell # To check for spelling
+# - make verifs  # To check for correctness: wrapping, spelling
+# - make wrap  # To check for wrapping
+# - make spell  # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
-# - make upgrade_venv  # To upgrade the venv that compiles the doc
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
 # Configuration
-
-# The version of poutils we use (Hardcoding it allows for pip to skip
-# hitting internet if it's already installed).
-POUTILS_VERSION := 0.1.2
 
 # The CPYTHON_CURRENT_COMMIT is the commit, in the cpython repository,
 # from which we generated our po files.  We use it here so when we
@@ -91,7 +86,7 @@ setup: venv
 .PHONY: venv
 venv:
 	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	$(VENV)/bin/pip install -q -U pip poutils==$(POUTILS_VERSION)
+	$(VENV)/bin/pip install -q -U -r requirements.txt
 
 
 .PHONY: serve
