@@ -5,8 +5,8 @@
 # - make  # Automatically build an html local version
 # - make todo  # To list remaining tasks
 # - make verifs # To check for correctness: wrapping, spelling
-# - make powrap # To check for wrapping
-# - make pospell # To check for spelling
+# - make wrap # To check for wrapping
+# - make spell # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
@@ -16,10 +16,10 @@
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
-CPYTHON_CLONE := ../cpython/
+CPYTHON_CLONE := $(realpath ../cpython/)
 SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
 LANGUAGE := fr
-VENV := ~/.venvs/python-docs-i18n/
+VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
 BRANCH = 3.8
@@ -38,7 +38,7 @@ endif
 	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' \
-	  $(MODE) && echo "Build success, files in $(CPYTHON_CLONE)Doc/build/$(MODE), run 'make serve' or 'python3 -m http.server -d $(CPYTHON_CLONE)Doc/build/$(MODE)' to see them."
+	  $(MODE) && echo "Build success, open file://$(CPYTHON_CLONE)/Doc/build/html/index.html or run 'make serve' to see them."
 
 
 .PHONY: serve
@@ -82,18 +82,18 @@ todo: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo
 
 .PHONY: verifs
-verifs: powrap pospell
+verifs: wrap spell
 
-.PHONY: powrap
-powrap: $(VENV)/bin/powrap
+.PHONY: wrap
+wrap: $(VENV)/bin/powrap
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep .po)
 # foo/bar.po => $(POS)/foo/bar.po.out
 DESTS = $(addprefix $(POS)/,$(addsuffix .out,$(SRCS)))
 
-.PHONY: pospell
-pospell: $(VENV)/bin/pospell $(DESTS) 
+.PHONY: spell
+spell: $(VENV)/bin/pospell $(DESTS) 
 
 $(POS)/%.po.out: %.po dict
 	@echo "Checking $<..."
