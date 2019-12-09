@@ -5,8 +5,8 @@
 # - make  # Automatically build an html local version
 # - make todo  # To list remaining tasks
 # - make verifs # To check for correctness: wrapping, spelling
-# - make powrap # To check for wrapping
-# - make pospell # To check for spelling
+# - make wrap # To check for wrapping
+# - make spell # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
 # - make progress  # To compute current progression
@@ -16,10 +16,10 @@
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
 # real work to the Python Doc Makefile.
 
-CPYTHON_CLONE := ../cpython/
+CPYTHON_CLONE := $(realpath ../cpython/)
 SPHINX_CONF := $(CPYTHON_CLONE)/Doc/conf.py
 LANGUAGE := fr
-VENV := ~/.venvs/python-docs-i18n/
+VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
 BRANCH = 3.8
@@ -34,7 +34,14 @@ ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all 
 endif
 	mkdir -p $(CPYTHON_CLONE)/locales/$(LANGUAGE)/
 	ln -nfs $(shell $(PYTHON) -c 'import os; print(os.path.realpath("."))') $(CPYTHON_CLONE)/locales/$(LANGUAGE)/LC_MESSAGES
-	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' $(MODE)
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) \
+	  SPHINXOPTS='-qW -j$(JOBS) -D locale_dirs=../locales -D language=$(LANGUAGE) -D gettext_compact=0 -D latex_engine=xelatex -D latex_elements.inputenc= -D latex_elements.fontenc=' \
+	  $(MODE) && echo "Build success, open file://$(CPYTHON_CLONE)/Doc/build/html/index.html or run 'make serve' to see them."
+
+
+.PHONY: serve
+serve:
+	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ serve
 
 
 $(SPHINX_CONF):
@@ -73,15 +80,15 @@ todo: $(VENV)/bin/potodo
 	$(VENV)/bin/potodo
 
 .PHONY: verifs
-verifs: powrap pospell
+verifs: wrap spell
 
-.PHONY: powrap
-powrap: $(VENV)/bin/powrap
-	$(VENV)/bin/powrap --check --quiet *.po */*.po
+.PHONY: wrap
+wrap: $(VENV)/bin/powrap
+	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
-.PHONY: pospell
-pospell: $(VENV)/bin/pospell
-	$(VENV)/bin/pospell -p dict -l fr_FR *.po */*.po
+.PHONY: spell
+spell: $(VENV)/bin/pospell
+	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
 
 .PHONY: merge
 merge: upgrade_venv
