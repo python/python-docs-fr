@@ -97,7 +97,7 @@ spell: $(VENV)/bin/pospell $(DESTS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Checking $<..."
-	@mkdir -p $(shell dirname $@)
+	@mkdir -p $(@D)
 	@set -o pipefail;\
 	$(VENV)/bin/pospell -p dict -l fr_FR $< | tee $@;\
 	EXIT=$$?;\
