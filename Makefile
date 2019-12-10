@@ -27,8 +27,6 @@ COMMIT =
 JOBS = auto
 POSPELL_TMP_DIR = .pospell/
 
-SHELL := /bin/bash
-
 .PHONY: all
 all: $(SPHINX_CONF) $(VENV)/bin/activate
 ifneq "$(shell cd $(CPYTHON_CLONE) 2>/dev/null && git describe --contains --all HEAD)" "$(BRANCH)"
@@ -98,12 +96,7 @@ spell: $(VENV)/bin/pospell $(DESTS)
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Checking $<..."
 	@mkdir -p $(@D)
-	@set -o pipefail;\
-	$(VENV)/bin/pospell -p dict -l fr_FR $< | tee $@;\
-	EXIT=$$?;\
-	if [ "$$EXIT" -ne "0" ];\
-	then touch $<;\
-	fi
+	@($(VENV)/bin/pospell -p dict -l fr_FR $< || touch $<) | tee $@
 
 .PHONY: merge
 merge: upgrade_venv
