@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-15 18:54+0100\n"
-"PO-Revision-Date: 2019-11-24 23:17+0100\n"
+"PO-Revision-Date: 2019-12-08 22:43+0100\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -492,7 +492,7 @@ msgstr ":class:`c_char_p`"
 
 #: ../Doc/library/ctypes.rst:263
 msgid ":c:type:`char *` (NUL terminated)"
-msgstr ":c:type:`char *` (NUL terminated)"
+msgstr ":c:type:`char *` (terminé par NUL)"
 
 #: ../Doc/library/ctypes.rst:263
 msgid "bytes object or ``None``"
@@ -504,7 +504,7 @@ msgstr ":class:`c_wchar_p`"
 
 #: ../Doc/library/ctypes.rst:265
 msgid ":c:type:`wchar_t *` (NUL terminated)"
-msgstr ":c:type:`wchar_t *` (Terminé par NUL)"
+msgstr ":c:type:`wchar_t *` (terminé par NUL)"
 
 #: ../Doc/library/ctypes.rst:265
 msgid "string or ``None``"
@@ -620,8 +620,8 @@ msgid ""
 "Of course, it must be one of integer, string, or bytes::"
 msgstr ""
 "Il est possible de personnaliser la conversion des arguments effectuée par :"
-"mod:`ctypes pour permettre de passer en argument des instances de vos "
-"propres classes. mod:`ctypes' recherche un attribut :attr:`_as_parameter_` "
+"mod:`ctypes` pour permettre de passer en argument des instances de vos "
+"propres classes. :mod:`ctypes` recherche un attribut :attr:`_as_parameter_` "
 "et le prend comme argument à la fonction. Bien entendu, ce doit être soit un "
 "entier, soit une chaîne de caractères, soit des octets ::"
 
@@ -632,8 +632,8 @@ msgid ""
 "attribute available on request."
 msgstr ""
 "Si vous ne souhaitez pas stocker les données de l'instance dans la variable :"
-"attr:`_as_parameter_` de l'instance, vous pouvez toujours définir une class:"
-"`propriété <property>' qui rend cet attribut disponible sur demande."
+"attr:`_as_parameter_` de l'instance, vous pouvez toujours définir une :class:"
+"`propriété <property>` qui rend cet attribut disponible sur demande."
 
 #: ../Doc/library/ctypes.rst:410
 msgid "Specifying the required argument types (function prototypes)"
@@ -645,7 +645,7 @@ msgid ""
 "from DLLs by setting the :attr:`argtypes` attribute."
 msgstr ""
 "Il est possible de définir le type des arguments demandés par une fonction "
-"exportée depuis une DLL en définissant son attribut :attr:`argtypes'."
+"exportée depuis une DLL en définissant son attribut :attr:`argtypes`."
 
 #: ../Doc/library/ctypes.rst:415
 msgid ""
@@ -684,7 +684,7 @@ msgid ""
 msgstr ""
 "Pour appeler une fonction avec vos propres classes, il faut implémenter une "
 "méthode de classe :meth:`from_param`, qui est utilisée dans la séquence :"
-"attr:`argtypes'. La méthode de classe :meth:`from_param` récupère l'objet "
+"attr:`argtypes`. La méthode de classe :meth:`from_param` récupère l'objet "
 "Python passé à la fonction et doit faire une vérification de type ou quelque "
 "chose tout ce qui est nécessaire pour s'assurer que l'objet est valide, puis "
 "retourne l'objet lui-même, son attribut :attr:`_as_parameter_`, ou tout ce "
@@ -702,12 +702,18 @@ msgid ""
 "return types can be specified by setting the :attr:`restype` attribute of "
 "the function object."
 msgstr ""
+"Le module suppose par défaut qu'une fonction renvoie un C :c:type:`int`. "
+"Définir l'attribut :attr:`restype` de l'objet encapsulant la fonction permet "
+"de définir un autre type de retour."
 
 #: ../Doc/library/ctypes.rst:458
 msgid ""
 "Here is a more advanced example, it uses the ``strchr`` function, which "
 "expects a string pointer and a char, and returns a pointer to a string::"
 msgstr ""
+"Voici un exemple plus poussé. Celui-ci utilise la fonction ``strchr``, qui "
+"prend en paramètres un pointeur vers une chaîne et un caractère, et qui "
+"renvoie un pointeur dur une chaîne ::"
 
 #: ../Doc/library/ctypes.rst:471
 msgid ""
@@ -715,6 +721,9 @@ msgid ""
 "`argtypes` attribute, and the second argument will be converted from a "
 "single character Python bytes object into a C char::"
 msgstr ""
+"Pour économiser l'appel ``ord(\"x\")``, il est possible de définir "
+"l'attribut :attr:`argtypes`, et le second argument, un objet octet à un seul "
+"caractère sera automatiquement converti en un caractère C ::"
 
 #: ../Doc/library/ctypes.rst:489
 msgid ""
@@ -725,6 +734,12 @@ msgid ""
 "function call. This is useful to check for error return values and "
 "automatically raise an exception::"
 msgstr ""
+"Si la fonction à interfacer renvoie un entier, l'attribut :attr:`restype` "
+"peut aussi être un appelable (une fonction ou une classe par exemple).Dans "
+"ce cas, l'appelable sera appelé avec l'entier renvoyé par la fonction, et le "
+"résultat de cet appel, sera le resultat final de l'appel à la fonction. "
+"C'est pratique pour vérifier les codes d'erreurs des valeurs de retour et "
+"lever automatiquement des exceptions ::"
 
 #: ../Doc/library/ctypes.rst:512
 msgid ""
@@ -733,16 +748,24 @@ msgid ""
 "exception. ``WinError`` takes an optional error code parameter, if no one is "
 "used, it calls :func:`GetLastError` to retrieve it."
 msgstr ""
+"``WinError`` appelle l'API Windows``FormatMessage()`` pour obtenir une "
+"représentation de la chaîne de caractères qui correspond au code d'erreur, "
+"et *renvoie* une exception. ``WinError`` prend en paramètre — optionnel — le "
+"code d'erreur. Si celui-ci n'est pas passé, elle appelle :func:"
+"`GetLastError` pour le récupérer."
 
 #: ../Doc/library/ctypes.rst:517
 msgid ""
 "Please note that a much more powerful error checking mechanism is available "
 "through the :attr:`errcheck` attribute; see the reference manual for details."
 msgstr ""
+"Notez cependant que l'attribut :attr:`errcheck` permet de vérifier bien plus "
+"efficacement les erreurs ; référez-vous au manuel de référence pour des "
+"précisions."
 
 #: ../Doc/library/ctypes.rst:524
 msgid "Passing pointers (or: passing parameters by reference)"
-msgstr ""
+msgstr "Passage de pointeurs (passage de paramètres par référence)"
 
 #: ../Doc/library/ctypes.rst:526
 msgid ""
@@ -751,6 +774,8 @@ msgid ""
 "large to be passed by value. This is also known as *passing parameters by "
 "reference*."
 msgstr ""
+"Il arrive qu'une fonction C du code à interfacer requière un *pointeur* vers "
+"un certain type de donnée en paramètre. Ce"
 
 #: ../Doc/library/ctypes.rst:530
 msgid ""
@@ -760,6 +785,11 @@ msgid ""
 "constructs a real pointer object, so it is faster to use :func:`byref` if "
 "you don't need the pointer object in Python itself::"
 msgstr ""
+":mod:`ctypes` contient la fonction :func:`byref` qui permet de passer des "
+"paramètres par référence. La fonction :func:`pointer` permet la même chose, "
+"mais en faisant plus de travail car :func:`pointer` construit un véritable "
+"objet pointeur. Ainsi, si vous n'avez pas besoin de cet objet dans votre "
+"code Python, utiliser :func:`byref` est plus performant ::"
 
 #: ../Doc/library/ctypes.rst:552
 msgid "Structures and unions"
@@ -772,12 +802,19 @@ msgid ""
 "subclass must define a :attr:`_fields_` attribute.  :attr:`_fields_` must be "
 "a list of *2-tuples*, containing a *field name* and a *field type*."
 msgstr ""
+"Les structures et les unions doivent hériter des classes de base :class:"
+"`Structure` et :class:`Union` définies dans le module :mod:`ctypes`. Chaque "
+"sous-classe doit définir un attribut :attr:`_fields_`.  :attr:`_fields_` "
+"doit être un liste de *paires*, contenant un *nom de champ* et un *type de "
+"champ*."
 
 #: ../Doc/library/ctypes.rst:559
 msgid ""
 "The field type must be a :mod:`ctypes` type like :class:`c_int`, or any "
 "other derived :mod:`ctypes` type: structure, union, array, pointer."
 msgstr ""
+"Le type de champ doit être un type :mod:`ctypes` comme :class:`c_int` ou un "
+"type :mod:`ctypes` dérivé : structure, union, tableau ou pointeur."
 
 #: ../Doc/library/ctypes.rst:562
 msgid ""
@@ -785,30 +822,43 @@ msgid ""
 "named *x* and *y*, and also shows how to initialize a structure in the "
 "constructor::"
 msgstr ""
+"Voici un exemple simple : une structure POINT, qui contient deux entiers *x* "
+"et *y* et qui montre également comment instancier une structure dans le "
+"constructeur ::"
 
 #: ../Doc/library/ctypes.rst:582
 msgid ""
 "You can, however, build much more complicated structures.  A structure can "
 "itself contain other structures by using a structure as a field type."
 msgstr ""
+"Il est bien entendu possible de créer des structures plus complexes. Une "
+"structure peut elle-même contenir d'autres structures en prenant une "
+"structure comme type de champ."
 
 #: ../Doc/library/ctypes.rst:585
 msgid ""
 "Here is a RECT structure which contains two POINTs named *upperleft* and "
 "*lowerright*::"
 msgstr ""
+"Voici une structure RECT qui contient deux POINTs *upperleft* and "
+"*lowerright* ::"
 
 #: ../Doc/library/ctypes.rst:599
 msgid ""
 "Nested structures can also be initialized in the constructor in several "
 "ways::"
 msgstr ""
+"Une structure encapsulée peut être instanciée dans le constructeur de "
+"plusieurs façons ::"
 
 #: ../Doc/library/ctypes.rst:604
 msgid ""
 "Field :term:`descriptor`\\s can be retrieved from the *class*, they are "
 "useful for debugging because they can provide useful information::"
 msgstr ""
+"Il est possible de récupérer les :term:`descripteurs <descriptor>` des "
+"champs depuis la *classe*, c'est utile pour déboguer car ils contiennent des "
+"informations utiles ::"
 
 #: ../Doc/library/ctypes.rst:618
 msgid ""
@@ -817,10 +867,15 @@ msgid ""
 "guaranteed by the library to work in the general case.  Unions and "
 "structures with bit-fields should always be passed to functions by pointer."
 msgstr ""
+":mod:`ctypes` ne prend pas en charge le passage par valeur des unions ou des "
+"structures avec des champ de bits. Bien que cela puisse fonctionner sur des "
+"architectures 32 bits avec un heu d'instructions x86, ce n'est pas garantit "
+"par la bibliothèque en général. Les unions et les structures avec des champs "
+"de bits doivent toujours être passées par pointeur."
 
 #: ../Doc/library/ctypes.rst:624
 msgid "Structure/union alignment and byte order"
-msgstr ""
+msgstr "Alignement et boutisme des structures et des unions"
 
 #: ../Doc/library/ctypes.rst:626
 msgid ""
@@ -830,6 +885,8 @@ msgid ""
 "to a positive integer and specifies the maximum alignment for the fields. "
 "This is what ``#pragma pack(n)`` also does in MSVC."
 msgstr ""
+"Par défaut les champs Structure et Unions sont alignés de la même manière "
+"que le ferait un compilateur C."
 
 #: ../Doc/library/ctypes.rst:632
 msgid ""
@@ -839,6 +896,11 @@ msgid ""
 "`BigEndianUnion`, and :class:`LittleEndianUnion` base classes.  These "
 "classes cannot contain pointer fields."
 msgstr ""
+":mod:`ctypes` suit le boutisme natif pour les Structures et les Unions. Pour "
+"construire des structures avec un boutisme différent, utilisez les classes "
+"de base :class:`BigEndianStructure`, :class:`LittleEndianStructure`, :class:"
+"`BigEndianUnion` ou :class:`LittleEndianUnion`. Ces classes ne peuvent pas "
+"avoir de champ pointeur."
 
 #: ../Doc/library/ctypes.rst:642
 msgid "Bit fields in structures and unions"
@@ -850,6 +912,9 @@ msgid ""
 "fields are only possible for integer fields, the bit width is specified as "
 "the third item in the :attr:`_fields_` tuples::"
 msgstr ""
+"Il est possible de créer des structures et des unions contenant des champs "
+"de bits. Seuls les entiers peuvent être des champs de bits, le nombre de "
+"bits est défini dans le troisième champ du n-uplet :attr:`_fields_` ::"
 
 #: ../Doc/library/ctypes.rst:662
 msgid "Arrays"
@@ -860,32 +925,40 @@ msgid ""
 "Arrays are sequences, containing a fixed number of instances of the same "
 "type."
 msgstr ""
+"Les tableaux sont des séquences qui contiennent un nombre fixe d'instances "
+"du même type."
 
 #: ../Doc/library/ctypes.rst:666
 msgid ""
 "The recommended way to create array types is by multiplying a data type with "
 "a positive integer::"
 msgstr ""
+"La meilleure façon de créer des tableaux consiste à multiplier le type de "
+"donnée par un entier positif ::"
 
 #: ../Doc/library/ctypes.rst:671
 msgid ""
 "Here is an example of a somewhat artificial data type, a structure "
 "containing 4 POINTs among other stuff::"
 msgstr ""
+"Voici un exemple — un peu artificiel — d'une structure contenant, entre "
+"autres, 4 POINTs ::"
 
 #: ../Doc/library/ctypes.rst:687
 msgid "Instances are created in the usual way, by calling the class::"
-msgstr ""
+msgstr "Comme d'habitude, on crée les instances en appelant la classe ::"
 
 #: ../Doc/library/ctypes.rst:693
 msgid ""
 "The above code print a series of ``0 0`` lines, because the array contents "
 "is initialized to zeros."
 msgstr ""
+"Le code précédent affiche une suite de ``0 0`` car le contenu du tableau est "
+"initialisé avec des zéros."
 
 #: ../Doc/library/ctypes.rst:696
 msgid "Initializers of the correct type can also be specified::"
-msgstr ""
+msgstr "Des valeurs d'initialisation du bon type peuvent être passées ::"
 
 #: ../Doc/library/ctypes.rst:712
 msgid "Pointers"
@@ -896,18 +969,24 @@ msgid ""
 "Pointer instances are created by calling the :func:`pointer` function on a :"
 "mod:`ctypes` type::"
 msgstr ""
+"On crée une instance de pointeur en appelant la fonction :`pointer`sur un "
+"type :mod:`ctypes` ::"
 
 #: ../Doc/library/ctypes.rst:722
 msgid ""
 "Pointer instances have a :attr:`~_Pointer.contents` attribute which returns "
 "the object to which the pointer points, the ``i`` object above::"
 msgstr ""
+"Les instances de pointer ont un attribut :attr:`~_Pointer.contents`qui "
+"renvoie l'objet pointé (l'objet ``i`` ci-dessus) ::"
 
 #: ../Doc/library/ctypes.rst:729
 msgid ""
 "Note that :mod:`ctypes` does not have OOR (original object return), it "
 "constructs a new, equivalent object each time you retrieve an attribute::"
 msgstr ""
+"Attention mod:`ctypes` ne fait pas de ROI (retour de l'objet initial). Il "
+"crée un nouvel objet à chaque fois qu l'on accède à un attribut ::"
 
 #: ../Doc/library/ctypes.rst:738
 msgid ""
@@ -915,14 +994,17 @@ msgid ""
 "attribute would cause the pointer to point to the memory location where this "
 "is stored::"
 msgstr ""
+"Affecter une autre instance de :class:`c_int` à l'attribut *contents* du "
+"pointeur fait pointer le pointeur vers l'adresse mémoire de cette nouvelle "
+"instance ::"
 
 #: ../Doc/library/ctypes.rst:750
 msgid "Pointer instances can also be indexed with integers::"
-msgstr ""
+msgstr "Il est possible d'indicer les pointeurs par des entiers ::"
 
 #: ../Doc/library/ctypes.rst:756
 msgid "Assigning to an integer index changes the pointed to value::"
-msgstr ""
+msgstr "Affecter à travers un indice change la valeur pointée ::"
 
 #: ../Doc/library/ctypes.rst:765
 msgid ""
@@ -932,6 +1014,11 @@ msgid ""
 "a C function, and you *know* that the pointer actually points to an array "
 "instead of a single item."
 msgstr ""
+"Si vous êtes sûr de vous, vous pouvez utiliser d'autres valeurs que 0, comme "
+"en C : il est ainsi possible de modifier une zone mémoire de votre choix. De "
+"manière générale cette fonctionnalité ne s'utilise que sur un pointeur "
+"renvoyé par une fonction C, pointeur que vous *savez* pointer vers un "
+"tableau et non sur un seul élément."
 
 #: ../Doc/library/ctypes.rst:771
 msgid ""
@@ -940,18 +1027,27 @@ msgid ""
 "the :func:`POINTER` function, which accepts any :mod:`ctypes` type, and "
 "returns a new type::"
 msgstr ""
+"Sous le capot, la fonction :func:`pointer` fait plus que simplement créer "
+"une instance de pointeur ; elle doit d'abord créer un pointeur de *type*. "
+"Cela s'effectue avec la fonction :func:`POINTER` , qui prend en paramètre "
+"n'importe quel type :mod:`ctypes` et renvoie un nouveau type ::"
 
 #: ../Doc/library/ctypes.rst:787
 msgid ""
 "Calling the pointer type without an argument creates a ``NULL`` pointer. "
 "``NULL`` pointers have a ``False`` boolean value::"
 msgstr ""
+"Appeler le pointeur sur type sans arguments crée un pointeur ``NULL``. Les "
+"pointeurs ``NULL`` s'évaluent à ``False`` ::"
 
 #: ../Doc/library/ctypes.rst:795
 msgid ""
 ":mod:`ctypes` checks for ``NULL`` when dereferencing pointers (but "
 "dereferencing invalid non-\\ ``NULL`` pointers would crash Python)::"
 msgstr ""
+":mod:`ctypes` vérifie que le pointeur n'est pas ``NULL`` quand il en "
+"déréférence un (mais déréférencer des pointeurs non ``NULL`` invalides fait "
+"planter Python) ::"
 
 #: ../Doc/library/ctypes.rst:814
 msgid "Type conversions"
@@ -967,6 +1063,14 @@ msgid ""
 "instances instead of pointer types.  So, for ``POINTER(c_int)``, ctypes "
 "accepts an array of c_int::"
 msgstr ""
+"En général, *ctypes* respecte un typage fort. Cela signifie que si un "
+"``POINTER(c_int)`` est présent dans la liste des :attr:`argtypes` d'une "
+"fonction ou est le type d'un attribut membre dans une définition de "
+"structure, seules des instances de ce type seront valides. Cette règle "
+"comporte quelques exceptions pour lesquelles *ctypes* accepte d'autres "
+"objets. Par exemple il est possible de passer des instances de tableau à "
+"place de pointeurs, s'ils sont compatibles. Dans le cas de "
+"``POINTER(c_int)``, *ctypes* accepte des tableaux de *c_int* ::"
 
 #: ../Doc/library/ctypes.rst:837
 msgid ""
@@ -975,10 +1079,17 @@ msgid ""
 "pointed type (``c_int`` in this case) can be passed to the function.  ctypes "
 "will apply the required :func:`byref` conversion in this case automatically."
 msgstr ""
+"De plus, si un paramètre de fonction est déclaré explicitement de type "
+"pointeur (comme ``POINTER(c_int)``) dans les :attr:`argtypes`, il est aussi "
+"possible de passer un objet du type pointé (ici, ``c_int``) à la fonction. "
+"*ctypes* appelle alors automatiquement la fonction de conversion :func:"
+"`byref`."
 
 #: ../Doc/library/ctypes.rst:842
 msgid "To set a POINTER type field to ``NULL``, you can assign ``None``::"
 msgstr ""
+"Pour mettre un champ de type *POINTER* à ``NULL``, il faut lui affecter "
+"``None`` ::"
 
 #: ../Doc/library/ctypes.rst:849
 msgid ""
@@ -988,10 +1099,15 @@ msgid ""
 "accepts ``POINTER(c_int)`` pointers or :class:`c_int` arrays for its "
 "``values`` field, but not instances of other types::"
 msgstr ""
+"Parfois il faut gérer des incompatibilités entre les types. En C, il est "
+"possible de convertir un type en un autre. mod:`ctypes` fournit la fonction :"
+"func:`cast` qui permet la même chose. La structure ``Bar``ci-dessus accepte "
+"des pointeurs ``POINTER(c_int)`` ou des tableaux de :class:`c_int` comme "
+"valeur pour le champ ``values``, mais pas des instances d'autres types ::"
 
 #: ../Doc/library/ctypes.rst:861
 msgid "For these cases, the :func:`cast` function is handy."
-msgstr ""
+msgstr "C'est là que la fonction :func:`cast` intervient."
 
 #: ../Doc/library/ctypes.rst:863
 msgid ""
@@ -1001,12 +1117,18 @@ msgid ""
 "ctypes pointer type.  It returns an instance of the second argument, which "
 "references the same memory block as the first argument::"
 msgstr ""
+"La fonction :func:`cast` permet de caster une intance de *ctypes* en un "
+"pointeur vers un type de données *ctypes* différent. :func:`cast`prend deux "
+"paramètres, un objet *ctypes* qui est ou qui peut être converti en un "
+"certain pointeur, et un type pointeur de *ctypes*. Elle renvoie une instance "
+"du second argument, qui pointe sur le même bloc mémoire que le premier "
+"argument :"
 
 #: ../Doc/library/ctypes.rst:874
 msgid ""
 "So, :func:`cast` can be used to assign to the ``values`` field of ``Bar`` "
 "the structure::"
-msgstr ""
+msgstr "Aisin, "
 
 #: ../Doc/library/ctypes.rst:887
 msgid "Incomplete Types"
@@ -1136,7 +1258,7 @@ msgstr ""
 
 #: ../Doc/library/ctypes.rst:1060
 msgid "Accessing values exported from dlls"
-msgstr ""
+msgstr "Accès aux variables exportées depuis les dlls"
 
 #: ../Doc/library/ctypes.rst:1062
 msgid ""
