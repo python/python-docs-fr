@@ -35,10 +35,10 @@ UPSTREAM := https://github.com/python/cpython
 VENV := $(shell pwd)/venv/
 PYTHON := $(shell which python3)
 MODE := html
+POSPELL_TMP_DIR := .pospell/
 WORKTREES := $(VENV)/worktrees/
 WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
-
 
 .PHONY: all
 all: setup
@@ -109,9 +109,17 @@ todo: venv
 wrap: venv
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
+SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
+# foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
+DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
+
 .PHONY: spell
-spell: venv
-	$(VENV)/bin/pospell -p dict -l fr_FR *.po **/*.po
+spell: venv $(DESTS) 
+
+$(POSPELL_TMP_DIR)/%.po.out: %.po dict
+	@echo "Checking $<..."
+	@mkdir -p $(@D)
+	@$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
 fuzzy: venv
@@ -149,5 +157,5 @@ merge: setup
 
 .PHONY: clean
 clean:
-	rm -fr venv
+	rm -fr venv $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
