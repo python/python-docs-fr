@@ -85,8 +85,11 @@ setup: venv
 
 .PHONY: venv
 venv:
-	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	$(VENV)/bin/pip install -q -U -r requirements.txt
+	@if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
+	@$(VENV)/bin/pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
+	@if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
+	    $(VENV)/bin/pip install -q --upgrade pip; \
+	fi
 
 
 .PHONY: serve
@@ -114,7 +117,7 @@ SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: spell
-spell: venv $(DESTS) 
+spell: venv $(DESTS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Checking $<..."
