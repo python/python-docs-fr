@@ -119,7 +119,7 @@ spell: venv $(DESTS)
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Checking $<..."
 	@mkdir -p $(@D)
-	@($(VENV)/bin/pospell -p dict -l fr_FR $< || touch $<) | tee $@
+	@$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
 fuzzy: venv
