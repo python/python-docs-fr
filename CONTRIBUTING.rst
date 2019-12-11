@@ -143,13 +143,15 @@ Que traduire ?
 ~~~~~~~~~~~~~~
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
-à traduire.
-Une fois installé, utilisez la commande ``potodo`` dans votre clone local.
-Vous pouvez choisir n'importe quel fichier non réservé dans la liste
-renvoyée par la commande.
+à traduire. Une fois installé, utilisez la commande ``potodo`` dans votre clone
+local.
 
-**Nous vous recommandons de ne pas commencer avec un fichier de ``c-api``
-car c'est une partie très technique.**
+Vous pouvez choisir n'importe quel fichier non réservé dans la liste
+renvoyée par la commande. Cependant, nous vous recommandons de ne **pas**
+commencer avec un fichier de ``c-api`` car c'est une partie très technique.
+Les anciennes versions de Python sont pour la plupart obsolètes et leurs
+journaux de modifications (dans le dossier ``whatsnew``) ne sont pas les pages
+les plus consultées. Il y a des fichiers plus prioritaires à traduire.
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
