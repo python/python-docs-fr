@@ -73,7 +73,7 @@ setup: venv
 	        while ! git -C $(CPYTHON_PATH) cat-file -e $(CPYTHON_CURRENT_COMMIT);        \
 	        do                                                                           \
 	            depth=$$((depth * 2));                                                   \
-	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM);                \
+	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM) $(BRANCH);      \
 	        done                                                                         \
 	    else                                                                             \
 	        git -C $(CPYTHON_PATH) fetch --depth 1 $(UPSTREAM);                          \
