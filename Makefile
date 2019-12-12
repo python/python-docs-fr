@@ -86,7 +86,7 @@ setup: venv
 .PHONY: venv
 venv:
 	@if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	@$(VENV)/bin/pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
+	@$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
 	@if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
 	    $(VENV)/bin/pip install -q --upgrade pip; \
 	fi
