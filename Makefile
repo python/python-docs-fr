@@ -23,7 +23,7 @@
 # .po files.
 CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
 
-CPYTHON_PATH := $(realpath ../cpython/)
+CPYTHON_PATH := ../cpython/
 
 LANGUAGE := fr
 BRANCH := 3.8
