@@ -70,7 +70,7 @@ setup: venv
 	    if [ -n "$(CPYTHON_CURRENT_COMMIT)" ];                                           \
 	    then                                                                             \
 	        depth=32;                                                                    \
-	        while ! git -C $(CPYTHON_PATH) rev-parse $(CPYTHON_CURRENT_COMMIT);          \
+	        while ! git -C $(CPYTHON_PATH) cat-file -e $(CPYTHON_CURRENT_COMMIT);        \
 	        do                                                                           \
 	            depth=$$((depth * 2));                                                   \
 	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM);                \
