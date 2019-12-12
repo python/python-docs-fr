@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
+CPYTHON_CURRENT_COMMIT := f6a64d5599487aaf70417efc471b9129c8a56cff
 
 CPYTHON_PATH := ../cpython/
 
