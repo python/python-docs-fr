@@ -5,10 +5,16 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y hunspell hunspell-fr-comprehensive
 install:
-  - pip install pospell "powrap>=0.3.0"
+  - pip install poutils
   - pospell --version
   - powrap --version
+  - padpo --version
 script:
-  - powrap --check --quiet *.po **/*.po
-  - pospell -p dict -l fr_FR *.po **/*.po
-  - make CPYTHON_CLONE=/tmp/cpython/ COMMIT=4d1abedce9422473af2ac78047e55cde73208208
+  - 'printf "%s\n" "$TRAVIS_COMMIT_RANGE"'
+  - 'CHANGED_FILES="$(git diff --name-only $TRAVIS_COMMIT_RANGE | grep "\.po$")" ;:'
+  - 'printf "%s files changed.\n" "$(printf "%s" "$CHANGED_FILES" | grep -c "po$")" ;:'
+  - 'if [ -n "$CHANGED_FILES" ]; then printf -- "- %s\n" $CHANGED_FILES; fi'
+  - 'if [ -n "$CHANGED_FILES" ]; then powrap --check --quiet $CHANGED_FILES; fi'
+  - 'if [ -n "$CHANGED_FILES" ]; then pospell -p dict -l fr_FR $CHANGED_FILES; fi'
+  - 'if [ -n "$CHANGED_FILES" ]; then make CPYTHON_PATH=/tmp/cpython/; fi'
+  - 'if [ -n "$CHANGED_FILES" ]; then padpo -i $CHANGED_FILES 2>&1 | grep -v -Ff padpo.ignore || true; fi'
