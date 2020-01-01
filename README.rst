@@ -70,4 +70,4 @@ l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet est devenu la
 traduction officielle de la documentation Python en français grâce à
 la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_. `Jules Lasne
 <https://github.com/Seluj78>`_ à publié fin 2019 une `vidéo de
-l'histore du repo <https://youtu.be/azXmvpEJMhU>`_.
+l'histoire du dépôt <https://youtu.be/azXmvpEJMhU>`_.
