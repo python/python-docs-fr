@@ -42,8 +42,8 @@ Comment contribuer
 
 Vous pouvez contribuer :
 
-- en proposant des *pull requests* Github (solution recommandée),
-- ou en envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+- en proposant des *pull requests* Github (solution recommandée) ;
+- en envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 Un guide pour contribuer au projet via Github se trouve dans
 `CONTRIBUTING.rst
