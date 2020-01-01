@@ -204,7 +204,7 @@ rarement le cas pour les « you should » de cette documentation.
 De la même manière, « can » est souvent mieux traduit sans introduire de notion
 de possibilité, en particulier quand la phrase est à la voix passive ; la
 phrase « These objects can be accessed by… » se traduit mieux par « On accède à
-ces fonctions en… ».
+ces objets en… ».
 
 Glossaire
 ~~~~~~~~~
