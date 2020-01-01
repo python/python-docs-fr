@@ -176,8 +176,8 @@ Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
 Pour les caractères spéciaux, référez-vous à la section
 `Les caractères spéciaux`_
 
-Quelques conseils
------------------
+Conseils
+--------
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
@@ -185,9 +185,9 @@ Utilisation du futur
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
 originale utilise souvent le futur : « if you do this, il will produce
-that … ». En français, l'utilisation du présent convient tout à fait et le
+that… ». En français, l'utilisation du présent convient tout à fait et le
 présent est souvent plus facile à lire : « si vous faites ceci, il se
-produit cela … ». On ne conserve le futur que si la deuxième proposition
+produit cela… ». On ne conserve le futur que si la seconde proposition
 se situe réellement dans le futur (par exemple, on peut penser qu'un
 processus de compilation n'est pas immédiat) ou pour des raisons de
 concordance des temps.
@@ -203,21 +203,25 @@ chose dont l'on peut de temps en temps se passer, alors que c'est très
 rarement le cas pour les « you should » de cette documentation.
 De la même manière, « can » est souvent mieux traduit sans introduire de notion
 de possibilité, en particulier quand la phrase est à la voix passive ; la
-phrase « These objects can be accessed by… » se traduit mieux par « On accède à
+phrase « these objects can be accessed by… » se traduit mieux par « on accède à
 ces objets en… ».
+
+Utilisation du masculin
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Dans un souci de lisibilité et en accord avec la préconisation de
+l'Académie française, nous utilisons le masculin pour indiquer un
+genre neutre. Par exemple : l'utilisateur ou le lecteur.
+
 
 Glossaire
 ~~~~~~~~~
 
-Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
-rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
+Afin d'assurer la cohérence de la traduction, voici quelques propositions et
+rappels pour les termes fréquents à traduire. N'hésitez pas à ouvrir un ticket
 si vous n'êtes pas d'accord.
 
-Dans un souci de lisibilité et en accord avec la préconisation de l'Académie
-française, nous utilisons le masculin pour indiquer un genre neutre. Par
-exemple : l'utilisateur ou le lecteur.
-
-Pour trouver facilement comment un terme est déjà traduit dans notre
+Pour trouver facilement comment un terme est déjà traduit dans la
 documentation, vous pouvez utiliser `pogrep`_.
 
 ========================== ===============================================
@@ -287,8 +291,8 @@ underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
 
-Les caractères spéciaux
------------------------
+Caractères spéciaux
+-------------------
 
 La touche de composition :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -503,7 +507,7 @@ de ``python-docs-fr`` et certains s'attendent à trouver un clone de CPython
   ├── python-docs-fr/
   └── cpython/
 
-Pour cloner CPython vous pouvez utiliser :
+Pour cloner CPython, vous pouvez utiliser :
 
 .. code-block:: bash
 
