@@ -4,12 +4,12 @@ Guide de contribution à la documention via GitHub.
 Prérequis
 ---------
 
-- Un compte `Github <https://github.com/join>`_.
-- Un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_.
-- Un éditeur de fichier ``.po`` (comme `poedit <https://poedit.net/>`_).
+- un compte `Github <https://github.com/join>`_ ;
+- un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
+- un éditeur de fichier ``.po`` (comme `poedit <https://poedit.net/>`_).
 
-Instructions :
---------------
+Instructions
+------------
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
@@ -34,14 +34,14 @@ où vous avez le droit de faire des modifications.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler
-(pour vous aiguillez vous pouvez vous rendre à `Que traduire ?`_ et lire
+(pour vous aiguiller, vous pouvez vous rendre à `Que traduire ?`_ et lire
 les explications concernant `potodo`_ qui vous permettra de voir ce qui a
 déjà été traduit et ce qui ne l'a pas été).
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
-(par exemple «Je travaille sur library/csv.po»).
+(par exemple « Je travaille sur library/csv.po »).
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
@@ -81,12 +81,12 @@ suivez cette procédure :
 
     # Pour l'orthographe, une liste blanche de certains termes techniques ou
     # de noms propres, comme « Guido », « C99 » ou « sérialisable », est
-    # stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
+    # stockée dans le fichier « dict » à la racine du projet. Vous pouvez
     # bien sûr y ajouter une entrée si nécessaire.
     # La commande suivante va lancer les vérifications nécessaires.
     make verifs
 
-    # C'est le moment de git add et git commit
+    # C'est le moment de git add et git commit.
     # git add va permettre de déplacer nos modifications dans l'index de Git en
     # attendant d'être déplacée dans le dépôt local.
     git add library/sys.po
@@ -106,11 +106,11 @@ suivez cette procédure :
     # quelques secondes vous indiquant que vous pouvez demander une pull request.
 
     # À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
-    # suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
+    # suggestions-corrections. Pour les prendre en compte, retournez sur votre branche
     # contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
     # sur une autre branche) :
     git checkout library/sys
-    git pull  # pour rapatrier les modifications que vous auriez accepté
+    git pull  # pour rapatrier les modifications que vous auriez acceptées
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
@@ -120,8 +120,8 @@ suivez cette procédure :
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
 segment manquant :
 
-- Vous récupérez depuis *upstream* (le dépôt commun public sur Github)
-- Vous poussez sur *origin* (votre clone sur Github)
+- vous récupérez depuis *upstream* (le dépôt commun public sur Github) ;
+- vous poussez sur *origin* (votre clone sur Github).
 
 C'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
 de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
@@ -170,11 +170,14 @@ Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 Dans les fichiers, ne traduisez pas le contenu des balises telles que
 ``:ref :...`` et ``:term :...``.
 
-Si vous devez utiliser des mots anglais, mettez les en *italique*
-(entourés par des astérisques).
+Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
+(entouré par des astérisques).
 
-Pour les caractères spéciaux, référez vous à la section
+Pour les caractères spéciaux, référez-vous à la section
 `Les caractères spéciaux`_
+
+Conseils
+--------
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
@@ -182,15 +185,15 @@ Utilisation du futur
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
 originale utilise souvent le futur : « if you do this, il will produce
-that … ». En français, l'utilisation du présent convient tout à fait et le
+that… ». En français, l'utilisation du présent convient tout à fait et le
 présent est souvent plus facile à lire : « si vous faites ceci, il se
-produit cela … ». On ne conserve le futur que si la deuxième proposition
+produit cela… ». On ne conserve le futur que si la seconde proposition
 se situe réellement dans le futur (par exemple, on peut penser qu'un
 processus de compilation n'est pas immédiat) ou pour des raisons de
 concordance des temps.
 
-Traduction de *should*
-~~~~~~~~~~~~~~~~~~~~~~
+Utilisation du conditionnel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La version originale est très polie envers le lecteur ; elle lui intime
 rarement des obligations, préférant employer « you should ». Cependant, en
@@ -198,9 +201,98 @@ français, il est d'usage d'être plus direct pour être correctement compris :
 « vous devez ». *Vous devriez* est en effet généralement compris comme quelque
 chose dont l'on peut de temps en temps se passer, alors que c'est très
 rarement le cas pour les « you should » de cette documentation.
+De la même manière, « can » est souvent mieux traduit sans introduire de notion
+de possibilité, en particulier quand la phrase est à la voix passive ; la
+phrase « these objects can be accessed by… » se traduit mieux par « on accède à
+ces objets en… ».
 
-Les caractères spéciaux
--------------------------
+Utilisation du masculin
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Dans un souci de lisibilité et en accord avec la préconisation de
+l'Académie française, nous utilisons le masculin pour indiquer un
+genre neutre. Par exemple : l'utilisateur ou le lecteur.
+
+
+Glossaire
+~~~~~~~~~
+
+Afin d'assurer la cohérence de la traduction, voici quelques propositions et
+rappels pour les termes fréquents à traduire. N'hésitez pas à ouvrir un ticket
+si vous n'êtes pas d'accord.
+
+Pour trouver facilement comment un terme est déjà traduit dans la
+documentation, vous pouvez utiliser `pogrep`_.
+
+========================== ===============================================
+Terme                      Traduction proposée
+========================== ===============================================
+-like                      -compatible
+abstract data type         type abstrait
+argument                   argument (à ne pas confondre avec *paramètre*)
+backslash                  antislash, *backslash*
+backtrace                  trace d'appels, trace de pile
+bound                      lier
+bug                        bogue, *bug*
+built-in                   native
+callback                   fonction de rappel
+call stack                 pile d'appels
+debugging                  débogage
+deep copy                  copie récursive (préféré), ou copie profonde
+double quote               guillemet
+deprecated                 obsolète
+-like                      -compatible
+e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
+                           lui-même issu du latin *exempli gratia*).
+                           On sépare les deux mots par  une espace
+                           insécable pour éviter les retours à la ligne
+                           malheureux.
+et al.                     et autres, `à accorder
+                           <https://fr.wikipedia.org/wiki/Et_al.>`_
+                           suivant le contexte
+export                     exportation
+expression                 expression
+garbage collector          ramasse-miettes
+getter                     accesseur
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
+                           lui-même issu du latin *id est*)
+identifier                 identifiant
+immutable                  immuable
+import                     importation
+installer                  installateur
+interpreter                interpréteur
+library                    bibliothèque
+list comprehension         liste en compréhension (liste en intension est
+                           valide, mais nous ne l'utilisons pas)
+little-endian, big-endian  `petit-boutiste, gros-boutiste
+                           <https://fr.wikipedia.org/wiki/Endianness>`_
+mixin type                 type de mélange
+mutable                    muable
+namespace                  espace de nommage
+                           (sauf pour le XML où c'est espace de noms)
+parameter                  paramètre
+pickle (v.)                sérialiser
+prompt                     invite
+raise                      lever
+regular expression         expression rationnelle, expression régulière
+return                     renvoie, donne (on évite « retourne » qui
+                           pourrait porter à confusion)
+setter                     mutateur
+simple quote               guillemet simple
+socket                     connecteur ou interface de connexion
+statement                  instruction
+subprocess                 sous-processus
+support                    prendre en charge, implémenter (« supporter » n'a
+                           pas le même sens en français)
+specify                    définir, préciser (plutôt que « spécifier »)
+thread                     fil d'exécution
+traceback                  trace d'appels, trace de pile
+underscore                 tiret bas, *underscore*
+whitespace                 caractère d'espacement
+========================== ===============================================
+
+Caractères spéciaux
+-------------------
 
 La touche de composition :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -228,7 +320,7 @@ simplement fonctionner :
 - … …
 
 Comment définir la touche de composition ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
@@ -264,8 +356,8 @@ modifier dans les paramètres > clavier > Disposition : puis
 => Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
-Le cas de « --- », « -- »,  « ... » :
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Le cas de « --- », « -- »,  « ... »
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La version anglaise utilise une chose nommée
 `smartquotes <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_,
@@ -280,8 +372,8 @@ Les *smartquotes* sont normalement responsables de la transformation de
 | « -- » ou « --- » : faites :kbd:`Compose - - -`
 | « ... » : faites :kbd:`Compose . . .`
 
-Le cas de « "…" » :
-~~~~~~~~~~~~~~~~~~~
+Le cas de « "…" »
+~~~~~~~~~~~~~~~~~
 
 Les guillemets français ``«`` et ``»`` ne sont pas identiques aux
 guillemets anglais ``"``. Cependant, Python utilise les guillemets
@@ -374,83 +466,6 @@ Ressources de traduction
   résumé succint de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
-Glossaire
----------
-
-Afin d'assurer la cohérence de nos traductions, voici quelques propositions et
-rappels pour les termes fréquents à traduire, n'hésitez pas à ouvrir un ticket
-si vous n'êtes pas d'accord.
-
-Dans un souci de lisibilité et en accord avec la préconisation de l'Académie
-française, nous utilisons le masculin pour indiquer un genre neutre. Par
-exemple : l'utilisateur ou le lecteur.
-
-Pour trouver facilement comment un terme est déjà traduit dans notre
-documentation, vous pouvez utiliser `pogrep`_.
-
-========================== ===============================================
-Terme                      Traduction proposée
-========================== ===============================================
--like                      -compatible
-abstract data type         type abstrait
-argument                   argument (à ne pas confondre avec *paramètre*)
-backslash                  antislash, *backslash*
-backtrace                  trace d'appels, trace de pile
-bound                      lier
-bug                        bogue, *bug*
-built-in                   native
-callback                   fonction de rappel
-call stack                 pile d'appels
-debugging                  débogage
-deep copy                  copie récursive (préféré), ou copie profonde
-double quote               guillemet
-deprecated                 obsolète
--like                      -compatible
-e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
-                           lui-même issu du latin *exempli gratia*).
-                           On sépare les deux mots par  une espace
-                           insécable pour éviter les retours à la ligne
-                           malheureux.
-et al.                     et autres, `à accorder
-                           <https://fr.wikipedia.org/wiki/Et_al.>`_
-                           suivant le contexte
-export                     exportation
-expression                 expression
-garbage collector          ramasse-miettes
-getter                     accesseur
-i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
-                           lui-même issu du latin *id est*)
-identifier                 identifiant
-immutable                  immuable
-import                     importation
-installer                  installateur
-interpreter                interpréteur
-library                    bibliothèque
-list comprehension         liste en compréhension (liste en intension est
-                           valide, mais nous ne l'utilisons pas)
-little-endian, big-endian  `petit-boutiste, gros-boutiste
-                           <https://fr.wikipedia.org/wiki/Endianness>`_
-mixin type                 type de mélange
-mutable                    muable
-namespace                  espace de nommage
-                           (sauf pour le XML où c'est espace de noms)
-parameter                  paramètre
-pickle (v.)                sérialiser
-prompt                     invite
-raise                      lever
-regular expression         expression rationnelle, expression régulière
-return                     renvoie, donne (on évite « retourne » qui
-                           pourrait porter à confusion).
-setter                     mutateur
-simple quote               guillemet simple
-socket                     connecteur ou interface de connexion
-statement                  instruction
-subprocess                 sous-processus
-thread                     fil d'exécution
-traceback                  trace d'appels, trace de pile
-underscore                 tiret bas, *underscore*
-whitespace                 caractère d'espacement
-========================== ===============================================
 
 Simplifier les diffs git
 ------------------------
@@ -483,7 +498,7 @@ Maintenance
 -----------
 
 Toutes ces commandes doivent être exécutées à partir de la racine d'un clone
-de ``python-docs-fr``, et certains s'attendent à trouver un clone de CPython
+de ``python-docs-fr`` et certaines s'attendent à trouver un clone de CPython
 à jour à proximité, comme :
 
 .. code-block:: bash
