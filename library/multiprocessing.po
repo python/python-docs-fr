@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-05 23:16+0100\n"
-"PO-Revision-Date: 2019-06-18 22:36+0200\n"
-"Last-Translator: Jules Lasne <jules.lasne@gmail.com>\n"
+"PO-Revision-Date: 2020-01-09 22:44+0100\n"
+"Last-Translator: Antoine Wecxsteen\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: ../Doc/library/multiprocessing.rst:2
 msgid ":mod:`multiprocessing` --- Process-based parallelism"
@@ -135,9 +135,8 @@ msgstr ""
 "cette méthode est plutôt lent par rapport à *fork* ou *forkserver*."
 
 #: ../Doc/library/multiprocessing.rst:105
-#, fuzzy
 msgid "Available on Unix and Windows.  The default on Windows and macOS."
-msgstr "Disponible sur Unix et Windows. Par défaut sur Windows."
+msgstr "Disponible sur Unix et Windows. Par défaut sur Windows et macOS."
 
 #: ../Doc/library/multiprocessing.rst:114
 msgid "*fork*"
@@ -205,7 +204,6 @@ msgstr ""
 "descripteurs héritables du parent sous Windows."
 
 #: ../Doc/library/multiprocessing.rst:139
-#, fuzzy
 msgid ""
 "On Unix using the *spawn* or *forkserver* start methods will also start a "
 "*resource tracker* process which tracks the unlinked named system resources "
@@ -220,14 +218,17 @@ msgid ""
 "space in the main memory.)"
 msgstr ""
 "Sous Unix, utiliser les méthodes de démarrage *spawn* ou *forkserver* "
-"démarre aussi un processus *semaphore tracker* qui traque les sémaphores "
-"nommés non libérés créés par les processus du programme. Quand tous les "
-"processus sont terminés, le traqueur de sémaphores libère les sémaphores "
-"restants. Généralement il ne devrait pas y en avoir, mais si un processus a "
-"été tué par un signal, certains sémaphores ont pu « fuiter ». (Libérer les "
-"sémaphores nommés est une affaire sérieuse puisque le système n'en autorise "
-"qu'un certain nombre, et qu'ils ne seront pas automatiquement libérés avant "
-"le prochain redémarrage.)"
+"démarre aussi un processus de *suivi de ressources* qui détecte les "
+"ressources systèmes non-libérées (comme des sémaphores nommés ou des objets :"
+"class:`~multiprocessing.shared_memory.SharedMemory`) créés par les processus "
+"du programme. Quand tous les processus sont terminés, le traqueur de "
+"ressources libère tous les objets restants. Normalement, il ne devrait pas y "
+"en avoir, mais si un processus a été tué par un signal, certaines ressources "
+"peuvent avoir été « perdues ». Ni les sémaphores ni les blocs de mémoire "
+"partagée ne sont libérés avant le prochain redémarrage. C'est problématique "
+"dans les deux cas car le système n'autorise qu'un nombre limité de "
+"sémaphores et que les blocs de mémoire partagée prennent de la place dans la "
+"mémoire principale."
 
 #: ../Doc/library/multiprocessing.rst:152
 msgid ""
@@ -515,15 +516,14 @@ msgstr ""
 "Pool`, ne fonctionnent pas dans l'interpréteur interactif. Par exemple : ::"
 
 #: ../Doc/library/multiprocessing.rst:453
-#, fuzzy
 msgid ""
 "(If you try this it will actually output three full tracebacks interleaved "
 "in a semi-random fashion, and then you may have to stop the parent process "
 "somehow.)"
 msgstr ""
-"(Si vous essayez ce code, il affichera trois traces d'appels complètes "
-"entrelacées de manière semi-aléatoire, et vous aurez alors à stopper le "
-"processus maître.)"
+"Si vous essayez ce code, il affichera trois traces d'appels complètes "
+"entrelacées de manière semi-aléatoire, et vous devrez vous débrouiller pour "
+"arrêter le processus maître."
 
 #: ../Doc/library/multiprocessing.rst:459
 msgid "Reference"
@@ -1163,6 +1163,8 @@ msgid ""
 "If the queue is closed, :exc:`ValueError` is raised instead of :exc:"
 "`AssertionError`."
 msgstr ""
+"Si la queue a été marquée comme fermée, une :exc:`ValueError` est levée. "
+"Auparavant, une :exc:`AssertionError` était levée."
 
 #: ../Doc/library/multiprocessing.rst:813
 msgid "Equivalent to ``put(obj, False)``."
@@ -1189,13 +1191,12 @@ msgstr ""
 "dans ce cas)."
 
 #: ../Doc/library/multiprocessing.rst:825
-#, fuzzy
 msgid ""
 "If the queue is closed, :exc:`ValueError` is raised instead of :exc:"
 "`OSError`."
 msgstr ""
-"Cette fonction levait auparavant une :exc:`IOError`, qui est maintenant un "
-"alias pour :exc:`OSError`."
+"Si la queue a été marquée comme terminée, une :exc:`ValueError` est levée. "
+"Auparavant, une :exc:`OSError`. était levée."
 
 #: ../Doc/library/multiprocessing.rst:831
 msgid "Equivalent to ``get(False)``."
@@ -1411,12 +1412,14 @@ msgid "An analogue of :func:`threading.current_thread`."
 msgstr "Un analogue à :func:`threading.current_thread`."
 
 #: ../Doc/library/multiprocessing.rst:955
-#, fuzzy
 msgid ""
 "Return the :class:`Process` object corresponding to the parent process of "
 "the :func:`current_process`. For the main process, ``parent_process`` will "
 "be ``None``."
-msgstr "Renvoie l'objet :class:`Process` correspondant au processus courant."
+msgstr ""
+"Renvoie l'objet :class:`Process` correspondant au processus père de :func:"
+"`current_process`. Pour le processus maître, ``parent_process`` vaut "
+"``None``."
 
 #: ../Doc/library/multiprocessing.rst:963
 msgid ""
@@ -2177,7 +2180,7 @@ msgstr ""
 "`Lock` ou :class:`RLock` alors il sera utilisé pour synchroniser l'accès à "
 "la valeur. Si *lock* vaut ``False``, l'accès à l'objet renvoyé ne sera pas "
 "automatiquement protégé par un verrou, donc il ne sera pas forcément "
-"« *process-safe* »"
+"« *process-safe* »."
 
 #: ../Doc/library/multiprocessing.rst:1409
 msgid ""
@@ -2242,7 +2245,7 @@ msgstr ""
 "class:`RLock` alors il sera utilisé pour synchroniser l'accès à la valeur. "
 "Si *lock* vaut ``False``, l'accès à l'objet renvoyé ne sera pas "
 "automatiquement protégé par un verrou, donc il ne sera pas forcément "
-"« *process-safe* »"
+"« *process-safe* »."
 
 #: ../Doc/library/multiprocessing.rst:1442
 msgid "Note that *lock* is a keyword only argument."
@@ -2279,11 +2282,11 @@ msgid ""
 "second process and trying to dereference the pointer from the second process "
 "may cause a crash."
 msgstr ""
-"Bien qu'il soit possible de stocker un pointeur dans une mémoire partagée, "
-"souvenez-vous qu'il référencera un emplacement dans l'espace d'adressage "
-"d'un processus particulier. Ainsi, le pointeur risque d'être invalide dans "
-"le contexte d'un second processus et déréférencer le pointeur depuis ce "
-"second processus pourrait causer un crash."
+"Bien qu'il soit possible de stocker un pointeur en mémoire partagée, "
+"rappelez-vous qu'un pointer référence un emplacement dans l'espace "
+"d'adressage d'un processus particulier. Ainsi, ce pointeur a des fortes "
+"chances d'être invalide dans le contexte d'un autre processus et "
+"déréférencer le pointeur depuis ce second processus peut causer un plantage."
 
 #: ../Doc/library/multiprocessing.rst:1468
 msgid "Return a ctypes array allocated from shared memory."
@@ -2303,7 +2306,7 @@ msgstr ""
 "éléments du tableau (*typecode*) tel qu'utilisé par le module :mod:`array`. "
 "Si *size_or_initialize* est un entier, alors il détermine la taille du "
 "tableau, et le tableau sera initialisé avec des zéros. Autrement, "
-"*size*or_initializer* est une séquence qui sera utilisée pour initialiser le "
+"*size_or_initializer* est une séquence qui sera utilisée pour initialiser le "
 "tableau et dont la taille détermine celle du tableau."
 
 #: ../Doc/library/multiprocessing.rst:1477
@@ -2365,7 +2368,7 @@ msgstr ""
 "`~multiprocessing.Lock` ou :class:`~multiprocessing.RLock` alors il sera "
 "utilisé pour synchroniser l'accès à la valeur. Si *lock* vaut ``False``, "
 "l'accès à l'objet renvoyé ne sera pas automatiquement protégé par un verrou, "
-"donc il ne sera pas forcément « *process-safe* »"
+"donc il ne sera pas forcément « *process-safe* »."
 
 #: ../Doc/library/multiprocessing.rst:1515
 msgid ""
@@ -3278,15 +3281,14 @@ msgstr ""
 "d'exécution qui gère les résultats se retrouverait bloqué."
 
 #: ../Doc/library/multiprocessing.rst:2171
-#, fuzzy
 msgid ""
 "A parallel equivalent of the :func:`map` built-in function (it supports only "
 "one *iterable* argument though, for multiple iterables see :meth:`starmap`). "
 "It blocks until the result is ready."
 msgstr ""
-"Un équivalent parallèle à la fonction *built-in* :func:`map` (qui ne "
-"supporte cependant qu'un *itérable* en argument). Elle bloque jusqu'à ce que "
-"le résultat soit prêt."
+"Un équivalent parallèle de la fonction native :func:`map` (qui ne prend "
+"qu'un seul argument *itérable* ; pour en passer plusieurs référez-vous à :"
+"meth:`starmap`). Elle bloque jusqu'à ce que le résultat soit prêt."
 
 #: ../Doc/library/multiprocessing.rst:2175
 msgid ""
@@ -3455,6 +3457,8 @@ msgid ""
 "If the result is not ready, :exc:`ValueError` is raised instead of :exc:"
 "`AssertionError`."
 msgstr ""
+"Si le résultat n'est pas prêt, une :exc:`ValueError` est levée au lieu "
+"d'une :exc:`AssertionError` auparavant."
 
 #: ../Doc/library/multiprocessing.rst:2288
 msgid "The following example demonstrates the use of a pool::"
