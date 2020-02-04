@@ -402,13 +402,13 @@ Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
 Le cas des doubles espaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La doc anglaise comporte beaucoup de double-espaces.
+La documentation originale comporte beaucoup de double-espaces.
 Cela se fait en anglais, mais pas en français. De toute manière, 
 ils passent ensuite à une moulinette et le rendu des espaces est délégué 
 au HTML et au PDF, qui n'en tiennent pas compte. 
-Nous avions décidé de ne rien changer pour les double-espaces 
+Nous avons décidé de ne rien changer pour les double-espaces 
 coté traduction : nous ne les retirons pas et ce n'est pas grave 
-si les traducteurs les retirent par accident
+si des traducteurs en retirent par accident.
 
 
 Outils utiles pour la traduction
