@@ -241,7 +241,6 @@ debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
 deprecated                 obsolète
--like                      -compatible
 e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            lui-même issu du latin *exempli gratia*).
                            On sépare les deux mots par  une espace
