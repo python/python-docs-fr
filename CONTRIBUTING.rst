@@ -398,6 +398,18 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 
 Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
 
+Le cas des doubles espaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La documentation originale comporte beaucoup de double-espaces.
+Cela se fait en anglais, mais pas en français. De toute manière, 
+ils passent ensuite à une moulinette et le rendu des espaces est délégué 
+au HTML et au PDF, qui n'en tiennent pas compte. 
+Nous avons décidé de ne rien changer pour les double-espaces 
+coté traduction : nous ne les retirons pas et ce n'est pas grave 
+si des traducteurs en retirent par accident.
+
+
 Outils utiles pour la traduction
 --------------------------------
 
