@@ -21,7 +21,7 @@ où vous avez le droit de faire des modifications.
 .. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
-    git clone git@github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
+    git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # *OU* HTTPS :
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
