@@ -6,17 +6,18 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-04 10:00+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-02-23 20:01+0100\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Philippe GALVAN\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../Doc/distutils/setupscript.rst:5
 msgid "Writing the Setup Script"
-msgstr ""
+msgstr "Rédiger le script `Setup`"
 
 #: Doc/distutils/_setuptools_disclaimer.rst:3
 msgid ""
@@ -24,6 +25,10 @@ msgid ""
 "documentation at https://setuptools.readthedocs.io/en/latest/setuptools.html "
 "independently covers all of the relevant information currently included here."
 msgstr ""
+"Ce document est conservé uniquement jusqu'à ce que la documentation de "
+"``setuptools`` présente à l'adresse https://setuptools.readthedocs.io/en/"
+"latest/setuptools.html couvre indépendamment toutes les informations "
+"pertinentes actuellement incluses ici."
 
 #: ../Doc/distutils/setupscript.rst:9
 msgid ""
@@ -36,6 +41,15 @@ msgid ""
 "Distutils by the module developer is supplied as keyword arguments to :func:"
 "`setup`."
 msgstr ""
+"Le script `Setup` est au centre de toute opération de construction, de "
+"distribution et d'installation des modules utilisant les Distutils. "
+"L'objectif principal du script `Setup` est de décrire le module aux "
+"Distutils, de telle sorte que les diverses commandes qui agissent sur votre "
+"module fassent les bonnes choses.  Comme nous avons vu dans la section :ref:"
+"`distutils-simple-example` au-dessus, le script `Setup` consiste "
+"principalement à un appel à :func:`setup`, et la plupart des informations "
+"fournies aux Distutils par le développeur du module sont fournies en tant "
+"qu'arguments nommés à :func:`setup`."
 
 #: ../Doc/distutils/setupscript.rst:17
 msgid ""
@@ -46,6 +60,14 @@ msgid ""
 "install other module distributions.  The Distutils' own setup script, shown "
 "here, is used to install the package into Python 1.5.2.) ::"
 msgstr ""
+"Voici un exemple un peu plus concret, que nous allons suivre pour les "
+"quelques sections suivantes : le propre script `Setup` des Distutils.  "
+"(Gardez toujours à l'esprit qu'en dépit de l'inclusion des Distutils dans "
+"python 1.6 et ses versions successives, ils ont aussi une existence à part "
+"entière de telle sorte que les utilisateurs de Python 1.5.2 puissent les "
+"utiliser pour installer d'autres modules.  Le propre script `Setup` des "
+"Distutils montré ici est utilisé pour installer le paquet dans Python "
+"1.5.2.) ::"
 
 #: ../Doc/distutils/setupscript.rst:37
 msgid ""
@@ -57,6 +79,14 @@ msgid ""
 "module would be tedious to generate and difficult to maintain.  For more "
 "information on the additional meta-data, see section :ref:`meta-data`."
 msgstr ""
+"Il y a seulement 2 différences entre cet exemple et l'exemple trivial de la "
+"distribution d'un unique fichier présenté dans la partie :ref:`distutils-"
+"simple-example` : plus de métadonnées, et la spécification de modules "
+"purement Python par paquet, plutôt que par module.  C'est important car les "
+"Distutils sont composés de quelques douzaines de modules séparés (pour le "
+"moment) en deux paquets; une liste explicite de chaque module serait pénible "
+"à générer et difficile à maintenir.  Pour plus d'information sur les "
+"métadonnées supplémentaires, voir la partie :ref: `meta-data`."
 
 #: ../Doc/distutils/setupscript.rst:45
 msgid ""
@@ -68,6 +98,15 @@ msgid ""
 "systems, which of course is one of the major goals of the Distutils.  In "
 "this spirit, all pathnames in this document are slash-separated."
 msgstr ""
+"A noter que chaque chemin d'accès fournis au script `Setup` doit être écrit "
+"selon la convention Unix. Autrement dit, séparé par des barres obliques "
+"(slash).  Les Distutils prendront soin de convertir cette représentation "
+"indépendante d'une plateforme en une représentation adaptée à votre "
+"plateforme actuelle avant d'effectivement utiliser le chemin d'accès.  Cela "
+"rend votre script `Setup` portable d'un système d'exploitation à l'autre, ce "
+"qui évidemment est l'un des buts majeurs des Distutils.  Dans cet esprit, "
+"tous les chemins d'accès dans ce document sont séparés par des barres "
+"obliques (slash)."
 
 #: ../Doc/distutils/setupscript.rst:53
 msgid ""
@@ -76,10 +115,15 @@ msgid ""
 "or :func:`os.listdir` to specify files, you should be careful to write "
 "portable code instead of hardcoding path separators::"
 msgstr ""
+"Celà, évidemment, s'applique uniquement aux chemins d'accès fournis par les "
+"fonction de Distutils.  Si vous, par exemple, vous utilisez les fonction "
+"standard de Python telles que :func:`glob.glob` or :func:`os.listdir` pour "
+"définir des fichiers, vous devez prendre soin d'écrire du code portable au "
+"lieu de coder en dur les séparateurs de chemin::"
 
 #: ../Doc/distutils/setupscript.rst:65
 msgid "Listing whole packages"
-msgstr ""
+msgstr "Lister l'ensemble des paquets"
 
 #: ../Doc/distutils/setupscript.rst:67
 msgid ""
@@ -96,6 +140,19 @@ msgid ""
 "break this promise, the Distutils will issue a warning but still process the "
 "broken package anyway."
 msgstr ""
+"L'option ``packages`` dit aux Distutils de traiter (construire, distribuer, "
+"installer, etc.) tous les modules en python pur trouvés dans chaque paquet "
+"mentionnés dans la liste ``packages``.  Afin de faire cela, évidemment il "
+"faut une correspondance entre les noms des paquets et des répertoires dans "
+"le système de fichiers. La correspondance par défaut est la plus évidente. A "
+"savoir : le paquet Distutils se trouve dans le répertoire `distutils` situés "
+"à la racine de la distribution. Ainsi, quand vous dites ``packages = "
+"['foo']`` dans votre script `Setup`, vous promettez que les Distutils "
+"trouveront un fichier ``foo/__init__.py`` (qui peut s'épeuler différemment "
+"sur votre système, mais vous voyez l'idée) à un emplacement relatif au "
+"répertoire où se trouve le script `Setup`.  Si vous rompez cette promesse, "
+"les Distutils lèveront un avertissement mais traiteront tout de même le "
+"paquet défectueux."
 
 #: ../Doc/distutils/setupscript.rst:79
 msgid ""
@@ -106,6 +163,14 @@ msgid ""
 "in any package at all) are in :file:`lib`, modules in the :mod:`foo` package "
 "are in :file:`lib/foo`, and so forth.  Then you would put ::"
 msgstr ""
+"Si vous utilisez une convention différente pour arranger votre répertoire de "
+"sources, ce n'est pas un problème: vous avez seulement à fournir l'option "
+"``package_dir`` pour prévenir les Distutils de l'usage de cette convention.  "
+"Par exemple, Disons que vous gardez toutes les sources Python sous :file:"
+"`lib, de telle sorte que les modules dans le \"paquet racine\" (C'est à "
+"dire, dans aucun paquet du tout) sont dans :file:`lib`, les modules dans le "
+"paquet :mod:`foo` sont dans :file:`lib/foo`, et ainsi de suite. Ensuite vous "
+"pouvez mettre::"
 
 #: ../Doc/distutils/setupscript.rst:88
 msgid ""
@@ -115,6 +180,11 @@ msgid ""
 "``packages = ['foo']``, you are promising that the file :file:`lib/foo/"
 "__init__.py` exists."
 msgstr ""
+"dans votre script `Setup`. Les clés de ce dictionnaire sont les noms des "
+"paquets, et un nom de paquet vide fait office de paquet racine. Les valeurs "
+"sont des noms de répertoires relatifs à la racine de votre distribution.  "
+"Dans ce cas, lorsque vous dites ``packages = ['foo']``, vous promettez que "
+"le fichier :file:`lib/foo/__init__.py` existe."
 
 #: ../Doc/distutils/setupscript.rst:93
 msgid ""
@@ -122,6 +192,9 @@ msgid ""
 "`lib`, the :mod:`foo.bar` package in :file:`lib/bar`, etc.  This would be "
 "written in the setup script as ::"
 msgstr ""
+"Une autre convention possible est de mettre le paquet :mod`foo` directement "
+"dans :file:`lib`, le paquet :mod:`foo.bar` dans :file:`lib/bar`, etc. Cela "
+"s'écrirait ainsi dans le script `Setup` : ::"
 
 #: ../Doc/distutils/setupscript.rst:99
 msgid ""
@@ -137,7 +210,7 @@ msgstr ""
 
 #: ../Doc/distutils/setupscript.rst:112
 msgid "Listing individual modules"
-msgstr ""
+msgstr "Lister des modules indivuels"
 
 #: ../Doc/distutils/setupscript.rst:114
 msgid ""
@@ -147,6 +220,11 @@ msgid ""
 "shown in section :ref:`distutils-simple-example`; here is a slightly more "
 "involved example::"
 msgstr ""
+"Pour un petit module, vous pouvez préférer lister tous les modules plutot "
+"que les paquets---surtout le cas d'un module seul qui va dans le \"paquet "
+"racine\" (A savoir, aucun paquet du tout). Le cas le plus simple a été "
+"montré dans la partie :ref:`distutils-simple-example`; voici un exemple plus "
+"concret::"
 
 #: ../Doc/distutils/setupscript.rst:121
 msgid ""
@@ -157,10 +235,16 @@ msgid ""
 "you can override the package/directory correspondence using the "
 "``package_dir`` option."
 msgstr ""
+"Cela décrit deux modules, l'un d'eux dans le paquet \"racine\", l'autre dans "
+"le paquet :mod: `pkg`. Encore une fois, la structure paquet/répertoire par "
+"défaut implique que ces deux modules peuvent être trouvés dans :file:`mod1."
+"py` et :file:`pkg/mod2.py`, et que :file:`pkg/__init__.py` existe aussi. Et "
+"encore, vous pouvez redéfinir la correspondance paquet/répertoire en "
+"utilisant l'option ``package_dir``."
 
 #: ../Doc/distutils/setupscript.rst:131
 msgid "Describing extension modules"
-msgstr ""
+msgstr "Décrire des modules d'extension"
 
 #: ../Doc/distutils/setupscript.rst:133
 msgid ""
@@ -171,6 +255,14 @@ msgid ""
 "have to specify the extension name, source file(s), and any compile/link "
 "requirements (include directories, libraries to link with, etc.)."
 msgstr ""
+"Tout comme écrire des modules d'extension Python est un peu plus compliqué "
+"que d’écrire des modules purement en Python, les décrire aux Distutils est "
+"un peu plus compliqué. Contrairement aux modules purs, ce n'est pas "
+"suffisant de simplement lister les modules ou les paquets et d'attendre des "
+"Distutils de trouver par eux-même les bons fichiers; vous avez à spécifier "
+"le nom de l'extension, du ou des fichiers de sources, et de quelconques "
+"prérequis de compilation/lien (répertoires à inclure, librairies à lier "
+"avec, etc.)."
 
 #: ../Doc/distutils/setupscript.rst:142
 msgid ""
@@ -182,6 +274,13 @@ msgid ""
 "instructions to the compiler/linker are needed, describing this extension is "
 "quite simple::"
 msgstr ""
+"Tout ceci est fait à l'aide d'un autre argument nommé dans :func:`setup`, "
+"l'option ``ext_modules``. ``ext_modules`` est simplement une liste de "
+"classes :class:`~distutils.core.Extension`, chacune décrivant une simple "
+"extension de module. Supposez que votre distribution inclut une simple "
+"extension appelée :mod:`foo` et implémentée par :file:`foo.c`. Si aucune "
+"instruction supplémentaire au compilateur/lieur n'est requise, décrire cette "
+"extension est assez simple::"
 
 #: ../Doc/distutils/setupscript.rst:152
 msgid ""
@@ -189,6 +288,9 @@ msgid ""
 "along with :func:`setup`.  Thus, the setup script for a module distribution "
 "that contains only this one extension and nothing else might be::"
 msgstr ""
+"La classe :class:`Extension` peut être importée depuis :mod:`distutils.core` "
+"en même temps que :func:`setup`.  Ainsi, le script `Setup` pour un module "
+"qui contient seulement cette seule extension et rien d'autre peut être::"
 
 #: ../Doc/distutils/setupscript.rst:162
 msgid ""
@@ -197,10 +299,14 @@ msgid ""
 "deal of flexibility in describing Python extensions, which is explained in "
 "the following sections."
 msgstr ""
+"La classe :class:`Extension` (en réalité, la machine sous-jacente "
+"construisant les extensions implémentée par la commande :command:"
+"`build_ext`) permet une grande flexibilité dans la description des "
+"extensions Python, ce qui est expliqué dans les parties suivantes."
 
 #: ../Doc/distutils/setupscript.rst:169
 msgid "Extension names and packages"
-msgstr ""
+msgstr "Nom des extensions et paquets"
 
 #: ../Doc/distutils/setupscript.rst:171
 msgid ""
@@ -208,10 +314,12 @@ msgid ""
 "always the name of the extension, including any package names.  For "
 "example, ::"
 msgstr ""
+"Le premier argument du constructeur :class:`~distutils.core.Extension` est "
+"toujours le nom de l'extension, incluant tout nom de paquet. Par exemple, ::"
 
 #: ../Doc/distutils/setupscript.rst:176
 msgid "describes an extension that lives in the root package, while ::"
-msgstr ""
+msgstr "décrit une extension qui se situe dans le paquet racine, tandis que ::"
 
 #: ../Doc/distutils/setupscript.rst:180
 msgid ""
@@ -220,6 +328,10 @@ msgid ""
 "is where in the filesystem (and therefore where in Python's namespace "
 "hierarchy) the resulting extension lives."
 msgstr ""
+"décrit la même extension dans le paquet :mod:pkg`.Les fichiers source et le "
+"code objet résultant sont identiques dans les deux cas; la seule différence "
+"est où dans le système de fichier (et conséquemment où dans la hiérarchie de "
+"l'espace de nommage de Python) l'extension résultante se situe."
 
 #: ../Doc/distutils/setupscript.rst:185
 msgid ""
@@ -227,16 +339,21 @@ msgid ""
 "same base package), use the ``ext_package`` keyword argument to :func:"
 "`setup`.  For example, ::"
 msgstr ""
+"Si vous avez un certain nombre d'extensions toutes dans le même paquet (ou "
+"toutes sous le même paquet de base), utilisez l'argument nommé "
+"``ext_package`` de :func:`setup`.  Par exesmple, ::"
 
 #: ../Doc/distutils/setupscript.rst:195
 msgid ""
 "will compile :file:`foo.c` to the extension :mod:`pkg.foo`, and :file:`bar."
 "c` to :mod:`pkg.subpkg.bar`."
 msgstr ""
+"compilera :file:`foo.c` en l’extension :mod: `pkg.foo`, et :file:`bar.c`en :"
+"mod:`pkg.subpkg.bar`s."
 
 #: ../Doc/distutils/setupscript.rst:200
 msgid "Extension source files"
-msgstr ""
+msgstr "Fichiers sources d'extensionss"
 
 #: ../Doc/distutils/setupscript.rst:202
 msgid ""
@@ -247,6 +364,12 @@ msgid ""
 "files: :file:`.cc` and :file:`.cpp` seem to be recognized by both Unix and "
 "Windows compilers.)"
 msgstr ""
+"Le second argument du constructeur d' :class:`~distutils.core.Extension` est "
+"une liste de fichiers sources. Puisque les Distutils supportent seulement "
+"les extensions en C, C++ et Objective-C, ce sont normalement des fichiers "
+"sources en C/C++/Objective-C. (Assurez vous d'utiliser les extensions "
+"appropriées pour détecter les fichiers sources en C++ : :file:`.cc` et :file:"
+"`.cpp` semblent être reconnus tant par les compilateurs Unix que Windows.)"
 
 #: ../Doc/distutils/setupscript.rst:209
 msgid ""
@@ -255,16 +378,22 @@ msgid ""
 "will run SWIG on the interface file and compile the resulting C/C++ file "
 "into your extension."
 msgstr ""
+"Néanmoins, vous pouvez également inclure des fichiers (:file:`.i`) "
+"d'interface SWIG dans la liste ; la commande :command:`build_ext` sait "
+"comment gérer les extensions SWIG : il lancera SWIG sur un fichier "
+"d'interface et compilera le fichier en C/C++ en une extension."
 
 #: ../Doc/distutils/setupscript.rst:216
 msgid ""
 "This warning notwithstanding, options to SWIG can be currently passed like "
 "this::"
 msgstr ""
+"Malgré cet avertissement, les options peuvent être actuellement passées à "
+"SWIG de la façon suivante::"
 
 #: ../Doc/distutils/setupscript.rst:225
 msgid "Or on the commandline like this::"
-msgstr ""
+msgstr "Ou en ligne de commande de cette façon::"
 
 #: ../Doc/distutils/setupscript.rst:229
 msgid ""
@@ -274,10 +403,16 @@ msgid ""
 "rc`) files for Visual C++. These will be compiled to binary resource (:file:"
 "`.res`) files and linked into the executable."
 msgstr ""
+"Sur certaines plateformes, vous pouvez inclure des fichiers autres que "
+"sources qui seront traités par le compilateur et inclus dans votre "
+"extension.  Pour l'instant, Cela signifie seulement les fichiers Windows de "
+"messagerie en texte (:file:`.mc`) et les fichiers de définition de ressource "
+"pour Visual C++ (:file:`.rc`). Ils seront compilés en fichiers de ressources "
+"binaires (:file`.res`) et liés à l'exécutable."
 
 #: ../Doc/distutils/setupscript.rst:237
 msgid "Preprocessor options"
-msgstr ""
+msgstr "Options de préprocesseur"
 
 #: ../Doc/distutils/setupscript.rst:239
 msgid ""
@@ -291,6 +426,9 @@ msgid ""
 "For example, if your extension requires header files in the :file:`include` "
 "directory under your distribution root, use the ``include_dirs`` option::"
 msgstr ""
+"Par exemple, si votre extension nécessite des fichiers d'en-tête dans le "
+"répertoire :file:`include` under your distribution root, utilisez l'option "
+"``include_dirs`` ::"
 
 #: ../Doc/distutils/setupscript.rst:248
 msgid ""
@@ -298,12 +436,17 @@ msgid ""
 "will only be built on Unix systems with X11R6 installed to :file:`/usr`, you "
 "can get away with ::"
 msgstr ""
+"A cet endroit vous pouvez spécifier des répertoires en absolu ; si vous "
+"savez que votre extension sera compilée sur un système Unix avec X11R6 "
+"installé dans :file:`/usr`, vous pouvez vous en tirer avec ::"
 
 #: ../Doc/distutils/setupscript.rst:254
 msgid ""
 "You should avoid this sort of non-portable usage if you plan to distribute "
 "your code: it's probably better to write C code like  ::"
 msgstr ""
+"Vous devez éviter ce type d'utilisation non portable si vous envisagez de "
+"distribuer votre code : C'est probablement mieux d'écrire du code C comme  ::"
 
 #: ../Doc/distutils/setupscript.rst:259
 msgid ""
@@ -317,13 +460,29 @@ msgid ""
 "in this case---is always included in the search path when building Python "
 "extensions, the best approach is to write C code like  ::"
 msgstr ""
+"Si vous avez besoin d'inclure des fichiers d'en-tête provenant d'autres "
+"extensions Python, vous pouvez profiter du fait que les fichiers d'en-tête "
+"sont installés de façon consistante parla commande :command:"
+"`install_headers` des Distutils. Par exemple, les fichiers d'en-têtes de "
+"Numerical Python (NumPy) sont installés (Dans le cas d'une installation Unix "
+"standard) dans :file:`/usr/local/include/python1.5/Numerical`. "
+"(L'emplacement exact diffère selon votre plateforme et votre installation de "
+"Python.) Vu que le répertoire :file:`include` de Python---\\ :file:`/usr/"
+"local/include/python1.5` dans ce cas ci---est toujours inclus dans le chemin "
+"de recherche quand vous construisez des extensions Python, la meilleure "
+"approche est d'écrire du code C comme  ::"
 
 #: ../Doc/distutils/setupscript.rst:271
+#, fuzzy
 msgid ""
 "If you must put the :file:`Numerical` include directory right into your "
 "header search path, though, you can find that directory using the Distutils :"
 "mod:`distutils.sysconfig` module::"
 msgstr ""
+"Si vous devez mettre le répertoire :file:`include` de :fome:`Numerical` "
+"directement dans l'en-tête du chemin de recherche, cependant, vous pouvez "
+"trouver ce répertoire en utilisant le module : :mod:`distutils.sysconfig` "
+"des Distutils::"
 
 #: ../Doc/distutils/setupscript.rst:281
 msgid ""
@@ -331,6 +490,9 @@ msgid ""
 "installation, regardless of platform---it's probably easier to just write "
 "your C code in the sensible way."
 msgstr ""
+"Même si c'est assez portable---ça marchera sur la plupart des installations "
+"de Python, indépendamment de la plateforme---il sera probablement plus "
+"facile de simplement écrire votre code C de façon raisonnable."
 
 #: ../Doc/distutils/setupscript.rst:285
 msgid ""
@@ -342,6 +504,14 @@ msgid ""
 "your C source: with most compilers, this sets ``FOO`` to the string ``1``.)  "
 "``undef_macros`` is just a list of macros to undefine."
 msgstr ""
+"Vous pouvez définir ou ignorer des macros de pré-processeur avec les options "
+"``define_macros`` et ``undef_macros`` . ``define_macros`` prends une liste "
+"de tuples ``(nom, valeur)``, où ``nom`` est le nom de la macro à définir "
+"(une chaîne de caractères) et ``valeur`` est sa valeur: soit une chaîne de "
+"caractère ou bien un ``None``. (Définir une macro ``FOO`` à ``None`` est à "
+"équivalent à un simple ``#define FOO`` dans votre source en C: Pour la "
+"majorité des compilateurs, cela fixe la valeur de ``FOO`` à une chaine de "
+"caractère ``1``.)  ``undef_macros`` est juste une liste de macros à ignorer."
 
 #: ../Doc/distutils/setupscript.rst:293
 msgid "For example::"
@@ -349,11 +519,11 @@ msgstr "Par exemple ::"
 
 #: ../Doc/distutils/setupscript.rst:300
 msgid "is the equivalent of having this at the top of every C source file::"
-msgstr ""
+msgstr "est équivalent à avoir ça en haut de chaque fichier source en C::"
 
 #: ../Doc/distutils/setupscript.rst:309
 msgid "Library options"
-msgstr ""
+msgstr "Options des librairies"
 
 #: ../Doc/distutils/setupscript.rst:311
 msgid ""
@@ -364,24 +534,36 @@ msgid ""
 "time, and ``runtime_library_dirs`` is a list of directories to  search for "
 "shared (dynamically loaded) libraries at run-time."
 msgstr ""
+"Vous pouvez aussi spécifier les librairies à lier quand vous construisez "
+"votre extension, ainsi que le répertoire de recherche pour ces librairies. "
+"L'option ``libraries`` est une liste de librairies à lier, ``library_dirs`` "
+"est une liste de répertoire de libraires pour la recherche au moment de la "
+"liaison, et ``runtime_library_dirs`` est une liste de répertoire pour la "
+"recherche des librairies partagées (chargées dynamiquement) à l'exécution."
 
 #: ../Doc/distutils/setupscript.rst:317
 msgid ""
 "For example, if you need to link against libraries known to be in the "
 "standard library search path on target systems ::"
 msgstr ""
+"Par exemple si vous avez besoin de lier des librairies que l'on sait dans le "
+"chemin des librairies standard des systèmes cible ::"
 
 #: ../Doc/distutils/setupscript.rst:323
 msgid ""
 "If you need to link with libraries in a non-standard location, you'll have "
 "to include the location in ``library_dirs``::"
 msgstr ""
+"Si vous avez besoin d'établir un lien avec des librairies à un emplacement "
+"non standard, vous devrez inclure l'emplacement dans ``library_dirs``::"
 
 #: ../Doc/distutils/setupscript.rst:330
 msgid ""
 "(Again, this sort of non-portable construct should be avoided if you intend "
 "to distribute your code.)"
 msgstr ""
+"(Encore, ce genre de construction non portable doit être évitée si vous avez "
+"l'intention de distribuer votre code.)"
 
 #: ../Doc/distutils/setupscript.rst:337
 msgid "Other options"
@@ -391,6 +573,8 @@ msgstr "Autres options"
 msgid ""
 "There are still some other options which can be used to handle special cases."
 msgstr ""
+"Il y a encore d'autres option qui peuvent être utilisées pour gérer des cas "
+"spéciaux."
 
 #: ../Doc/distutils/setupscript.rst:341
 msgid ""
@@ -398,6 +582,9 @@ msgid ""
 "extension will not abort the build process, but instead simply not install "
 "the failing extension."
 msgstr ""
+"L'option ``optional`` est un booléen; si il est vrai, un échec de la "
+"construction dans l'extension n'annulera pas le processus de construction, "
+"mais à la place, l'extension en échec ne sera pas installée."
 
 #: ../Doc/distutils/setupscript.rst:345
 msgid ""
@@ -405,6 +592,9 @@ msgid ""
 "linker. These files must not have extensions, as the default extension for "
 "the compiler is used."
 msgstr ""
+"L'option ``extra_objects`` est une liste d'objets fichiers à passer au "
+"lieur. Ces fichiers ne doivent pas avoir des extensions car l'extension par "
+"défaut du compilateur est utilisée."
 
 #: ../Doc/distutils/setupscript.rst:349
 msgid ""
@@ -412,6 +602,9 @@ msgid ""
 "additional command line options for the respective compiler and linker "
 "command lines."
 msgstr ""
+"``extra_compile_args`` et ``extra_link_args`` peuvent être utilisés pour "
+"spécifier des options additionnelles en ligne de commande propres aux lignes "
+"de commandes respectives du compilateur et du lieur."
 
 #: ../Doc/distutils/setupscript.rst:353
 msgid ""
@@ -420,6 +613,10 @@ msgid ""
 "when building compiled extensions: Distutils  will automatically add "
 "``initmodule`` to the list of exported symbols."
 msgstr ""
+"``export_symbols`` est seulement utile sur Windows.  Il peut contenir une "
+"liste de symboles (fonctions ou variables) à exporter. Cette option n'est "
+"pas requise pour la construction d'extensions compilées: Distutils ajoutera "
+"automatiquement ``initmodule`` à la liste des symboles exportés."
 
 #: ../Doc/distutils/setupscript.rst:358
 msgid ""
@@ -428,32 +625,40 @@ msgid ""
 "sources to rebuild extension if any on this files has been modified since "
 "the previous build."
 msgstr ""
+"L'option ``depends`` et une liste de fichiers des les extensions dépendent "
+"(par exemple les fichiers d'en-têtes). La commande ``build`` appellera le "
+"compilateur appellera le compilateur sur les sources pour reconstruire "
+"l'extension si un quelconque de ces fichiers à été modifié depuis la "
+"dernière construction."
 
 #: ../Doc/distutils/setupscript.rst:364
 msgid "Relationships between Distributions and Packages"
-msgstr ""
+msgstr "Relations entre Distributions et Paquets"
 
 #: ../Doc/distutils/setupscript.rst:366
 msgid "A distribution may relate to packages in three specific ways:"
 msgstr ""
+"Une distribution peut se rapporter à des paquets de 3 manière spécifiques:"
 
 #: ../Doc/distutils/setupscript.rst:368
 msgid "It can require packages or modules."
-msgstr ""
+msgstr "Elle peut nécessiter des paquets ou des modules."
 
 #: ../Doc/distutils/setupscript.rst:370
 msgid "It can provide packages or modules."
-msgstr ""
+msgstr "Elle peut fournir des paquets ou des modules."
 
 #: ../Doc/distutils/setupscript.rst:372
 msgid "It can obsolete packages or modules."
-msgstr ""
+msgstr "Elle peut décommissionner des paquets ou des modules."
 
 #: ../Doc/distutils/setupscript.rst:374
 msgid ""
 "These relationships can be specified using keyword arguments to the :func:"
 "`distutils.core.setup` function."
 msgstr ""
+"Ces relations peuvent être spécifiées en utilisant des paramètres nommés "
+"dans la fonction :func:`distutils.core.setup` function."
 
 #: ../Doc/distutils/setupscript.rst:377
 msgid ""
@@ -462,6 +667,10 @@ msgid ""
 "be a list of strings.  Each string specifies a package that is required, and "
 "optionally what versions are sufficient."
 msgstr ""
+"Les dépendances à d'autres modules et paquets Python peuvent être spécifiées "
+"en fournissant le paramètre nommé ``requires`` à :func:`setup`. La valeur "
+"doit être une liste de chaînes de caractères. Chaque chaîne de caractères "
+"spécifie un paquet requis, et en option les versions suffisantes."
 
 #: ../Doc/distutils/setupscript.rst:382
 msgid ""
@@ -469,6 +678,9 @@ msgid ""
 "should consist entirely of the module or package name. Examples include "
 "``'mymodule'`` and ``'xml.parsers.expat'``."
 msgstr ""
+"Il est nécessaire de spécifier chaque version d'un module ou d'un paquet, la "
+"chaîne de caractères doit être entièrement constituée de noms de modules ou "
+"de paquets. Les examples incluent ``mymodule`` et ``'xml.parsers.expat'``."
 
 #: ../Doc/distutils/setupscript.rst:386
 msgid ""
@@ -476,6 +688,10 @@ msgid ""
 "in parentheses.  Each qualifier may consist of a comparison operator and a "
 "version number.  The accepted comparison operators are::"
 msgstr ""
+"Si des versions spécifique sont requises, une suite de qualificateurs peut "
+"être fournie entre parenthèses. Chaque qualificateur peut consister en un "
+"opérateur de comparaison et un numéro de version. Les opérateurs de "
+"comparaison acceptés sont::"
 
 #: ../Doc/distutils/setupscript.rst:393
 msgid ""
@@ -483,14 +699,18 @@ msgid ""
 "optional whitespace).  In this case, all of the qualifiers must be matched; "
 "a logical AND is used to combine the evaluations."
 msgstr ""
+"Ils peuvent être combinés en utilisant plusieurs qualificateurs séparés par "
+"des virgules (et de façon optionnelle des espaces). Dans ce cas, tous les "
+"qualificateurs doivent être validés; un ET logique est utilisé pour combiner "
+"les évaluations."
 
 #: ../Doc/distutils/setupscript.rst:397
 msgid "Let's look at a bunch of examples:"
-msgstr ""
+msgstr "Jetons un œil à quelques exemples:"
 
 #: ../Doc/distutils/setupscript.rst:400
 msgid "Requires Expression"
-msgstr ""
+msgstr "Valeur de ``requires``"
 
 #: ../Doc/distutils/setupscript.rst:400 ../Doc/distutils/setupscript.rst:418
 msgid "Explanation"
@@ -498,20 +718,22 @@ msgstr "Explication"
 
 #: ../Doc/distutils/setupscript.rst:402
 msgid "``==1.0``"
-msgstr ""
+msgstr "``==1.0``"
 
 #: ../Doc/distutils/setupscript.rst:402
 msgid "Only version ``1.0`` is compatible"
-msgstr ""
+msgstr "Seule la version ``1.0`` est compatible"
 
 #: ../Doc/distutils/setupscript.rst:404
 msgid "``>1.0, !=1.5.1, <2.0``"
-msgstr ""
+msgstr "``>1.0, !=1.5.1, <2.0``"
 
 #: ../Doc/distutils/setupscript.rst:404
 msgid ""
 "Any version after ``1.0`` and before ``2.0`` is compatible, except ``1.5.1``"
 msgstr ""
+"Toute version après ``1.0`` et avant ``2.0`` est compatible, à l'exception "
+"de ``1.5.1``"
 
 #: ../Doc/distutils/setupscript.rst:408
 msgid ""
@@ -522,6 +744,13 @@ msgid ""
 "optionally identifies the version.  If the version is not specified, it is "
 "assumed to match that of the distribution."
 msgstr ""
+"Maintenant que nous pouvons spécifier des dépendances, nous devons également "
+"être en mesure de spécifier dans ce que nous fournissons ce que d'autres "
+"distributions peuvent nécessiter.  Cela est réalisé en utilisant l' argument "
+"nommé *provides* dans :func:`setup`. La valeur de cet argument est une liste "
+"de chaînés de caractères, chacune d'entre elle étant un module Python ou un "
+"paquet, et de façon optionnelle identifie la version. Si la version n'est "
+"pas spécifiée, il est supposé quelle correspond à celle de la distribution."
 
 #: ../Doc/distutils/setupscript.rst:415
 msgid "Some examples:"
@@ -529,23 +758,25 @@ msgstr "Quelques exemples :"
 
 #: ../Doc/distutils/setupscript.rst:418
 msgid "Provides Expression"
-msgstr ""
+msgstr "Valeur de ``provides``"
 
 #: ../Doc/distutils/setupscript.rst:420
 msgid "``mypkg``"
-msgstr ""
+msgstr "``monpaquet``"
 
 #: ../Doc/distutils/setupscript.rst:420
 msgid "Provide ``mypkg``, using the distribution version"
-msgstr ""
+msgstr "On fournit ``monpaquet`` en utilisant la version de la distribution"
 
 #: ../Doc/distutils/setupscript.rst:423
 msgid "``mypkg (1.1)``"
-msgstr ""
+msgstr "``monpaquet (1.1)``"
 
 #: ../Doc/distutils/setupscript.rst:423
 msgid "Provide ``mypkg`` version 1.1, regardless of the distribution version"
 msgstr ""
+"On fournit ``monpaquet`` en version 1.1, indépendamment de la version de la "
+"distribution"
 
 #: ../Doc/distutils/setupscript.rst:427
 msgid ""
@@ -556,6 +787,10 @@ msgid ""
 "more version qualifiers.  Version qualifiers are given in parentheses after "
 "the module or package name."
 msgstr ""
+"Un paquet peut déclarer qu'il rend obsolète d'autres paquets en utilisant "
+"l'argument nommé *obsoletes*.  La valeur pour celui-ci est similaire à celui "
+"de l'argument nommé *requires*: une liste de chaînes de caractères donnant "
+"les spécifications du module ou du paquet."
 
 #: ../Doc/distutils/setupscript.rst:434
 msgid ""
@@ -563,16 +798,23 @@ msgid ""
 "the distribution being described.  If no qualifiers are given, all versions "
 "of the named module or package are understood to be obsoleted."
 msgstr ""
+"Les versions identifiées par les qualificateurs sont celles qui sont rendues "
+"obsolètes par la distribution décrite.  Si aucun qualificateur n'est donné, "
+"toutes les versions du module ou du paquet nommé sont interprétées comme "
+"obsolètes."
 
 #: ../Doc/distutils/setupscript.rst:441
 msgid "Installing Scripts"
-msgstr ""
+msgstr "Installation des scripts"
 
 #: ../Doc/distutils/setupscript.rst:443
 msgid ""
 "So far we have been dealing with pure and non-pure Python modules, which are "
 "usually not run by themselves but imported by scripts."
 msgstr ""
+"Jusqu'à présent nous avons interagit avec des modules purement ou non en "
+"Python, qui ne sont habituellement pas lancés par eux-mêmes mais importés "
+"par des scripts."
 
 #: ../Doc/distutils/setupscript.rst:446
 msgid ""
@@ -585,22 +827,35 @@ msgid ""
 "`!--executable` (or :option:`!-e`) option will allow the interpreter path to "
 "be explicitly overridden."
 msgstr ""
+"Les scripts sont des fichiers contenant du code source Python prévus pour "
+"être lancés en ligne de commande. Les scripts n'ont pas besoin des Distutils "
+"pour faire quoique ce soit de très compliqué. La seule fonctionnalité "
+"astucieuse est que la première ligne du script commence par ``#!`` et "
+"contient le mot \"python\", les Distutils ajusteront la première ligne pour "
+"pour faire référence à l'emplacement actuel de l'interpréteur. Par défaut, "
+"elle est replacée par l'emplacement actuel de l'interpréteur.  L'option :"
+"option:`!--executable` (or :option:`!-e`) permettra au chemin de "
+"l'interpréteur d'être explicitement remplacé."
 
 #: ../Doc/distutils/setupscript.rst:454
 msgid ""
 "The ``scripts`` option simply is a list of files to be handled in this way.  "
 "From the PyXML setup script::"
 msgstr ""
+"L'option ``scripts`` est simplement une liste de fichiers à utiliser ce "
+"cette façon.  Depuis le script `setup` de PyML::"
 
 #: ../Doc/distutils/setupscript.rst:461
 msgid ""
 "All the scripts will also be added to the ``MANIFEST`` file if no template "
 "is provided.  See :ref:`manifest`."
 msgstr ""
+"Tous les scripts seront aussi ajoutés au fichier ``MANIFEST`` si aucun "
+"modèle n'est fournit.  Voir :ref:`manifest`."
 
 #: ../Doc/distutils/setupscript.rst:469
 msgid "Installing Package Data"
-msgstr ""
+msgstr "Installer des paquets de données"
 
 #: ../Doc/distutils/setupscript.rst:471
 msgid ""
@@ -609,6 +864,11 @@ msgid ""
 "text files containing documentation that might be of interest to programmers "
 "using the package.  These files are called :dfn:`package data`."
 msgstr ""
+"Souvent, des fichiers additionnels doivent être installés dans le paquet.  "
+"Ces fichiers sont souvent de la donnée qui est intimement liée à "
+"l'implémentation du paquet, ou des fichiers texte contenant de la "
+"documentation qui peut être intéressante pour le programmeur utilisant le "
+"paquet.  Ces fichiers sont appelés :dfn:`package data`."
 
 #: ../Doc/distutils/setupscript.rst:476
 msgid ""
@@ -620,32 +880,48 @@ msgid ""
 "appropriate); that is, the files are expected to be part of the package in "
 "the source directories. They may contain glob patterns as well."
 msgstr ""
+"Les 'paquets de données' peuvent être ajoutés en utilsant l'argument nommé "
+"``package_data`` dans la fonction :func:`setup`.  La valeur doit être un "
+"mappage du nom du paquet à une liste de chemins relatifs qui doivent être "
+"copiés dans le paquet.  Les chemins sont interprétés relativement au "
+"répertoire contenant le paquet (l'information du mappage ``package_dir`` est "
+"utilisée le cas échéant); ceci étant, on s'attend à ce que les fichiers "
+"fassent partie du répertoire source du paquet. Ils peuvent également "
+"contenir des motifs `glob`."
 
 #: ../Doc/distutils/setupscript.rst:484
+#, fuzzy
 msgid ""
 "The path names may contain directory portions; any necessary directories "
 "will be created in the installation."
 msgstr ""
+"Les chemins d'accès peuvent contenir des parties de répertoires; tout "
+"répertoire nécessaire sera créé dans cette installation."
 
 #: ../Doc/distutils/setupscript.rst:487
 msgid ""
 "For example, if a package should contain a subdirectory with several data "
 "files, the files can be arranged like this in the source tree::"
 msgstr ""
+"Par exemple, si un paquet contient un sous-répertoire avec de nombreux "
+"fichiers de donnée, les fichiers peuvent être organisées dans l'arbre source "
+"de la façon suivante::"
 
 #: ../Doc/distutils/setupscript.rst:500
 msgid "The corresponding call to :func:`setup` might be::"
-msgstr ""
+msgstr "L'appel correspondant à :func:`setup` peut être::"
 
 #: ../Doc/distutils/setupscript.rst:509
 msgid ""
 "All the files that match ``package_data`` will be added to the ``MANIFEST`` "
 "file if no template is provided.  See :ref:`manifest`."
 msgstr ""
+"Tous les fichiers correspondant à ``package_date`` seront ajoutés au fichier "
+"``MANIFEST`` si aucun modèle n'est fournit.  Voir :ref:`manifest`."
 
 #: ../Doc/distutils/setupscript.rst:517
 msgid "Installing Additional Files"
-msgstr ""
+msgstr "Installer des fichiers additionnels"
 
 #: ../Doc/distutils/setupscript.rst:519
 msgid ""
@@ -653,18 +929,26 @@ msgid ""
 "the module distribution: configuration files, message catalogs, data files, "
 "anything which doesn't fit in the previous categories."
 msgstr ""
+"L'option ``data_files`` peut être utilisée pour spécifier des fichiers "
+"additionnels requis par la distribution du module : fichiers de "
+"configurations, catalogues de messages, fichiers de donnée, tout ce qui ne "
+"rentre par dans les catégories précédentes."
 
 #: ../Doc/distutils/setupscript.rst:523
 msgid ""
 "``data_files`` specifies a sequence of (*directory*, *files*) pairs in the "
 "following way::"
 msgstr ""
+"``data_files`` spécifie une séquence de paires (*répertoires*, *fichiers*) "
+"de la façon suivante::"
 
 #: ../Doc/distutils/setupscript.rst:531
 msgid ""
 "Each (*directory*, *files*) pair in the sequence specifies the installation "
 "directory and the files to install there."
 msgstr ""
+"Chaque paire (*répertoire*, *fichier*) dans la séquence spécifie le "
+"répertoire d'installation et les fichiers à y installer."
 
 #: ../Doc/distutils/setupscript.rst:534
 msgid ""
@@ -673,6 +957,10 @@ msgid ""
 "specify the directory where the data files will be installed, but you cannot "
 "rename the data files themselves."
 msgstr ""
+"Chaque nom de fichier dans *fichiers* est interprété relativement au script :"
+"file:`setup` en haut du paquet de la distribution source. Notez que vous "
+"pouvez spécifier un répertoire où les fichiers de donnée seront installés, "
+"mais vous ne pouvez pas renommer les fichiers de donnée eux-mêmes."
 
 #: ../Doc/distutils/setupscript.rst:539
 msgid ""
@@ -684,6 +972,15 @@ msgid ""
 "*files* is used to determine the final location of the installed file; only "
 "the name of the file is used."
 msgstr ""
+"Le *répertoire* doit être un chemin relatif. Il est interprété relativement "
+"au préfixe d'installation (le ``sys.prefix`` de Python pour les "
+"installations système; ``site.USER_BASE`` pour les installations "
+"utilisateur). Distutils permet à *répertoire* d'être un chemin "
+"d'installation absolu, mais cela est déconseillé dans la mesure où c'est "
+"incompatible avec la mise en paquet au format `wheel`. Aucune information de "
+"répertoire provenant de *fichiers* n'est utilisée pour déterminer "
+"l’emplacement final d'installation du fichier; seul le nom du fichier est "
+"utilisé."
 
 #: ../Doc/distutils/setupscript.rst:547
 msgid ""
@@ -693,26 +990,36 @@ msgid ""
 "files directly in the target directory, an empty string should be given as "
 "the directory."
 msgstr ""
+"Vous pouvez spécifier les options ``data_files`` comme une simple succession "
+"de fichiers sans spécifier de répertoire cible, mais cela n'est pas "
+"recommandé, et la commande :command:`install affichera un message d'alerte "
+"dans ce cas. Pour installer des fichiers de donnée directement dans le "
+"répertoire cible, une chaîne de caractère vide devra être donnée en tant que "
+"répertoire."
 
 #: ../Doc/distutils/setupscript.rst:553
 msgid ""
 "All the files that match ``data_files`` will be added to the ``MANIFEST`` "
 "file if no template is provided.  See :ref:`manifest`."
 msgstr ""
+"Tous les fichiers correspondant à ``data_files`` seront ajoutés au fichier "
+"``MANIFEST`` si aucun modèle n'est fournit.  Voir :ref:`manifest`."
 
 #: ../Doc/distutils/setupscript.rst:561
 msgid "Additional meta-data"
-msgstr ""
+msgstr "Métadonnées additionnelles"
 
 #: ../Doc/distutils/setupscript.rst:563
 msgid ""
 "The setup script may include additional meta-data beyond the name and "
 "version. This information includes:"
 msgstr ""
+"Le script `setup` peut inclure des métadonnées additionnelles au-delà du nom "
+"et de la version. Ces informations incluent :"
 
 #: ../Doc/distutils/setupscript.rst:567
 msgid "Meta-Data"
-msgstr ""
+msgstr "Metadonnées"
 
 #: ../Doc/distutils/setupscript.rst:567
 msgid "Description"
@@ -732,13 +1039,13 @@ msgstr "``name``"
 
 #: ../Doc/distutils/setupscript.rst:569
 msgid "name of the package"
-msgstr ""
+msgstr "nom du paquet"
 
 #: ../Doc/distutils/setupscript.rst:569 ../Doc/distutils/setupscript.rst:571
 #: ../Doc/distutils/setupscript.rst:573 ../Doc/distutils/setupscript.rst:578
 #: ../Doc/distutils/setupscript.rst:585 ../Doc/distutils/setupscript.rst:601
 msgid "short string"
-msgstr ""
+msgstr "courte chaîne de caractères"
 
 #: ../Doc/distutils/setupscript.rst:569 ../Doc/distutils/setupscript.rst:583
 msgid "\\(1)"
@@ -750,7 +1057,7 @@ msgstr "``version``"
 
 #: ../Doc/distutils/setupscript.rst:571
 msgid "version of this release"
-msgstr ""
+msgstr "version de la publication"
 
 #: ../Doc/distutils/setupscript.rst:571
 msgid "(1)(2)"
@@ -758,11 +1065,11 @@ msgstr "(1)(2)"
 
 #: ../Doc/distutils/setupscript.rst:573
 msgid "``author``"
-msgstr ""
+msgstr "``author``"
 
 #: ../Doc/distutils/setupscript.rst:573
 msgid "package author's name"
-msgstr ""
+msgstr "nom de l'auteur du paquet"
 
 #: ../Doc/distutils/setupscript.rst:573 ../Doc/distutils/setupscript.rst:575
 #: ../Doc/distutils/setupscript.rst:578 ../Doc/distutils/setupscript.rst:580
@@ -771,31 +1078,31 @@ msgstr "\\(3)"
 
 #: ../Doc/distutils/setupscript.rst:575
 msgid "``author_email``"
-msgstr ""
+msgstr "``author_email``"
 
 #: ../Doc/distutils/setupscript.rst:575
 msgid "email address of the package author"
-msgstr ""
+msgstr "adresse courriel de l'auteur du paquet"
 
 #: ../Doc/distutils/setupscript.rst:575 ../Doc/distutils/setupscript.rst:580
 msgid "email address"
-msgstr ""
+msgstr "adresse de courriel"
 
 #: ../Doc/distutils/setupscript.rst:578
 msgid "``maintainer``"
-msgstr ""
+msgstr "``maintainer``"
 
 #: ../Doc/distutils/setupscript.rst:578
 msgid "package maintainer's name"
-msgstr ""
+msgstr "nom du mainteneur du paquet"
 
 #: ../Doc/distutils/setupscript.rst:580
 msgid "``maintainer_email``"
-msgstr ""
+msgstr "``maintainer_email``"
 
 #: ../Doc/distutils/setupscript.rst:580
 msgid "email address of the package maintainer"
-msgstr ""
+msgstr "adresse du courriel du mainteneur du paquet"
 
 #: ../Doc/distutils/setupscript.rst:583
 msgid "``url``"
@@ -803,11 +1110,11 @@ msgstr "``url``"
 
 #: ../Doc/distutils/setupscript.rst:583
 msgid "home page for the package"
-msgstr ""
+msgstr "page d'acceuil du paquet"
 
 #: ../Doc/distutils/setupscript.rst:583 ../Doc/distutils/setupscript.rst:592
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../Doc/distutils/setupscript.rst:585
 msgid "``description``"
@@ -815,7 +1122,7 @@ msgstr "``description``"
 
 #: ../Doc/distutils/setupscript.rst:585
 msgid "short, summary description of the package"
-msgstr ""
+msgstr "bref résumé décrivant le paquet"
 
 #: ../Doc/distutils/setupscript.rst:589
 msgid "``long_description``"
@@ -823,11 +1130,11 @@ msgstr "``long_description``"
 
 #: ../Doc/distutils/setupscript.rst:589
 msgid "longer description of the package"
-msgstr ""
+msgstr "plus longue description du paquet"
 
 #: ../Doc/distutils/setupscript.rst:589
 msgid "long string"
-msgstr ""
+msgstr "longue chaîne de caractères"
 
 #: ../Doc/distutils/setupscript.rst:589
 msgid "\\(4)"
@@ -835,24 +1142,24 @@ msgstr "\\(4)"
 
 #: ../Doc/distutils/setupscript.rst:592
 msgid "``download_url``"
-msgstr ""
+msgstr "``download_url``"
 
 #: ../Doc/distutils/setupscript.rst:592
 msgid "location where the package may be downloaded"
-msgstr ""
+msgstr "endroit où le paquet peut être téléchargé"
 
 #: ../Doc/distutils/setupscript.rst:595
 msgid "``classifiers``"
-msgstr ""
+msgstr "``classifiers``"
 
 #: ../Doc/distutils/setupscript.rst:595
 msgid "a list of classifiers"
-msgstr ""
+msgstr "une liste de classificateurs"
 
 #: ../Doc/distutils/setupscript.rst:595 ../Doc/distutils/setupscript.rst:597
 #: ../Doc/distutils/setupscript.rst:599
 msgid "list of strings"
-msgstr ""
+msgstr "liste de chaînes de caractères"
 
 #: ../Doc/distutils/setupscript.rst:595
 msgid "(6)(7)"
@@ -860,23 +1167,23 @@ msgstr "(6)(7)"
 
 #: ../Doc/distutils/setupscript.rst:597
 msgid "``platforms``"
-msgstr ""
+msgstr "``platforms``"
 
 #: ../Doc/distutils/setupscript.rst:597
 msgid "a list of platforms"
-msgstr ""
+msgstr "une liste de plateformes"
 
 #: ../Doc/distutils/setupscript.rst:597 ../Doc/distutils/setupscript.rst:599
 msgid "(6)(8)"
-msgstr ""
+msgstr "(6)(8)"
 
 #: ../Doc/distutils/setupscript.rst:599
 msgid "``keywords``"
-msgstr ""
+msgstr "``keywords``"
 
 #: ../Doc/distutils/setupscript.rst:599
 msgid "a list of keywords"
-msgstr ""
+msgstr "une liste de mots clés"
 
 #: ../Doc/distutils/setupscript.rst:601
 msgid "``license``"
@@ -884,7 +1191,7 @@ msgstr "``license``"
 
 #: ../Doc/distutils/setupscript.rst:601
 msgid "license for the package"
-msgstr ""
+msgstr "licence du paquet"
 
 #: ../Doc/distutils/setupscript.rst:601
 msgid "\\(5)"
@@ -896,41 +1203,56 @@ msgstr "Notes :"
 
 #: ../Doc/distutils/setupscript.rst:607
 msgid "These fields are required."
-msgstr ""
+msgstr "Ces champs sont requis."
 
 #: ../Doc/distutils/setupscript.rst:610
 msgid ""
 "It is recommended that versions take the form *major.minor[.patch[.sub]]*."
 msgstr ""
+"Il est recommandé que les versions prennent la forme *majeure.mineure[."
+"correctif[.sous]]*."
 
 #: ../Doc/distutils/setupscript.rst:613
 msgid ""
 "Either the author or the maintainer must be identified. If maintainer is "
 "provided, distutils lists it as the author in :file:`PKG-INFO`."
 msgstr ""
+"L'un ou l'autre de l'auteur ou un mainteneur doit être identifié. Si un "
+"mainteneur est fournit, distutils l'indique en tant qu'auteur dans le "
+"fichier :file:`PKG-INFO`."
 
 #: ../Doc/distutils/setupscript.rst:617
 msgid ""
 "The ``long_description`` field is used by PyPI when you publish a package, "
 "to build its project page."
 msgstr ""
+"Le champ ``long_description`` est utilisé par PyPi quand vous publiez un "
+"paquet pour construire sa page de projet."
 
 #: ../Doc/distutils/setupscript.rst:621
+#, fuzzy
 msgid ""
 "The ``license`` field is a text indicating the license covering the package "
 "where the license is not a selection from the \"License\" Trove classifiers. "
 "See the ``Classifier`` field. Notice that there's a ``licence`` distribution "
 "option which is deprecated but still acts as an alias for ``license``."
 msgstr ""
+"Le champ ``license`` est un texte indiquant la licence couvrant le paquet ou "
+"la licence n'est pas sélectionné parmi les classifiateurs de la \"Licence\" "
+"Trove. Voir le champ ``Classifier``. A noter qu'il y a une option de "
+"distribution ``licence`` qui est dépréciée mais agit toujours comme un alias "
+"pour ``license``."
 
 #: ../Doc/distutils/setupscript.rst:628
 msgid "This field must be a list."
-msgstr ""
+msgstr "Ce champ doit être une liste."
 
 #: ../Doc/distutils/setupscript.rst:631
 msgid ""
 "The valid classifiers are listed on `PyPI <https://pypi.org/classifiers>`_."
 msgstr ""
+"Les classificateurs valides sont listés sur `PyPI <https://pypi.org/"
+"classifiers>`_."
 
 #: ../Doc/distutils/setupscript.rst:635
 msgid ""
@@ -938,34 +1260,41 @@ msgid ""
 "pass a comma-separated string ``'foo, bar'``, it will be converted to "
 "``['foo', 'bar']``, Otherwise, it will be converted to a list of one string."
 msgstr ""
+"Pour préserver la rétrocompatibilité, ce champ accepte aussi une chaîne de "
+"caractères. Si vous passez une chaine de caractères séparée par des virgules "
+"``'foo, bar'``, elle sera convertie en ``['foo', 'bar']``, Autrement, elle "
+"sera convertie en une liste d'une chaîne de caractères."
 
 #: ../Doc/distutils/setupscript.rst:641
 msgid "'short string'"
-msgstr "'chaîne courte'"
+msgstr "'courte chaîne de caractères'"
 
 #: ../Doc/distutils/setupscript.rst:641
 msgid "A single line of text, not more than 200 characters."
-msgstr ""
+msgstr "Une simple ligne de texte ne dépassant par 200 caractères."
 
 #: ../Doc/distutils/setupscript.rst:645
 msgid "'long string'"
-msgstr "'chaîne longue'"
+msgstr "'long chaîne de caractères'"
 
 #: ../Doc/distutils/setupscript.rst:644
 msgid ""
 "Multiple lines of plain text in reStructuredText format (see http://docutils."
 "sourceforge.net/)."
 msgstr ""
+"De multiples chaînes de texte au format ReStructuredText (voir http://"
+"docutils.sourceforge.net/)."
 
 #: ../Doc/distutils/setupscript.rst:648
 msgid "'list of strings'"
-msgstr "'liste de chaînes'"
+msgstr "'liste de chaînes de caractères'"
 
 #: ../Doc/distutils/setupscript.rst:648
 msgid "See below."
-msgstr ""
+msgstr "Voir ci-dessous."
 
 #: ../Doc/distutils/setupscript.rst:650
+#, fuzzy
 msgid ""
 "Encoding the version information is an art in itself. Python packages "
 "generally adhere to the version format *major.minor[.patch][sub]*. The major "
@@ -979,42 +1308,59 @@ msgid ""
 "which only fix bugs) and \"pr1,pr2,...,prN\" (for final pre-release release "
 "testing). Some examples:"
 msgstr ""
+"Encoder les informations de version est un art en soi. Les paquets Python "
+"adhèrent généralement au format de version *majeure.mineure[.correctif]"
+"[sous]*. Le numéro majeur est 0 pour initial, publications expérimentales "
+"d'un logiciel. Il est incrémenté pour les publications qui représentent des "
+"étapes majeures pour le paquet. Le nombre mineur est incrémenté quand des "
+"d'importantes nouvelles fonctionnalités sont ajoutées au paquet. Le numéro "
+"de correctif s'incrémente lors de la publication d'une correction de bug est "
+"faite.  Celles-ci sont \"a1,a2,...,aN\" (pour les publications alpha, où les "
+"fonctionnalités et l'API peut changer), \"b1,b2,...,bN\" (pour les "
+"publications beta, qui corrigent seulement les bugs) et \"pr1,pr2,...,prN"
+"\" (pour les ultime pré-publication et publications de test). Quelques "
+"examples :"
 
 #: ../Doc/distutils/setupscript.rst:662
 msgid "0.1.0"
-msgstr ""
+msgstr "0.1.0"
 
 #: ../Doc/distutils/setupscript.rst:662
 msgid "the first, experimental release of a package"
-msgstr ""
+msgstr "la première, publication expérimentale du paquet"
 
 #: ../Doc/distutils/setupscript.rst:665
 msgid "1.0.1a2"
-msgstr ""
+msgstr "1.0.1a2"
 
 #: ../Doc/distutils/setupscript.rst:665
 msgid "the second alpha release of the first patch version of 1.0"
-msgstr ""
+msgstr "la seconde publication alpha du premier correctif de la version 1.0"
 
 #: ../Doc/distutils/setupscript.rst:667
 msgid "``classifiers`` must be specified in a list::"
-msgstr ""
+msgstr "les ``classifiers`` doivent être spécifiés dans une liste::"
 
 #: ../Doc/distutils/setupscript.rst:688
 msgid ""
 ":class:`~distutils.core.setup` now warns when ``classifiers``, ``keywords`` "
 "or ``platforms`` fields are not specified as a list or a string."
 msgstr ""
+":class:`~distutils.core.setup` alerte maintenant lorsque les champs "
+"``classifiers``, ``keywords`` ou ``platforms`` ne sont pas spécifiés en tant "
+"que liste ou chaîne de caractères."
 
 #: ../Doc/distutils/setupscript.rst:695
 msgid "Debugging the setup script"
-msgstr ""
+msgstr "Débugger le script `setup`"
 
 #: ../Doc/distutils/setupscript.rst:697
 msgid ""
 "Sometimes things go wrong, and the setup script doesn't do what the "
 "developer wants."
 msgstr ""
+"Parfois les choses tournent mal, et le script `setup` ne fait pas ce que le "
+"développeur veut."
 
 #: ../Doc/distutils/setupscript.rst:700
 msgid ""
@@ -1026,6 +1372,14 @@ msgid ""
 "or the Python installation is broken because they don't read all the way "
 "down to the bottom and see that it's a permission problem."
 msgstr ""
+"Distutils saisit toute exception lors de l'exécution du script `setup`, et "
+"affiche un mssage d'erreur simple avant d'arrêter le script.  L'intention "
+"pour ce comportement est de ne pas embrouiller les administrateurs qui ne "
+"savent pas grand chose de Python et qui essayent d'installer un paquet.  Si "
+"ils reçoivent une grosse et longue trace provenant des entrailles de "
+"Distutils, ils peuvent penser que le paquet ou que l'installation de Python "
+"est corrompue car ils ne lise pas tout jusqu'en bas et voient que c'est un "
+"problème de permissions."
 
 #: ../Doc/distutils/setupscript.rst:708
 msgid ""
@@ -1036,6 +1390,13 @@ msgid ""
 "traceback when an exception occurs, and print the whole command line when an "
 "external program (like a C compiler) fails."
 msgstr ""
+"D'un autre coté, cela n'aide pas le développeur à trouver la cause du "
+"problème. A cette fin, la variable d'environnement :envvar:`DISTUTILS_DEBUG` "
+"peut être assignée à n'importe quoi sauf une chaîne de caractères vide, et "
+"distutils affichera maintenant une information détaillée à propos de ce "
+"qu'il fait, déversera la trace complète lors d'une exception, et affichera "
+"la ligne de commande complète quand un programme externe (comme un "
+"compilateur C) échoue."
 
 #~ msgid "\\(6)"
 #~ msgstr "\\(6)"
