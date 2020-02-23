@@ -21,7 +21,7 @@ où vous avez le droit de faire des modifications.
 .. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
-    git clone git@github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
+    git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # *OU* HTTPS :
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
@@ -241,7 +241,6 @@ debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
 deprecated                 obsolète
--like                      -compatible
 e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            lui-même issu du latin *exempli gratia*).
                            On sépare les deux mots par  une espace
@@ -398,6 +397,18 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 ``mot espace-insécable deux-points deux-points``.
 
 Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
+
+Le cas des doubles espaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La documentation originale comporte beaucoup de double-espaces.
+Cela se fait en anglais, mais pas en français. De toute manière, 
+ils passent ensuite à une moulinette et le rendu des espaces est délégué 
+au HTML et au PDF, qui n'en tiennent pas compte. 
+Nous avons décidé de ne rien changer pour les double-espaces 
+coté traduction : nous ne les retirons pas et ce n'est pas grave 
+si des traducteurs en retirent par accident.
+
 
 Outils utiles pour la traduction
 --------------------------------

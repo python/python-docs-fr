@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := e21aa61e96f8343200e765d119ebe778873a6bf1
+CPYTHON_CURRENT_COMMIT := 83d3202b92fb4c2fc6df5b035d57f3a1cf715f20
 
 CPYTHON_PATH := ../cpython/
 
@@ -157,6 +157,7 @@ merge: setup
 	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
+	echo 'To add, you can use git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
 
 .PHONY: clean
 clean:
