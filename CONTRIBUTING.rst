@@ -135,6 +135,8 @@ Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/p
 et un joli bouton « Compare & pull request » devrait apparaître au bout de
 quelques secondes vous indiquant que vous pouvez demander une pull request.
 
+Mettez dans le commentaire de la pull request le texte suivant : Fixes #9999 où 9999 est le numéro du ticket GitHub créé pour réserver le fichier traduit.
+
 À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
 suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
 contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
