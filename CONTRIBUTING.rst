@@ -80,7 +80,7 @@ Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
 poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
-Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
+Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_. (voir la section *outils*)
 qui va reformater correctement le fichier que avez vous avez modifié.
 Exécutez `powrap -m` (reformater tous les fichiers modifiés)
 ou `powrap library/sys.po` (un fichier en particulier) :
