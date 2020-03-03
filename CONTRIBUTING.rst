@@ -78,7 +78,12 @@ Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
 (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
 
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
-poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
+
+.. code-block:: bash
+
+    poedit library/sys.po
+
+Ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
 Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_. (voir la section *outils*)
 qui va reformater correctement le fichier que avez vous avez modifié.
