@@ -235,6 +235,7 @@ backtrace                  trace d'appels, trace de pile
 bound                      lier
 bug                        bogue, *bug*
 built-in                   native
+bytecode		   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
 debugging                  débogage
@@ -286,6 +287,7 @@ support                    prendre en charge, implémenter (« supporter » n'
 specify                    définir, préciser (plutôt que « spécifier »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
+tuple			   n-uplet	
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
