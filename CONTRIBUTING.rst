@@ -235,7 +235,7 @@ backtrace                  trace d'appels, trace de pile
 bound                      lier
 bug                        bogue, *bug*
 built-in                   native
-bytecode		   code intermédiaire
+bytecode                   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
 debugging                  débogage
