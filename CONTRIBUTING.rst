@@ -287,7 +287,7 @@ support                    prendre en charge, implémenter (« supporter » n'
 specify                    définir, préciser (plutôt que « spécifier »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
-tuple			   n-uplet	
+tuple                      n-uplet	
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
