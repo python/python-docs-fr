@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Python 3.6\n"
+"Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-09 17:54+0200\n"
+"POT-Creation-Date: 2020-02-04 10:00+0100\n"
 "PO-Revision-Date: 2018-11-29 18:22+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -132,8 +132,9 @@ msgid ":c:func:`Py_GetVersion`"
 msgstr ""
 
 #: ../Doc/c-api/init.rst:51
+#, fuzzy
 msgid "Utilities:"
-msgstr ""
+msgstr "Utilitaires"
 
 #: ../Doc/c-api/init.rst:53
 msgid ":c:func:`Py_DecodeLocale`"
@@ -144,16 +145,19 @@ msgid "Memory allocators:"
 msgstr ""
 
 #: ../Doc/c-api/init.rst:57
+#, fuzzy
 msgid ":c:func:`PyMem_RawMalloc`"
-msgstr ""
+msgstr ":c:func:`PyMem_RawCalloc`,"
 
 #: ../Doc/c-api/init.rst:58
+#, fuzzy
 msgid ":c:func:`PyMem_RawRealloc`"
-msgstr ""
+msgstr ":c:func:`PyMem_RawCalloc`,"
 
 #: ../Doc/c-api/init.rst:59
+#, fuzzy
 msgid ":c:func:`PyMem_RawCalloc`"
-msgstr ""
+msgstr ":c:func:`PyMem_RawCalloc`,"
 
 #: ../Doc/c-api/init.rst:60
 msgid ":c:func:`PyMem_RawFree`"
@@ -316,8 +320,9 @@ msgid ""
 msgstr ""
 
 #: ../Doc/c-api/init.rst:172
+#, fuzzy
 msgid "See :pep:`528` for more details."
-msgstr ""
+msgstr "Voir la :pep:`529` pour plus d'informations."
 
 #: ../Doc/c-api/init.rst:178
 msgid ""
@@ -498,7 +503,7 @@ msgstr ""
 
 #: ../Doc/c-api/init.rst:332
 msgid ""
-"``encoding`` and/or ``errors`` may be NULL to use :envvar:`PYTHONIOENCODING` "
+"*encoding* and/or *errors* may be ``NULL`` to use :envvar:`PYTHONIOENCODING` "
 "and/or default values (depending on other settings)."
 msgstr ""
 
@@ -923,37 +928,61 @@ msgid ""
 "`PyGILState_\\*` API is unsupported."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:772
+#: ../Doc/c-api/init.rst:776
+msgid "Cautions about fork()"
+msgstr ""
+
+#: ../Doc/c-api/init.rst:778
 msgid ""
 "Another important thing to note about threads is their behaviour in the face "
 "of the C :c:func:`fork` call. On most systems with :c:func:`fork`, after a "
-"process forks only the thread that issued the fork will exist. That also "
-"means any locks held by other threads will never be released. Python solves "
-"this for :func:`os.fork` by acquiring the locks it uses internally before "
-"the fork, and releasing them afterwards. In addition, it resets any :ref:"
-"`lock-objects` in the child. When extending or embedding Python, there is no "
-"way to inform Python of additional (non-Python) locks that need to be "
-"acquired before or reset after a fork. OS facilities such as :c:func:"
-"`pthread_atfork` would need to be used to accomplish the same thing. "
-"Additionally, when extending or embedding Python, calling :c:func:`fork` "
-"directly rather than through :func:`os.fork` (and returning to or calling "
-"into Python) may result in a deadlock by one of Python's internal locks "
-"being held by a thread that is defunct after the fork. :c:func:"
-"`PyOS_AfterFork_Child` tries to reset the necessary locks, but is not always "
-"able to."
+"process forks only the thread that issued the fork will exist.  This has a "
+"concrete impact both on how locks must be handled and on all stored state in "
+"CPython's runtime."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:791
+#: ../Doc/c-api/init.rst:784
+msgid ""
+"The fact that only the \"current\" thread remains means any locks held by "
+"other threads will never be released. Python solves this for :func:`os.fork` "
+"by acquiring the locks it uses internally before the fork, and releasing "
+"them afterwards. In addition, it resets any :ref:`lock-objects` in the "
+"child. When extending or embedding Python, there is no way to inform Python "
+"of additional (non-Python) locks that need to be acquired before or reset "
+"after a fork. OS facilities such as :c:func:`pthread_atfork` would need to "
+"be used to accomplish the same thing. Additionally, when extending or "
+"embedding Python, calling :c:func:`fork` directly rather than through :func:"
+"`os.fork` (and returning to or calling into Python) may result in a deadlock "
+"by one of Python's internal locks being held by a thread that is defunct "
+"after the fork. :c:func:`PyOS_AfterFork_Child` tries to reset the necessary "
+"locks, but is not always able to."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:799
+msgid ""
+"The fact that all other threads go away also means that CPython's runtime "
+"state there must be cleaned up properly, which :func:`os.fork` does.  This "
+"means finalizing all other :c:type:`PyThreadState` objects belonging to the "
+"current interpreter and all other :c:type:`PyInterpreterState` objects.  Due "
+"to this and the special nature of the :ref:`\"main\" interpreter <sub-"
+"interpreter-support>`, :c:func:`fork` should only be called in that "
+"interpreter's \"main\" thread, where the CPython global runtime was "
+"originally initialized. The only exception is if :c:func:`exec` will be "
+"called immediately after."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:812
+#, fuzzy
 msgid "High-level API"
-msgstr ""
+msgstr "Bibliothèques de haut-niveau"
 
-#: ../Doc/c-api/init.rst:793
+#: ../Doc/c-api/init.rst:814
 msgid ""
 "These are the most commonly used types and functions when writing C "
 "extension code, or when embedding the Python interpreter:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:798
+#: ../Doc/c-api/init.rst:819
 msgid ""
 "This data structure represents the state shared by a number of cooperating "
 "threads.  Threads belonging to the same interpreter share their module "
@@ -961,7 +990,7 @@ msgid ""
 "in this structure."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:803
+#: ../Doc/c-api/init.rst:824
 msgid ""
 "Threads belonging to different interpreters initially share nothing, except "
 "process state like available memory, open file descriptors and such.  The "
@@ -969,14 +998,14 @@ msgid ""
 "which interpreter they belong."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:811
+#: ../Doc/c-api/init.rst:832
 msgid ""
 "This data structure represents the state of a single thread.  The only "
 "public data member is :c:type:`PyInterpreterState \\*`:attr:`interp`, which "
 "points to this thread's interpreter state."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:824
+#: ../Doc/c-api/init.rst:845
 msgid ""
 "Initialize and acquire the global interpreter lock.  It should be called in "
 "the main thread before creating a second thread or engaging in any other "
@@ -984,50 +1013,50 @@ msgid ""
 "before calling :c:func:`PyEval_SaveThread` or :c:func:`PyEval_RestoreThread`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:829
+#: ../Doc/c-api/init.rst:850
 msgid "This is a no-op when called for a second time."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:831
+#: ../Doc/c-api/init.rst:852
 msgid ""
 "This function is now called by :c:func:`Py_Initialize()`, so you don't have "
 "to call it yourself anymore."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:835
+#: ../Doc/c-api/init.rst:856
 msgid ""
 "This function cannot be called before :c:func:`Py_Initialize()` anymore."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:843
+#: ../Doc/c-api/init.rst:864
 msgid ""
 "Returns a non-zero value if :c:func:`PyEval_InitThreads` has been called.  "
 "This function can be called without holding the GIL, and therefore can be "
 "used to avoid calls to the locking API when running single-threaded."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:847
+#: ../Doc/c-api/init.rst:868
 msgid "The :term:`GIL` is now initialized by :c:func:`Py_Initialize()`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:853
+#: ../Doc/c-api/init.rst:874
 msgid ""
 "Release the global interpreter lock (if it has been created) and reset the "
-"thread state to *NULL*, returning the previous thread state (which is not "
-"*NULL*).  If the lock has been created, the current thread must have "
+"thread state to ``NULL``, returning the previous thread state (which is not "
+"``NULL``).  If the lock has been created, the current thread must have "
 "acquired it."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:861
+#: ../Doc/c-api/init.rst:882
 msgid ""
 "Acquire the global interpreter lock (if it has been created) and set the "
-"thread state to *tstate*, which must not be *NULL*.  If the lock has been "
+"thread state to *tstate*, which must not be ``NULL``.  If the lock has been "
 "created, the current thread must not have acquired it, otherwise deadlock "
 "ensues."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:867 ../Doc/c-api/init.rst:913
-#: ../Doc/c-api/init.rst:1088 ../Doc/c-api/init.rst:1126
+#: ../Doc/c-api/init.rst:888 ../Doc/c-api/init.rst:934
+#: ../Doc/c-api/init.rst:1109 ../Doc/c-api/init.rst:1147
 msgid ""
 "Calling this function from a thread when the runtime is finalizing will "
 "terminate the thread, even if the thread was not created by Python. You can "
@@ -1036,27 +1065,27 @@ msgid ""
 "avoid unwanted termination."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:875
+#: ../Doc/c-api/init.rst:896
 msgid ""
 "Return the current thread state.  The global interpreter lock must be held. "
-"When the current thread state is *NULL*, this issues a fatal error (so that "
-"the caller needn't check for *NULL*)."
+"When the current thread state is ``NULL``, this issues a fatal error (so "
+"that the caller needn't check for ``NULL``)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:882
+#: ../Doc/c-api/init.rst:903
 msgid ""
 "Swap the current thread state with the thread state given by the argument "
-"*tstate*, which may be *NULL*.  The global interpreter lock must be held and "
-"is not released."
+"*tstate*, which may be ``NULL``.  The global interpreter lock must be held "
+"and is not released."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:887
+#: ../Doc/c-api/init.rst:908
 msgid ""
 "The following functions use thread-local storage, and are not compatible "
 "with sub-interpreters:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:892
+#: ../Doc/c-api/init.rst:913
 msgid ""
 "Ensure that the current thread is ready to call the Python C API regardless "
 "of the current state of Python, or of the global interpreter lock. This may "
@@ -1069,7 +1098,7 @@ msgid ""
 "is acceptable."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:902
+#: ../Doc/c-api/init.rst:923
 msgid ""
 "The return value is an opaque \"handle\" to the thread state when :c:func:"
 "`PyGILState_Ensure` was called, and must be passed to :c:func:"
@@ -1079,13 +1108,13 @@ msgid ""
 "func:`PyGILState_Release`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:909
+#: ../Doc/c-api/init.rst:930
 msgid ""
 "When the function returns, the current thread will hold the GIL and be able "
 "to call arbitrary Python code.  Failure is a fatal error."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:921
+#: ../Doc/c-api/init.rst:942
 msgid ""
 "Release any resources previously acquired.  After this call, Python's state "
 "will be the same as it was prior to the corresponding :c:func:"
@@ -1093,13 +1122,13 @@ msgid ""
 "caller, hence the use of the GILState API)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:926
+#: ../Doc/c-api/init.rst:947
 msgid ""
 "Every call to :c:func:`PyGILState_Ensure` must be matched by a call to :c:"
 "func:`PyGILState_Release` on the same thread."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:932
+#: ../Doc/c-api/init.rst:953
 msgid ""
 "Get the current thread state for this thread.  May return ``NULL`` if no "
 "GILState API has been used on the current thread.  Note that the main thread "
@@ -1107,7 +1136,7 @@ msgid ""
 "made on the main thread.  This is mainly a helper/diagnostic function."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:940
+#: ../Doc/c-api/init.rst:961
 msgid ""
 "Return ``1`` if the current thread is holding the GIL and ``0`` otherwise. "
 "This function can be called from any thread at any time. Only if it has had "
@@ -1118,13 +1147,13 @@ msgid ""
 "otherwise behave differently."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:952
+#: ../Doc/c-api/init.rst:973
 msgid ""
 "The following macros are normally used without a trailing semicolon; look "
 "for example usage in the Python source distribution."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:958
+#: ../Doc/c-api/init.rst:979
 msgid ""
 "This macro expands to ``{ PyThreadState *_save; _save = PyEval_SaveThread();"
 "``. Note that it contains an opening brace; it must be matched with a "
@@ -1132,7 +1161,7 @@ msgid ""
 "discussion of this macro."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:966
+#: ../Doc/c-api/init.rst:987
 msgid ""
 "This macro expands to ``PyEval_RestoreThread(_save); }``. Note that it "
 "contains a closing brace; it must be matched with an earlier :c:macro:"
@@ -1140,113 +1169,114 @@ msgid ""
 "macro."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:974
+#: ../Doc/c-api/init.rst:995
 msgid ""
 "This macro expands to ``PyEval_RestoreThread(_save);``: it is equivalent to :"
 "c:macro:`Py_END_ALLOW_THREADS` without the closing brace."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:980
+#: ../Doc/c-api/init.rst:1001
 msgid ""
 "This macro expands to ``_save = PyEval_SaveThread();``: it is equivalent to :"
 "c:macro:`Py_BEGIN_ALLOW_THREADS` without the opening brace and variable "
 "declaration."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:986
+#: ../Doc/c-api/init.rst:1007
+#, fuzzy
 msgid "Low-level API"
-msgstr ""
+msgstr "Bibliothèques de bas-niveau"
 
-#: ../Doc/c-api/init.rst:988
+#: ../Doc/c-api/init.rst:1009
 msgid ""
 "All of the following functions must be called after :c:func:`Py_Initialize`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:990
+#: ../Doc/c-api/init.rst:1011
 msgid ":c:func:`Py_Initialize()` now initializes the :term:`GIL`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:996
+#: ../Doc/c-api/init.rst:1017
 msgid ""
 "Create a new interpreter state object.  The global interpreter lock need not "
 "be held, but may be held if it is necessary to serialize calls to this "
 "function."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1000
+#: ../Doc/c-api/init.rst:1021
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython."
 "PyInterpreterState_New`` with no arguments."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1005
+#: ../Doc/c-api/init.rst:1026
 msgid ""
 "Reset all information in an interpreter state object.  The global "
 "interpreter lock must be held."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1008
+#: ../Doc/c-api/init.rst:1029
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython."
 "PyInterpreterState_Clear`` with no arguments."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1013
+#: ../Doc/c-api/init.rst:1034
 msgid ""
 "Destroy an interpreter state object.  The global interpreter lock need not "
 "be held.  The interpreter state must have been reset with a previous call "
 "to :c:func:`PyInterpreterState_Clear`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1020
+#: ../Doc/c-api/init.rst:1041
 msgid ""
 "Create a new thread state object belonging to the given interpreter object. "
 "The global interpreter lock need not be held, but may be held if it is "
 "necessary to serialize calls to this function."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1027
+#: ../Doc/c-api/init.rst:1048
 msgid ""
 "Reset all information in a thread state object.  The global interpreter lock "
 "must be held."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1033
+#: ../Doc/c-api/init.rst:1054
 msgid ""
 "Destroy a thread state object.  The global interpreter lock need not be "
 "held. The thread state must have been reset with a previous call to :c:func:"
 "`PyThreadState_Clear`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1040
+#: ../Doc/c-api/init.rst:1061
 msgid ""
 "Return the interpreter's unique ID.  If there was any error in doing so then "
 "``-1`` is returned and an error is set."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1048
+#: ../Doc/c-api/init.rst:1069
 msgid ""
 "Return a dictionary in which interpreter-specific data may be stored. If "
-"this function returns *NULL* then no exception has been raised and the "
+"this function returns ``NULL`` then no exception has been raised and the "
 "caller should assume no interpreter-specific dict is available."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1052
+#: ../Doc/c-api/init.rst:1073
 msgid ""
 "This is not a replacement for :c:func:`PyModule_GetState()`, which "
 "extensions should use to store interpreter-specific state information."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1060
+#: ../Doc/c-api/init.rst:1081
 msgid ""
 "Return a dictionary in which extensions can store thread-specific state "
 "information.  Each extension should use a unique key to use to store state "
 "in the dictionary.  It is okay to call this function when no current thread "
-"state is available. If this function returns *NULL*, no exception has been "
+"state is available. If this function returns ``NULL``, no exception has been "
 "raised and the caller should assume no current thread state is available."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1069
+#: ../Doc/c-api/init.rst:1090
 msgid ""
 "Asynchronously raise an exception in a thread. The *id* argument is the "
 "thread id of the target thread; *exc* is the exception object to be raised. "
@@ -1258,76 +1288,76 @@ msgid ""
 "raises no exceptions."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1077
+#: ../Doc/c-api/init.rst:1098
 msgid ""
 "The type of the *id* parameter changed from :c:type:`long` to :c:type:"
 "`unsigned long`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1083
+#: ../Doc/c-api/init.rst:1104
 msgid ""
 "Acquire the global interpreter lock and set the current thread state to "
-"*tstate*, which should not be *NULL*.  The lock must have been created "
+"*tstate*, which should not be ``NULL``.  The lock must have been created "
 "earlier. If this thread already has the lock, deadlock ensues."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1094 ../Doc/c-api/init.rst:1132
+#: ../Doc/c-api/init.rst:1115 ../Doc/c-api/init.rst:1153
 msgid ""
 "Updated to be consistent with :c:func:`PyEval_RestoreThread`, :c:func:"
 "`Py_END_ALLOW_THREADS`, and :c:func:`PyGILState_Ensure`, and terminate the "
 "current thread if called while the interpreter is finalizing."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1099
+#: ../Doc/c-api/init.rst:1120
 msgid ""
 ":c:func:`PyEval_RestoreThread` is a higher-level function which is always "
 "available (even when threads have not been initialized)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1105
+#: ../Doc/c-api/init.rst:1126
 msgid ""
-"Reset the current thread state to *NULL* and release the global interpreter "
-"lock.  The lock must have been created earlier and must be held by the "
-"current thread.  The *tstate* argument, which must not be *NULL*, is only "
-"used to check that it represents the current thread state --- if it isn't, a "
-"fatal error is reported."
+"Reset the current thread state to ``NULL`` and release the global "
+"interpreter lock.  The lock must have been created earlier and must be held "
+"by the current thread.  The *tstate* argument, which must not be ``NULL``, "
+"is only used to check that it represents the current thread state --- if it "
+"isn't, a fatal error is reported."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1111
+#: ../Doc/c-api/init.rst:1132
 msgid ""
 ":c:func:`PyEval_SaveThread` is a higher-level function which is always "
 "available (even when threads have not been initialized)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1117
+#: ../Doc/c-api/init.rst:1138
 msgid ""
 "Acquire the global interpreter lock.  The lock must have been created "
 "earlier. If this thread already has the lock, a deadlock ensues."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1120
+#: ../Doc/c-api/init.rst:1141
 msgid ""
 "This function does not update the current thread state.  Please use :c:func:"
 "`PyEval_RestoreThread` or :c:func:`PyEval_AcquireThread` instead."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1140
+#: ../Doc/c-api/init.rst:1161
 msgid ""
 "Release the global interpreter lock.  The lock must have been created "
 "earlier."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1142
+#: ../Doc/c-api/init.rst:1163
 msgid ""
 "This function does not update the current thread state.  Please use :c:func:"
 "`PyEval_SaveThread` or :c:func:`PyEval_ReleaseThread` instead."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1151
+#: ../Doc/c-api/init.rst:1172
 msgid "Sub-interpreter support"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1153
+#: ../Doc/c-api/init.rst:1174
 msgid ""
 "While in most uses, you will only embed a single Python interpreter, there "
 "are cases where you need to create several independent interpreters in the "
@@ -1335,25 +1365,25 @@ msgid ""
 "to do that."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1158
+#: ../Doc/c-api/init.rst:1179
 msgid ""
 "The \"main\" interpreter is the first one created when the runtime "
 "initializes. It is usually the only Python interpreter in a process.  Unlike "
 "sub-interpreters, the main interpreter has unique process-global "
 "responsibilities like signal handling.  It is also responsible for execution "
 "during runtime initialization and is usually the active interpreter during "
-"runtime finalization.  The :c:func:`PyInterpreterState_Main` funtion returns "
-"a pointer to its state."
+"runtime finalization.  The :c:func:`PyInterpreterState_Main` function "
+"returns a pointer to its state."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1165
+#: ../Doc/c-api/init.rst:1186
 msgid ""
 "You can switch between sub-interpreters using the :c:func:"
 "`PyThreadState_Swap` function. You can create and destroy them using the "
 "following functions:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1179
+#: ../Doc/c-api/init.rst:1200
 msgid ""
 "Create a new sub-interpreter.  This is an (almost) totally separate "
 "environment for the execution of Python code.  In particular, the new "
@@ -1366,12 +1396,12 @@ msgid ""
 "underlying file descriptors)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1189
+#: ../Doc/c-api/init.rst:1210
 msgid ""
 "The return value points to the first thread state created in the new sub-"
 "interpreter.  This thread state is made in the current thread state. Note "
 "that no actual thread is created; see the discussion of thread states "
-"below.  If creation of the new interpreter is unsuccessful, *NULL* is "
+"below.  If creation of the new interpreter is unsuccessful, ``NULL`` is "
 "returned; no exception is set since the exception state is stored in the "
 "current thread state and there may not be a current thread state.  (Like all "
 "other Python/C API functions, the global interpreter lock must be held "
@@ -1380,53 +1410,79 @@ msgid ""
 "state on entry.)"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1204
-msgid ""
-"Extension modules are shared between (sub-)interpreters as follows: the "
-"first time a particular extension is imported, it is initialized normally, "
-"and a (shallow) copy of its module's dictionary is squirreled away.  When "
-"the same extension is imported by another (sub-)interpreter, a new module is "
-"initialized and filled with the contents of this copy; the extension's "
-"``init`` function is not called.  Note that this is different from what "
-"happens when an extension is imported after the interpreter has been "
-"completely re-initialized by calling :c:func:`Py_FinalizeEx` and :c:func:"
-"`Py_Initialize`; in that case, the extension's ``initmodule`` function *is* "
-"called again."
+#: ../Doc/c-api/init.rst:1225
+msgid "Extension modules are shared between (sub-)interpreters as follows:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1221
+#: ../Doc/c-api/init.rst:1227
+msgid ""
+"For modules using multi-phase initialization, e.g. :c:func:"
+"`PyModule_FromDefAndSpec`, a separate module object is created and "
+"initialized for each interpreter. Only C-level static and global variables "
+"are shared between these module objects."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:1233
+msgid ""
+"For modules using single-phase initialization, e.g. :c:func:"
+"`PyModule_Create`, the first time a particular extension is imported, it is "
+"initialized normally, and a (shallow) copy of its module's dictionary is "
+"squirreled away. When the same extension is imported by another "
+"(sub-)interpreter, a new module is initialized and filled with the contents "
+"of this copy; the extension's ``init`` function is not called. Objects in "
+"the module's dictionary thus end up shared across (sub-)interpreters, which "
+"might cause unwanted behavior (see `Bugs and caveats`_ below)."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:1244
+msgid ""
+"Note that this is different from what happens when an extension is imported "
+"after the interpreter has been completely re-initialized by calling :c:func:"
+"`Py_FinalizeEx` and :c:func:`Py_Initialize`; in that case, the extension's "
+"``initmodule`` function *is* called again. As with multi-phase "
+"initialization, this means that only C-level static and global variables are "
+"shared between these modules."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:1258
 msgid ""
 "Destroy the (sub-)interpreter represented by the given thread state. The "
 "given thread state must be the current thread state.  See the discussion of "
 "thread states below.  When the call returns, the current thread state is "
-"*NULL*.  All thread states associated with this interpreter are destroyed.  "
-"(The global interpreter lock must be held before calling this function and "
-"is still held when it returns.)  :c:func:`Py_FinalizeEx` will destroy all "
-"sub-interpreters that haven't been explicitly destroyed at that point."
+"``NULL``.  All thread states associated with this interpreter are "
+"destroyed.  (The global interpreter lock must be held before calling this "
+"function and is still held when it returns.)  :c:func:`Py_FinalizeEx` will "
+"destroy all sub-interpreters that haven't been explicitly destroyed at that "
+"point."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1231
+#: ../Doc/c-api/init.rst:1268
 msgid "Bugs and caveats"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1233
+#: ../Doc/c-api/init.rst:1270
 msgid ""
 "Because sub-interpreters (and the main interpreter) are part of the same "
 "process, the insulation between them isn't perfect --- for example, using "
 "low-level file operations like  :func:`os.close` they can (accidentally or "
 "maliciously) affect each other's open files.  Because of the way extensions "
 "are shared between (sub-)interpreters, some extensions may not work "
-"properly; this is especially likely when the extension makes use of (static) "
-"global variables, or when the extension manipulates its module's dictionary "
-"after its initialization.  It is possible to insert objects created in one "
-"sub-interpreter into a namespace of another sub-interpreter; this should be "
-"done with great care to avoid sharing user-defined functions, methods, "
-"instances or classes between sub-interpreters, since import operations "
-"executed by such objects may affect the wrong (sub-)interpreter's dictionary "
-"of loaded modules."
+"properly; this is especially likely when using single-phase initialization "
+"or (static) global variables. It is possible to insert objects created in "
+"one sub-interpreter into a namespace of another (sub-)interpreter; this "
+"should be avoided if possible."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1247
+#: ../Doc/c-api/init.rst:1280
+msgid ""
+"Special care should be taken to avoid sharing user-defined functions, "
+"methods, instances or classes between sub-interpreters, since import "
+"operations executed by such objects may affect the wrong (sub-)interpreter's "
+"dictionary of loaded modules. It is equally important to avoid sharing "
+"objects from which the above are reachable."
+msgstr ""
+
+#: ../Doc/c-api/init.rst:1286
 msgid ""
 "Also note that combining this functionality with :c:func:`PyGILState_\\*` "
 "APIs is delicate, because these APIs assume a bijection between Python "
@@ -1438,25 +1494,25 @@ msgid ""
 "created threads will probably be broken when using sub-interpreters."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1258
+#: ../Doc/c-api/init.rst:1297
 msgid "Asynchronous Notifications"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1260
+#: ../Doc/c-api/init.rst:1299
 msgid ""
 "A mechanism is provided to make asynchronous notifications to the main "
 "interpreter thread.  These notifications take the form of a function pointer "
 "and a void pointer argument."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1269
+#: ../Doc/c-api/init.rst:1308
 msgid ""
 "Schedule a function to be called from the main interpreter thread.  On "
 "success, ``0`` is returned and *func* is queued for being called in the main "
 "thread.  On failure, ``-1`` is returned without setting any exception."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1273
+#: ../Doc/c-api/init.rst:1312
 msgid ""
 "When successfully queued, *func* will be *eventually* called from the main "
 "interpreter thread with the argument *arg*.  It will be called "
@@ -1464,17 +1520,17 @@ msgid ""
 "these conditions met:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1278
+#: ../Doc/c-api/init.rst:1317
 msgid "on a :term:`bytecode` boundary;"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1279
+#: ../Doc/c-api/init.rst:1318
 msgid ""
 "with the main thread holding the :term:`global interpreter lock` (*func* can "
 "therefore use the full C API)."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1282
+#: ../Doc/c-api/init.rst:1321
 msgid ""
 "*func* must return ``0`` on success, or ``-1`` on failure with an exception "
 "set.  *func* won't be interrupted to perform another asynchronous "
@@ -1482,13 +1538,13 @@ msgid ""
 "if the global interpreter lock is released."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1287
+#: ../Doc/c-api/init.rst:1326
 msgid ""
 "This function doesn't need a current thread state to run, and it doesn't "
 "need the global interpreter lock."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1291
+#: ../Doc/c-api/init.rst:1330
 msgid ""
 "This is a low-level function, only useful for very special cases. There is "
 "no guarantee that *func* will be called as quick as possible.  If the main "
@@ -1498,18 +1554,18 @@ msgid ""
 "`PyGILState API<gilstate>`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1303
+#: ../Doc/c-api/init.rst:1342
 msgid "Profiling and Tracing"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1308
+#: ../Doc/c-api/init.rst:1347
 msgid ""
 "The Python interpreter provides some low-level support for attaching "
 "profiling and execution tracing facilities.  These are used for profiling, "
 "debugging, and coverage analysis tools."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1312
+#: ../Doc/c-api/init.rst:1351
 msgid ""
 "This C interface allows the profiling or tracing code to avoid the overhead "
 "of calling through Python-level callable objects, making a direct C function "
@@ -1519,7 +1575,7 @@ msgid ""
 "reported to the Python-level trace functions in previous versions."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1322
+#: ../Doc/c-api/init.rst:1361
 msgid ""
 "The type of the trace function registered using :c:func:`PyEval_SetProfile` "
 "and :c:func:`PyEval_SetTrace`. The first parameter is the object passed to "
@@ -1530,66 +1586,66 @@ msgid ""
 "or :const:`PyTrace_OPCODE`, and *arg* depends on the value of *what*:"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1331
+#: ../Doc/c-api/init.rst:1370
 msgid "Value of *what*"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1331
+#: ../Doc/c-api/init.rst:1370
 msgid "Meaning of *arg*"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1333
+#: ../Doc/c-api/init.rst:1372
 msgid ":const:`PyTrace_CALL`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1333 ../Doc/c-api/init.rst:1338
-#: ../Doc/c-api/init.rst:1349
+#: ../Doc/c-api/init.rst:1372 ../Doc/c-api/init.rst:1377
+#: ../Doc/c-api/init.rst:1388
 msgid "Always :c:data:`Py_None`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1335
+#: ../Doc/c-api/init.rst:1374
 msgid ":const:`PyTrace_EXCEPTION`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1335
+#: ../Doc/c-api/init.rst:1374
 msgid "Exception information as returned by :func:`sys.exc_info`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1338
+#: ../Doc/c-api/init.rst:1377
 msgid ":const:`PyTrace_LINE`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1340
+#: ../Doc/c-api/init.rst:1379
 msgid ":const:`PyTrace_RETURN`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1340
+#: ../Doc/c-api/init.rst:1379
 msgid ""
-"Value being returned to the caller, or *NULL* if caused by an exception."
+"Value being returned to the caller, or ``NULL`` if caused by an exception."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1343
+#: ../Doc/c-api/init.rst:1382
 msgid ":const:`PyTrace_C_CALL`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1343 ../Doc/c-api/init.rst:1345
-#: ../Doc/c-api/init.rst:1347
+#: ../Doc/c-api/init.rst:1382 ../Doc/c-api/init.rst:1384
+#: ../Doc/c-api/init.rst:1386
 msgid "Function object being called."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1345
+#: ../Doc/c-api/init.rst:1384
 msgid ":const:`PyTrace_C_EXCEPTION`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1347
+#: ../Doc/c-api/init.rst:1386
 msgid ":const:`PyTrace_C_RETURN`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1349
+#: ../Doc/c-api/init.rst:1388
 msgid ":const:`PyTrace_OPCODE`"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1354
+#: ../Doc/c-api/init.rst:1393
 msgid ""
 "The value of the *what* parameter to a :c:type:`Py_tracefunc` function when "
 "a new call to a function or method is being reported, or a new entry into a "
@@ -1598,7 +1654,7 @@ msgid ""
 "the corresponding frame."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1363
+#: ../Doc/c-api/init.rst:1402
 msgid ""
 "The value of the *what* parameter to a :c:type:`Py_tracefunc` function when "
 "an exception has been raised.  The callback function is called with this "
@@ -1610,7 +1666,7 @@ msgid ""
 "profiler."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1374
+#: ../Doc/c-api/init.rst:1413
 msgid ""
 "The value passed as the *what* parameter to a :c:type:`Py_tracefunc` "
 "function (but not a profiling function) when a line-number event is being "
@@ -1618,31 +1674,31 @@ msgid ""
 "*0* on that frame."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1381
+#: ../Doc/c-api/init.rst:1420
 msgid ""
 "The value for the *what* parameter to :c:type:`Py_tracefunc` functions when "
 "a call is about to return."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1387
+#: ../Doc/c-api/init.rst:1426
 msgid ""
 "The value for the *what* parameter to :c:type:`Py_tracefunc` functions when "
 "a C function is about to be called."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1393
+#: ../Doc/c-api/init.rst:1432
 msgid ""
 "The value for the *what* parameter to :c:type:`Py_tracefunc` functions when "
 "a C function has raised an exception."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1399
+#: ../Doc/c-api/init.rst:1438
 msgid ""
 "The value for the *what* parameter to :c:type:`Py_tracefunc` functions when "
 "a C function has returned."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1405
+#: ../Doc/c-api/init.rst:1444
 msgid ""
 "The value for the *what* parameter to :c:type:`Py_tracefunc` functions (but "
 "not profiling functions) when a new opcode is about to be executed.  This "
@@ -1650,17 +1706,17 @@ msgid ""
 "attr:`f_trace_opcodes` to *1* on the frame."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1413
+#: ../Doc/c-api/init.rst:1452
 msgid ""
 "Set the profiler function to *func*.  The *obj* parameter is passed to the "
-"function as its first parameter, and may be any Python object, or *NULL*.  "
+"function as its first parameter, and may be any Python object, or ``NULL``.  "
 "If the profile function needs to maintain state, using a different value for "
 "*obj* for each thread provides a convenient and thread-safe place to store "
 "it.  The profile function is called for all monitored events except :const:"
 "`PyTrace_LINE` :const:`PyTrace_OPCODE` and :const:`PyTrace_EXCEPTION`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1423
+#: ../Doc/c-api/init.rst:1462
 msgid ""
 "Set the tracing function to *func*.  This is similar to :c:func:"
 "`PyEval_SetProfile`, except the tracing function does receive line-number "
@@ -1671,48 +1727,48 @@ msgid ""
 "parameter."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1433
+#: ../Doc/c-api/init.rst:1472
 msgid "Advanced Debugger Support"
 msgstr "Support avancé du débogueur"
 
-#: ../Doc/c-api/init.rst:1438
+#: ../Doc/c-api/init.rst:1477
 msgid ""
 "These functions are only intended to be used by advanced debugging tools."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1443
+#: ../Doc/c-api/init.rst:1482
 msgid ""
 "Return the interpreter state object at the head of the list of all such "
 "objects."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1448
+#: ../Doc/c-api/init.rst:1487
 msgid "Return the main interpreter state object."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1453
+#: ../Doc/c-api/init.rst:1492
 msgid ""
 "Return the next interpreter state object after *interp* from the list of all "
 "such objects."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1459
+#: ../Doc/c-api/init.rst:1498
 msgid ""
 "Return the pointer to the first :c:type:`PyThreadState` object in the list "
 "of threads associated with the interpreter *interp*."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1465
+#: ../Doc/c-api/init.rst:1504
 msgid ""
 "Return the next thread state object after *tstate* from the list of all such "
 "objects belonging to the same :c:type:`PyInterpreterState` object."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1472
+#: ../Doc/c-api/init.rst:1511
 msgid "Thread Local Storage Support"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1476
+#: ../Doc/c-api/init.rst:1515
 msgid ""
 "The Python interpreter provides low-level support for thread-local storage "
 "(TLS) which wraps the underlying native TLS implementation to support the "
@@ -1722,19 +1778,19 @@ msgid ""
 "thread."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1483
+#: ../Doc/c-api/init.rst:1522
 msgid ""
 "The GIL does *not* need to be held when calling these functions; they supply "
 "their own locking."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1486
+#: ../Doc/c-api/init.rst:1525
 msgid ""
 "Note that :file:`Python.h` does not include the declaration of the TLS APIs, "
 "you need to include :file:`pythread.h` to use thread-local storage."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1490
+#: ../Doc/c-api/init.rst:1529
 msgid ""
 "None of these API functions handle memory management on behalf of the :c:"
 "type:`void\\*` values.  You need to allocate and deallocate them yourself. "
@@ -1742,22 +1798,22 @@ msgid ""
 "functions don't do refcount operations on them either."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1498
+#: ../Doc/c-api/init.rst:1537
 msgid "Thread Specific Storage (TSS) API"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1500
+#: ../Doc/c-api/init.rst:1539
 msgid ""
 "TSS API is introduced to supersede the use of the existing TLS API within "
 "the CPython interpreter.  This API uses a new type :c:type:`Py_tss_t` "
 "instead of :c:type:`int` to represent thread keys."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1506
+#: ../Doc/c-api/init.rst:1545
 msgid "\"A New C-API for Thread-Local Storage in CPython\" (:pep:`539`)"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1511
+#: ../Doc/c-api/init.rst:1550
 msgid ""
 "This data structure represents the state of a thread key, the definition of "
 "which may depend on the underlying TLS implementation, and it has an "
@@ -1765,66 +1821,66 @@ msgid ""
 "public members in this structure."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1516
+#: ../Doc/c-api/init.rst:1555
 msgid ""
 "When :ref:`Py_LIMITED_API <stable>` is not defined, static allocation of "
 "this type by :c:macro:`Py_tss_NEEDS_INIT` is allowed."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1522
+#: ../Doc/c-api/init.rst:1561
 msgid ""
 "This macro expands to the initializer for :c:type:`Py_tss_t` variables. Note "
 "that this macro won't be defined with :ref:`Py_LIMITED_API <stable>`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1527
+#: ../Doc/c-api/init.rst:1566
 msgid "Dynamic Allocation"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1529
+#: ../Doc/c-api/init.rst:1568
 msgid ""
 "Dynamic allocation of the :c:type:`Py_tss_t`, required in extension modules "
 "built with :ref:`Py_LIMITED_API <stable>`, where static allocation of this "
 "type is not possible due to its implementation being opaque at build time."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1536
+#: ../Doc/c-api/init.rst:1575
 msgid ""
 "Return a value which is the same state as a value initialized with :c:macro:"
-"`Py_tss_NEEDS_INIT`, or *NULL* in the case of dynamic allocation failure."
+"`Py_tss_NEEDS_INIT`, or ``NULL`` in the case of dynamic allocation failure."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1543
+#: ../Doc/c-api/init.rst:1582
 msgid ""
 "Free the given *key* allocated by :c:func:`PyThread_tss_alloc`, after first "
 "calling :c:func:`PyThread_tss_delete` to ensure any associated thread locals "
 "have been unassigned. This is a no-op if the *key* argument is `NULL`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1549
+#: ../Doc/c-api/init.rst:1588
 msgid ""
 "A freed key becomes a dangling pointer, you should reset the key to `NULL`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1554
+#: ../Doc/c-api/init.rst:1593
 msgid "Methods"
 msgstr "Méthodes"
 
-#: ../Doc/c-api/init.rst:1556
+#: ../Doc/c-api/init.rst:1595
 msgid ""
-"The parameter *key* of these functions must not be *NULL*.  Moreover, the "
+"The parameter *key* of these functions must not be ``NULL``.  Moreover, the "
 "behaviors of :c:func:`PyThread_tss_set` and :c:func:`PyThread_tss_get` are "
 "undefined if the given :c:type:`Py_tss_t` has not been initialized by :c:"
 "func:`PyThread_tss_create`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1564
+#: ../Doc/c-api/init.rst:1603
 msgid ""
 "Return a non-zero value if the given :c:type:`Py_tss_t` has been initialized "
 "by :c:func:`PyThread_tss_create`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1570
+#: ../Doc/c-api/init.rst:1609
 msgid ""
 "Return a zero value on successful initialization of a TSS key.  The behavior "
 "is undefined if the value pointed to by the *key* argument is not "
@@ -1833,7 +1889,7 @@ msgid ""
 "no-op and immediately returns success."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1579
+#: ../Doc/c-api/init.rst:1618
 msgid ""
 "Destroy a TSS key to forget the values associated with the key across all "
 "threads, and change the key's initialization state to uninitialized.  A "
@@ -1842,31 +1898,31 @@ msgid ""
 "key -- calling it on an already destroyed key is a no-op."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1588
+#: ../Doc/c-api/init.rst:1627
 msgid ""
 "Return a zero value to indicate successfully associating a :c:type:`void\\*` "
 "value with a TSS key in the current thread.  Each thread has a distinct "
 "mapping of the key to a :c:type:`void\\*` value."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1595
+#: ../Doc/c-api/init.rst:1634
 msgid ""
 "Return the :c:type:`void\\*` value associated with a TSS key in the current "
-"thread.  This returns *NULL* if no value is associated with the key in the "
+"thread.  This returns ``NULL`` if no value is associated with the key in the "
 "current thread."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1603
+#: ../Doc/c-api/init.rst:1642
 msgid "Thread Local Storage (TLS) API"
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1605
+#: ../Doc/c-api/init.rst:1644
 msgid ""
 "This API is superseded by :ref:`Thread Specific Storage (TSS) API <thread-"
 "specific-storage-api>`."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1610
+#: ../Doc/c-api/init.rst:1649
 msgid ""
 "This version of the API does not support platforms where the native TLS key "
 "is defined in a way that cannot be safely cast to ``int``.  On such "
@@ -1875,7 +1931,7 @@ msgid ""
 "platforms."
 msgstr ""
 
-#: ../Doc/c-api/init.rst:1615
+#: ../Doc/c-api/init.rst:1654
 msgid ""
 "Due to the compatibility problem noted above, this version of the API should "
 "not be used in new code."
