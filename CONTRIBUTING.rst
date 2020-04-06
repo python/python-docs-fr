@@ -259,6 +259,8 @@ i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
 identifier                 identifiant
 immutable                  immuable
 import                     importation
+index                      indice (en particulier quand on parle de chaînes de
+                           caractères)
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
@@ -404,11 +406,11 @@ Le cas des doubles espaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La documentation originale comporte beaucoup de double-espaces.
-Cela se fait en anglais, mais pas en français. De toute manière, 
-ils passent ensuite à une moulinette et le rendu des espaces est délégué 
-au HTML et au PDF, qui n'en tiennent pas compte. 
-Nous avons décidé de ne rien changer pour les double-espaces 
-coté traduction : nous ne les retirons pas et ce n'est pas grave 
+Cela se fait en anglais, mais pas en français. De toute manière,
+ils passent ensuite à une moulinette et le rendu des espaces est délégué
+au HTML et au PDF, qui n'en tiennent pas compte.
+Nous avons décidé de ne rien changer pour les double-espaces
+coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
 
