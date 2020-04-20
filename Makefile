@@ -80,6 +80,7 @@ setup: venv
 	    fi;                                                                              \
 	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
 	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
+	    $(WORKTREE)/Doc/venv/bin/python -m pip install Sphinx==2.2;                      \
 	fi
 
 
