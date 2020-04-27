@@ -50,6 +50,7 @@ upgrade_venv:
 
 $(VENV)/bin/activate: $(SPHINX_CONF)
 	$(MAKE) -C $(CPYTHON_CLONE)/Doc/ VENVDIR=$(VENV) PYTHON=$(PYTHON) venv
+	$(VENV)/bin/python3 -m pip install Sphinx==2.2
 
 
 .PHONY: progress
