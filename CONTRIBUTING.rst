@@ -460,9 +460,10 @@ Ressources de traduction
   - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
   - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
   - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
-- la `liste de diffusion de traductions de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
-- la `liste de diffusion doc-sig
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+- les listes de diffusion relatives à la documentation (courriel) :
+
+  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
+  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - les `glossaires et dictionnaires de traduc.org
   <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
   `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
