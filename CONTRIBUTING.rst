@@ -467,11 +467,8 @@ Ressources de traduction
 - des glossaires et dictionnaires :
   
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
-  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
-  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française ;
-  - Wikipédia. En consultant un article sur la version anglaise,
-  puis en basculant sur la version francaise pour voir
-  comment le sujet de l'article est traduit.
+  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française ;
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit.
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
