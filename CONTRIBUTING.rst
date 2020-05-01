@@ -413,6 +413,32 @@ Nous avons décidé de ne rien changer pour les double-espaces
 coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
+Les énumérations
+~~~~~~~~~~~~~~~~
+
+Chaque paragraphe d'une énumération introduite par un deux-point
+doit se terminer par un point-virgule (bien entendu précédé d'une
+espace insécable) quelque soit sa ponctuation interne. Seul le dernier
+paragraphe de l'énumération s'achève par un point, ou, si la phrase
+continue après l'énumération, une virgule. Si l'un des paragraphes est
+lui-même une énumération, chacun des sous-paragraphes se termine par
+une virgule et le dernier par un point-virgule.
+
+Par exemple :
+
+- le premier paragraphe de l'énumération ;
+- le deuxième paragraphe, une énumération :
+  
+  - premier sous-paragraphe,
+  - second sous-paragraphe ;
+
+- le dernier paragraphe.
+
+Malheureusement *poedit* n'aime pas les différences de ponctuation finales
+entre un paragraphe et sa traduction. Il faut passer outre ses avertissements.
+Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
+les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
+avertissements.
 
 Outils utiles pour la traduction
 --------------------------------
