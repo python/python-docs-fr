@@ -456,12 +456,13 @@ Ressources de traduction
 -------------------------
 
 - les canaux IRC sur freenode :
+
   - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_
-  Communauté python autour de la documentation française.
+  communauté python autour de la documentation française,
   - `#python-fr <http://irc.lc/freenode/python-fr>`_
-  Communauté python française.
+  communauté python francophone,
   - `#python-doc <http://irc.lc/freenode/python-fr>`_
-  Communauté python autour de la documentation anglaise.
+  communauté python autour de la documentation anglophone ;
 - la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
 - la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
@@ -474,7 +475,7 @@ Ressources de traduction
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- Wikipédia : En allant sur l'article d'un sujet sur la version anglaise
+- Wikipédia. En allant sur l'article d'un sujet sur la version anglaise
   de Wikipédia, puis en basculant sur la version francaise pour voir
   comment le sujet est traduit.
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
