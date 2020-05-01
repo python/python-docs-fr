@@ -1,5 +1,5 @@
 Guide de contribution à la documention via GitHub.
-===================================================
+==================================================
 
 Prérequis
 ---------
@@ -159,7 +159,7 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne sont pas traduites.
-Vous pouvez les trouver à l'aide de `make todo`...
+Vous pouvez les trouver à l'aide de `make todo`…
 
 Vous pouvez aussi « traduire » des liens hypertextes
 (par exemple s'il s'agit d'un lien vers un article de Wikipédia qui possède une
@@ -174,7 +174,7 @@ Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
 (entouré par des astérisques).
 
 Pour les caractères spéciaux, référez-vous à la section
-`Les caractères spéciaux`_
+`Caractères spéciaux`_
 
 Conseils
 --------
@@ -234,7 +234,7 @@ backslash                  antislash, *backslash*
 backtrace                  trace d'appels, trace de pile
 bound                      lier
 bug                        bogue, *bug*
-built-in                   native
+built-in                   natif
 bytecode                   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
@@ -244,7 +244,7 @@ double quote               guillemet
 deprecated                 obsolète
 e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            lui-même issu du latin *exempli gratia*).
-                           On sépare les deux mots par  une espace
+                           On sépare les deux mots par une espace
                            insécable pour éviter les retours à la ligne
                            malheureux.
 et al.                     et autres, `à accorder
@@ -254,7 +254,7 @@ export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
-i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
                            lui-même issu du latin *id est*)
 identifier                 identifiant
 immutable                  immuable
@@ -402,14 +402,14 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 
 Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
 
-Le cas des doubles espaces
+Le cas des doubles-espaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La documentation originale comporte beaucoup de double-espaces.
+La documentation originale comporte beaucoup de doubles-espaces.
 Cela se fait en anglais, mais pas en français. De toute manière,
 ils passent ensuite à une moulinette et le rendu des espaces est délégué
 au HTML et au PDF, qui n'en tiennent pas compte.
-Nous avons décidé de ne rien changer pour les double-espaces
+Nous avons décidé de ne rien changer pour les doubles-espaces
 coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
@@ -423,7 +423,7 @@ Potodo
 | Permet de d'identifier les parties de la documention qu'il reste à traduire.
 | Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
   ``python3.6`` ou plus.
-| `Lien vers le repository <https://github.com/seluj78/potodo>`__
+| `Lien vers le dépôt <https://github.com/seluj78/potodo>`__
 
 Pogrep
 ~~~~~~
@@ -433,7 +433,7 @@ Pogrep
   d'autres fichiers.
 | Installez-le à l'aide de *pip* (``pip install pogrep``) dans un
   environnement.
-| `Lien vers le repository <https://github.com/JulienPalard/pogrep>`__
+| `Lien vers le dépôt <https://github.com/JulienPalard/pogrep>`__
 
 Padpo (beta)
 ~~~~~~~~~~~~~~~
@@ -442,7 +442,7 @@ Padpo (beta)
   du fichier .po.
 | Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
   ``python3.7`` ou plus.
-| `Lien vers le repository <https://github.com/vpoulailleau/padpo>`__
+| `Lien vers le dépôt <https://github.com/vpoulailleau/padpo>`__
 
 Powrap
 ~~~~~~
@@ -450,7 +450,7 @@ Powrap
 | Formateur de fichier .po.
 | Installez-le à l'aide de *pip* (``pip install powrap``) dans un
   environnement.
-| `Lien vers le repository <https://github.com/JulienPalard/powrap>`__
+| `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
 Ressources de traduction
 -------------------------
