@@ -456,27 +456,22 @@ Ressources de traduction
 -------------------------
 
 - les canaux IRC sur freenode :
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_
-  Communauté python autour de la documentation française.
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_
-  Communauté python française.
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_
-  Communauté python autour de la documentation anglaise.
-- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
-- la `liste de diffusion doc-sig
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
-- les `glossaires et dictionnaires de traduc.org
-  <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
-  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-  de l'Office québécois de la langue française ;
-- le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_, car
-  il est déjà traduit ;
+
+  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
+  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
+  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
+- les listes de diffusion relatives à la documentation (courriel) :
+
+  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
+  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+- des glossaires et dictionnaires :
+  
+  - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
+  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit.
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- Wikipédia : En allant sur l'article d'un sujet sur la version anglaise
-  de Wikipédia, puis en basculant sur la version francaise pour voir
-  comment le sujet est traduit.
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
   résumé succint de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
