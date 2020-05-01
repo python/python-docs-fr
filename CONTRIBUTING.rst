@@ -457,12 +457,9 @@ Ressources de traduction
 
 - les canaux IRC sur freenode :
 
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_
-  communauté python autour de la documentation française,
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_
-  communauté python francophone,
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_
-  communauté python autour de la documentation anglophone ;
+  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ communauté python autour de la documentation française,
+  - `#python-fr <http://irc.lc/freenode/python-fr>`_  communauté python francophone,
+  - `#python-doc <http://irc.lc/freenode/python-fr>`_ communauté python autour de la documentation anglophone ;
 - la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
 - la `liste de diffusion doc-sig
   <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
