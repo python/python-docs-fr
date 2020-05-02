@@ -418,7 +418,7 @@ Les énumérations
 
 Chaque paragraphe d'une énumération introduite par un deux-point
 doit se terminer par un point-virgule (bien entendu précédé d'une
-espace insécable) quelque soit sa ponctuation interne. Seul le dernier
+espace insécable) quelle que soit sa ponctuation interne. Seul le dernier
 paragraphe de l'énumération s'achève par un point ou, si la phrase
 continue après l'énumération, une virgule. Si l'un des paragraphes est
 lui-même une énumération, chacun des sous-paragraphes se termine par
