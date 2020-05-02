@@ -308,8 +308,8 @@ clavier. C'est à l'utilisateur de définir la touche de composition.
 Avec une touche de composition, vous pouvez utiliser les
 compositions suivantes :
 
-- :kbd:`Compose < <` donne «
-- :kbd:`Compose > >` donne »
+- :kbd:`Compose < <` donne ``«``
+- :kbd:`Compose > >` donne ``»``
 - :kbd:`Compose SPACE SPACE` donne une espace insécable
 - :kbd:`Compose . . .` donne ``…``
 
@@ -320,14 +320,14 @@ simplement fonctionner :
 - :kbd:`Compose C =` donne ``€``
 - :kbd:`Compose 1 2` donne ``½``
 - :kbd:`Compose ' E` donne ``É``
-- … …
+- …
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux/Unix/\*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
+=> Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
 l'outil graphique de configuration de votre clavier ou via
 ``dpkg-reconfigure keyboard-configuration``
 (pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
@@ -354,7 +354,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
 
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les paramètres > clavier > Disposition : puis
-'Touche composée'. Pour finir, redémarrez votre session.
+« Touche composée ». Pour finir, redémarrez votre session.
 
 => Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
