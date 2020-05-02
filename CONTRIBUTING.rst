@@ -86,7 +86,7 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
 Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_. (voir la section *outils*)
-qui va reformater correctement le fichier que avez vous avez modifié.
+qui reformate correctement le fichier que avez vous avez modifié.
 Exécutez `powrap -m` (reformater tous les fichiers modifiés)
 ou `powrap library/sys.po` (un fichier en particulier) :
 
@@ -98,7 +98,7 @@ Pour l'orthographe, une liste blanche de certains termes techniques ou
 de noms propres, comme « Guido », « C99 » ou « sérialisable », est
 stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
 bien sûr y ajouter une entrée si nécessaire.
-La commande suivante va lancer les vérifications nécessaires.
+La commande suivante lance les vérifications nécessaires.
 
 .. code-block:: bash
 
@@ -106,15 +106,15 @@ La commande suivante va lancer les vérifications nécessaires.
 
 
 C'est le moment de git add et git commit
-git add va permettre de déplacer nos modifications dans l'index de Git en
-attendant d'être déplacée dans le dépôt local.
+git add place nos modifications dans l'index de Git en
+attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
     git add library/sys.po
 
 
-Puis on bascule les modifications dans le dépôt local avec un commit.
+Puis on propage les modifications dans le dépôt local avec un commit.
 
 .. code-block:: bash
 
@@ -130,7 +130,7 @@ branche est liée à votre fork Github (et donc que vos futurs `git pull` et
 
     git push -u origin
 
-La commande précédente vous affichera un lien pour ouvrir une pull request sur
+La commande précédente vous affiche un lien pour ouvrir une pull request sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
 et un joli bouton « Compare & pull request » devrait apparaître au bout de
 quelques secondes vous indiquant que vous pouvez demander une pull request.
