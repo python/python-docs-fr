@@ -297,8 +297,8 @@ whitespace                 caractère d'espacement
 Caractères spéciaux
 -------------------
 
-La touche de composition :
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+La touche de composition
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 absente par défault des claviers, permet de saisir des
@@ -308,8 +308,8 @@ clavier. C'est à l'utilisateur de définir la touche de composition.
 Avec une touche de composition, vous pouvez utiliser les
 compositions suivantes :
 
-- :kbd:`Compose < <` donne «
-- :kbd:`Compose > >` donne »
+- :kbd:`Compose < <` donne ``«``
+- :kbd:`Compose > >` donne ``»``
 - :kbd:`Compose SPACE SPACE` donne une espace insécable
 - :kbd:`Compose . . .` donne ``…``
 
@@ -320,14 +320,14 @@ simplement fonctionner :
 - :kbd:`Compose C =` donne ``€``
 - :kbd:`Compose 1 2` donne ``½``
 - :kbd:`Compose ' E` donne ``É``
-- … …
+- …
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux/Unix/\*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
+=> Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
 l'outil graphique de configuration de votre clavier ou via
 ``dpkg-reconfigure keyboard-configuration``
 (pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
@@ -354,7 +354,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
 
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les paramètres > clavier > Disposition : puis
-'Touche composée'. Pour finir, redémarrez votre session.
+« Touche composée ». Pour finir, redémarrez votre session.
 
 => Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
@@ -413,6 +413,32 @@ Nous avons décidé de ne rien changer pour les doubles-espaces
 coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
+Les énumérations
+~~~~~~~~~~~~~~~~
+
+Chaque paragraphe d'une énumération introduite par un deux-point
+doit se terminer par un point-virgule (bien entendu précédé d'une
+espace insécable) quelle que soit sa ponctuation interne. Seul le dernier
+paragraphe de l'énumération s'achève par un point ou, si la phrase
+continue après l'énumération, une virgule. Si l'un des paragraphes est
+lui-même une énumération, chacun des sous-paragraphes se termine par
+une virgule et le dernier par un point-virgule.
+
+Par exemple :
+
+- le premier paragraphe de l'énumération ;
+- le deuxième paragraphe, lui-aussi une énumération :
+  
+  - premier sous-paragraphe,
+  - second sous-paragraphe ;
+
+- le dernier paragraphe.
+
+Malheureusement *poedit* n'aime pas les différences de ponctuation finales
+entre un paragraphe et sa traduction ; il faut passer outre ses avertissements.
+Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
+les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
+avertissements.
 
 Outils utiles pour la traduction
 --------------------------------
