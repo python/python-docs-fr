@@ -297,8 +297,8 @@ whitespace                 caractère d'espacement
 Caractères spéciaux
 -------------------
 
-La touche de composition :
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+La touche de composition
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 absente par défault des claviers, permet de saisir des
