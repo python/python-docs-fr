@@ -46,7 +46,7 @@ Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` rés
 dans les tickets et les *pull requests*.
 
 N'hésitez pas non plus à vous équiper de quelques outils pour vous aider dans
-votre traduction (voir `Outils utiles pour la traduction`_)
+votre traduction (voir `Outils utiles pour la traduction`_).
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -210,7 +210,7 @@ Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
 (entouré par des astérisques).
 
 Pour les caractères spéciaux, référez-vous à la section
-`Caractères spéciaux`_
+`Caractères spéciaux`_.
 
 Conseils
 --------
@@ -349,14 +349,14 @@ compositions suivantes :
 - :kbd:`Compose SPACE SPACE` donne une espace insécable
 - :kbd:`Compose . . .` donne ``…``
 
-Comme vous l'avez noté, presque toutes les compositions sont faciles
-à retenir, vous pouvez donc essayer les autres et elles devraient tout
+Comme vous l'avez noté, presque toutes les compositions sont intuitives,
+vous pouvez donc en essayer d'autres et elles devraient tout
 simplement fonctionner :
 
 - :kbd:`Compose C =` donne ``€``
 - :kbd:`Compose 1 2` donne ``½``
 - :kbd:`Compose ' E` donne ``É``
-- …
+- etc.
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -398,10 +398,10 @@ pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 Le cas de « --- », « -- »,  « ... »
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La version anglaise utilise une chose nommée
+La version anglaise utilise les
 `smartquotes <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_,
-qui fonctionne en anglais, mais cause des problèmes dans d'autres langues.
-Nous l'avons donc désactivée dans la version française.
+qui fonctionnent en anglais, mais causent des problèmes dans d'autres langues.
+Nous les avons donc désactivées dans la version française.
 
 Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
@@ -498,7 +498,7 @@ Pogrep
 | `Lien vers le dépôt <https://github.com/JulienPalard/pogrep>`__
 
 Padpo (beta)
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 | Analyseur de code qui vérifie la grammaire et l'orthographe et la syntaxe
   du fichier .po.
@@ -530,7 +530,7 @@ Ressources de traduction
   
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
   - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
-  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit.
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit ;
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
@@ -539,8 +539,8 @@ Ressources de traduction
   majuscules, des espaces, etc.
 
 
-Simplifier les diffs git
-------------------------
+Simplification des diffs git
+----------------------------
 
 Les diffs git sont souvent encombrés de changements inutiles de numéros
 de ligne, comme :
