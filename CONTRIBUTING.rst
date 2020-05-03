@@ -1,5 +1,5 @@
 Guide de contribution à la documention via GitHub.
-===================================================
+==================================================
 
 Prérequis
 ---------
@@ -21,7 +21,7 @@ où vous avez le droit de faire des modifications.
 .. code-block:: bash
 
     # Clonez votre fork Github avec `git` en utilisant ssh :
-    git clone git@github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
+    git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # *OU* HTTPS :
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
@@ -51,64 +51,99 @@ votre traduction (voir `Outils utiles pour la traduction`_)
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
 
+
+Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
+(fraîchement récupérée) de la branche upstream/3.8. On met donc à jour notre
+version locale.
+
 .. code-block:: bash
 
-    # Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
-    # (fraîchement récupérée) de la branche upstream/3.8. On met donc à jour notre
-    # version locale.
     git fetch upstream
 
-    # On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
-    # fichier sur lequel on travaille. Par exemple, si vous travaillez sur
-    # « library/sys.po », vous pouvez nommer votre branche « library-sys ».
-    # Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
+
+On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
+fichier sur lequel on travaille. Par exemple, si vous travaillez sur
+« library/sys.po », vous pouvez nommer votre branche « library-sys ».
+Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
+
+.. code-block:: bash
+
     git checkout -b library-sys upstream/3.8
 
-    # Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
-    # N'oubliez pas de configurer votre nom et votre email dans Poedit.
-    # (Édition -> Préférences -> Général)
-    # Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
-    # (Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
-    #
-    # Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
-    # poedit library/sys.po ou lancez simplement poedit puis « Fichier » → « Ouvrir »
 
-    # Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap` (voir la section *outils*)
-    # qui va reformater correctement le fichier que avez vous avez modifié.
-    # Exécutez `powrap -m` (reformater tous les fichiers modifiés)
-    # ou `powrap library/sys.po` (un fichier en particulier) :
+Vous pouvez maintenant travailler sur le fichier (typiquement, en utilisant poedit).
+N'oubliez pas de configurer votre nom et votre email dans Poedit.
+(Édition -> Préférences -> Général)
+Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères.
+(Édition -> Préférences -> Avancé -> Passer à la ligne à : 79)
+
+Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
+
+.. code-block:: bash
+
+    poedit library/sys.po
+
+Ou lancez simplement poedit puis « Fichier » → « Ouvrir »
+
+Si vous n'utilisez pas poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_. (voir la section *outils*)
+qui reformate correctement le fichier que avez vous avez modifié.
+Exécutez `powrap -m` (reformater tous les fichiers modifiés)
+ou `powrap library/sys.po` (un fichier en particulier) :
+
+.. code-block:: bash
+
     powrap -m
 
-    # Pour l'orthographe, une liste blanche de certains termes techniques ou
-    # de noms propres, comme « Guido », « C99 » ou « sérialisable », est
-    # stockée dans le fichier « dict » à la racine du projet. Vous pouvez
-    # bien sûr y ajouter une entrée si nécessaire.
-    # La commande suivante va lancer les vérifications nécessaires.
+Pour l'orthographe, une liste blanche de certains termes techniques ou
+de noms propres, comme « Guido », « C99 » ou « sérialisable », est
+stockée dans le fichier « dict » à la racine du projet.  Vous pouvez
+bien sûr y ajouter une entrée si nécessaire.
+La commande suivante lance les vérifications nécessaires.
+
+.. code-block:: bash
+
     make verifs
 
-    # C'est le moment de git add et git commit.
-    # git add va permettre de déplacer nos modifications dans l'index de Git en
-    # attendant d'être déplacée dans le dépôt local.
+
+C'est le moment de git add et git commit
+git add place nos modifications dans l'index de Git en
+attendant d'être propagées dans le dépôt local.
+
+.. code-block:: bash
+
     git add library/sys.po
 
-    # Puis on bascule les modifications dans le dépôt local avec un commit.
+
+Puis on propage les modifications dans le dépôt local avec un commit.
+
+.. code-block:: bash
+
     git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
-    # Poussez ensuite vos modifications sur votre fork Github.
-    # Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-    # branche est liée à votre fork Github (et donc que vos futurs `git pull` et
-    # `git push` sachent quoi tirer)
+
+Poussez ensuite vos modifications sur votre fork Github.
+Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
+branche est liée à votre fork Github (et donc que vos futurs `git pull` et
+`git push` sachent quoi tirer)
+
+.. code-block:: bash
+
     git push -u origin
 
-    # La commande précédente vous affichera un lien pour ouvrir une pull request sur
-    # Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
-    # et un joli bouton « Compare & pull request » devrait apparaître au bout de
-    # quelques secondes vous indiquant que vous pouvez demander une pull request.
+La commande précédente vous affiche un lien pour ouvrir une pull request sur
+Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
+et un joli bouton « Compare & pull request » devrait apparaître au bout de
+quelques secondes vous indiquant que vous pouvez demander une pull request.
 
-    # À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
-    # suggestions-corrections. Pour les prendre en compte, retournez sur votre branche
-    # contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
-    # sur une autre branche) :
+Mettez dans le commentaire de la pull request le texte suivant : Fixes #9999 où 9999 est le numéro du ticket GitHub créé pour réserver le fichier traduit.
+
+À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
+suggestions/corrections. Pour les prendre en compte, retournez sur votre branche
+contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
+sur une autre branche) :
+
+.. code-block:: bash
+
     git checkout library/sys
     git pull  # pour rapatrier les modifications que vous auriez acceptées
               # sur l'interface web.
@@ -116,6 +151,7 @@ suivez cette procédure :
     # Réglez les problèmes, puis commitez à nouveau :
     git commit -a -m "prise en compte des remarques"
     git push
+
 
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
 segment manquant :
@@ -159,7 +195,7 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne sont pas traduites.
-Vous pouvez les trouver à l'aide de `make todo`...
+Vous pouvez les trouver à l'aide de `make todo`…
 
 Vous pouvez aussi « traduire » des liens hypertextes
 (par exemple s'il s'agit d'un lien vers un article de Wikipédia qui possède une
@@ -174,7 +210,7 @@ Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
 (entouré par des astérisques).
 
 Pour les caractères spéciaux, référez-vous à la section
-`Les caractères spéciaux`_
+`Caractères spéciaux`_
 
 Conseils
 --------
@@ -234,7 +270,8 @@ backslash                  antislash, *backslash*
 backtrace                  trace d'appels, trace de pile
 bound                      lier
 bug                        bogue, *bug*
-built-in                   native
+built-in                   natif
+bytecode                   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
 debugging                  débogage
@@ -243,7 +280,7 @@ double quote               guillemet
 deprecated                 obsolète
 e.g.                       p. ex. (on n'utilise pas l'anglicisme « e.g. »,
                            lui-même issu du latin *exempli gratia*).
-                           On sépare les deux mots par  une espace
+                           On sépare les deux mots par une espace
                            insécable pour éviter les retours à la ligne
                            malheureux.
 et al.                     et autres, `à accorder
@@ -253,11 +290,13 @@ export                     exportation
 expression                 expression
 garbage collector          ramasse-miettes
 getter                     accesseur
-i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e »,
+i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
                            lui-même issu du latin *id est*)
 identifier                 identifiant
 immutable                  immuable
 import                     importation
+index                      indice (en particulier quand on parle de chaînes de
+                           caractères)
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
@@ -286,6 +325,7 @@ support                    prendre en charge, implémenter (« supporter » n'
 specify                    définir, préciser (plutôt que « spécifier »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
+tuple                      n-uplet
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
@@ -293,8 +333,8 @@ whitespace                 caractère d'espacement
 Caractères spéciaux
 -------------------
 
-La touche de composition :
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+La touche de composition
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 absente par défault des claviers, permet de saisir des
@@ -304,8 +344,8 @@ clavier. C'est à l'utilisateur de définir la touche de composition.
 Avec une touche de composition, vous pouvez utiliser les
 compositions suivantes :
 
-- :kbd:`Compose < <` donne «
-- :kbd:`Compose > >` donne »
+- :kbd:`Compose < <` donne ``«``
+- :kbd:`Compose > >` donne ``»``
 - :kbd:`Compose SPACE SPACE` donne une espace insécable
 - :kbd:`Compose . . .` donne ``…``
 
@@ -316,14 +356,14 @@ simplement fonctionner :
 - :kbd:`Compose C =` donne ``€``
 - :kbd:`Compose 1 2` donne ``½``
 - :kbd:`Compose ' E` donne ``É``
-- … …
+- …
 
 Comment définir la touche de composition ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux/Unix/\*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
+=> Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
 l'outil graphique de configuration de votre clavier ou via
 ``dpkg-reconfigure keyboard-configuration``
 (pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
@@ -350,7 +390,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
 
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les paramètres > clavier > Disposition : puis
-'Touche composée'. Pour finir, redémarrez votre session.
+« Touche composée ». Pour finir, redémarrez votre session.
 
 => Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
@@ -398,17 +438,43 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 
 Pour saisir une espace insécable faites : :kbd:`Compose SPACE SPACE`
 
-Le cas des doubles espaces
+Le cas des doubles-espaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La documentation originale comporte beaucoup de double-espaces.
-Cela se fait en anglais, mais pas en français. De toute manière, 
-ils passent ensuite à une moulinette et le rendu des espaces est délégué 
-au HTML et au PDF, qui n'en tiennent pas compte. 
-Nous avons décidé de ne rien changer pour les double-espaces 
-coté traduction : nous ne les retirons pas et ce n'est pas grave 
+La documentation originale comporte beaucoup de doubles-espaces.
+Cela se fait en anglais, mais pas en français. De toute manière,
+ils passent ensuite à une moulinette et le rendu des espaces est délégué
+au HTML et au PDF, qui n'en tiennent pas compte.
+Nous avons décidé de ne rien changer pour les doubles-espaces
+coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
+Les énumérations
+~~~~~~~~~~~~~~~~
+
+Chaque paragraphe d'une énumération introduite par un deux-point
+doit se terminer par un point-virgule (bien entendu précédé d'une
+espace insécable) quelle que soit sa ponctuation interne. Seul le dernier
+paragraphe de l'énumération s'achève par un point ou, si la phrase
+continue après l'énumération, une virgule. Si l'un des paragraphes est
+lui-même une énumération, chacun des sous-paragraphes se termine par
+une virgule et le dernier par un point-virgule.
+
+Par exemple :
+
+- le premier paragraphe de l'énumération ;
+- le deuxième paragraphe, lui-aussi une énumération :
+  
+  - premier sous-paragraphe,
+  - second sous-paragraphe ;
+
+- le dernier paragraphe.
+
+Malheureusement *poedit* n'aime pas les différences de ponctuation finales
+entre un paragraphe et sa traduction ; il faut passer outre ses avertissements.
+Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
+les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
+avertissements.
 
 Outils utiles pour la traduction
 --------------------------------
@@ -419,7 +485,7 @@ Potodo
 | Permet de d'identifier les parties de la documention qu'il reste à traduire.
 | Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
   ``python3.6`` ou plus.
-| `Lien vers le repository <https://github.com/seluj78/potodo>`__
+| `Lien vers le dépôt <https://github.com/seluj78/potodo>`__
 
 Pogrep
 ~~~~~~
@@ -429,7 +495,7 @@ Pogrep
   d'autres fichiers.
 | Installez-le à l'aide de *pip* (``pip install pogrep``) dans un
   environnement.
-| `Lien vers le repository <https://github.com/JulienPalard/pogrep>`__
+| `Lien vers le dépôt <https://github.com/JulienPalard/pogrep>`__
 
 Padpo (beta)
 ~~~~~~~~~~~~~~~
@@ -438,7 +504,7 @@ Padpo (beta)
   du fichier .po.
 | Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
   ``python3.7`` ou plus.
-| `Lien vers le repository <https://github.com/vpoulailleau/padpo>`__
+| `Lien vers le dépôt <https://github.com/vpoulailleau/padpo>`__
 
 Powrap
 ~~~~~~
@@ -446,33 +512,28 @@ Powrap
 | Formateur de fichier .po.
 | Installez-le à l'aide de *pip* (``pip install powrap``) dans un
   environnement.
-| `Lien vers le repository <https://github.com/JulienPalard/powrap>`__
+| `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
 Ressources de traduction
 -------------------------
 
 - les canaux IRC sur freenode :
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_
-  Communauté python autour de la documentation française.
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_
-  Communauté python française.
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_
-  Communauté python autour de la documentation anglaise.
-- la `liste traductions AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_ ;
-- la `liste de diffusion doc-sig
-  <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
-- les `glossaires et dictionnaires de traduc.org
-  <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le
-  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_
-  de l'Office québécois de la langue française ;
-- le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_, car
-  il est déjà traduit ;
+
+  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
+  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
+  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
+- les listes de diffusion relatives à la documentation (courriel) :
+
+  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
+  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+- des glossaires et dictionnaires :
+  
+  - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
+  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit.
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- Wikipédia : En allant sur l'article d'un sujet sur la version anglaise
-  de Wikipédia, puis en basculant sur la version francaise pour voir
-  comment le sujet est traduit.
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
   résumé succint de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
