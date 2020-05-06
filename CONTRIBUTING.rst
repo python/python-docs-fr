@@ -274,6 +274,7 @@ built-in                   natif
 bytecode                   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
+caught (exception)         interceptée
 debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde
 double quote               guillemet
