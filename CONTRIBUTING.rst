@@ -269,7 +269,7 @@ argument                   argument (à ne pas confondre avec *paramètre*)
 backslash                  antislash, *backslash*
 backtrace                  trace d'appels, trace de pile
 bound                      lier
-bug                        bogue, *bug*
+bug                        bogue
 built-in                   natif
 bytecode                   code intermédiaire
 callback                   fonction de rappel
