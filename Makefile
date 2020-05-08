@@ -43,7 +43,7 @@ JOBS := auto
 .PHONY: all
 all: setup
 	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	cp --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
+	gcp --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS)   \
 	  -D locale_dirs=../locales   \
