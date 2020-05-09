@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../Doc/c-api/arg.rst:6
 msgid "Parsing arguments and building values"
@@ -88,6 +88,10 @@ msgid ""
 "this object.  You won't have to release any memory yourself. The only "
 "exceptions are ``es``, ``es#``, ``et`` and ``et#``."
 msgstr ""
+"En général, lorsqu'un format définit un pointeur vers un tampon, le tampon "
+"est géré par l'objet Python correspondant et le tampon partage la durée de "
+"vie de cet objet. vous n'avez pas à libérer de mémoire. Les seules "
+"exceptions sont ``es``, ``es#``, ``et`` et ``et#``."
 
 #: ../Doc/c-api/arg.rst:42
 msgid ""
@@ -117,6 +121,11 @@ msgid ""
 "object's :c:member:`PyBufferProcs.bf_releasebuffer` field is ``NULL``, which "
 "disallows mutable objects such as :class:`bytearray`."
 msgstr ""
+"Certains formats requièrent un :term:`objet compatible avec une chaîne "
+"d'octets <bytes-like object>` en lecture seule, et définissent un pointeur à "
+"la place d'une structure tampon. Ils fonctionnent en vérifiant que le champ :"
+"c:member:`PyBufferProcs.bf_releasebuffer` de l'objet est *NULL*, ce qui "
+"n'autorise pas les objets muables tels que :class:`bytearray`."
 
 #: ../Doc/c-api/arg.rst:58
 msgid ""
@@ -150,6 +159,13 @@ msgid ""
 "is raised. Unicode objects are converted to C strings using ``'utf-8'`` "
 "encoding. If this conversion fails, a :exc:`UnicodeError` is raised."
 msgstr ""
+"Convertit un objet Unicode en un pointeur vers une chaîne de caractères. "
+"S'il s'agit d'un pointeur vers une chaîne de caractères déjà existante, il "
+"est stocké dans la variable de type pointeur vers un caractère dont vous "
+"avez donné l'adresse. Une chaîne de caractères en C se termine par *NULL*. "
+"La chaîne de caractères Python ne doit donc pas contenir de caractère dont "
+"le code est *null*. Si elle en contient, une exception :exc:`ValueError` est "
+"levée. Si la conversion échoue, une :exc:`UnicodeError` est levée."
 
 #: ../Doc/c-api/arg.rst:77
 msgid ""
@@ -158,12 +174,19 @@ msgid ""
 "strings, it is preferable to use the ``O&`` format with :c:func:"
 "`PyUnicode_FSConverter` as *converter*."
 msgstr ""
+"Ce format n'accepte pas les :term:`objets compatibles avec une chaîne "
+"d'octets  <bytes-like object>`. Si vous voulez accepter les chemins du "
+"système de fichiers et les convertir vers des chaînes de caractères C, il "
+"est préférable d'utiliser le format ``O&`` avec :c:func:"
+"`PyUnicode_FSConverter` en tant que *converter*."
 
 #: ../Doc/c-api/arg.rst:83 ../Doc/c-api/arg.rst:150
 msgid ""
 "Previously, :exc:`TypeError` was raised when embedded null code points were "
 "encountered in the Python string."
 msgstr ""
+"Auparavant, une :exc:`TypeError` était levée quand la chaîne de caractères "
+"Python contenait des codes NULL."
 
 #: ../Doc/c-api/arg.rst:91
 msgid "``s*`` (:class:`str` or :term:`bytes-like object`) [Py_buffer]"
@@ -176,12 +199,19 @@ msgid ""
 "resulting C string may contain embedded NUL bytes. Unicode objects are "
 "converted to C strings using ``'utf-8'`` encoding."
 msgstr ""
+"Ce format accepte les objets Unicode et les *bytes-like object*. Cela "
+"remplit une structure :c:type:`Py_buffer` qui est fournie par l'appelant. "
+"Dans ce cas, la chaîne de caractères C qui en résulte peut contenir des "
+"octets NULL. Les objets Unicode sont convertis en chaînes de caractères C en "
+"utilisant l'encodage ``'utf-8'``."
 
 #: ../Doc/c-api/arg.rst:98
 msgid ""
 "``s#`` (:class:`str`, read-only :term:`bytes-like object`) [const char \\*, "
 "int or :c:type:`Py_ssize_t`]"
 msgstr ""
+"``s#`` (:class:`str`, :term:`bytes-like object` en lecture seule) [``const "
+"char \\*``, ``int`` ou :c:type:`Py_ssize_t`]"
 
 #: ../Doc/c-api/arg.rst:94
 msgid ""
@@ -190,6 +220,11 @@ msgid ""
 "second one its length. The string may contain embedded null bytes. Unicode "
 "objects are converted to C strings using ``'utf-8'`` encoding."
 msgstr ""
+"La même chose que ``s*``, mais n'accepte pas les objets muables. Le résultat "
+"est stocké dans deux variables C, la première est un pointeur vers une "
+"chaîne de caractères C, la seconde contient sa taille. La chaîne de "
+"caractères peut contenir des octets NULL. Les objets Unicode sont convertis "
+"vers des chaînes de caractères C utilisant l'encodage ``'utf-8'``."
 
 #: ../Doc/c-api/arg.rst:102 ../Doc/c-api/arg.rst:566
 msgid "``z`` (:class:`str` or ``None``) [const char \\*]"
@@ -211,19 +246,21 @@ msgstr ""
 "``z*`` (:class:`str`, :term:`bytes-like object` ou ``None``) [``Py_buffer``]"
 
 #: ../Doc/c-api/arg.rst:105
-#, fuzzy
 msgid ""
 "Like ``s*``, but the Python object may also be ``None``, in which case the "
 "``buf`` member of the :c:type:`Py_buffer` structure is set to ``NULL``."
 msgstr ""
-"Comme ``u``, mais l'objet Python peut aussi être ``None``, auquel cas le "
-"pointeur :c:type:`Py_UNICODE` vaut *NULL*."
+"Comme ``s*``, mais l'objet Python peut aussi être  ``None``, auquel cas le "
+"membre ``buf``, dont la structure est :c:type:`Py_buffer` est fixée à *NULL*."
 
 #: ../Doc/c-api/arg.rst:110
 msgid ""
 "``z#`` (:class:`str`, read-only :term:`bytes-like object` or ``None``) "
 "[const char \\*, int]"
 msgstr ""
+"``z#`` (:class:`str`, :term:`objet compatible avec une chaîne d'octets "
+"<bytes-like object>` en lecture seule ou ``None``) [constante char \\*, "
+"entier]"
 
 #: ../Doc/c-api/arg.rst:109
 #, fuzzy
@@ -237,6 +274,8 @@ msgstr ""
 #: ../Doc/c-api/arg.rst:120
 msgid "``y`` (read-only :term:`bytes-like object`) [const char \\*]"
 msgstr ""
+"``y`` (lecture seule :term:`objet compatible avec une chaîne d'octets <bytes-"
+"like object>`) [constante char \\*]"
 
 #: ../Doc/c-api/arg.rst:113
 msgid ""
@@ -245,12 +284,18 @@ msgid ""
 "contain embedded null bytes; if it does, a :exc:`ValueError` exception is "
 "raised."
 msgstr ""
+"Ce format convertit un *objet compatible avec une chaîne d'octets* en un "
+"pointeur C vers une chaîne de caractères ; il n'accepte pas les objets "
+"Unicode. Le tampon d'octets ne doit pas contenir d'octets *null* ; si c'est "
+"le cas, une exception  :exc:`ValueError` est levée."
 
 #: ../Doc/c-api/arg.rst:118
 msgid ""
 "Previously, :exc:`TypeError` was raised when embedded null bytes were "
 "encountered in the bytes buffer."
 msgstr ""
+"Auparavant, :exc:`TypeError` était levée lorsque des octets *null* étaient "
+"rencontrés dans le tampon d'octets."
 
 #: ../Doc/c-api/arg.rst:125
 msgid "``y*`` (:term:`bytes-like object`) [Py_buffer]"
@@ -265,6 +310,8 @@ msgstr ""
 #: ../Doc/c-api/arg.rst:129
 msgid "``y#`` (read-only :term:`bytes-like object`) [const char \\*, int]"
 msgstr ""
+"``y#`` (lecture seule :term:`objet compatible avec une chaîne d'octets "
+"<bytes-like object>`) [constante char \\*, entier]"
 
 #: ../Doc/c-api/arg.rst:128
 msgid ""
@@ -284,6 +331,10 @@ msgid ""
 "attempting any conversion.  Raises :exc:`TypeError` if the object is not a "
 "bytes object.  The C variable may also be declared as :c:type:`PyObject\\*`."
 msgstr ""
+"Nécessite que l'objet Python soit de type :class:`bytes`, sans avoir tenté "
+"de conversion. :exc:`TypeError` est levée si l'objet n'est pas un objet de "
+"type *bytes*. La variable C doit aussi être déclarée en tant que :c:type:"
+"`PyObject\\*`."
 
 #: ../Doc/c-api/arg.rst:139
 msgid "``Y`` (:class:`bytearray`) [PyByteArrayObject \\*]"
@@ -311,6 +362,13 @@ msgid ""
 "Python string must not contain embedded null code points; if it does, a :exc:"
 "`ValueError` exception is raised."
 msgstr ""
+"Convertit un objet Python Unicode en un pointeur C vers un tampon de "
+"caractères Unicode terminé par *NULL*. Vous devez passer l'adresse d'un "
+"pointeur :c:type:`Py_UNICODE`, qui sera rempli avec le pointeur vers un "
+"tampon Unicode existant. Veuillez noter que la taille d'un  :c:type:"
+"`Py_UNICODE` dépend des options de compilation (soit 16, soit 32 bits). La "
+"chaîne de caractères Python ne doit pas contenir de code *NULL*. Si elle en "
+"contient, une exception :exc:`ValueError` est levée."
 
 #: ../Doc/c-api/arg.rst:157 ../Doc/c-api/arg.rst:166 ../Doc/c-api/arg.rst:174
 #: ../Doc/c-api/arg.rst:182
