@@ -407,8 +407,8 @@ Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
 ``...`` en *ellipses* ``…``.
 
-=> Si vous voyez :
-| « -- » ou « --- » : faites :kbd:`Compose - - -`
+=> Si vous voyez :  
+| « -- » ou « --- » : faites :kbd:`Compose - - -`  
 | « ... » : faites :kbd:`Compose . . .`
 
 Le cas de « "…" »
@@ -419,7 +419,7 @@ guillemets anglais ``"``. Cependant, Python utilise les guillemets
 anglais comme délimiteurs de chaîne de caractères. Il convient donc de
 traduire les guillemets mais pas les délimiteurs de chaîne.
 
-=> Si vous voyez :
+=> Si vous voyez :  
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
