@@ -184,9 +184,9 @@ local.
 
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée par la commande **à l'exception** des fichiers de :
+
 - ``c-api/`` car c'est une partie très technique ;
-- ``whatsnew/`` car les anciennes versions de Python sont pour la plupart
-  obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
+- ``whatsnew/`` car les anciennes versions de Python sont pour la plupart obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
 - ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
