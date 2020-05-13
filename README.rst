@@ -43,11 +43,11 @@ Comment contribuer
 Vous pouvez contribuer :
 
 - en proposant des *pull requests* Github (solution recommandée) ;
-- en envoyant un patch à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+- en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
-Un guide pour contribuer au projet via Github se trouve dans
-`CONTRIBUTING.rst
-<https://github.com/python/python-docs-fr/blob/3.8/CONTRIBUTING.rst>`_.
+Consultez le
+`guide <https://github.com/python/python-docs-fr/blob/3.8/CONTRIBUTING.rst>`_
+pour apprendre les conventions à respecter dans la traduction française.
 
 
 Où obtenir de l'aide ?
@@ -56,8 +56,8 @@ Où obtenir de l'aide ?
 Le coordinateur de cette traduction est `Julien Palard <https://mdk.fr/>`_.
 
 N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
-<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou sur la
-`liste de diffusion des traductions de l'AFPy <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou par la
+`liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
 
 
 Historique du projet
