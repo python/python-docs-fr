@@ -20,17 +20,17 @@ où vous avez le droit de faire des modifications.
 
 .. code-block:: bash
 
-    # Clonez votre fork Github avec `git` en utilisant ssh :
+    # Clonez votre fork Github avec `git` en utilisant ssh
     git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
-    # *OU* HTTPS :
+    # *OU* HTTPS
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
-    # Allez dans le répertoire cloné :
+    # Allez dans le répertoire cloné
     cd python-docs-fr/
 
-    # Ajoutez le dépôt officiel (nommé upstream)
-    # Ceci permet à *git* de savoir quoi/où est *upstream*
+    # Ajoutez le dépôt officiel (nommé upstream),
+    # ceci permet à *git* de savoir quoi et où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 Ensuite, vous devez trouver un fichier sur lequel travailler
@@ -183,18 +183,18 @@ Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
 local.
 
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
-renvoyée par la commande **à l'exception** des fichiers de ``c-api`` car
-c'est une partie très technique, de ``whatsnew`` car les anciennes versions
-de Python sont pour la plupart obsolètes et leurs journaux de modifications
-ne sont pas les pages les plus consultées, et de ``distutils`` et
-``install`` car ces pages seront bientôt obsolètes. 
+renvoyée par la commande **à l'exception** des fichiers de :
+- ``c-api/`` car c'est une partie très technique ;
+- ``whatsnew/`` car les anciennes versions de Python sont pour la plupart
+  obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
+- ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
 *fuzzy* l'aide de `make fuzzy`).
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
-idée, et passer ensuite à la traduction de celles qui ne sont pas traduites.
+idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 Vous pouvez les trouver à l'aide de `make todo`…
 
 Vous pouvez aussi « traduire » des liens hypertextes

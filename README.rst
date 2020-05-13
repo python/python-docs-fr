@@ -47,7 +47,7 @@ Vous pouvez contribuer :
 
 Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.8/CONTRIBUTING.rst>`_
-pour apprendre les conventions à respecter dans la traduction française.
+pour apprendre les conventions à respecter.
 
 
 Où obtenir de l'aide ?
