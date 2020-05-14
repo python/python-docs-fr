@@ -579,6 +579,9 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
     git config diff.podiff.textconv podiff
 
 
+Pas d'inquiétude, cela ne change la façon dont Git voit les changements que sur
+les fichiers de la traduction, sans incidence sur les autres.
+
 Maintenance
 -----------
 
