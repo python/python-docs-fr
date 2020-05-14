@@ -23,7 +23,7 @@ où vous avez le droit de faire des modifications.
     # Clonez votre fork Github avec `git` en utilisant ssh
     git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
-    # *OU* HTTPS
+    # ou bien via HTTPS
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # Allez dans le répertoire cloné
@@ -94,7 +94,7 @@ ou `powrap library/sys.po` (un fichier en particulier) :
     powrap -m
 
 Pour l'orthographe, une liste blanche de certains termes techniques ou
-de noms propres, comme « Guido », « C99 » ou « sérialisable », est
+de noms propres, comme « Guido », « C99 » ou « sérialisable », est
 stockée dans le fichier « dict » à la racine du projet. Vous pouvez
 bien sûr y ajouter une entrée si nécessaire.
 La commande suivante lance les vérifications nécessaires.
@@ -412,7 +412,7 @@ Le cas de « --- », « -- »,  « ... »
 La version anglaise utilise les
 `smartquotes <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_,
 qui fonctionnent en anglais, mais causent des problèmes dans d'autres langues.
-Nous les avons donc désactivées dans la version française.
+Nous les avons donc désactivées (voir #303) dans la version française.
 
 Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
