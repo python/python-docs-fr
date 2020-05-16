@@ -103,6 +103,23 @@ La commande suivante lance les vérifications nécessaires.
 
     make verifs
 
+Nous pouvons alors compiler la documentation, c'est-à-dire générer les fichiers HTML
+utilisés par le site. Si la commande précédente s'est exécutée sans erreur, la
+compilation ne devrait pas échouer.
+
+.. code-block:: bash
+
+    make
+
+Il faut alors vérifier le rendu de la traduction « en vrai ». Lancez un serveur de
+documentation local :
+
+.. code-block:: bash
+
+    make serve
+
+Pour afficher la documentation, ouvrez l'adresse `<http://localhost:8000/library/sys.html>`_
+(ou tout autre port indiqué par la sortie de la commande précédente).
 
 C'est le moment de `git add` et `git commit`.
 `git add` place nos modifications dans l'index de Git en
@@ -606,8 +623,8 @@ Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
 
 
-Fusionner les fichiers *pot* de CPython
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fusion des fichiers *pot* de CPython
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -628,6 +645,15 @@ Lancer un *build* en local
 .. code-block:: bash
 
   make
+
+
+Lancer un serveur de documentation en local
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make serve
+
 
 
 Synchroniser la traduction avec Transifex
