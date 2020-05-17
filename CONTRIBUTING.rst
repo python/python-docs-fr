@@ -1,15 +1,22 @@
 Guide de contribution à la documention via GitHub.
 ==================================================
 
+Instructions
+------------
+
 Prérequis
----------
+~~~~~~~~~
 
 - un compte `Github <https://github.com/join>`_ ;
 - un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
-Instructions
-------------
+Équipez-vous aussi de quelques outils pour vous aider dans
+votre traduction (voir `Outils utiles pour la traduction`_).
+
+
+*fork* personnel
+~~~~~~~~~~~~~~~
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
@@ -33,6 +40,10 @@ où vous avez le droit de faire des modifications.
     # ceci permet à *git* de savoir quoi et où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
+
+Réservation d'un fichier
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Ensuite, vous devez trouver un fichier sur lequel travailler
 (pour vous aiguiller, vous pouvez vous rendre à `Que traduire ?`_ et lire
 les explications concernant `potodo`_ qui vous permettra de voir ce qui a
@@ -44,9 +55,6 @@ en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
 (par exemple « Je travaille sur library/sys.po »).
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
-
-Équipez-vous aussi de quelques outils pour vous aider dans
-votre traduction (voir `Outils utiles pour la traduction`_).
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -82,6 +90,7 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 
     poedit library/sys.po
 
+
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 Si vous n'utilisez pas Poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_
@@ -92,6 +101,10 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 .. code-block:: bash
 
     powrap -m
+
+
+Traduction
+~~~~~~~~~~
 
 Vous pouvez commencer à présent commencer à traduire le fichier.
 N'oubliez pas de respecter les `Conventions` du projet.
@@ -122,7 +135,11 @@ documentation local :
     make serve
 
 La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
-(ou tout autre port indiqué par la sortie de la commande précédente).
+(ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
+recommencer les étapes de cette section autant de fois que nécessaire.
+
+*pull request*
+~~~~~~~~~~~~~~
 
 C'est le moment de `git add` et `git commit`.
 `git add` place nos modifications dans l'index de Git en
@@ -164,7 +181,7 @@ sur une autre branche) :
 
 .. code-block:: bash
 
-    git checkout library/sys
+    git checkout library-sys
     git pull  # pour rapatrier les modifications que vous auriez acceptées
               # sur l'interface web.
 
@@ -196,7 +213,7 @@ les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 Que traduire ?
-~~~~~~~~~~~~~~
+--------------
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
 à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
@@ -239,7 +256,6 @@ Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
 lien vers un article de Wikipédia qui possède une traduction).
 Modifiez le lien et sa description dans ce cas.
 Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
-
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
@@ -368,8 +384,8 @@ underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
 
-Caractères spéciaux
--------------------
+Caractères spéciaux et typographie
+----------------------------------
 
 La touche de composition
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -550,6 +566,7 @@ Powrap
 | Installez-le à l'aide de *pip* (``pip install powrap``).
 | `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
+
 Ressources de traduction
 ------------------------
 
@@ -578,6 +595,7 @@ L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` o
 `reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
 Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
 page et génèrent une documentation au style très « lourd ». 
+
 
 Simplification des diffs git
 ----------------------------
@@ -608,6 +626,7 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
 Pas d'inquiétude, cela ne change la façon dont Git voit les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
+
 
 Maintenance
 -----------
@@ -648,16 +667,16 @@ Trouver les chaînes de caractères *fuzzy*
   make fuzzy
 
 
-Lancer un *build* en local
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+*build* local
+~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   make
 
 
-Lancer un serveur de documentation en local
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Serveur de documentation en local
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -665,8 +684,8 @@ Lancer un serveur de documentation en local
 
 
 
-Synchroniser la traduction avec Transifex
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Synchronisation de la traduction avec Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous aurez besoin de ``transifex-client`` et ``powrap``,
 depuis PyPI.
