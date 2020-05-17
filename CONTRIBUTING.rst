@@ -45,9 +45,9 @@ Réservation d'un fichier
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ensuite, vous devez trouver un fichier sur lequel travailler
-(pour vous aiguiller, vous pouvez vous rendre à `Que traduire ?`_ et lire
-les explications concernant `potodo`_ qui vous permettra de voir ce qui a
-déjà été traduit et ce qui ne l'a pas été).
+(pour vous aiguiller, lisez la section `Que traduire ?`_). Nous vous conseillons
+de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
+vous aidera grandement à produire une traduction de bonne qualité.
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
