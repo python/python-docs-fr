@@ -229,7 +229,7 @@ renvoyée par la commande **à l'exception** des fichiers de :
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
 de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
-mais dont la source en aglais a été remodifiée depuis (correction orthographique,
+mais dont la source en anglais a été remodifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
 généralement « faciles » à traduire.
 
@@ -240,14 +240,11 @@ idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 Conventions
 -----------
 
-Dans les fichiers, ne traduisez pas le contenu des balises telles que
-``:ref :...`` et ``:term :...``.
-
-Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
-(entouré par des astérisques).
-
-Pour les caractères spéciaux, référez-vous à la section
-`Caractères spéciaux`_.
+- dans les fichiers, ne traduisez pas le contenu des balises telles que
+``:ref :...`` et ``:term :...`` ;
+- si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
+(entouré par des astérisques) ;
+- pour les caractères spéciaux, référez-vous à la section `Caractères spéciaux et typographie`_.
 
 Liens hypertextes
 ~~~~~~~~~~~~~~~~~
