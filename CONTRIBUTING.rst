@@ -93,32 +93,35 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 
     powrap -m
 
+Vous pouvez commencer à présent commencer à traduire le fichier.
+N'oubliez pas de respecter les `Conventions` du projet.
+
 Pour l'orthographe, une liste blanche de certains termes techniques ou
 de noms propres, comme « Guido », « C99 » ou « sérialisable », est
 stockée dans le fichier « dict » à la racine du projet. Vous pouvez
 bien sûr y ajouter une entrée si nécessaire.
-La commande suivante lance les vérifications nécessaires.
+La commande suivante lance les vérifications nécessaires :
 
 .. code-block:: bash
 
     make verifs
 
-Nous pouvons alors compiler la documentation, c'est-à-dire générer les fichiers HTML
-utilisés par le site. Si la commande précédente s'est exécutée sans erreur, la
+Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
+utilisés par le site pour les relire. Si la commande précédente s'est exécutée sans erreur, la
 compilation ne devrait pas échouer.
 
 .. code-block:: bash
 
     make
 
-Il faut alors vérifier le rendu de la traduction « en vrai ». Lancez un serveur de
+Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
 documentation local :
 
 .. code-block:: bash
 
     make serve
 
-Pour afficher la documentation, ouvrez l'adresse `<http://localhost:8000/library/sys.html>`_
+La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
 (ou tout autre port indiqué par la sortie de la commande précédente).
 
 C'est le moment de `git add` et `git commit`.
@@ -196,7 +199,7 @@ Que traduire ?
 ~~~~~~~~~~~~~~
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
-à traduire. Une fois installé, utilisez la commande ``potodo`` dans votre clone
+à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
 local.
 
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
@@ -207,18 +210,18 @@ renvoyée par la commande **à l'exception** des fichiers de :
 - ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
-*fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
-*fuzzy* l'aide de `make fuzzy`).
+*fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
+de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
+mais dont la source en aglais a été remodifiée depuis (correction orthographique,
+changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
+généralement « faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
-Vous pouvez les trouver à l'aide de `make todo`…
 
-Vous pouvez aussi « traduire » des liens hypertextes
-(par exemple s'il s'agit d'un lien vers un article de Wikipédia qui possède une
-traduction).
-Modifiez le lien et sa description dans ce cas.
-Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
+
+Conventions
+-----------
 
 Dans les fichiers, ne traduisez pas le contenu des balises telles que
 ``:ref :...`` et ``:term :...``.
@@ -229,8 +232,14 @@ Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
 Pour les caractères spéciaux, référez-vous à la section
 `Caractères spéciaux`_.
 
-Conseils
---------
+Liens hypertextes
+~~~~~~~~~~~~~~~~~
+
+Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
+lien vers un article de Wikipédia qui possède une traduction).
+Modifiez le lien et sa description dans ce cas.
+Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
+
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
