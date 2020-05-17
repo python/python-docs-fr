@@ -107,7 +107,7 @@ Traduction
 ~~~~~~~~~~
 
 Vous pouvez commencer à présent commencer à traduire le fichier.
-N'oubliez pas de respecter les `Conventions` du projet.
+N'oubliez pas de respecter les `Conventions`_ du projet.
 
 Pour l'orthographe, une liste blanche de certains termes techniques ou
 de noms propres, comme « Guido », « C99 » ou « sérialisable », est
@@ -120,7 +120,7 @@ La commande suivante lance les vérifications nécessaires :
     make verifs
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
-utilisés par le site pour les relire. Si la commande précédente s'est exécutée sans erreur, la
+affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
 compilation ne devrait pas échouer.
 
 .. code-block:: bash
@@ -231,7 +231,7 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
 mais dont la source en anglais a été remodifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
-généralement « faciles » à traduire.
+généralement « plus faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
@@ -241,9 +241,9 @@ Conventions
 -----------
 
 - dans les fichiers, ne traduisez pas le contenu des balises telles que
-``:ref :...`` et ``:term :...`` ;
+  ``:ref :...`` et ``:term :...`` ;
 - si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
-(entouré par des astérisques) ;
+  (entouré par des astérisques) ;
 - pour les caractères spéciaux, référez-vous à la section `Caractères spéciaux et typographie`_.
 
 Liens hypertextes
@@ -621,7 +621,7 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
     git config diff.podiff.textconv podiff
 
 
-Pas d'inquiétude, cela ne change la façon dont Git voit les changements que sur
+Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
 
 
