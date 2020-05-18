@@ -1,5 +1,5 @@
-Guide de contribution à la documention via GitHub.
-==================================================
+Guide de contribution à la documention via GitHub
+=================================================
 
 Instructions
 ------------
@@ -20,7 +20,7 @@ votre traduction (voir `Outils utiles pour la traduction`_).
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
-``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
+``Fork``. Ceci crée une copie du projet sur votre compte Github, c'est un endroit
 où vous avez le droit de faire des modifications.
 
 Étape par étape :
@@ -106,8 +106,7 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 Traduction
 ~~~~~~~~~~
 
-Vous pouvez commencer à présent commencer à traduire le fichier.
-N'oubliez pas de respecter les `Conventions`_ du projet.
+Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
 
 Pour l'orthographe, une liste blanche de certains termes techniques ou
 de noms propres, comme « Guido », « C99 » ou « sérialisable », est
@@ -160,7 +159,7 @@ Puis on propage les modifications dans le dépôt local avec un commit.
 Poussez ensuite vos modifications sur votre fork Github.
 Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
 branche est liée à votre fork Github (et donc que vos futurs `git pull` et
-`git push` sachent quoi tirer)
+`git push` sachent quoi tirer).
 
 .. code-block:: bash
 
