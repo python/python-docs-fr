@@ -235,7 +235,6 @@ idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 Conventions
 -----------
 
-
 Prototypes et exemples
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -266,7 +265,6 @@ mais pas en
        resultat = function_de_la_biliotheque(argument_nomme=...)
        ...
 
-
 Liens hypertextes
 ~~~~~~~~~~~~~~~~~
 
@@ -274,6 +272,29 @@ Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
 lien vers un article de Wikipédia qui possède une traduction).
 Modifiez le lien et sa description dans ce cas.
 Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
+
+Balises
+~~~~~~~
+
+Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
+Vous devez cependant traduire les balises ``:term:...``, qui font référence à
+un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
+La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
+``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```
+
+Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
+terme que vous pouvez rencontrer.
+
+Style
+~~~~~
+
+Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
+en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
+agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
+conseillé — d'intervertir des propositions ou de réarranger des phrases de la
+documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
+équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
+garde aux anglicismes.
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
@@ -308,30 +329,6 @@ Utilisation du masculin
 Dans un souci de lisibilité et en accord avec la préconisation de
 l'Académie française, nous utilisons le masculin pour indiquer un
 genre neutre. Par exemple : l'utilisateur ou le lecteur.
-
-Style
-~~~~~
-
-Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
-en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
-agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
-conseillé — d'intervertir des propositions ou de réarranger des phrases de la
-documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
-équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
-garde aux anglicismes.
-
-Balises
-~~~~~~~
-
-Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
-Vous devez cependant traduire les balises ``:term:...``, qui font référence à
-un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
-La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:\`dictionary\``` en  ``:term:`dictionaire <dictionary>```
-
-Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
-terme que vous pouvez rencontrer.
-
 
 Glossaire
 ~~~~~~~~~
@@ -384,8 +381,8 @@ i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
 identifier                 identifiant
 immutable                  immuable
 import                     importation
-index                      indice (en particulier quand on parle de chaînes de
-                           caractères)
+index                      indice (en particulier quand on parle de chaînes
+                           de caractères)
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
@@ -409,10 +406,11 @@ simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
 statement                  instruction
 subprocess                 sous-processus
-support                    prendre en charge, implémenter (« supporter » n'a
-                           pas le même sens en français)
+support                    prendre en charge, implémenter (« supporter »
+                           n'a pas le même sens en français)
 specify                    définir, préciser (plutôt que « spécifier »)
-typically                  normalement, habituellement, comme d'habitude (plutôt que « typiquement »)
+typically                  normalement, habituellement, comme d'habitude
+                           (plutôt que « typiquement »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 tuple                      n-uplet
