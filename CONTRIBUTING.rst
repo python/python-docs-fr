@@ -239,11 +239,43 @@ idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 Conventions
 -----------
 
-- dans les fichiers, ne traduisez pas le contenu des balises telles que
+
+- dans les fichiers, ne traduisez pas le contenu des balises comme que
   ``:ref :...`` et ``:term :...`` ;
 - si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
   (entouré par des astérisques) ;
 - pour les caractères spéciaux, référez-vous à la section `Caractères spéciaux et typographie`_.
+
+Prototypes et exemples
+~~~~~~~~~~~~~~~~~~~~~~
+
+Il ne faut pas traduire le nom des paramètres d'une méthode ou d'une fonction mais les
+laisser tels quel entourés d'astérisques.
+Si la documentation contient des exemples, vous *pouvez* traduire les noms de variables
+utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
+
+.. code-block:: python
+
+    def sample_function():
+       result = stdlib_function(keyword_arg=...)
+       ...
+
+en
+
+.. code-block:: python
+
+    def fonction_exemple():
+       resultat = stdlib_function(keyword_arg=...)
+       ...
+
+mais pas en 
+
+.. code-block:: python
+
+    def fonction_exemple():
+       resultat = function_de_la_biliotheque(argument_nomme=...)
+       ...
+
 
 Liens hypertextes
 ~~~~~~~~~~~~~~~~~
