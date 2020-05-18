@@ -272,6 +272,9 @@ Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
 lien vers un article de Wikipédia qui possède une traduction).
 Modifiez le lien et sa description dans ce cas.
 Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
+Par exemple vous pouvez traduire ``Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>``
+en    ``https://fr.wikipedia.org/wiki/Jeu_de_la_vie``
+
 
 Balises
 ~~~~~~~
@@ -280,7 +283,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```
+``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
