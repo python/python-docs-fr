@@ -323,7 +323,22 @@ garde aux anglicismes.
 Balises
 ~~~~~~~
 
-Ne traduisez pas le contenu des balises comme ``:ref\ :...`` ou ``:term:...``.
+Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
+Vous devez cependant traduire les balises ``:term:...``, qui font référence à
+un concept ou une primitive Python défini dans le glossaire. La correspondance
+doit se faire sous la forme ``:term:nom_français<nom_anglais>`` Par exemple,
+traduisez 
+
+.. code-block:: rst
+   :term:`dictionary`
+
+en 
+
+.. code-block:: rst
+   :term:`dictionaire <dictionary>`
+
+Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
+terme que vous pouvez rencontrer.
 
 
 Glossaire
