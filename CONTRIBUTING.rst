@@ -108,10 +108,6 @@ Traduction
 
 Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
 
-Pour l'orthographe, une liste blanche de certains termes techniques ou
-de noms propres, comme « Guido », « C99 » ou « sérialisable », est
-stockée dans le fichier « dict » à la racine du projet. Vous pouvez
-bien sûr y ajouter une entrée si nécessaire.
 La commande suivante lance les vérifications nécessaires :
 
 .. code-block:: bash
@@ -240,12 +236,6 @@ Conventions
 -----------
 
 
-- dans les fichiers, ne traduisez pas le contenu des balises comme que
-  ``:ref :...`` et ``:term :...`` ;
-- si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
-  (entouré par des astérisques) ;
-- pour les caractères spéciaux, référez-vous à la section `Caractères spéciaux et typographie`_.
-
 Prototypes et exemples
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -330,17 +320,28 @@ documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
 équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
 garde aux anglicismes.
 
+Balises
+~~~~~~~
+
+Ne traduisez pas le contenu des balises comme ``:ref :...`` ou ``:term :...``.
+
+
 Glossaire
 ~~~~~~~~~
 
-Afin d'assurer la cohérence de la traduction, voici quelques propositions et
-rappels pour les termes fréquents à traduire.
+Afin d'assurer la cohérence de la traduction, voici quelques 
+termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
+« C99 » ou de certains anglicismes comme « sérialisable » ou « implémentation»,
+est stockée dans le fichier « dict » à la racine du projet. Vous pouvez
+y ajouter une entrée si cela est nécessaire.
+Si vous devez *absolument* utiliser un mot anglais, mettez-le en italique
+(entouré par des astérisques).
 
 Pour trouver facilement comment un terme est déjà traduit dans la
 documentation, vous pouvez utiliser `pogrep`_.
 
 ========================== ===============================================
-Terme                      Traduction proposée
+Terme                      Traduction
 ========================== ===============================================
 -like                      -compatible
 abstract data type         type abstrait
