@@ -328,13 +328,14 @@ Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez : 
 
-<https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 .. code-block:: bash
+
    :term:`dictionary`
 
 en 
 
 .. code-block:: bash
+   
    :term:`dictionaire <dictionary>`
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
