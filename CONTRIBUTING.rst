@@ -323,7 +323,7 @@ garde aux anglicismes.
 Balises
 ~~~~~~~
 
-Ne traduisez pas le contenu des balises comme ``:ref :...`` ou ``:term :...``.
+Ne traduisez pas le contenu des balises comme ``:ref\ :...`` ou ``:term:...``.
 
 
 Glossaire
