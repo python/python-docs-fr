@@ -272,8 +272,8 @@ Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
 lien vers un article de Wikipédia qui possède une traduction).
 Modifiez le lien et sa description dans ce cas.
 Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
-Par exemple vous pouvez traduire ``Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>``
-en    ``https://fr.wikipedia.org/wiki/Jeu_de_la_vie``
+Par exemple vous pouvez traduire ```Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_``
+en ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
 
 
 Balises
