@@ -28,6 +28,7 @@ CPYTHON_PATH := ../cpython/
 LANGUAGE := fr
 BRANCH := 3.8
 
+.SILENT:
 
 # Internal variables
 
@@ -43,7 +44,7 @@ JOBS := auto
 .PHONY: all
 all: setup
 	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	cp --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
+	cp -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2 
 	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS)   \
 	  -D locale_dirs=../locales   \
@@ -86,9 +87,9 @@ setup: venv
 
 .PHONY: venv
 venv:
-	@if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	@$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
-	@if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
+	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
+	$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
+	if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
 	    $(VENV)/bin/pip install -q --upgrade pip; \
 	fi
 
@@ -100,7 +101,7 @@ serve:
 
 .PHONY: progress
 progress:
-	@$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
+	$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
 	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
@@ -121,9 +122,9 @@ DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 spell: venv $(DESTS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
-	@echo "Checking $<..."
-	@mkdir -p $(@D)
-	@$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
+	echo "Checking $<..."
+	mkdir -p $(@D)
+	$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
 fuzzy: venv
@@ -162,5 +163,5 @@ merge: setup
 
 .PHONY: clean
 clean:
-	rm -fr venv $(POSPELL_TMP_DIR)
+	rm -fr $(VENV) $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
