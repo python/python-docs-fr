@@ -299,6 +299,7 @@ et al.                     et autres, `à accorder
                            suivant le contexte
 export                     exportation
 expression                 expression
+framework                  cadriciel
 garbage collector          ramasse-miettes
 getter                     accesseur
 i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
