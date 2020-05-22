@@ -238,15 +238,16 @@ Conventions
 Prototypes et exemples
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Il ne faut pas traduire le nom des paramètres d'une méthode ou d'une fonction mais les
-laisser tels quel entourés d'astérisques.
-Si la documentation contient des exemples, vous *pouvez* traduire les noms de variables
+Il ne faut pas traduire le nom des éléments de la bibliothèque standard (noms
+de fonctions, paramètres de ces fonctions, constantes etc.) mais les laisser
+tels quel, entourés d'astérisques dans les blocs de texte.
+Si la documentation contient des exemples, vous *pouvez* traduire les noms
 utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
 
 .. code-block:: python
 
     def sample_function():
-       result = stdlib_function(keyword_arg=...)
+       result = thread.join(timeout=...)
        ...
 
 en
@@ -254,7 +255,7 @@ en
 .. code-block:: python
 
     def fonction_exemple():
-       resultat = stdlib_function(keyword_arg=...)
+       resultat = thread.join(timeout=...)
        ...
 
 mais pas en 
@@ -262,18 +263,18 @@ mais pas en
 .. code-block:: python
 
     def fonction_exemple():
-       resultat = function_de_la_biliotheque(argument_nomme=...)
+       resultat = fildexécution.attendre(délai=...)
        ...
 
 Liens hypertextes
 ~~~~~~~~~~~~~~~~~
 
-Il faut « traduire » les liens hypertextes (par exemple s'il s'agit d'un
-lien vers un article de Wikipédia qui possède une traduction).
-Modifiez le lien et sa description dans ce cas.
-Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
-Par exemple vous pouvez traduire ```Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_``
-en ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
+Il faut transformer les liens hypertextes qui redirigent vers une page dont il
+existe une version française (c'est notamment très souvent le cas pour les
+articles de Wikipédia). Modifiez le lien *et* sa description dans ce cas.
+Si aucune traduction de la cible n'existe, ne traduisez pas la description.
+Par exemple, ```Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_``
+doit devenir ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
 
 
 Balises
