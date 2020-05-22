@@ -226,7 +226,7 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
 mais dont la source en anglais a été remodifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
-généralement « plus faciles » à traduire.
+généralement plus « faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
