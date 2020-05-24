@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 83d3202b92fb4c2fc6df5b035d57f3a1cf715f20
+CPYTHON_CURRENT_COMMIT := dc3239177ff26cb6a12e437a1f507be730fe8ba7
 
 CPYTHON_PATH := ../cpython/
 
@@ -44,7 +44,7 @@ JOBS := auto
 .PHONY: all
 all: setup
 	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	cp -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2 
+	cp -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
 	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS)   \
 	  -D locale_dirs=../locales   \
