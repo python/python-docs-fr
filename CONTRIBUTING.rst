@@ -1,19 +1,26 @@
-Guide de contribution à la documention via GitHub.
-==================================================
+Guide de contribution à la documention via GitHub
+=================================================
+
+Instructions
+------------
 
 Prérequis
----------
+~~~~~~~~~
 
 - un compte `Github <https://github.com/join>`_ ;
 - un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
-Instructions
-------------
+Équipez-vous aussi de quelques outils pour vous aider dans
+votre traduction (voir `Outils utiles pour la traduction`_).
+
+
+*fork* personnel
+~~~~~~~~~~~~~~~
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
-``Fork``. Ceci crée une copie du projet sur votre compte Github : un endroit
+``Fork``. Ceci crée une copie du projet sur votre compte Github, c'est un endroit
 où vous avez le droit de faire des modifications.
 
 Étape par étape :
@@ -33,10 +40,14 @@ où vous avez le droit de faire des modifications.
     # ceci permet à *git* de savoir quoi et où est *upstream*
     git remote add upstream https://github.com/python/python-docs-fr.git
 
+
+Réservation d'un fichier
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Ensuite, vous devez trouver un fichier sur lequel travailler
-(pour vous aiguiller, vous pouvez vous rendre à `Que traduire ?`_ et lire
-les explications concernant `potodo`_ qui vous permettra de voir ce qui a
-déjà été traduit et ce qui ne l'a pas été).
+(pour vous aiguiller, lisez la section `Que traduire ?`_). Nous vous conseillons
+de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
+vous aidera grandement à produire une traduction de bonne qualité.
 
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
@@ -44,9 +55,6 @@ en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
 (par exemple « Je travaille sur library/sys.po »).
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
-
-Équipez-vous aussi de quelques outils pour vous aider dans
-votre traduction (voir `Outils utiles pour la traduction`_).
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -82,6 +90,7 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 
     poedit library/sys.po
 
+
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 Si vous n'utilisez pas Poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_
@@ -93,16 +102,39 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 
     powrap -m
 
-Pour l'orthographe, une liste blanche de certains termes techniques ou
-de noms propres, comme « Guido », « C99 » ou « sérialisable », est
-stockée dans le fichier « dict » à la racine du projet. Vous pouvez
-bien sûr y ajouter une entrée si nécessaire.
-La commande suivante lance les vérifications nécessaires.
+
+Traduction
+~~~~~~~~~~
+
+Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
+
+La commande suivante lance les vérifications nécessaires :
 
 .. code-block:: bash
 
     make verifs
 
+Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
+affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
+compilation ne devrait pas échouer.
+
+.. code-block:: bash
+
+    make
+
+Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
+documentation local :
+
+.. code-block:: bash
+
+    make serve
+
+La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
+(ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
+recommencer les étapes de cette section autant de fois que nécessaire.
+
+*pull request*
+~~~~~~~~~~~~~~
 
 C'est le moment de `git add` et `git commit`.
 `git add` place nos modifications dans l'index de Git en
@@ -123,7 +155,7 @@ Puis on propage les modifications dans le dépôt local avec un commit.
 Poussez ensuite vos modifications sur votre fork Github.
 Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
 branche est liée à votre fork Github (et donc que vos futurs `git pull` et
-`git push` sachent quoi tirer)
+`git push` sachent quoi tirer).
 
 .. code-block:: bash
 
@@ -144,7 +176,7 @@ sur une autre branche) :
 
 .. code-block:: bash
 
-    git checkout library/sys
+    git checkout library-sys
     git pull  # pour rapatrier les modifications que vous auriez acceptées
               # sur l'interface web.
 
@@ -176,10 +208,10 @@ les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 Que traduire ?
-~~~~~~~~~~~~~~
+--------------
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
-à traduire. Une fois installé, utilisez la commande ``potodo`` dans votre clone
+à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
 local.
 
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
@@ -190,30 +222,83 @@ renvoyée par la commande **à l'exception** des fichiers de :
 - ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
-*fuzzy* pour aider à garder la documentation à jour (trouvez les entrées
-*fuzzy* l'aide de `make fuzzy`).
+*fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
+de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
+mais dont la source en anglais a été remodifiée depuis (correction orthographique,
+changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
+généralement plus « faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
-Vous pouvez les trouver à l'aide de `make todo`…
 
-Vous pouvez aussi « traduire » des liens hypertextes
-(par exemple s'il s'agit d'un lien vers un article de Wikipédia qui possède une
-traduction).
-Modifiez le lien et sa description dans ce cas.
-Si aucune traduction de la cible n'existe, ne traduisez pas le titre.
 
-Dans les fichiers, ne traduisez pas le contenu des balises telles que
-``:ref :...`` et ``:term :...``.
+Conventions
+-----------
 
-Si vous devez absolument utiliser un mot anglais, mettez-le en *italique*
-(entouré par des astérisques).
+Prototypes et exemples
+~~~~~~~~~~~~~~~~~~~~~~
 
-Pour les caractères spéciaux, référez-vous à la section
-`Caractères spéciaux`_.
+Il ne faut pas traduire le nom des éléments de la bibliothèque standard (noms
+de fonctions, paramètres de ces fonctions, constantes etc.) mais les laisser
+tels quel, entourés d'astérisques dans les blocs de texte.
+Si la documentation contient des exemples, vous *pouvez* traduire les noms
+utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
 
-Conseils
---------
+.. code-block:: python
+
+    def sample_function():
+       result = thread.join(timeout=...)
+       ...
+
+en
+
+.. code-block:: python
+
+    def fonction_exemple():
+       resultat = thread.join(timeout=...)
+       ...
+
+mais pas en 
+
+.. code-block:: python
+
+    def fonction_exemple():
+       resultat = fildexécution.attendre(délai=...)
+       ...
+
+Liens hypertextes
+~~~~~~~~~~~~~~~~~
+
+Il faut transformer les liens hypertextes qui redirigent vers une page dont il
+existe une version française (c'est notamment très souvent le cas pour les
+articles de Wikipédia). Modifiez le lien *et* sa description dans ce cas.
+Si aucune traduction de la cible n'existe, ne traduisez pas la description.
+Par exemple, ```Conway's Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_``
+doit devenir ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
+
+
+Balises
+~~~~~~~
+
+Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
+Vous devez cependant traduire les balises ``:term:...``, qui font référence à
+un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
+La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
+``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
+
+Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
+terme que vous pouvez rencontrer.
+
+Style
+~~~~~
+
+Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
+en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
+agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
+conseillé — d'intervertir des propositions ou de réarranger des phrases de la
+documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
+équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
+garde aux anglicismes.
 
 Utilisation du futur
 ~~~~~~~~~~~~~~~~~~~~
@@ -249,28 +334,22 @@ Dans un souci de lisibilité et en accord avec la préconisation de
 l'Académie française, nous utilisons le masculin pour indiquer un
 genre neutre. Par exemple : l'utilisateur ou le lecteur.
 
-Style
-~~~~~
-
-Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
-en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
-agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
-conseillé — d'intervertir des propositions ou de réarranger des phrases de la
-documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
-équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
-garde aux anglicismes.
-
 Glossaire
 ~~~~~~~~~
 
-Afin d'assurer la cohérence de la traduction, voici quelques propositions et
-rappels pour les termes fréquents à traduire.
+Afin d'assurer la cohérence de la traduction, voici quelques 
+termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
+« C99 » ou de certains anglicismes comme « sérialisable » ou « implémentation»,
+est stockée dans le fichier « dict » à la racine du projet. Vous pouvez
+y ajouter une entrée si cela est nécessaire.
+Si vous devez *absolument* utiliser un mot anglais, mettez-le en italique
+(entouré par des astérisques).
 
 Pour trouver facilement comment un terme est déjà traduit dans la
 documentation, vous pouvez utiliser `pogrep`_.
 
 ========================== ===============================================
-Terme                      Traduction proposée
+Terme                      Traduction
 ========================== ===============================================
 -like                      -compatible
 abstract data type         type abstrait
@@ -299,6 +378,7 @@ et al.                     et autres, `à accorder
                            suivant le contexte
 export                     exportation
 expression                 expression
+framework                  cadriciel
 garbage collector          ramasse-miettes
 getter                     accesseur
 i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
@@ -306,8 +386,8 @@ i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
 identifier                 identifiant
 immutable                  immuable
 import                     importation
-index                      indice (en particulier quand on parle de chaînes de
-                           caractères)
+index                      indice (en particulier quand on parle de chaînes
+                           de caractères)
 installer                  installateur
 interpreter                interpréteur
 library                    bibliothèque
@@ -331,10 +411,11 @@ simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
 statement                  instruction
 subprocess                 sous-processus
-support                    prendre en charge, implémenter (« supporter » n'a
-                           pas le même sens en français)
+support                    prendre en charge, implémenter (« supporter »
+                           n'a pas le même sens en français)
 specify                    définir, préciser (plutôt que « spécifier »)
-typically                  normalement, habituellement, comme d'habitude (plutôt que « typiquement »)
+typically                  normalement, habituellement, comme d'habitude
+                           (plutôt que « typiquement »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 tuple                      n-uplet
@@ -342,8 +423,8 @@ underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
 
-Caractères spéciaux
--------------------
+Caractères spéciaux et typographie
+----------------------------------
 
 La touche de composition
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -524,6 +605,7 @@ Powrap
 | Installez-le à l'aide de *pip* (``pip install powrap``).
 | `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
+
 Ressources de traduction
 ------------------------
 
@@ -553,6 +635,7 @@ L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` o
 Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
 page et génèrent une documentation au style très « lourd ». 
 
+
 Simplification des diffs git
 ----------------------------
 
@@ -580,8 +663,9 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
     git config diff.podiff.textconv podiff
 
 
-Pas d'inquiétude, cela ne change la façon dont Git voit les changements que sur
+Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
+
 
 Maintenance
 -----------
@@ -606,8 +690,8 @@ Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
 
 
-Fusionner les fichiers *pot* de CPython
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fusion des fichiers *pot* de CPython
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -622,16 +706,25 @@ Trouver les chaînes de caractères *fuzzy*
   make fuzzy
 
 
-Lancer un *build* en local
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+*build* local
+~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   make
 
 
-Synchroniser la traduction avec Transifex
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Serveur de documentation en local
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make serve
+
+
+
+Synchronisation de la traduction avec Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous aurez besoin de ``transifex-client`` et ``powrap``,
 depuis PyPI.
