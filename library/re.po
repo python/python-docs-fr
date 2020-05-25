@@ -47,7 +47,6 @@ msgstr ""
 "remplacement doit être du même type que le motif et la chaîne analysée."
 
 #: ../Doc/library/re.rst:24
-#, fuzzy
 msgid ""
 "Regular expressions use the backslash character (``'\\'``) to indicate "
 "special forms or to allow special characters to be used without invoking "
@@ -68,7 +67,11 @@ msgstr ""
 "littérales ; par exemple, pour rechercher un *backslash* littéral il "
 "faudrait écrire ``'\\\\\\\\'`` comme motif, parce que l'expression "
 "rationnelle devrait être ``\\\\`` et chaque *backslash* doit être représenté "
-"par ``\\\\`` au sein des chaînes littérales Python."
+"par ``\\\\`` au sein des chaînes littérales Python. Notez aussi qu'une "
+"séquence d'échappement invalide en raison de l'utilisation de *backslash* au "
+"sens de Python dans une chaîne littérale lève un :exc:`DeprecationWarning` "
+"qui, dans le futur, deviendra une :exc:`SyntaxError`. Ceci se produit même "
+"si la séquence d'échappement est valide en tant qu'expression régulière."
 
 #: ../Doc/library/re.rst:36
 msgid ""
@@ -1109,7 +1112,6 @@ msgid "``\\W``"
 msgstr "``\\W``"
 
 #: ../Doc/library/re.rst:540
-#, fuzzy
 msgid ""
 "Matches any character which is not a word character. This is the opposite of "
 "``\\w``. If the :const:`ASCII` flag is used this becomes the equivalent of "
@@ -1119,7 +1121,8 @@ msgstr ""
 "Valide tout caractère qui n'est pas un caractère de mot. C'est l'opposé de ``"
 "\\w``. Si l'option :const:`ASCII` est utilisée, cela devient équivalent à "
 "``[^a-zA-Z0-9_]``. Si l'option :const:`LOCALE` est utilisée, les caractères "
-"considérés alphanumériques dans la locale, et le tiret bas, seront acceptés."
+"considérés alphanumériques dans la locale, et le tiret bas, ne correspondent "
+"pas."
 
 #: ../Doc/library/re.rst:549
 msgid "``\\Z``"
@@ -1147,16 +1150,15 @@ msgstr ""
 "caractères.)"
 
 #: ../Doc/library/re.rst:575
-#, fuzzy
 msgid ""
 "``'\\u'``, ``'\\U'``, and ``'\\N'`` escape sequences are only recognized in "
 "Unicode patterns.  In bytes patterns they are errors.  Unknown escapes of "
 "ASCII letters are reserved for future use and treated as errors."
 msgstr ""
-"Les séquences d'échappement ``'\\u'`` et ``'\\U'`` sont seulement reconnues "
-"dans les motifs Unicode.  Dans les motifs de *byte*, ce sont des erreurs. "
-"Les échappements inconnus de lettres ASCII sont réservés pour une "
-"utilisation future et sont considérés comme des erreurs."
+"Les séquences d'échappement ``'\\u'``, ``'\\U'`` et ``'\\N'`` sont seulement "
+"reconnues dans les motifs Unicode. Dans les motifs d'octets (type *bytes*), "
+"ce sont des erreurs. Les échappements inconnus de lettres ASCII sont "
+"réservés pour une utilisation future et sont considérés comme des erreurs."
 
 #: ../Doc/library/re.rst:579
 msgid ""
@@ -1187,6 +1189,9 @@ msgid ""
 "The ``'\\N{name}'`` escape sequence has been added. As in string literals, "
 "it expands to the named Unicode character (e.g. ``'\\N{EM DASH}'``)."
 msgstr ""
+"La séquence d'échappement ``'\\N{name}'`` a été ajoutée. Comme avec des "
+"chaînes de caractères littérales, elle est transformée vers le caractère "
+"Unicode correspondant (par exemple ``'\\N{EM DASH}'``)."
 
 #: ../Doc/library/re.rst:598
 msgid "Module Contents"
@@ -1318,15 +1323,15 @@ msgid ""
 "combination with the :const:`IGNORECASE` flag, they will match the 52 ASCII "
 "letters and 4 additional non-ASCII letters: 'İ' (U+0130, Latin capital "
 "letter I with dot above), 'ı' (U+0131, Latin small letter dotless i), 'ſ' (U"
-"+017F, Latin small letter long s) and 'K' (U+212A, Kelvin sign). If the :"
+"+017F, Latin small letter long s) and 'K' (U+212A, Kelvin sign). If the :"
 "const:`ASCII` flag is used, only letters 'a' to 'z' and 'A' to 'Z' are "
 "matched."
 msgstr ""
 "À noter : quand les motifs Unicode ``[a-z]`` ou ``[A-Z]`` sont utilisés en "
 "combinaison avec la constante :const:`IGNORECASE`, ils correspondront aux 52 "
-"caractères ASCII et aux 4 caractères non ASCII : 'İ' (*U+0130*, Latin "
+"caractères ASCII et aux 4 caractères non ASCII : 'İ' (*U+0130*, Latin "
 "majuscule I avec un point au-dessus), 'ı' (*U+0131*, Latin minuscule sans "
-"point au-dessus), 'ſ' (*U+017F*, Latin minuscule *long s*) et 'K' (*U+212A*, "
+"point au-dessus), 'ſ' (*U+017F*, Latin minuscule *long s*) et 'K' (*U+212A*, "
 "*Kelvin sign*). Si la constante :const:`ASCII` est utilisée, seuls les "
 "caractères 'a' à 'z' et 'A' à 'Z' seront concernés."
 
@@ -1699,12 +1704,11 @@ msgstr ""
 "métacaractères d'expressions rationnelles.  Par exemple ::"
 
 #: ../Doc/library/re.rst:945
-#, fuzzy
 msgid ""
 "This function must not be used for the replacement string in :func:`sub` "
 "and :func:`subn`, only backslashes should be escaped.  For example::"
 msgstr ""
-"Ces fonctions ne doivent pas être utilisées pour la chaîne de remplacement "
+"Cette fonction ne doit pas être utilisée pour la chaîne de remplacement "
 "dans :func:`sub` et :func:`subn`, seuls les antislash devraient être "
 "échappés. Par exemple ::"
 
@@ -1719,6 +1723,10 @@ msgid ""
 "``'/'``, ``':'``, ``';'``, ``'<'``, ``'='``, ``'>'``, ``'@'``, and ``\"`\"`` "
 "are no longer escaped."
 msgstr ""
+"Seuls les caractères qui peuvent avoir une signification spéciale dans une "
+"expression rationnelle sont échappés. De ce fait, ``'!'``, ``'\"'``, "
+"``'%'``, ``\"'\"``, ``','``, ``'/'``, ``':'``, ``';'``, ``'<'``, ``'='``, "
+"``'>'``, ``'@'``, et ``\"`\"`` ne sont plus échappés."
 
 #: ../Doc/library/re.rst:965
 msgid "Clear the regular expression cache."
@@ -2177,13 +2185,12 @@ msgid "Checking for a Pair"
 msgstr "Rechercher une paire"
 
 #: ../Doc/library/re.rst:1344
-#, fuzzy
 msgid ""
 "In this example, we'll use the following helper function to display match "
 "objects a little more gracefully::"
 msgstr ""
-"Dans cet exemple, nous utiliserons cette fonction de facilité pour afficher "
-"les objets de correspondance sous une meilleure forme ::"
+"Dans cet exemple, nous nous aidons de la fonction suivante pour afficher de "
+"manière plus jolie les objets qui correspondent ::"
 
 #: ../Doc/library/re.rst:1352
 msgid ""
@@ -2216,7 +2223,6 @@ msgstr ""
 "utiliser des références arrière comme ::"
 
 #: ../Doc/library/re.rst:1377
-#, fuzzy
 msgid ""
 "To find out what card the pair consists of, one could use the :meth:`~Match."
 "group` method of the match object in the following manner::"
@@ -2384,13 +2390,12 @@ msgstr ""
 "démontré dans l'exemple suivant qui crée un répertoire téléphonique."
 
 #: ../Doc/library/re.rst:1484
-#, fuzzy
 msgid ""
 "First, here is the input.  Normally it may come from a file, here we are "
 "using triple-quoted string syntax"
 msgstr ""
-"Premièrement, voici l'entrée.  Elle provient normalement d'un fichier, nous "
-"utilisons ici une chaîne à guillemets triples ::"
+"Tout d'abord, voici l'entrée. Elle provient normalement d'un fichier, nous "
+"utilisons ici une chaîne à guillemets triples"
 
 #: ../Doc/library/re.rst:1497
 msgid ""
