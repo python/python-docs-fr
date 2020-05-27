@@ -64,7 +64,7 @@ Historique du projet
 --------------------
 
 - vers 2000 : `lancement du projet <https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ ;
-- vers 2012 : `reprise `<https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
+- vers 2012 : `reprise <https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
 - 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
 
 Une `vidéo <https://youtu.be/azXmvpEJMhU>`_ de `Jules Lasne <https://github.com/Seluj78>`_ montre l'évolution du dépôt.
