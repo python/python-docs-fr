@@ -252,7 +252,7 @@ Conventions
 -----------
 
 Certaines conventions ont été édictées pour homogénéiser la traduction.
-Il faut suivre les règles de `Style`_ imposées, les `Règles rst`_ et
+Il faut suivre les règles de `style`_ imposées, les `Règles rst`_ et
 les traductions déjà définies dans le `Glossaire`_.
 
 
