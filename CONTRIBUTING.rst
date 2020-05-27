@@ -106,10 +106,10 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 Traduction
 ~~~~~~~~~~
 
-Vous pouvez dès à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
+Vous pouvez dès à présent commencer à traduire le fichier en respectant les `conventions <Conventions>`_ du projet.
 Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
-bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo <Padpo (beta)`_). En cas
-de doute, un `Glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
+bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo <Padpo (beta)>`_). En cas
+de doute, un `glossaire <Glossaire>`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
 en anglais.
 
 .. code-block:: bash
@@ -252,8 +252,8 @@ Conventions
 -----------
 
 Certaines conventions ont été édictées pour homogénéiser la traduction.
-Il faut suivre les règles de `style <Style>`_ imposées, les
-`règles rst <Règles rst>`_ et les traductions déjà définies dans le
+Il faut suivre les règles de :ref:`style <Style>`_ imposées, les
+`règles rst <Règles rst>`_ et les traductions déjà définies dans le
 `glossaire <Glossaire>`_.
 
 
