@@ -16,7 +16,7 @@ votre traduction (voir `Outils utiles pour la traduction`_).
 
 
 *fork* personnel
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
@@ -94,7 +94,7 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 Si vous n'utilisez pas Poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_
-(voir la section *outils*) qui reformate correctement le fichier que avez vous avez modifié.
+(voir la section *outils*) qui reformate correctement le fichier que vous avez modifié.
 Exécutez `powrap -m` (reformater tous les fichiers modifiés)
 ou `powrap library/sys.po` (un fichier en particulier) :
 
@@ -106,7 +106,7 @@ ou `powrap library/sys.po` (un fichier en particulier) :
 Traduction
 ~~~~~~~~~~
 
-Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
+Vous pouvez dès à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
 
 La commande suivante lance les vérifications nécessaires :
 
@@ -305,7 +305,7 @@ Utilisation du futur
 
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
-originale utilise souvent le futur : « if you do this, il will produce
+originale utilise souvent le futur : « if you do this, it will produce
 that… ». En français, l'utilisation du présent convient tout à fait et le
 présent est souvent plus facile à lire : « si vous faites ceci, il se
 produit cela… ». On ne conserve le futur que si la seconde proposition
