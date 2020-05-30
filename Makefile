@@ -41,10 +41,27 @@ WORKTREES := $(VENV)/worktrees/
 WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
 
+# Detect OS
+
+ifeq '$(findstring ;,$(PATH))' ';'
+    detected_OS := Windows
+else
+    detected_OS := $(shell uname 2>/dev/null || echo Unknown)
+    detected_OS := $(patsubst CYGWIN%,Cygwin,$(detected_OS))
+    detected_OS := $(patsubst MSYS%,MSYS,$(detected_OS))
+    detected_OS := $(patsubst MINGW%,MSYS,$(detected_OS))
+endif
+
+ifeq ($(detected_OS),Darwin)        # Mac OS X
+    CP_CMD := gcp                   # accessible with `brew install coreutils` or `brew upgrade coreutils`
+else
+    CP_CMD := cp
+endif
+
 .PHONY: all
 all: setup
 	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	cp -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
+	$(CP_CMD) -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
 	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
 	  SPHINXOPTS='-qW -j$(JOBS)   \
 	  -D locale_dirs=../locales   \
@@ -81,7 +98,7 @@ setup: venv
 	    fi;                                                                              \
 	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
 	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
-	    $(WORKTREE)/Doc/venv/bin/python -m pip install Sphinx==2.2 docutils==0.15;                      \
+	    $(WORKTREE)/Doc/venv/bin/python -m pip install Sphinx==2.2.2 docutils==0.15;                      \
 	fi
 
 
