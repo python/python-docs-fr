@@ -138,11 +138,10 @@ La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html
 (ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
 recommencer les étapes de cette section autant de fois que nécessaire.
 
-.. warning::
-        Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
-        « la traduction devrait commencer par une majuscule » car c'est le cas pour
-        la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
-        *affichez et relisez la page HTML produite* avec ``make serve``.
+Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
+« la traduction devrait commencer par une majuscule » car c'est le cas pour
+la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
+*affichez et relisez la page HTML produite* avec ``make serve``.
 
 *pull request*
 ~~~~~~~~~~~~~~
