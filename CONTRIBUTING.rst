@@ -93,15 +93,6 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
-Si vous n'utilisez pas Poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_
-(voir la section *outils*) qui reformate correctement le fichier que vous avez modifié.
-Exécutez `powrap -m` (reformater tous les fichiers modifiés)
-ou `powrap library/sys.po` (un fichier en particulier) :
-
-.. code-block:: bash
-
-    powrap -m
-
 
 Traduction
 ~~~~~~~~~~
@@ -146,6 +137,13 @@ documentation local :
 La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
 (ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
 recommencer les étapes de cette section autant de fois que nécessaire.
+
+.. warning::
+
+        Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
+        « la traduction devrait commencer par une majuscule » car c'est le cas pour
+        la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
+        *affichez et relisez la page HTML produite* avec ``make serve``.
 
 *pull request*
 ~~~~~~~~~~~~~~
