@@ -99,7 +99,7 @@ Traduction
 
 Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `conventions`_ du projet.
 Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
-bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo (beta)>`_). En cas
+bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo (beta)`_). En cas
 de doute, un `glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
 en anglais.
 
@@ -139,7 +139,6 @@ La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html
 recommencer les étapes de cette section autant de fois que nécessaire.
 
 .. warning::
-
         Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
         « la traduction devrait commencer par une majuscule » car c'est le cas pour
         la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
@@ -349,7 +348,7 @@ Balises
 
 Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
-un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
+un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
 ``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
 
