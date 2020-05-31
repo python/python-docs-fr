@@ -68,7 +68,7 @@ version locale.
     git fetch upstream
 
 
-On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
+On crée ensuite une branche. Il est pratique de nommer la branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
