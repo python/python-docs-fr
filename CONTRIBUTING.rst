@@ -99,7 +99,7 @@ Traduction
 
 Vous pouvez dès à présent commencer à traduire le fichier en respectant les `conventions`_ du projet.
 Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
-bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo <padpo (beta)>`_). En cas
+bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo <Padpo (beta)>`_). En cas
 de doute, un `glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
 en anglais.
 
