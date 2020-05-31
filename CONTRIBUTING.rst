@@ -60,7 +60,7 @@ Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier
 suivez cette procédure :
 
 Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour
-(fraîchement récupérée) de la branche upstream/3.8. On met donc à jour notre
+(fraîchement récupérée) de la branche upstream/3.9. On met donc à jour notre
 version locale.
 
 .. code-block:: bash
@@ -71,11 +71,11 @@ version locale.
 On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
-Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
+Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.9 ».
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.8
+    git checkout -b library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -196,13 +196,13 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.7``, ``3.8``, etc.), seulement récupéré les
+branche de version (``3.8``, ``3.9``, etc.), seulement récupéré les
 modifications à partir d'elles.
 
 Toutes les traductions sont faites sur la dernière version.
 Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
-si la dernière version de python est Python 3.8, nous ne voulons pas
-traduire directement sur la version python 3.5.
+si la dernière version de python est Python 3.9, nous ne voulons pas
+traduire directement sur la version Python 3.5.
 Si nécessaire, les traductions seraient rétroportées sur les versions
 les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
@@ -219,7 +219,7 @@ renvoyée par la commande **à l'exception** des fichiers de :
 
 - ``c-api/`` car c'est une partie très technique ;
 - ``whatsnew/`` car les anciennes versions de Python sont pour la plupart obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
-- ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
+- ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes.
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
@@ -258,7 +258,7 @@ en
        resultat = thread.join(timeout=...)
        ...
 
-mais pas en 
+mais pas en
 
 .. code-block:: python
 
@@ -337,7 +337,7 @@ genre neutre. Par exemple : l'utilisateur ou le lecteur.
 Glossaire
 ~~~~~~~~~
 
-Afin d'assurer la cohérence de la traduction, voici quelques 
+Afin d'assurer la cohérence de la traduction, voici quelques
 termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
 « C99 » ou de certains anglicismes comme « sérialisable » ou « implémentation»,
 est stockée dans le fichier « dict » à la racine du projet. Vous pouvez
@@ -512,7 +512,7 @@ guillemets anglais ``"``. Cependant, Python utilise les guillemets
 anglais comme délimiteurs de chaîne de caractères. Il convient donc de
 traduire les guillemets mais pas les délimiteurs de chaîne.
 
-=> Si vous voyez :  
+=> Si vous voyez :
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
@@ -557,7 +557,7 @@ Par exemple :
 
 - le premier paragraphe de l'énumération ;
 - le deuxième paragraphe, lui-aussi une énumération :
-  
+
   - premier sous-paragraphe,
   - second sous-paragraphe ;
 
@@ -619,7 +619,7 @@ Ressources de traduction
   - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
   - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - des glossaires et dictionnaires :
-  
+
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
   - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
   - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit ;
@@ -633,7 +633,7 @@ Ressources de traduction
 L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
 `reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
 Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
-page et génèrent une documentation au style très « lourd ». 
+page et génèrent une documentation au style très « lourd ».
 
 
 Simplification des diffs git
