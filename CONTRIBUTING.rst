@@ -68,7 +68,7 @@ version locale.
     git fetch upstream
 
 
-On créé ensuite une branche. Il est pratique de nommer la branche en fonction du
+On crée ensuite une branche. Il est pratique de nommer la branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3.8 ».
@@ -93,22 +93,27 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
-Si vous n'utilisez pas Poedit, vous pouvez utiliser `powrap <https://github.com/JulienPalard/powrap>`_
-(voir la section *outils*) qui reformate correctement le fichier que vous avez modifié.
-Exécutez `powrap -m` (reformater tous les fichiers modifiés)
-ou `powrap library/sys.po` (un fichier en particulier) :
-
-.. code-block:: bash
-
-    powrap -m
-
 
 Traduction
 ~~~~~~~~~~
 
-Vous pouvez dès à présent commencer à traduire le fichier en respectant les `Conventions`_ du projet.
+Vous pouvez dès à présent commencer à traduire le fichier en respectant les `conventions`_ du projet.
+Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
+bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo (beta)`_). En cas
+de doute, un `glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
+en anglais.
 
-La commande suivante lance les vérifications nécessaires :
+.. code-block:: bash
+
+    make spell
+
+Vous pouvez aussi réindenter les fichiers avec : 
+
+.. code-block:: bash
+
+    make wrap
+
+Et pour faire les deux à la fois, lancez :
 
 .. code-block:: bash
 
@@ -133,11 +138,18 @@ La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html
 (ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
 recommencer les étapes de cette section autant de fois que nécessaire.
 
+Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
+« la traduction devrait commencer par une majuscule » car c'est le cas pour
+la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
+*affichez et relisez la page HTML produite* avec ``make serve``.
+
 *pull request*
 ~~~~~~~~~~~~~~
 
-C'est le moment de `git add` et `git commit`.
-`git add` place nos modifications dans l'index de Git en
+Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains de bien respecter les
+`Conventions`_ de traduction, vient le moment d'envoyer votre travail sur le dépôt local.
+
+``git add`` place nos modifications dans l'index de Git en
 attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
@@ -145,17 +157,16 @@ attendant d'être propagées dans le dépôt local.
     git add library/sys.po
 
 
-Puis on propage les modifications dans le dépôt local avec un commit.
+``git commit`` permet de les propager :
 
 .. code-block:: bash
 
     git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
-
-Poussez ensuite vos modifications sur votre fork Github.
-Le -u n'est utile qu'une fois pour que votre client git se souvienne que cette
-branche est liée à votre fork Github (et donc que vos futurs `git pull` et
-`git push` sachent quoi tirer).
+Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
+Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
+branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
+``git push`` sachent quoi tirer).
 
 .. code-block:: bash
 
@@ -166,13 +177,14 @@ Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/p
 et un joli bouton « Compare & pull request » devrait apparaître au bout de
 quelques secondes vous indiquant que vous pouvez demander une pull request.
 
-Mettez dans le commentaire de la pull request le texte suivant :
+Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
+Cela permet à Github de lier la *pull request* au ticket de réservation.
 
 À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
 suggestions et corrections. Pour les prendre en compte, retournez sur votre branche
-contenant du fichier concerné (au cas où vous auriez commencé quelque chose d'autre
-sur une autre branche) :
+contenant le fichier concerné (au cas où vous auriez commencé quelque chose d'autre
+sur une autre branche) :
 
 .. code-block:: bash
 
@@ -196,7 +208,7 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (``3.7``, ``3.8``, etc.), seulement récupéré les
+branche de version (3.7, 3.8, etc.), seulement récupéré les
 modifications à partir d'elles.
 
 Toutes les traductions sont faites sur la dernière version.
@@ -210,20 +222,20 @@ les plus anciennes par l'`équipe de documentation
 Que traduire ?
 --------------
 
-Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers ``po``
+Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers *po*
 à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
 local.
 
 Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée par la commande **à l'exception** des fichiers de :
 
-- ``c-api/`` car c'est une partie très technique ;
-- ``whatsnew/`` car les anciennes versions de Python sont pour la plupart obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
-- ``distutils/`` et ``install/`` car ces pages seront bientôt obsolètes. 
+- *c-api/* car c'est une partie très technique ;
+- *whatsnew/* car les anciennes versions de Python sont pour la plupart obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
+- *distutils/* et *install/* car ces pages seront bientôt obsolètes. 
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
-de `make fuzzy`). Une entrée *fuzzy* correspond à une entrée déjà traduite
+de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
 mais dont la source en anglais a été remodifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
 généralement plus « faciles » à traduire.
@@ -235,8 +247,61 @@ idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 Conventions
 -----------
 
+Certaines conventions ont été édictées pour homogénéiser la traduction.
+Il faut suivre les règles de `style`_ imposées, les `règles rst`_ et
+les traductions déjà définies dans le `glossaire`_.
+
+
+Style
+~~~~~
+
+Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
+en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
+agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
+conseillé — d'intervertir des propositions ou de réarranger des phrases de la
+documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
+équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
+garde aux anglicismes.
+
+Utilisation du futur
+++++++++++++++++++++
+
+Dans la description du comportement de Python (au sens large, c'est-à-dire
+l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
+originale utilise souvent le futur : « if you do this, it will produce
+that… ». En français, l'utilisation du présent convient tout à fait et le
+présent est souvent plus facile à lire : « si vous faites ceci, il se
+produit cela… ». On ne conserve le futur que si la seconde proposition
+se situe réellement dans le futur (par exemple, on peut penser qu'un
+processus de compilation n'est pas immédiat) ou pour des raisons de
+concordance des temps.
+
+Utilisation du conditionnel
++++++++++++++++++++++++++++
+
+La version originale est très polie envers le lecteur ; elle lui intime
+rarement des obligations, préférant employer « you should ». Cependant, en
+français, il est d'usage d'être plus direct pour être correctement compris :
+« vous devez ». *Vous devriez* est en effet généralement compris comme quelque
+chose dont l'on peut de temps en temps se passer, alors que c'est très
+rarement le cas pour les « you should » de cette documentation.
+De la même manière, « can » est souvent mieux traduit sans introduire de notion
+de possibilité, en particulier quand la phrase est à la voix passive ; la
+phrase « these objects can be accessed by… » se traduit mieux par « on accède à
+ces objets en… ».
+
+Utilisation du masculin
++++++++++++++++++++++++
+
+Dans un souci de lisibilité et en accord avec la préconisation de
+l'Académie française, nous utilisons le masculin pour indiquer un
+genre neutre. Par exemple : l'utilisateur ou le lecteur.
+
+Règles rst
+~~~~~~~~~~
+
 Prototypes et exemples
-~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++
 
 Il ne faut pas traduire le nom des éléments de la bibliothèque standard (noms
 de fonctions, paramètres de ces fonctions, constantes etc.) mais les laisser
@@ -267,7 +332,7 @@ mais pas en
        ...
 
 Liens hypertextes
-~~~~~~~~~~~~~~~~~
++++++++++++++++++
 
 Il faut transformer les liens hypertextes qui redirigent vers une page dont il
 existe une version française (c'est notamment très souvent le cas pour les
@@ -278,61 +343,17 @@ doit devenir ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
 
 
 Balises
-~~~~~~~
++++++++
 
 Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
-un concept ou une primitive Python défini dans le `glossaire <https://docs.python.org/fr/3/glossary.html>`_.
+un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
 ``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
 
-Style
-~~~~~
-
-Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
-en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
-agréable à lire. Les traductions mot-à-mot sont à proscrire et il est permis — même
-conseillé — d'intervertir des propositions ou de réarranger des phrases de la
-documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
-équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
-garde aux anglicismes.
-
-Utilisation du futur
-~~~~~~~~~~~~~~~~~~~~
-
-Dans la description du comportement de Python (au sens large, c'est-à-dire
-l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
-originale utilise souvent le futur : « if you do this, it will produce
-that… ». En français, l'utilisation du présent convient tout à fait et le
-présent est souvent plus facile à lire : « si vous faites ceci, il se
-produit cela… ». On ne conserve le futur que si la seconde proposition
-se situe réellement dans le futur (par exemple, on peut penser qu'un
-processus de compilation n'est pas immédiat) ou pour des raisons de
-concordance des temps.
-
-Utilisation du conditionnel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-La version originale est très polie envers le lecteur ; elle lui intime
-rarement des obligations, préférant employer « you should ». Cependant, en
-français, il est d'usage d'être plus direct pour être correctement compris :
-« vous devez ». *Vous devriez* est en effet généralement compris comme quelque
-chose dont l'on peut de temps en temps se passer, alors que c'est très
-rarement le cas pour les « you should » de cette documentation.
-De la même manière, « can » est souvent mieux traduit sans introduire de notion
-de possibilité, en particulier quand la phrase est à la voix passive ; la
-phrase « these objects can be accessed by… » se traduit mieux par « on accède à
-ces objets en… ».
-
-Utilisation du masculin
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Dans un souci de lisibilité et en accord avec la préconisation de
-l'Académie française, nous utilisons le masculin pour indiquer un
-genre neutre. Par exemple : l'utilisateur ou le lecteur.
 
 Glossaire
 ~~~~~~~~~
@@ -422,6 +443,36 @@ tuple                      n-uplet
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
+
+Ressources de traduction
+------------------------
+
+- les canaux IRC sur freenode :
+
+  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
+  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
+  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
+- les listes de diffusion relatives à la documentation (courriel) :
+
+  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
+  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+- des glossaires et dictionnaires :
+  
+  - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
+  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit ;
+- le `guide stylistique pour le français de localisation des produits Sun
+  <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
+  beaucoup de conseils pour éviter une traduction trop mot à mot ;
+- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
+  résumé succint de typographie, utile pour apprendre le bon usage des
+  majuscules, des espaces, etc.
+
+L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
+`reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
+Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
+page et génèrent une documentation au style très « lourd ». 
+
 
 Caractères spéciaux et typographie
 ----------------------------------
@@ -531,8 +582,8 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 
 Pour saisir une espace insécable faites :kbd:`Compose SPACE SPACE`
 
-Le cas des doubles-espaces
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Les doubles-espaces
+~~~~~~~~~~~~~~~~~~~
 
 La documentation originale comporte beaucoup de doubles-espaces.
 Cela se fait en anglais, mais pas en français. De toute manière,
@@ -606,38 +657,8 @@ Powrap
 | `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
 
-Ressources de traduction
-------------------------
-
-- les canaux IRC sur freenode :
-
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
-- les listes de diffusion relatives à la documentation (courriel) :
-
-  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
-  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
-- des glossaires et dictionnaires :
-  
-  - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
-  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
-  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit ;
-- le `guide stylistique pour le français de localisation des produits Sun
-  <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
-  beaucoup de conseils pour éviter une traduction trop mot à mot ;
-- `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
-  résumé succint de typographie, utile pour apprendre le bon usage des
-  majuscules, des espaces, etc.
-
-L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
-`reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
-Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
-page et génèrent une documentation au style très « lourd ». 
-
-
 Simplification des diffs git
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Les diffs git sont souvent encombrés de changements inutiles de numéros
 de ligne, comme :
@@ -696,31 +717,6 @@ Fusion des fichiers *pot* de CPython
 .. code-block:: bash
 
   make merge
-
-
-Trouver les chaînes de caractères *fuzzy*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-  make fuzzy
-
-
-*build* local
-~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-  make
-
-
-Serveur de documentation en local
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-  make serve
-
 
 
 Synchronisation de la traduction avec Transifex
