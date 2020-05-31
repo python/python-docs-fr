@@ -99,7 +99,7 @@ Traduction
 
 Vous pouvez commencer à présent commencer à traduire le fichier en respectant les `conventions`_ du projet.
 Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
-bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo (beta)`_). En cas
+bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo <padpo (beta)>`_). En cas
 de doute, un `glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
 en anglais.
 
@@ -249,7 +249,7 @@ Conventions
 
 Certaines conventions ont été édictées pour homogénéiser la traduction.
 Il faut suivre les règles de `style`_ imposées, les `règles rst`_ et
-les traductions déjà définies dans le `Glossaire`_.
+les traductions déjà définies dans le `glossaire`_.
 
 
 Style
