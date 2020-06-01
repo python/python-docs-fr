@@ -10,12 +10,9 @@ Traduction française de la documentation Python
 .. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
    :width: 45%
 
+
 Contribuer à la traduction
 --------------------------
-
-
-Comment contribuer
-~~~~~~~~~~~~~~~~~~
 
 Vous pouvez contribuer :
 
@@ -26,14 +23,9 @@ Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.8/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
-
-Où obtenir de l'aide ?
-~~~~~~~~~~~~~~~~~~~~~~
-
-Le coordinateur de cette traduction est `Julien Palard <https://mdk.fr/>`_.
-
-N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
-<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou par la
+Le coordinateur de cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
+Vous pouvez obtenir de l'aide sur le canal ``#python-fr`` sur `freenode
+<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou poser vos questions sur la
 `liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
 
 
