@@ -11,6 +11,24 @@ Traduction française de la documentation Python
    :width: 45%
 
 
+Contribuer à la traduction
+--------------------------
+
+Vous pouvez contribuer :
+
+- en proposant des *pull requests* Github (solution recommandée) ;
+- en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+
+Consultez le
+`guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
+pour apprendre les conventions à respecter.
+
+Le coordinateur de cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
+Vous pouvez obtenir de l'aide sur le canal ``#python-fr`` sur `freenode
+<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou poser vos questions sur la
+`liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
+
+
 Accord de contribution à la documentation
 -----------------------------------------
 
@@ -34,40 +52,11 @@ En soumettant votre travail à la PSF pour inclusion dans la documentation,
 vous signifiez votre acceptation de cet accord.
 
 
-Contribuer à la traduction
---------------------------
-
-Comment contribuer
-~~~~~~~~~~~~~~~~~~
-
-Vous pouvez contribuer :
-
-- en proposant des *pull requests* Github (solution recommandée) ;
-- en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
-
-Consultez le
-`guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
-pour apprendre les conventions à respecter.
-
-
-Où obtenir de l'aide ?
-~~~~~~~~~~~~~~~~~~~~~~
-
-Le coordinateur de cette traduction est `Julien Palard <https://mdk.fr/>`_.
-
-N'hésitez pas à poser vos questions sur le canal ``#python-fr`` sur `freenode
-<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou par la
-`liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
-
-
 Historique du projet
 --------------------
 
-Ce projet a été lancé `vers 2000
-<https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ puis
-repris `vers 2012 <https://github.com/AFPy/python_doc_fr>`_ par
-l'`AFPy <https://www.afpy.org/>`_. En 2017 ce projet est devenu la
-traduction officielle de la documentation Python en français grâce à
-la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_. `Jules Lasne
-<https://github.com/Seluj78>`_ a publié fin 2019 une `vidéo de
-l'histoire du dépôt <https://youtu.be/azXmvpEJMhU>`_.
+- vers 2000 : `lancement du projet <https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ ;
+- vers 2012 : `reprise <https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
+- 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+
+Une `vidéo <https://youtu.be/azXmvpEJMhU>`_ de `Jules Lasne <https://github.com/Seluj78>`_ montre l'évolution du dépôt.
