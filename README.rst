@@ -3,7 +3,7 @@ Traduction française de la documentation Python
 
 |build| |progression|
 
-.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.8
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.9
    :target: https://travis-ci.org/python/python-docs-fr
    :width: 45%
 
@@ -46,7 +46,7 @@ Vous pouvez contribuer :
 - en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
 
 Consultez le
-`guide <https://github.com/python/python-docs-fr/blob/3.8/CONTRIBUTING.rst>`_
+`guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
 
