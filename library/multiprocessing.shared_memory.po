@@ -19,10 +19,12 @@ msgid ""
 ":mod:`multiprocessing.shared_memory` ---  Provides shared memory for direct "
 "access across processes"
 msgstr ""
+":mod:`multiprocessing.shared_memory` — Mémoire partagée en accès direct "
+"depuis plusieurs processus"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:7
 msgid "**Source code:** :source:`Lib/multiprocessing/shared_memory.py`"
-msgstr ""
+msgstr "**Code source :** :source:`Lib/multiprocessing/shared_memory.py`"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:18
 msgid ""
@@ -34,6 +36,14 @@ msgid ""
 "`SharedMemoryManager`, is also provided in the ``multiprocessing.managers`` "
 "module."
 msgstr ""
+"Ce module fournit une classe, :class:`SharedMemory`, pour l'allocation et la "
+"gestion de mémoire partagée entre un ou plusieurs processus sur une machine "
+"à plusieurs cœurs ou à multiprocesseurs (architecture *symmetric "
+"multiprocessor* ou SMP). Pour faciliter la gestion du cycle de vie de la "
+"mémoire partagée, tout particulièrement entre plusieurs processus, le module "
+"``multiprocessing.managers`` fournit aussi la classe :class:"
+"`~multiprocessing.managers.SharedMemoryManager`, sous-classe de :class:"
+"`BaseManager`."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:26
 msgid ""
@@ -49,6 +59,17 @@ msgid ""
 "via disk or socket or other communications requiring the serialization/"
 "deserialization and copying of data."
 msgstr ""
+"Dans ce module, il faut entendre « mémoire partagée » au sens de « blocs de "
+"mémoire partagée à la mode System V » (même si l'implémentation peut "
+"différer), et non au sens de « mémoire distribuée ». Ce type de mémoire "
+"partagée permet à plusieurs processus d'écrire dans une zone commune (ou "
+"« partagée ») de la mémoire vive. Normalement, les processus n'ont accès "
+"qu'à leur propre espace mémoire ; la mémoire partagée permet justement le "
+"partage de données entre des processus, ce qui leur évite d'avoir à "
+"s'envoyer ces données par message. Échanger des données par mémoire partagée "
+"peut amener des gains de performance substantiels par rapport aux échanges "
+"via le disque dur, des connecteurs ou d'autres canaux qui nécessitent de "
+"sérialiser et de désérialiser les données."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:41
 msgid ""
@@ -58,6 +79,11 @@ msgid ""
 "different process can attach to that same shared memory block using that "
 "same name."
 msgstr ""
+"Crée un nouveau bloc de mémoire partagée ou enregistre un bloc déjà "
+"existant. Un nom unique doit être donné à chaque bloc de mémoire partagée ; "
+"ainsi, un processus peut créer un nouveau bloc de mémoire partagée avec un "
+"nom fixé et un autre processus peut enregistrer le même bloc, à partir de "
+"son nom."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:47
 msgid ""
@@ -68,6 +94,12 @@ msgid ""
 "block is no longer needed by any process, the :meth:`unlink()` method should "
 "be called to ensure proper cleanup."
 msgstr ""
+"Puisque qu'il permet de partager des données entre processus, un bloc de "
+"mémoire partagée peut survivre au processus qui l'a créé. Lorsqu'un "
+"processus n'a plus besoin d'un bloc — qui peut toujours être en cours "
+"d'utilisation par un autre — il doit appeler la méthode :meth:`close()`. "
+"Quand tous les processus ont fini d'utiliser ce bloc, il faut appeler la "
+"méthode :meth:`unlink()` pour le libérer."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:54
 msgid ""
@@ -75,12 +107,17 @@ msgid ""
 "string.  When creating a new shared memory block, if ``None`` (the default) "
 "is supplied for the name, a novel name will be generated."
 msgstr ""
+"*name* est le nom (une chaîne de caractères) unique de la mémoire partagée à "
+"allouer. Lors de la création d'un nouveau bloc mémoire, si ``None`` (valeur "
+"par défaut) est passé comme nom, un nouveau nom est généré."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:58
 msgid ""
 "*create* controls whether a new shared memory block is created (``True``) or "
 "an existing shared memory block is attached (``False``)."
 msgstr ""
+"*create* indique si un nouveau bloc doit être alloué (``True``) ou si on "
+"enregistre un bloc déjà existant (``False``)."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:61
 msgid ""
@@ -90,6 +127,11 @@ msgid ""
 "memory block may be larger or equal to the size requested.  When attaching "
 "to an existing shared memory block, the ``size`` parameter is ignored."
 msgstr ""
+"*size* définit le nombre d'octets à allouer. Comme certaines plates-formes "
+"choisissent d'allouer les blocs mémoire en multiples de la taille de la page "
+"mémoire de la plate-forme, la taille réellement allouée peut être supérieure "
+"à la taille demandée. Lors de l'enregistrement d'un bloc déjà existant, le "
+"paramètre ``size`` est ignoré."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:69
 msgid ""
@@ -98,6 +140,10 @@ msgid ""
 "instance is no longer needed.  Note that calling ``close()`` does not cause "
 "the shared memory block itself to be destroyed."
 msgstr ""
+"Empêche les accès ultérieurs à la mémoire partagée depuis cette instance ; "
+"toutes les instances doivent appeler ``close()`` pour s'assurer que les "
+"ressources sont bien libérées. Notez qu'appeler ``close()`` ne libère pas la "
+"mémoire elle-même."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:77
 msgid ""
@@ -111,24 +157,35 @@ msgid ""
 "relinquishing its hold on a shared memory block may call ``unlink()`` and :"
 "meth:`close()` in either order."
 msgstr ""
+"Initie la libération de la mémoire partagée sous-jacente. Pour être sûr que "
+"les ressources sont libérées correctement, ``unlink()`` doit être appelée "
+"une (et une seule) fois par tous les processus qui ont utilisé le bloc "
+"partagé. Après avoir initié la destruction d'un bloc mémoire, le bloc peut "
+"ne pas être détruit immédiatement ; ce comportement dépend de la plate-"
+"forme. Accéder aux données d'un bloc de mémoire partagée après l'appel à "
+"``unlink()`` peut provoquer une erreur mémoire. Notez que le dernier "
+"processus à libérer le bloc mémoire de mémoire partagée peut appeler "
+"``unlink()`` et :meth:`close()` dans n'importe quel ordre."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:90
 msgid "A memoryview of contents of the shared memory block."
-msgstr ""
+msgstr "Une *memoryview* du contenu du bloc de mémoire partagée."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:94
 msgid "Read-only access to the unique name of the shared memory block."
-msgstr ""
+msgstr "Nom unique du bloc de mémoire partagée (lecture seule)."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:98
 msgid "Read-only access to size in bytes of the shared memory block."
-msgstr ""
+msgstr "Taille en octets du bloc de mémoire partagée (lecture seule)."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:101
 msgid ""
 "The following example demonstrates low-level use of :class:`SharedMemory` "
 "instances::"
 msgstr ""
+"L'exemple qui suit montre un exemple d'utilisation bas niveau d'instances "
+"de :class:`SharedMemory` :"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:127
 msgid ""
@@ -136,12 +193,17 @@ msgid ""
 "`SharedMemory` class with `NumPy arrays <https://www.numpy.org/>`_, "
 "accessing the same ``numpy.ndarray`` from two distinct Python shells:"
 msgstr ""
+"Le code qui suit est un exemple d'utilisation réel de la classe :class:"
+"`SharedMemory` avec des `tableaux NumPy <https://www.numpy.org/>`_ qui "
+"accèdent au même ``numpy.ndarray`` depuis deux invites Python différentes :"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:181
 msgid ""
 "A subclass of :class:`~multiprocessing.managers.BaseManager` which can be "
 "used for the management of shared memory blocks across processes."
 msgstr ""
+"Une sous-classe de :class:`~multiprocessing.managers.BaseManager` pour gérer "
+"des blocs de mémoire partagée entre processus."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:184
 msgid ""
@@ -156,6 +218,16 @@ msgid ""
 "instances through a ``SharedMemoryManager``, we avoid the need to manually "
 "track and trigger the freeing of shared memory resources."
 msgstr ""
+"Un appel à :meth:`~multiprocessing.managers.BaseManager.start` depuis une "
+"instance :class:`SharedMemoryManager` lance un nouveau processus dont le "
+"seul but est de gérer le cycle de vie des blocs mémoires qu'il a créés. La "
+"méthode :meth:`~multiprocessing.managers.BaseManager.shutdown()` de "
+"l'instance déclenche la libération de tous les blocs mémoires gérés par ce "
+"processus. Elle appelle :meth:`SharedMemory.unlink()` sur tous les objets :"
+"class:`SharedMemory` gérés par ce processus et l'arrête ensuite. Créer des "
+"instances de ``SharedMemory`` par l'intermédiaire d'un "
+"``SharedMemoryManager`` évite d'avoir à gérer et à libérer manuellement les "
+"ressources mémoire partagées."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:196
 msgid ""
@@ -163,6 +235,9 @@ msgid ""
 "instances and for creating a list-like object (:class:`ShareableList`) "
 "backed by shared memory."
 msgstr ""
+"Cette classe fournit des méthodes pour créer et renvoyer des instances de :"
+"class:`SharedMemory` et pour créer des objets compatibles liste (:class:"
+"`ShareableList`) basés sur la mémoire partagée."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:200
 msgid ""
@@ -171,24 +246,34 @@ msgid ""
 "may be used to connect to an existing ``SharedMemoryManager`` service from "
 "other processes."
 msgstr ""
+"Référez-vous à :class:`multiprocessing.managers.BaseManager` pour la "
+"description des arguments optionnels hérités *address* et *authkey*, et "
+"comment ceux-ci doivent être utilisés pour enregistrer un service de "
+"``SharedMemoryManager`` depuis un autre processus."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:207
 msgid ""
 "Create and return a new :class:`SharedMemory` object with the specified "
 "``size`` in bytes."
 msgstr ""
+"Crée et renvoie un nouvel objet :class:`SharedMemory` de taille ``size`` "
+"octets."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:212
 msgid ""
 "Create and return a new :class:`ShareableList` object, initialized by the "
 "values from the input ``sequence``."
 msgstr ""
+"Crée et renvoie un nouvel objet :class:`ShareableList`, initialisé à partir "
+"des valeurs de la ``sequence`` en entrée."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:216
 msgid ""
 "The following example demonstrates the basic mechanisms of a :class:"
 "`SharedMemoryManager`:"
 msgstr ""
+"L'exemple qui suit illustre les mécanismes de base de :class:"
+"`SharedMemoryManager` :"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:234
 msgid ""
@@ -197,6 +282,10 @@ msgid ""
 "to ensure that all shared memory blocks are released after they are no "
 "longer needed:"
 msgstr ""
+"L'exemple suivant montre comment utiliser un objet :class:"
+"`SharedMemoryManager` avec l'instruction :keyword:`with` pour être sûr que "
+"tous les blocs mémoire sont libérés quand ils ne sont plus nécessaires. "
+"C'est souvent plus pratique que l'exemple précédent :"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:253
 msgid ""
@@ -204,6 +293,10 @@ msgid ""
 "the shared memory blocks created using that manager are all released when "
 "the :keyword:`with` statement's code block finishes execution."
 msgstr ""
+"Lors de l'utilisation d'un :class:`SharedMemoryManager` dans une "
+"instruction :keyword:`with`, les blocs de mémoire partagée créés par ce "
+"gestionnaire sont tous libérés quand les instructions à l'intérieur du bloc :"
+"keyword:`with` ont été exécutées."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:260
 msgid ""
@@ -216,6 +309,14 @@ msgid ""
 "support the dynamic creation of new :class:`ShareableList` instances via "
 "slicing."
 msgstr ""
+"Construit un objet muable compatible avec le type liste dont toutes les "
+"valeurs sont stockées dans un bloc de mémoire partagée. Ceci réduit le type "
+"les valeurs pouvant être stockées aux types natifs ``int``, ``float``, "
+"``bool``, ``str`` (de moins de 10 Mo chacune), ``bytes`` (de moins de 10 Mo "
+"chacun) et ``None``. Une autre différence majeure avec une ``list`` native "
+"réside dans le fait qu'il est impossible de changer la taille (c.-à-d. pas "
+"d'ajout en fin de liste, ni d'insertion etc.) et qu'il n'est pas possible de "
+"créer de nouvelles instances de :class:`ShareableList` par découpage."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:269
 msgid ""
@@ -223,6 +324,9 @@ msgid ""
 "to ``None`` to instead attach to an already existing ``ShareableList`` by "
 "its unique shared memory name."
 msgstr ""
+"*sequence* sert à créer une nouvelle ``ShareableList`` avec des valeurs. "
+"Mettez-le à ``None`` pour enregistrer une ``ShareableList`` déjà existante, "
+"en renseignant son nom unique."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:273
 msgid ""
@@ -231,32 +335,43 @@ msgid ""
 "``ShareableList``, specify its shared memory block's unique name while "
 "leaving ``sequence`` set to ``None``."
 msgstr ""
+"*name* est le nom unique de la mémoire partagée demandée, tel que décrit "
+"dans la définition de :class:`SharedMemory`. Pour enregistrer une "
+"``ShareableList`` déjà existante, renseignez le nom unique du bloc de "
+"mémoire partagée et laissez ``sequence`` à ``None``."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:280
 msgid "Returns the number of occurrences of ``value``."
-msgstr ""
+msgstr "Renvoie le nombre d’occurrences de ``value``."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:284
 msgid ""
 "Returns first index position of ``value``.  Raises :exc:`ValueError` if "
 "``value`` is not present."
 msgstr ""
+"Renvoie l'indice de la première occurrence de ``value``. Lève une :exc:"
+"`ValueError` si ``value`` n'est pas présent."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:289
 msgid ""
 "Read-only attribute containing the :mod:`struct` packing format used by all "
 "currently stored values."
 msgstr ""
+"Attribut en lecture seule contenant le format d’agrégation :mod:`struct` "
+"utilisé par les valeurs déjà stockées."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:294
 msgid "The :class:`SharedMemory` instance where the values are stored."
 msgstr ""
+"Instance de :class:`SharedMemory` dans laquelle les valeurs sont stockées."
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:297
 msgid ""
 "The following example demonstrates basic use of a :class:`ShareableList` "
 "instance:"
 msgstr ""
+"L'exemple qui suit illustre un cas d'usage de base d'une instance de :class:"
+"`ShareableList` :"
 
 #: ../Doc/library/multiprocessing.shared_memory.rst:330
 msgid ""
@@ -264,3 +379,6 @@ msgid ""
 "same :class:`ShareableList` by supplying the name of the shared memory block "
 "behind it:"
 msgstr ""
+"L'exemple ci-dessous montre comment un, deux ou un grand nombre de processus "
+"peuvent accéder à une :class:`ShareableList` commune à partir du nom du bloc "
+"mémoire partagé sous-jacent :"
