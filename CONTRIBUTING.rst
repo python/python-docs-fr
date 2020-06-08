@@ -747,30 +747,30 @@ sur une autre, par exemple pour copier de la 3.7 à la 3.8 :
 
 Notes :
 
-- J'utilise ``git fetch`` au début pour avoir upstream/3.7 et
+- j'utilise ``git fetch`` au début pour avoir upstream/3.7 et
   upstream/3.8 à jour localement, ainsi je peux travailler sans
   toucher au réseau jusqu'au ``git push``, mais chacun fait comme il
-  veut.
-- J'utilise ``*.po */*.po`` et pas ``**/*.po``, car si vous avez un
+  veut ;
+- j'utilise ``*.po */*.po`` et pas ``**/*.po``, car si vous avez un
   venv il va vous trouver des traductions de Sphinx et peut être
   d'autres paquets dans ``.venv/lib/python*/`` (et mettre beaucoup
-  plus longtemps).
-- J'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
+  plus longtemps) ;
+- j'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
   n'écrire que si le ``msgstr`` est vide, donc de ne pas modifier
   l'existant, ainsi il est impossible de casser quelque chose, c'est
   important lors du *forward-porting* pour ne pas défaire une
-  correction. Mais on pourrait le tenter sans ``---no-overwrite`` sur
+  correction. Mais on pourrait le tenter sans ``--no-overwrite`` sur
   du rétroportage, attention, ça fait des bêtises, ça nécessite une
   relecture attentive : certaines traductions, comme *example:* sont en
   francais parfois traduite avec une majuscule, et parfois non, en
-  fonction du contexte, ``pomerge`` uniformiserai ça, c'est pas bien.
-- Attention, si vous testez sans ``--no-overwrite``, il est peut être
+  fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
+- attention, si vous testez sans ``--no-overwrite``, il est peut être
   bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
   de lui faire écrire des choses lues lors des sessions précédentes,
-  via un ``rm -f ~/.pomerge.json``.
-- J'utilise ``git add -p`` car j'aime bien relire quand même,
-  typiquement je n'ajoute pas les différnces d'ordre dans les entêtes,
-  mais un ``git add -u`` irait très bien.
+  via un ``rm -f ~/.pomerge.json`` ;
+- j'utilise ``git add -p`` car j'aime bien relire quand même,
+  typiquement je n'ajoute pas les différences d'ordre dans les entêtes,
+  mais un ``git add -u`` irait très bien ;
 
 
 Synchronisation de la traduction avec Transifex
