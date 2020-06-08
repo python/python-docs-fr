@@ -726,7 +726,7 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 à l'autre :
 
 - d'une ancienne branche vers une nouvelle branche : lors du passage
-  d'une version à l'autre de cpython, quelqu'un à une PR sur une
+  d'une version à l'autre de cpython, quelqu'un a une PR sur une
   ancienne release (*forward porting*) ;
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
