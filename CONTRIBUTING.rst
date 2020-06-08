@@ -725,10 +725,10 @@ Copier des traductions d'une branche à l'autre
 Dans certains cas on a besoin de bouger des traductions d'une branche
 à l'autre :
 
-- D'une ancienne branche vers une nouvelle branche : Lors du passage
+- d'une ancienne branche vers une nouvelle branche : lors du passage
   d'une version à l'autre de cpython, quelqu'un à une PR sur une
-  ancienne release (*forward porting*).
-- D'une nouvelle branche vers des anciennes branches : Pour propager
+  ancienne release (*forward porting*) ;
+- d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
 On utilise ``pomerge`` : on le fait lire sur une branche, puis écrire
