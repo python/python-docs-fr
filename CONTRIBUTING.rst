@@ -771,6 +771,7 @@ Notes :
 - j'utilise ``git add -p`` car j'aime bien relire quand même,
   typiquement je n'ajoute pas les différences d'ordre dans les entêtes,
   mais un ``git add -u`` irait très bien ;
+- attention au fichier dict à qui il peut manquer des lignes.
 
 
 Synchronisation de la traduction avec Transifex
