@@ -742,7 +742,7 @@ sur une autre, par exemple pour copier de la 3.7 à la 3.8 ::
     pomerge  --no-overwrite --to-files *.po */*.po
     powrap -m
     git add --patch
-    git commit -m "Forward porting from 3.7"
+    git commit --message="Forward porting from 3.7"
     git push --set-upstream origin HEAD
 
 Notes :
