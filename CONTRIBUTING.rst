@@ -731,8 +731,8 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
-On utilise ``pomerge`` : on le fait lire sur une branche, puis écrire
-sur une autre, par exemple pour copier de la 3.7 à la 3.8 :
+On utilise ``pomerge``\  : on le fait lire sur une branche, puis écrire
+sur une autre, par exemple pour copier de la 3.7 à la 3.8 ::
 
     git fetch
     git checkout 3.7
@@ -767,7 +767,7 @@ Notes :
 - attention, si vous testez sans ``--no-overwrite``, il est peut être
   bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
   de lui faire écrire des choses lues lors des sessions précédentes,
-  via un ``rm -f ~/.pomerge.json`` ;
+  via un ``rm -f ~/.pomerge.json``\  ;
 - j'utilise ``git add -p`` car j'aime bien relire quand même,
   typiquement je n'ajoute pas les différences d'ordre dans les entêtes,
   mais un ``git add -u`` irait très bien ;
