@@ -752,7 +752,7 @@ Notes :
   toucher au réseau jusqu'au ``git push``, mais chacun fait comme il
   veut ;
 - j'utilise ``*.po */*.po`` et pas ``**/*.po``, car si vous avez un
-  venv il va vous trouver des traductions de Sphinx et peut être
+  venv dans l'arborescence il va vous trouver des traductions de Sphinx et peut-être
   d'autres paquets dans ``.venv/lib/python*/`` (et mettre beaucoup
   plus longtemps) ;
 - j'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
