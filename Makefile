@@ -28,6 +28,8 @@ CPYTHON_PATH := ../cpython/
 LANGUAGE := fr
 BRANCH := 3.9
 
+EXCLUDED := whatsnew/ c-api/
+
 .SILENT:
 
 # Internal variables
@@ -125,7 +127,7 @@ progress:
 
 .PHONY: todo
 todo: venv
-	$(VENV)/bin/potodo
+	$(VENV)/bin/potodo --exclude $(VENV) $(EXCLUDED)
 
 .PHONY: wrap
 wrap: venv
@@ -145,7 +147,7 @@ $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 
 .PHONY: fuzzy
 fuzzy: venv
-	$(VENV)/bin/potodo -f
+	$(VENV)/bin/potodo -f --exclude $(VENV) $(EXCLUDED)
 
 .PHONY: verifs
 verifs: wrap spell
