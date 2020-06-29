@@ -49,6 +49,12 @@ Ensuite, vous devez trouver un fichier sur lequel travailler
 de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
 vous aidera grandement à produire une traduction de bonne qualité.
 
+Si c'est votre première contribution, commencez par une toute petite
+PR, de quelques paragraphes maximum, pour vous familiariser. Il n'est
+pas nécessaire de terminer un fichier lorsqu'on le commence, vous
+pouvez donc prendre n'importe quel fichier, mais ne traduire que
+quelques paragraphes.
+
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
