@@ -737,18 +737,23 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
-On utilise ``pomerge``\  : on le fait lire sur une branche, puis écrire
-sur une autre, par exemple pour copier de la 3.7 à la 3.8 ::
+Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser `git
+cherry-pick -x LE_SHA`, ça garde l'auteur, le sha1 d'origine, et
+toutes les modifications.
+
+Pour backporter "en gros" on utilise ``pomerge``\  : on le fait lire
+sur une branche, puis écrire sur une autre, par exemple pour copier de
+la 3.8 à la 3.7 ::
 
     git fetch
-    git checkout 3.7
-    git reset --hard upstream/3.7
+    git checkout 3.8
+    git reset --hard upstream/3.8
     pomerge --from-files *.po */*.po
-    git checkout -b forward-porting upstream/3.8
+    git checkout -b back-porting upstream/3.7
     pomerge  --no-overwrite --to-files *.po */*.po
     powrap -m
     git add --patch
-    git commit --message="Forward porting from 3.7"
+    git commit --message="Backporting from 3.8"
     git push --set-upstream origin HEAD
 
 Notes :
@@ -763,11 +768,10 @@ Notes :
   plus longtemps) ;
 - j'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
   n'écrire que si le ``msgstr`` est vide, donc de ne pas modifier
-  l'existant, ainsi il est impossible de casser quelque chose, c'est
-  important lors du *forward-porting* pour ne pas défaire une
-  correction. Mais on pourrait le tenter sans ``--no-overwrite`` sur
-  du rétroportage, attention, ça fait des bêtises, ça nécessite une
-  relecture attentive : certaines traductions, comme *example:* sont en
+  l'existant, ainsi il est impossible de casser quelque chose.
+  On peut le tenter sans ``--no-overwrite``, attention, ça fait
+  des bêtises, ça nécessite une relecture attentive :
+  certaines traductions, comme *example:* sont en
   francais parfois traduite avec une majuscule, et parfois non, en
   fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
 - attention, si vous testez sans ``--no-overwrite``, il est peut être
