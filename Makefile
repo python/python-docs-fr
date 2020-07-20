@@ -180,7 +180,9 @@ merge: setup
 	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
-	echo 'To add, you can use git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
+	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
+	-$(VENV)/bin/powrap -m
+	printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
 
 .PHONY: clean
 clean:
