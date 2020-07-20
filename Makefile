@@ -161,7 +161,7 @@ merge: setup
 	git -C $(CPYTHON_PATH) worktree prune
 	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(word 1,$(shell git -C $(CPYTHON_PATH) remote -v | grep python/cpython))/$(BRANCH)
 	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
-	(cd $(WORKTREES)/$(BRANCH); $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+	(cd $(WORKTREES)/$(BRANCH)/Doc; $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
 	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
 	    while read -r POT;\
 	    do\
