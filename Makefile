@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := cdb015b7ed58ee2babf552001374c278219854e1
+CPYTHON_CURRENT_COMMIT := 760552ceb8c5f5ca4f1bf13f47543b42b25e0b83
 
 CPYTHON_PATH := ../cpython/
 
@@ -177,6 +177,7 @@ merge: setup
 	            msgcat -o "$$PO" "$$POT";\
 	        fi\
 	    done
+	echo "Replacing CPYTHON_CURRENT_COMMIT Makefile by: " $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)
 	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
