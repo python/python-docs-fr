@@ -355,7 +355,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
+``:term:`dictionary``` en  ``:term:`dictionnaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
@@ -471,7 +471,7 @@ Ressources de traduction
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
-  résumé succint de typographie, utile pour apprendre le bon usage des
+  résumé succinct de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
 L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
@@ -487,7 +487,7 @@ La touche de composition
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
-absente par défault des claviers, permet de saisir des
+absente par défaut des claviers, permet de saisir des
 caractères spéciaux en combinant les caractères déjà présents sur le
 clavier. C'est à l'utilisateur de définir la touche de composition.
 
@@ -772,7 +772,7 @@ Notes :
   On peut le tenter sans ``--no-overwrite``, attention, ça fait
   des bêtises, ça nécessite une relecture attentive :
   certaines traductions, comme *example:* sont en
-  francais parfois traduite avec une majuscule, et parfois non, en
+  français parfois traduite avec une majuscule, et parfois non, en
   fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
 - attention, si vous testez sans ``--no-overwrite``, il est peut être
   bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
