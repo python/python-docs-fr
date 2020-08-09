@@ -751,13 +751,13 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
-Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser `git
-cherry-pick -x LE_SHA`, ça garde l'auteur, le sha1 d'origine, et
+Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser ``git
+cherry-pick -x LE_SHA``, ça garde l'auteur, le sha1 d'origine, et
 toutes les modifications.
 
-Pour backporter "en gros" on utilise ``pomerge``\  : on le fait lire
+Pour backporter « en gros » on utilise ``pomerge``\  : on le fait lire
 sur une branche, puis écrire sur une autre, par exemple pour copier de
-la 3.8 à la 3.7 ::
+la 3.8 à la 3.7 :
 
 .. code-block:: bash
 
@@ -813,21 +813,21 @@ Propagez d'abord les traductions connues localement :
 
 .. code-block:: bash
 
-   pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
-   powrap --modified
-   git commit -m "Propagating known translations."
+    pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
+    powrap --modified
+    git commit -m "Propagating known translations."
 
 
 Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
-   tx pull -f --parallel
-   pomerge --from-files **/*.po
-   git checkout -- .
-   pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
-   powrap --modified
-   git add -p
-   git commit -m "tx pull"
-   tx push -t -f --no-interactive --parallel
+    tx pull -f --parallel
+    pomerge --from-files **/*.po
+    git checkout -- .
+    pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
+    powrap --modified
+    git add -p
+    git commit -m "tx pull"
+    tx push -t -f --no-interactive --parallel
 
