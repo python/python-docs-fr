@@ -81,7 +81,7 @@ Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout --branch library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -172,7 +172,7 @@ attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
-    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
 
 Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
@@ -182,7 +182,7 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 .. code-block:: bash
 
-    git push -u origin
+    git push --set-upstream origin
 
 
 La commande précédente vous affiche un lien pour ouvrir une pull request sur
@@ -206,7 +206,7 @@ sur une autre branche) :
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
-    git commit -a -m "prise en compte des remarques"
+    git commit --all --message "prise en compte des remarques"
     git push
 
 
@@ -815,7 +815,7 @@ Propagez d'abord les traductions connues localement :
 
     pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
     powrap --modified
-    git commit -m "Propagating known translations."
+    git commit --message "Propagating known translations."
 
 
 Ensuite récupérez les changements depuis Transifex :
