@@ -765,9 +765,9 @@ la 3.8 à la 3.7 :
     git checkout 3.8
     git reset --hard upstream/3.8
     pomerge --from-files *.po */*.po
-    git checkout -b back-porting upstream/3.7
+    git checkout --branch back-porting upstream/3.7
     pomerge  --no-overwrite --to-files *.po */*.po
-    powrap -m
+    powrap --modified
     git add --patch
     git commit --message="Backporting from 3.8"
     git push --set-upstream origin HEAD
