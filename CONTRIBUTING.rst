@@ -81,7 +81,7 @@ Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout --branch library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -172,7 +172,8 @@ attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
-    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+
 
 
 Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
@@ -182,7 +183,8 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 .. code-block:: bash
 
-    git push -u origin
+    git push --set-upstream origin
+
 
 
 La commande précédente vous affiche un lien pour ouvrir une pull request sur
@@ -206,7 +208,7 @@ sur une autre branche) :
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
-    git commit -a -m "prise en compte des remarques"
+    git commit --all --message "prise en compte des remarques"
     git push
 
 
@@ -365,7 +367,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
+``:term:`dictionary``` en  ``:term:`dictionnaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
@@ -481,7 +483,7 @@ Ressources de traduction
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
-  résumé succint de typographie, utile pour apprendre le bon usage des
+  résumé succinct de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
 L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
@@ -497,7 +499,7 @@ La touche de composition
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
-absente par défault des claviers, permet de saisir des
+absente par défaut des claviers, permet de saisir des
 caractères spéciaux en combinant les caractères déjà présents sur le
 clavier. C'est à l'utilisateur de définir la touche de composition.
 
@@ -765,9 +767,9 @@ la 3.8 à la 3.7 :
     git checkout 3.8
     git reset --hard upstream/3.8
     pomerge --from-files *.po */*.po
-    git checkout -b back-porting upstream/3.7
+    git checkout --branch back-porting upstream/3.7
     pomerge  --no-overwrite --to-files *.po */*.po
-    powrap -m
+    powrap --modified
     git add --patch
     git commit --message="Backporting from 3.8"
     git push --set-upstream origin HEAD
@@ -789,7 +791,7 @@ Notes :
   On peut le tenter sans ``--no-overwrite``, attention, ça fait
   des bêtises, ça nécessite une relecture attentive :
   certaines traductions, comme *example:* sont en
-  francais parfois traduite avec une majuscule, et parfois non, en
+  français parfois traduite avec une majuscule, et parfois non, en
   fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
 - attention, si vous testez sans ``--no-overwrite``, il est peut être
   bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
@@ -815,7 +817,7 @@ Propagez d'abord les traductions connues localement :
 
     pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
     powrap --modified
-    git commit -m "Propagating known translations."
+    git commit --message "Propagating known translations."
 
 
 Ensuite récupérez les changements depuis Transifex :
