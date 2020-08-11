@@ -175,6 +175,7 @@ attendant d'être propagées dans le dépôt local.
     git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
 
+
 Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
 Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
 branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
@@ -183,6 +184,7 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 .. code-block:: bash
 
     git push --set-upstream origin
+
 
 
 La commande précédente vous affiche un lien pour ouvrir une pull request sur
