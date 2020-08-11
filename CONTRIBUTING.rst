@@ -81,7 +81,7 @@ Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout --branch library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -113,17 +113,20 @@ en anglais.
 
     make spell
 
+
 Vous pouvez aussi réindenter les fichiers avec :
 
 .. code-block:: bash
 
     make wrap
 
+
 Et pour faire les deux à la fois, lancez :
 
 .. code-block:: bash
 
     make verifs
+
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
 affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
@@ -133,12 +136,14 @@ compilation ne devrait pas échouer.
 
     make
 
+
 Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
 documentation local :
 
 .. code-block:: bash
 
     make serve
+
 
 La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
 (ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
@@ -167,7 +172,8 @@ attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
-    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+
 
 Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
 Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
@@ -176,7 +182,8 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 .. code-block:: bash
 
-    git push -u origin
+    git push --set-upstream origin
+
 
 La commande précédente vous affiche un lien pour ouvrir une pull request sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
@@ -199,7 +206,7 @@ sur une autre branche) :
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
-    git commit -a -m "prise en compte des remarques"
+    git commit --all --message "prise en compte des remarques"
     git push
 
 
@@ -321,6 +328,7 @@ utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
        result = thread.join(timeout=...)
        ...
 
+
 en
 
 .. code-block:: python
@@ -329,6 +337,7 @@ en
        resultat = thread.join(timeout=...)
        ...
 
+
 mais pas en
 
 .. code-block:: python
@@ -336,6 +345,7 @@ mais pas en
     def fonction_exemple():
        resultat = fildexécution.attendre(délai=...)
        ...
+
 
 Liens hypertextes
 +++++++++++++++++
@@ -538,6 +548,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
     # Gestion des touches clavier
     xmodmap $HOME/.Xmodmap
 
+
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les « Paramètres » → « Clavier » → « Disposition » →
 « Touche composée ». Pour finir, redémarrez votre session.
@@ -674,6 +685,7 @@ de ligne, comme :
     -#: ../Doc/library/signal.rst:406
     +#: ../Doc/library/signal.rst:408
 
+
 Pour dire à git que ce ne sont pas des informations utiles, vous pouvez faire
 ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 ``PATH``.
@@ -707,11 +719,13 @@ de ``python-docs-fr`` et certaines s'attendent à trouver un clone de CPython
   ├── python-docs-fr/
   └── cpython/
 
+
 Pour cloner CPython, vous pouvez utiliser :
 
 .. code-block:: bash
 
   git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
+
 
 Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
@@ -737,24 +751,27 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
-Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser `git
-cherry-pick -x LE_SHA`, ça garde l'auteur, le sha1 d'origine, et
+Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser ``git
+cherry-pick -x LE_SHA``, ça garde l'auteur, le sha1 d'origine, et
 toutes les modifications.
 
-Pour backporter "en gros" on utilise ``pomerge``\  : on le fait lire
+Pour backporter « en gros » on utilise ``pomerge``\  : on le fait lire
 sur une branche, puis écrire sur une autre, par exemple pour copier de
-la 3.8 à la 3.7 ::
+la 3.8 à la 3.7 :
+
+.. code-block:: bash
 
     git fetch
     git checkout 3.8
     git reset --hard upstream/3.8
     pomerge --from-files *.po */*.po
-    git checkout -b back-porting upstream/3.7
+    git checkout --branch back-porting upstream/3.7
     pomerge  --no-overwrite --to-files *.po */*.po
-    powrap -m
+    powrap --modified
     git add --patch
     git commit --message="Backporting from 3.8"
     git push --set-upstream origin HEAD
+
 
 Notes :
 
@@ -796,20 +813,21 @@ Propagez d'abord les traductions connues localement :
 
 .. code-block:: bash
 
-   pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
-   powrap --modified
-   git commit -m "Propagating known translations."
+    pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
+    powrap --modified
+    git commit --message "Propagating known translations."
 
 
 Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
-   tx pull -f --parallel
-   pomerge --from-files **/*.po
-   git checkout -- .
-   pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
-   powrap --modified
-   git add -p
-   git commit -m "tx pull"
-   tx push -t -f --no-interactive --parallel
+    tx pull -f --parallel
+    pomerge --from-files **/*.po
+    git checkout -- .
+    pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
+    powrap --modified
+    git add -p
+    git commit -m "tx pull"
+    tx push -t -f --no-interactive --parallel
+
