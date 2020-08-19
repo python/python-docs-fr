@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := cdb015b7ed58ee2babf552001374c278219854e1
+CPYTHON_CURRENT_COMMIT := 760552ceb8c5f5ca4f1bf13f47543b42b25e0b83
 
 CPYTHON_PATH := ../cpython/
 
@@ -77,12 +77,12 @@ all: setup
 
 .PHONY: setup
 setup: venv
-	# Setup the main clone
+	echo "Setup the main clone"
 	if ! [ -d $(CPYTHON_PATH) ]; then \
 	    git clone --depth 16 --branch $(BRANCH) $(UPSTREAM) $(CPYTHON_PATH); \
 	fi
 
-	# Setup the current worktree
+	echo "Setup the current worktree"
 	if ! [ -d $(WORKTREE) ]; then                                                        \
 	    rm -fr $(WORKTREES);                                                             \
 	    git -C $(CPYTHON_PATH) worktree prune;                                           \
@@ -100,12 +100,12 @@ setup: venv
 	    fi;                                                                              \
 	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
 	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
-	    $(WORKTREE)/Doc/venv/bin/python -m pip install Sphinx==2.2.2 docutils==0.15;                      \
 	fi
 
 
 .PHONY: venv
 venv:
+	echo "Setup venv in $(VENV)"
 	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
 	$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
 	if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
@@ -131,6 +131,7 @@ todo: venv
 
 .PHONY: wrap
 wrap: venv
+	echo "Verify wrapping"
 	$(VENV)/bin/powrap --check --quiet *.po **/*.po
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
@@ -141,7 +142,7 @@ DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 spell: venv $(DESTS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
-	echo "Checking $<..."
+	echo "Pospell checking $<..."
 	mkdir -p $(@D)
 	$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
 
@@ -154,12 +155,13 @@ verifs: wrap spell
 
 .PHONY: merge
 merge: setup
+	echo "Merge from $(UPSTREAM)"
 	git -C $(CPYTHON_PATH) fetch $(UPSTREAM)
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
 	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(word 1,$(shell git -C $(CPYTHON_PATH) remote -v | grep python/cpython))/$(BRANCH)
 	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
-	(cd $(WORKTREES)/$(BRANCH); $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
+	(cd $(WORKTREES)/$(BRANCH)/Doc; $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
 	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
 	    while read -r POT;\
 	    do\
@@ -175,12 +177,16 @@ merge: setup
 	            msgcat -o "$$PO" "$$POT";\
 	        fi\
 	    done
+	echo "Replacing CPYTHON_CURRENT_COMMIT Makefile by: " $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)
 	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
 	rm -fr $(WORKTREES)/$(BRANCH)
 	git -C $(CPYTHON_PATH) worktree prune
-	echo 'To add, you can use git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
+	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
+	-$(VENV)/bin/powrap -m
+	printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
 
 .PHONY: clean
 clean:
+	echo "Cleaning *.mo, $(VENV), and $(POSPELL_TMP_DIR)"
 	rm -fr $(VENV) $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
