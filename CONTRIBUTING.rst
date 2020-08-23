@@ -49,6 +49,12 @@ Ensuite, vous devez trouver un fichier sur lequel travailler
 de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
 vous aidera grandement à produire une traduction de bonne qualité.
 
+Si c'est votre première contribution, commencez par une toute petite
+PR, de quelques paragraphes maximum, pour vous familiariser. Il n'est
+pas nécessaire de terminer un fichier lorsqu'on le commence, vous
+pouvez donc prendre n'importe quel fichier, mais ne traduire que
+quelques paragraphes.
+
 Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
 ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
 en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
@@ -75,7 +81,7 @@ Cette nouvelle branche nommée « library-sys » est basée sur « upstream/3
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout --branch library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -107,17 +113,20 @@ en anglais.
 
     make spell
 
+
 Vous pouvez aussi réindenter les fichiers avec :
 
 .. code-block:: bash
 
     make wrap
 
+
 Et pour faire les deux à la fois, lancez :
 
 .. code-block:: bash
 
     make verifs
+
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
 affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
@@ -127,12 +136,14 @@ compilation ne devrait pas échouer.
 
     make
 
+
 Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
 documentation local :
 
 .. code-block:: bash
 
     make serve
+
 
 La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
 (ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
@@ -161,7 +172,9 @@ attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
-    git commit -m "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+    git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
+
+
 
 Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
 Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
@@ -170,7 +183,9 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 .. code-block:: bash
 
-    git push -u origin
+    git push --set-upstream origin
+
+
 
 La commande précédente vous affiche un lien pour ouvrir une pull request sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
@@ -193,7 +208,7 @@ sur une autre branche) :
               # sur l'interface web.
 
     # Réglez les problèmes, puis commitez à nouveau :
-    git commit -a -m "prise en compte des remarques"
+    git commit --all --message "prise en compte des remarques"
     git push
 
 
@@ -315,6 +330,7 @@ utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
        result = thread.join(timeout=...)
        ...
 
+
 en
 
 .. code-block:: python
@@ -323,6 +339,7 @@ en
        resultat = thread.join(timeout=...)
        ...
 
+
 mais pas en
 
 .. code-block:: python
@@ -330,6 +347,7 @@ mais pas en
     def fonction_exemple():
        resultat = fildexécution.attendre(délai=...)
        ...
+
 
 Liens hypertextes
 +++++++++++++++++
@@ -349,7 +367,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionaire <dictionary>```.
+``:term:`dictionary``` en  ``:term:`dictionnaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
@@ -465,7 +483,7 @@ Ressources de traduction
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
 - `Petites leçons de typographie <https://jacques-andre.fr/faqtypo/lessons.pdf>`_,
-  résumé succint de typographie, utile pour apprendre le bon usage des
+  résumé succinct de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
 L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
@@ -481,7 +499,7 @@ La touche de composition
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
-absente par défault des claviers, permet de saisir des
+absente par défaut des claviers, permet de saisir des
 caractères spéciaux en combinant les caractères déjà présents sur le
 clavier. C'est à l'utilisateur de définir la touche de composition.
 
@@ -531,6 +549,7 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
 
     # Gestion des touches clavier
     xmodmap $HOME/.Xmodmap
+
 
 Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les « Paramètres » → « Clavier » → « Disposition » →
@@ -668,6 +687,7 @@ de ligne, comme :
     -#: ../Doc/library/signal.rst:406
     +#: ../Doc/library/signal.rst:408
 
+
 Pour dire à git que ce ne sont pas des informations utiles, vous pouvez faire
 ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 ``PATH``.
@@ -701,11 +721,13 @@ de ``python-docs-fr`` et certaines s'attendent à trouver un clone de CPython
   ├── python-docs-fr/
   └── cpython/
 
+
 Pour cloner CPython, vous pouvez utiliser :
 
 .. code-block:: bash
 
   git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
+
 
 Ceci évite de télécharger tout l'historique (inutile pour générer la
 documentation) mais récupère néanmoins toutes les branches.
@@ -731,19 +753,27 @@ Dans certains cas on a besoin de bouger des traductions d'une branche
 - d'une nouvelle branche vers des anciennes branches : pour propager
   de temps en temps le travail sur d'anciennes releases (*back porting*).
 
-On utilise ``pomerge``\  : on le fait lire sur une branche, puis écrire
-sur une autre, par exemple pour copier de la 3.7 à la 3.8 ::
+Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser ``git
+cherry-pick -x LE_SHA``, ça garde l'auteur, le sha1 d'origine, et
+toutes les modifications.
+
+Pour backporter « en gros » on utilise ``pomerge``\  : on le fait lire
+sur une branche, puis écrire sur une autre, par exemple pour copier de
+la 3.8 à la 3.7 :
+
+.. code-block:: bash
 
     git fetch
-    git checkout 3.7
-    git reset --hard upstream/3.7
+    git checkout 3.8
+    git reset --hard upstream/3.8
     pomerge --from-files *.po */*.po
-    git checkout -b forward-porting upstream/3.8
+    git checkout --branch back-porting upstream/3.7
     pomerge  --no-overwrite --to-files *.po */*.po
-    powrap -m
+    powrap --modified
     git add --patch
-    git commit --message="Forward porting from 3.7"
+    git commit --message="Backporting from 3.8"
     git push --set-upstream origin HEAD
+
 
 Notes :
 
@@ -757,12 +787,11 @@ Notes :
   plus longtemps) ;
 - j'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
   n'écrire que si le ``msgstr`` est vide, donc de ne pas modifier
-  l'existant, ainsi il est impossible de casser quelque chose, c'est
-  important lors du *forward-porting* pour ne pas défaire une
-  correction. Mais on pourrait le tenter sans ``--no-overwrite`` sur
-  du rétroportage, attention, ça fait des bêtises, ça nécessite une
-  relecture attentive : certaines traductions, comme *example:* sont en
-  francais parfois traduite avec une majuscule, et parfois non, en
+  l'existant, ainsi il est impossible de casser quelque chose.
+  On peut le tenter sans ``--no-overwrite``, attention, ça fait
+  des bêtises, ça nécessite une relecture attentive :
+  certaines traductions, comme *example:* sont en
+  français parfois traduite avec une majuscule, et parfois non, en
   fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
 - attention, si vous testez sans ``--no-overwrite``, il est peut être
   bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
@@ -786,20 +815,21 @@ Propagez d'abord les traductions connues localement :
 
 .. code-block:: bash
 
-   pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
-   powrap --modified
-   git commit -m "Propagating known translations."
+    pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
+    powrap --modified
+    git commit --message "Propagating known translations."
 
 
 Ensuite récupérez les changements depuis Transifex :
 
 .. code-block:: bash
 
-   tx pull -f --parallel
-   pomerge --from-files **/*.po
-   git checkout -- .
-   pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
-   powrap --modified
-   git add -p
-   git commit -m "tx pull"
-   tx push -t -f --no-interactive --parallel
+    tx pull -f --parallel
+    pomerge --from-files **/*.po
+    git checkout -- .
+    pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
+    powrap --modified
+    git add -p
+    git commit -m "tx pull"
+    tx push -t -f --no-interactive --parallel
+
