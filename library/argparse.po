@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-20 10:51+0200\n"
-"PO-Revision-Date: 2020-09-09 16:00-0700\n"
+"PO-Revision-Date: 2020-09-10 11:49-0700\n"
 "Last-Translator: Yannick Gingras <ygingras@ygingras.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -1198,6 +1198,12 @@ msgid ""
 "the ``default`` value is used when the option string was not present at the "
 "command line::"
 msgstr ""
+"Tous les arguments optionnels et certains arguments positionnels peuvent "
+"être omis à la ligne de commande. L'argument nommé ``default`` de la "
+"méthode :meth:`~ArgumentParser.add_argument` (qui vaut ``None`` par défaut), "
+"indique quelle valeur sera utilisé si l'argument de la ligne de commande est "
+"absent. Pour les arguments optionnels, la valeur de ``default`` est utilisé "
+"si la chaîne d'option n'est pas présente sur la ligne de commande ::"
 
 #: library/argparse.rst:1009
 msgid ""
@@ -1206,18 +1212,28 @@ msgid ""
 "conversion argument, if provided, before setting the attribute on the :class:"
 "`Namespace` return value.  Otherwise, the parser uses the value as is::"
 msgstr ""
+"Si la valeur de ``default`` est une chaîne, l'analyseur analyse cette valeur "
+"comme si c'était un argument de la ligne de commande. En particulier, "
+"l'analyseur applique la conversion spécifiée par l'argument type_ (si une "
+"est fournie) avant d'affecter l'attribut à l'objet :class:`Namespace` "
+"renvoyé. Autrement, l'analyseur utilise la valeur telle qu'elle ::"
 
 #: library/argparse.rst:1020
 msgid ""
 "For positional arguments with nargs_ equal to ``?`` or ``*``, the "
 "``default`` value is used when no command-line argument was present::"
 msgstr ""
+"Pour les arguments positionnels pour lesquels nargs_ est ``?`` ou ``*``, la "
+"valeur de ``default`` est utilisée quand l'argument est absent de la ligne "
+"de commande ::"
 
 #: library/argparse.rst:1031
 msgid ""
 "Providing ``default=argparse.SUPPRESS`` causes no attribute to be added if "
 "the command-line argument was not present::"
 msgstr ""
+"Si vous passez ``default=argparse.SUPPRESS``, aucun attribut ne sera ajouté "
+"à l'objet ``Namespace``quand l'argument est absent de la ligne de commande ::"
 
 #: library/argparse.rst:1043
 msgid "type"
@@ -1233,12 +1249,21 @@ msgid ""
 "performed.  Common built-in types and functions can be used directly as the "
 "value of the ``type`` argument::"
 msgstr ""
+"Par défaut, les objets ``default=argparse.SUPPRESS`` capturent les arguments "
+"de la ligne de commande comme des chaînes. Très souvent par contre, on "
+"désire interpréter les chaînes de la ligne de commande comme un autre type, "
+"tel que :class:`float` ou :class:`int`. L'argument nommé ``type`` d':meth:"
+"`~ArgumentParser.add_argument` nous permet de faire les vérifications et les "
+"conversions de type nécessaires. Les types et les fonctions natives peuvent "
+"être utilisés directement pour la valeur de l'argument ``type`` ::"
 
 #: library/argparse.rst:1058
 msgid ""
 "See the section on the default_ keyword argument for information on when the "
 "``type`` argument is applied to default arguments."
 msgstr ""
+"Consultez la rubrique de l'argument nommé default_ pour plus d'information "
+"sur quand l'argument ``type`` est appliqué aux arguments par défaut."
 
 #: library/argparse.rst:1061
 msgid ""
@@ -1247,22 +1272,31 @@ msgid ""
 "``errors=`` arguments of the :func:`open` function.  For example, "
 "``FileType('w')`` can be used to create a writable file::"
 msgstr ""
+"Pour faciliter l'utilisation de types de fichiers variés, le module "
+"``argparse`` fourni le type fabrique ``FileType`` qui accepte les arguments "
+"``mode=``, ``bufsize=``, ``encoding=`` et ``errors=`` de la fonction :func:"
+"`open`. Par exemple, ``FileType('w')`` peut être utilisé pour créer un "
+"fichier en mode écriture ::"
 
 #: library/argparse.rst:1071
 msgid ""
 "``type=`` can take any callable that takes a single string argument and "
 "returns the converted value::"
 msgstr ""
+"``type=`` peux prendre n'importe quelle fonction ou objet appelable qui "
+"prend un seul argument chaîne et qui renvoi la valeur convertie ::"
 
 #: library/argparse.rst:1090
 msgid ""
 "The choices_ keyword argument may be more convenient for type checkers that "
 "simply check against a range of values::"
 msgstr ""
+"L'argument nommé choices_ est parfois plus facile d'utilisation pour les "
+"vérificateurs de type qui comparent la valeur à une gamme prédéfinie ::"
 
 #: library/argparse.rst:1101
 msgid "See the choices_ section for more details."
-msgstr "Voir le chapitre choices_ pour plus de détails."
+msgstr "Voir la rubrique de choices_ pour plus de détails."
 
 #: library/argparse.rst:1105
 msgid "choices"
@@ -1276,6 +1310,12 @@ msgid ""
 "line is parsed, argument values will be checked, and an error message will "
 "be displayed if the argument was not one of the acceptable values::"
 msgstr ""
+"Certains arguments de la ligne de commande doivent être choisis parmi un "
+"ensemble fermé de valeurs. Ceux-ci peuvent être gérés en passant un "
+"conteneur à l'argument nommé *choices* de la méthode :meth:`~ArgumentParser."
+"add_argument`. Quand la ligne de commande est analysée, les valeurs de "
+"l'argument sont comparées et un message d'erreur est affiché si l'argument "
+"n'est pas parmi les valeurs acceptables ::"
 
 #: library/argparse.rst:1122
 msgid ""
@@ -1283,6 +1323,9 @@ msgid ""
 "conversions have been performed, so the type of the objects in the *choices* "
 "container should match the type_ specified::"
 msgstr ""
+"Prenez note que le test d'inclusion dans le conteur *choices* est fait après "
+"la conversion de type_. Le type des objets dans le conteneur *choices* "
+"doivent donc correspondre au type_ spécifié ::"
 
 #: library/argparse.rst:1134
 msgid ""
@@ -1292,6 +1335,11 @@ msgid ""
 "choices; if we reuse previous rock/paper/scissors game example, this could "
 "be as follows::"
 msgstr ""
+"N'importe quel conteneur peut être fourni pour la valeur de *choices*, donc "
+"les objets :class:`list`, les objets :class:`set` et les conteurs "
+"personnalisés sont tous acceptés. Ceci inclus :class:`enum.Enum` qui peut "
+"être utilisé pour limiter le choix des arguments. Si on revient à notre "
+"exemple roche-papier-ciseaux, on peut faire comme suit ::"
 
 #: library/argparse.rst:1153
 msgid "required"
@@ -1304,6 +1352,11 @@ msgid ""
 "command line. To make an option *required*, ``True`` can be specified for "
 "the ``required=`` keyword argument to :meth:`~ArgumentParser.add_argument`::"
 msgstr ""
+"En général, le module :mod:`argparse` prend pour acquis que les drapeaux "
+"comme ``-f`` et ``--bar`` annoncent un argument *optionnel* qui peut "
+"toujours être omis de la ligne de commande. Pour rendre une option "
+"*obligatoire*, ``True`` peut être passé à l'argument nommé ``required=`` d':"
+"meth:`~ArgumentParser.add_argument` ::"
 
 #: library/argparse.rst:1168
 msgid ""
@@ -1311,12 +1364,18 @@ msgid ""
 "`~ArgumentParser.parse_args` will report an error if that option is not "
 "present at the command line."
 msgstr ""
+"Tel que démontré dans l'exemple, quand l'option est marquée comme "
+"``required``, :meth:`~ArgumentParser.parse_args` mentionne une erreur si "
+"l'option est absente de la ligne de commande."
 
 #: library/argparse.rst:1174
 msgid ""
 "Required options are generally considered bad form because users expect "
 "*options* to be *optional*, and thus they should be avoided when possible."
 msgstr ""
+"En général, les options obligatoires manifeste un style boiteux car les "
+"utilisateur s'attendent que les *options* soient *optionnelles*. Elles "
+"devraient donc être évités si possible."
 
 #: library/argparse.rst:1179
 msgid "help"
@@ -1329,6 +1388,10 @@ msgid ""
 "at the command line), these ``help`` descriptions will be displayed with "
 "each argument::"
 msgstr ""
+"La valeur de ``help`` est une chaîne qui contient une brève description de "
+"l'argument. Quand un utilisateur demande de l'aide (en général par "
+"l'utilisation de ``-h`` ou ``--help`` sur la ligne de commande), ces "
+"descriptions d'aide seront affichées pour chacun des arguments ::"
 
 #: library/argparse.rst:1201
 msgid ""
@@ -1344,12 +1407,17 @@ msgid ""
 "As the help string supports %-formatting, if you want a literal ``%`` to "
 "appear in the help string, you must escape it as ``%%``."
 msgstr ""
+"Comme la chaîne d'aide utilise le caractère ``%`` pour le formatage, si vous "
+"désirez afficher un ``%`` littéral dans la chaîne d'aide, vous devez en "
+"faire l’échappement avec ``%%``."
 
 #: library/argparse.rst:1221
 msgid ""
 ":mod:`argparse` supports silencing the help entry for certain options, by "
 "setting the ``help`` value to ``argparse.SUPPRESS``::"
 msgstr ""
+":mod:`argparse` peut supprimer la rubrique d'aide de certaines options. Pour "
+"se faire, passez ``argparse.SUPPRESS`` à ``help`` ::"
 
 #: library/argparse.rst:1234
 msgid "metavar"
@@ -1369,7 +1437,7 @@ msgstr ""
 
 #: library/argparse.rst:1260
 msgid "An alternative name can be specified with ``metavar``::"
-msgstr ""
+msgstr "Un nom alternatif peut être fourni à ``metavar`` ::"
 
 #: library/argparse.rst:1277
 msgid ""
@@ -1413,7 +1481,7 @@ msgstr ""
 
 #: library/argparse.rst:1329
 msgid "``dest`` allows a custom attribute name to be provided::"
-msgstr ""
+msgstr "``dest`` vous permet de fournir un nom d'attribut personnalisé ::"
 
 #: library/argparse.rst:1337
 msgid "Action classes"
