@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-20 10:51+0200\n"
-"PO-Revision-Date: 2020-09-10 11:49-0700\n"
+"PO-Revision-Date: 2020-09-11 12:04-0700\n"
 "Last-Translator: Yannick Gingras <ygingras@ygingras.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -1402,6 +1402,12 @@ msgid ""
 "arguments to :meth:`~ArgumentParser.add_argument`, e.g. ``%(default)s``, ``"
 "%(type)s``, etc.::"
 msgstr ""
+"La chaîne ``help`` peut contenir des spécificateurs de formatage afin "
+"d'éviter la répétition de contenu tel que le nom du programme et la valeur "
+"par défaut de l'argument. Les spécificateurs de formatage disponibles "
+"incluent entre autre le nom du programme, ``%(prog)s``, et la plupart des "
+"arguments nommés d':meth:`~ArgumentParser.add_argument`, tels que ``"
+"%(default)s``, ``%(type)s``, etc. ::"
 
 #: library/argparse.rst:1218
 msgid ""
@@ -1435,6 +1441,15 @@ msgid ""
 "optional argument ``--foo`` that should be followed by a single command-line "
 "argument will be referred to as ``FOO``.  An example::"
 msgstr ""
+"Quand un objet :class:`ArgumentParser` construit le message d'aide, il doit "
+"pouvoir faire référence à chacun des argument attendus. Par défaut, les "
+"objets ``ArgumentParser`` utilisent la valeur de dest_ pour le nom de chaque "
+"objets. Par défaut, la valeur de dest_ est utilisée telle quelle pour les "
+"actions d'arguments positionnels et elle est convertie en majuscules pour "
+"les actions d'arguments optionnels. Ainsi, un argument positionnel unique "
+"avec ``dest='bar'`` sera affiché comme ``bar`` et un argument positionnel "
+"unique ``--foo`` qui prend un seul argument sur la ligne de commande sera "
+"affiché comme ``FOO``. Par exemple ::"
 
 #: library/argparse.rst:1260
 msgid "An alternative name can be specified with ``metavar``::"
@@ -1446,6 +1461,9 @@ msgid ""
 "attribute on the :meth:`~ArgumentParser.parse_args` object is still "
 "determined by the dest_ value."
 msgstr ""
+"Prenez note que ``metavar``ne change que le nom *affiché*. Le nom de "
+"l'attribut ajouté à l'objet renvoyé par :meth:`~ArgumentParser.parse_args` "
+"est toujours déterminé par la valeur de dest_."
 
 #: library/argparse.rst:1281
 msgid ""
@@ -1453,6 +1471,9 @@ msgid ""
 "times. Providing a tuple to ``metavar`` specifies a different display for "
 "each of the arguments::"
 msgstr ""
+"Certaines valeurs de ``nargs`` peuvent provoquer l'affichage de ``metavar`` "
+"plus d'une fois. Passer un n-uplet à ``metavar`` indique les différents noms "
+"à afficher pour chacun des arguments ::"
 
 #: library/argparse.rst:1298
 msgid "dest"
@@ -1467,6 +1488,12 @@ msgid ""
 "is normally supplied as the first argument to :meth:`~ArgumentParser."
 "add_argument`::"
 msgstr ""
+"La plupart des actions d':class:`ArgumentParser` ajoute une valeur dans un "
+"attribut de l'objet renvoyé par :meth:`~ArgumentParser.parse_args`. Le nom "
+"de l'attribut est déterminé par l'argument nommé ``dest`` d':meth:"
+"`~ArgumentParser.add_argument`. Pour les arguments positionnels, ``dest`` "
+"est généralement le premier argument d':meth:`~ArgumentParser."
+"add_argument` ::"
 
 #: library/argparse.rst:1312
 msgid ""
@@ -1479,6 +1506,14 @@ msgid ""
 "characters to make sure the string is a valid attribute name.  The examples "
 "below illustrate this behavior::"
 msgstr ""
+"Pour les actions d'arguments optionnels, la valeur de ``dest`` est "
+"généralement inférée à partir de la chaîne d'option. :class:`ArgumentParser` "
+"génère la valeur de ``dest`` en prenant la première chaîne d'option longue "
+"et en retirant le préfixe ``--``. Si une chaîne d'option longue n'est pas "
+"fournie, ``dest`` sera dérivée de la première chaîne d'option courte sans le "
+"préfixe ``-``. Tous les ``-`` subséquents seront convertis en ``_`` pour "
+"s'assurer que le chaîne est un nom d'attribut valide. Les exemples suivants "
+"illustrent ce comportement ::"
 
 #: library/argparse.rst:1329
 msgid "``dest`` allows a custom attribute name to be provided::"
@@ -1494,6 +1529,10 @@ msgid ""
 "which processes arguments from the command-line. Any object which follows "
 "this API may be passed as the ``action`` parameter to :meth:`add_argument`."
 msgstr ""
+"Les classes ``Action`` implémentent l'API Action, un appelable qui retourne "
+"un appelable qui traite les arguments de la ligne de commande. Tout objet "
+"qui suit cette API peut être passé comme paramètre ``action`` d':meth:"
+"`add_argument`."
 
 #: library/argparse.rst:1348
 msgid ""
@@ -1503,6 +1542,11 @@ msgid ""
 "keyword arguments passed to :meth:`ArgumentParser.add_argument` except for "
 "the ``action`` itself."
 msgstr ""
+"Les objets ``Action`` sont utilisés par un ``ArgumentParser`` pour "
+"représenter l'information nécessaire à l'analyse d'un seul argument à partir "
+"d'une ou plusieurs chaînes de la ligne de commande. La classe ``Action`` "
+"doit accepter les deux arguments positionnels d':meth:`ArgumentParser."
+"add_argument` ainsi que tous ses arguments nommés, sauf ``action``."
 
 #: library/argparse.rst:1354
 msgid ""
@@ -1511,16 +1555,24 @@ msgid ""
 "\"type\", \"required\", \"help\", etc. defined. The easiest way to ensure "
 "these attributes are defined is to call ``Action.__init__``."
 msgstr ""
+"Les instances d'``Action`` (ou la valeur de retour de l'appelable passé au "
+"paramètre ``action``) doivent définir les attributs nécessaires: \"dest\", "
+"\"option_strings\", \"default\", \"type\", \"required\", \"help\", etc. La "
+"façon la plus simple de s'assurer que ces attributs sont définis est "
+"d'appeler ``Action.__init__``."
 
 #: library/argparse.rst:1359
 msgid ""
 "Action instances should be callable, so subclasses must override the "
 "``__call__`` method, which should accept four parameters:"
 msgstr ""
+"Les instances d'``Action`` doivent être appelable et donc les sous-classes "
+"doivent surcharger la méthode ``__call__``. Cette méthode doit accepter "
+"quatre paramètres :"
 
 #: library/argparse.rst:1362
 msgid "``parser`` - The ArgumentParser object which contains this action."
-msgstr ""
+msgstr "``parser`` – L'objet ``ArgumentParser`` qui contient cette action."
 
 #: library/argparse.rst:1364
 msgid ""
@@ -1528,6 +1580,9 @@ msgid ""
 "`~ArgumentParser.parse_args`.  Most actions add an attribute to this object "
 "using :func:`setattr`."
 msgstr ""
+"``namespace`` – L'objet :class:`Namespace` qui sera renvoyé par :meth:"
+"`~ArgumentParser.parse_args`. La majorité des actions ajoutent un attribut à "
+"cet objet avec :func:`setattr`."
 
 #: library/argparse.rst:1368
 msgid ""
@@ -1535,6 +1590,10 @@ msgid ""
 "conversions applied.  Type conversions are specified with the type_ keyword "
 "argument to :meth:`~ArgumentParser.add_argument`."
 msgstr ""
+"``values`` – Les arguments de la ligne de commande associés à l'action après "
+"les avoir soumis à la conversion de type. Les conversions de types sont "
+"spécifiées grâce à l’argument nommé type_ d':meth:`~ArgumentParser."
+"add_argument`."
 
 #: library/argparse.rst:1372
 msgid ""
@@ -1542,12 +1601,18 @@ msgid ""
 "The ``option_string`` argument is optional, and will be absent if the action "
 "is associated with a positional argument."
 msgstr ""
+"``option_string`` – La chaîne d'option utilisée pour invoquer cette action. "
+"L'argument ``option_string`` est optionnel et est absent si l'action est "
+"associée à un argument positionnel."
 
 #: library/argparse.rst:1376
 msgid ""
 "The ``__call__`` method may perform arbitrary actions, but will typically "
 "set attributes on the ``namespace`` based on ``dest`` and ``values``."
 msgstr ""
+"La méthode ``__call__`` peut réaliser un traitement arbitraire, mais en "
+"général elle affect des attributs sur ``namespace`` en fonction de ``dest`` "
+"et de ``values``."
 
 #: library/argparse.rst:1379
 msgid ""
@@ -1555,6 +1620,11 @@ msgid ""
 "argument and return a string which will be used when printing the usage of "
 "the program. If such method is not provided, a sensible default will be used."
 msgstr ""
+"Les classes dérivées d'``Action`` peuvent définir une méthode "
+"``format_usage`` qui ne prends aucun argument et qui renvoie une chaîne qui "
+"sera utilisée lors de l'affichage du message d'utilisation du programme. Si "
+"cette méthode n'est pas fournie, une valeur par défaut raisonnable sera "
+"utilisée."
 
 #: library/argparse.rst:1384
 msgid "The parse_args() method"
@@ -1565,6 +1635,8 @@ msgid ""
 "Convert argument strings to objects and assign them as attributes of the "
 "namespace.  Return the populated namespace."
 msgstr ""
+"Convertie les chaînes d'arguments en objets et les assigne comme attributs "
+"de l'objet ``namespace``. Retourne l'objet ``namespace`` rempli."
 
 #: library/argparse.rst:1391
 msgid ""
@@ -1572,18 +1644,23 @@ msgid ""
 "created and how they are assigned. See the documentation for :meth:"
 "`add_argument` for details."
 msgstr ""
+"Les appels à :meth:`add_argument` qui ont été faits déterminent exactement "
+"quels objets sont créés et comment ils sont affectées. Consultez la rubrique "
+"d':meth:`add_argument` pour les détails."
 
 #: library/argparse.rst:1395
 msgid ""
 "args_ - List of strings to parse.  The default is taken from :data:`sys."
 "argv`."
-msgstr ""
+msgstr "args_ – Liste de chaînes à analyser. Par défaut: :data:`sys.argv`."
 
 #: library/argparse.rst:1398
 msgid ""
 "namespace_ - An object to take the attributes.  The default is a new empty :"
 "class:`Namespace` object."
 msgstr ""
+"namespace – Un objet pour recevoir les attributs. Par défaut: une nouvelle "
+"instance (vide) de :class:`Namespace`."
 
 #: library/argparse.rst:1403
 msgid "Option value syntax"
@@ -1608,12 +1685,17 @@ msgid ""
 "For short options (options only one character long), the option and its "
 "value can be concatenated::"
 msgstr ""
+"Pour les options courtes (les options qui utilisent un seul caractère), "
+"l'option et sa valeur sont concaténées ::"
 
 #: library/argparse.rst:1430
 msgid ""
 "Several short options can be joined together, using only a single ``-`` "
 "prefix, as long as only the last option (or none of them) requires a value::"
 msgstr ""
+"Plusieurs options courtes peuvent être groupées ensemble après un seul "
+"préfixe ``-`` pour autant que seule la dernière (ou aucune) nécessite une "
+"valeur ::"
 
 #: library/argparse.rst:1442
 msgid "Invalid arguments"
@@ -1667,6 +1749,9 @@ msgid ""
 "An error is produced for arguments that could produce more than one options. "
 "This feature can be disabled by setting :ref:`allow_abbrev` to ``False``."
 msgstr ""
+"Une erreur est générée pour les arguments qui peuvent produire plus d'une "
+"option. Ce comportement peut être désactivé en passant ``False`` à :ref:"
+"`allow_abbrev`."
 
 #: library/argparse.rst:1544
 msgid "Beyond ``sys.argv``"
@@ -1682,13 +1767,16 @@ msgstr ""
 
 #: library/argparse.rst:1566
 msgid "The Namespace object"
-msgstr "L'objet namespace"
+msgstr "L'objet ``Namespace``"
 
 #: library/argparse.rst:1570
 msgid ""
 "Simple class used by default by :meth:`~ArgumentParser.parse_args` to create "
 "an object holding attributes and return it."
 msgstr ""
+"Classe rudimentaire qui est utilisé par défaut par :meth:`~ArgumentParser."
+"parse_args` pour créer un objet qui stock les attributs. Cet objet est "
+"renvoyé par :meth:`~ArgumentParser.parse_args`."
 
 #: library/argparse.rst:1573
 msgid ""
@@ -1696,6 +1784,10 @@ msgid ""
 "readable string representation. If you prefer to have dict-like view of the "
 "attributes, you can use the standard Python idiom, :func:`vars`::"
 msgstr ""
+"Cette classe est délibérément rudimentaire: une sous-classe d':class:"
+"`object` avec une représentation textuelle intelligible. Si vous préférez "
+"une vue dict-compatible, vous devez utiliser :func:`vars` (un idiome Python "
+"populaire) ::"
 
 #: library/argparse.rst:1583
 msgid ""
@@ -1703,6 +1795,10 @@ msgid ""
 "to an already existing object, rather than a new :class:`Namespace` object.  "
 "This can be achieved by specifying the ``namespace=`` keyword argument::"
 msgstr ""
+"Il est parfois utile de demander à :class:`ArgumentParser` de faire "
+"l'affectation des attributs sur un objet existant plutôt que de faire la "
+"création d'un nouvel objet :class:`Namespace`. Ceci peut être réalisé avec "
+"l'argument nommé ``namespace=`` ::"
 
 #: library/argparse.rst:1599
 msgid "Other utilities"
@@ -2119,6 +2215,8 @@ msgid ""
 "The :mod:`argparse` module improves on the standard library :mod:`optparse` "
 "module in a number of ways including:"
 msgstr ""
+"Le module :mod:`argparse` fournit plusieurs améliorations par rapport au "
+"module :mod:`optparse` de la bibliothèque standard :"
 
 #: library/argparse.rst:2121
 msgid "Handling positional arguments."
@@ -2148,13 +2246,15 @@ msgstr ""
 
 #: library/argparse.rst:2128
 msgid "A partial upgrade path from :mod:`optparse` to :mod:`argparse`:"
-msgstr ""
+msgstr "Le passage partiel d':mod:`optparse` à :mod:`argparse` :"
 
 #: library/argparse.rst:2130
 msgid ""
 "Replace all :meth:`optparse.OptionParser.add_option` calls with :meth:"
 "`ArgumentParser.add_argument` calls."
 msgstr ""
+"Remplacer tous les appels à :meth:`optparse.OptionParser.add_option` par des "
+"appels à :meth:`ArgumentParser.add_argument`."
 
 #: library/argparse.rst:2133
 msgid ""
@@ -2163,6 +2263,11 @@ msgid ""
 "for the positional arguments. Keep in mind that what was previously called "
 "``options``, now in the :mod:`argparse` context is called ``args``."
 msgstr ""
+"Remplacer ``(options, args) = parser.parse_args()`` par ``args = parser."
+"parse_args()`` et ajouter des appels à :meth:`ArgumentParser.add_argument` "
+"pour les arguments positionnels. Prenez note que les valeurs précédemment "
+"appelées ``options`` sont appelées ``args`` dans le contexte d':mod:"
+"`argparse`."
 
 #: library/argparse.rst:2138
 msgid ""
@@ -2170,24 +2275,34 @@ msgid ""
 "meth:`~ArgumentParser.parse_intermixed_args` instead of :meth:"
 "`~ArgumentParser.parse_args`."
 msgstr ""
+"Remplacer :meth:`optparse.OptionParser.disable_interspersed_args` en "
+"appelant :meth:`~ArgumentParser.parse_intermixed_args` plutôt que :meth:"
+"`~ArgumentParser.parse_args`."
 
 #: library/argparse.rst:2142
 msgid ""
 "Replace callback actions and the ``callback_*`` keyword arguments with "
 "``type`` or ``action`` arguments."
 msgstr ""
+"Remplacer les actions de rappel (*callback actions* en anglais) et les "
+"arguments nommés ``callback_*`` par des arguments ``type`` et ``actions``."
 
 #: library/argparse.rst:2145
 msgid ""
 "Replace string names for ``type`` keyword arguments with the corresponding "
 "type objects (e.g. int, float, complex, etc)."
 msgstr ""
+"Remplacer les chaînes représentants le nom des types pour l'argument nommé "
+"``type`` par les objets types correspondants (par exemple: int, float, "
+"complex, etc)."
 
 #: library/argparse.rst:2148
 msgid ""
 "Replace :class:`optparse.Values` with :class:`Namespace` and :exc:`optparse."
 "OptionError` and :exc:`optparse.OptionValueError` with :exc:`ArgumentError`."
 msgstr ""
+"Remplacer :class:`optparse.Values` par :class:`Namespace`; et :exc:`optparse."
+"OptionError` et :exc:`optparse.OptionValueError` par :exc:`ArgumentError`."
 
 #: library/argparse.rst:2152
 msgid ""
@@ -2195,6 +2310,10 @@ msgid ""
 "with the standard Python syntax to use dictionaries to format strings, that "
 "is, ``%(default)s`` and ``%(prog)s``."
 msgstr ""
+"Remplacer les chaînes avec des argument de formatage implicite (tels que ``"
+"%default`` ou ``%prog``) par la syntaxe standard de Python pour "
+"l'interpolation d'un dictionnaire dans les chaînes de formatage (c'est à "
+"dire ``%(default)s`` et ``%(prog)s``)."
 
 #: library/argparse.rst:2156
 msgid ""
@@ -2202,3 +2321,6 @@ msgid ""
 "``parser.add_argument('--version', action='version', version='<the "
 "version>')``."
 msgstr ""
+"Remplacer l'argument ``version`` du constructeur d'``OptionParser`` par un "
+"appel à ``parser.add_argument('--version', action='version', version='<la "
+"version>')``."
