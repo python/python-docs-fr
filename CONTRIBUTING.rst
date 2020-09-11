@@ -418,6 +418,7 @@ et al.                     et autres, `à accorder
 export                     exportation
 expression                 expression
 framework                  cadriciel
+frozen package or set      paquet ou ensemble figé
 garbage collector          ramasse-miettes
 getter                     accesseur
 i.e.                       c.-à-d. (on n'utilise pas l'anglicisme « i.e. »,
