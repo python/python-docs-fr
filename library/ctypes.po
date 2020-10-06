@@ -1522,6 +1522,9 @@ msgid ""
 "When programming in a compiled language, shared libraries are accessed when "
 "compiling/linking a program, and when the program is run."
 msgstr ""
+"Les langages compilés ont besoin d'accéder aux bibliothèques partagées au "
+"moment de la compilation, de l'édition de liens et pendant l'exécution du "
+"programme."
 
 #: ../Doc/library/ctypes.rst:1253
 msgid ""
@@ -1531,12 +1534,20 @@ msgid ""
 "while the ctypes library loaders act like when a program is run, and call "
 "the runtime loader directly."
 msgstr ""
+"Le but de la fonction :func:`find_library` est de trouver une bibliothèque "
+"de la même façon que le ferait le compilateur ou le chargeur (sur les plates-"
+"formes avec plusieurs versions de la même bibliothèque, la plus récente est "
+"chargée), alors que les chargeurs de bibliothèques de *ctypes* se comportent "
+"de la même façon qu'un programme qui s'exécute, et appellent directement le "
+"chargeur."
 
 #: ../Doc/library/ctypes.rst:1259
 msgid ""
 "The :mod:`ctypes.util` module provides a function which can help to "
 "determine the library to load."
 msgstr ""
+"Le module :mod:`ctypes.util` fournit une fonction pour déterminer quelle "
+"bibliothèque charger."
 
 #: ../Doc/library/ctypes.rst:1267
 msgid ""
@@ -1545,10 +1556,15 @@ msgid ""
 "number (this is the form used for the posix linker option :option:`!-l`).  "
 "If no library can be found, returns ``None``."
 msgstr ""
+"Tente de trouver une bibliothèque et en renvoie le chemin. *name* est le nom "
+"de la bibliothèque sans préfixe — comme *lib* — ni suffixe — comme ``.so``, "
+"``.dylib`` ou un numéro de version (c.-à-d. la même forme que l'option POSIX "
+"de l'éditeur de lien :option:`!-l`). Si la fonction ne parvient pas à "
+"trouver de bibliothèque, elle renvoie ``None``."
 
 #: ../Doc/library/ctypes.rst:1272 ../Doc/library/ctypes.rst:1860
 msgid "The exact functionality is system dependent."
-msgstr ""
+msgstr "Le mode opératoire exact dépend du système."
 
 #: ../Doc/library/ctypes.rst:1274
 msgid ""
@@ -1556,6 +1572,9 @@ msgid ""
 "ldconfig``, ``gcc``, ``objdump`` and ``ld``) to find the library file. It "
 "returns the filename of the library file."
 msgstr ""
+"Sous Linux, :func:`find_library` essaye de lancer des programmes externes "
+"(``/sbin/ldconfig``, ``gcc``, ``objdump`` et ``ld``) pour trouver la "
+"bibliothèque. Elle renvoie le nom de la bibliothèque sur le disque."
 
 #: ../Doc/library/ctypes.rst:1278
 msgid ""
@@ -1563,16 +1582,21 @@ msgid ""
 "when searching for libraries, if a library cannot be found by any other "
 "means."
 msgstr ""
+"Sous Linux, si les autres moyens échouent, la fonction utilise la variable "
+"d'environnement ``LD_LIBRARY_PATH`` pour trouver la bibliothèque."
 
 #: ../Doc/library/ctypes.rst:1282
 msgid "Here are some examples::"
-msgstr ""
+msgstr "Voici quelques exemples :"
 
 #: ../Doc/library/ctypes.rst:1293
 msgid ""
 "On OS X, :func:`find_library` tries several predefined naming schemes and "
 "paths to locate the library, and returns a full pathname if successful::"
 msgstr ""
+"Sous OS X, :func:`find_library` regarde dans des chemins et conventions de "
+"chemins prédéfinies pour trouver la bibliothèque et en renvoie le chemin "
+"complet si elle la trouve :"
 
 #: ../Doc/library/ctypes.rst:1307
 msgid ""
@@ -1580,6 +1604,10 @@ msgid ""
 "returns the full pathname, but since there is no predefined naming scheme a "
 "call like ``find_library(\"c\")`` will fail and return ``None``."
 msgstr ""
+"Sous Windows, :func:`find_library` examine le chemin de recherche du système "
+"et renvoie le chemin complet de la bibliothèque, mais comme il n'existe pas "
+"de convention de nommage, des appels comme ``find_library(\"c\")`` échouent "
+"et renvoient ``None``."
 
 #: ../Doc/library/ctypes.rst:1311
 msgid ""
@@ -1588,6 +1616,11 @@ msgid ""
 "into the wrapper module instead of using :func:`find_library` to locate the "
 "library at runtime."
 msgstr ""
+"Si vous encapsulez une bibliothèque partagée avec :mod:`ctypes`, il est "
+"*probablement* plus judicieux de déterminer le chemin de cette bibliothèque "
+"lors du développement et de l'écrire en dur dans le module d'encapsulation, "
+"plutôt que d'utiliser :func:`find_library` pour la trouver lors de "
+"l'exécution."
 
 #: ../Doc/library/ctypes.rst:1319
 msgid "Loading shared libraries"
@@ -1598,6 +1631,9 @@ msgid ""
 "There are several ways to load shared libraries into the Python process.  "
 "One way is to instantiate one of the following classes:"
 msgstr ""
+"Il y a plusieurs moyens de charger une bibliothèque partagée dans un "
+"processus Python. L'un d'entre eux consiste à instancier une des classes "
+"suivantes :"
 
 #: ../Doc/library/ctypes.rst:1327
 msgid ""
@@ -1605,6 +1641,9 @@ msgid ""
 "these libraries use the standard C calling convention, and are assumed to "
 "return :c:type:`int`."
 msgstr ""
+"Une instance de cette classe représente une bibliothèque partagée déjà "
+"chargée. Les fonctions de cette bibliothèque utilisent la convention d'appel "
+"C standard et doivent renvoyer un :c:type:`int`."
 
 #: ../Doc/library/ctypes.rst:1334
 msgid ""
@@ -1615,6 +1654,13 @@ msgid ""
 "failed or succeeded, together with additional error code.  If the return "
 "value signals a failure, an :class:`OSError` is automatically raised."
 msgstr ""
+"En Windows seulement : une instance de cette classe représente une "
+"bibliothèque partagée déjà chargée. Les fonctions de cette bibliothèque "
+"utilisent la convention d'appel *stdcall*, et doivent renvoyer un code :"
+"class:`HRESULT` (propre à Windows). Les valeurs de :class:`HRESULT` "
+"contiennent des informations précisant si l'appel de la fonction a échoué ou "
+"s'il a réussi, ainsi qu'un code d'erreur supplémentaire. Si la valeur de "
+"retour signale un échec, une :class:`OSError` est levée automatiquement."
 
 #: ../Doc/library/ctypes.rst:1341
 msgid ":exc:`WindowsError` used to be raised."
@@ -1626,6 +1672,10 @@ msgid ""
 "functions in these libraries use the ``stdcall`` calling convention, and are "
 "assumed to return :c:type:`int` by default."
 msgstr ""
+"En Windows seulement : une instance de cette classe représente une "
+"bibliothèque partagée déjà chargée. Les fonctions de cette bibliothèque "
+"utilisent la convention d'appel *stdcall* et doivent renvoyer par défaut un :"
+"c:type:`int`."
 
 #: ../Doc/library/ctypes.rst:1351
 msgid ""
@@ -1633,12 +1683,18 @@ msgid ""
 "the :class:`WinDLL` and :class:`OleDLL` use the standard calling convention "
 "on this platform."
 msgstr ""
+"Sous Windows CE, seule la convention d'appel standard est utilisée. Pour des "
+"raisons pratiques, :class:`WinDLL` et :class:`OleDLL` utilisent la "
+"convention d'appel standard sur cette plate-forme."
 
 #: ../Doc/library/ctypes.rst:1355
 msgid ""
 "The Python :term:`global interpreter lock` is released before calling any "
 "function exported by these libraries, and reacquired afterwards."
 msgstr ""
+"Le :term:`verrou global de l'interpréteur <global interpreter lock>` Python "
+"est relâché avant chaque appel d'une fonction exposée par ces bibliothèques "
+"et ré-activé après."
 
 #: ../Doc/library/ctypes.rst:1361
 msgid ""
@@ -1647,10 +1703,15 @@ msgid ""
 "function execution the Python error flag is checked. If the error flag is "
 "set, a Python exception is raised."
 msgstr ""
+"Cette classe est identique à :class:`CDLL`, à ceci près que le GIL n'est "
+"*pas* relâché pendant l'appel de la fonction, et, qu'au terme de l'appel, le "
+"drapeau d'erreur Python est vérifié. Si celui-ci est activé, une exception "
+"Python est levée."
 
 #: ../Doc/library/ctypes.rst:1366
 msgid "Thus, this is only useful to call Python C api functions directly."
 msgstr ""
+"Donc, cette classe ne sert qu'à appeler les fonctions de l'API C de Python."
 
 #: ../Doc/library/ctypes.rst:1368
 msgid ""
@@ -1661,6 +1722,12 @@ msgid ""
 "``LoadLibrary`` function is used to load the library into the process, and "
 "to get a handle to it."
 msgstr ""
+"Toutes ces classes peuvent être instanciées en les appelant avec le chemin "
+"de la bibliothèque partagée comme unique argument. Il est aussi possible de "
+"passer un lien vers une bibliothèque déjà chargée en utilisant le paramètre "
+"``handle``. Sinon, les fonctions ``dlopen`` ou ``LoadLibrary`` de la plate-"
+"forme sous-jacente permettent de charger la bibliothèque dans le processus, "
+"et d'en obtenir un lien."
 
 #: ../Doc/library/ctypes.rst:1375
 msgid ""
@@ -1669,6 +1736,10 @@ msgid ""
 "ignored.  On posix systems, RTLD_NOW is always added, and is not "
 "configurable."
 msgstr ""
+"Le mode de chargement de la bibliothèque est défini par le paramètre *mode*. "
+"Pour plus de détails, référez-vous à l'entrée :manpage:`dlopen(3)` du "
+"manuel. En Windows, *mode* est ignoré. Sur les systèmes POSIX, RTLD_NOW y "
+"est toujours ajouté. Ceci n'est pas configurable."
 
 #: ../Doc/library/ctypes.rst:1380
 msgid ""
@@ -1679,6 +1750,13 @@ msgid ""
 "the :data:`errno` value before the function call is swapped with the ctypes "
 "private copy, the same happens immediately after the function call."
 msgstr ""
+"Le paramètre *use_errno*, lorsque défini à vrai, active un mécanisme de "
+"*ctypes* qui permet d'accéder au numéro d'erreur :data:`errno` du système de "
+"manière sécurisée. :mod:`ctypes` maintient une copie de :data:`errno` du "
+"système dans chaque fil d'exécution. Si vous appelez des fonctions externes "
+"créées avec ``use_errno=True``, la valeur de :data:`errno` avant l'appel de "
+"la fonction est échangée avec la copie privée de *ctypes*. La même chose se "
+"produit juste après l'appel de la fonction."
 
 #: ../Doc/library/ctypes.rst:1387
 msgid ""
@@ -1686,6 +1764,9 @@ msgid ""
 "private copy, and the function :func:`ctypes.set_errno` changes the ctypes "
 "private copy to a new value and returns the former value."
 msgstr ""
+"La fonction :func:`ctypes.get_errno` renvoie la valeur de la copie privée de "
+"*ctypes*. La fonction :func:`ctypes.set_errno` affecte une nouvelle valeur à "
+"la copie privée et renvoie l'ancienne valeur."
 
 #: ../Doc/library/ctypes.rst:1391
 msgid ""
@@ -1695,24 +1776,36 @@ msgid ""
 "and :func:`ctypes.set_last_error` are used to request and change the ctypes "
 "private copy of the windows error code."
 msgstr ""
+"Définir le paramètre *use_last_error* à vrai active le même mécanisme pour "
+"le code d'erreur de Windows qui est géré par les fonctions :func:"
+"`GetLastError` et :func:`SetLastError` de l'API Windows ; :func:`ctypes."
+"get_last_error` et :func:`ctypes.set_last_error` servent à obtenir et "
+"modifier la copie privée *ctypes* de ce code d'erreur."
 
 #: ../Doc/library/ctypes.rst:1400
 msgid ""
 "Flag to use as *mode* parameter.  On platforms where this flag is not "
 "available, it is defined as the integer zero."
 msgstr ""
+"Valeur possible pour le paramètre *mode*. Vaut zéro sur les plates-formes où "
+"ce drapeau n'est pas disponible."
 
 #: ../Doc/library/ctypes.rst:1407
 msgid ""
 "Flag to use as *mode* parameter.  On platforms where this is not available, "
 "it is the same as *RTLD_GLOBAL*."
 msgstr ""
+"Valeur possible pour le paramètre *mode*. Vaut *RTLD_GLOBAL* sur les plates-"
+"formes où ce drapeau n'est pas disponible."
 
 #: ../Doc/library/ctypes.rst:1414
 msgid ""
 "The default mode which is used to load shared libraries.  On OSX 10.3, this "
 "is *RTLD_GLOBAL*, otherwise it is the same as *RTLD_LOCAL*."
 msgstr ""
+"Mode de chargement par défaut des bibliothèques partagées. Vaut "
+"*RTLD_GLOBAL* sur OSX 10.3 et *RTLD_LOCAL* sur les autres systèmes "
+"d'exploitation."
 
 #: ../Doc/library/ctypes.rst:1417
 msgid ""
@@ -1722,12 +1815,19 @@ msgid ""
 "therefore accessing it repeatedly returns the same object each time.  On the "
 "other hand, accessing it through an index returns a new object each time::"
 msgstr ""
+"Les instances de ces classes n'ont pas de méthodes publiques ; on accède aux "
+"fonctions de la bibliothèque partagée par attribut ou par indiçage. Notez "
+"que les résultats des accès par attribut sont mis en cache, et donc des "
+"accès consécutifs renvoient à chaque fois le même objet. Accéder à une "
+"fonction par indice renvoie cependant chaque fois un nouvel objet :"
 
 #: ../Doc/library/ctypes.rst:1430
 msgid ""
 "The following public attributes are available, their name starts with an "
 "underscore to not clash with exported function names:"
 msgstr ""
+"Les attributs publics suivants sont disponibles, leur nom commence par un "
+"tiret bas pour éviter les conflits avec les noms des fonctions exportées :"
 
 #: ../Doc/library/ctypes.rst:1436
 msgid "The system handle used to access the library."
@@ -1735,7 +1835,7 @@ msgstr ""
 
 #: ../Doc/library/ctypes.rst:1441
 msgid "The name of the library passed in the constructor."
-msgstr ""
+msgstr "Nom de la bibliothèque donné au constructeur."
 
 #: ../Doc/library/ctypes.rst:1443
 msgid ""
@@ -1744,12 +1844,18 @@ msgid ""
 "calling the :meth:`LoadLibrary` method, or by retrieving the library as "
 "attribute of the loader instance."
 msgstr ""
+"Il est possible de charger une bibliothèque partagée soit en utilisant une "
+"instance de la classe :class:`LibraryLoader`, soit en appelant la méthode :"
+"meth:`LoadLibrary`, soit en récupérant la bibliothèque comme attribut de "
+"l'instance du chargeur."
 
 #: ../Doc/library/ctypes.rst:1451
 msgid ""
 "Class which loads shared libraries.  *dlltype* should be one of the :class:"
 "`CDLL`, :class:`PyDLL`, :class:`WinDLL`, or :class:`OleDLL` types."
 msgstr ""
+"Classe pour charger une bibliothèque partagée. *dlltype* doit être de type :"
+"class:`CDLL`, :class:`PyDLL`, :class:`WinDLL` ou :class:`OleDLL`."
 
 #: ../Doc/library/ctypes.rst:1454
 msgid ""
@@ -1757,38 +1863,44 @@ msgid ""
 "by accessing it as attribute of a library loader instance.  The result is "
 "cached, so repeated attribute accesses return the same library each time."
 msgstr ""
+":meth:`__getattr__` a un comportement particulier : elle charge une "
+"bibliothèque quand on accède à un attribut du chargeur. Le résultat est mis "
+"en cache, donc des accès consécutifs renvoient la même bibliothèque à chaque "
+"fois."
 
 #: ../Doc/library/ctypes.rst:1460
 msgid ""
 "Load a shared library into the process and return it.  This method always "
 "returns a new instance of the library."
 msgstr ""
+"Charge une bibliothèque partagée dans le processus et la renvoie. Cette "
+"méthode renvoie toujours une nouvelle instance de la bibliothèque."
 
 #: ../Doc/library/ctypes.rst:1464
 msgid "These prefabricated library loaders are available:"
-msgstr ""
+msgstr "Plusieurs chargeurs sont fournis :"
 
 #: ../Doc/library/ctypes.rst:1469
 msgid "Creates :class:`CDLL` instances."
-msgstr ""
+msgstr "Pour créer des instances de :class:`CDLL`."
 
 #: ../Doc/library/ctypes.rst:1475
 msgid "Windows only: Creates :class:`WinDLL` instances."
-msgstr ""
+msgstr "Pour créer des instances de :class:`WinDLL` (uniquement en Windows)."
 
 #: ../Doc/library/ctypes.rst:1481
 msgid "Windows only: Creates :class:`OleDLL` instances."
-msgstr ""
+msgstr "Pour créer des instances de :class:`OleDLL` (uniquement en Windows)."
 
 #: ../Doc/library/ctypes.rst:1487
 msgid "Creates :class:`PyDLL` instances."
-msgstr ""
+msgstr "Pour créer des instances de :class:`PyDLL`."
 
 #: ../Doc/library/ctypes.rst:1490
 msgid ""
 "For accessing the C Python api directly, a ready-to-use Python shared "
 "library object is available:"
-msgstr ""
+msgstr "Il existe un moyen rapide d'accéder directement à l'API C Python :"
 
 #: ../Doc/library/ctypes.rst:1496
 msgid ""
@@ -1797,6 +1909,11 @@ msgid ""
 "`int`, which is of course not always the truth, so you have to assign the "
 "correct :attr:`restype` attribute to use these functions."
 msgstr ""
+"Une instance de :class:`PyDLL` dont les attributs sont les fonctions "
+"exportées par l'API C Python. Toutes ces fonctions sont supposées renvoyer "
+"un :c:type:`int` C, ce qui n'est bien entendu pas toujours le cas. Il faut "
+"donc définir vous-même le bon attribut :attr:`restype` pour pouvoir les "
+"utiliser."
 
 #: ../Doc/library/ctypes.rst:1505
 msgid "Foreign functions"
@@ -1810,28 +1927,41 @@ msgid ""
 "instances as arguments, and return the default result type specified by the "
 "library loader. They are instances of a private class:"
 msgstr ""
+"Comme expliqué dans la section précédente, on peut accéder aux fonctions "
+"externes au travers des attributs des bibliothèques partagées. Un objet "
+"fonction créé de cette façon accepte par défaut un nombre quelconque "
+"d'arguments qui peuvent être de n'importe quel type de données *ctypes*. Il "
+"renvoie le type par défaut du chargeur de la bibliothèque. Ce sont des "
+"instances de la classe privée :"
 
 #: ../Doc/library/ctypes.rst:1516
 msgid "Base class for C callable foreign functions."
-msgstr ""
+msgstr "Classe de base pour les fonctions externes C."
 
 #: ../Doc/library/ctypes.rst:1518
 msgid ""
 "Instances of foreign functions are also C compatible data types; they "
 "represent C function pointers."
 msgstr ""
+"Une instance de fonction externe est également un type de donnée compatible "
+"avec le C ; elle représente un pointeur vers une fonction."
 
 #: ../Doc/library/ctypes.rst:1521
 msgid ""
 "This behavior can be customized by assigning to special attributes of the "
 "foreign function object."
 msgstr ""
+"Son comportement peut-être personnalisé en réaffectant les attributs "
+"spécifiques de l'objet représentant la fonction externe."
 
 #: ../Doc/library/ctypes.rst:1526
 msgid ""
 "Assign a ctypes type to specify the result type of the foreign function. Use "
 "``None`` for :c:type:`void`, a function not returning anything."
 msgstr ""
+"Fait correspondre le type de retour de la fonction externe à un type "
+"*ctypes*. Dans le cas où la fonction ne renvoie rien (:c:type:`void`), "
+"utilisez ``None``."
 
 #: ../Doc/library/ctypes.rst:1529
 msgid ""
@@ -1842,6 +1972,14 @@ msgid ""
 "or error checking use a ctypes data type as :attr:`restype` and assign a "
 "callable to the :attr:`errcheck` attribute."
 msgstr ""
+"Il est aussi possible de passer n'importe quel un objet Python qui n'est pas "
+"un type *ctypes* pourvu qu'il soit appelable. Dans ce cas, la fonction est "
+"censée renvoyer un :c:type:`int` C et l'appelable sera appelé avec cet "
+"entier, ce qui permet ainsi de faire des actions supplémentaires comme "
+"vérifier un code d'erreur. Ce mécanisme est obsolète ; une façon plus souple "
+"de faire des actions supplémentaires ou de la vérification consiste à "
+"affecter un type *ctypes* à :attr:`restype` et à affecter un appelable à "
+"l'attribut :attr:`errcheck`."
 
 #: ../Doc/library/ctypes.rst:1538
 msgid ""
@@ -1851,6 +1989,11 @@ msgid ""
 "tuple; functions using the C calling convention accept additional, "
 "unspecified arguments as well."
 msgstr ""
+"Fait correspondre le type des arguments que la fonction accepte avec un *n*-"
+"uplet de types *ctypes*. Les fonctions qui utilisent la convention d'appel "
+"``stdcall`` ne peuvent être appelées qu'avec le même nombre d'arguments que "
+"la taille du *n*-uplet mais les fonctions qui utilisent la convention "
+"d'appel C acceptent aussi des arguments additionnels non-définis."
 
 #: ../Doc/library/ctypes.rst:1544
 msgid ""
@@ -1861,6 +2004,13 @@ msgid ""
 "attr:`argtypes` tuple will convert a string passed as argument into a bytes "
 "object using ctypes conversion rules."
 msgstr ""
+"À l'appel d'une fonction externe, chaque argument est passé à la méthode de "
+"classe :meth:`from_param` de l'élément correspondant dans le *n*-uplet des :"
+"attr:`argtypes`. Cette méthode convertit l'argument initial en un objet que "
+"la fonction externe peut comprendre. Par exemple, un :class:`c_char_p` dans "
+"le *n*-uplet des :attr:`argtypes` va transformer la chaîne de caractères "
+"passée en argument en un objet chaîne d'octets selon les règles de "
+"conversion *ctypes*."
 
 #: ../Doc/library/ctypes.rst:1551
 msgid ""
@@ -1869,30 +2019,47 @@ msgid ""
 "usable as argument (integer, string, ctypes instance).  This allows defining "
 "adapters that can adapt custom objects as function parameters."
 msgstr ""
+"Nouveau : il est maintenant possible de mettre des objets qui ne sont pas "
+"des types de *ctypes* dans les *argtypes*, mais ceux-ci doivent avoir une "
+"méthode :meth:`from_param` renvoyant une valeur qui peut être utilisée comme "
+"un argument (entier, chaîne de caractères ou instance *ctypes*). Ceci permet "
+"de créer des adaptateurs qui convertissent des objets arbitraires en des "
+"paramètres de fonction."
 
 #: ../Doc/library/ctypes.rst:1558
 msgid ""
 "Assign a Python function or another callable to this attribute. The callable "
 "will be called with three or more arguments:"
 msgstr ""
+"Définit une fonction Python ou tout autre appelable qui sera appelé avec "
+"trois arguments ou plus :"
 
 #: ../Doc/library/ctypes.rst:1565
 msgid ""
 "*result* is what the foreign function returns, as specified by the :attr:"
 "`restype` attribute."
 msgstr ""
+"*result* est la valeur de retour de la fonction externe, comme défini par "
+"l'attribut :attr:`restype`."
 
 #: ../Doc/library/ctypes.rst:1568
 msgid ""
 "*func* is the foreign function object itself, this allows reusing the same "
 "callable object to check or post process the results of several functions."
 msgstr ""
+"*func* est l'objet représentant la fonction externe elle-même. Cet accesseur "
+"permet de réutiliser le même appelable pour vérifier le résultat de "
+"plusieurs fonctions ou de faire des actions supplémentaires après leur "
+"exécution."
 
 #: ../Doc/library/ctypes.rst:1572
 msgid ""
 "*arguments* is a tuple containing the parameters originally passed to the "
 "function call, this allows specializing the behavior on the arguments used."
 msgstr ""
+"*arguments* est le *n*-uplet qui contient les paramètres initiaux passés à "
+"la fonction, ceci permet de spécialiser le comportement des arguments "
+"utilisés."
 
 #: ../Doc/library/ctypes.rst:1576
 msgid ""
@@ -1900,12 +2067,17 @@ msgid ""
 "function call, but it can also check the result value and raise an exception "
 "if the foreign function call failed."
 msgstr ""
+"L'objet renvoyé par cette fonction est celui renvoyé par l'appel de la "
+"fonction externe, mais il peut aussi vérifier la valeur du résultat et lever "
+"une exception si l'appel a échoué."
 
 #: ../Doc/library/ctypes.rst:1583
 msgid ""
 "This exception is raised when a foreign function call cannot convert one of "
 "the passed arguments."
 msgstr ""
+"Exception levée quand un appel à la fonction externe ne peut pas convertir "
+"un des arguments qu'elle a reçus."
 
 #: ../Doc/library/ctypes.rst:1590
 msgid "Function prototypes"
