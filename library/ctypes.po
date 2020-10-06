@@ -1836,18 +1836,25 @@ msgid ""
 "Flag to use as *mode* parameter.  On platforms where this flag is not "
 "available, it is defined as the integer zero."
 msgstr ""
+"Valeur possible pour le paramètre *mode*. Vaut zéro sur les plates-formes où "
+"ce drapeau n'est pas disponible."
 
 #: ../Doc/library/ctypes.rst:1416
 msgid ""
 "Flag to use as *mode* parameter.  On platforms where this is not available, "
 "it is the same as *RTLD_GLOBAL*."
 msgstr ""
+"Valeur possible pour le paramètre *mode*. Vaut *RTLD_GLOBAL* sur les plates-"
+"formes où ce drapeau n'est pas disponible."
 
 #: ../Doc/library/ctypes.rst:1423
 msgid ""
 "The default mode which is used to load shared libraries.  On OSX 10.3, this "
 "is *RTLD_GLOBAL*, otherwise it is the same as *RTLD_LOCAL*."
 msgstr ""
+"Mode de chargement par défaut des bibliothèques partagées. Vaut "
+"*RTLD_GLOBAL* sur OSX 10.3 et *RTLD_LOCAL* sur les autres systèmes "
+"d'exploitation."
 
 #: ../Doc/library/ctypes.rst:1426
 msgid ""
@@ -1857,12 +1864,19 @@ msgid ""
 "therefore accessing it repeatedly returns the same object each time.  On the "
 "other hand, accessing it through an index returns a new object each time::"
 msgstr ""
+"Les instances de ces classes n'ont pas de méthodes publiques ; on accède aux "
+"fonctions de la bibliothèque partagée par attribut ou par indiçage. Notez "
+"que les résultats des accès par attribut sont mis en cache, et donc des "
+"accès consécutifs renvoient à chaque fois le même objet. Accéder à une "
+"fonction par indice renvoie cependant chaque fois un nouvel objet :"
 
 #: ../Doc/library/ctypes.rst:1439
 msgid ""
 "The following public attributes are available, their name starts with an "
 "underscore to not clash with exported function names:"
 msgstr ""
+"Les attributs publics suivants sont disponibles, leur nom commence par un "
+"tiret bas pour éviter les conflits avec les noms des fonctions exportées :"
 
 #: ../Doc/library/ctypes.rst:1445
 msgid "The system handle used to access the library."
@@ -1870,7 +1884,7 @@ msgstr ""
 
 #: ../Doc/library/ctypes.rst:1450
 msgid "The name of the library passed in the constructor."
-msgstr ""
+msgstr "Nom de la bibliothèque donné au constructeur."
 
 #: ../Doc/library/ctypes.rst:1452
 msgid ""
@@ -1889,6 +1903,8 @@ msgid ""
 "Class which loads shared libraries.  *dlltype* should be one of the :class:"
 "`CDLL`, :class:`PyDLL`, :class:`WinDLL`, or :class:`OleDLL` types."
 msgstr ""
+"Classe pour charger une bibliothèque partagée. *dlltype* doit être de type :"
+"class:`CDLL`, :class:`PyDLL`, :class:`WinDLL` ou :class:`OleDLL`."
 
 #: ../Doc/library/ctypes.rst:1463
 msgid ""
@@ -1896,6 +1912,10 @@ msgid ""
 "by accessing it as attribute of a library loader instance.  The result is "
 "cached, so repeated attribute accesses return the same library each time."
 msgstr ""
+":meth:`__getattr__` a un comportement particulier : elle charge une "
+"bibliothèque quand on accède à un attribut du chargeur. Le résultat est mis "
+"en cache, donc des accès consécutifs renvoient la même bibliothèque à chaque "
+"fois."
 
 #: ../Doc/library/ctypes.rst:1469
 msgid ""
@@ -2010,28 +2030,41 @@ msgid ""
 "instances as arguments, and return the default result type specified by the "
 "library loader. They are instances of a private class:"
 msgstr ""
+"Comme expliqué dans la section précédente, on peut accéder aux fonctions "
+"externes au travers des attributs des bibliothèques partagées. Un objet "
+"fonction créé de cette façon accepte par défaut un nombre quelconque "
+"d'arguments qui peuvent être de n'importe quel type de données *ctypes*. Il "
+"renvoie le type par défaut du chargeur de la bibliothèque. Ce sont des "
+"instances de la classe privée :"
 
 #: ../Doc/library/ctypes.rst:1542
 msgid "Base class for C callable foreign functions."
-msgstr ""
+msgstr "Classe de base pour les fonctions externes C."
 
 #: ../Doc/library/ctypes.rst:1544
 msgid ""
 "Instances of foreign functions are also C compatible data types; they "
 "represent C function pointers."
 msgstr ""
+"Une instance de fonction externe est également un type de donnée compatible "
+"avec le C ; elle représente un pointeur vers une fonction."
 
 #: ../Doc/library/ctypes.rst:1547
 msgid ""
 "This behavior can be customized by assigning to special attributes of the "
 "foreign function object."
 msgstr ""
+"Son comportement peut-être personnalisé en réaffectant les attributs "
+"spécifiques de l'objet représentant la fonction externe."
 
 #: ../Doc/library/ctypes.rst:1552
 msgid ""
 "Assign a ctypes type to specify the result type of the foreign function. Use "
 "``None`` for :c:type:`void`, a function not returning anything."
 msgstr ""
+"Fait correspondre le type de retour de la fonction externe à un type "
+"*ctypes*. Dans le cas où la fonction ne renvoie rien (:c:type:`void`), "
+"utilisez ``None``."
 
 #: ../Doc/library/ctypes.rst:1555
 msgid ""
@@ -2042,6 +2075,14 @@ msgid ""
 "or error checking use a ctypes data type as :attr:`restype` and assign a "
 "callable to the :attr:`errcheck` attribute."
 msgstr ""
+"Il est aussi possible de passer n'importe quel un objet Python qui n'est pas "
+"un type *ctypes* pourvu qu'il soit appelable. Dans ce cas, la fonction est "
+"censée renvoyer un :c:type:`int` C et l'appelable sera appelé avec cet "
+"entier, ce qui permet ainsi de faire des actions supplémentaires comme "
+"vérifier un code d'erreur. Ce mécanisme est obsolète ; une façon plus souple "
+"de faire des actions supplémentaires ou de la vérification consiste à "
+"affecter un type *ctypes* à :attr:`restype` et à affecter un appelable à "
+"l'attribut :attr:`errcheck`."
 
 #: ../Doc/library/ctypes.rst:1564
 msgid ""
@@ -2051,6 +2092,11 @@ msgid ""
 "tuple; functions using the C calling convention accept additional, "
 "unspecified arguments as well."
 msgstr ""
+"Fait correspondre le type des arguments que la fonction accepte avec un *n*-"
+"uplet de types *ctypes*. Les fonctions qui utilisent la convention d'appel "
+"``stdcall`` ne peuvent être appelées qu'avec le même nombre d'arguments que "
+"la taille du *n*-uplet mais les fonctions qui utilisent la convention "
+"d'appel C acceptent aussi des arguments additionnels non-définis."
 
 #: ../Doc/library/ctypes.rst:1570
 msgid ""
@@ -2061,6 +2107,13 @@ msgid ""
 "attr:`argtypes` tuple will convert a string passed as argument into a bytes "
 "object using ctypes conversion rules."
 msgstr ""
+"À l'appel d'une fonction externe, chaque argument est passé à la méthode de "
+"classe :meth:`from_param` de l'élément correspondant dans le *n*-uplet des :"
+"attr:`argtypes`. Cette méthode convertit l'argument initial en un objet que "
+"la fonction externe peut comprendre. Par exemple, un :class:`c_char_p` dans "
+"le *n*-uplet des :attr:`argtypes` va transformer la chaîne de caractères "
+"passée en argument en un objet chaîne d'octets selon les règles de "
+"conversion *ctypes*."
 
 #: ../Doc/library/ctypes.rst:1577
 msgid ""
@@ -2069,30 +2122,47 @@ msgid ""
 "usable as argument (integer, string, ctypes instance).  This allows defining "
 "adapters that can adapt custom objects as function parameters."
 msgstr ""
+"Nouveau : il est maintenant possible de mettre des objets qui ne sont pas "
+"des types de *ctypes* dans les *argtypes*, mais ceux-ci doivent avoir une "
+"méthode :meth:`from_param` renvoyant une valeur qui peut être utilisée comme "
+"un argument (entier, chaîne de caractères ou instance *ctypes*). Ceci permet "
+"de créer des adaptateurs qui convertissent des objets arbitraires en des "
+"paramètres de fonction."
 
 #: ../Doc/library/ctypes.rst:1584
 msgid ""
 "Assign a Python function or another callable to this attribute. The callable "
 "will be called with three or more arguments:"
 msgstr ""
+"Définit une fonction Python ou tout autre appelable qui sera appelé avec "
+"trois arguments ou plus :"
 
 #: ../Doc/library/ctypes.rst:1591
 msgid ""
 "*result* is what the foreign function returns, as specified by the :attr:"
 "`restype` attribute."
 msgstr ""
+"*result* est la valeur de retour de la fonction externe, comme défini par "
+"l'attribut :attr:`restype`."
 
 #: ../Doc/library/ctypes.rst:1594
 msgid ""
 "*func* is the foreign function object itself, this allows reusing the same "
 "callable object to check or post process the results of several functions."
 msgstr ""
+"*func* est l'objet représentant la fonction externe elle-même. Cet accesseur "
+"permet de réutiliser le même appelable pour vérifier le résultat de "
+"plusieurs fonctions ou de faire des actions supplémentaires après leur "
+"exécution."
 
 #: ../Doc/library/ctypes.rst:1598
 msgid ""
 "*arguments* is a tuple containing the parameters originally passed to the "
 "function call, this allows specializing the behavior on the arguments used."
 msgstr ""
+"*arguments* est le *n*-uplet qui contient les paramètres initiaux passés à "
+"la fonction, ceci permet de spécialiser le comportement des arguments "
+"utilisés."
 
 #: ../Doc/library/ctypes.rst:1602
 msgid ""
@@ -2100,12 +2170,17 @@ msgid ""
 "function call, but it can also check the result value and raise an exception "
 "if the foreign function call failed."
 msgstr ""
+"L'objet renvoyé par cette fonction est celui renvoyé par l'appel de la "
+"fonction externe, mais il peut aussi vérifier la valeur du résultat et lever "
+"une exception si l'appel a échoué."
 
 #: ../Doc/library/ctypes.rst:1609
 msgid ""
 "This exception is raised when a foreign function call cannot convert one of "
 "the passed arguments."
 msgstr ""
+"Exception levée quand un appel à la fonction externe ne peut pas convertir "
+"un des arguments qu'elle a reçus."
 
 #: ../Doc/library/ctypes.rst:None
 msgid ""
@@ -2121,6 +2196,12 @@ msgid ""
 "seh_exception`` with argument ``code`` will be raised, allowing an audit "
 "hook to replace the exception with its own."
 msgstr ""
+"En Windows, quand un appel à une fonction externe lève une exception système "
+"(par exemple, une erreur de segmentation), celle-ci est interceptée pour "
+"être remplacée par l'exception Python correspondante. De plus, un évènement "
+"d'audit ``ctypes.seh_exception`` est levé avec ``code`` en argument, ce qui "
+"permet à un point d'entrée (*hook* en anglais) d'audit de remplacer "
+"l'exception par une des siennes."
 
 #: ../Doc/library/ctypes.rst:None
 msgid ""
@@ -2134,6 +2215,9 @@ msgid ""
 "``ctypes.call_function`` with arguments ``function pointer`` and "
 "``arguments``."
 msgstr ""
+"Certaines manières d'appeler des fonction externes peuvent lever des "
+"évènements d'audit ``ctypes.call_function`` avec ``function pointer`` et "
+"``arguments`` comme arguments."
 
 #: ../Doc/library/ctypes.rst:1629
 msgid "Function prototypes"
