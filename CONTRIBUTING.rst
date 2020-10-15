@@ -430,6 +430,8 @@ index                      indice (en particulier quand on parle de chaînes
                            de caractères)
 installer                  installateur
 interpreter                interpréteur
+keyword                    mot clé
+keyword argument           argument nommé
 library                    bibliothèque
 list comprehension         liste en compréhension (liste en intension est
                            valide, mais nous ne l'utilisons pas)
@@ -833,4 +835,3 @@ Ensuite récupérez les changements depuis Transifex :
     git add -p
     git commit -m "tx pull"
     tx push -t -f --no-interactive --parallel
-
