@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-15 22:05+0200\n"
-"PO-Revision-Date: 2020-06-01 16:54+0900\n"
-"Last-Translator: Samuel Giffard <samuel@giffard.co>\n"
+"PO-Revision-Date: 2020-10-15 22:24+0200\n"
+"Last-Translator: Jules Lasne <jules.lasne@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: reference/datamodel.rst:6
 msgid "Data model"
@@ -262,7 +262,6 @@ msgid "NotImplemented"
 msgstr "NotImplemented"
 
 #: reference/datamodel.rst:155
-#, fuzzy
 msgid ""
 "This type has a single value.  There is a single object with this value. "
 "This object is accessed through the built-in name ``NotImplemented``. "
@@ -276,8 +275,8 @@ msgstr ""
 "Les méthodes numériques et les comparaisons riches doivent renvoyer cette "
 "valeur si elles n'implémentent pas l'opération pour les opérandes fournis "
 "(l'interpréteur essaie alors l'opération en permutant les opérandes ou tout "
-"autre stratégie de contournement, en fonction de l'opérateur). Sa valeur "
-"booléenne est vraie."
+"autre stratégie de contournement, en fonction de l'opérateur). Cette valeur "
+"ne devrais pas être évaluée dans un contexte booléen"
 
 #: reference/datamodel.rst:162
 msgid "See :ref:`implementing-the-arithmetic-operations` for more details."
@@ -291,6 +290,9 @@ msgid ""
 "currently evaluates as true, it will emit a :exc:`DeprecationWarning`. It "
 "will raise a :exc:`TypeError` in a future version of Python."
 msgstr ""
+"L'évaluation de ``NotImplemented`` dans un contexte booléen est obsolète. "
+"Bien qu'il renvoie ``True``, elle émet un :exc:`DeprecationWarning`. Elle "
+"lèvera une :exc:`TypeError` dans une future version de Python."
 
 #: reference/datamodel.rst:179
 msgid "Ellipsis"
@@ -2308,13 +2310,12 @@ msgstr ""
 "si vous lui passez une chaîne non vide."
 
 #: reference/datamodel.rst:1351
-#, fuzzy
 msgid ""
 "``object.__format__(x, '')`` is now equivalent to ``str(x)`` rather than "
 "``format(str(x), '')``."
 msgstr ""
 "``object.__format__(x, '')`` est maintenant équivalent à ``str(x)`` plutôt "
-"qu'à ``format(str(self), '')``."
+"qu'à ``format(str(x), '')``."
 
 #: reference/datamodel.rst:1367
 msgid ""
@@ -2998,7 +2999,6 @@ msgstr ""
 "``A.__dict__['m'].__get__(obj, obj.__class__)``."
 
 #: reference/datamodel.rst:1739
-#, fuzzy
 msgid ""
 "For instance bindings, the precedence of descriptor invocation depends on "
 "the which descriptor methods are defined.  A descriptor can define any "
@@ -3026,9 +3026,9 @@ msgstr ""
 "définissent à la fois :meth:`__get__` et :meth:`__set__`, alors que les "
 "descripteurs hors-données définissent seulement la méthode :meth:`__get__`. "
 "Les descripteurs de données qui définissent :meth:`__set__` et :meth:"
-"`__get__` sont toujours prioritaires face à une redéfinition du dictionnaire "
-"de l'instance. En revanche, les descripteurs hors-données peuvent être "
-"shuntés par les instances."
+"`__get__` (et/ou :meth:`__delete__`) sont toujours prioritaires face à une "
+"redéfinition du dictionnaire de l'instance. En revanche, les descripteurs "
+"hors-données peuvent être shuntés par les instances."
 
 #: reference/datamodel.rst:1752
 msgid ""
@@ -4162,6 +4162,10 @@ msgid ""
 "meth:`__ipow__` but returns ``NotImplemented`` would fail to fall back to "
 "``x.__pow__(y)`` and ``y.__rpow__(x)``. This bug is fixed in Python 3.10."
 msgstr ""
+"En raison d'un bogue dans le mécanisme de ``**=``, une classe qui défini :"
+"meth:`__ipow__` mais renvoie ``NotImplemented`` ne réussira pas à se replier "
+"sur ``x.__pow__(y)`` et ``y.__rpow__(x)``. Ce bogue est résolu dans Python "
+"3.10"
 
 #: reference/datamodel.rst:2428
 msgid ""
@@ -4387,7 +4391,7 @@ msgstr "Coroutines"
 msgid "Awaitable Objects"
 msgstr "Objets *attendables* (*awaitable*)"
 
-#: reference/datamodel.rst:2611
+#: reference/datamodel.rst:2610
 #, fuzzy
 msgid ""
 "An :term:`awaitable` object generally implements an :meth:`__await__` "
