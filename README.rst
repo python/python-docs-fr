@@ -20,7 +20,9 @@ Vous pouvez contribuer :
 - en nous remontant des erreurs et propositions d'amélioration sur
   `discuss.afpy.org <https://discuss.afpy.org>`_ ou la `ml
   <https://lists.afpy.org/mailman/listinfo/traductions>`_;
-- en devenant membre ou en faisant un don à l'AFPy.
+- en devenant `membre <https://www.afpy.org/adhesions>`_ de l'AFPy et
+  en devenant `sponsor <https://liberapay.com/python-docs-fr>`_ du
+  repo.
 
 Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
