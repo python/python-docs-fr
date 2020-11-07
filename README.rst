@@ -10,6 +10,14 @@ Traduction française de la documentation Python
 .. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
    :width: 45%
 
+Ce projet se fait en collaboration avec l'`AFPy
+<https://www.afpy.org>`_ (Association Francophone Python) qui fait la
+promotion du langage de développement Python dans l'ensemble des
+nations francophones à travers des événements accessibles à tous comme
+l'édition francophone de la PyCon nommée la `PyConFR
+<https://pycon.fr>`_, de nombreux meetups dans plusieurs villes et le
+maintien de nombreux projets communautaires pour enrichir
+l'écosystème.
 
 Contribuer à la traduction
 --------------------------
