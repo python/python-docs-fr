@@ -17,7 +17,10 @@ Contribuer à la traduction
 Vous pouvez contribuer :
 
 - en proposant des *pull requests* Github (solution recommandée) ;
-- en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+- en nous remontant des erreurs et propositions d'amélioration sur
+  `discuss.afpy.org <https://discuss.afpy.org>`_ ou la `ml
+  <https://lists.afpy.org/mailman/listinfo/traductions>`_;
+- en devenant membre ou en faisant un don à l'AFPy.
 
 Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
