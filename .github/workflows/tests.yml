@@ -46,9 +46,12 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install padpo
-        run: sudo python3 -m pip install padpo
+        run:
+          python3.9 -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install padpo
       - name: Run padpo
-        run: padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
+        run: .venv/bin/padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
 
   sphinx:
     name: 'Build the doc'
