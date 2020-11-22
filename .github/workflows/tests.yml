@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - *.*
+  pull_request:
+    branches:
+      - *.*
+
+jobs:
+  pospell:
+    name: 'Orthographe'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y hunspell hunspell-fr-comprehensive
+          sudo pip install pospell
+          pospell -p dict -l fr_FR *.po */*.po
+
+  powrap:
+    name: 'Ensure wrapping consistency'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        run: |
+          sudo pip install powrap
+          powrap --check --quiet *.po */*.po
+
+  padpo:
+    name: 'Grammaire'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        run: |
+          sudo pip install padpo
+          padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
+
+  sphinx:
+    name: 'Build the doc'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        run: make
