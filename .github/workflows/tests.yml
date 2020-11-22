@@ -16,29 +16,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
+      - name: Install pospell
+        run: |
           sudo apt-get update
           sudo apt-get install -y hunspell hunspell-fr-comprehensive
           sudo python3 -m pip install pospell
-          pospell -p dict -l fr_FR *.po */*.po
+      - name: Run pospell
+        run: pospell -p dict -l fr_FR *.po */*.po
 
   powrap:
     name: 'Ensure wrapping consistency'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          sudo python3 -m pip install powrap
-          powrap --check --quiet *.po */*.po
+      - name: Install powrap
+        run: sudo python3 -m pip install powrap
+      - name: Run powrap
+        run: powrap --check --quiet *.po */*.po
 
   padpo:
     name: 'Grammaire'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          sudo python3 -m pip install padpo
-          padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
+      - name: Install padpo
+        run: sudo python3 -m pip install padpo
+      - name: Run padpo
+        run: padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
 
   sphinx:
     name: 'Build the doc'
