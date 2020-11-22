@@ -52,4 +52,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: make --trace
+      - uses: actions/cache@v2
+        with:
+          path: '~/cpython/'
+      - name: Clone cpython
+        run: |
+          if [ ! -d ~/cpython ]; then
+            git clone https://github.com/python/cpython ~/cpython/
+          else
+            git -C ~/cpython fetch
+      - name: make
+        run: make --trace CPYTHON_PATH=$HOME/cpython/
