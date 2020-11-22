@@ -72,7 +72,12 @@ jobs:
           else
             git -C ~/cpython fetch
           fi
-      - name: Create venv
-        run: python3.9 -m venv .venv
-      - name: make
-        run: make --trace CPYTHON_PATH=$HOME/cpython/ VENV=.venv/
+      - name: Prepare build hierarchy
+        run: |
+          mkdir -p ~/locales/fr/LC_MESSAGES/
+          cp -uv --parents *.po */*.po ~/locales/fr/LC_MESSAGES/
+          git -C ~/cpython checkout b30934e9afb0af3f8e2e5f0992445be775b3c630
+      - name: Prepare venv
+        run: make -C $HOME/cpython/Doc venv
+      - name: sphinx-build
+        run: make -C $HOME/cpython/Doc SPHINXOPTS="-qW -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
