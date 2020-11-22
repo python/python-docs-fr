@@ -46,7 +46,7 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install padpo
-        run:
+        run: |
           python3.9 -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
           .venv/bin/python -m pip install padpo
@@ -62,6 +62,9 @@ jobs:
         with:
           path: '~/cpython/'
           key: '1'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
       - name: Clone cpython
         run: |
           if [ ! -d ~/cpython ]; then
@@ -69,5 +72,7 @@ jobs:
           else
             git -C ~/cpython fetch
           fi
+      - name: Create venv
+        run: python3.9 -m venv .venv
       - name: make
-        run: make --trace CPYTHON_PATH=$HOME/cpython/
+        run: make --trace CPYTHON_PATH=$HOME/cpython/ VENV=.venv/
