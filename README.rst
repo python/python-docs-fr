@@ -10,6 +10,14 @@ Traduction française de la documentation Python
 .. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
    :width: 45%
 
+Ce projet se fait en collaboration avec l'`AFPy
+<https://www.afpy.org>`_ (Association Francophone Python) qui fait la
+promotion du langage de développement Python dans l'ensemble des
+nations francophones à travers des événements accessibles à tous comme
+l'édition francophone de la PyCon nommée la `PyConFR
+<https://pycon.fr>`_, de nombreux meetups dans plusieurs villes et le
+maintien de nombreux projets communautaires pour enrichir
+l'écosystème.
 
 Contribuer à la traduction
 --------------------------
@@ -17,7 +25,12 @@ Contribuer à la traduction
 Vous pouvez contribuer :
 
 - en proposant des *pull requests* Github (solution recommandée) ;
-- en envoyant un correctif à la liste `traductions <https://lists.afpy.org/mailman/listinfo/traductions>`_.
+- en nous remontant des erreurs et propositions d'amélioration sur
+  `discuss.afpy.org <https://discuss.afpy.org>`_ ou la `ml
+  <https://lists.afpy.org/mailman/listinfo/traductions>`_;
+- en devenant `membre <https://www.afpy.org/adhesions>`_ de l'AFPy et
+  en devenant `sponsor <https://liberapay.com/python-docs-fr>`_ du
+  repo.
 
 Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
