@@ -30,8 +30,6 @@ BRANCH := 3.9
 
 EXCLUDED := whatsnew/ c-api/
 
-.SILENT:
-
 # Internal variables
 
 UPSTREAM := https://github.com/python/cpython
