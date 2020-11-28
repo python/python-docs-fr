@@ -1,3 +1,6 @@
+Maintenance
+-----------
+
 Les commandes suivantes doivent être exécutées à partir de la racine d'un clone
 de ``python-docs-fr`` et certaines s'attendent à trouver un clone de CPython
 à jour à proximité :
