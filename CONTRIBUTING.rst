@@ -30,7 +30,7 @@ où vous avez le droit de faire des modifications.
     # Clonez votre fork Github avec `git` en utilisant ssh
     git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
-    # ou bien via HTTPS
+    # ou bien avec HTTPS
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # Allez dans le répertoire cloné
@@ -187,10 +187,10 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 
 
-La commande précédente vous affiche un lien pour ouvrir une pull request sur
+La commande précédente vous affiche un lien pour ouvrir une *pull request* sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
 et un joli bouton « Compare & pull request » devrait apparaître au bout de
-quelques secondes vous indiquant que vous pouvez demander une pull request.
+quelques secondes vous indiquant que vous pouvez demander une *pull request*.
 
 Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
@@ -367,7 +367,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionnaire <dictionary>```.
+``:term:`dictionary``` en ``:term:`dictionnaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
@@ -379,7 +379,7 @@ Glossaire
 Afin d'assurer la cohérence de la traduction, voici quelques
 termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
 « C99 » ou de certains anglicismes comme « sérialisable » ou « implémentation»,
-est stockée dans le fichier « dict » à la racine du projet. Vous pouvez
+est stockée dans le fichier *dict* à la racine du projet. Vous pouvez
 y ajouter une entrée si cela est nécessaire.
 Si vous devez *absolument* utiliser un mot anglais, mettez-le en italique
 (entouré par des astérisques).
@@ -476,7 +476,7 @@ Ressources de traduction
 - les listes de diffusion relatives à la documentation (courriel) :
 
   - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
-  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+  - `de CPython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - des glossaires et dictionnaires :
 
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
@@ -489,8 +489,8 @@ Ressources de traduction
   résumé succinct de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
-L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
-`reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
+L'utilisation de traducteurs automatiques comme `DeepL <https://www.deepl.com/>`_ ou semi-automatiques comme
+`reverso <https://context.reverso.net/traduction/anglais-francais/>`_ est proscrite.
 Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
 page et génèrent une documentation au style très « lourd ».
 
@@ -528,13 +528,13 @@ Comment définir la touche de composition ?
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
-l'outil graphique de configuration de votre clavier ou via
+⇒ Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
+l'outil graphique de configuration de votre clavier ou avec
 ``dpkg-reconfigure keyboard-configuration``
 (pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
 et distributions assimilées).
 
-À minima, vous pouvez configurer votre fichier '~/.Xmodmap' pour
+À tout le moins, vous pouvez configurer votre fichier *~/.Xmodmap* pour
 ajouter l'équivalent de :
 
 .. code-block:: shell
@@ -546,7 +546,7 @@ ajouter l'équivalent de :
 Utilisez ``xev`` pour connaitre la bonne correspondance de la touche que vous
 voulez assigner !
 
-Ensuite, dans votre fichier '~/.xsession', ajoutez :
+Ensuite, dans votre fichier *~/.xsession*, ajoutez :
 
 .. code-block:: shell
 
@@ -554,11 +554,11 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
     xmodmap $HOME/.Xmodmap
 
 
-Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
+⇒ Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les « Paramètres » → « Clavier » → « Disposition » →
 « Touche composée ». Pour finir, redémarrez votre session.
 
-=> Sous Windows, vous
+⇒ Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
 Le cas de « --- », « -- »,  « ... »
@@ -573,7 +573,7 @@ Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
 ``...`` en *ellipses* ``…``.
 
-=> Si vous voyez :
+⇒ Si vous voyez :
 | « -- » ou « --- » : faites :kbd:`Compose - - -`
 | « ... » : faites :kbd:`Compose . . .`
 
@@ -585,7 +585,7 @@ guillemets anglais ``"``. Cependant, Python utilise les guillemets
 anglais comme délimiteurs de chaîne de caractères. Il convient donc de
 traduire les guillemets mais pas les délimiteurs de chaîne.
 
-=> Si vous voyez :
+⇒ Si vous voyez :
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
@@ -599,7 +599,7 @@ Le cas de « :: »
 En français, nous mettons une espace insécable devant nos deux-points, comme :
 « Et voilà : ».
 
-=> Traduisez ``mot deux-points deux-points`` par
+⇒ Traduisez ``mot deux-points deux-points`` par
 ``mot espace-insécable deux-points deux-points``.
 
 Pour saisir une espace insécable faites :kbd:`Compose SPACE SPACE`
