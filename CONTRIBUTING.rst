@@ -460,7 +460,9 @@ typically                  normalement, habituellement, comme d'habitude
                            (plutôt que « typiquement »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
-tuple                      n-uplet
+tuple                      *n*-uplet (avec *n* en italique), on peut
+                           traduire *3-tuple* par triplet, *4-tuple* par
+                           quadruplet etc.
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
