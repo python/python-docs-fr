@@ -445,6 +445,8 @@ parameter                  paramètre
 pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
+roughly                    approximativement, à peu près (on ne traduit pas
+                           « roughly equivalent » par « sensiblement équivalent »)
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (on évite « retourne » qui
                            pourrait porter à confusion)
