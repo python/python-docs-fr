@@ -30,7 +30,7 @@ où vous avez le droit de faire des modifications.
     # Clonez votre fork Github avec `git` en utilisant ssh
     git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
-    # ou bien via HTTPS
+    # ou bien avec HTTPS
     git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
 
     # Allez dans le répertoire cloné
@@ -187,10 +187,10 @@ branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
 
 
 
-La commande précédente vous affiche un lien pour ouvrir une pull request sur
+La commande précédente vous affiche un lien pour ouvrir une *pull request* sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
 et un joli bouton « Compare & pull request » devrait apparaître au bout de
-quelques secondes vous indiquant que vous pouvez demander une pull request.
+quelques secondes vous indiquant que vous pouvez demander une *pull request*.
 
 Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
@@ -367,7 +367,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en  ``:term:`dictionnaire <dictionary>```.
+``:term:`dictionary``` en ``:term:`dictionnaire <dictionary>```.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
@@ -379,7 +379,7 @@ Glossaire
 Afin d'assurer la cohérence de la traduction, voici quelques
 termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
 « C99 » ou de certains anglicismes comme « sérialisable » ou « implémentation»,
-est stockée dans le fichier « dict » à la racine du projet. Vous pouvez
+est stockée dans le fichier *dict* à la racine du projet. Vous pouvez
 y ajouter une entrée si cela est nécessaire.
 Si vous devez *absolument* utiliser un mot anglais, mettez-le en italique
 (entouré par des astérisques).
@@ -445,6 +445,8 @@ parameter                  paramètre
 pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
+roughly                    approximativement, à peu près (on ne traduit pas
+                           « roughly equivalent » par « sensiblement équivalent »)
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (on évite « retourne » qui
                            pourrait porter à confusion)
@@ -460,7 +462,10 @@ typically                  normalement, habituellement, comme d'habitude
                            (plutôt que « typiquement »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
-tuple                      n-uplet
+tuple                      *n*-uplet (avec *n* en italique), on peut
+                           traduire *2-tuple* par « paire » ou « couple »,
+                           *3-tuple* par « triplet », *4-tuple* par
+                           « quadruplet » etc.
 underscore                 tiret bas, *underscore*
 whitespace                 caractère d'espacement
 ========================== ===============================================
@@ -476,7 +481,7 @@ Ressources de traduction
 - les listes de diffusion relatives à la documentation (courriel) :
 
   - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
-  - `de cpython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
+  - `de CPython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - des glossaires et dictionnaires :
 
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
@@ -489,8 +494,8 @@ Ressources de traduction
   résumé succinct de typographie, utile pour apprendre le bon usage des
   majuscules, des espaces, etc.
 
-L'utilisation de traducteurs automatiques comme `DeepL https://www.deepl.com/` ou semi-automatiques comme
-`reverso https://context.reverso.net/traduction/anglais-francais/` est proscrite.
+L'utilisation de traducteurs automatiques comme `DeepL <https://www.deepl.com/>`_ ou semi-automatiques comme
+`reverso <https://context.reverso.net/traduction/anglais-francais/>`_ est proscrite.
 Les traductions générées sont très souvent à retravailler, ils ignorent les règles énoncées sur cette
 page et génèrent une documentation au style très « lourd ».
 
@@ -528,13 +533,13 @@ Comment définir la touche de composition ?
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-=> Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
-l'outil graphique de configuration de votre clavier ou via
+⇒ Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
+l'outil graphique de configuration de votre clavier ou avec
 ``dpkg-reconfigure keyboard-configuration``
 (pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
 et distributions assimilées).
 
-À minima, vous pouvez configurer votre fichier '~/.Xmodmap' pour
+À tout le moins, vous pouvez configurer votre fichier *~/.Xmodmap* pour
 ajouter l'équivalent de :
 
 .. code-block:: shell
@@ -546,7 +551,7 @@ ajouter l'équivalent de :
 Utilisez ``xev`` pour connaitre la bonne correspondance de la touche que vous
 voulez assigner !
 
-Ensuite, dans votre fichier '~/.xsession', ajoutez :
+Ensuite, dans votre fichier *~/.xsession*, ajoutez :
 
 .. code-block:: shell
 
@@ -554,11 +559,11 @@ Ensuite, dans votre fichier '~/.xsession', ajoutez :
     xmodmap $HOME/.Xmodmap
 
 
-Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
+⇒ Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
 modifier dans les « Paramètres » → « Clavier » → « Disposition » →
 « Touche composée ». Pour finir, redémarrez votre session.
 
-=> Sous Windows, vous
+⇒ Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
 Le cas de « --- », « -- »,  « ... »
@@ -573,7 +578,7 @@ Les *smartquotes* sont normalement responsables de la transformation de
 ``--`` en *en-dash* (``—``), de ``---`` en *em-dash* (``—``), et de
 ``...`` en *ellipses* ``…``.
 
-=> Si vous voyez :
+⇒ Si vous voyez :
 | « -- » ou « --- » : faites :kbd:`Compose - - -`
 | « ... » : faites :kbd:`Compose . . .`
 
@@ -585,7 +590,7 @@ guillemets anglais ``"``. Cependant, Python utilise les guillemets
 anglais comme délimiteurs de chaîne de caractères. Il convient donc de
 traduire les guillemets mais pas les délimiteurs de chaîne.
 
-=> Si vous voyez :
+⇒ Si vous voyez :
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
@@ -599,7 +604,7 @@ Le cas de « :: »
 En français, nous mettons une espace insécable devant nos deux-points, comme :
 « Et voilà : ».
 
-=> Traduisez ``mot deux-points deux-points`` par
+⇒ Traduisez ``mot deux-points deux-points`` par
 ``mot espace-insécable deux-points deux-points``.
 
 Pour saisir une espace insécable faites :kbd:`Compose SPACE SPACE`
@@ -710,128 +715,3 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
 
-
-Maintenance
------------
-
-Toutes ces commandes doivent être exécutées à partir de la racine d'un clone
-de ``python-docs-fr`` et certaines s'attendent à trouver un clone de CPython
-à jour à proximité, comme :
-
-.. code-block:: bash
-
-  ~/
-  ├── python-docs-fr/
-  └── cpython/
-
-
-Pour cloner CPython, vous pouvez utiliser :
-
-.. code-block:: bash
-
-  git clone --depth 1 --no-single-branch https://github.com/python/cpython.git
-
-
-Ceci évite de télécharger tout l'historique (inutile pour générer la
-documentation) mais récupère néanmoins toutes les branches.
-
-
-Fusion des fichiers *pot* de CPython
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-  make merge
-
-
-Copier des traductions d'une branche à l'autre
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Dans certains cas on a besoin de bouger des traductions d'une branche
-à l'autre :
-
-- d'une ancienne branche vers une nouvelle branche : lors du passage
-  d'une version à l'autre de cpython, quelqu'un a une PR sur une
-  ancienne release (*forward porting*) ;
-- d'une nouvelle branche vers des anciennes branches : pour propager
-  de temps en temps le travail sur d'anciennes releases (*back porting*).
-
-Pour forward-porter un ou plusieurs commits, il vaut mieux utiliser ``git
-cherry-pick -x LE_SHA``, ça garde l'auteur, le sha1 d'origine, et
-toutes les modifications.
-
-Pour backporter « en gros » on utilise ``pomerge``\  : on le fait lire
-sur une branche, puis écrire sur une autre, par exemple pour copier de
-la 3.8 à la 3.7 :
-
-.. code-block:: bash
-
-    git fetch
-    git checkout 3.8
-    git reset --hard upstream/3.8
-    pomerge --from-files *.po */*.po
-    git checkout --branch back-porting upstream/3.7
-    pomerge  --no-overwrite --to-files *.po */*.po
-    powrap --modified
-    git add --patch
-    git commit --message="Backporting from 3.8"
-    git push --set-upstream origin HEAD
-
-
-Notes :
-
-- j'utilise ``git fetch`` au début pour avoir upstream/3.7 et
-  upstream/3.8 à jour localement, ainsi je peux travailler sans
-  toucher au réseau jusqu'au ``git push``, mais chacun fait comme il
-  veut ;
-- j'utilise ``*.po */*.po`` et pas ``**/*.po``, car si vous avez un
-  venv dans l'arborescence il va vous trouver des traductions de Sphinx et peut-être
-  d'autres paquets dans ``.venv/lib/python*/`` (et mettre beaucoup
-  plus longtemps) ;
-- j'utilise ``pomerge --no-overwrite``, ça indique à ``pomerge`` de
-  n'écrire que si le ``msgstr`` est vide, donc de ne pas modifier
-  l'existant, ainsi il est impossible de casser quelque chose.
-  On peut le tenter sans ``--no-overwrite``, attention, ça fait
-  des bêtises, ça nécessite une relecture attentive :
-  certaines traductions, comme *example:* sont en
-  français parfois traduite avec une majuscule, et parfois non, en
-  fonction du contexte, ``pomerge`` uniformiserait ça, ce n'est pas bien ;
-- attention, si vous testez sans ``--no-overwrite``, il est peut être
-  bon de vider la mémoire de ``pomerge`` avant la lecture, pour éviter
-  de lui faire écrire des choses lues lors des sessions précédentes,
-  via un ``rm -f ~/.pomerge.json``\  ;
-- j'utilise ``git add --patch`` (ou ``-p``) car j'aime bien relire quand même,
-  typiquement je n'ajoute pas les différences d'ordre dans les entêtes,
-  mais un ``git add --update`` irait très bien ;
-- attention au fichier *dict* à qui il peut manquer des lignes.
-
-
-Synchronisation de la traduction avec Transifex
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Vous aurez besoin de ``transifex-client`` et ``powrap``,
-depuis PyPI.
-
-Vous devrez configurer ``tx`` via ``tx init`` si ce n'est déjà fait.
-
-Propagez d'abord les traductions connues localement :
-
-.. code-block:: bash
-
-    pomerge --no-overwrite --from-files **/*.po --to-files **/*.po
-    powrap --modified
-    git commit --message "Propagating known translations."
-
-
-Ensuite récupérez les changements depuis Transifex :
-
-.. code-block:: bash
-
-    tx pull -f --parallel
-    pomerge --from-files **/*.po
-    git checkout -- .
-    pomerge --no-overwrite --mark-as-fuzzy --to-files **/*.po
-    powrap --modified
-    git add -p
-    git commit -m "tx pull"
-    tx push -t -f --no-interactive --parallel
