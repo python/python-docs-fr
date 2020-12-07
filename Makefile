@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := d7cd1164c18dbf78380ce4c95bf46c7bb0ac0bb7
+CPYTHON_CURRENT_COMMIT := b30934e9afb0af3f8e2e5f0992445be775b3c630
 
 CPYTHON_PATH := ../cpython/
 
@@ -29,8 +29,6 @@ LANGUAGE := fr
 BRANCH := 3.9
 
 EXCLUDED := whatsnew/ c-api/
-
-.SILENT:
 
 # Internal variables
 

@@ -1,0 +1,85 @@
+---
+
+name: Tests
+
+on:
+  push:
+    branches:
+      - '*.*'
+  pull_request:
+    branches:
+      - '*.*'
+
+jobs:
+  pospell:
+    name: 'Orthographe (pospell)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Register pospell problem matcher
+        run: echo "::add-matcher::.github/problem-matchers/pospell.json"
+      - name: Install pospell
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y hunspell hunspell-fr-comprehensive
+          sudo python3 -m pip install pospell
+      - name: Run pospell
+        run: pospell -p dict -l fr_FR *.po */*.po
+
+  powrap:
+    name: 'Longueur des lignes (powrap)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install powrap
+        run: |
+          sudo apt-get update
+          sudo apt-get install gettext
+          sudo python3 -m pip install powrap
+      - name: Run powrap
+        run: powrap --check --quiet *.po */*.po
+
+  padpo:
+    name: 'Grammaire (padpo)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install padpo
+        run: |
+          python3.9 -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip setuptools wheel
+          .venv/bin/python -m pip install padpo
+      - name: Run padpo
+        run: PATH=$PATH:$PWD/.venv/bin/ padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
+
+  sphinx:
+    name: 'Génération de la doc (sphinx)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: '~/cpython/'
+          key: '1'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Clone cpython
+        run: |
+          if [ ! -d ~/cpython ]; then
+            git clone https://github.com/python/cpython ~/cpython/
+          else
+            git -C ~/cpython fetch
+          fi
+      - name: Prepare build hierarchy
+        run: |
+          mkdir -p ~/locales/fr/LC_MESSAGES/
+          cp -uv --parents *.po */*.po ~/locales/fr/LC_MESSAGES/
+          git -C ~/cpython checkout b30934e9afb0af3f8e2e5f0992445be775b3c630
+      - name: Prepare venv
+        run: make -C $HOME/cpython/Doc venv
+      - name: sphinx-build
+        run: make -C $HOME/cpython/Doc SPHINXOPTS="-qW -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
