@@ -22,16 +22,18 @@ jobs:
         id: changed_files
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Show changed files
-        run:
-          echo '${{ join(fromJSON(steps.changed_files.outputs.all), '\n') }}'
-      # - name: Install pospell
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y hunspell hunspell-fr-comprehensive
-      #     sudo python3 -m pip install pospell
-      # - name: Run pospell
-      #   run: pospell -p dict -l fr_FR *.po */*.po
+      - name: Install pospell
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y hunspell hunspell-fr-comprehensive
+          sudo python3 -m pip install pospell
+      - name: Run pospell
+        with:
+          ADDED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.added), ' ') }}
+          MODIFIED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.modified), ' ') }}
+        run: |
+          CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$')
+          [ -n "$CHANGED_PO_FILES" ] && pospell -p dict -l fr_FR $CHANGED_PO_FILES
 
 #   powrap:
 #     name: 'Longueur des lignes (powrap)'
