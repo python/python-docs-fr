@@ -51,6 +51,10 @@ jobs:
           ADDED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.added), ' ') }}
           MODIFIED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.modified), ' ') }}
         run: |
+          echo "$MODIFIED_FILES"
+          printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES"
+          printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n'
+          printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$'
           CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$')
           printf "Running on" "$CHANGED_PO_FILES"
           [ -n "$CHANGED_PO_FILES" ] && ${{ matrix.tool.command }} $CHANGED_PO_FILES ${{ matrix.tool.command_suffix }}
