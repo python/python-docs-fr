@@ -172,5 +172,5 @@ merge: ensure_prerequisites
 .PHONY: clean
 clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
-	[ -n "$(POSPELL_TMP_DIR)" ] && rm -fr $(POSPELL_TMP_DIR)
+	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
