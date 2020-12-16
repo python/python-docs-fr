@@ -59,21 +59,18 @@ endif
 .PHONY: all
 all: ensure_prerequisites
 	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
-	mkdir -p $(CPYTHON_PATH)/locales/$(LANGUAGE)/LC_MESSAGES/
-	$(CP_CMD) -uv --parents *.po */*.po $(CPYTHON_PATH)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
-	$(MAKE) -C $(CPYTHON_PATH)/Doc/ \
-	  SPHINXOPTS='-qW -j$(JOBS)   \
-	  -D locale_dirs=../locales   \
-	  -D language=$(LANGUAGE)     \
-	  -D gettext_compact=0        \
-	  -D latex_engine=xelatex     \
-	  -D latex_elements.inputenc= \
-	  -D latex_elements.fontenc=' \
+	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
+	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
+	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
+	  SPHINXOPTS='-qW -j$(JOBS)         \
+	  -D locale_dirs=$(abspath locales) \
+	  -D language=$(LANGUAGE)           \
+	  -D gettext_compact=0              \
+	  -D latex_engine=xelatex           \
+	  -D latex_elements.inputenc=       \
+	  -D latex_elements.fontenc='       \
 	  $(MODE)
-	# Cleanup
 	git -C $(CPYTHON_PATH) checkout -
-	rm -fr $(CPYTHON_PATH)/locales/
-	# Info
 	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
 
 
@@ -92,7 +89,7 @@ ensure_prerequisites:
 	    echo "  git clone $(UPSTREAM) $(CPYTHON_PATH)"; \
 	    exit 1; \
 	fi
-	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain | grep -v locales/)" ]; then \
+	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain)" ]; then \
 	    echo "Your cpython clone at $(CPYTHON_PATH) is not clean."; \
 	    echo "In order to avoid breaking things, please clean it first."; \
 	    exit 1; \
