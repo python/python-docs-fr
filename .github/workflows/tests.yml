@@ -11,53 +11,54 @@ on:
       - '*.*'
 
 jobs:
-  pospell:
-    name: 'Orthographe (pospell)'
+  checks:
+    strategy:
+      matrix:
+        tool:
+          - name: Orthographe
+            package: pospell
+            apt_dependencies: hunspell hunspell-fr-comprehensive
+            command: pospell -p dict -l fr_FR
+          - name: Longueur des lignes
+            package: powrap
+            apt_dependencies: gettext
+            command: powrap --check --quiet --diff
+          - name: Grammaire
+            package: padpo
+            command: 'padpo -i 2>&1'
+            command_suffix: '| grep -v -Ff padpo.ignore'
+
+    name: ${{ matrix.tool.name }} (${{ matrix.tool.package }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Register pospell problem matcher
+      - name: Register problem matchers
         run: echo "::add-matcher::.github/problem-matchers/pospell.json"
-      - name: Install pospell
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y hunspell hunspell-fr-comprehensive
-          sudo python3 -m pip install pospell
-      - name: Run pospell
-        run: pospell -p dict -l fr_FR *.po */*.po
-
-  powrap:
-    name: 'Longueur des lignes (powrap)'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install powrap
-        run: |
-          sudo apt-get update
-          sudo apt-get install gettext
-          sudo python3 -m pip install powrap
-      - name: Run powrap
-        run: powrap --check --quiet *.po */*.po
-
-  padpo:
-    name: 'Grammaire (padpo)'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+      - uses: lots0logs/gh-action-get-changed-files@2.1.4
+        id: changed_files
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - name: Install padpo
+      - name: Install ${{ matrix.tool.package }}
         run: |
-          python3.9 -m venv .venv
-          .venv/bin/python -m pip install --upgrade pip setuptools wheel
-          .venv/bin/python -m pip install padpo
-      - name: Run padpo
-        run: PATH=$PATH:$PWD/.venv/bin/ padpo -i *.po */*.po 2>&1 | grep -v -Ff padpo.ignore
+          [ -n "${{ matrix.tool.apt_dependencies }}" ] && sudo apt-get update && sudo apt-get install -y ${{ matrix.tool.apt_dependencies }}
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install ${{ matrix.tool.package }}
+      - name: Run ${{ matrix.tool.package }}
+        env:
+          ADDED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.added), ' ') }}
+          MODIFIED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.modified), ' ') }}
+        run: |
+          CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$')
+          echo "Running on:" $CHANGED_PO_FILES
+          [ -n "$CHANGED_PO_FILES" ] && ${{ matrix.tool.command }} $CHANGED_PO_FILES ${{ matrix.tool.command_suffix }}
 
   sphinx:
     name: 'Génération de la doc (sphinx)'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
