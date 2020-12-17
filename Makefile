@@ -65,7 +65,7 @@ all: ensure_prerequisites
 	  SPHINXOPTS='-qW -j$(JOBS)         \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
-	  -D gettext_compact=0              \
+	  -D gettext_compact=true           \
 	  -D latex_engine=xelatex           \
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
