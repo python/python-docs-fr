@@ -18,15 +18,14 @@ jobs:
           - name: Orthographe
             package: pospell
             apt_dependencies: hunspell hunspell-fr-comprehensive
-            command: pospell -p dict -l fr_FR
+            command: 'pospell -p dict -l fr_FR $CHANGED_PO_FILES'
           - name: Longueur des lignes
             package: powrap
             apt_dependencies: gettext
-            command: powrap --check --quiet --diff
+            command: 'powrap --check --quiet --diff $CHANGED_PO_FILES'
           - name: Grammaire
             package: padpo
-            command: 'padpo -i 2>&1'
-            command_suffix: '| grep -v -Ff padpo.ignore'
+            command: 'padpo -i $CHANGED_PO_FILES 2>&1 | grep -v -Ff padpo.ignore'
 
     name: ${{ matrix.tool.name }} (${{ matrix.tool.package }})
     runs-on: ubuntu-latest
@@ -52,8 +51,13 @@ jobs:
           MODIFIED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.modified), ' ') }}
         run: |
           CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$')
-          echo "Running on:" $CHANGED_PO_FILES
-          [ -n "$CHANGED_PO_FILES" ] && ${{ matrix.tool.command }} $CHANGED_PO_FILES ${{ matrix.tool.command_suffix }}
+          if [ -n "$CHANGED_PO_FILES" ]
+          then
+            echo "Running on:" $CHANGED_PO_FILES
+            ${{ matrix.tool.command }}
+          else
+            echo "No changed po files, nothing to check."
+          fi
 
   sphinx:
     name: 'Génération de la doc (sphinx)'
