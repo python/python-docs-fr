@@ -18,15 +18,14 @@ jobs:
           - name: Orthographe
             package: pospell
             apt_dependencies: hunspell hunspell-fr-comprehensive
-            command: pospell -p dict -l fr_FR
+            command: 'pospell -p dict -l fr_FR $CHANGED_PO_FILES'
           - name: Longueur des lignes
             package: powrap
             apt_dependencies: gettext
-            command: powrap --check --quiet --diff
+            command: 'powrap --check --quiet --diff $CHANGED_PO_FILES'
           - name: Grammaire
             package: padpo
-            command: 'padpo -i 2>&1'
-            command_suffix: '| grep -v -Ff padpo.ignore'
+            command: 'padpo -i $CHANGED_PO_FILES 2>&1 | grep -v -Ff padpo.ignore'
 
     name: ${{ matrix.tool.name }} (${{ matrix.tool.package }})
     runs-on: ubuntu-latest
@@ -51,9 +50,14 @@ jobs:
           ADDED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.added), ' ') }}
           MODIFIED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.modified), ' ') }}
         run: |
-          CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$')
-          echo "Running on:" $CHANGED_PO_FILES
-          [ -n "$CHANGED_PO_FILES" ] && ${{ matrix.tool.command }} $CHANGED_PO_FILES ${{ matrix.tool.command_suffix }}
+          CHANGED_PO_FILES=$(printf "%s %s\n" "$ADDED_FILES" "$MODIFIED_FILES" | tr ' ' '\n' | grep '.po$'; true)
+          if [ -n "$CHANGED_PO_FILES" ]
+          then
+            echo "Running on:" $CHANGED_PO_FILES
+            ${{ matrix.tool.command }}
+          else
+            echo "No changed po files, nothing to check."
+          fi
 
   sphinx:
     name: 'Génération de la doc (sphinx)'
@@ -81,6 +85,10 @@ jobs:
           cp -uv --parents *.po */*.po ~/locales/fr/LC_MESSAGES/
           git -C ~/cpython checkout b30934e9afb0af3f8e2e5f0992445be775b3c630
       - name: Prepare venv
-        run: make -C $HOME/cpython/Doc venv
+        run: |
+          # If the venv exists but is broken, drop it (happens on Python upgrades):
+          # see https://github.com/actions/setup-python/issues/170
+          [ -d $HOME/cpython/Doc/venv/bin/ -a ! -e $HOME/cpython/Doc/venv/bin/python ] && rm -fr $HOME/cpython/Doc/venv
+          make -C $HOME/cpython/Doc venv
       - name: sphinx-build
         run: make -C $HOME/cpython/Doc SPHINXOPTS="-qW -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
