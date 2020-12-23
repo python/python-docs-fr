@@ -93,7 +93,7 @@ dans les tickets et les *pull requests*.
 * Soit en créant un sujet sur le `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction en
   indiquant sur quoi vous travaillez et l'URL de votre dépôt.
 
-* Soit sur IRC en venant sur le canal #python-docs-fr pour nous le signaler.
+* Soit sur IRC en venant sur le canal `#python-docs-fr <https://webchat.freenode.net/#python-docs-fr>`_ pour nous le signaler.
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -240,7 +240,7 @@ Soit vous signalez via le `discuss de l'AFPy <https://discuss.afpy.org/>`_ ou su
 vous avez traduit une section. Puis nous viendrons récupérer les modifications pour les intégrer
 sur Github.
 
-Soit en créant un `*bundle* <https://git-scm.com/book/fr/v2/Utilitaires-Git-Empaquetage-bundling>`_ Git,
+Soit en créant un *`bundle <https://git-scm.com/book/fr/v2/Utilitaires-Git-Empaquetage-bundling>`_* Git,
 pour cela, il faut créer un fichier contenant les différentes modifications effectué.
 
 .. code-block:: bash
