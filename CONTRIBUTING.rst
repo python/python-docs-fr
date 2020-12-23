@@ -44,7 +44,7 @@ où vous avez le droit de faire des modifications.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Si vous n'avez pas de compte Github, il est possible *fork* ce dépôt sur une autre forge.
-Vous devez dans un premier initier un dépôt vide sur la forge où vous voulez héberger le
+Vous devez dans un premier temps initier un dépôt vide sur la forge où vous voulez héberger le
 dépôt.
 
 .. code-block:: bash
