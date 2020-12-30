@@ -45,8 +45,7 @@ Réservation d'un fichier
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
-
-   Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.
+    Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.
 
 Ensuite, vous devez trouver un fichier sur lequel travailler
 (pour vous aiguiller, lisez la section `Que traduire ?`_). Nous vous conseillons
