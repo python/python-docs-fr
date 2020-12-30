@@ -64,15 +64,16 @@ en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
-Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour de la branche « upstream/3.9 ». On met donc à jour notre
-version locale.
+Pour travailler, nous avons besoin d'une branche, basée sur une version à jour de la branche « upstream/3.9 ». On met donc à jour
+notre version locale.
 
 .. code-block:: bash
 
     git fetch upstream
 
 
-On crée ensuite la branche, en la basant sur « upstream/3.9 », fraîchement récupérée. Il est pratique de nommer cette branche en fonction du
+On crée ensuite la branche, en la basant sur « upstream/3.9 », fraîchement récupérée.
+Il est pratique de nommer cette branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 
