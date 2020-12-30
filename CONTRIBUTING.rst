@@ -44,13 +44,17 @@ où vous avez le droit de faire des modifications.
 Réservation d'un fichier
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+   Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.
+
 Ensuite, vous devez trouver un fichier sur lequel travailler
 (pour vous aiguiller, lisez la section `Que traduire ?`_). Nous vous conseillons
 de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
 vous aidera grandement à produire une traduction de bonne qualité.
 
 Si c'est votre première contribution, commencez par une toute petite
-PR, de quelques paragraphes maximum, pour vous familiariser. Il n'est
+traduction, de quelques paragraphes maximum, pour vous familiariser. Il n'est
 pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
@@ -61,9 +65,6 @@ en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
 (par exemple « Je travaille sur library/sys.po »).
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
-
-Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
-suivez cette procédure :
 
 Pour travailler, nous aurons besoin d'une branche, basée sur une version à jour de la branche « upstream/3.9 ». On met donc à jour notre
 version locale.
@@ -682,10 +683,10 @@ Powrap
 | `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
 
-Simplification des diffs git
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Simplification des git diff
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Les diffs git sont souvent encombrés de changements inutiles de numéros
+Le résultat de *git diff* est souvent encombré de changements inutiles de numéros
 de ligne, comme :
 
 .. code-block:: diff
@@ -694,7 +695,7 @@ de ligne, comme :
     +#: ../Doc/library/signal.rst:408
 
 
-Pour dire à git que ce ne sont pas des informations utiles, vous pouvez faire
+Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
 ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 ``PATH``.
 
