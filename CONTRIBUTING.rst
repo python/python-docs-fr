@@ -683,16 +683,16 @@ Powrap
 | `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
 
 
-Simplification des git diff
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Affichage des modifications par Git
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Le résultat de *git diff* est souvent encombré de changements inutiles de numéros
+Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
 de ligne, comme :
 
 .. code-block:: diff
 
-    -#: ../Doc/library/signal.rst:406
-    +#: ../Doc/library/signal.rst:408
+    -#: ../Doc/library/sys.rst:406
+    +#: ../Doc/library/sys.rst:408
 
 
 Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
