@@ -75,8 +75,8 @@ de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
 vous aidera grandement à produire une traduction de bonne qualité.
 
 Si c'est votre première contribution, commencez par une toute petite
-*pull request*, de quelques paragraphes maximum, pour vous familiariser. Il n'est
-pas nécessaire de terminer un fichier lorsqu'on le commence, vous
+*pull request*, de quelques paragraphes maximum, pour vous familiariser.
+Il n'est pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
 
