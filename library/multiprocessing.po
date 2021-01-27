@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 16:05+0100\n"
+"POT-Creation-Date: 2021-01-27 19:26+0100\n"
 "PO-Revision-Date: 2020-08-22 12:43+0200\n"
 "Last-Translator: Mathieu Dupuy <deronnax@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -3173,7 +3173,7 @@ msgstr ""
 "*processes* est le nombre de processus *workers* à utiliser. Si *processes* "
 "est ``None``, le nombre renvoyé par :func:`os.cpu_count` est utilisé."
 
-#: library/multiprocessing.rst:2125
+#: library/multiprocessing.rst:2125 library/multiprocessing.rst:2684
 msgid ""
 "If *initializer* is not ``None`` then each worker process will call "
 "``initializer(*initargs)`` when it starts."
@@ -3984,11 +3984,62 @@ msgstr ""
 ":mod:`multiprocessing.dummy` réplique toute l'API de :mod:`multiprocessing` "
 "mais n'est rien de plus qu'un *wrapper* autour du module :mod:`threading`."
 
-#: library/multiprocessing.rst:2668
+#: library/multiprocessing.rst:2666
+msgid ""
+"In particular, the ``Pool`` function provided by :mod:`multiprocessing."
+"dummy` returns an instance of :class:`ThreadPool`, which is a subclass of :"
+"class:`Pool` that supports all the same method calls but uses a pool of "
+"worker threads rather than worker processes."
+msgstr ""
+
+#: library/multiprocessing.rst:2674
+msgid ""
+"A thread pool object which controls a pool of worker threads to which jobs "
+"can be submitted.  :class:`ThreadPool` instances are fully interface "
+"compatible with :class:`Pool` instances, and their resources must also be "
+"properly managed, either by using the pool as a context manager or by "
+"calling :meth:`~multiprocessing.pool.Pool.close` and :meth:`~multiprocessing."
+"pool.Pool.terminate` manually."
+msgstr ""
+
+#: library/multiprocessing.rst:2681
+#, fuzzy
+msgid ""
+"*processes* is the number of worker threads to use.  If *processes* is "
+"``None`` then the number returned by :func:`os.cpu_count` is used."
+msgstr ""
+"*processes* est le nombre de processus *workers* à utiliser. Si *processes* "
+"est ``None``, le nombre renvoyé par :func:`os.cpu_count` est utilisé."
+
+#: library/multiprocessing.rst:2687
+msgid ""
+"Unlike :class:`Pool`, *maxtasksperchild* and *context* cannot be provided."
+msgstr ""
+
+#: library/multiprocessing.rst:2691
+msgid ""
+"A :class:`ThreadPool` shares the same interface as :class:`Pool`, which is "
+"designed around a pool of processes and predates the introduction of the :"
+"class:`concurrent.futures` module.  As such, it inherits some operations "
+"that don't make sense for a pool backed by threads, and it has its own type "
+"for representing the status of asynchronous jobs, :class:`AsyncResult`, that "
+"is not understood by any other libraries."
+msgstr ""
+
+#: library/multiprocessing.rst:2698
+msgid ""
+"Users should generally prefer to use :class:`concurrent.futures."
+"ThreadPoolExecutor`, which has a simpler interface that was designed around "
+"threads from the start, and which returns :class:`concurrent.futures.Future` "
+"instances that are compatible with many other libraries, including :mod:"
+"`asyncio`."
+msgstr ""
+
+#: library/multiprocessing.rst:2708
 msgid "Programming guidelines"
 msgstr "Lignes directrices de programmation"
 
-#: library/multiprocessing.rst:2670
+#: library/multiprocessing.rst:2710
 msgid ""
 "There are certain guidelines and idioms which should be adhered to when "
 "using :mod:`multiprocessing`."
@@ -3996,19 +4047,19 @@ msgstr ""
 "Il y a certaines lignes directrices et idiomes auxquels il faut adhérer en "
 "utilisant :mod:`multiprocessing`."
 
-#: library/multiprocessing.rst:2675
+#: library/multiprocessing.rst:2715
 msgid "All start methods"
 msgstr "Toutes les méthodes de démarrage"
 
-#: library/multiprocessing.rst:2677
+#: library/multiprocessing.rst:2717
 msgid "The following applies to all start methods."
 msgstr "Les règles suivantes s'appliquent aux méthodes de démarrage."
 
-#: library/multiprocessing.rst:2679
+#: library/multiprocessing.rst:2719
 msgid "Avoid shared state"
 msgstr "Éviter les états partagés"
 
-#: library/multiprocessing.rst:2681
+#: library/multiprocessing.rst:2721
 msgid ""
 "As far as possible one should try to avoid shifting large amounts of data "
 "between processes."
@@ -4016,7 +4067,7 @@ msgstr ""
 "Autant que possible, vous devriez éviter de déplacer de larges données entre "
 "les processus."
 
-#: library/multiprocessing.rst:2684
+#: library/multiprocessing.rst:2724
 msgid ""
 "It is probably best to stick to using queues or pipes for communication "
 "between processes rather than using the lower level synchronization "
@@ -4026,21 +4077,21 @@ msgstr ""
 "tubes pour la communication entre processus plutôt que d'utiliser des "
 "primitives de synchronisation plus bas-niveau."
 
-#: library/multiprocessing.rst:2688
+#: library/multiprocessing.rst:2728
 msgid "Picklability"
 msgstr "Sérialisation"
 
-#: library/multiprocessing.rst:2690
+#: library/multiprocessing.rst:2730
 msgid "Ensure that the arguments to the methods of proxies are picklable."
 msgstr ""
 "Assurez-vous que les arguments passés aux méthodes des mandataires soient "
 "sérialisables (*pickables*)."
 
-#: library/multiprocessing.rst:2692
+#: library/multiprocessing.rst:2732
 msgid "Thread safety of proxies"
 msgstr "Sûreté des mandataires à travers les fils d'exécution"
 
-#: library/multiprocessing.rst:2694
+#: library/multiprocessing.rst:2734
 msgid ""
 "Do not use a proxy object from more than one thread unless you protect it "
 "with a lock."
@@ -4048,18 +4099,18 @@ msgstr ""
 "N'utilisez pas d'objet mandataire depuis plus d'un fil d'exécution à moins "
 "que vous ne le protégiez avec un verrou."
 
-#: library/multiprocessing.rst:2697
+#: library/multiprocessing.rst:2737
 msgid ""
 "(There is never a problem with different processes using the *same* proxy.)"
 msgstr ""
 "(Il n'y a jamais de problème avec plusieurs processus utilisant un *même* "
 "mandataire.)"
 
-#: library/multiprocessing.rst:2699
+#: library/multiprocessing.rst:2739
 msgid "Joining zombie processes"
 msgstr "Attendre les processus zombies"
 
-#: library/multiprocessing.rst:2701
+#: library/multiprocessing.rst:2741
 msgid ""
 "On Unix when a process finishes but has not been joined it becomes a zombie. "
 "There should never be very many because each time a new process starts (or :"
@@ -4078,11 +4129,11 @@ msgstr ""
 "processus. Toutefois il est probablement une bonne pratique d'attendre "
 "explicitement tous les processus que vous démarrez."
 
-#: library/multiprocessing.rst:2709
+#: library/multiprocessing.rst:2749
 msgid "Better to inherit than pickle/unpickle"
 msgstr "Préférez hériter que sérialiser/désérialiser"
 
-#: library/multiprocessing.rst:2711
+#: library/multiprocessing.rst:2751
 msgid ""
 "When using the *spawn* or *forkserver* start methods many types from :mod:"
 "`multiprocessing` need to be picklable so that child processes can use "
@@ -4099,11 +4150,11 @@ msgstr ""
 "qu'un processus qui nécessite l'accès à une ressource partagée créée autre "
 "part qu'il en hérite depuis un de ses processus ancêtres."
 
-#: library/multiprocessing.rst:2719
+#: library/multiprocessing.rst:2759
 msgid "Avoid terminating processes"
 msgstr "Éviter de terminer les processus"
 
-#: library/multiprocessing.rst:2721
+#: library/multiprocessing.rst:2761
 msgid ""
 "Using the :meth:`Process.terminate <multiprocessing.Process.terminate>` "
 "method to stop a process is liable to cause any shared resources (such as "
@@ -4115,7 +4166,7 @@ msgstr ""
 "indisponible aux autres processus des ressources partagées (comme des "
 "verrous, sémaphores, tubes et queues) actuellement utilisée par le processus."
 
-#: library/multiprocessing.rst:2727
+#: library/multiprocessing.rst:2767
 msgid ""
 "Therefore it is probably best to only consider using :meth:`Process."
 "terminate <multiprocessing.Process.terminate>` on processes which never use "
@@ -4125,11 +4176,11 @@ msgstr ""
 "<multiprocessing.Process.terminate>` que sur les processus qui n'utilisent "
 "jamais de ressources partagées."
 
-#: library/multiprocessing.rst:2731
+#: library/multiprocessing.rst:2771
 msgid "Joining processes that use queues"
 msgstr "Attendre les processus qui utilisent des queues"
 
-#: library/multiprocessing.rst:2733
+#: library/multiprocessing.rst:2773
 msgid ""
 "Bear in mind that a process that has put items in a queue will wait before "
 "terminating until all the buffered items are fed by the \"feeder\" thread to "
@@ -4144,7 +4195,7 @@ msgstr ""
 "<multiprocessing.Queue.cancel_join_thread>` de la queue pour éviter ce "
 "comportement.)"
 
-#: library/multiprocessing.rst:2739
+#: library/multiprocessing.rst:2779
 msgid ""
 "This means that whenever you use a queue you need to make sure that all "
 "items which have been put on the queue will eventually be removed before the "
@@ -4159,11 +4210,11 @@ msgstr ""
 "termineront. Souvenez-vous aussi que tous les processus non *daemons* seront "
 "attendus automatiquement."
 
-#: library/multiprocessing.rst:2745
+#: library/multiprocessing.rst:2785
 msgid "An example which will deadlock is the following::"
 msgstr "L'exemple suivant provoquera un interblocage ::"
 
-#: library/multiprocessing.rst:2759
+#: library/multiprocessing.rst:2799
 msgid ""
 "A fix here would be to swap the last two lines (or simply remove the ``p."
 "join()`` line)."
@@ -4171,11 +4222,11 @@ msgstr ""
 "Une solution ici serait d'intervertir les deux dernières lignes (ou "
 "simplement supprimer la ligne ``p.join()``)."
 
-#: library/multiprocessing.rst:2762
+#: library/multiprocessing.rst:2802
 msgid "Explicitly pass resources to child processes"
 msgstr "Passer explicitement les ressources aux processus fils"
 
-#: library/multiprocessing.rst:2764
+#: library/multiprocessing.rst:2804
 msgid ""
 "On Unix using the *fork* start method, a child process can make use of a "
 "shared resource created in a parent process using a global resource.  "
@@ -4187,7 +4238,7 @@ msgstr ""
 "utilisant une ressource globale. Cependant, il est préférable de passer "
 "l'objet en argument au constructeur du processus fils."
 
-#: library/multiprocessing.rst:2769
+#: library/multiprocessing.rst:2809
 msgid ""
 "Apart from making the code (potentially) compatible with Windows and the "
 "other start methods this also ensures that as long as the child process is "
@@ -4202,24 +4253,24 @@ msgstr ""
 "libérées quand l'objet est collecté par le ramasse-miettes du processus "
 "parent."
 
-#: library/multiprocessing.rst:2776
+#: library/multiprocessing.rst:2816
 msgid "So for instance ::"
 msgstr "Donc par exemple ::"
 
-#: library/multiprocessing.rst:2788
+#: library/multiprocessing.rst:2828
 msgid "should be rewritten as ::"
 msgstr "devrait être réécrit comme ::"
 
-#: library/multiprocessing.rst:2800
+#: library/multiprocessing.rst:2840
 msgid "Beware of replacing :data:`sys.stdin` with a \"file like object\""
 msgstr ""
 "Faire attention à remplacer :data:`sys.stdin` par un objet « *file-like* »"
 
-#: library/multiprocessing.rst:2802
+#: library/multiprocessing.rst:2842
 msgid ":mod:`multiprocessing` originally unconditionally called::"
 msgstr "À l'origine, :mod:`multiprocessing` appelait inconditionnellement ::"
 
-#: library/multiprocessing.rst:2806
+#: library/multiprocessing.rst:2846
 msgid ""
 "in the :meth:`multiprocessing.Process._bootstrap` method --- this resulted "
 "in issues with processes-in-processes. This has been changed to::"
@@ -4227,7 +4278,7 @@ msgstr ""
 "dans la méthode :meth:`multiprocessing.Process._bootstrap` — cela provoquait "
 "des problèmes avec les processus imbriqués. Cela peut être changé en ::"
 
-#: library/multiprocessing.rst:2812
+#: library/multiprocessing.rst:2852
 msgid ""
 "Which solves the fundamental issue of processes colliding with each other "
 "resulting in a bad file descriptor error, but introduces a potential danger "
@@ -4244,7 +4295,7 @@ msgstr ""
 "like*, cela peut amener les données à être transmises à l'objet à plusieurs "
 "reprises, résultant en une corruption."
 
-#: library/multiprocessing.rst:2819
+#: library/multiprocessing.rst:2859
 msgid ""
 "If you write a file-like object and implement your own caching, you can make "
 "it fork-safe by storing the pid whenever you append to the cache, and "
@@ -4255,28 +4306,28 @@ msgstr ""
 "vous ajoutez des données au cache, et annulez le cache quand le *pip* "
 "change. Par exemple ::"
 
-#: library/multiprocessing.rst:2831
+#: library/multiprocessing.rst:2871
 msgid ""
 "For more information, see :issue:`5155`, :issue:`5313` and :issue:`5331`"
 msgstr ""
 "Pour plus d'informations, voir :issue:`5155`, :issue:`5313` et :issue:`5331`"
 
-#: library/multiprocessing.rst:2834
+#: library/multiprocessing.rst:2874
 msgid "The *spawn* and *forkserver* start methods"
 msgstr "Les méthodes de démarrage *spawn* et *forkserver*"
 
-#: library/multiprocessing.rst:2836
+#: library/multiprocessing.rst:2876
 msgid ""
 "There are a few extra restriction which don't apply to the *fork* start "
 "method."
 msgstr ""
 "Certaines restrictions ne s'appliquent pas à la méthode de démarrage *fork*."
 
-#: library/multiprocessing.rst:2839
+#: library/multiprocessing.rst:2879
 msgid "More picklability"
 msgstr "Plus de sérialisation"
 
-#: library/multiprocessing.rst:2841
+#: library/multiprocessing.rst:2881
 msgid ""
 "Ensure that all arguments to :meth:`Process.__init__` are picklable. Also, "
 "if you subclass :class:`~multiprocessing.Process` then make sure that "
@@ -4289,11 +4340,11 @@ msgstr ""
 "sérialisables quand la méthode :meth:`Process.start <multiprocessing.Process."
 "start>` est appelée."
 
-#: library/multiprocessing.rst:2846
+#: library/multiprocessing.rst:2886
 msgid "Global variables"
 msgstr "Variables globales"
 
-#: library/multiprocessing.rst:2848
+#: library/multiprocessing.rst:2888
 msgid ""
 "Bear in mind that if code run in a child process tries to access a global "
 "variable, then the value it sees (if any) may not be the same as the value "
@@ -4306,7 +4357,7 @@ msgstr ""
 "moment même où :meth:`Process.start <multiprocessing.Process.start>` est "
 "appelée."
 
-#: library/multiprocessing.rst:2853
+#: library/multiprocessing.rst:2893
 msgid ""
 "However, global variables which are just module level constants cause no "
 "problems."
@@ -4314,11 +4365,11 @@ msgstr ""
 "Cependant, les variables globales qui sont juste des constantes de modules "
 "ne posent pas de problèmes."
 
-#: library/multiprocessing.rst:2856
+#: library/multiprocessing.rst:2896
 msgid "Safe importing of main module"
 msgstr "Importation sûre du module principal"
 
-#: library/multiprocessing.rst:2858
+#: library/multiprocessing.rst:2898
 msgid ""
 "Make sure that the main module can be safely imported by a new Python "
 "interpreter without causing unintended side effects (such a starting a new "
@@ -4328,7 +4379,7 @@ msgstr ""
 "un nouvel interpréteur Python sans causer d'effets de bord inattendus (comme "
 "le démarrage d'un nouveau processus)."
 
-#: library/multiprocessing.rst:2862
+#: library/multiprocessing.rst:2902
 msgid ""
 "For example, using the *spawn* or *forkserver* start method running the "
 "following module would fail with a :exc:`RuntimeError`::"
@@ -4336,7 +4387,7 @@ msgstr ""
 "Par exemple, utiliser la méthode de démarrage *spawn* ou *forkserver* pour "
 "lancer le module suivant échouerait avec une :exc:`RuntimeError` ::"
 
-#: library/multiprocessing.rst:2874
+#: library/multiprocessing.rst:2914
 msgid ""
 "Instead one should protect the \"entry point\" of the program by using ``if "
 "__name__ == '__main__':`` as follows::"
@@ -4344,7 +4395,7 @@ msgstr ""
 "Vous devriez plutôt protéger le « point d'entrée » du programme en utilisant "
 "``if __name__ == '__main__':`` comme suit ::"
 
-#: library/multiprocessing.rst:2888
+#: library/multiprocessing.rst:2928
 msgid ""
 "(The ``freeze_support()`` line can be omitted if the program will be run "
 "normally instead of frozen.)"
@@ -4352,7 +4403,7 @@ msgstr ""
 "(La ligne ``freeze_support()`` peut être omise si le programme est "
 "uniquement lancé normalement et pas figé.)"
 
-#: library/multiprocessing.rst:2891
+#: library/multiprocessing.rst:2931
 msgid ""
 "This allows the newly spawned Python interpreter to safely import the module "
 "and then run the module's ``foo()`` function."
@@ -4360,7 +4411,7 @@ msgstr ""
 "Cela permet aux interpréteurs Python fraîchement instanciés d'importer en "
 "toute sécurité le module et d'exécution ensuite la fonction ``foo()``."
 
-#: library/multiprocessing.rst:2894
+#: library/multiprocessing.rst:2934
 msgid ""
 "Similar restrictions apply if a pool or manager is created in the main "
 "module."
@@ -4368,21 +4419,21 @@ msgstr ""
 "Des restrictions similaires s'appliquent si une *pool* ou un gestionnaire "
 "est créé dans le module principal."
 
-#: library/multiprocessing.rst:2901
+#: library/multiprocessing.rst:2941
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/multiprocessing.rst:2903
+#: library/multiprocessing.rst:2943
 msgid "Demonstration of how to create and use customized managers and proxies:"
 msgstr ""
 "Démonstration de comment créer et utiliser des gestionnaires et mandataires "
 "personnalisés :"
 
-#: library/multiprocessing.rst:2909
+#: library/multiprocessing.rst:2949
 msgid "Using :class:`~multiprocessing.pool.Pool`:"
 msgstr "En utilisant :class:`~multiprocessing.pool.Pool` :"
 
-#: library/multiprocessing.rst:2915
+#: library/multiprocessing.rst:2955
 msgid ""
 "An example showing how to use queues to feed tasks to a collection of worker "
 "processes and collect the results:"

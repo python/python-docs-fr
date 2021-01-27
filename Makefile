@@ -2,7 +2,7 @@
 #
 # Here is what you can do:
 #
-# - make  # Automatically build an html local version
+# - make  # Automatically build an HTML local version
 # - make todo  # To list remaining tasks
 # - make verifs  # To check for correctness: wrapping, spelling
 # - make wrap  # To check for wrapping
@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := bf353f3c2d937772a8cf30b15fd8eb7b82665ccb
+CPYTHON_CURRENT_COMMIT := 895591c1f0bdec5ad357fe6a5fd0875990061357
 
 CPYTHON_PATH := ../cpython/
 
@@ -33,12 +33,10 @@ EXCLUDED := whatsnew/ c-api/
 # Internal variables
 
 UPSTREAM := https://github.com/python/cpython
-VENV := $(shell pwd)/venv/
+
 PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
-WORKTREES := $(VENV)/worktrees/
-WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
 
 # Detect OS
@@ -59,132 +57,117 @@ else
 endif
 
 .PHONY: all
-all: setup
-	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	$(CP_CMD) -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
-	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
-	  SPHINXOPTS='-qW -j$(JOBS)   \
-	  -D locale_dirs=../locales   \
-	  -D language=$(LANGUAGE)     \
-	  -D gettext_compact=0        \
-	  -D latex_engine=xelatex     \
-	  -D latex_elements.inputenc= \
-	  -D latex_elements.fontenc=' \
-	  $(MODE) && echo "Build success, open file://$(WORKTREE)/Doc/build/html/index.html or run 'make serve' to see them."
+all: ensure_prerequisites
+	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
+	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
+	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
+	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
+	  SPHINXOPTS='-qW -j$(JOBS)         \
+	  -D locale_dirs=$(abspath locales) \
+	  -D language=$(LANGUAGE)           \
+	  -D gettext_compact=0           \
+	  -D latex_engine=xelatex           \
+	  -D latex_elements.inputenc=       \
+	  -D latex_elements.fontenc='       \
+	  $(MODE)
+	git -C $(CPYTHON_PATH) checkout -
+	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
 
 
-.PHONY: setup
-setup: venv
-	echo "Setup the main clone"
-	if ! [ -d $(CPYTHON_PATH) ]; then \
-	    git clone --depth 16 --branch $(BRANCH) $(UPSTREAM) $(CPYTHON_PATH); \
+.PHONY: ensure_prerequisites
+ensure_prerequisites:
+	@if [ -z $(CPYTHON_PATH) ]; then \
+	    echo "Your CPYTHON_PATH is empty, please provide one."; \
+	    exit 1; \
 	fi
-
-	echo "Setup the current worktree"
-	if ! [ -d $(WORKTREE) ]; then                                                        \
-	    rm -fr $(WORKTREES);                                                             \
-	    git -C $(CPYTHON_PATH) worktree prune;                                           \
-	    mkdir -p $(WORKTREES);                                                           \
-	    if [ -n "$(CPYTHON_CURRENT_COMMIT)" ];                                           \
-	    then                                                                             \
-	        depth=32;                                                                    \
-	        while ! git -C $(CPYTHON_PATH) cat-file -e $(CPYTHON_CURRENT_COMMIT);        \
-	        do                                                                           \
-	            depth=$$((depth * 2));                                                   \
-	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM) $(BRANCH);      \
-	        done                                                                         \
-	    else                                                                             \
-	        git -C $(CPYTHON_PATH) fetch --depth 1 $(UPSTREAM);                          \
-	    fi;                                                                              \
-	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
-	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
+	@if ! [ -d $(CPYTHON_PATH) ]; then \
+	    echo "Building the translation requires a cpython clone."; \
+	    echo "Please provide the path to a clone using the CPYTHON_PATH variable."; \
+	    echo "(Currently CPYTHON_PATH is $(CPYTHON_PATH)."; \
+	    echo "So you may want to run:"; \
+	    echo ""; \
+	    echo "  git clone $(UPSTREAM) $(CPYTHON_PATH)"; \
+	    exit 1; \
 	fi
-
-
-.PHONY: venv
-venv:
-	echo "Setup venv in $(VENV)"
-	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
-	if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
-	    $(VENV)/bin/pip install -q --upgrade pip; \
+	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain)" ]; then \
+	    echo "Your cpython clone at $(CPYTHON_PATH) is not clean."; \
+	    echo "In order to avoid breaking things, please clean it first."; \
+	    exit 1; \
 	fi
-
+	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
+	    echo "You're missing dependencies, please enable a venv and install:"; \
+	    echo ""; \
+	    echo "  python -m pip install -r requirements.txt -r $(CPYTHON_PATH)/Doc/requirements.txt"; \
+	    exit 1; \
+	fi
 
 .PHONY: serve
 serve:
-	$(MAKE) -C $(WORKTREE)/Doc/ serve
+	$(MAKE) -C $(CPYTHON_PATH)/Doc/ serve
 
 
 .PHONY: progress
 progress:
-	$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
+	@$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
 	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
 	$(shell msgcat *.po */*.po | grep -c '^msgid')
 
 
 .PHONY: todo
-todo: venv
-	$(VENV)/bin/potodo --exclude $(VENV) $(EXCLUDED)
+todo: ensure_prerequisites
+	potodo --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
-wrap: venv
-	echo "Verify wrapping"
-	$(VENV)/bin/powrap --check --quiet *.po **/*.po
+wrap: ensure_prerequisites
+	@echo "Verify wrapping"
+	powrap --check --quiet *.po **/*.po
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
 DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: spell
-spell: venv $(DESTS)
+spell: ensure_prerequisites $(DESTS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
-	echo "Pospell checking $<..."
+	@echo "Pospell checking $<..."
 	mkdir -p $(@D)
-	$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
+	pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
-fuzzy: venv
-	$(VENV)/bin/potodo -f --exclude $(VENV) $(EXCLUDED)
+fuzzy: ensure_prerequisites
+	potodo -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: verifs
 verifs: wrap spell
 
 .PHONY: merge
-merge: setup
-	echo "Merge from $(UPSTREAM)"
-	git -C $(CPYTHON_PATH) fetch $(UPSTREAM)
-	rm -fr $(WORKTREES)/$(BRANCH)
-	git -C $(CPYTHON_PATH) worktree prune
-	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(word 1,$(shell git -C $(CPYTHON_PATH) remote -v | grep python/cpython))/$(BRANCH)
-	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
-	(cd $(WORKTREES)/$(BRANCH)/Doc; $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
-	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
-	    while read -r POT;\
-	    do\
-	        PO="./$$(echo "$$POT" | sed "s#$(WORKTREES)/$(BRANCH)/pot/##; s#\.pot\$$#.po#")";\
-	        mkdir -p "$$(dirname "$$PO")";\
-	        if [ -f "$$PO" ];\
-	        then\
-	            case "$$POT" in\
-	            *whatsnew*) msgmerge --backup=off --force-po --no-fuzzy-matching -U "$$PO" "$$POT" ;;\
-	            *)          msgmerge --backup=off --force-po -U "$$PO" "$$POT" ;;\
-	            esac\
-	        else\
-	            msgcat -o "$$PO" "$$POT";\
-	        fi\
+merge: ensure_prerequisites
+	@echo "Merge from $(UPSTREAM)"
+	git -C $(CPYTHON_PATH) checkout $(BRANCH)
+	git -C $(CPYTHON_PATH) pull --ff-only
+	(cd $(CPYTHON_PATH)/Doc; sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
+	find $(CPYTHON_PATH)/pot/ -name '*.pot' |\
+	    while read -r POT; \
+	    do \
+	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_PATH)/pot/##; s#\.pot\$$#.po#")"; \
+	        mkdir -p "$$(dirname "$$PO")"; \
+	        if [ -f "$$PO" ]; \
+	        then \
+	            msgmerge --backup=off --force-po -U "$$PO" "$$POT"; \
+	        else \
+	            msgcat -o "$$PO" "$$POT"; \
+	        fi \
 	    done
-	echo "Replacing CPYTHON_CURRENT_COMMIT Makefile by: " $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)
-	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
-	rm -fr $(WORKTREES)/$(BRANCH)
-	git -C $(CPYTHON_PATH) worktree prune
+	rm -fr $(CPYTHON_PATH)/pot/
+	@echo "Replacing CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)
+	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)/' Makefile
 	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
-	-$(VENV)/bin/powrap -m
-	printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
+	powrap -m
+	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
 
 .PHONY: clean
 clean:
-	echo "Cleaning *.mo, $(VENV), and $(POSPELL_TMP_DIR)"
-	rm -fr $(VENV) $(POSPELL_TMP_DIR)
+	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
+	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
