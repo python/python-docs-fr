@@ -80,8 +80,8 @@ Il n'est pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
 
-Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez signaler
-par différents moyens :
+Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez nous
+le signaler par différents moyens :
 
 * Soit en ouvrant un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
   en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
@@ -235,14 +235,14 @@ Cela permet à Github de lier la *pull request* au ticket de réservation.
 Sur une autre forge
 +++++++++++++++++++
 
-Quand vous avez poussé vos modifications, il y a plusieurs possibilité.
+Quand vous avez poussé vos modifications, il y a plusieurs possibilités.
 
 Soit vous signalez via le `discuss de l'AFPy <https://discuss.afpy.org/>`_ ou sur IRC que
-vous avez traduit une section. Puis nous viendrons récupérer les modifications pour les intégrer
+vous avez traduit une section. Nous viendrons récupérer les modifications pour les intégrer
 sur Github.
 
 Soit en créant un *`bundle <https://git-scm.com/book/fr/v2/Utilitaires-Git-Empaquetage-bundling>`_* Git,
-pour cela, il faut créer un fichier contenant les différentes modifications effectué.
+pour cela, il faut créer un fichier contenant les différentes modifications effectuées.
 
 .. code-block:: bash
 
