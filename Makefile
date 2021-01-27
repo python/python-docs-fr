@@ -60,7 +60,7 @@ endif
 all: ensure_prerequisites
 	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
-	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
+	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
 	  SPHINXOPTS='-qW -j$(JOBS)         \
 	  -D locale_dirs=$(abspath locales) \
