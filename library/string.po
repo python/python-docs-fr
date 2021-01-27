@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 16:05+0100\n"
+"POT-Creation-Date: 2021-01-27 19:26+0100\n"
 "PO-Revision-Date: 2020-12-23 15:48+0100\n"
 "Last-Translator: Jules Lasne <jules.lasne@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -787,7 +787,7 @@ msgstr ""
 "Format de chaîne. C'est le type par défaut pour les chaînes de caractères et "
 "peut être omis."
 
-#: library/string.rst:471 library/string.rst:553
+#: library/string.rst:471 library/string.rst:558
 msgid "None"
 msgstr "``None``"
 
@@ -859,7 +859,7 @@ msgstr ""
 "Format hexadécimal. Affiche le nombre en base 16 en utilisant les lettres "
 "majuscules pour les chiffres au-dessus de 9."
 
-#: library/string.rst:546
+#: library/string.rst:551
 msgid "``'n'``"
 msgstr "``'n'``"
 
@@ -958,16 +958,18 @@ msgid "``'g'``"
 msgstr "``'g'``"
 
 #: library/string.rst:513
+#, fuzzy
 msgid ""
 "General format.  For a given precision ``p >= 1``, this rounds the number to "
 "``p`` significant digits and then formats the result in either fixed-point "
-"format or in scientific notation, depending on its magnitude."
+"format or in scientific notation, depending on its magnitude. A precision of "
+"``0`` is treated as equivalent to a precision of ``1``."
 msgstr ""
 "Format général. Pour une précision donnée ``p >= 1``, ceci arrondit le "
 "nombre à ``p`` chiffres significatifs et puis formate le résultat soit en "
 "virgule fixe soit en notation scientifique, en fonction de la magnitude."
 
-#: library/string.rst:518
+#: library/string.rst:520
 msgid ""
 "The precise rules are as follows: suppose that the result formatted with "
 "presentation type ``'e'`` and precision ``p-1`` would have exponent "
@@ -990,7 +992,17 @@ msgstr ""
 "retirée s'il n'y a aucun chiffre la suivant, sauf si l'option ``'#'`` est "
 "utilisée."
 
-#: library/string.rst:531
+#: library/string.rst:533
+msgid ""
+"With no precision given, uses a precision of ``6`` significant digits for :"
+"class:`float`. For :class:`~decimal.Decimal`, the coefficient of the result "
+"is formed from the coefficient digits of the value; scientific notation is "
+"used for values smaller than ``1e-6`` in absolute value and values where the "
+"place value of the least significant digit is larger than 1, and fixed-point "
+"notation is used otherwise."
+msgstr ""
+
+#: library/string.rst:542
 msgid ""
 "Positive and negative infinity, positive and negative zero, and nans, are "
 "formatted as ``inf``, ``-inf``, ``0``, ``-0`` and ``nan`` respectively, "
@@ -1000,18 +1012,11 @@ msgstr ""
 "négatif, *not a number* sont formatées respectivement par ``inf``, ``-inf``, "
 "``0``, ``-0`` et ``nan``, peu importe la précision."
 
-#: library/string.rst:536
-msgid ""
-"A precision of ``0`` is treated as equivalent to a precision of ``1``. With "
-"no precision given, uses a precision of ``6`` significant digits for :class:"
-"`float`, and shows all coefficient digits for :class:`~decimal.Decimal`."
-msgstr ""
-
-#: library/string.rst:542
+#: library/string.rst:547
 msgid "``'G'``"
 msgstr "``'G'``"
 
-#: library/string.rst:542
+#: library/string.rst:547
 msgid ""
 "General format. Same as ``'g'`` except switches to ``'E'`` if the number "
 "gets too large. The representations of infinity and NaN are uppercased, too."
@@ -1020,7 +1025,7 @@ msgstr ""
 "nombre est trop grand. Également, la représentation des infinis et de Nan "
 "sont en majuscules également."
 
-#: library/string.rst:546
+#: library/string.rst:551
 msgid ""
 "Number. This is the same as ``'g'``, except that it uses the current locale "
 "setting to insert the appropriate number separator characters."
@@ -1028,11 +1033,11 @@ msgstr ""
 "Nombre. Pareil que ``'g'``, si ce n'est que l'environnement linguistique est "
 "pris en compte pour insérer le séparateur approprié."
 
-#: library/string.rst:550
+#: library/string.rst:555
 msgid "``'%'``"
 msgstr "``'%'``"
 
-#: library/string.rst:550
+#: library/string.rst:555
 msgid ""
 "Percentage. Multiplies the number by 100 and displays in fixed (``'f'``) "
 "format, followed by a percent sign."
@@ -1040,12 +1045,13 @@ msgstr ""
 "Pourcentage. Multiplie le nombre par 100 et l'affiche en virgule fixe "
 "(``'f'``), suivi d'un symbole pourcent ``'%'``."
 
-#: library/string.rst:553
+#: library/string.rst:558
+#, fuzzy
 msgid ""
-"Similar to ``'g'``, except that fixed-point notation, when used, has at "
-"least one digit past the decimal point. The default precision is as high as "
-"needed to represent the particular value. The overall effect is to match the "
-"output of :func:`str` as altered by the other format modifiers."
+"For :class:`float` this is the same as ``'g'``, except that when fixed-point "
+"notation is used to format the result, it always includes at least one digit "
+"past the decimal point. The precision used is as large as needed to "
+"represent the given value faithfully."
 msgstr ""
 "Pareil que ``'g'``, si ce n'est que lorsque la notation en virgule fixe est "
 "utilisée, il y a toujours au moins un chiffre derrière la virgule. La "
@@ -1053,11 +1059,24 @@ msgstr ""
 "L'effet visé est de le faire correspondre à la valeur renvoyée par :func:"
 "`str` altérée par les autres modificateurs de format."
 
-#: library/string.rst:565
+#: library/string.rst:564
+msgid ""
+"For :class:`~decimal.Decimal`, this is the same as either ``'g'`` or ``'G'`` "
+"depending on the value of ``context.capitals`` for the current decimal "
+"context."
+msgstr ""
+
+#: library/string.rst:568
+msgid ""
+"The overall effect is to match the output of :func:`str` as altered by the "
+"other format modifiers."
+msgstr ""
+
+#: library/string.rst:576
 msgid "Format examples"
 msgstr "Exemples de formats"
 
-#: library/string.rst:567
+#: library/string.rst:578
 msgid ""
 "This section contains examples of the :meth:`str.format` syntax and "
 "comparison with the old ``%``-formatting."
@@ -1065,7 +1084,7 @@ msgstr ""
 "Cette section contient des exemples de la syntaxe de :meth:`str.format` et "
 "des comparaisons avec l'ancien formatage par ``%``."
 
-#: library/string.rst:570
+#: library/string.rst:581
 msgid ""
 "In most of the cases the syntax is similar to the old ``%``-formatting, with "
 "the addition of the ``{}`` and with ``:`` used instead of ``%``. For "
@@ -1075,7 +1094,7 @@ msgstr ""
 "``%``, avec l'ajout de ``{}`` et avec ``:`` au lieu de ``%``. Par exemple : "
 "``'%03.2f'`` peut être changé en ``'{03.2f}'``."
 
-#: library/string.rst:574
+#: library/string.rst:585
 msgid ""
 "The new format syntax also supports new and different options, shown in the "
 "following examples."
@@ -1083,61 +1102,61 @@ msgstr ""
 "La nouvelle syntaxe de formatage gère également de nouvelles options et des "
 "options différentes, montrées dans les exemples qui suivent."
 
-#: library/string.rst:577
+#: library/string.rst:588
 msgid "Accessing arguments by position::"
 msgstr "Accéder à un argument par sa position ::"
 
-#: library/string.rst:590
+#: library/string.rst:601
 msgid "Accessing arguments by name::"
 msgstr "Accéder à un argument par son nom ::"
 
-#: library/string.rst:598
+#: library/string.rst:609
 msgid "Accessing arguments' attributes::"
 msgstr "Accéder aux attributs d'un argument ::"
 
-#: library/string.rst:613
+#: library/string.rst:624
 msgid "Accessing arguments' items::"
 msgstr "Accéder aux éléments d'un argument ::"
 
-#: library/string.rst:619
+#: library/string.rst:630
 msgid "Replacing ``%s`` and ``%r``::"
 msgstr "Remplacer ``%s`` et ``%r`` ::"
 
-#: library/string.rst:624
+#: library/string.rst:635
 msgid "Aligning the text and specifying a width::"
 msgstr "Aligner le texte et spécifier une longueur minimale ::"
 
-#: library/string.rst:635
+#: library/string.rst:646
 msgid "Replacing ``%+f``, ``%-f``, and ``% f`` and specifying a sign::"
 msgstr "Remplacer ``%+f``, ``%-f``, et ``%f`` et spécifier un signe ::"
 
-#: library/string.rst:644
+#: library/string.rst:655
 msgid ""
 "Replacing ``%x`` and ``%o`` and converting the value to different bases::"
 msgstr ""
 "Remplacer ``%x`` et ``%o`` et convertir la valeur dans différentes bases ::"
 
-#: library/string.rst:653
+#: library/string.rst:664
 msgid "Using the comma as a thousands separator::"
 msgstr "Utiliser une virgule comme séparateur des milliers ::"
 
-#: library/string.rst:658
+#: library/string.rst:669
 msgid "Expressing a percentage::"
 msgstr "Exprimer un pourcentage ::"
 
-#: library/string.rst:665
+#: library/string.rst:676
 msgid "Using type-specific formatting::"
 msgstr "Utiliser un formatage propre au type ::"
 
-#: library/string.rst:672
+#: library/string.rst:683
 msgid "Nesting arguments and more complex examples::"
 msgstr "Arguments imbriqués et des exemples plus complexes ::"
 
-#: library/string.rst:706
+#: library/string.rst:717
 msgid "Template strings"
 msgstr "Chaînes modèles"
 
-#: library/string.rst:708
+#: library/string.rst:719
 msgid ""
 "Template strings provide simpler string substitutions as described in :pep:"
 "`292`.  A primary use case for template strings is for internationalization "
@@ -1155,7 +1174,7 @@ msgstr ""
 "l'internationalisation, voir le paquet `flufl.i18n <http://flufli18n."
 "readthedocs.io/en/latest/>`."
 
-#: library/string.rst:718
+#: library/string.rst:729
 msgid ""
 "Template strings support ``$``-based substitutions, using the following "
 "rules:"
@@ -1163,11 +1182,11 @@ msgstr ""
 "Les chaînes modèles prennent en charge les substitutions basées sur ``$`` en "
 "utilisant les règles suivantes :"
 
-#: library/string.rst:720
+#: library/string.rst:731
 msgid "``$$`` is an escape; it is replaced with a single ``$``."
 msgstr "``$$`` est un échappement ; il est remplacé par un simple ``$``."
 
-#: library/string.rst:722
+#: library/string.rst:733
 msgid ""
 "``$identifier`` names a substitution placeholder matching a mapping key of ``"
 "\"identifier\"``.  By default, ``\"identifier\"`` is restricted to any case-"
@@ -1182,7 +1201,7 @@ msgstr ""
 "n'étant pas un identifieur après le ``$`` termine la spécification du "
 "substituant."
 
-#: library/string.rst:729
+#: library/string.rst:740
 msgid ""
 "``${identifier}`` is equivalent to ``$identifier``.  It is required when "
 "valid identifier characters follow the placeholder but are not part of the "
@@ -1193,7 +1212,7 @@ msgstr ""
 "directement le substituant mais ne fait pas partie du substituant, comme ``"
 "\"${noun}ification\"``."
 
-#: library/string.rst:733
+#: library/string.rst:744
 msgid ""
 "Any other appearance of ``$`` in the string will result in a :exc:"
 "`ValueError` being raised."
@@ -1201,7 +1220,7 @@ msgstr ""
 "Tout autre présence du symbole ``$`` dans une chaîne résultera en la levée "
 "d'une :exc:`ValueError`."
 
-#: library/string.rst:736
+#: library/string.rst:747
 msgid ""
 "The :mod:`string` module provides a :class:`Template` class that implements "
 "these rules.  The methods of :class:`Template` are:"
@@ -1209,12 +1228,12 @@ msgstr ""
 "Le module :mod:`string` fournit une classe :class:`Template` qui implémente "
 "ces règles. Les méthodes de :class:`Template` sont :"
 
-#: library/string.rst:742
+#: library/string.rst:753
 msgid "The constructor takes a single argument which is the template string."
 msgstr ""
 "Le constructeur prend un seul argument qui est la chaîne du *template*."
 
-#: library/string.rst:747
+#: library/string.rst:758
 msgid ""
 "Performs the template substitution, returning a new string.  *mapping* is "
 "any dictionary-like object with keys that match the placeholders in the "
@@ -1229,7 +1248,7 @@ msgstr ""
 "*mapping* et *kwds* sont donnés et qu'il y a des doublons, les substituants "
 "de *kwds* sont prioritaires."
 
-#: library/string.rst:756
+#: library/string.rst:767
 msgid ""
 "Like :meth:`substitute`, except that if placeholders are missing from "
 "*mapping* and *kwds*, instead of raising a :exc:`KeyError` exception, the "
@@ -1244,7 +1263,7 @@ msgstr ""
 "$`` renverra simplement ``$`` au lieu de lever une exception :exc:"
 "`ValueError`."
 
-#: library/string.rst:762
+#: library/string.rst:773
 msgid ""
 "While other exceptions may still occur, this method is called \"safe\" "
 "because it always tries to return a usable string instead of raising an "
@@ -1260,13 +1279,13 @@ msgstr ""
 "contient des délimiteurs fantômes, des accolades non fermées, ou des "
 "substituants qui ne sont pas des identificateurs Python valides."
 
-#: library/string.rst:769
+#: library/string.rst:780
 msgid ":class:`Template` instances also provide one public data attribute:"
 msgstr ""
 "Les instances de la classe :class:`Template` fournissent également un "
 "attribut public :"
 
-#: library/string.rst:773
+#: library/string.rst:784
 msgid ""
 "This is the object passed to the constructor's *template* argument.  In "
 "general, you shouldn't change it, but read-only access is not enforced."
@@ -1275,11 +1294,11 @@ msgstr ""
 "vous ne devriez pas le changer, mais un accès en lecture-seule n'est pas "
 "possible à fournir."
 
-#: library/string.rst:776
+#: library/string.rst:787
 msgid "Here is an example of how to use a Template::"
 msgstr "Voici un exemple de comment utiliser un *Template* ::"
 
-#: library/string.rst:794
+#: library/string.rst:805
 msgid ""
 "Advanced usage: you can derive subclasses of :class:`Template` to customize "
 "the placeholder syntax, delimiter character, or the entire regular "
@@ -1292,7 +1311,7 @@ msgstr ""
 "analyser les chaînes *templates*. Pour faire cela, vous pouvez redéfinir les "
 "attributs suivants :"
 
-#: library/string.rst:799
+#: library/string.rst:810
 msgid ""
 "*delimiter* -- This is the literal string describing a placeholder "
 "introducing delimiter.  The default value is ``$``.  Note that this should "
@@ -1307,7 +1326,7 @@ msgstr ""
 "escape` sur cette chaîne si nécessaire. Notez aussi que le délimiteur ne "
 "peut pas être changé après la création de la classe."
 
-#: library/string.rst:806
+#: library/string.rst:817
 msgid ""
 "*idpattern* -- This is the regular expression describing the pattern for non-"
 "braced placeholders.  The default value is the regular expression ``(?a:[_a-"
@@ -1320,7 +1339,7 @@ msgstr ""
 "donné et *braceidpattern* est ``None``, ce motif est aussi utilisé pour les "
 "marqueurs entre accolades."
 
-#: library/string.rst:813
+#: library/string.rst:824
 msgid ""
 "Since default *flags* is ``re.IGNORECASE``, pattern ``[a-z]`` can match with "
 "some non-ASCII characters. That's why we use the local ``a`` flag here."
@@ -1329,7 +1348,7 @@ msgstr ""
 "ASCII* peuvent correspondre au motif ``[a-z]``. C'est pourquoi on utilise "
 "une option locale ``a`` ici."
 
-#: library/string.rst:817
+#: library/string.rst:828
 msgid ""
 "*braceidpattern* can be used to define separate patterns used inside and "
 "outside the braces."
@@ -1337,7 +1356,7 @@ msgstr ""
 "*braceidpattern* peut être utilisé pour définir des motifs des motifs "
 "différents suivant qu’ils sont à l’intérieur ou à l’extérieur des accolades."
 
-#: library/string.rst:821
+#: library/string.rst:832
 msgid ""
 "*braceidpattern* -- This is like *idpattern* but describes the pattern for "
 "braced placeholders.  Defaults to ``None`` which means to fall back to "
@@ -1351,7 +1370,7 @@ msgstr ""
 "l’intérieur d’accolades ou non). S’il est donné, cela vous permet de définir "
 "définir des motifs entre accolades différents des motifs sans accolades."
 
-#: library/string.rst:829
+#: library/string.rst:840
 msgid ""
 "*flags* -- The regular expression flags that will be applied when compiling "
 "the regular expression used for recognizing substitutions.  The default "
@@ -1366,7 +1385,7 @@ msgstr ""
 "personnalisé doit suivre les conventions des expressions rationnelles "
 "*verbose*."
 
-#: library/string.rst:837
+#: library/string.rst:848
 msgid ""
 "Alternatively, you can provide the entire regular expression pattern by "
 "overriding the class attribute *pattern*.  If you do this, the value must be "
@@ -1380,7 +1399,7 @@ msgstr ""
 "noms. Les groupes de capture correspondent aux règles données au-dessus, "
 "ainsi qu'à la règle du substituant invalide :"
 
-#: library/string.rst:843
+#: library/string.rst:854
 msgid ""
 "*escaped* -- This group matches the escape sequence, e.g. ``$$``, in the "
 "default pattern."
@@ -1388,7 +1407,7 @@ msgstr ""
 "*escaped* -- Ce groupe lie les séquences échappées (par exemple ``$$``) dans "
 "le motif par défaut."
 
-#: library/string.rst:846
+#: library/string.rst:857
 msgid ""
 "*named* -- This group matches the unbraced placeholder name; it should not "
 "include the delimiter in capturing group."
@@ -1396,7 +1415,7 @@ msgstr ""
 "*named* -- Ce groupe lie les substituants non entourés d'accolades ; il ne "
 "devrait pas inclure le délimiteur dans le groupe de capture."
 
-#: library/string.rst:849
+#: library/string.rst:860
 msgid ""
 "*braced* -- This group matches the brace enclosed placeholder name; it "
 "should not include either the delimiter or braces in the capturing group."
@@ -1404,7 +1423,7 @@ msgstr ""
 "*braced* -- Ce groupe lie le nom entouré d'accolades ; il ne devrait inclure "
 "ni le délimiteur, ni les accolades dans le groupe de capture."
 
-#: library/string.rst:852
+#: library/string.rst:863
 msgid ""
 "*invalid* -- This group matches any other delimiter pattern (usually a "
 "single delimiter), and it should appear last in the regular expression."
@@ -1413,11 +1432,11 @@ msgstr ""
 "un seul délimiteur) et il devrait apparaître en dernier dans l'expression "
 "rationnelle."
 
-#: library/string.rst:857
+#: library/string.rst:868
 msgid "Helper functions"
 msgstr "Fonctions d'assistance"
 
-#: library/string.rst:861
+#: library/string.rst:872
 msgid ""
 "Split the argument into words using :meth:`str.split`, capitalize each word "
 "using :meth:`str.capitalize`, and join the capitalized words using :meth:"
