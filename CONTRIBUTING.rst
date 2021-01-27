@@ -49,17 +49,17 @@ dépôt.
 
 .. code-block:: bash
 
-    # Clonez en HTTP le dépôt
+    # Clonez en HTTPS le dépôt
     git clone https://github.com/python/python-docs-fr
 
     # Allez dans le répertoire cloné
     cd python-docs-fr/
 
     # Renommez *origin* en *upstream* pour avoir une référence vers le dépôt officiel
-    # Il permettra de récupérer les nouveaux commit
+    # Il permettra de récupérer les nouveaux commits
     git remote rename origin upstream
 
-    # Rajoutez le *remote* de votre forge (en HTTP ou SSH)
+    # Rajoutez le *remote* de votre forge (en HTTPS ou SSH)
     git remote add origin <url>
 
     # Envoyez le dépôt sur votre forge et définir par défaut
