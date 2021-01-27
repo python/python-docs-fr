@@ -7,16 +7,15 @@ Instructions
 Prérequis
 ~~~~~~~~~
 
-- un compte `Github <https://github.com/join>`_ ;
-- un client ``git`` `Linux <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
+- un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
 Équipez-vous aussi de quelques outils pour vous aider dans
 votre traduction (voir `Outils utiles pour la traduction`_).
 
 
-*fork* personnel
-~~~~~~~~~~~~~~~~
+*fork* personnel sur Github
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
 <https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
@@ -41,6 +40,32 @@ où vous avez le droit de faire des modifications.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 
+*fork* personnel sur une autre forge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous n'avez pas de compte Github, il est possible *fork* ce dépôt sur une autre forge.
+Vous devez dans un premier temps initier un dépôt vide sur la forge où vous voulez héberger le
+dépôt.
+
+.. code-block:: bash
+
+    # Clonez en HTTPS le dépôt
+    git clone https://github.com/python/python-docs-fr
+
+    # Allez dans le répertoire cloné
+    cd python-docs-fr/
+
+    # Renommez *origin* en *upstream* pour avoir une référence vers le dépôt officiel
+    # Il permettra de récupérer les nouveaux commits
+    git remote rename origin upstream
+
+    # Rajoutez le *remote* de votre forge (en HTTPS ou SSH)
+    git remote add origin <url>
+
+    # Envoyez le dépôt sur votre forge et définir par défaut
+    git push -u origin
+
+
 Réservation d'un fichier
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -57,15 +82,28 @@ pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
 
-Une fois que vous avez choisi un fichier sur lequel travailler, veuillez
-ouvrir un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
-en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
-(par exemple « Je travaille sur library/sys.po »).
+Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez nous
+le signaler par différents moyens :
+
+* Soit en ouvrant un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
+  en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
+  (par exemple « Je travaille sur library/sys.po »).
+
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
-Pour travailler, nous avons besoin d'une branche, basée sur une version à jour de la branche « upstream/3.9 ». On met donc à jour
-notre version locale.
+* Soit en créant un sujet sur le
+  `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
+  en indiquant sur quoi vous travaillez et l'URL de votre dépôt.
+
+* Soit sur IRC en venant sur le canal `#python-docs-fr <https://webchat.freenode.net/#python-docs-fr>`_ pour nous le signaler.
+
+Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
+suivez cette procédure :
+
+Pour travailler, nous avons besoin d'une branche, basée sur une version à jour
+(fraîchement récupérée) de la branche « upstream/3.9 ». On met donc à jour notre
+version locale.
 
 .. code-block:: bash
 
@@ -174,16 +212,17 @@ attendant d'être propagées dans le dépôt local.
 
 
 
-Poussez ensuite vos modifications sur votre *fork* Github avec ``git push``.
+Poussez ensuite vos modifications sur votre *fork* avec ``git push``.
 Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
-branche est liée à votre *fork* Github (et donc que vos futurs ``git pull`` et
+branche est liée à votre *fork* (et donc que vos futurs ``git pull`` et
 ``git push`` sachent quoi tirer).
 
 .. code-block:: bash
 
     git push --set-upstream origin
 
-
+Sur Github
+++++++++++
 
 La commande précédente vous affiche un lien pour ouvrir une *pull request* sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
@@ -193,6 +232,26 @@ quelques secondes vous indiquant que vous pouvez demander une *pull request*.
 Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
 Cela permet à Github de lier la *pull request* au ticket de réservation.
+
+
+Sur une autre forge
++++++++++++++++++++
+
+Quand vous avez poussé vos modifications, il y a plusieurs possibilités.
+
+Soit vous signalez via le `discuss de l'AFPy <https://discuss.afpy.org/>`_ ou sur IRC que
+vous avez traduit une section. Nous viendrons récupérer les modifications pour les intégrer
+sur Github.
+
+Soit en créant un *`bundle <https://git-scm.com/book/fr/v2/Utilitaires-Git-Empaquetage-bundling>`_* Git,
+pour cela, il faut créer un fichier contenant les différentes modifications effectuées.
+
+.. code-block:: bash
+
+    git bundle create <name>.bundle <commit_id1>..<commit_id2>
+
+Puis nous partager ce *bundle* sur le `discuss de l'AFPy <https://discuss.afpy.org/>`_ pour pouvoir l'intégrer.
+
 
 À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
 suggestions et corrections. Pour les prendre en compte, retournez sur votre branche
@@ -231,6 +290,7 @@ traduire directement sur la version Python 3.5.
 Si nécessaire, les traductions seraient rétroportées sur les versions
 les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
+
 
 Que traduire ?
 --------------
@@ -464,7 +524,7 @@ tuple                      *n*-uplet (avec *n* en italique), on peut
                            traduire *2-tuple* par « paire » ou « couple »,
                            *3-tuple* par « triplet », *4-tuple* par
                            « quadruplet » etc.
-underscore                 tiret bas, *underscore*
+underscore                 tiret bas, *underscore*, sous-tiret
 whitespace                 caractère d'espacement
 ========================== ===============================================
 
