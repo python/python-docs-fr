@@ -90,8 +90,9 @@ par différents moyens :
 Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
 dans les tickets et les *pull requests*.
 
-* Soit en créant un sujet sur le `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction en
-  indiquant sur quoi vous travaillez et l'URL de votre dépôt.
+* Soit en créant un sujet sur le
+  `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
+  en indiquant sur quoi vous travaillez et l'URL de votre dépôt.
 
 * Soit sur IRC en venant sur le canal `#python-docs-fr <https://webchat.freenode.net/#python-docs-fr>`_ pour nous le signaler.
 
