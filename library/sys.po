@@ -2,6 +2,7 @@
 # For licence information, see README file.
 #
 msgid ""
+
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.1\n"
+
 
 #: library/sys.rst:2
 msgid ":mod:`sys` --- System-specific parameters and functions"
@@ -55,7 +57,6 @@ msgstr ""
 "actifs pour l’interpréteur en cours d'exécution."
 
 #: library/sys.rst:31
-#, fuzzy
 msgid ""
 "When an auditing event is raised through the :func:`sys.audit` function, "
 "each hook will be called in the order it was added with the event name and "
@@ -65,11 +66,13 @@ msgid ""
 "terminate the process entirely."
 msgstr ""
 "Quand un événement d'audit est déclenché par la fonction :func:`sys.audit`, "
-"chaque fonction de rappel est appelée dans l'ordre dans lequel elle a été "
-"ajoutée avec le nom de l'événement et le *n*-uplet des arguments. Les "
-"fonctions de rappel qui sont ajoutées par :c:func:`PySys_AddAuditHook` sont "
-"appelées les premières, suivi par les fonctions de rappel ajoutées dans "
-"l'interpréteur en cours d'exécution."
+"chaque point d'entrée est appelé dans l'ordre dans lequel elle a été ajoutée "
+"avec le nom de l'événement et le *n*-uplet des arguments. Les points "
+"d'entrées qui sont ajoutés par :c:func:`PySys_AddAuditHook` sont appelées "
+"les premiers, suivi par les fonctions de rappel ajoutées dans l'interpréteur "
+"en cours d'exécution. Les points d'entrées peuvent *logger** l'événement, "
+"lever une exception pour stopper l'opération ou terminer le processus "
+"entièrement."
 
 #: library/sys.rst:38
 msgid ""
@@ -78,7 +81,6 @@ msgid ""
 msgstr ""
 
 #: library/sys.rst:40
-#, fuzzy
 msgid ""
 "Calling :func:`sys.addaudithook` will itself raise an auditing event named "
 "``sys.addaudithook`` with no arguments. If any existing hooks raise an "
@@ -86,17 +88,21 @@ msgid ""
 "and the exception suppressed. As a result, callers cannot assume that their "
 "hook has been added unless they control all existing hooks."
 msgstr ""
-"Déclenche un événement d'audit ``sys.addaudithook`` sans arguments. Si "
-"n'importe quel *hooks* lève une exception dérivée de :class:`RuntimeError`, "
-"le nouveau *hook* ne sera pas ajouté et l'exception supprimée. Par "
-"conséquent, les appels ne peuvent pas supposer que leurs *hooks* ont été "
-"ajoutés à moins de contrôler tous les *hooks* existants."
+"L'appel de :func:`sys.addaudithook` lèvera d'elle même un événement d'audit "
+"appelé ``sys.addaudithook`` sans arguments. Si n'importe quel *hooks* lève "
+"une exception dérivée de :class:`RuntimeError`, le nouveau point d'entrée ne "
+"sera pas ajouté et l'exception supprimée. Par conséquent, les appels ne "
+"peuvent pas supposer que leurs points d'entrées ont été ajoutés à moins de "
+"contrôler tous les points d'entrées existants."
 
 #: library/sys.rst:47
 msgid ""
 "See the :ref:`audit events table <audit-events>` for all events raised by "
 "CPython, and :pep:`578` for the original design discussion."
 msgstr ""
+"Voir la :ref:`table d'évenements d'audit <audit-events>` pour tous les "
+"événements levés par CPython et :pep:`578` pour la discussion originale de "
+"ce design."
 
 #: library/sys.rst:54
 msgid ""
@@ -158,7 +164,6 @@ msgstr ""
 "fsencode(arg) for arg in sys.argv]``."
 
 #: library/sys.rst:90
-#, fuzzy
 msgid ""
 "Raise an auditing event and trigger any active auditing hooks. *event* is a "
 "string identifying the event, and *args* may contain optional arguments with "
@@ -166,17 +171,20 @@ msgid ""
 "given event are considered a public and stable API and should not be "
 "modified between releases."
 msgstr ""
-"Déclenche un événement d'audit pour tous les *hooks* actifs. Le nom de "
-"l’éventement est une chaine de caractères identifiant l'événement et son "
-"prototype associé qui est le nombre et les types et ses arguments. Pour un "
-"événement donné, le prototype est considéré comme une API publique et stable "
-"et ne doit pas être modifié entre les différentes versions de Python."
+"Déclenche un événement d'audit pour tous les points d'entrées d'audit "
+"actifs. *event* est une chaîne de caractères identifiant l'événement, et "
+"*args* peut contenir des arguments optionnels avec plus d'informations sur "
+"l'événement en question. Le nombre et types d'arguments pour un événement "
+"donné sont considérés comme une API publique et stable, et ne devraient pas "
+"être modifiés entre les versions."
 
 #: library/sys.rst:96
 msgid ""
 "For example, one auditing event is named ``os.chdir``. This event has one "
 "argument called *path* that will contain the requested new working directory."
 msgstr ""
+"Par exemple, un event d'audit est nommé ``os.chdir``. Cet événement à un "
+"argument appelé *path* qui contiendras le nouveau répertoire de travail."
 
 #: library/sys.rst:100
 msgid ""
@@ -187,27 +195,40 @@ msgid ""
 "implementations to decide how to respond to particular events: they can "
 "merely log the event or abort the operation by raising an exception."
 msgstr ""
+":func:`sys.audit` appellera les point d'entrées (*hooks* en anglais) "
+"d'audits existants, en passant le nom de l'événement et ses arguments, et re "
+"lèvera la première exception de n'importe quel point d'entrée. En général, "
+"si une exception est levée, elle ne devrais pas être gérée et le processus "
+"devrait être terminé aussi rapidement que possible. Cela permets que les "
+"implémentations des points d'entrées décident comment répondre à des "
+"événements particuliers : Ils peuvent simplement *logger* l'événement ou "
+"arrêter l'opération en levant une exception."
 
 #: library/sys.rst:108
 msgid ""
 "Hooks are added using the :func:`sys.addaudithook` or :c:func:"
 "`PySys_AddAuditHook` functions."
 msgstr ""
+"Les points d'entrées sont ajoutés en utilisant les fonctions :func:`sys."
+"addaudithook` ou :c:func:`PySys_AddAuditHook`."
 
 #: library/sys.rst:111
 msgid ""
 "The native equivalent of this function is :c:func:`PySys_Audit`. Using the "
 "native function is preferred when possible."
 msgstr ""
+"L'équivalent natif de cette fonction est :c:func:`PySys_Audit`. "
+"L'utilisation de la fonction native est encouragée lorsque possible."
 
 #: library/sys.rst:114
 msgid ""
 "See the :ref:`audit events table <audit-events>` for all events raised by "
 "CPython."
 msgstr ""
+"Voir le `tableau d'événements d'audit <audit-events>` pour tous les "
+"événements levés par CPython."
 
 #: library/sys.rst:122
-#, fuzzy
 msgid ""
 "Set during Python startup, before ``site.py`` is run, to the same value as :"
 "data:`exec_prefix`. If not running in a :ref:`virtual environment <venv-"
@@ -337,6 +358,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys._current_frames`` with no "
 "arguments."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``sys._current_frames`` sans "
+"arguments."
 
 #: library/sys.rst:203
 #, fuzzy
@@ -589,11 +612,21 @@ msgid ""
 "use :mod:`compileall` as a pre-build step, you must ensure you run it with "
 "the same pycache prefix (if any) that you will use at runtime."
 msgstr ""
+"Si cela est défini (et non à ``None``), Python écrira les fichiers de code "
+"intermédiaire de cache (**bytecode** en anglais) ``.pyc`` dans (et lira "
+"depuis) une arborescence de dossiers parallèle situés à la racine de ce "
+"dossier, plutot que dans les dossiers ``__pycache__`` dans l'arborescence de "
+"fichiers sources. Tous les dossiers ``__pycache__`` dans les dossiers "
+"sources seront ignorés et de nouveaux fichiers `.pyc` seront crées dans le "
+"préfixe *pycache*. Ainsi, si vous utilisez :mod:`compileall` en tant "
+"qu'étape de pré-compilation, vous devez vous assurer que vous le lanciez "
+"avec le même préfixe *pycache* (s'il y en a un) que celui que vous "
+"utiliserez au moment de l'execution."
 
 #: library/sys.rst:356
 msgid ""
 "A relative path is interpreted relative to the current working directory."
-msgstr ""
+msgstr "Un chemin relatif est interprété relativement au répertoire courant."
 
 #: library/sys.rst:358
 msgid ""
@@ -602,6 +635,11 @@ msgid ""
 "`PYTHONPYCACHEPREFIX` environment variable (command-line takes precedence). "
 "If neither are set, it is ``None``."
 msgstr ""
+"Cette valeur est initialement définie basée sur la valeur de l'option de "
+"ligne de commande :option:`-X` ``pycache_prefix=PATH`` ou la variable "
+"d'environnement :envvar:`PYTHONPYCACHEPREFIX` (La ligne de commande est "
+"prioritaire). Si aucune des deux options n'est définie, alors la valeur est "
+"``None``."
 
 #: library/sys.rst:368
 msgid ""
@@ -633,6 +671,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys.excepthook`` with arguments "
 "``hook``, ``type``, ``value``, ``traceback``."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``sys.excepthook`` avec les "
+"arguments ``hook``, ``type``, ``value``, ``traceback``."
 
 #: library/sys.rst:379
 msgid ""
@@ -643,6 +683,13 @@ msgid ""
 "Otherwise, the audit hook exception will be reported as unraisable and ``sys."
 "excepthook`` will be called."
 msgstr ""
+"Lève un événement d'audit ``sys.excepthook`` avec les arguments ``hook``, "
+"``type``, ``value``, ``traceback`` lorsqu'une exception non interceptée se "
+"produit. Si aucun point d'entrée n'a été défini, ``hook`` peut être "
+"``None``. Si n'importe quel point d'entrée lève une exception dérivée de :"
+"class:`RuntimeError`, l'appel au point d'entrée sera supprimé. Autrement, "
+"l'exception du point d'entrée d'audit sera reporté comme *non levable* "
+"(**unraisable** en anglais) et ``sus.excepthook` sera appelé."
 
 #: library/sys.rst:388
 msgid ""
@@ -650,6 +697,9 @@ msgid ""
 "the :func:`threading.excepthook` function handles exception raised by :func:"
 "`threading.Thread.run`."
 msgstr ""
+"La fonction :func:`sys.unraisablehook` gère les exceptions *non-levables* et "
+"la fonction :func:`threading.excepthook` gère les exceptions levées par :"
+"func:`threading.Thread.run`."
 
 #: library/sys.rst:398
 msgid ""
@@ -945,16 +995,15 @@ msgstr ":const:`dev_mode`"
 
 #: library/sys.rst:521
 msgid ":option:`-X dev <-X>` (:ref:`Python Development Mode <devmode>`)"
-msgstr ""
+msgstr ":option:`-X dev <-X>` (:ref:`Python en mode développement <devmode>`)"
 
 #: library/sys.rst:522
 msgid ":const:`utf8_mode`"
 msgstr ":const:`utf8_mode`"
 
 #: library/sys.rst:522
-#, fuzzy
 msgid ":option:`-X utf8 <-X>`"
-msgstr ":option:`-X` ``utf8``"
+msgstr ":option:`-X utf8 <-X>`"
 
 #: library/sys.rst:523
 #, fuzzy
@@ -984,15 +1033,14 @@ msgstr ""
 "Ajout de l'attribut ``isolated`` pour l'option :option:`-I` ``isolated``."
 
 #: library/sys.rst:538
-#, fuzzy
 msgid ""
 "Added the ``dev_mode`` attribute for the new :ref:`Python Development Mode "
 "<devmode>` and the ``utf8_mode`` attribute for the new  :option:`-X` "
 "``utf8`` flag."
 msgstr ""
-"Ajout de l'attribut ``dev_mode`` pour la nouvelle option :option:`-X` "
-"``dev`` et l'attribut ``utf8_mode`` pour la nouvelle option :option:`-X` "
-"``utf8``."
+"Ajout de l'attribut ``dev_mode`` pour le nouveau :ref:`Mode Développeur "
+"Python <devmode>` et l'attribut ``utf8_mode`` pour la nouvelle option :"
+"option:`-X` ``utf8``."
 
 #: library/sys.rst:543
 #, fuzzy
@@ -1034,13 +1082,12 @@ msgid "DBL_EPSILON"
 msgstr "DBL_EPSILON"
 
 #: library/sys.rst:561
-#, fuzzy
 msgid ""
 "difference between 1.0 and the least value greater than 1.0 that is "
 "representable as a float"
 msgstr ""
-"différence entre 1 et la plus petite valeur plus grande que 1 représentable "
-"en *float*"
+"différence entre 1.0 et la plus petite valeur plus grande que 1.0 "
+"représentable en *float*"
 
 #: library/sys.rst:564
 msgid "See also :func:`math.ulp`."
@@ -1087,9 +1134,8 @@ msgid "DBL_MAX"
 msgstr "DBL_MAX"
 
 #: library/sys.rst:572
-#, fuzzy
 msgid "maximum representable positive finite float"
-msgstr "plus grand `float` fini représentable"
+msgstr "plus grand `float` fini représentable positif"
 
 #: library/sys.rst:574
 msgid ":const:`max_exp`"
@@ -1100,13 +1146,12 @@ msgid "DBL_MAX_EXP"
 msgstr "DBL_MAX_EXP"
 
 #: library/sys.rst:574
-#, fuzzy
 msgid ""
 "maximum integer *e* such that ``radix**(e-1)`` is a representable finite "
 "float"
 msgstr ""
-"plus grand nombre entier *e* tel que ``radix**(e-1)`` soit représentable "
-"sous forme de *float* finit"
+"plus grand nombre entier *e* tel que ``radix**(e-1)`` soit un nombre à "
+"virgule flotante représentable finit"
 
 #: library/sys.rst:577
 msgid ":const:`max_10_exp`"
@@ -1117,13 +1162,12 @@ msgid "DBL_MAX_10_EXP"
 msgstr "DBL_MAX_10_EXP"
 
 #: library/sys.rst:577
-#, fuzzy
 msgid ""
 "maximum integer *e* such that ``10**e`` is in the range of representable "
 "finite floats"
 msgstr ""
 "plus grand nombre entier *e* tel que ``10**e`` est dans l'intervalle des "
-"nombre flottants finis"
+"nombre flottants finis représentables"
 
 #: library/sys.rst:580
 msgid ":const:`min`"
@@ -1134,15 +1178,17 @@ msgid "DBL_MIN"
 msgstr "DBL_MIN"
 
 #: library/sys.rst:580
-#, fuzzy
 msgid "minimum representable positive *normalized* float"
-msgstr "plus petit nombre à virgule flottante positif normalisé"
+msgstr ""
+"plus petit nombre à virgule flottante positif *normalisé* représentable"
 
 #: library/sys.rst:582
 msgid ""
 "Use :func:`math.ulp(0.0) <math.ulp>` to get the smallest positive "
 "*denormalized* representable float."
 msgstr ""
+"Utilisez :func:`math.ulp(0.0) <math.ulp>` pour obtenir le plus petit nombre "
+"a virgule positif *dénormalisé* représentable."
 
 #: library/sys.rst:586
 msgid ":const:`min_exp`"
@@ -1153,10 +1199,10 @@ msgid "DBL_MIN_EXP"
 msgstr "DBL_MIN_EXP"
 
 #: library/sys.rst:586
-#, fuzzy
 msgid "minimum integer *e* such that ``radix**(e-1)`` is a normalized float"
 msgstr ""
-"plus petit entier *e* tel que ``radix**(e-1)`` est un *float* normalisé"
+"plus petit entier *e* tel que ``radix**(e-1)`` est un nombre à virgule "
+"flotante normalisé"
 
 #: library/sys.rst:589
 msgid ":const:`min_10_exp`"
@@ -1167,7 +1213,6 @@ msgid "DBL_MIN_10_EXP"
 msgstr "DBL_MIN_10_EXP"
 
 #: library/sys.rst:589
-#, fuzzy
 msgid "minimum integer *e* such that ``10**e`` is a normalized float"
 msgstr ""
 "plus petit nombre entier *e* tel que ``10**e`` est un nombre à virgule "
@@ -1469,6 +1514,7 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys._getframe`` with no "
 "arguments."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``sys._getframe`` sans arguments."
 
 #: library/sys.rst:781
 msgid ""
@@ -1666,7 +1712,7 @@ msgstr ":const:`width`"
 
 #: library/sys.rst:901
 msgid "width in bits used for hash values"
-msgstr "Nombre de bits des valeurs de *hash*"
+msgstr "largeur en bits utilisé pour les valeurs de hachage"
 
 #: library/sys.rst:903
 msgid ":const:`modulus`"
@@ -1844,6 +1890,8 @@ msgid ""
 "The addition of new required attributes must go through the normal PEP "
 "process. See :pep:`421` for more information."
 msgstr ""
+"L'addition de nouveaux attributs requis doivent passer par le processus de "
+"**PEP** classique. Voir :pep:`421` pour plus d'informations."
 
 #: library/sys.rst:994
 msgid ""
@@ -1892,12 +1940,17 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython.run_interactivehook`` "
 "with argument ``hook``."
 msgstr ""
+"Lève un :ref:`évènement d'audit <auditing>` ``cpython.run_interactivehook`` "
+"avec comme argument ``hook``."
 
 #: library/sys.rst:1023
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython.run_interactivehook`` "
 "with the hook object as the argument when the hook is called on startup."
 msgstr ""
+"Lève un :ref:`évènement d'audit <auditing>` ``cpython.run_interactivehook`` "
+"avec l'objet de point d'entrée comme argument lorsqu'il est appelé au "
+"démarrage."
 
 #: library/sys.rst:1032
 msgid ""
@@ -2199,7 +2252,7 @@ msgstr "Pour les autres systèmes, les valeurs sont :"
 
 #: library/sys.rst:1213
 msgid "System"
-msgstr "Le système une station de travail."
+msgstr "Système"
 
 #: library/sys.rst:1213
 msgid "``platform`` value"
@@ -2308,6 +2361,9 @@ msgid ""
 "Name of the platform-specific library directory. It is used to build the "
 "path of standard library and the paths of installed extension modules."
 msgstr ""
+"Nom du dossier de la bibliothèque spécifique à la plateforme. Il est utilisé "
+"pour construire le chemin de vers la bibliothèque standard et les chemins "
+"vers les modules d'extensions installés."
 
 #: library/sys.rst:1250
 msgid ""
@@ -2315,12 +2371,18 @@ msgid ""
 "equal to ``\"lib64\"`` on 64-bit platforms which gives the following ``sys."
 "path`` paths (where ``X.Y`` is the Python ``major.minor`` version):"
 msgstr ""
+"C'est égal à ``\"lib\"`` sur la plupart des plateformes. Sur Fedora et SuSE, "
+"c'est égal à ``\"lib64\"`` sur les plateformes 64-bits qui renvoient les "
+"chemins ``sys.path`` suivants (où ``X.Y`` et la version ``majeure.mineur`` "
+"de Python) :"
 
 #: library/sys.rst:1254
 msgid ""
 "``/usr/lib64/pythonX.Y/``: Standard library (like ``os.py`` of the :mod:`os` "
 "module)"
 msgstr ""
+"``/usr/lib64/pythonX.Y/``: Bibliothèque standard (comme ``os.py`` du module :"
+"mod:`os`)"
 
 #: library/sys.rst:1256
 msgid ""
@@ -2328,18 +2390,25 @@ msgid ""
 "library (like the :mod:`errno` module, the exact filename is platform "
 "specific)"
 msgstr ""
+"``/usr/lib64/pythonX.Y/lib-dynload/`` : Modules d'extension C de la "
+"bibliothèque standard (comme le module :mod:`errno`, le nom du fichier exact "
+"est spécifique à la plateforme)"
 
 #: library/sys.rst:1259
 msgid ""
 "``/usr/lib/pythonX.Y/site-packages/`` (always use ``lib``, not :data:`sys."
 "platlibdir`): Third-party modules"
 msgstr ""
+"``/usr/lib/pythonX.Y/site-packages/`` (toujours utiliser ``lib``, et non :"
+"data:`sys.platlibdir`) : modules tiers"
 
 #: library/sys.rst:1261
 msgid ""
 "``/usr/lib64/pythonX.Y/site-packages/``: C extension modules of third-party "
 "packages"
 msgstr ""
+"``/usr/lib64/pythonX.Y/site-packages/``: Modules d'extension C de paquets "
+"tiers"
 
 #: library/sys.rst:1269
 #, fuzzy
@@ -2453,6 +2522,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys.setprofile`` with no "
 "arguments."
 msgstr ""
+"Lève un :ref:`évènement d'audit <auditing>` ``sys.setprofile`` sans "
+"arguments."
 
 #: library/sys.rst:1415
 msgid "The events have the following meaning:"
@@ -2722,6 +2793,17 @@ msgid ""
 "tracing function that simply returns ``None`` to disable itself immediately "
 "on each frame)."
 msgstr ""
+"Pour une utilisation plus fine, il est possible de définir une fonction de "
+"traçage en assignant ``frame.f_trace = tracefunc`` explicitement, plutôt que "
+"de s'appuyer sur le fait qu'elle soit définie indirectement par la valeur de "
+"retour d'une fonction trace déjà installée. Cela est aussi demandé pour "
+"l'activation de la fonction de traçage dans le cadre, ce que :func:"
+"`settrace` ne fait pas. Notez que pour que cela fonctionne, une fonction "
+"globale de traçage doit avoir été installée avec :func:`settrace` afin "
+"d'activer la machine de traçage au moment de l'execution, mais il n'est pas "
+"nécéssaire que ce soit la même fonction de traçage (Par exemple, cela "
+"pourrait être une fonction de traçage avec peu de surcharge qui retourne "
+"simplement ``None`` pour se désactiver immédiatement à chaque cadre)."
 
 #: library/sys.rst:1464
 msgid "For more information on code and frame objects, refer to :ref:`types`."
@@ -2734,6 +2816,7 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys.settrace`` with no "
 "arguments."
 msgstr ""
+"Lève un :ref:`évènement d'audit <auditing>` ``sys.settrace`` sans arguments."
 
 #: library/sys.rst:1470
 msgid ""
@@ -2775,18 +2858,24 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys."
 "set_asyncgen_hooks_firstiter`` with no arguments."
 msgstr ""
+"Lève un :ref:`évènement d'audit <auditing>` ``sys."
+"set_asyncgen_hooks_firstiter`` sans arguments."
 
 #: library/sys.rst:1490
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys."
 "set_asyncgen_hooks_finalizer`` with no arguments."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``sys."
+"set_asyncgen_hooks_finalizer`` sans arguments."
 
 #: library/sys.rst:1492
 msgid ""
 "Two auditing events are raised because the underlying API consists of two "
 "calls, each of which must raise its own event."
 msgstr ""
+"Deux événements d'audit sont levés car l'API sous-jacente consiste de deux "
+"appels, dont chacun doit lever son propre événement."
 
 #: library/sys.rst:1495
 msgid ""
@@ -2957,15 +3046,19 @@ msgid ""
 "the :option:`-u` command-line option or setting the :envvar:"
 "`PYTHONUNBUFFERED` environment variable."
 msgstr ""
-"En mode interactif, les entrées et sorties standards passent par un tampon "
-"d'une ligne. Autrement, elles passent par blocs dans un tampon, comme les "
-"fichiers textes classiques. Vous pouvez remplacer cette valeur avec "
-"l'option :option:`-u` en ligne de commande."
+"En mode interactif, les entrées et sorties standards (``stdout``) passent "
+"par un tampon d'une ligne. Autrement, elles passent par blocs dans un "
+"tampon, comme les fichiers textes classiques. ``stderr` passe par un tampon "
+"d'une ligne dans les deux cas. Vous pouvez passer les deux flux sans tampons "
+"avec l'option :option:`-u` en ligne de commande ou en définissant la "
+"variable d'environnement :envvar:`PYTHONUNBUFFERED`."
 
 #: library/sys.rst:1590
 msgid ""
 "Non-interactive ``stderr`` is now line-buffered instead of fully buffered."
 msgstr ""
+"Le ``stderr`` non interactif est maintenant tamponné ligne par ligne plutôt "
+"qu'entièrement."
 
 #: library/sys.rst:1596
 msgid ""
@@ -3128,7 +3221,7 @@ msgstr ""
 
 #: library/sys.rst:1686
 msgid "Handle an unraisable exception."
-msgstr ""
+msgstr "Gère une exception *non levable* (**unraisable** en anglais)"
 
 #: library/sys.rst:1688
 msgid ""
@@ -3136,6 +3229,9 @@ msgid ""
 "handle it. For example, when a destructor raises an exception or during "
 "garbage collection (:func:`gc.collect`)."
 msgstr ""
+"Appelé lorsqu'une exception s'est produite mais qu'il n'y a aucun moyen pour "
+"Python de la gérer. Par exemple, lorsqu'un destructeur lève une exception ou "
+"durant la **garbage collection** (:func:`gc.collect`)."
 
 #: library/sys.rst:1692
 msgid "The *unraisable* argument has the following attributes:"
@@ -3143,36 +3239,41 @@ msgstr "Les arguments *unraisable* ont la signification suivante :"
 
 #: library/sys.rst:1694
 msgid "*exc_type*: Exception type."
-msgstr "*exc_type* : le type de l'exception ;"
+msgstr "*exc_type* : Type de l'exception."
 
 #: library/sys.rst:1695
 msgid "*exc_value*: Exception value, can be ``None``."
-msgstr "*exc_value*: la valeur de l'exception, peut être ``None`` ;"
+msgstr "*exc_value*: Valeur de l'exception, peut être ``None``."
 
 #: library/sys.rst:1696
 msgid "*exc_traceback*: Exception traceback, can be ``None``."
 msgstr ""
-"*exc_traceback* : la pile d'appels pour cette exception, peut être ``None`` ;"
+"*exc_traceback* : la pile d'appels pour cette exception, peut être ``None``."
 
 #: library/sys.rst:1697
 msgid "*err_msg*: Error message, can be ``None``."
-msgstr ""
+msgstr "*err_msg* : Message d'erreur, peut être ``None``."
 
 #: library/sys.rst:1698
 msgid "*object*: Object causing the exception, can be ``None``."
-msgstr ""
+msgstr "*object* : Objet causant l'exception, peut être ``None``."
 
 #: library/sys.rst:1700
 msgid ""
 "The default hook formats *err_msg* and *object* as: ``f'{err_msg}: {object!"
 "r}'``; use \"Exception ignored in\" error message if *err_msg* is ``None``."
 msgstr ""
+"Le point d'entrée par défaut formate *err_msg* et *object* de la façon "
+"suivante : ``f'{err_msg}: {object!r}'``; Utilisez \"Exception ignored in\" "
+"dans le message d'erreur si *err_msg* est à ``None``."
 
 #: library/sys.rst:1704
 msgid ""
 ":func:`sys.unraisablehook` can be overridden to control how unraisable "
 "exceptions are handled."
 msgstr ""
+":func:`sys.unraisablehook` peut être remplacé pour contrôler comment les "
+"exceptions *non levables* (**unraisable** en anglais) sont gérées."
 
 #: library/sys.rst:1707
 msgid ""
@@ -3191,20 +3292,22 @@ msgid ""
 "object which is being finalized. Avoid storing *object* after the custom "
 "hook completes to avoid resurrecting objects."
 msgstr ""
-"Stocker *thread* en utilisant une fonction de rappel personnalisée peut le "
+"Stocker *object* en utilisant un point d'entrée personnalisé peut le "
 "ressusciter, si c'est un objet en cours de finalisation. Évitez de stocker "
-"*thread* après la fin de la fonction de rappel, pour éviter de ressusciter "
-"des objets."
+"*object* après la fin du point d'entrée, pour éviter de ressusciter des "
+"objets."
 
 #: library/sys.rst:1715
 msgid "See also :func:`excepthook` which handles uncaught exceptions."
-msgstr ""
+msgstr "Voir aussi :func:`excepthook` qui gère les exceptions *non levables*."
 
 #: library/sys.rst:1717
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``sys.unraisablehook`` with "
 "arguments ``hook``, ``unraisable``."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``sys.unraisablehook`` avec les "
+"arguments ``hook``, ``unraisable``."
 
 #: library/sys.rst:1719
 msgid ""
@@ -3213,6 +3316,10 @@ msgid ""
 "``unraisable`` object is the same as what will be passed to the hook. If no "
 "hook has been set, ``hook`` may be ``None``."
 msgstr ""
+"Lève un événement d'audit ``sys.unraisablehook`` avec comme arguments "
+"``hook``, ``unraisable`` lorsqu'une exception qui ne peut être gérée se "
+"produit. L'objet ``unraisable`` est le même qui sera passé au point "
+"d'entrée. Si aucun point d'entrée n'est défini, ``hook`` peut être ``None``."
 
 #: library/sys.rst:1728
 msgid ""
