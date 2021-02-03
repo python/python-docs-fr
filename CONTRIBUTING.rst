@@ -117,7 +117,7 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 
 .. code-block:: bash
 
-    git checkout --branch library-sys upstream/3.9
+    git checkout -b library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
