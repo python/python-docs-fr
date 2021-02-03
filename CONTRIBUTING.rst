@@ -117,7 +117,7 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 
 .. code-block:: bash
 
-    git checkout --branch library-sys upstream/3.9
+    git checkout -b library-sys upstream/3.9
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -503,27 +503,27 @@ parameter                  paramètre
 pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
-roughly                    approximativement, à peu près (on ne traduit pas
-                           « roughly equivalent » par « sensiblement équivalent »)
 regular expression         expression rationnelle, expression régulière
 return                     renvoie, donne (on évite « retourne » qui
                            pourrait porter à confusion)
+roughly                    approximativement, à peu près (on ne traduit pas
+                           « roughly equivalent » par « sensiblement équivalent »)
 setter                     mutateur
 simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
+specify                    définir, préciser (plutôt que « spécifier »)
 statement                  instruction
 subprocess                 sous-processus
 support                    prendre en charge, implémenter (« supporter »
                            n'a pas le même sens en français)
-specify                    définir, préciser (plutôt que « spécifier »)
-typically                  normalement, habituellement, comme d'habitude
-                           (plutôt que « typiquement »)
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 tuple                      *n*-uplet (avec *n* en italique), on peut
                            traduire *2-tuple* par « paire » ou « couple »,
                            *3-tuple* par « triplet », *4-tuple* par
                            « quadruplet » etc.
+typically                  normalement, habituellement, comme d'habitude
+                           (plutôt que « typiquement »)
 underscore                 tiret bas, *underscore*, sous-tiret
 whitespace                 caractère d'espacement
 ========================== ===============================================
