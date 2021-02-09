@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-27 19:26+0100\n"
-"PO-Revision-Date: 2020-10-15 13:22+0200\n"
+"PO-Revision-Date: 2021-02-09 11:07-0700\n"
 "Last-Translator: Yannick Gingras <ygingras@ygingras.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: library/argparse.rst:2
 msgid ""
@@ -808,12 +808,12 @@ msgstr ""
 "const_ – Valeur constante requise par certains choix d'action_ et de nargs_ ;"
 
 #: library/argparse.rst:698
-#, fuzzy
 msgid ""
 "default_ - The value produced if the argument is absent from the command "
 "line and if it is absent from the namespace object."
 msgstr ""
-"default_ – Valeur produite si l'argument est absent de la ligne de commande ;"
+"default_ – Valeur produite si l'argument est absent de la ligne de "
+"commande et absent de l'objet ``namespace`` ;"
 
 #: library/argparse.rst:701
 msgid ""
@@ -1210,6 +1210,8 @@ msgid ""
 "If the target namespace already has an attribute set, the action *default* "
 "will not over write it::"
 msgstr ""
+"Si l'objet ``namespace`` cible a déjà un attribut assigné, l'action "
+"*default* ne l'écrase pas ::"
 
 #: library/argparse.rst:1017
 msgid ""
@@ -1247,7 +1249,6 @@ msgid "type"
 msgstr "Le paramètre *type*"
 
 #: library/argparse.rst:1053
-#, fuzzy
 msgid ""
 "By default, the parser reads command-line arguments in as simple strings. "
 "However, quite often the command-line string should instead be interpreted "
@@ -1255,19 +1256,21 @@ msgid ""
 "keyword for :meth:`~ArgumentParser.add_argument` allows any necessary type-"
 "checking and type conversions to be performed."
 msgstr ""
-"Par défaut, les objets :class:`ArgumentParser` capturent les arguments de la "
+"Par défaut, l'analyseur capture les arguments de la "
 "ligne de commande comme des chaînes. Très souvent par contre, on désire "
 "interpréter les chaînes de la ligne de commande comme un autre type, tel "
 "que :class:`float` ou :class:`int`. L'argument nommé ``type`` d':meth:"
 "`~ArgumentParser.add_argument` nous permet de faire les vérifications et les "
-"conversions de type nécessaires. Les types et les fonctions natives peuvent "
-"être utilisés directement pour la valeur de l'argument ``type`` ::"
+"conversions de type nécessaires."
 
 #: library/argparse.rst:1059
 msgid ""
 "If the type_ keyword is used with the default_ keyword, the type converter "
 "is only applied if the default is a string."
 msgstr ""
+"Si l'argument nommé type_ est utilisé en conjonction avec l'argument nommé "
+"keyword_, le convertisseur de type n'est appliqué que si la valeur par "
+"défaut est une chaîne."
 
 #: library/argparse.rst:1062
 msgid ""
@@ -1276,14 +1279,21 @@ msgid ""
 "`ValueError`, the exception is caught and a nicely formatted error message "
 "is displayed.  No other exception types are handled."
 msgstr ""
+"La valeur de l'argument ``type`` peut être n'importe quel appelable qui "
+"accepte une seul chaîne. Si la fonction lance :exc:`ArgumentTypeError`, :exc:"
+"`TypeError` ou :exc:`ValueError`, l'exception est traitée et un message "
+"d'erreur agréablement formaté est affiché. Aucun autre type d'exception "
+"n'est géré."
 
 #: library/argparse.rst:1067
 msgid "Common built-in types and functions can be used as type converters:"
 msgstr ""
+"Les types et les fonctions natives peuvent être utilisés comme "
+"convertisseurs de types :"
 
 #: library/argparse.rst:1083
 msgid "User defined functions can be used as well:"
-msgstr ""
+msgstr "Les fonctions définies par l'usager peuvent aussi être utilisées :"
 
 #: library/argparse.rst:1095
 msgid ""
@@ -1291,6 +1301,9 @@ msgid ""
 "does is convert empty strings to ``False`` and non-empty strings to "
 "``True``. This is usually not what is desired."
 msgstr ""
+"La fonction :func:`bool` est déconseillée comme convertisseur de type. Son "
+"comportement se limite à convertir les chaînes vides à ``False`` et les "
+"chaînes non-vides à ``True``. Ce n'est généralement pas le résultat désiré."
 
 #: library/argparse.rst:1099
 msgid ""
@@ -1299,6 +1312,11 @@ msgid ""
 "exceptions. Anything with more interesting error-handling or resource "
 "management should be done downstream after the arguments are parsed."
 msgstr ""
+"En général, l'argument nommé ``type`` est un raccourci qui ne devrait être "
+"utilisé que pour les conversions simples qui ne peuvent lever qu'une des "
+"trois exceptions gérées. Les conversions qui demande un traitement d'erreurs "
+"plus intéressant ou une gestion de ressources devraient être effectuées plus "
+"tard dans l’exécution suite à l'analyse des arguments."
 
 #: library/argparse.rst:1104
 msgid ""
@@ -1307,6 +1325,11 @@ msgid ""
 "JSONDecodeError` would not be well formatted and a :exc:`FileNotFound` "
 "exception would not be handled at all."
 msgstr ""
+"Par exemple, les conversion de documents JSON ou YAML ont des cas d'erreurs "
+"complexes qui demande un meilleur signalement que ce qui est fourni par "
+"l'argument nommé ``type``. Une exception :exc:`~json.JSONDecodeError` ne "
+"serait pas adéquatement formatée et une exception :exc:`FileNotFound` ne "
+"serait pas du tout traitée."
 
 #: library/argparse.rst:1109
 msgid ""
@@ -1316,12 +1339,20 @@ msgid ""
 "closed.  In this case, it would be better to wait until after the parser has "
 "run and then use the :keyword:`with`-statement to manage the files."
 msgstr ""
+"Même la classe :class:`~argparse.FileType` a ses limitations quand elle est "
+"utilisée avec l'argument nommé ``type``. Si un argument utilise *FileType* et "
+"qu'un argument ultérieur échoue, une erreur est annoncée mais le fichier "
+"n'est pas automatiquement fermé. Dans ce cas, il serait mieux d'attendre "
+"après l'exécution de l'analyseur puis d'utiliser un bloc :keyword:`with` "
+"pour gérer les fichiers."
 
 #: library/argparse.rst:1115
 msgid ""
 "For type checkers that simply check against a fixed set of values, consider "
 "using the choices_ keyword instead."
 msgstr ""
+"Pour les vérificateurs de types qui ne font que tester l'appartenance à un "
+"ensemble de valeurs, pensez plutôt à utiliser l'argument nommé choices_."
 
 #: library/argparse.rst:1120
 msgid "choices"
@@ -1353,22 +1384,21 @@ msgstr ""
 "doivent donc correspondre au type_ spécifié ::"
 
 #: library/argparse.rst:1149
-#, fuzzy
 msgid ""
 "Any container can be passed as the *choices* value, so :class:`list` "
 "objects, :class:`set` objects, and custom containers are all supported."
 msgstr ""
 "N'importe quel conteneur peut être fourni pour la valeur de *choices*, donc "
 "les objets :class:`list`, les objets :class:`set` et les conteurs "
-"personnalisés sont tous acceptés. Ceci inclus :class:`enum.Enum` qui peut "
-"être utilisé pour limiter le choix des arguments. Si on revient à notre "
-"exemple pierre-papier-ciseaux, on peut faire comme suit ::"
+"personnalisés sont tous acceptés."
 
 #: library/argparse.rst:1152
 msgid ""
 "Use of :class:`enum.Enum` is not recommended because it is difficult to "
 "control its appearance in usage, help, and error messages."
 msgstr ""
+"L'utilisation d':class:`enum.Enum` est déconseillée car il est difficile de "
+"contrôler son apparence dans les messages d'usage, d'aide et d'erreur."
 
 #: library/argparse.rst:1155
 msgid ""
@@ -1377,6 +1407,11 @@ msgid ""
 "*dest* parameter.  If this display isn't desirable (perhaps because there "
 "are many choices), just specify an explicit metavar_."
 msgstr ""
+"Les choix formatés écrasent la valeur par défaut de *metavar* qui est "
+"normalement dérivée de *dest*. C'est en général le comportement recherché "
+"car l'usager ne voit jamais le paramètre *dest*. Si cet affichage n'est pas "
+"souhaité (comme lorsque les choix sont nombreux) spécifiez simplement "
+"metavar_ de façon explicite."
 
 #: library/argparse.rst:1162
 msgid "required"
@@ -1647,7 +1682,7 @@ msgid ""
 "set attributes on the ``namespace`` based on ``dest`` and ``values``."
 msgstr ""
 "La méthode ``__call__`` peut réaliser un traitement arbitraire, mais en "
-"général elle affect des attributs sur ``namespace`` en fonction de ``dest`` "
+"général elle affect des attributs sur le ``namespace`` en fonction de ``dest`` "
 "et de ``values``."
 
 #: library/argparse.rst:1388
