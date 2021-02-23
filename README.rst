@@ -10,11 +10,11 @@ Traduction française de la documentation Python
 .. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
    :width: 45%
 
-Ce projet se fait en collaboration avec l'`AFPy
-<https://www.afpy.org>`_ (Association Francophone Python) qui fait la
+Ce projet est réalisé en collaboration avec l'`AFPy
+<https://www.afpy.org>`_ (Association Francophone Python), dont le but est la
 promotion du langage de développement Python dans l'ensemble des
 nations francophones à travers des événements accessibles à tous comme
-l'édition francophone de la PyCon nommée la `PyConFR
+l'édition francophone de la PyCon, la `PyConFR
 <https://pycon.fr>`_, de nombreux meetups dans plusieurs villes et le
 maintien de nombreux projets communautaires pour enrichir
 l'écosystème.
@@ -25,18 +25,18 @@ Contribuer à la traduction
 Vous pouvez contribuer :
 
 - en proposant des *pull requests* Github (solution recommandée) ;
-- en nous remontant des erreurs et propositions d'amélioration sur
-  `discuss.afpy.org <https://discuss.afpy.org>`_ ou la `ml
-  <https://lists.afpy.org/mailman/listinfo/traductions>`_;
-- en devenant `membre <https://www.afpy.org/adhesions>`_ de l'AFPy et
-  en devenant `sponsor <https://liberapay.com/python-docs-fr>`_ du
-  repo.
+- en remontant des erreurs et propositions d'amélioration sur
+  le `forum de l'AFPy <https://discuss.afpy.or/c/traduction/>`_ ou sur la
+  `liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ ;
+- en devenant `membre <https://www.afpy.org/adhesions>`_ de l'AFPy ou
+  `mécène <https://liberapay.com/python-docs-fr>`_ du projet.
 
 Consultez le
 `guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
-Le coordinateur de cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
+Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>` de
+cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
 Vous pouvez obtenir de l'aide sur le canal ``#python-fr`` sur `freenode
 <https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou poser vos questions sur la
 `liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
@@ -72,4 +72,4 @@ Historique du projet
 - vers 2012 : `reprise <https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
 - 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
 
-Une `vidéo <https://youtu.be/azXmvpEJMhU>`_ de `Jules Lasne <https://github.com/Seluj78>`_ montre l'évolution du dépôt.
+Une `vidéo <https://youtu.be/S2_Xui95erI>`_ de `Jules Lasne <https://github.com/Seluj78>`_ montre l'évolution du dépôt.
