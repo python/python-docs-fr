@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 895591c1f0bdec5ad357fe6a5fd0875990061357
+CPYTHON_CURRENT_COMMIT := eec8e61992fb654d4cf58de4d727c18622b8303e
 
 CPYTHON_PATH := ../cpython/
 
@@ -160,11 +160,10 @@ merge: ensure_prerequisites
 	        fi \
 	    done
 	rm -fr $(CPYTHON_PATH)/pot/
-	@echo "Replacing CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)
-	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)/' Makefile
 	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
 	powrap -m
-	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
+	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)
+	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done\n'
 
 .PHONY: clean
 clean:
