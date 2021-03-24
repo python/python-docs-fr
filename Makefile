@@ -95,6 +95,7 @@ ensure_prerequisites:
 	    exit 1; \
 	fi
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
+	    git -C $(CPYTHON_PATH) checkout $(BRANCH); \
 	    echo "You're missing dependencies, please enable a venv and install:"; \
 	    echo ""; \
 	    echo "  python -m pip install -r requirements.txt -r $(CPYTHON_PATH)/Doc/requirements.txt"; \
