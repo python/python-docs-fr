@@ -500,6 +500,7 @@ mutable                    muable
 namespace                  espace de nommage
                            (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
+parse, parser              analyser, analyseur syntaxique
 pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
