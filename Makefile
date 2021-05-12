@@ -70,7 +70,6 @@ all: ensure_prerequisites
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
 	  $(MODE)
-	git -C $(CPYTHON_PATH) checkout -
 	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
 
 
