@@ -58,7 +58,13 @@ endif
 
 .PHONY: all
 all: ensure_prerequisites
-	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
+	@if [ $(shell git -C $(CPYTHON_PATH) rev-parse HEAD) != $(CPYTHON_CURRENT_COMMIT) ]; then \
+	    echo "Your $(CPYTHON_PATH) repositoy is not at the currect revision"; \
+	    echo "You can run try and run "; \
+	    echo "git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)"; \
+	    echo "to fix the problem"; \
+	    exit 1; \
+	fi
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
