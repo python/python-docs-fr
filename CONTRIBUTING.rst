@@ -233,6 +233,21 @@ Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
 Cela permet à Github de lier la *pull request* au ticket de réservation.
 
+Il peut arriver que vous ayez besoin de reprendre votre PR sur votre
+ordinateur après avoir fait des modifications en ligne sur GitHub,
+par exemple lorsque GitHub vous offre la possibilité de faire un commit
+automatique contenant les suggestions proposées pendant la revue.
+Cela fonctionne bien, mais le résultat n'est pas toujours accepté par
+``powrap``. Si cela arrive, vous pouvez récupérer le commit fait par
+GitHub puis relancer ``powrap`` :
+
+.. code-block:: bash
+
+    git pull
+    powrap <fichier.po>
+    git add <fichier.po>
+    git commit -m "Formatage après commit automatique"
+    git push
 
 Sur une autre forge
 +++++++++++++++++++
@@ -773,4 +788,3 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
 Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
-
