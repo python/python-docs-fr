@@ -239,7 +239,7 @@ par exemple lorsque GitHub vous offre la possibilité de faire un commit
 automatique contenant les suggestions proposées pendant la revue.
 Cela fonctionne bien, mais le résultat n'est pas toujours accepté par
 ``powrap``. Si cela arrive, vous pouvez récupérer le commit fait par
-GitHub puis relancer ``powrap``:
+GitHub puis relancer ``powrap`` :
 
 .. code-block:: bash
 
