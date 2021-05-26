@@ -96,7 +96,9 @@ dans les tickets et les *pull requests*.
   `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
   en indiquant sur quoi vous travaillez et l'URL de votre dépôt.
 
-* Soit sur IRC en venant sur le canal `#python-docs-fr <https://webchat.freenode.net/#python-docs-fr>`_ pour nous le signaler.
+* Soit sur IRC en venant sur le canal
+  `irc://irc.libera.chat/#python-docs-fr <https://kiwiirc.com/nextclient/#irc://irc.libera.chat/#python-docs-fr>`_
+  pour nous le signaler.
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -547,11 +549,11 @@ whitespace                 caractère d'espacement
 Ressources de traduction
 ------------------------
 
-- les canaux IRC sur freenode :
+- les canaux IRC sur irc.libera.chat :
 
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
+  - `#python-docs-fr <https://kiwiirc.com/nextclient/#irc://irc.libera.chat/#python-docs-fr>`_ — communauté python autour de la documentation française,
+  - `#python-fr <https://kiwiirc.com/nextclient/#irc://irc.libera.chat/#python-fr>`_  — communauté python francophone,
+  - `#python-doc <https://kiwiirc.com/nextclient/#irc://irc.libera.chat/#python-doc>`_ — communauté python autour de la documentation anglophone ;
 - les listes de diffusion relatives à la documentation (courriel) :
 
   - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
