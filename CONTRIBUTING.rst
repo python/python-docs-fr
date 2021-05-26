@@ -1,5 +1,5 @@
-Guide de contribution à la documention via GitHub
-=================================================
+Guide de contribution à la documentation via GitHub
+===================================================
 
 Instructions
 ------------
