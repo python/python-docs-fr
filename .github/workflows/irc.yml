@@ -1,0 +1,26 @@
+name: "Push Notification"
+on: [push, pull_request, create]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: irc push
+        uses: rectalogic/notify-irc@v1
+        if: github.event_name == 'push'
+        with:
+          server: irc.libera.chat
+          channel: "#python-docs-fr"
+          nickname: github
+          message: |
+            ${{ github.actor }} a poussé ${{ github.event.ref }} ${{ github.event.compare }}
+            ${{ join(github.event.commits.*.message) }}
+      - name: irc pull request
+        uses: rectalogic/notify-irc@v1
+        if: github.event_name == 'pull_request'
+        with:
+          server: irc.libera.chat
+          channel: "#python-docs-fr"
+          nickname: github
+          message: |
+            ${{ github.actor }} a ouvert une ${{ github.event.html_url }}
