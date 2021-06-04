@@ -288,6 +288,10 @@ msgid ""
 "Similar behavior occurs with files newer than 2107-12-31, the timestamp is "
 "also set to the limit."
 msgstr ""
+"Les fichiers ZIP plus anciens que le 1er janvier 1980 sont autorisés lorsque "
+"l'argument *strict_timestamps* vaut ``False``, moyennant de les voir datés "
+"du 1er janvier 1980. De même pour les fichiers datés d'après le 31 décembre "
+"2107 qui voient leur horodatage fixé au 31 décembre 2107."
 
 #: ../Doc/library/zipfile.rst:187
 msgid ""
@@ -352,7 +356,7 @@ msgstr "Ajout du paramètre *compresslevel*."
 
 #: ../Doc/library/zipfile.rst:221 ../Doc/library/zipfile.rst:643
 msgid "The *strict_timestamps* keyword-only argument"
-msgstr ""
+msgstr "l'argument nommé *strict_timestamps*"
 
 #: ../Doc/library/zipfile.rst:227
 msgid ""
@@ -766,25 +770,34 @@ msgid ""
 "`ZipFile` instance or ``file`` suitable for passing to the :class:`ZipFile` "
 "constructor)."
 msgstr ""
+"Construit un objet *Path* depuis le fichier ZIP *root* (qui peut être une "
+"instance de :class:`ZipFile` ou tout ce qui sera accepté par le paramètre "
+"*file* du constructeur de :class:`ZipFile`)."
 
 #: ../Doc/library/zipfile.rst:479
 msgid ""
 "``at`` specifies the location of this Path within the zipfile, e.g. 'dir/"
 "file.txt', 'dir/', or ''. Defaults to the empty string, indicating the root."
 msgstr ""
+"``at`` indique la position de ce *Path* dans l'archive ZIP, par exemple ``"
+"\"dir/file.txt\"``, ``\"dir/\"``, ou ``\"\"``. Par défaut c'est une chaine "
+"vide, indiquant la racine de l'archive."
 
 #: ../Doc/library/zipfile.rst:483
 msgid ""
 "Path objects expose the following features of :mod:`pathlib.Path` objects:"
 msgstr ""
+"Les objets ``Path`` de ``zipfile`` exposent les fonctionnalités suivantes "
+"des objets de :mod:`pathlib.Path` :"
 
 #: ../Doc/library/zipfile.rst:486
 msgid "Path objects are traversable using the ``/`` operator."
 msgstr ""
+"On peut naviguer dans les objets ``Path`` en utilisant l'opérateur ``/``."
 
 #: ../Doc/library/zipfile.rst:490
 msgid "The final path component."
-msgstr ""
+msgstr "Le dernier segment du chemin."
 
 #: ../Doc/library/zipfile.rst:494
 msgid ""
@@ -828,10 +841,13 @@ msgid ""
 "passed through to :class:`io.TextIOWrapper` (except ``buffer``, which is "
 "implied by the context)."
 msgstr ""
+"Lit le fichier au format texte. Les arguments positionnels et nommés sont "
+"passés à :class:`io.TextIOWrapper` (sauf ``buffer``, qui est imposé par le "
+"contexte)"
 
 #: ../Doc/library/zipfile.rst:529
 msgid "Read the current file as bytes."
-msgstr ""
+msgstr "Lit le fichier en mode binaire, renvoyant un objet *bytes*."
 
 #: ../Doc/library/zipfile.rst:535
 msgid "PyZipFile Objects"
@@ -1216,27 +1232,32 @@ msgstr "Teste si le fichier zip est valide."
 
 #: ../Doc/library/zipfile.rst:826
 msgid "Decompression pitfalls"
-msgstr ""
+msgstr "Problèmes de décompression"
 
 #: ../Doc/library/zipfile.rst:828
 msgid ""
 "The extraction in zipfile module might fail due to some pitfalls listed "
 "below."
 msgstr ""
+"L'extraction d'une archive ZIP par le module *zipfile* peut échouer pour les "
+"raisons listées ci-dessous."
 
 #: ../Doc/library/zipfile.rst:831
 msgid "From file itself"
-msgstr ""
+msgstr "À cause du fichier lui-même"
 
 #: ../Doc/library/zipfile.rst:833
 msgid ""
 "Decompression may fail due to incorrect password / CRC checksum / ZIP format "
 "or unsupported compression method / decryption."
 msgstr ""
+"La décompression peut échouer à cause d'un mot de passe ou d'une somme de "
+"contrôle CRC incorrectes. Elle peut aussi échouer si le format, la méthode "
+"de compression, ou de chiffrement n'est pas implémenté."
 
 #: ../Doc/library/zipfile.rst:837
 msgid "File System limitations"
-msgstr ""
+msgstr "Limitations du système de fichiers"
 
 #: ../Doc/library/zipfile.rst:839
 msgid ""
@@ -1245,10 +1266,14 @@ msgid ""
 "file name, length of the pathname, size of a single file, and number of "
 "files, etc."
 msgstr ""
+"Dépasser les limites du système de fichiers peut faire échouer la "
+"décompression. Ces limites peuvent concerner les caractères licites pour un "
+"nom de fichier, la longueur du nom du fichier ou du chemin, la taille d'un "
+"fichier, le nombre de fichiers, etc."
 
 #: ../Doc/library/zipfile.rst:844
 msgid "Resources limitations"
-msgstr ""
+msgstr "Ressources limitées"
 
 #: ../Doc/library/zipfile.rst:846
 msgid ""
@@ -1256,10 +1281,13 @@ msgid ""
 "example, decompression bombs (aka `ZIP bomb`_) apply to zipfile library that "
 "can cause disk volume exhaustion."
 msgstr ""
+"Le manque de mémoire ou d'espace disque peut mener à un échec de "
+"décompression. Par exemple, une bombe de décompression (`ZIP bomb`_), "
+"décompressés avec *zifile* peut remplir l'espace disque."
 
 #: ../Doc/library/zipfile.rst:851
 msgid "Interruption"
-msgstr ""
+msgstr "Interruption"
 
 #: ../Doc/library/zipfile.rst:853
 msgid ""
@@ -1267,10 +1295,12 @@ msgid ""
 "the decompression process may result in incomplete decompression of the "
 "archive."
 msgstr ""
+"Une interruption durant la décompression, en utilisant *control-C* ou en "
+"tuant le processus, peut mener à une décompression partielle de l'archive."
 
 #: ../Doc/library/zipfile.rst:857
 msgid "Default behaviors of extraction"
-msgstr ""
+msgstr "Comportements par défaut de l'extraction"
 
 #: ../Doc/library/zipfile.rst:859
 msgid ""
@@ -1278,6 +1308,9 @@ msgid ""
 "decompression results. For example, when extracting the same archive twice, "
 "it overwrites files without asking."
 msgstr ""
+"Ne pas connaître le comportement d'extraction par défaut peut causer des "
+"résultats inattendus. Par exemple, lors de l'extraction d'une même archive "
+"deux fois, les fichiers sont écrasés sans prévenir."
 
 #~ msgid ""
 #~ "There is no official file name encoding for ZIP files. If you have "
