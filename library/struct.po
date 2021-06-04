@@ -39,20 +39,31 @@ msgid ""
 "or omit implicit pad bytes, use ``standard`` size and alignment instead of "
 "``native`` size and alignment: see :ref:`struct-alignment` for details."
 msgstr ""
+"par défaut, le résultat de l'agrégation d'une structure C donnée comprend "
+"des octets de bourrage afin de maintenir un alignement correct des types C "
+"sous-jacents ; de la même manière, l'alignement est pris en compte lors de "
+"la dissociation. Ce comportement a été choisi de manière à ce que les octets "
+"d'une structure agrégée reproduisent exactement l'agencement en mémoire de "
+"la structure C équivalente. Pour gérer des formats de données indépendants "
+"de la plateforme ou omettre les octets implicites de bourrage, utilisez la "
+"taille et l'alignement ``standard`` en lieu et place de la taille et "
+"l'alignement ``native`` (voir :ref:`struct-alignment` pour les détails)."
 
 #: ../Doc/library/struct.rst:29
 msgid "Functions and Exceptions"
-msgstr ""
+msgstr "Fonctions et exceptions"
 
 #: ../Doc/library/struct.rst:31
 msgid "The module defines the following exception and functions:"
-msgstr ""
+msgstr "Le module définit les exceptions et fonctions suivantes :"
 
 #: ../Doc/library/struct.rst:36
 msgid ""
 "Exception raised on various occasions; argument is a string describing what "
 "is wrong."
 msgstr ""
+"Exception levée à plusieurs occasions ; l'argument est une chaîne qui décrit "
+"ce qui ne va pas."
 
 #: ../Doc/library/struct.rst:42
 msgid ""
@@ -92,7 +103,7 @@ msgstr ""
 
 #: ../Doc/library/struct.rst:82
 msgid "Format Strings"
-msgstr ""
+msgstr "Chaînes de spécification du format"
 
 #: ../Doc/library/struct.rst:84
 msgid ""
@@ -102,10 +113,16 @@ msgid ""
 "addition, there are special characters for controlling the :ref:`struct-"
 "alignment`."
 msgstr ""
+"Les chaînes de spécification du format servent à définir l'agencement lors "
+"de l'agrégation et la dissociation des données. Elles sont construites à "
+"partir de :ref:`caractères de format <format-characters>`, qui spécifient le "
+"type de donnée à agréger-dissocier. De plus, il existe des caractères "
+"spéciaux pour contrôler :ref:`le boutisme, la taille et l'alignement <struct-"
+"alignment>`."
 
 #: ../Doc/library/struct.rst:93
 msgid "Byte Order, Size, and Alignment"
-msgstr ""
+msgstr "Boutisme, taille et alignement"
 
 #: ../Doc/library/struct.rst:95
 msgid ""
@@ -113,6 +130,9 @@ msgid ""
 "order, and properly aligned by skipping pad bytes if necessary (according to "
 "the rules used by the C compiler)."
 msgstr ""
+"Par défaut, les types C sont représentés dans le format et le boutisme "
+"natifs de la machine ; ils sont alignés correctement en sautant des octets "
+"si nécessaire (en fonction des règles utilisées par le compilateur C)."
 
 #: ../Doc/library/struct.rst:99
 msgid ""
@@ -120,6 +140,9 @@ msgid ""
 "indicate the byte order, size and alignment of the packed data, according to "
 "the following table:"
 msgstr ""
+"Cependant, le premier caractère de la chaîne de format peut être utilisé "
+"pour indiquer le boutisme, la taille et l'alignement des données agrégées, "
+"conformément à la table suivante :"
 
 #: ../Doc/library/struct.rst:104
 msgid "Character"
@@ -127,15 +150,15 @@ msgstr "Caractère"
 
 #: ../Doc/library/struct.rst:104
 msgid "Byte order"
-msgstr ""
+msgstr "Boutisme"
 
 #: ../Doc/library/struct.rst:104
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: ../Doc/library/struct.rst:104
 msgid "Alignment"
-msgstr ""
+msgstr "Alignement"
 
 #: ../Doc/library/struct.rst:106
 msgid "``@``"
@@ -143,7 +166,7 @@ msgstr "``@``"
 
 #: ../Doc/library/struct.rst:106 ../Doc/library/struct.rst:108
 msgid "native"
-msgstr ""
+msgstr "natif"
 
 #: ../Doc/library/struct.rst:108
 msgid "``=``"
@@ -152,12 +175,12 @@ msgstr "``=``"
 #: ../Doc/library/struct.rst:108 ../Doc/library/struct.rst:110
 #: ../Doc/library/struct.rst:112 ../Doc/library/struct.rst:114
 msgid "standard"
-msgstr ""
+msgstr "standard"
 
 #: ../Doc/library/struct.rst:108 ../Doc/library/struct.rst:110
 #: ../Doc/library/struct.rst:112 ../Doc/library/struct.rst:114
 msgid "none"
-msgstr ""
+msgstr "aucun"
 
 #: ../Doc/library/struct.rst:110
 msgid "``<``"
@@ -165,7 +188,7 @@ msgstr "``<``"
 
 #: ../Doc/library/struct.rst:110
 msgid "little-endian"
-msgstr ""
+msgstr "petit-boutiste"
 
 #: ../Doc/library/struct.rst:112
 msgid "``>``"
@@ -173,7 +196,7 @@ msgstr "``>``"
 
 #: ../Doc/library/struct.rst:112
 msgid "big-endian"
-msgstr ""
+msgstr "gros-boutiste"
 
 #: ../Doc/library/struct.rst:114
 msgid "``!``"
@@ -181,11 +204,13 @@ msgstr "``!``"
 
 #: ../Doc/library/struct.rst:114
 msgid "network (= big-endian)"
-msgstr ""
+msgstr "réseau (= gros-boutiste)"
 
 #: ../Doc/library/struct.rst:117
 msgid "If the first character is not one of these, ``'@'`` is assumed."
 msgstr ""
+"Si le premier caractère n'est pas dans cette liste, le module se comporte "
+"comme si ``'@'`` avait été indiqué."
 
 #: ../Doc/library/struct.rst:119
 msgid ""
@@ -195,36 +220,54 @@ msgid ""
 "switchable endianness (bi-endian). Use ``sys.byteorder`` to check the "
 "endianness of your system."
 msgstr ""
+"Le boutisme natif est gros-boutiste ou petit-boutiste, en fonction de la "
+"machine sur laquelle s'exécute le programme. Par exemple, les Intel x86 et "
+"les AMD64 (x86-64) sont petit-boutistes ; les Motorola 68000 et les *PowerPC "
+"G5* sont gros-boutistes ; les ARM et les Intel Itanium peuvent changer de "
+"boutisme. Utilisez ``sys.byteorder`` pour vérifier le boutisme de votre "
+"système."
 
 #: ../Doc/library/struct.rst:125
 msgid ""
 "Native size and alignment are determined using the C compiler's ``sizeof`` "
 "expression.  This is always combined with native byte order."
 msgstr ""
+"La taille et l'alignement natifs sont déterminés en utilisant l'expression "
+"``sizeof`` du compilateur C. Leur valeur est toujours combinée au boutisme "
+"natif."
 
 #: ../Doc/library/struct.rst:128
 msgid ""
 "Standard size depends only on the format character;  see the table in the :"
 "ref:`format-characters` section."
 msgstr ""
+"La taille standard dépend seulement du caractère du format ; référez-vous au "
+"tableau dans la section :ref:`format-characters`."
 
 #: ../Doc/library/struct.rst:131
 msgid ""
 "Note the difference between ``'@'`` and ``'='``: both use native byte order, "
 "but the size and alignment of the latter is standardized."
 msgstr ""
+"Notez la différence entre ``'@'`` et ``'='`` : les deux utilisent le "
+"boutisme natif mais la taille et l'alignement du dernier sont standards."
 
 #: ../Doc/library/struct.rst:134
 msgid ""
 "The form ``'!'`` is available for those poor souls who claim they can't "
 "remember whether network byte order is big-endian or little-endian."
 msgstr ""
+"La forme ``'!'`` existe pour les têtes en l'air qui prétendent ne pas se "
+"rappeler si le boutisme réseau est gros-boutiste ou petit-boutiste."
 
 #: ../Doc/library/struct.rst:137
 msgid ""
 "There is no way to indicate non-native byte order (force byte-swapping); use "
 "the appropriate choice of ``'<'`` or ``'>'``."
 msgstr ""
+"Il n'y a pas de moyen de spécifier le boutisme contraire au boutisme natif "
+"(c'est-à-dire forcer la permutation des octets) ; utilisez le bon caractère "
+"entre ``'<'`` et ``'>'``."
 
 #: ../Doc/library/struct.rst:140 ../Doc/library/struct.rst:206
 msgid "Notes:"
@@ -235,12 +278,17 @@ msgid ""
 "Padding is only automatically added between successive structure members. No "
 "padding is added at the beginning or the end of the encoded struct."
 msgstr ""
+"Le bourrage (*padding* en anglais) n'est automatiquement ajouté qu'entre les "
+"membres successifs de la structure. Il n'y a pas de bourrage au début ou à "
+"la fin de la structure agrégée."
 
 #: ../Doc/library/struct.rst:145
 msgid ""
 "No padding is added when using non-native size and alignment, e.g. with '<', "
 "'>', '=', and '!'."
 msgstr ""
+"Il n'y a pas d'ajout de bourrage lorsque vous utilisez une taille et un "
+"alignement non-natifs, par exemple avec `<`, `'>', `=` ou `!`."
 
 #: ../Doc/library/struct.rst:148
 msgid ""
@@ -248,10 +296,13 @@ msgid ""
 "type, end the format with the code for that type with a repeat count of "
 "zero.  See :ref:`struct-examples`."
 msgstr ""
+"Pour aligner la fin d'une structure à l'alignement requis par un type "
+"particulier, terminez le format avec le code du type voulu et une valeur de "
+"répétition à zéro. Référez-vous à :ref:`struct-examples`."
 
 #: ../Doc/library/struct.rst:156
 msgid "Format Characters"
-msgstr ""
+msgstr "Caractères de format"
 
 #: ../Doc/library/struct.rst:158
 msgid ""
@@ -262,6 +313,13 @@ msgid ""
 "``'!'`` or ``'='``.  When using native size, the size of the packed value is "
 "platform-dependent."
 msgstr ""
+"Les caractères de format possèdent les significations suivantes ; la "
+"conversion entre les valeurs C et Python doit être évidente compte tenu des "
+"types concernés. La colonne « taille standard » fait référence à la taille "
+"en octets de la valeur agrégée avec l'utilisation de la taille standard "
+"(c'est-à-dire lorsque la chaîne de format commence par l'un des caractères "
+"suivants : ``'<'``, ``'>'``, ``'!'`` ou ``'='``). Si vous utilisez la taille "
+"native, la taille de la valeur agrégée dépend de la plateforme."
 
 #: ../Doc/library/struct.rst:166
 msgid "Format"
@@ -277,7 +335,7 @@ msgstr "Type Python"
 
 #: ../Doc/library/struct.rst:166
 msgid "Standard size"
-msgstr ""
+msgstr "Taille standard"
 
 #: ../Doc/library/struct.rst:166
 msgid "Notes"
@@ -289,11 +347,11 @@ msgstr "``x``"
 
 #: ../Doc/library/struct.rst:168
 msgid "pad byte"
-msgstr ""
+msgstr "octet de bourrage"
 
 #: ../Doc/library/struct.rst:168
 msgid "no value"
-msgstr ""
+msgstr "pas de valeur"
 
 #: ../Doc/library/struct.rst:170
 msgid "``c``"
@@ -327,7 +385,7 @@ msgstr ":c:type:`signed char`"
 #: ../Doc/library/struct.rst:190 ../Doc/library/struct.rst:192
 #: ../Doc/library/struct.rst:203
 msgid "integer"
-msgstr ""
+msgstr "*int* (entier)"
 
 #: ../Doc/library/struct.rst:172 ../Doc/library/struct.rst:174
 #: ../Doc/library/struct.rst:178 ../Doc/library/struct.rst:180
@@ -501,6 +559,9 @@ msgid ""
 "by C99. If this type is not available, it is simulated using a :c:type:"
 "`char`. In standard mode, it is always represented by one byte."
 msgstr ""
+"Le code de conversion ``'?'`` correspond au type :c:type:`_Bool` de C99. Si "
+"ce type n'est pas disponible, il est simulé en utilisant un :c:type:`char`. "
+"Dans le mode standard, il est toujours représenté par un octet."
 
 #: ../Doc/library/struct.rst:216
 msgid ""
@@ -545,18 +606,29 @@ msgid ""
 "on the host system. The struct module does not interpret this as native "
 "ordering, so the ``'P'`` format is not available."
 msgstr ""
+"Le caractère de format ``'P'`` n'est disponible que pour le boutisme natif "
+"(choisi par défaut ou à l'aide du caractère ``'@'`` de boutisme). Le "
+"caractère de boutisme ``'='`` choisit d'utiliser un petit ou un gros en "
+"fonction du système hôte. Le module *struct* ne l'interprète pas comme un "
+"boutisme natif, donc le format ``'P'`` n'est pas disponible."
 
 #: ../Doc/library/struct.rst:251
 msgid ""
 "A format character may be preceded by an integral repeat count.  For "
 "example, the format string ``'4h'`` means exactly the same as ``'hhhh'``."
 msgstr ""
+"Un caractère de format peut être précédé par un entier indiquant le nombre "
+"de répétitions. Par exemple, la chaîne de format ``'4h'`` a exactement la "
+"même signification que ``'hhhh'``."
 
 #: ../Doc/library/struct.rst:254
 msgid ""
 "Whitespace characters between formats are ignored; a count and its format "
 "must not contain whitespace though."
 msgstr ""
+"Les caractères d'espacement entre les indications de format sont ignorés ; "
+"cependant, le nombre de répétitions et le format associé ne doivent pas être "
+"séparés par des caractères d'espacement."
 
 #: ../Doc/library/struct.rst:257
 msgid ""
@@ -603,6 +675,11 @@ msgid ""
 "used. Either 0 or 1 in the native or standard bool representation will be "
 "packed, and any non-zero value will be ``True`` when unpacking."
 msgstr ""
+"Pour le caractère de format ``'?'``, la valeur renvoyée est :const:`True` "
+"ou :const:`False`. Lors de l'agrégation, la valeur de vérité de l'objet "
+"argument est utilisée. La valeur agrégée est 0 ou 1 dans la représentation "
+"native ou standard et, lors de la dissociation, n'importe quelle valeur "
+"différente de zéro est renvoyée ``True``."
 
 #: ../Doc/library/struct.rst:294
 msgid "Examples"
@@ -613,42 +690,53 @@ msgid ""
 "All examples assume a native byte order, size, and alignment with a big-"
 "endian machine."
 msgstr ""
+"tous les exemples présentés supposent que l'on utilise le boutisme, la "
+"taille et l'alignement natifs sur une machine gros-boutiste."
 
 #: ../Doc/library/struct.rst:300
 msgid "A basic example of packing/unpacking three integers::"
-msgstr ""
+msgstr "Un exemple de base d'agrégation et dissociation de trois entiers ::"
 
 #: ../Doc/library/struct.rst:310
 msgid ""
 "Unpacked fields can be named by assigning them to variables or by wrapping "
 "the result in a named tuple::"
 msgstr ""
+"Les champs dissociés peuvent être nommés en leur assignant des variables ou "
+"en encapsulant le résultat dans un *n*-uplet nommé ::"
 
 #: ../Doc/library/struct.rst:321
 msgid ""
 "The ordering of format characters may have an impact on size since the "
 "padding needed to satisfy alignment requirements is different::"
 msgstr ""
+"L'ordre des caractères de format peut avoir un impact sur la taille puisque "
+"le bourrage nécessaire pour réaliser l'alignement est différent ::"
 
 #: ../Doc/library/struct.rst:333
 msgid ""
 "The following format ``'llh0l'`` specifies two pad bytes at the end, "
 "assuming longs are aligned on 4-byte boundaries::"
 msgstr ""
+"Le format suivant ``'llh0l'`` spécifie deux octets de bourrage à la fin, "
+"considérant que les entiers longs sont alignés sur des espacements de 4 "
+"octets ::"
 
 #: ../Doc/library/struct.rst:339
 msgid ""
 "This only works when native size and alignment are in effect; standard size "
 "and alignment does not enforce any alignment."
 msgstr ""
+"Ceci ne fonctionne que quand la taille et l'alignement natifs sont "
+"utilisés ; la taille et l'alignement standards ne forcent aucun alignement."
 
 #: ../Doc/library/struct.rst:346
 msgid "Module :mod:`array`"
-msgstr ""
+msgstr "Module :mod:`array`"
 
 #: ../Doc/library/struct.rst:346
 msgid "Packed binary storage of homogeneous data."
-msgstr ""
+msgstr "Stockage agrégé binaire de données homogènes."
 
 #: ../Doc/library/struct.rst:348
 msgid "Module :mod:`xdrlib`"
@@ -656,7 +744,7 @@ msgstr "Module :mod:`xdrlib`"
 
 #: ../Doc/library/struct.rst:349
 msgid "Packing and unpacking of XDR data."
-msgstr ""
+msgstr "Agrégation et dissociation de données XDR."
 
 #: ../Doc/library/struct.rst:355
 msgid "Classes"
@@ -664,7 +752,7 @@ msgstr "Classes"
 
 #: ../Doc/library/struct.rst:357
 msgid "The :mod:`struct` module also defines the following type:"
-msgstr ""
+msgstr "Le module :mod:`struct` définit aussi le type suivant :"
 
 #: ../Doc/library/struct.rst:362
 msgid ""
@@ -673,10 +761,16 @@ msgid ""
 "methods is more efficient than calling the :mod:`struct` functions with the "
 "same format since the format string only needs to be compiled once."
 msgstr ""
+"Renvoie un nouvel objet Struct qui écrit et lit des données binaires "
+"conformément à la chaîne de format *format*. Créer une fois pour toutes un "
+"objet Struct puis appeler ses méthodes est plus efficace que d'appeler les "
+"fonctions de :mod:`struct` avec le même format puisque la chaîne de format "
+"n'est compilée qu'une seule fois."
 
 #: ../Doc/library/struct.rst:369
 msgid "Compiled Struct objects support the following methods and attributes:"
 msgstr ""
+"Les objets ``Struct`` compilés gèrent les méthodes et attributs suivants :"
 
 #: ../Doc/library/struct.rst:374
 msgid ""
@@ -687,6 +781,7 @@ msgstr ""
 #: ../Doc/library/struct.rst:380
 msgid "Identical to the :func:`pack_into` function, using the compiled format."
 msgstr ""
+"Identique à la fonction :func:`pack_into`, en utilisant le format compilé."
 
 #: ../Doc/library/struct.rst:385
 msgid ""
@@ -702,7 +797,7 @@ msgstr ""
 
 #: ../Doc/library/struct.rst:397
 msgid "The format string used to construct this Struct object."
-msgstr ""
+msgstr "La chaîne de format utilisée pour construire l'objet `Struct`."
 
 #: ../Doc/library/struct.rst:401
 msgid ""
