@@ -732,7 +732,7 @@ Potodo
 | Permet de d'identifier les parties de la documention qu'il reste à traduire.
 | Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
   ``python3.6`` ou plus.
-| `Lien vers le dépôt <https://github.com/seluj78/potodo>`__
+| `Lien vers le dépôt <https://github.com/AFPy/potodo>`__
 
 Pogrep
 ~~~~~~
@@ -741,7 +741,7 @@ Pogrep
   sur comment traduire un terme ou chercher la traduction d'un terme dans
   d'autres fichiers.
 | Installez-le à l'aide de *pip* (``pip install pogrep``).
-| `Lien vers le dépôt <https://github.com/JulienPalard/pogrep>`__
+| `Lien vers le dépôt <https://github.com/AFPy/pogrep>`__
 
 Padpo (beta)
 ~~~~~~~~~~~~
@@ -750,14 +750,14 @@ Padpo (beta)
   du fichier .po.
 | Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
   ``python3.7`` ou plus.
-| `Lien vers le dépôt <https://github.com/vpoulailleau/padpo>`__
+| `Lien vers le dépôt <https://github.com/AFPy/padpo>`__
 
 Powrap
 ~~~~~~
 
 | Formateur de fichier .po.
 | Installez-le à l'aide de *pip* (``pip install powrap``).
-| `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
+| `Lien vers le dépôt <https://github.com/AFPy/powrap>`__
 
 
 Affichage des modifications par Git
