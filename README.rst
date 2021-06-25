@@ -37,9 +37,11 @@ pour apprendre les conventions à respecter.
 
 Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>` de
 cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
-Vous pouvez obtenir de l'aide sur le canal ``#python-fr`` sur `freenode
-<https://kiwi.freenode.net/>`_ (ne nécessite pas d'inscription) ou poser vos questions sur la
-`liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ des traductions de l'AFPy.
+Vous pouvez obtenir de l'aide sur le canal
+`irc://irc.libera.chat/#python-fr <https://web.libera.chat/#python-fr>`_
+(ne nécessite pas d'inscription) ou poser vos questions sur la
+`liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_
+des traductions de l'AFPy.
 
 
 Accord de contribution à la documentation

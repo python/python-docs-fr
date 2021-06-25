@@ -1,5 +1,5 @@
-Guide de contribution à la documention via GitHub
-=================================================
+Guide de contribution à la documentation via GitHub
+===================================================
 
 Instructions
 ------------
@@ -96,7 +96,9 @@ dans les tickets et les *pull requests*.
   `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
   en indiquant sur quoi vous travaillez et l'URL de votre dépôt.
 
-* Soit sur IRC en venant sur le canal `#python-docs-fr <https://webchat.freenode.net/#python-docs-fr>`_ pour nous le signaler.
+* Soit sur IRC en venant sur le canal
+  `irc://irc.libera.chat/#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_
+  pour nous le signaler.
 
 Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
 suivez cette procédure :
@@ -233,6 +235,21 @@ Mettez dans le commentaire de la *pull request* le texte suivant :
 « Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
 Cela permet à Github de lier la *pull request* au ticket de réservation.
 
+Il peut arriver que vous ayez besoin de reprendre votre PR sur votre
+ordinateur après avoir fait des modifications en ligne sur GitHub,
+par exemple lorsque GitHub vous offre la possibilité de faire un commit
+automatique contenant les suggestions proposées pendant la revue.
+Cela fonctionne bien, mais le résultat n'est pas toujours accepté par
+``powrap``. Si cela arrive, vous pouvez récupérer le commit fait par
+GitHub puis relancer ``powrap`` :
+
+.. code-block:: bash
+
+    git pull
+    powrap <fichier.po>
+    git add <fichier.po>
+    git commit -m "Formatage après commit automatique"
+    git push
 
 Sur une autre forge
 +++++++++++++++++++
@@ -500,6 +517,7 @@ mutable                    muable
 namespace                  espace de nommage
                            (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
+parse, parser              analyser, analyseur syntaxique
 pickle (v.)                sérialiser
 prompt                     invite
 raise                      lever
@@ -531,11 +549,11 @@ whitespace                 caractère d'espacement
 Ressources de traduction
 ------------------------
 
-- les canaux IRC sur freenode :
+- les canaux IRC sur irc.libera.chat :
 
-  - `#python-docs-fr <http://irc.lc/freenode/python-docs-fr>`_ — communauté python autour de la documentation française,
-  - `#python-fr <http://irc.lc/freenode/python-fr>`_  — communauté python francophone,
-  - `#python-doc <http://irc.lc/freenode/python-fr>`_ — communauté python autour de la documentation anglophone ;
+  - `#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_ — communauté python autour de la documentation française,
+  - `#python-fr <https://web.libera.chat/#python-fr>`_  — communauté python francophone,
+  - `#python-doc <https://web.libera.chat/#python-doc>`_ — communauté python autour de la documentation anglophone ;
 - les listes de diffusion relatives à la documentation (courriel) :
 
   - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
@@ -714,7 +732,7 @@ Potodo
 | Permet de d'identifier les parties de la documention qu'il reste à traduire.
 | Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
   ``python3.6`` ou plus.
-| `Lien vers le dépôt <https://github.com/seluj78/potodo>`__
+| `Lien vers le dépôt <https://github.com/AFPy/potodo>`__
 
 Pogrep
 ~~~~~~
@@ -723,7 +741,7 @@ Pogrep
   sur comment traduire un terme ou chercher la traduction d'un terme dans
   d'autres fichiers.
 | Installez-le à l'aide de *pip* (``pip install pogrep``).
-| `Lien vers le dépôt <https://github.com/JulienPalard/pogrep>`__
+| `Lien vers le dépôt <https://github.com/AFPy/pogrep>`__
 
 Padpo (beta)
 ~~~~~~~~~~~~
@@ -732,14 +750,14 @@ Padpo (beta)
   du fichier .po.
 | Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
   ``python3.7`` ou plus.
-| `Lien vers le dépôt <https://github.com/vpoulailleau/padpo>`__
+| `Lien vers le dépôt <https://github.com/AFPy/padpo>`__
 
 Powrap
 ~~~~~~
 
 | Formateur de fichier .po.
 | Installez-le à l'aide de *pip* (``pip install powrap``).
-| `Lien vers le dépôt <https://github.com/JulienPalard/powrap>`__
+| `Lien vers le dépôt <https://github.com/AFPy/powrap>`__
 
 
 Affichage des modifications par Git
@@ -772,4 +790,3 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
 Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
-

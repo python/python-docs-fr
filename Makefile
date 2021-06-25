@@ -21,7 +21,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := eec8e61992fb654d4cf58de4d727c18622b8303e
+CPYTHON_CURRENT_COMMIT := cf739332bd039cd2303b58663a804f784883820d
 
 CPYTHON_PATH := ../cpython/
 
@@ -62,7 +62,7 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
-	  SPHINXOPTS='-qW -j$(JOBS)         \
+	  SPHINXOPTS='-W -j$(JOBS)         \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
 	  -D gettext_compact=0           \
@@ -70,7 +70,6 @@ all: ensure_prerequisites
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
 	  $(MODE)
-	git -C $(CPYTHON_PATH) checkout -
 	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
 
 
