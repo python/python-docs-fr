@@ -88,6 +88,11 @@ ensure_prerequisites:
 	    echo "  git clone $(UPSTREAM) $(CPYTHON_PATH)"; \
 	    exit 1; \
 	fi
+	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain)" ]; then \
+	    echo "Your cpython clone at $(CPYTHON_PATH) is not clean."; \
+	    echo "In order to avoid breaking things, please clean it first."; \
+	    exit 1; \
+	fi
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
 	    git -C $(CPYTHON_PATH) checkout $(BRANCH); \
 	    echo "You're missing dependencies, please enable a venv and install:"; \
