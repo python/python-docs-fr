@@ -104,7 +104,7 @@ Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier
 suivez cette procédure :
 
 Pour travailler, nous avons besoin d'une branche, basée sur une version à jour
-(fraîchement récupérée) de la branche « upstream/3.9 ». On met donc à jour notre
+(fraîchement récupérée) de la branche « upstream/3.10 ». On met donc à jour notre
 version locale.
 
 .. code-block:: bash
@@ -112,14 +112,14 @@ version locale.
     git fetch upstream
 
 
-On crée ensuite la branche, en la basant sur « upstream/3.9 », fraîchement récupérée.
+On crée ensuite la branche, en la basant sur « upstream/3.10 », fraîchement récupérée.
 Il est pratique de nommer cette branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout -b library-sys upstream/3.10
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -297,13 +297,13 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (3.8, 3.9, etc.), seulement récupéré les
+branche de version (3.9, 3.10, etc.), seulement récupéré les
 modifications à partir d'elles.
 
 Toutes les traductions sont faites sur la dernière version.
 Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
-si la dernière version de python est Python 3.9, nous ne voulons pas
-traduire directement sur la version Python 3.5.
+si la dernière version de python est Python 3.10, nous ne voulons pas
+traduire directement sur la version Python 3.6.
 Si nécessaire, les traductions seraient rétroportées sur les versions
 les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
