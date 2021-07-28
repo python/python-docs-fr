@@ -22,8 +22,6 @@
 # .po files.
 CPYTHON_CURRENT_COMMIT := d5feb2b1f12a15c1a9bac094a8f6f77d0cfcbdc2
 
-CPYTHON_PATH := ../cpython/
-
 LANGUAGE := fr
 BRANCH := 3.10
 
@@ -57,52 +55,41 @@ endif
 
 .PHONY: all
 all: ensure_prerequisites
-	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
+	git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT) || (git -C venv/cpython fetch && git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT))
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
-	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
-	  SPHINXOPTS='-j$(JOBS)         \
+	$(MAKE) -C venv/cpython/Doc/ \
+	  SPHINXOPTS='-j$(JOBS)             \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
-	  -D gettext_compact=0           \
+	  -D gettext_compact=0              \
 	  -D latex_engine=xelatex           \
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
 	  $(MODE)
-	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
+	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make serve' to see them."
+
+
+# We clone cpython/ inside venv/ because venv/ is the only directory
+# excluded by cpython' Sphinx configuration.
+venv/cpython/.git/HEAD:
+	git clone https://github.com/python/cpython venv/cpython
 
 
 .PHONY: ensure_prerequisites
-ensure_prerequisites:
-	@if [ -z $(CPYTHON_PATH) ]; then \
-	    echo "Your CPYTHON_PATH is empty, please provide one."; \
-	    exit 1; \
-	fi
-	@if ! [ -d $(CPYTHON_PATH) ]; then \
-	    echo "Building the translation requires a cpython clone."; \
-	    echo "Please provide the path to a clone using the CPYTHON_PATH variable."; \
-	    echo "(Currently CPYTHON_PATH is $(CPYTHON_PATH)."; \
-	    echo "So you may want to run:"; \
-	    echo ""; \
-	    echo "  git clone $(UPSTREAM) $(CPYTHON_PATH)"; \
-	    exit 1; \
-	fi
-	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain)" ]; then \
-	    echo "Your cpython clone at $(CPYTHON_PATH) is not clean."; \
-	    echo "In order to avoid breaking things, please clean it first."; \
-	    exit 1; \
-	fi
+ensure_prerequisites: venv/cpython/.git/HEAD
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
-	    git -C $(CPYTHON_PATH) checkout $(BRANCH); \
-	    echo "You're missing dependencies, please enable a venv and install:"; \
+	    git -C venv/cpython/ checkout $(BRANCH); \
+	    echo "You're missing dependencies please install:"; \
 	    echo ""; \
-	    echo "  python -m pip install -r requirements.txt -r $(CPYTHON_PATH)/Doc/requirements.txt"; \
+	    echo "  python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
 	    exit 1; \
 	fi
 
+
 .PHONY: serve
 serve:
-	$(MAKE) -C $(CPYTHON_PATH)/Doc/ serve
+	$(MAKE) -C venv/cpython/Doc/ serve
 
 .PHONY: todo
 todo: ensure_prerequisites
@@ -135,13 +122,13 @@ verifs: wrap spell
 .PHONY: merge
 merge: ensure_prerequisites
 	@echo "Merge from $(UPSTREAM)"
-	git -C $(CPYTHON_PATH) checkout $(BRANCH)
-	git -C $(CPYTHON_PATH) pull --ff-only
-	(cd $(CPYTHON_PATH)/Doc; sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
-	find $(CPYTHON_PATH)/pot/ -name '*.pot' |\
+	git -C venv/cpython/ checkout $(BRANCH)
+	git -C venv/cpython/ pull --ff-only
+	(cd venv/cpython/Doc; sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
+	find venv/cpython/pot/ -name '*.pot' |\
 	    while read -r POT; \
 	    do \
-	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_PATH)/pot/##; s#\.pot\$$#.po#")"; \
+	        PO="./$$(echo "$$POT" | sed "s#venv/cpython/pot/##; s#\.pot\$$#.po#")"; \
 	        mkdir -p "$$(dirname "$$PO")"; \
 	        if [ -f "$$PO" ]; \
 	        then \
@@ -150,10 +137,10 @@ merge: ensure_prerequisites
 	            msgcat -o "$$PO" "$$POT"; \
 	        fi \
 	    done
-	rm -fr $(CPYTHON_PATH)/pot/
+	rm -fr venv/cpython/pot/
 	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
 	powrap -m
-	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)
+	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C venv/cpython/ rev-parse HEAD)
 	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done\n'
 
 .PHONY: clean
