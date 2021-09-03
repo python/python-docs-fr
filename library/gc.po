@@ -6,17 +6,18 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-19 16:59+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2021-09-07 00:51+0200\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: library/gc.rst:2
 msgid ":mod:`gc` --- Garbage Collector interface"
-msgstr ""
+msgstr ":mod:`gc` — Interface du ramasse-miettes"
 
 #: library/gc.rst:12
 msgid ""
@@ -31,23 +32,34 @@ msgid ""
 "this includes ``gc.DEBUG_SAVEALL``, causing garbage-collected objects to be "
 "saved in gc.garbage for inspection."
 msgstr ""
+"Ce module constitue une interface au ramasse-miettes facultatif. Il permet "
+"de désactiver le ramasse-miettes ou de régler la fréquence des passages. Il "
+"fournit des options de débogage, et donne aussi accès aux objets qui ne "
+"peuvent pas être détruits bien qu'ils aient été détectés comme non "
+"référencés. Le ramasse-miettes vient en complément du système de comptage de "
+"références, et peut donc être désactivé pour du code qui ne crée aucun cycle "
+"de références. On le désactive avec ``gc.disable()``. Pour remonter à la "
+"source d'une fuite de mémoire, utilisez ``gc.set_debug(gc.DEBUG_LEAK)``. "
+"Notez que ``gc.DEBUG_LEAK`` inclut ``gc.DEBUG_SAVEALL``. Cette dernière "
+"option fait que les objets inatteignables, au lieu d'être détruits, sont "
+"placés dans la liste ``gc.garbage`` pour pouvoir y être examinés."
 
 #: library/gc.rst:23
-#, fuzzy
 msgid "The :mod:`gc` module provides the following functions:"
-msgstr "Le module :mod:`abc` fournit également la fonction suivante :"
+msgstr "Le module :mod:`gc` contient les fonctions suivantes :"
 
 #: library/gc.rst:28
 msgid "Enable automatic garbage collection."
-msgstr ""
+msgstr "Active le ramasse-miettes."
 
 #: library/gc.rst:33
 msgid "Disable automatic garbage collection."
-msgstr ""
+msgstr "Désactive le ramasse-miettes."
 
 #: library/gc.rst:38
 msgid "Return ``True`` if automatic collection is enabled."
 msgstr ""
+"Renvoie ``True`` ou ``False`` selon que le ramasse-miettes est activé ou non."
 
 #: library/gc.rst:43
 msgid ""
@@ -56,6 +68,11 @@ msgid ""
 "0 to 2).  A :exc:`ValueError` is raised if the generation number  is "
 "invalid. The number of unreachable objects found is returned."
 msgstr ""
+"Déclenche un passage du ramasse-miettes. En l'absence d'argument, un passage "
+"complet est effectué. Le paramètre *generation* permet de le limiter à une "
+"génération entre 0 et 2. Une exception :exc:`ValueError` est levée si le "
+"numéro de la génération n'est pas valide. Cette fonction renvoie le nombre "
+"d'objets inatteignables qui ont été détectés."
 
 #: library/gc.rst:48
 msgid ""
@@ -71,10 +88,13 @@ msgid ""
 "written to ``sys.stderr``.  See below for a list of debugging flags which "
 "can be combined using bit operations to control debugging."
 msgstr ""
+"Change les options de débogage du ramasse-miettes, qui activent l'écriture "
+"d'informations sur ``sys.stderr``. Une liste d'options se trouve plus bas. "
+"Les options peuvent se combiner par les opérateurs bit à bit."
 
 #: library/gc.rst:63
 msgid "Return the debugging flags currently set."
-msgstr ""
+msgstr "Renvoie les options de débogage actives."
 
 #: library/gc.rst:68
 msgid ""
@@ -82,16 +102,21 @@ msgid ""
 "returned. If *generation* is not None, return only the objects tracked by "
 "the collector that are in that generation."
 msgstr ""
+"Renvoie la liste des objets suivis par le ramasse-miettes, à l'exclusion de "
+"cette liste elle-même. Le paramètre facultatif *generation* restreint la "
+"liste aux objets d'une génération particulière."
 
 #: library/gc.rst:72
 msgid "New *generation* parameter."
-msgstr ""
+msgstr "ajout du paramètre *generation*."
 
 #: library/gc.rst:75
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``gc.get_objects`` with argument "
 "``generation``."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``gc.get_objects`` avec "
+"l'argument ``generation``."
 
 #: library/gc.rst:79
 msgid ""
@@ -99,16 +124,24 @@ msgid ""
 "statistics since interpreter start.  The number of keys may change in the "
 "future, but currently each dictionary will contain the following items:"
 msgstr ""
+"Renvoie une liste de trois dictionnaires, un par génération. Ils contiennent "
+"des statistiques sur l'action du ramasse-miettes depuis le lancement de "
+"l'interpréteur. Les clés actuellement présentes sont les suivantes (d'autres "
+"pourraient être ajoutées dans des versions ultérieures) :"
 
 #: library/gc.rst:84
 msgid "``collections`` is the number of times this generation was collected;"
 msgstr ""
+"``collections``, le nombre de fois où cette génération a été examinée par le "
+"ramasse-miettes ;"
 
 #: library/gc.rst:86
 msgid ""
 "``collected`` is the total number of objects collected inside this "
 "generation;"
 msgstr ""
+"``collected``, le nombre total d'objets qui ont été détruits alors qu'ils "
+"étaient dans cette génération ;"
 
 #: library/gc.rst:89
 msgid ""
@@ -116,12 +149,18 @@ msgid ""
 "uncollectable (and were therefore moved to the :data:`garbage` list) inside "
 "this generation."
 msgstr ""
+"``uncollectable``, le nombre total d'objets qui ont été identifiés comme "
+"indestructibles (et donc ajoutés à la liste :data:`garbage`) au sein de "
+"cette génération."
 
 #: library/gc.rst:98
 msgid ""
 "Set the garbage collection thresholds (the collection frequency). Setting "
 "*threshold0* to zero disables collection."
 msgstr ""
+"Règle les seuils de déclenchement du ramasse-miettes, qui déterminent sa "
+"fréquence de passage. Si *threshold0* est mis à zéro, le ramasse-miettes ne "
+"passe jamais."
 
 #: library/gc.rst:101
 msgid ""
@@ -141,18 +180,36 @@ msgid ""
 "org/garbage_collector/#collecting-the-oldest-generation>`_ for more "
 "information."
 msgstr ""
+"Les objets sont répartis en trois générations en fonction du nombre de "
+"passages du ramasse-miettes qui les ont laissés intacts. Les objets "
+"fraîchement créés sont placés dans la génération la plus jeune, numéro 0. À "
+"chaque fois qu'un objet persiste à la suite d'un passage du ramasse-miettes, "
+"il monte d'une génération, ceci jusqu'à la génération 2, la plus âgée. Le "
+"ramasse-miettes se déclenche en fonction du nombre d'allocations et de "
+"destructions depuis le passage précédent : lorsque les allocations moins les "
+"destructions font plus que *threshold0*, un passage est initié. Lors des "
+"premiers passages, seule la génération 0 est inspectée. La génération 1 est "
+"examinée périodiquement, lorsque le nombre de passages sur la génération 0 "
+"depuis le dernier passage ayant aussi examiné la génération 1 vient à "
+"excéder *threshold1*. Les règles pour la génération 2 sont plus complexes. "
+"Pour avoir des détails, voir `Collecting the oldest generation <https://"
+"devguide.python.org/garbage_collector/#collecting-the-oldest-generation>`_ "
+"(dans le guide du développeur, en anglais)."
 
 #: library/gc.rst:118
 msgid ""
 "Return the current collection  counts as a tuple of ``(count0, count1, "
 "count2)``."
 msgstr ""
+"Renvoie un triplet des nombres totaux de passages effectués par génération."
 
 #: library/gc.rst:124
 msgid ""
 "Return the current collection thresholds as a tuple of ``(threshold0, "
 "threshold1, threshold2)``."
 msgstr ""
+"Renvoie les seuils de passage sous la forme du triplet ``(threshold0, "
+"threshold1, threshold2)``."
 
 #: library/gc.rst:130
 msgid ""
@@ -161,6 +218,11 @@ msgid ""
 "extension types which do refer to other objects but do not support garbage "
 "collection will not be found."
 msgstr ""
+"Renvoie la liste des objets qui contiennent directement une référence à l'un "
+"quelconque des arguments. Il est à noter que cette fonction prend uniquement "
+"en compte les objets suivis par le ramasse-miettes, ce qui exclut les "
+"instances de certains types d'extension qui contiennent bien des références "
+"sans pour autant prendre en charge le ramassage des miettes."
 
 #: library/gc.rst:135
 msgid ""
@@ -169,6 +231,9 @@ msgid ""
 "listed among the resulting referrers.  To get only currently live objects, "
 "call :func:`collect` before calling :func:`get_referrers`."
 msgstr ""
+"La liste renvoyée peut contenir des objets déjà isolés, mais maintenus en "
+"mémoire à cause d'un cycle. Pour les exclure, appelez :func:`collect` juste "
+"avant :func:`get_referrers`."
 
 #: library/gc.rst:141
 msgid ""
@@ -177,12 +242,18 @@ msgid ""
 "temporarily invalid state. Avoid using :func:`get_referrers` for any purpose "
 "other than debugging."
 msgstr ""
+"La manipulation des objets renvoyés par :func:`get_referrers` est hasardeuse "
+"car ils risquent d'être encore en cours d'initialisation, donc dans un état "
+"temporairement instable. Mieux vaut réserver :func:`get_referrers` au "
+"débogage."
 
 #: library/gc.rst:146
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``gc.get_referrers`` with "
 "argument ``objs``."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``gc.get_referrers`` avec "
+"l'argument ``objs``."
 
 #: library/gc.rst:151
 msgid ""
@@ -195,12 +266,25 @@ msgid ""
 "example, if an integer is directly reachable from an argument, that integer "
 "object may or may not appear in the result list."
 msgstr ""
+"Renvoie une liste des objets pointés par les références que contiennent les "
+"arguments. Ils sont déterminés en appelant, si présente, la méthode C :c:"
+"member:`~PyTypeObject.tp_traverse` de chaque argument, qui visite les objets "
+"auxquels cet argument fait référence. Il est à noter que :c:member:"
+"`~PyTypeObject.tp_traverse` n'est définie que par les objets qui gèrent le "
+"ramassage des miettes, et n'a l'obligation de visiter que les objets qui "
+"peuvent potentiellement faire partie d'un cycle. Ainsi, la liste renvoyée "
+"par cette fonction ne contient par forcément tous les objets qu'il est "
+"possible d'atteindre à partir des arguments. Par exemple, si l'un des "
+"arguments contient un entier, ce dernier objet peut être présent ou non dans "
+"la liste."
 
 #: library/gc.rst:159
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``gc.get_referents`` with "
 "argument ``objs``."
 msgstr ""
+"Lève un :ref:`événement d'audit <auditing>` ``gc.get_referents`` avec "
+"l'argument ``objs``."
 
 #: library/gc.rst:163
 msgid ""
@@ -211,12 +295,21 @@ msgid ""
 "present in order to suppress the garbage collector footprint of simple "
 "instances (e.g. dicts containing only atomic keys and values)::"
 msgstr ""
+"Renvoie ``True`` ou ``False`` selon que l'argument est suivi ou non par le "
+"ramasse-miettes. En règle générale, les objets atomiques ne sont pas suivis, "
+"tandis que les objets non-atomiques, tels que les conteneurs et instances de "
+"classes définies par l'utilisateur, le sont. Cependant, certains types "
+"présentent des optimisations qui permettent de se passer avantageusement du "
+"ramasse-miettes dans les cas simples, comme les dictionnaires dont toutes "
+"les clés et valeurs sont atomiques :"
 
 #: library/gc.rst:188
 msgid ""
 "Returns ``True`` if the given object has been finalized by the garbage "
 "collector, ``False`` otherwise. ::"
 msgstr ""
+"Renvoie ``True`` ou ``False`` selon que l'argument a été finalisé par le "
+"ramasse-miettes."
 
 #: library/gc.rst:209
 msgid ""
@@ -243,6 +336,8 @@ msgid ""
 "The following variables are provided for read-only access (you can mutate "
 "the values but should not rebind them):"
 msgstr ""
+"Les variables suivantes sont publiques, mais elles ne sont pas censées être "
+"modifiées (vous pouvez les muter, mais pas les redéfinir)."
 
 #: library/gc.rst:239
 msgid ""
@@ -251,12 +346,19 @@ msgid ""
 "should be empty most of the time, except when using instances of C extension "
 "types with a non-``NULL`` ``tp_del`` slot."
 msgstr ""
+"Liste des objets indestructibles, que le ramasse-miettes n'a pas pu éliminer "
+"bien qu'ils soient inatteignables. Depuis Python 3.4, cette liste demeure la "
+"plupart du temps vide. Elle peut se remplir si le programme fait appel à des "
+"types d'extension définis en C avec un champ ``tp_del`` différent de "
+"``NULL``."
 
 #: library/gc.rst:244
 msgid ""
 "If :const:`DEBUG_SAVEALL` is set, then all unreachable objects will be added "
 "to this list rather than freed."
 msgstr ""
+"Si :const:`DEBUG_SAVEALL` est actif, tous les objets inatteignables sont "
+"ajoutés à cette liste au lieu d'être détruits."
 
 #: library/gc.rst:247
 msgid ""
@@ -265,12 +367,19 @@ msgid ""
 "`DEBUG_UNCOLLECTABLE` is set, in addition all uncollectable objects are "
 "printed."
 msgstr ""
+"Si cette liste n'est pas vide lors de l':term:`arrêt de l'interpréteur "
+"<interpreter shutdown>`, un :exc:`ResourceWarning` est émis (les "
+"avertissements de ce type sont silencieux par défaut). De plus, si :const:"
+"`DEBUG_UNCOLLECTABLE` est actif, tous les objets indestructibles sont "
+"affichés."
 
 #: library/gc.rst:253
 msgid ""
 "Following :pep:`442`, objects with a :meth:`__del__` method don't end up in :"
 "attr:`gc.garbage` anymore."
 msgstr ""
+"en application de la :pep:`442`, les objets qui définissent une méthode :"
+"meth:`__del__` ne finissent plus dans :attr:`gc.garbage`."
 
 #: library/gc.rst:259
 msgid ""
@@ -278,72 +387,92 @@ msgid ""
 "after collection.  The callbacks will be called with two arguments, *phase* "
 "and *info*."
 msgstr ""
+"Liste de fonctions de rappel lancées par le ramasse-miettes avant et après "
+"un passage. Elles prennent deux arguments, *phase* et *info*."
 
 #: library/gc.rst:263
 msgid "*phase* can be one of two values:"
-msgstr ""
+msgstr "*phase* peut prendre deux valeurs :"
 
 #: library/gc.rst:265
 msgid "\"start\": The garbage collection is about to start."
-msgstr ""
+msgstr "``\"start\"`` lorsque le passage du ramasse-miettes est imminent."
 
 #: library/gc.rst:267
 msgid "\"stop\": The garbage collection has finished."
 msgstr ""
+"``\"stop\"`` lorsque le passage du ramasse-miettes vient de se terminer."
 
 #: library/gc.rst:269
 msgid ""
 "*info* is a dict providing more information for the callback.  The following "
 "keys are currently defined:"
 msgstr ""
+"*info* est un dictionnaire qui donne plus d'informations à la fonction de "
+"rappel. Les clés suivantes sont actuellement présentes :"
 
 #: library/gc.rst:272
 msgid "\"generation\": The oldest generation being collected."
-msgstr ""
+msgstr "``\"generation\"``, la génération la plus âgée intégrée à ce passage ;"
 
 #: library/gc.rst:274
 msgid ""
 "\"collected\": When *phase* is \"stop\", the number of objects successfully "
 "collected."
 msgstr ""
+"``\"collected\"`` : si *phase* vaut ``\"stop\"``, le nombre d'objets "
+"détruits avec succès ;"
 
 #: library/gc.rst:277
 msgid ""
 "\"uncollectable\": When *phase* is \"stop\", the number of objects that "
 "could not be collected and were put in :data:`garbage`."
 msgstr ""
+"``\"uncollectable\"`` : si *phase* vaut ``\"stop\"``, le nombre d'objets "
+"indestructibles ajoutés à :data:`garbage`."
 
 #: library/gc.rst:280
 msgid ""
 "Applications can add their own callbacks to this list.  The primary use "
 "cases are:"
 msgstr ""
+"Toute application peut ajouter ses propres fonctions de rappel à cette "
+"liste. Voici les principales applications :"
 
 #: library/gc.rst:283
 msgid ""
 "Gathering statistics about garbage collection, such as how often various "
 "generations are collected, and how long the collection takes."
 msgstr ""
+"Faire des statistiques sur le passage du ramasse-miettes, par exemple la "
+"fréquence à laquelle chaque génération est examinée, ou bien le temps d'un "
+"passage ;"
 
 #: library/gc.rst:287
 msgid ""
 "Allowing applications to identify and clear their own uncollectable types "
 "when they appear in :data:`garbage`."
 msgstr ""
+"Identifier les types définis par une application dont les instances "
+"s'ajoutent à :data:`garbage` car elles sont indestructibles."
 
 #: library/gc.rst:293
 msgid "The following constants are provided for use with :func:`set_debug`:"
 msgstr ""
+"Les constantes suivantes définissent les options de débogage que l'on peut "
+"passer à :func:`set_debug` :"
 
 #: library/gc.rst:298
 msgid ""
 "Print statistics during collection.  This information can be useful when "
 "tuning the collection frequency."
 msgstr ""
+"Affiche des statistiques durant les passages du ramasse-miettes. Utile pour "
+"pouvoir régler la fréquence des passages."
 
 #: library/gc.rst:304
 msgid "Print information on collectable objects found."
-msgstr ""
+msgstr "Affiche des informations sur les objets détruits."
 
 #: library/gc.rst:309
 msgid ""
@@ -351,18 +480,27 @@ msgid ""
 "reachable but cannot be freed by the collector).  These objects will be "
 "added to the ``garbage`` list."
 msgstr ""
+"Affiche des informations sur les objets indestructibles (ceux qui sont "
+"ajoutés à la liste ``garbage``, qui sont inatteignables mais dont la mémoire "
+"ne peut pas être libérée)."
 
 #: library/gc.rst:313
 msgid ""
 "Also print the contents of the :data:`garbage` list at :term:`interpreter "
 "shutdown`, if it isn't empty."
 msgstr ""
+"Affiche également le contenu de :data:`garbage` à l':term:`arrêt de "
+"l'interpréteur <interpreter shutdown>`, pour peu que cette liste ne soit pas "
+"vide."
 
 #: library/gc.rst:319
 msgid ""
 "When set, all unreachable objects found will be appended to *garbage* rather "
 "than being freed.  This can be useful for debugging a leaking program."
 msgstr ""
+"Lorsque cette option est active, les objets inatteignables sont ajoutés à la "
+"liste *garbage* au lieu d'être supprimés. Ceci est utile pour déboguer une "
+"fuite de mémoire."
 
 #: library/gc.rst:325
 msgid ""
@@ -370,3 +508,5 @@ msgid ""
 "leaking program (equal to ``DEBUG_COLLECTABLE | DEBUG_UNCOLLECTABLE | "
 "DEBUG_SAVEALL``)."
 msgstr ""
+"Combinaison des options utiles au débogage d'une fuite de mémoire. Il s'agit "
+"d'un raccourci pour ``DEBUG_COLLECTABLE|DEBUG_UNCOLLECTABLE|DEBUG_SAVEALL``."
