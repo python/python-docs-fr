@@ -733,7 +733,7 @@ Poutils
 regroupe un certain nombre d'outils liés à la traduction. Dans un
 environnement disposant de Python 3.7 ou plus, installez-le avec ::
 
-  pip3 install poutils
+  python3 -m pip install poutils
 
 Voici le détail des paquets qui nous intéressent dans Poutils :
 
@@ -746,7 +746,7 @@ dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
 dictionnaires français qui diffèrent en raison de l'orthographe
 réformée. Installez celui qui contient les deux orthographes avec ::
 
-  sudo apt-get install hunspell hunspell-fr-comprehensive
+  sudo apt install hunspell hunspell-fr-comprehensive
 
 Potodo
 ++++++
