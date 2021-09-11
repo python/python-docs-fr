@@ -534,6 +534,7 @@ statement                  instruction
 subprocess                 sous-processus
 support                    prendre en charge, implémenter (« supporter »
                            n'a pas le même sens en français)
+token (parsing)            lexème
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 tuple                      *n*-uplet (avec *n* en italique), on peut
