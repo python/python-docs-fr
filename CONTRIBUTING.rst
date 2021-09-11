@@ -726,38 +726,55 @@ avertissements.
 Outils utiles pour la traduction
 --------------------------------
 
-Potodo
-~~~~~~
+Poutils
+~~~~~~~
 
-| Permet de d'identifier les parties de la documention qu'il reste à traduire.
-| Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
-  ``python3.6`` ou plus.
-| `Lien vers le dépôt <https://github.com/AFPy/potodo>`__
+`Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
+regroupe un certain nombre d'outils liés à la traduction. Dans un
+environnement disposant de Python 3.7 ou plus, installez-le avec ::
+
+  python3 -m pip install poutils
+
+Voici le détail des paquets qui nous intéressent dans Poutils :
+
+Pospell
++++++++
+
+Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
+Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
+dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
+dictionnaires français qui diffèrent en raison de l'orthographe
+réformée. Installez celui qui contient les deux orthographes avec ::
+
+  sudo apt install hunspell hunspell-fr-comprehensive
+
+Potodo
+++++++
+
+Permet d'identifier les parties de la documentation qu'il reste à
+traduire.  ``make todo`` fait appel à Potodo.
 
 Pogrep
-~~~~~~
+++++++
 
-| Permet de rechercher dans la documentation des termes. Utile si on a un doute
-  sur comment traduire un terme ou chercher la traduction d'un terme dans
-  d'autres fichiers.
-| Installez-le à l'aide de *pip* (``pip install pogrep``).
-| `Lien vers le dépôt <https://github.com/AFPy/pogrep>`__
+Permet de rechercher dans la documentation des termes. Utile si on a un doute
+sur comment traduire un terme ou chercher la traduction d'un terme dans
+d'autres fichiers. Pour connaître les options disponibles, tapez ::
 
-Padpo (beta)
-~~~~~~~~~~~~
-
-| Analyseur de code qui vérifie la grammaire et l'orthographe et la syntaxe
-  du fichier .po.
-| Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
-  ``python3.7`` ou plus.
-| `Lien vers le dépôt <https://github.com/AFPy/padpo>`__
+  pogrep --help
 
 Powrap
-~~~~~~
+++++++
 
-| Formateur de fichier .po.
-| Installez-le à l'aide de *pip* (``pip install powrap``).
-| `Lien vers le dépôt <https://github.com/AFPy/powrap>`__
+Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
+wrap``.
+
+Padpo (beta)
+++++++++++++
+
+Analyseur de code qui encapsule notamment `Grammalecte
+<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
+et la syntaxe des fichiers *.po*.
 
 
 Affichage des modifications par Git
