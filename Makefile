@@ -3,13 +3,12 @@
 # Here is what you can do:
 #
 # - make  # Automatically build an HTML local version
-# - make todo  # To list remaining tasks
+# - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
 # - make wrap  # To check for wrapping
 # - make spell  # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
-# - make progress  # To compute current progression
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -104,14 +103,6 @@ ensure_prerequisites:
 .PHONY: serve
 serve:
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/ serve
-
-
-.PHONY: progress
-progress:
-	@$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
-	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
-	$(shell msgcat *.po */*.po | grep -c '^msgid')
-
 
 .PHONY: todo
 todo: ensure_prerequisites
