@@ -20,7 +20,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := cf739332bd039cd2303b58663a804f784883820d
+CPYTHON_CURRENT_COMMIT := d5feb2b1f12a15c1a9bac094a8f6f77d0cfcbdc2
 
 CPYTHON_PATH := ../cpython/
 

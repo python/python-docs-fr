@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-19 22:36+0200\n"
+"POT-Creation-Date: 2021-09-23 16:16+0200\n"
 "PO-Revision-Date: 2018-11-29 18:28+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -127,9 +127,9 @@ msgstr ""
 
 #: library/os.path.rst:83 library/os.path.rst:132 library/os.path.rst:158
 #: library/os.path.rst:204 library/os.path.rst:233 library/os.path.rst:252
-#: library/os.path.rst:272 library/os.path.rst:301 library/os.path.rst:343
-#: library/os.path.rst:376 library/os.path.rst:407 library/os.path.rst:439
-#: library/os.path.rst:471
+#: library/os.path.rst:272 library/os.path.rst:301 library/os.path.rst:351
+#: library/os.path.rst:396 library/os.path.rst:427 library/os.path.rst:459
+#: library/os.path.rst:510
 msgid "Accepts a :term:`path-like object`."
 msgstr "Accepte un :term:`path-like object`."
 
@@ -155,7 +155,7 @@ msgid ""
 "empty.  Unlike :func:`commonprefix`, this returns a valid path."
 msgstr ""
 
-#: library/os.path.rst:375 library/os.path.rst:403 library/os.path.rst:419
+#: library/os.path.rst:395 library/os.path.rst:423 library/os.path.rst:439
 msgid ":ref:`Availability <availability>`: Unix, Windows."
 msgstr ":ref:`Disponibilité <availability>` : Unix, Windows."
 
@@ -222,8 +222,9 @@ msgstr ""
 msgid ""
 "On Windows, :envvar:`USERPROFILE` will be used if set, otherwise a "
 "combination of :envvar:`HOMEPATH` and :envvar:`HOMEDRIVE` will be used.  An "
-"initial ``~user`` is handled by stripping the last directory component from "
-"the created user path derived above."
+"initial ``~user`` is handled by checking that the last directory component "
+"of the current user's home directory matches :envvar:`USERNAME`, and "
+"replacing it if so."
 msgstr ""
 
 #: library/os.path.rst:181
@@ -367,24 +368,53 @@ msgid ""
 "backward slashes. To normalize case, use :func:`normcase`."
 msgstr ""
 
-#: library/os.path.rst:349
+#: library/os.path.rst:344
+msgid ""
+"On POSIX systems, in accordance with `IEEE Std 1003.1 2013 Edition; 4.13 "
+"Pathname Resolution <http://pubs.opengroup.org/onlinepubs/9699919799/"
+"basedefs/V1_chap04.html#tag_04_13>`_, if a pathname begins with exactly two "
+"slashes, the first component following the leading characters may be "
+"interpreted in an implementation-defined manner, although more than two "
+"leading characters shall be treated as a single character."
+msgstr ""
+
+#: library/os.path.rst:357
 msgid ""
 "Return the canonical path of the specified filename, eliminating any "
 "symbolic links encountered in the path (if they are supported by the "
 "operating system)."
 msgstr ""
 
-#: library/os.path.rst:354
+#: library/os.path.rst:361
 msgid ""
-"When symbolic link cycles occur, the returned path will be one member of the "
-"cycle, but no guarantee is made about which member that will be."
+"If a path doesn't exist or a symlink loop is encountered, and *strict* is "
+"``True``, :exc:`OSError` is raised. If *strict* is ``False``, the path is "
+"resolved as far as possible and any remainder is appended without checking "
+"whether it exists."
 msgstr ""
 
-#: library/os.path.rst:360
+#: library/os.path.rst:367
+msgid ""
+"This function emulates the operating system's procedure for making a path "
+"canonical, which differs slightly between Windows and UNIX with respect to "
+"how links and subsequent path components interact."
+msgstr ""
+
+#: library/os.path.rst:371
+msgid ""
+"Operating system APIs make paths canonical as needed, so it's not normally "
+"necessary to call this function."
+msgstr ""
+
+#: library/os.path.rst:377
 msgid "Symbolic links and junctions are now resolved on Windows."
 msgstr ""
 
-#: library/os.path.rst:366
+#: library/os.path.rst:380
+msgid "The *strict* parameter was added."
+msgstr ""
+
+#: library/os.path.rst:386
 msgid ""
 "Return a relative filepath to *path* either from the current directory or "
 "from an optional *start* directory.  This is a path computation:  the "
@@ -393,32 +423,32 @@ msgid ""
 "are on different drives."
 msgstr ""
 
-#: library/os.path.rst:372
+#: library/os.path.rst:392
 msgid "*start* defaults to :attr:`os.curdir`."
 msgstr ""
 
-#: library/os.path.rst:382
+#: library/os.path.rst:402
 msgid ""
 "Return ``True`` if both pathname arguments refer to the same file or "
 "directory. This is determined by the device number and i-node number and "
 "raises an exception if an :func:`os.stat` call on either pathname fails."
 msgstr ""
 
-#: library/os.path.rst:404 library/os.path.rst:420
+#: library/os.path.rst:424 library/os.path.rst:440
 msgid "Added Windows support."
 msgstr "Prise en charge de Windows."
 
-#: library/os.path.rst:391
+#: library/os.path.rst:411
 msgid "Windows now uses the same implementation as all other platforms."
 msgstr ""
 
-#: library/os.path.rst:400
+#: library/os.path.rst:420
 msgid ""
 "Return ``True`` if the file descriptors *fp1* and *fp2* refer to the same "
 "file."
 msgstr ""
 
-#: library/os.path.rst:413
+#: library/os.path.rst:433
 msgid ""
 "Return ``True`` if the stat tuples *stat1* and *stat2* refer to the same "
 "file. These structures may have been returned by :func:`os.fstat`, :func:`os."
@@ -426,7 +456,7 @@ msgid ""
 "comparison used by :func:`samefile` and :func:`sameopenfile`."
 msgstr ""
 
-#: library/os.path.rst:429
+#: library/os.path.rst:449
 msgid ""
 "Split the pathname *path* into a pair, ``(head, tail)`` where *tail* is the "
 "last pathname component and *head* is everything leading up to that.  The "
@@ -439,7 +469,7 @@ msgid ""
 "and :func:`basename`."
 msgstr ""
 
-#: library/os.path.rst:445
+#: library/os.path.rst:465
 msgid ""
 "Split the pathname *path* into a pair ``(drive, tail)`` where *drive* is "
 "either a mount point or the empty string.  On systems which do not use drive "
@@ -447,34 +477,45 @@ msgid ""
 "``drive + tail`` will be the same as *path*."
 msgstr ""
 
-#: library/os.path.rst:450
+#: library/os.path.rst:470
 msgid ""
 "On Windows, splits a pathname into drive/UNC sharepoint and relative path."
 msgstr ""
 
-#: library/os.path.rst:452
+#: library/os.path.rst:472
 msgid ""
 "If the path contains a drive letter, drive will contain everything up to and "
-"including the colon. e.g. ``splitdrive(\"c:/dir\")`` returns ``(\"c:\", \"/"
-"dir\")``"
+"including the colon::"
 msgstr ""
 
-#: library/os.path.rst:456
+#: library/os.path.rst:478
 msgid ""
 "If the path contains a UNC path, drive will contain the host name and share, "
-"up to but not including the fourth separator. e.g. ``splitdrive(\"//host/"
-"computer/dir\")`` returns ``(\"//host/computer\", \"/dir\")``"
+"up to but not including the fourth separator::"
 msgstr ""
 
-#: library/os.path.rst:466
+#: library/os.path.rst:490
 msgid ""
 "Split the pathname *path* into a pair ``(root, ext)``  such that ``root + "
-"ext == path``, and *ext* is empty or begins with a period and contains at "
-"most one period. Leading periods on the basename are  ignored; ``splitext('."
-"cshrc')`` returns  ``('.cshrc', '')``."
+"ext == path``, and the extension, *ext*, is empty or begins with a period "
+"and contains at most one period."
 msgstr ""
 
-#: library/os.path.rst:477
+#: library/os.path.rst:494
+msgid "If the path contains no extension, *ext* will be ``''``::"
+msgstr ""
+
+#: library/os.path.rst:499
+msgid ""
+"If the path contains an extension, then *ext* will be set to this extension, "
+"including the leading period. Note that previous periods will be ignored::"
+msgstr ""
+
+#: library/os.path.rst:505
+msgid "Leading periods on the basename are ignored::"
+msgstr ""
+
+#: library/os.path.rst:516
 msgid ""
 "``True`` if arbitrary Unicode strings can be used as file names (within "
 "limitations imposed by the file system)."
