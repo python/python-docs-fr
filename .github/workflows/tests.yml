@@ -83,7 +83,7 @@ jobs:
         run: |
           mkdir -p ~/locales/fr/LC_MESSAGES/
           cp -uv --parents *.po */*.po ~/locales/fr/LC_MESSAGES/
-          git -C ~/cpython checkout 895591c1f0bdec5ad357fe6a5fd0875990061357
+          git -C ~/cpython checkout $(grep ^CPYTHON_CURRENT_COMMIT Makefile| cut -d= -f2)
       - name: Prepare venv
         run: |
           # If the venv exists but is broken, drop it (happens on Python upgrades):
@@ -91,4 +91,4 @@ jobs:
           [ -d $HOME/cpython/Doc/venv/bin/ -a ! -e $HOME/cpython/Doc/venv/bin/python ] && rm -fr $HOME/cpython/Doc/venv
           make -C $HOME/cpython/Doc venv
       - name: sphinx-build
-        run: make -C $HOME/cpython/Doc SPHINXOPTS="-qW -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
+        run: make -C $HOME/cpython/Doc SPHINXOPTS="-q -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html

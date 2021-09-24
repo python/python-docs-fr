@@ -3,13 +3,12 @@
 # Here is what you can do:
 #
 # - make  # Automatically build an HTML local version
-# - make todo  # To list remaining tasks
+# - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
 # - make wrap  # To check for wrapping
 # - make spell  # To check for spelling
 # - make merge  # To merge pot from upstream
 # - make fuzzy  # To find fuzzy strings
-# - make progress  # To compute current progression
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -21,12 +20,12 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := cf739332bd039cd2303b58663a804f784883820d
+CPYTHON_CURRENT_COMMIT := d5feb2b1f12a15c1a9bac094a8f6f77d0cfcbdc2
 
 CPYTHON_PATH := ../cpython/
 
 LANGUAGE := fr
-BRANCH := 3.9
+BRANCH := 3.10
 
 EXCLUDED := whatsnew/ c-api/
 
@@ -62,7 +61,7 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
-	  SPHINXOPTS='-W -j$(JOBS)         \
+	  SPHINXOPTS='-j$(JOBS)         \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
 	  -D gettext_compact=0           \
@@ -104,14 +103,6 @@ ensure_prerequisites:
 .PHONY: serve
 serve:
 	$(MAKE) -C $(CPYTHON_PATH)/Doc/ serve
-
-
-.PHONY: progress
-progress:
-	@$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
-	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
-	$(shell msgcat *.po */*.po | grep -c '^msgid')
-
 
 .PHONY: todo
 todo: ensure_prerequisites

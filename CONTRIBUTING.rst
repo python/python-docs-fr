@@ -104,7 +104,7 @@ Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier
 suivez cette procédure :
 
 Pour travailler, nous avons besoin d'une branche, basée sur une version à jour
-(fraîchement récupérée) de la branche « upstream/3.9 ». On met donc à jour notre
+(fraîchement récupérée) de la branche « upstream/3.10 ». On met donc à jour notre
 version locale.
 
 .. code-block:: bash
@@ -112,14 +112,14 @@ version locale.
     git fetch upstream
 
 
-On crée ensuite la branche, en la basant sur « upstream/3.9 », fraîchement récupérée.
+On crée ensuite la branche, en la basant sur « upstream/3.10 », fraîchement récupérée.
 Il est pratique de nommer cette branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.9
+    git checkout -b library-sys upstream/3.10
 
 
 Vous pouvez maintenant travailler sur le fichier.
@@ -297,13 +297,13 @@ de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
 rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (3.8, 3.9, etc.), seulement récupéré les
+branche de version (3.9, 3.10, etc.), seulement récupéré les
 modifications à partir d'elles.
 
 Toutes les traductions sont faites sur la dernière version.
 Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
-si la dernière version de python est Python 3.9, nous ne voulons pas
-traduire directement sur la version Python 3.5.
+si la dernière version de python est Python 3.10, nous ne voulons pas
+traduire directement sur la version Python 3.6.
 Si nécessaire, les traductions seraient rétroportées sur les versions
 les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
@@ -534,6 +534,7 @@ statement                  instruction
 subprocess                 sous-processus
 support                    prendre en charge, implémenter (« supporter »
                            n'a pas le même sens en français)
+token (parsing)            lexème
 thread                     fil d'exécution
 traceback                  trace d'appels, trace de pile
 tuple                      *n*-uplet (avec *n* en italique), on peut
@@ -726,38 +727,55 @@ avertissements.
 Outils utiles pour la traduction
 --------------------------------
 
-Potodo
-~~~~~~
+Poutils
+~~~~~~~
 
-| Permet de d'identifier les parties de la documention qu'il reste à traduire.
-| Installez-le à l'aide de *pip* (``pip install potodo``) dans un environnement
-  ``python3.6`` ou plus.
-| `Lien vers le dépôt <https://github.com/AFPy/potodo>`__
+`Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
+regroupe un certain nombre d'outils liés à la traduction. Dans un
+environnement disposant de Python 3.7 ou plus, installez-le avec ::
+
+  python3 -m pip install poutils
+
+Voici le détail des paquets qui nous intéressent dans Poutils :
+
+Pospell
++++++++
+
+Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
+Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
+dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
+dictionnaires français qui diffèrent en raison de l'orthographe
+réformée. Installez celui qui contient les deux orthographes avec ::
+
+  sudo apt install hunspell hunspell-fr-comprehensive
+
+Potodo
+++++++
+
+Permet d'identifier les parties de la documentation qu'il reste à
+traduire.  ``make todo`` fait appel à Potodo.
 
 Pogrep
-~~~~~~
+++++++
 
-| Permet de rechercher dans la documentation des termes. Utile si on a un doute
-  sur comment traduire un terme ou chercher la traduction d'un terme dans
-  d'autres fichiers.
-| Installez-le à l'aide de *pip* (``pip install pogrep``).
-| `Lien vers le dépôt <https://github.com/AFPy/pogrep>`__
+Permet de rechercher dans la documentation des termes. Utile si on a un doute
+sur comment traduire un terme ou chercher la traduction d'un terme dans
+d'autres fichiers. Pour connaître les options disponibles, tapez ::
 
-Padpo (beta)
-~~~~~~~~~~~~
-
-| Analyseur de code qui vérifie la grammaire et l'orthographe et la syntaxe
-  du fichier .po.
-| Installez-le à l'aide de *pip* (``pip install padpo``) dans un environnement
-  ``python3.7`` ou plus.
-| `Lien vers le dépôt <https://github.com/AFPy/padpo>`__
+  pogrep --help
 
 Powrap
-~~~~~~
+++++++
 
-| Formateur de fichier .po.
-| Installez-le à l'aide de *pip* (``pip install powrap``).
-| `Lien vers le dépôt <https://github.com/AFPy/powrap>`__
+Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
+wrap``.
+
+Padpo (beta)
+++++++++++++
+
+Analyseur de code qui encapsule notamment `Grammalecte
+<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
+et la syntaxe des fichiers *.po*.
 
 
 Affichage des modifications par Git

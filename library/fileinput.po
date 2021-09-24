@@ -5,18 +5,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-01 16:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2021-09-23 16:16+0200\n"
+"PO-Revision-Date: 2021-09-19 23:19+0200\n"
+"Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: library/fileinput.rst:2
 msgid ":mod:`fileinput` --- Iterate over lines from multiple input streams"
-msgstr ""
+msgstr ":mod:`fileinput` — Parcourt les lignes provenant de plusieurs entrées"
 
 #: library/fileinput.rst:10
 msgid "**Source code:** :source:`Lib/fileinput.py`"
@@ -28,10 +29,13 @@ msgid ""
 "over standard input or a list of files. If you just want to read or write "
 "one file see :func:`open`."
 msgstr ""
+"Ce module offre une classe auxiliaire et des fonctions pour lire facilement "
+"l'entrée standard ou bien les fichiers d'une liste. Si vous n'avez besoin de "
+"lire ou écrire qu'un seul fichier, il suffit de :func:`open`."
 
 #: library/fileinput.rst:18
 msgid "The typical use is::"
-msgstr ""
+msgstr "Ce module s'utilise le plus couramment comme ceci :"
 
 #: library/fileinput.rst:24
 msgid ""
@@ -42,6 +46,12 @@ msgid ""
 "it as the first argument to :func:`.input`.  A single file name is also "
 "allowed."
 msgstr ""
+"Ce code traite une à une les lignes des fichiers de ``sys.argv[1:]``. Si "
+"cette liste est vide (pas d'argument en ligne de commande), il lit l'entrée "
+"standard. Le nom de fichier ``'-'`` est équivalent à l'entrée standard (les "
+"arguments facultatifs *mode* et *openhook* sont ignorés dans ce cas). On "
+"peut aussi passer la liste des fichiers comme argument à :func:`.input`, "
+"voire un nom de fichier unique."
 
 #: library/fileinput.rst:30
 msgid ""
@@ -50,12 +60,16 @@ msgid ""
 "`FileInput`.  If an I/O error occurs during opening or reading a file, :exc:"
 "`OSError` is raised."
 msgstr ""
+"Par défaut, tous les fichiers sont ouverts en mode texte. On peut changer ce "
+"comportement à l'aide du paramètre *mode* de la fonction :func:`.input` ou "
+"du constructeur de :class:`FileInput`. Si une erreur d'entrée-sortie se "
+"produit durant l'ouverture ou la lecture d'un fichier, l'exception :exc:"
+"`OSError` est levée."
 
 #: library/fileinput.rst:35
-#, fuzzy
 msgid ":exc:`IOError` used to be raised; it is now an alias of :exc:`OSError`."
 msgstr ""
-":exc:`IOError` était normalement levée, elle est maintenant un alias de :exc:"
+":exc:`IOError` était levée auparavant, elle est devenue un alias de :exc:"
 "`OSError`."
 
 #: library/fileinput.rst:38
@@ -64,6 +78,10 @@ msgid ""
 "return no lines, except perhaps for interactive use, or if it has been "
 "explicitly reset (e.g. using ``sys.stdin.seek(0)``)."
 msgstr ""
+"Si ``sys.stdin`` apparaît plus d'une fois dans la liste, toutes les lignes "
+"sont consommées dès la première fois, sauf éventuellement en cas d'usage "
+"interactif ou si le flux d'entrée standard a été modifié dans l'intervalle "
+"(par exemple avec ``sys.stdin.seek(0)``)."
 
 #: library/fileinput.rst:42
 msgid ""
@@ -71,94 +89,144 @@ msgid ""
 "in the list of filenames is noticeable at all is when the last file opened "
 "is empty."
 msgstr ""
+"Les fichiers vides sont ouverts et refermés immédiatement. Ils ne sont pas "
+"détectables dans la liste des fichiers, sauf éventuellement dans le cas où "
+"le dernier fichier est vide."
 
 #: library/fileinput.rst:46
 msgid ""
 "Lines are returned with any newlines intact, which means that the last line "
 "in a file may not have one."
 msgstr ""
+"Les caractères de saut de ligne sont préservés, donc toutes les lignes se "
+"terminent par un saut de ligne, sauf éventuellement la dernière ligne d'un "
+"fichier."
 
 #: library/fileinput.rst:49
+#, fuzzy
 msgid ""
 "You can control how files are opened by providing an opening hook via the "
 "*openhook* parameter to :func:`fileinput.input` or :class:`FileInput()`. The "
 "hook must be a function that takes two arguments, *filename* and *mode*, and "
-"returns an accordingly opened file-like object. Two useful hooks are already "
-"provided by this module."
+"returns an accordingly opened file-like object. If *encoding* and/or "
+"*errors* are specified, they will be passed to the hook as aditional keyword "
+"arguments. This module provides a :func:`hook_compressed` to support "
+"compressed files."
 msgstr ""
+"Le paramètre *openhook* donne le contrôle sur la manière dont les fichiers "
+"sont ouverts par :func:`fileinput.input` ou :class:`FileInput()`. Il s'agit "
+"d'un point d'entrée automatique (*hook* en anglais). S'il est précisé, sa "
+"valeur doit être une fonction, qui est appelée avec les arguments *filename* "
+"et *mode* pour renvoyer un objet fichier-compatible ouvert selon *mode*. Ce "
+"module contient deux fonctions prédéfinies qui peuvent être passées pour "
+"*openhook*."
 
-#: library/fileinput.rst:55
+#: library/fileinput.rst:56
 msgid "The following function is the primary interface of this module:"
-msgstr ""
+msgstr "La fonction suivante constitue l'interface principale du module :"
 
-#: library/fileinput.rst:60
+#: library/fileinput.rst:61
 msgid ""
 "Create an instance of the :class:`FileInput` class.  The instance will be "
 "used as global state for the functions of this module, and is also returned "
 "to use during iteration.  The parameters to this function will be passed "
 "along to the constructor of the :class:`FileInput` class."
 msgstr ""
+"Crée une instance de :class:`FileInput`, qui devient l'état global pour "
+"toutes les fonctions du module. Elle est également renvoyée afin que "
+"l'utilisateur puisse la parcourir comme un objet itérable. Tous les "
+"paramètres de cette fonction sont transmis au constructeur de :class:"
+"`FileInput`."
 
-#: library/fileinput.rst:65
+#: library/fileinput.rst:66
 msgid ""
 "The :class:`FileInput` instance can be used as a context manager in the :"
 "keyword:`with` statement.  In this example, *input* is closed after the :"
 "keyword:`!with` statement is exited, even if an exception occurs::"
 msgstr ""
+"Les instances de :class:`FileInput` peuvent s'utiliser comme gestionnaires "
+"de contexte, avec l'instruction :keyword:`with`. Dans le code suivant, "
+"*input* est fermé lorsque le bloc :keyword:`!with` se termine, y compris si "
+"une exception l'a interrompu."
 
-#: library/fileinput.rst:166
+#: library/fileinput.rst:171
 msgid "Can be used as a context manager."
-msgstr ""
+msgstr "prise en charge du protocole de gestionnaire de contexte."
 
-#: library/fileinput.rst:76
+#: library/fileinput.rst:77
 msgid "The keyword parameters *mode* and *openhook* are now keyword-only."
-msgstr ""
+msgstr "les paramètres *mode* et *openhook* doivent être nommés."
 
-#: library/fileinput.rst:80
+#: library/fileinput.rst:183 library/fileinput.rst:213
+#, fuzzy
+msgid "The keyword-only parameter *encoding* and *errors* are added."
+msgstr ""
+"les paramètres *mode* et *openhook* doivent impérativement être nommés."
+
+#: library/fileinput.rst:84
 msgid ""
 "The following functions use the global state created by :func:`fileinput."
 "input`; if there is no active state, :exc:`RuntimeError` is raised."
 msgstr ""
+"Toutes les fonctions suivantes font appel à l'état global du module mis en "
+"place par :func:`fileinput.input`. L'absence de cet état déclenche "
+"l'exception :exc:`RuntimeError`."
 
-#: library/fileinput.rst:86
+#: library/fileinput.rst:90
 msgid ""
 "Return the name of the file currently being read.  Before the first line has "
 "been read, returns ``None``."
 msgstr ""
+"Renvoie le nom du fichier en train d'être lu, ou ``None`` avant la lecture "
+"de la toute première ligne."
 
-#: library/fileinput.rst:92
+#: library/fileinput.rst:96
 msgid ""
 "Return the integer \"file descriptor\" for the current file. When no file is "
 "opened (before the first line and between files), returns ``-1``."
 msgstr ""
+"Renvoie le descripteur de fichier (sous forme d'entier) utilisé pour lire le "
+"fichier courant. Si aucun fichier n'est ouvert (avant la première ligne et "
+"entre les fichiers), le résultat est ``-1``."
 
-#: library/fileinput.rst:98
+#: library/fileinput.rst:102
 msgid ""
 "Return the cumulative line number of the line that has just been read.  "
 "Before the first line has been read, returns ``0``.  After the last line of "
 "the last file has been read, returns the line number of that line."
 msgstr ""
+"Renvoie le numéro de la ligne qui vient d'être lue, en commençant par la "
+"première ligne du premier fichier. Avant cette toute première ligne, renvoie "
+"``0``. Après la dernière ligne du dernier fichier, renvoie le numéro de "
+"cette ligne."
 
-#: library/fileinput.rst:105
+#: library/fileinput.rst:109
 msgid ""
 "Return the line number in the current file.  Before the first line has been "
 "read, returns ``0``.  After the last line of the last file has been read, "
 "returns the line number of that line within the file."
 msgstr ""
+"Renvoie le numéro de ligne relatif au fichier courant. Avant la toute "
+"première ligne, renvoie ``0``. Après la toute dernière ligne, renvoie le "
+"numéro de cette ligne par rapport à son fichier source."
 
-#: library/fileinput.rst:112
+#: library/fileinput.rst:116
 msgid ""
 "Return ``True`` if the line just read is the first line of its file, "
 "otherwise return ``False``."
 msgstr ""
+"Renvoie ``True`` ou ``False`` selon que la ligne qui vient d'être lue est la "
+"première du fichier."
 
-#: library/fileinput.rst:118
+#: library/fileinput.rst:122
 msgid ""
 "Return ``True`` if the last line was read from ``sys.stdin``, otherwise "
 "return ``False``."
 msgstr ""
+"``True`` ou ``False`` selon que la dernière ligne lue provenait de ``sys."
+"stdin`` ou non."
 
-#: library/fileinput.rst:124
+#: library/fileinput.rst:128
 msgid ""
 "Close the current file so that the next iteration will read the first line "
 "from the next file (if any); lines not read from the file will not count "
@@ -168,18 +236,29 @@ msgid ""
 "file.  After the last line of the last file has been read, this function has "
 "no effect."
 msgstr ""
+"Ferme le fichier courant et laisse la lecture se poursuivre au début du "
+"suivant (ou se terminer si c'était le dernier fichier ; dans ce cas cette "
+"fonction ne fait rien). Les lignes court-circuitées ne comptent pas dans les "
+"numéros des lignes des fichiers suivants. Le nom du fichier courant n'est "
+"pas modifié immédiatement, mais seulement après que la première ligne du "
+"fichier suivant a été lue. Cette fonction n'a pas d'effet avant la lecture "
+"de la première ligne (elle ne peut pas sauter le premier fichier)."
 
-#: library/fileinput.rst:134
+#: library/fileinput.rst:138
 msgid "Close the sequence."
 msgstr ""
+"Ferme le fichier courant et termine la lecture en sautant les fichiers "
+"suivants."
 
-#: library/fileinput.rst:136
+#: library/fileinput.rst:140
 msgid ""
 "The class which implements the sequence behavior provided by the module is "
 "available for subclassing as well:"
 msgstr ""
+"La classe qui implémente ce comportement du module est publique. On peut en "
+"créer des classes filles."
 
-#: library/fileinput.rst:142
+#: library/fileinput.rst:146
 msgid ""
 "Class :class:`FileInput` is the implementation; its methods :meth:"
 "`filename`, :meth:`fileno`, :meth:`lineno`, :meth:`filelineno`, :meth:"
@@ -190,40 +269,66 @@ msgid ""
 "behavior. The sequence must be accessed in strictly sequential order; random "
 "access and :meth:`~io.TextIOBase.readline` cannot be mixed."
 msgstr ""
+":class:`FileInput` est l'implémentation principale du module. Ses méthodes :"
+"meth:`filename`, :meth:`fileno`, :meth:`lineno`, :meth:`filelineno`, :meth:"
+"`isfirstline`, :meth:`isstdin`, :meth:`nextfile` et :meth:`close` "
+"correspondent aux fonctions du même nom au niveau du module. Elle possède "
+"également une méthode :meth:`~io.TextIOBase.readline`, qui lit une nouvelle "
+"ligne et la renvoie, ainsi qu'une méthode :meth:`__getitem__` qui permet "
+"l'accès à un indice. Il faut lire les éléments de la séquence strictement "
+"dans l'ordre (l'accès à un indice arbitraire n'étant pas compatible avec :"
+"meth:`~io.TextIOBase.readline`)."
 
-#: library/fileinput.rst:151
+#: library/fileinput.rst:155
 msgid ""
 "With *mode* you can specify which file mode will be passed to :func:`open`. "
 "It must be one of ``'r'``, ``'rU'``, ``'U'`` and ``'rb'``."
 msgstr ""
+"Le paramètre *mode* permet de préciser le mode d'ouverture des fichiers. Il "
+"est passé directement à :func:`open`. Les valeurs possibles sont ``'r'``, "
+"``'rU'``, ``'U'`` et ``'rb'``."
 
-#: library/fileinput.rst:154
+#: library/fileinput.rst:158
 msgid ""
 "The *openhook*, when given, must be a function that takes two arguments, "
 "*filename* and *mode*, and returns an accordingly opened file-like object. "
 "You cannot use *inplace* and *openhook* together."
 msgstr ""
+"S'il est fourni, l'argument *openhook* est une fonction. Elle est appelée "
+"avec les paramètres *filename* et *mode*, et renvoie un objet fichier-"
+"compatible ouvert selon *mode*. Notez que *openhook* et *inplace* sont "
+"mutuellement exclusifs."
 
-#: library/fileinput.rst:158
+#: library/fileinput.rst:162
+msgid ""
+"You can specify *encoding* and *errors* that is passed to :func:`open` or "
+"*openhook*."
+msgstr ""
+
+#: library/fileinput.rst:164
 msgid ""
 "A :class:`FileInput` instance can be used as a context manager in the :"
 "keyword:`with` statement.  In this example, *input* is closed after the :"
 "keyword:`!with` statement is exited, even if an exception occurs::"
 msgstr ""
+"Les objets :class:`FileInput` peuvent aussi fonctionner comme gestionnaires "
+"de contexte dans un bloc :keyword:`with`. Dans l'exemple suivant, *input* "
+"est fermé à la fin du bloc :keyword:`!with`, même arrêté par une exception."
 
-#: library/fileinput.rst:169
+#: library/fileinput.rst:174
 msgid "The ``'rU'`` and ``'U'`` modes."
-msgstr ""
+msgstr "modes ``'rU'`` et ``'U'``."
 
-#: library/fileinput.rst:172
+#: library/fileinput.rst:177
 msgid "Support for :meth:`__getitem__` method is deprecated."
-msgstr ""
-
-#: library/fileinput.rst:175
-msgid "The keyword parameter *mode* and *openhook* are now keyword-only."
-msgstr ""
+msgstr "accès à un indice avec :meth:`__getitem__`."
 
 #: library/fileinput.rst:180
+msgid "The keyword parameter *mode* and *openhook* are now keyword-only."
+msgstr ""
+"les paramètres *mode* et *openhook* doivent impérativement être nommés."
+
+#: library/fileinput.rst:187
 msgid ""
 "**Optional in-place filtering:** if the keyword argument ``inplace=True`` is "
 "passed to :func:`fileinput.input` or to the :class:`FileInput` constructor, "
@@ -236,37 +341,74 @@ msgid ""
 "extension is ``'.bak'`` and it is deleted when the output file is closed.  "
 "In-place filtering is disabled when standard input is read."
 msgstr ""
+"**Filtrage sur place optionnel :** si ``inplace=True`` est passé à :func:"
+"`fileinput.input` ou au constructeur de :class:`FileInput`, chaque fichier "
+"d'entrée est déplacé vers une sauvegarde et la sortie standard est redirigée "
+"vers le fichier lui-même, ce qui permet d'écrire des filtres qui modifient "
+"directement les fichiers existants. Si le paramètre *backup* est fourni, il "
+"donne l'extension des fichiers de sauvegarde. Dans ce cas, la sauvegarde est "
+"conservée après l'opération. Par défaut, les fichiers de sauvegarde ont "
+"l'extension ``'.bak'`` et sont supprimés dès que le fichier de sortie est "
+"fermé. Si un fichier existe avec le même nom que la sauvegarde, il est "
+"écrasé. Le filtrage sur place ne fait rien pour l'entrée standard."
 
-#: library/fileinput.rst:192
+#: library/fileinput.rst:199
 msgid "The two following opening hooks are provided by this module:"
 msgstr ""
+"Les deux fonctions suivantes fournissent des valeurs prédéfinies pour "
+"*openhook*."
 
-#: library/fileinput.rst:196
+#: library/fileinput.rst:203
 msgid ""
 "Transparently opens files compressed with gzip and bzip2 (recognized by the "
 "extensions ``'.gz'`` and ``'.bz2'``) using the :mod:`gzip` and :mod:`bz2` "
 "modules.  If the filename extension is not ``'.gz'`` or ``'.bz2'``, the file "
 "is opened normally (ie, using :func:`open` without any decompression)."
 msgstr ""
+"Ouvre de façon transparente les fichiers compressés avec gzip ou bzip2, à "
+"l'aide des modules :mod:`gzip` et :mod:`bz2`. Les fichiers compressés sont "
+"reconnus aux extensions ``'.gz'`` et ``'.bz2'``. Tous les fichiers qui n'ont "
+"pas l'une de ces deux extensions sont ouverts normalement (avec :func:"
+"`open`, sans décompression)."
 
-#: library/fileinput.rst:201
+#: library/fileinput.rst:208
 msgid ""
-"Usage example:  ``fi = fileinput.FileInput(openhook=fileinput."
-"hook_compressed)``"
+"The *encoding* and *errors* values are passed to :class:`io.TextIOWrapper` "
+"for compressed files and open for normal files."
 msgstr ""
 
-#: library/fileinput.rst:206
+#: library/fileinput.rst:211
+#, fuzzy
+msgid ""
+"Usage example:  ``fi = fileinput.FileInput(openhook=fileinput."
+"hook_compressed, encoding=\"utf-8\")``"
+msgstr ""
+"Exemple d'utilisation : ``fi = fileinput.FileInput(openhook=fileinput."
+"hook_compressed)``."
+
+#: library/fileinput.rst:219
 msgid ""
 "Returns a hook which opens each file with :func:`open`, using the given "
 "*encoding* and *errors* to read the file."
 msgstr ""
+"Renvoie une fonction qui ouvre les fichiers en passant à :func:`open` les "
+"arguments *encoding* et *errors*. Le résultat peut être exploité à travers "
+"le point d'entrée automatique *openhook*."
 
-#: library/fileinput.rst:209
+#: library/fileinput.rst:222
 msgid ""
 "Usage example: ``fi = fileinput.FileInput(openhook=fileinput."
 "hook_encoded(\"utf-8\", \"surrogateescape\"))``"
 msgstr ""
+"Exemple d'utilisation : ``fi = fileinput.FileInput(openhook=fileinput."
+"hook_encoded(\"utf-8\", \"surrogateescape\"))``."
 
-#: library/fileinput.rst:213
+#: library/fileinput.rst:226
 msgid "Added the optional *errors* parameter."
+msgstr "ajout du paramètre facultatif *errors*."
+
+#: library/fileinput.rst:229
+msgid ""
+"This function is deprecated since :func:`input` and :class:`FileInput` now "
+"have *encoding* and *errors* parameters."
 msgstr ""
