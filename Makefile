@@ -148,3 +148,5 @@ clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
 	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
+	@echo "Cleaning build directory"
+	$(MAKE) -C venv/cpython/Doc/ clean
