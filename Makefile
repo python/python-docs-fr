@@ -120,6 +120,9 @@ fuzzy: ensure_prerequisites
 .PHONY: verifs
 verifs: wrap spell
 
+# Attention à ne pas utiliser $(shell ...) pour git rev-parse
+# car cela exécute la commande à la lecture du Makefile, avant
+# les commandes git du début de la règle.
 .PHONY: merge
 merge: ensure_prerequisites
 	@echo "Merge from $(UPSTREAM)"
@@ -141,7 +144,7 @@ merge: ensure_prerequisites
 	rm -fr venv/cpython/pot/
 	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
 	powrap -m
-	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C venv/cpython/ rev-parse HEAD)
+	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " `git -C venv/cpython/ rev-parse HEAD`
 	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done\n'
 
 .PHONY: clean
