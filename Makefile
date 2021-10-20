@@ -7,8 +7,9 @@
 # - make verifs  # To check for correctness: wrapping, spelling
 # - make wrap  # To check for wrapping
 # - make spell  # To check for spelling
-# - make merge  # To merge pot from upstream
+# - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
+# - make merge  # To merge pot from upstream
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -148,3 +149,5 @@ clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
 	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
+	@echo "Cleaning build directory"
+	$(MAKE) -C venv/cpython/Doc/ clean
