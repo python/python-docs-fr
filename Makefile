@@ -26,7 +26,15 @@ CPYTHON_CURRENT_COMMIT := d5feb2b1f12a15c1a9bac094a8f6f77d0cfcbdc2
 LANGUAGE := fr
 BRANCH := 3.10
 
-EXCLUDED := whatsnew/ c-api/
+EXCLUDED := \
+	whatsnew/ \
+	c-api/ \
+	distutils/ \
+	install/ \
+	library/2to3.po \
+	library/distutils.po \
+	library/imp.po \
+	library/tkinter.tix \
 
 # Internal variables
 

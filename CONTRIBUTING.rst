@@ -316,12 +316,17 @@ Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers *po*
 à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
 local.
 
-Vous pouvez choisir n'importe quel fichier non réservé dans la liste
-renvoyée par la commande **à l'exception** des fichiers de :
+Vous pouvez choisir n'importe quel fichier non réservé dans la liste renvoyée.
+Elle contient tous les fichiers qui ne sont pas encore complètement traduits, à
+l'exception des fichiers de :
 
 - *c-api/* car c'est une partie très technique ;
-- *whatsnew/* car les anciennes versions de Python sont pour la plupart obsolètes et leurs journaux de modifications ne sont pas les pages les plus consultées ;
-- *distutils/* et *install/* car ces pages seront bientôt obsolètes.
+- *whatsnew/* car les anciennes versions de Python sont pour la plupart
+  obsolètes et leurs journaux de modifications ne sont pas les pages les plus
+  consultées ;
+- *distutils/*, *install/*, et quelques autres parties qui seront bientôt
+  obsolètes. De manière générale, il n'est pas utile de traduire un module que
+  sa documentation mentionne comme obsolète.
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
