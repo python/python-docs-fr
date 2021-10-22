@@ -7,7 +7,7 @@
 # - make verifs  # To check for correctness: wrapping, spelling
 # - make wrap  # To check for wrapping
 # - make spell  # To check for spelling
-# - make merge  # To merge pot from upstream
+# - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
@@ -20,12 +20,21 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := d5feb2b1f12a15c1a9bac094a8f6f77d0cfcbdc2
+CPYTHON_CURRENT_COMMIT := 00ddc1fbd7296ffe066077194a895b175cca26de
+
 
 LANGUAGE := fr
 BRANCH := 3.10
 
-EXCLUDED := whatsnew/ c-api/
+EXCLUDED := \
+	whatsnew/ \
+	c-api/ \
+	distutils/ \
+	install/ \
+	library/2to3.po \
+	library/distutils.po \
+	library/imp.po \
+	library/tkinter.tix \
 
 # Internal variables
 
@@ -119,32 +128,10 @@ fuzzy: ensure_prerequisites
 .PHONY: verifs
 verifs: wrap spell
 
-.PHONY: merge
-merge: ensure_prerequisites
-	@echo "Merge from $(UPSTREAM)"
-	git -C venv/cpython/ checkout $(BRANCH)
-	git -C venv/cpython/ pull --ff-only
-	(cd venv/cpython/Doc; sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
-	find venv/cpython/pot/ -name '*.pot' |\
-	    while read -r POT; \
-	    do \
-	        PO="./$$(echo "$$POT" | sed "s#venv/cpython/pot/##; s#\.pot\$$#.po#")"; \
-	        mkdir -p "$$(dirname "$$PO")"; \
-	        if [ -f "$$PO" ]; \
-	        then \
-	            msgmerge --backup=off --force-po -U "$$PO" "$$POT"; \
-	        else \
-	            msgcat -o "$$PO" "$$POT"; \
-	        fi \
-	    done
-	rm -fr venv/cpython/pot/
-	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
-	powrap -m
-	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C venv/cpython/ rev-parse HEAD)
-	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done\n'
-
 .PHONY: clean
 clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
 	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
+	@echo "Cleaning build directory"
+	$(MAKE) -C venv/cpython/Doc/ clean
