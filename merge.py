@@ -6,8 +6,16 @@ import re
 import shutil
 from pathlib import Path
 import argparse
-from subprocess import run, PIPE
+import subprocess
+from subprocess import PIPE
 from tqdm import tqdm
+
+
+def run(*args: str | Path, **kwargs) -> subprocess.CompletedProcess:
+    """Run a shell command with subprocess.run() with check=True and
+    encoding="UTF-8".
+    """
+    return subprocess.run(list(args), encoding="UTF-8", check=True, **kwargs)
 
 
 def parse_args():
@@ -24,8 +32,8 @@ def parse_args():
 
 def setup_repo(repo_path: Path, branch: str):
     """Ensure we're up-to-date."""
-    run(["git", "-C", repo_path, "checkout", branch])
-    run(["git", "-C", repo_path, "pull", "--ff-only"])
+    run("git", "-C", repo_path, "checkout", branch)
+    run("git", "-C", repo_path, "pull", "--ff-only")
 
 
 def copy_new_files(new_files: set[Path], pot_path: Path) -> None:
@@ -34,7 +42,7 @@ def copy_new_files(new_files: set[Path], pot_path: Path) -> None:
     for file in new_files:
         file.parent.mkdir(parents=True, exist_ok=True)
         src = (pot_path / file).with_suffix(".pot")
-        run(["msgcat", "-o", file, src])
+        run("msgcat", "-o", file, src)
 
 
 def update_known_files(known_files: set[Path], pot_path: Path) -> None:
@@ -42,11 +50,7 @@ def update_known_files(known_files: set[Path], pot_path: Path) -> None:
     print(f"{len(known_files)} files to update.")
     for file in tqdm(known_files, desc="merging pot files"):
         src = (pot_path / file).with_suffix(".pot")
-        run(
-            ["msgmerge", "--backup=off", "--force-po", "-U", file, src],
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+        run("msgmerge", "-q", "--backup=off", "--force-po", "-U", file, src)
 
 
 def remove_old_files(old_files: set[Path]) -> None:
@@ -54,7 +58,7 @@ def remove_old_files(old_files: set[Path]) -> None:
     print(f"{len(old_files)} removed files.")
 
     for file in old_files:
-        run(["git", "rm", file])
+        run("git", "rm", file)
 
 
 def clean_paths(files: set[Path]) -> None:
@@ -76,11 +80,7 @@ def update_makefile(cpython_repo: Path) -> None:
     used to generate the `po` files.
     """
     makefile = Path("Makefile").read_text(encoding="UTF-8")
-    head = run(
-        ["git", "-C", cpython_repo, "rev-parse", "HEAD"],
-        stdout=PIPE,
-        encoding="UTF-8",
-    ).stdout
+    head = run("git", "-C", cpython_repo, "rev-parse", "HEAD", stdout=PIPE).stdout
     makefile = re.sub(
         "^CPYTHON_CURRENT_COMMIT :=.*$",
         f"CPYTHON_CURRENT_COMMIT := {head}",
@@ -88,7 +88,7 @@ def update_makefile(cpython_repo: Path) -> None:
         flags=re.M,
     )
     Path("Makefile").write_text(makefile, encoding="UTF-8")
-    run(["git", "add", "Makefile"])
+    run("git", "add", "Makefile")
 
 
 def git_add_relevant_files():
@@ -97,28 +97,22 @@ def git_add_relevant_files():
     This only add files with actual modifications, not just metadata
     modifications, to avoid noise in history.
     """
-    git_status = run(
-        ["git", "status", "--short"], stdout=PIPE, encoding="UTF-8"
-    ).stdout.split("\n")
-    to_add = [
-        line.split()[-1]
-        for line in git_status
-        if line.startswith(" M") and ".po" in line
-    ]
-    for file in to_add:
-        diff = run(["git", "diff", "-U0", file], encoding="UTF-8", stdout=PIPE).stdout
+    modified_files = run("git", "ls-files", "-m", stdout=PIPE).stdout.split("\n")
+    modified_po_files = [line for line in modified_files if line.endswith(".po")]
+    for file in modified_po_files:
+        diff = run("git", "diff", "-U0", file, stdout=PIPE).stdout
         if len(diff.split("\n")) > 8:
-            run(["git", "add", file])
+            run("git", "add", file)
         else:
-            run(["git", "checkout", "--", file])
-    run(["git", "rm", "-f", "whatsnew/changelog.po"])
+            run("git", "checkout", "--", file)
+    run("rm", "-f", "whatsnew/changelog.po")  # We don't translate this file.
 
 
 def main():
     args = parse_args()
     setup_repo(args.cpython_repo, args.branch)
     run(
-        ["sphinx-build", "-jauto", "-QDgettext_compact=0", "-bgettext", ".", "../pot"],
+        *["sphinx-build", "-jauto", "-QDgettext_compact=0", "-bgettext", ".", "../pot"],
         cwd=args.cpython_repo / "Doc",
     )
     pot_path = args.cpython_repo / "pot"
@@ -136,10 +130,10 @@ def main():
     remove_old_files(downstream - upstream)
     clean_paths((upstream - downstream) | (upstream & downstream))
     shutil.rmtree(pot_path)
-    run(["powrap", "-m"])
+    run("powrap", "-m")
     update_makefile(args.cpython_repo)
     git_add_relevant_files()
-    run(["git", "commit", "-m", "Make merge"])
+    run("git", "commit", "-m", "Make merge")
 
 
 if __name__ == "__main__":
