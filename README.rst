@@ -3,7 +3,7 @@ Traduction française de la documentation Python
 
 |build| |progression|
 
-.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.9
+.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.10
    :target: https://travis-ci.org/python/python-docs-fr
    :width: 45%
 
@@ -32,10 +32,10 @@ Vous pouvez contribuer :
   `mécène <https://liberapay.com/python-docs-fr>`_ du projet.
 
 Consultez le
-`guide <https://github.com/python/python-docs-fr/blob/3.9/CONTRIBUTING.rst>`_
+`guide <https://github.com/python/python-docs-fr/blob/3.10/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
-Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>` de
+Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>`_ de
 cette traduction est `Julien Palard (mdk) <https://mdk.fr/>`_.
 Vous pouvez obtenir de l'aide sur le canal
 `irc://irc.libera.chat/#python-fr <https://web.libera.chat/#python-fr>`_
