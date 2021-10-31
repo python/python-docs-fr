@@ -69,3 +69,8 @@ Historique du projet
 - 2021 : 50% de la documentation traduite.
 
 [![Progression de la traduction](https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png)](https://framagit.org/JulienPalard/write-the-docs-paris-19)
+
+.. image:: https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png
+   :target: https://framagit.org/JulienPalard/write-the-docs-paris-19
+   :alt: Progression de la traduction
+
