@@ -63,10 +63,10 @@ Historique du projet
 
 - vers 2000 : `lancement du projet <https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ ;
 - vers 2012 : `reprise <https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
-- 2016 : 15% de la documentation traduite ;
+- 2016 : 15 % de la documentation traduite ;
 - 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_ ;
-- 2019 : 30% de la documentation traduite ;
-- 2021 : 50% de la documentation traduite.
+- 2019 : 30 % de la documentation traduite ;
+- 2021 : 50 % de la documentation traduite.
 
 .. image:: https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png
    :target: https://framagit.org/JulienPalard/write-the-docs-paris-19
