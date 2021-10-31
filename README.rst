@@ -1,15 +1,6 @@
 Traduction française de la documentation Python
 ===============================================
 
-|build| |progression|
-
-.. |build| image:: https://travis-ci.org/python/python-docs-fr.svg?branch=3.10
-   :target: https://travis-ci.org/python/python-docs-fr
-   :width: 45%
-
-.. |progression| image:: https://img.shields.io/badge/dynamic/json.svg?label=fr&query=%24.fr&url=http%3A%2F%2Fgce.zhsj.me%2Fpython/newest
-   :width: 45%
-
 Ce projet est réalisé en collaboration avec l'`AFPy
 <https://www.afpy.org>`_ (Association Francophone Python), dont le but est la
 promotion du langage de développement Python dans l'ensemble des
@@ -72,6 +63,9 @@ Historique du projet
 
 - vers 2000 : `lancement du projet <https://julienpalard.frama.io/write-the-docs-paris-19/#/2>`_ ;
 - vers 2012 : `reprise <https://github.com/AFPy/python_doc_fr>`_ par l'`AFPy <https://www.afpy.org/>`_ ;
-- 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_.
+- 2016 : 15% de la documentation traduite ;
+- 2017 : le projet devient traduction officielle de la documentation Python par la `PEP 545 <https://www.python.org/dev/peps/pep-0545/>`_ ;
+- 2019 : 30% de la documentation traduite ;
+- 2021 : 50% de la documentation traduite.
 
-Une `vidéo <https://youtu.be/S2_Xui95erI>`_ de `Jules Lasne <https://github.com/Seluj78>`_ montre l'évolution du dépôt.
+[![Progression de la traduction](https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png)](https://framagit.org/JulienPalard/write-the-docs-paris-19)
