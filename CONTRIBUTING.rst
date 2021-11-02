@@ -152,7 +152,7 @@ en anglais.
     make spell
 
 
-Vous pouvez aussi réindenter les fichiers avec :
+Vous pouvez aussi vérifier l'indentation des fichiers avec :
 
 .. code-block:: bash
 
@@ -165,6 +165,14 @@ Et pour faire les deux à la fois, lancez :
 
     make verifs
 
+
+Si vous avez besoin de réindenter les fichiers, lancez :
+
+.. code-block:: bash
+
+    powrap -m
+
+* « *-m* » ou « *--modified* » utilise git pour trouver le(s) fichier(s) modifié(s).
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
 affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
