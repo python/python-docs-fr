@@ -152,18 +152,21 @@ en anglais.
     make spell
 
 
-Vous pouvez aussi réindenter les fichiers avec :
-
-.. code-block:: bash
-
-    make wrap
-
-
-Et pour faire les deux à la fois, lancez :
+Mais plus pratique, la commande ``verifs`` vérifie, en plus de
+l'orthograhpe, la longueur des lignes du fichier (qui ne doit jamais
+dépasser la 79ème colonne) :
 
 .. code-block:: bash
 
     make verifs
+
+
+Si la commande ``verifs`` trouve des problèmes de longueurs de ligne,
+corrigez-les avec :
+
+.. code-block:: bash
+
+    make wrap
 
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
