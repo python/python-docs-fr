@@ -141,33 +141,21 @@ Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 Traduction
 ~~~~~~~~~~
 
-Vous pouvez dès à présent commencer à traduire le fichier en respectant les `conventions`_ du projet.
-Pour vous aider à ne pas faire de fautes d'orthographe, vous pouvez vérifier que tous les mots utilisés sont
-bien dans le dictionnaire (ça ne vérifie pas la grammaire, pour cela utilisez `padpo (beta)`_). En cas
-de doute, un `glossaire`_ répertorie déjà les traductions retenues pour certains termes techniques ou faux amis
-en anglais.
-
-.. code-block:: bash
-
-    make spell
-
-
-Mais plus pratique, la commande ``verifs`` vérifie, en plus de
-l'orthograhpe, la longueur des lignes du fichier (qui ne doit jamais
-dépasser la 79ème colonne) :
+Vous pouvez dès à présent commencer à traduire le fichier en
+respectant les `conventions`_ du projet. Pour vous y aider, la commande :
 
 .. code-block:: bash
 
     make verifs
 
+vérifie la longueur des lignes et l'orthographe (mais pas la
+grammaire, pour cela utilisez `padpo (beta)`_). En cas de doute, un
+`glossaire`_ répertorie déjà les traductions retenues pour certains
+termes techniques ou faux amis en anglais.
 
-Si la commande ``verifs`` trouve des problèmes de longueurs de ligne,
-corrigez-les avec :
-
-.. code-block:: bash
-
-    make wrap
-
+Si ``make verifs`` trouve des problèmes de longueurs de ligne,
+vérifiez votre configuration ``poedit`` (Édition → Préférences →
+Avancé → Passer à la ligne à 79) ou utilisez ``make wrap``.
 
 Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
 affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
