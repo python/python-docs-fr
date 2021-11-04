@@ -5,7 +5,7 @@
 # - make  # Automatically build an HTML local version
 # - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
-# - make wrap  # To check for wrapping
+# - make wrap  # To rewrap modified files
 # - make spell  # To check for spelling
 # - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
@@ -106,8 +106,8 @@ todo: ensure_prerequisites
 
 .PHONY: wrap
 wrap: ensure_prerequisites
-	@echo "Verify wrapping"
-	powrap --check --quiet *.po **/*.po
+	@echo "Re wrapping modified files"
+	powrap -m
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
@@ -126,7 +126,8 @@ fuzzy: ensure_prerequisites
 	potodo -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: verifs
-verifs: wrap spell
+verifs: spell
+	powrap --check --quiet *.po */*.po
 
 .PHONY: clean
 clean:
