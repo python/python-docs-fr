@@ -32,7 +32,8 @@ EXCLUDED := \
 	library/2to3.po \
 	library/distutils.po \
 	library/imp.po \
-	library/tkinter.tix \
+	library/tkinter.tix.po \
+	library/test.po
 
 # Internal variables
 
