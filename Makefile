@@ -5,7 +5,7 @@
 # - make  # Automatically build an HTML local version
 # - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
-# - make wrap  # To check for wrapping
+# - make wrap  # To rewrap modified files
 # - make spell  # To check for spelling
 # - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
@@ -20,9 +20,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 00ddc1fbd7296ffe066077194a895b175cca26de
-
-
+CPYTHON_CURRENT_COMMIT := 75ed2ce9e86a7f213fa54e6f8cbbb3ab6f25b5a2
 LANGUAGE := fr
 BRANCH := 3.10
 
@@ -34,7 +32,8 @@ EXCLUDED := \
 	library/2to3.po \
 	library/distutils.po \
 	library/imp.po \
-	library/tkinter.tix \
+	library/tkinter.tix.po \
+	library/test.po
 
 # Internal variables
 
@@ -106,8 +105,8 @@ todo: ensure_prerequisites
 
 .PHONY: wrap
 wrap: ensure_prerequisites
-	@echo "Verify wrapping"
-	powrap --check --quiet *.po **/*.po
+	@echo "Re wrapping modified files"
+	powrap -m
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
@@ -126,7 +125,8 @@ fuzzy: ensure_prerequisites
 	potodo -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: verifs
-verifs: wrap spell
+verifs: spell
+	powrap --check --quiet *.po */*.po
 
 .PHONY: clean
 clean:
