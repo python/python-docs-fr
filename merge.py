@@ -80,7 +80,9 @@ def update_makefile(cpython_repo: Path) -> None:
     used to generate the `po` files.
     """
     makefile = Path("Makefile").read_text(encoding="UTF-8")
-    head = run("git", "-C", cpython_repo, "rev-parse", "HEAD", stdout=PIPE).stdout
+    head = run(
+        "git", "-C", cpython_repo, "rev-parse", "HEAD", stdout=PIPE
+    ).stdout.strip()
     makefile = re.sub(
         "^CPYTHON_CURRENT_COMMIT :=.*$",
         f"CPYTHON_CURRENT_COMMIT := {head}",
