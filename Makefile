@@ -25,7 +25,8 @@ LANGUAGE := fr
 BRANCH := 3.10
 
 EXCLUDED := \
-	whatsnew/ \
+	whatsnew/2.?.po \
+	whatsnew/3.[0-8].po \
 	c-api/ \
 	distutils/ \
 	install/ \
