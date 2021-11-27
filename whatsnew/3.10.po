@@ -5,9 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-27 10:27+0100\n"
-"PO-Revision-Date: 2021-11-01 14:48-0700\n"
-"Last-Translator: Yannick Gingras <ygingras@ygingras.net>\n"
+"POT-Creation-Date: 2021-10-21 15:04+0200\n"
+"PO-Revision-Date: 2021-11-16 09:30-0700\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1117,6 +1116,12 @@ msgid ""
 "have the :meth:`~object.__int__` method but do not have the :meth:`~object."
 "__index__` method). (Contributed by Serhiy Storchaka in :issue:`37999`.)"
 msgstr ""
+"Les fonctions d'extensions et les fonctions natives qui prennent des "
+"arguments entiers n'acceptent plus les :class:`~decimal.Decimal`, :class:"
+"`~fractions.Fraction` et autres objets qui ne peuvent pas être convertis en "
+"entiers sans perte de précision (par exemple ceux qui ont une méthode :meth:"
+"`~object.__int__` mais pas une méthode :meth:`~object.__index__`) "
+"(contribution de *Serhiy Storchaka* dans :issue:`37999`)."
 
 #: whatsnew/3.10.rst:826
 msgid ""
@@ -1124,12 +1129,18 @@ msgid ""
 "will correctly fall back to :func:`object.__pow__` and :func:`object."
 "__rpow__` as expected. (Contributed by Alex Shkop in :issue:`38302`.)"
 msgstr ""
+"Si :func:`object.__ipow__` renvoie :const:`NotImplemented`, l'opérateur va "
+"correctement se rabattre sur :func:`object.__pow__` et :func:`object."
+"__rpow__` tel qu'attendu (contribution d'*Alex Shkop* dans :issue:`38302`)."
 
 #: whatsnew/3.10.rst:830
 msgid ""
 "Assignment expressions can now be used unparenthesized within set literals "
 "and set comprehensions, as well as in sequence indexes (but not slices)."
 msgstr ""
+"Les expressions d'affectations peuvent maintenant être utilisées dans les "
+"littéraux d'ensembles, dans les compréhensions d'ensembles et dans les "
+"indices de séquences (mais pas dans les tranches)."
 
 #: whatsnew/3.10.rst:833
 msgid ""
@@ -1139,6 +1150,12 @@ msgid ""
 "``__globals__[\"__builtins__\"]`` if it exists, else from the current "
 "builtins. (Contributed by Mark Shannon in :issue:`42990`.)"
 msgstr ""
+"Les fonctions ont un nouvel attribut ``__builtins__`` qui est utilisé pour "
+"repérer les symboles natifs quand la fonction est exécutée, plutôt que de "
+"regarder dans ``__globals__['__builtins__']``. L'attribut est initialisé à "
+"partir de ``__globals__[\"__builtins__\"]`` s'il existe, ou des symboles "
+"natifs en cours autrement (contribution de *Mark Shannon* dans :issue:"
+"`42990`)."
 
 #: whatsnew/3.10.rst:839
 msgid ""
@@ -1147,6 +1164,10 @@ msgid ""
 "respectively. (Contributed by Joshua Bronson, Daniel Pope, and Justin Wang "
 "in :issue:`31861`.)"
 msgstr ""
+"Deux nouvelles fonctions natives – :func:`aiter` et :func:`anext` – ont été "
+"ajoutées pour fournir les équivalents asynchrones de :func:`iter` et de :"
+"func:`next`, respectivement (contribution de *Joshua Bronson*, *Daniel Pope* "
+"et *Justin Wang* dans :issue:`31861`)."
 
 #: whatsnew/3.10.rst:844
 msgid ""
@@ -1157,6 +1178,12 @@ msgid ""
 "static methods are now callable as regular functions. (Contributed by Victor "
 "Stinner in :issue:`43682`.)"
 msgstr ""
+"Les méthodes statiques (:func:`@staticmethod <staticmethod>`) et les "
+"méthodes de classes (:func:`@classmethod <classmethod>`) héritent maintenant "
+"des attributs de méthodes (``__module__``, ``__name__``, ``__qualname__``, "
+"``__doc__``, ``__annotations__``) et ont un nouvel attribut ``__wrapped__``. "
+"De plus, les méthodes statiques sont maintenant appelables en tant que "
+"fonctions classiques (contribution de *Victor Stinner* dans :issue:`43682`)."
 
 #: whatsnew/3.10.rst:851
 msgid ""
@@ -1165,6 +1192,10 @@ msgid ""
 "__future__ import annotations``. (Contributed by Batuhan Taskaya in :issue:"
 "`42737`.)"
 msgstr ""
+"Les annotations des cibles complexes (toutes cibles autre que ``simple "
+"name`` telles que définies dans la :pep:`526`) n'ont plus d'effet à "
+"l'exécution avec ``from __future__ import annotations`` (contribution de "
+"*Batuhan Taskaya* dans :issue:`42737`)."
 
 #: whatsnew/3.10.rst:855
 msgid ""
@@ -1174,6 +1205,12 @@ msgid ""
 "``__annotations__``; for more information, please see :ref:`annotations-"
 "howto`. (Contributed by Larry Hastings in :issue:`43901`.)"
 msgstr ""
+"Les objets ``class`` et ``module`` créent maintenant paresseusement un "
+"dictionnaire d'annotations vide sur demande. Les dictionnaires d'annotations "
+"sont stockés dans le ``__dict__`` de l'objet pour garder la retro-"
+"compatibilité.  Cela renforce les bonnes pratiques relatives à "
+"``__annotations__`` ; pour plus d'information, voir :ref:`annotations-howto` "
+"(contribution de *Larry Hastings* dans :issue:`43901`)."
 
 #: whatsnew/3.10.rst:862
 msgid ""
@@ -1182,6 +1219,10 @@ msgid ""
 "due to their side effects. (Contributed by Batuhan Taskaya in :issue:"
 "`42725`.)"
 msgstr ""
+"Les annotations qui contiennent ``yield``, ``yield from``, ``await`` ou une "
+"expression nommée ne sont plus permises sous ``from __future__ import "
+"annotations`` à cause de leurs effets secondaires (contribution de *Batuhan "
+"Taskaya* dans :issue:`42725`)."
 
 #: whatsnew/3.10.rst:867
 msgid ""
@@ -1190,6 +1231,10 @@ msgid ""
 "effectless under ``from __future__ import annotations``. (Contributed by "
 "Batuhan Taskaya in :issue:`42725`.)"
 msgstr ""
+"L'utilisation de variables non liées, de ``super()`` et d'autres expressions "
+"qui peuvent changer le traitement de la table des symboles en tant "
+"qu'annotation n'ont plus d'effet sous ``from __future__ import annotations`` "
+"(contribution de *Batuhan Taskaya* dans :issue:`42725`)."
 
 #: whatsnew/3.10.rst:872
 msgid ""
@@ -1200,6 +1245,13 @@ msgid ""
 "creating dictionaries and sets containing multiple NaNs. (Contributed by "
 "Raymond Hettinger in :issue:`43475`.)"
 msgstr ""
+"Le hachage des valeurs *NaN* des types :class:`float` et :class:`decimal."
+"Decimal` dépend maintenant de l'identité de l'objet. Préalablement, cette "
+"valeur de hachage était toujours ``0`` alors que les valeurs *NaN* ne sont "
+"pas égales entre elles. Cela pouvait potentiellement entrainer un temps "
+"d'exécution quadratique en raison des collisions excessives des valeurs de "
+"hachage lors de la création de dictionnaires et d'ensembles qui contiennent "
+"plusieurs *NaN* (contribution de *Raymond Hettinger* dans :issue:`43475`)."
 
 #: whatsnew/3.10.rst:879
 msgid ""
@@ -1207,6 +1259,9 @@ msgid ""
 "deleting the :const:`__debug__` constant.  (Contributed by Dong-hee Na in :"
 "issue:`45000`.)"
 msgstr ""
+"Une :exc:`SyntaxError` (plutôt qu'une :exc:`NameError`) sera levée quand la "
+"constante :const:`__debug__` est supprimée (contribution de *Dong-hee Na* "
+"dans :issue:`45000`)."
 
 #: whatsnew/3.10.rst:882
 msgid ""
@@ -1214,22 +1269,26 @@ msgid ""
 "attributes.  They will be ``None`` if not determined. (Contributed by Pablo "
 "Galindo in :issue:`43914`.)"
 msgstr ""
+"Les exceptions :exc:`SyntaxError` ont maintenant des attributs "
+"``end_lineno`` et ``end_offset``. La valeur est ``None`` quand ils ne "
+"peuvent pas être déterminés (contribution de *Pablo Galindo* dans :issue:"
+"`43914`)."
 
 #: whatsnew/3.10.rst:887
 msgid "New Modules"
-msgstr ""
+msgstr "Nouveaux modules"
 
 #: whatsnew/3.10.rst:889
 msgid "None yet."
-msgstr ""
+msgstr "Aucun pour le moment."
 
 #: whatsnew/3.10.rst:893
 msgid "Improved Modules"
-msgstr ""
+msgstr "Modules améliorés"
 
 #: whatsnew/3.10.rst:896
 msgid "asyncio"
-msgstr ""
+msgstr "``asyncio``"
 
 #: whatsnew/3.10.rst:898
 msgid ""
@@ -1237,6 +1296,9 @@ msgid ""
 "connect_accepted_socket` method. (Contributed by Alex Grönholm in :issue:"
 "`41332`.)"
 msgstr ""
+"Ajout de la méthode :meth:`~asyncio.events.AbstractEventLoop."
+"connect_accepted_socket` manquante (contribution d'*Alex Grönholm* dans :"
+"issue:`41332`)."
 
 #: whatsnew/3.10.rst:903
 msgid "argparse"
@@ -1248,10 +1310,15 @@ msgid ""
 "argparse help. Some tests might require adaptation if they rely on exact "
 "output match. (Contributed by Raymond Hettinger in :issue:`9694`.)"
 msgstr ""
+"L'expression ``\"optional arguments\"`` qui portait à confusion a été "
+"remplacée par ``\"options\"`` dans le message d'aide d'``argparse``. "
+"Certains tests devront être adaptés s'ils dépendent d'une comparaison exacte "
+"dans la sortie d'aide (contribution de *Raymond Hettinger* dans :issue:"
+"`9694`)."
 
 #: whatsnew/3.10.rst:909
 msgid "array"
-msgstr ""
+msgstr "``array``"
 
 #: whatsnew/3.10.rst:911
 msgid ""
@@ -1259,10 +1326,13 @@ msgid ""
 "optional *start* and *stop* parameters. (Contributed by Anders Lorentsen and "
 "Zackery Spytz in :issue:`31956`.)"
 msgstr ""
+"La méthode :meth:`~array.array.index` de la classe :class:`array.array` a "
+"maintenant les paramètres optionnels *start* et *stop* (contribution "
+"d'*Anders Lorentsen* et de *Zackery Spytz* dans :issue:`31956`)."
 
 #: whatsnew/3.10.rst:916
 msgid "asynchat, asyncore, smtpd"
-msgstr ""
+msgstr "``asynchat``, ``asyncore``, ``smtpd``"
 
 #: whatsnew/3.10.rst:917
 msgid ""
@@ -1270,6 +1340,9 @@ msgid ""
 "since Python 3.6.  An import-time :class:`DeprecationWarning` has now been "
 "added to all three of these modules."
 msgstr ""
+"Ces modules ont étés déclarés obsolètes dans leur documentation de modules "
+"depuis Python 3.6. Un :class:`DeprecationWarning` au moment de l'importation "
+"est maintenant ajouté pour ces trois modules."
 
 #: whatsnew/3.10.rst:922
 msgid "base64"
@@ -1280,36 +1353,45 @@ msgid ""
 "Add :func:`base64.b32hexencode` and :func:`base64.b32hexdecode` to support "
 "the Base32 Encoding with Extended Hex Alphabet."
 msgstr ""
+"Ajout de :func:`base64.b32hexencode` et de :func:`base64.b32hexdecode` pour "
+"prendre en charge l'encodage Base32 avec l'alphabet hexadécimal étendu."
 
 #: whatsnew/3.10.rst:928
 msgid "bdb"
-msgstr ""
+msgstr "``bdb``"
 
 #: whatsnew/3.10.rst:930
 msgid ""
 "Add :meth:`~bdb.Breakpoint.clearBreakpoints` to reset all set breakpoints. "
 "(Contributed by Irit Katriel in :issue:`24160`.)"
 msgstr ""
+"Ajout de :meth:`~bdb.Breakpoint.clearBreakpoints` pour supprimer tous les "
+"points d'arrêt (contribution d'*Irit Katriel* dans :issue:`24160`)."
 
 #: whatsnew/3.10.rst:934
 msgid "bisect"
-msgstr ""
+msgstr "``bisect``"
 
 #: whatsnew/3.10.rst:936
 msgid ""
 "Added the possibility of providing a *key* function to the APIs in the :mod:"
 "`bisect` module. (Contributed by Raymond Hettinger in :issue:`4356`.)"
 msgstr ""
+"Ajout de la possibilité de fournir une fonction ``key`` aux API dans le "
+"module :mod:`bisect` (contribution de *Raymond Hettinger* dans :issue:"
+"`4356`)."
 
 #: whatsnew/3.10.rst:940
 msgid "codecs"
-msgstr ""
+msgstr "``codecs``"
 
 #: whatsnew/3.10.rst:942
 msgid ""
 "Add a :func:`codecs.unregister` function to unregister a codec search "
 "function. (Contributed by Hai Shi in :issue:`41842`.)"
 msgstr ""
+"Ajout d'une fonction :func:`codecs.unregister` pour désinscrire une fonction "
+"de recherche de codecs (contribution de *Hai Shi* dans :issue:`41842`)."
 
 #: whatsnew/3.10.rst:946
 msgid "collections.abc"
@@ -1330,6 +1412,19 @@ msgid ""
 "may have passed silently in Python 3.9. (Contributed by Ken Jin in :issue:"
 "`42195`.)"
 msgstr ""
+"L'attribut ``__args__`` des :ref:`génériques paramétrables <types-"
+"genericalias>` de :class:`collections.abc.Callable` est maintenant cohérent "
+"avec :data:`typing.Callable`. Les génériques de :class:`collections.abc."
+"Callable` aplatissent maintenant les types des paramètres à l'instar de :"
+"data:`typing.Callable`. Ceci veut dire que ``collections.abc.Callable[[int, "
+"str], str]`` aura un attribut ``__args__`` de valeur ``(int, str, str)`` ; "
+"auparavant, il aurait été ``([int, str], str)``. Pour permettre ce "
+"changement, :class:`types.GenericAlias` peut être dérivée, et une sous-"
+"classe sera renvoyée lors de la surcharge  du type :class:`collections.abc."
+"Callable`. Prenez note que :exc:`TypeError` sera levée pour des formes "
+"invalides de paramétrisation de :class:`collections.abc.Callable`, ce qui "
+"aurait pu passer silencieusement dans Python 3.9 (contribution de *Ken Jin* "
+"dans :issue:`42195`)."
 
 #: whatsnew/3.10.rst:961
 msgid "contextlib"
@@ -1341,22 +1436,30 @@ msgid ""
 "generators and objects representing asynchronously released resources. "
 "(Contributed by Joongi Kim and John Belmonte in :issue:`41229`.)"
 msgstr ""
+"Ajout d'un gestionnaire de contexte :func:`contextlib.aclosing` pour fermer "
+"sécuritairement les générateurs asynchrones et les objets représentants des "
+"ressources libérées de façon asynchrone (contribution de *Joongi Kim* et "
+"*John Belmonte* dans :issue:`41229`)."
 
 #: whatsnew/3.10.rst:967
 msgid ""
 "Add asynchronous context manager support to :func:`contextlib.nullcontext`. "
 "(Contributed by Tom Gringauz in :issue:`41543`.)"
 msgstr ""
+"Ajout d'un gestionnaire de contexte pour prendre en charge :func:`contextlib."
+"nullcontext` (contribution de *Tom Gringauz* dans :issue:`41543`)."
 
 #: whatsnew/3.10.rst:970
 msgid ""
 "Add :class:`AsyncContextDecorator`, for supporting usage of async context "
 "managers as decorators."
 msgstr ""
+"Ajout de :class:`AsyncContextDecorator` pour prendre en charge les "
+"gestionnaires de contexte asynchrones en tant que décorateurs."
 
 #: whatsnew/3.10.rst:974
 msgid "curses"
-msgstr "curses"
+msgstr "``curses``"
 
 #: whatsnew/3.10.rst:976
 msgid ""
@@ -1367,6 +1470,14 @@ msgid ""
 "provided by the underlying ncurses library. (Contributed by Jeffrey "
 "Kintscher and Hans Petter Jansson in :issue:`36982`.)"
 msgstr ""
+"Les fonctions de couleurs étendues ajoutées dans *ncurses* 6.1 sont "
+"utilisées de façon transparente par :func:`curses.color_content`, :func:"
+"`curses.init_color`, :func:`curses.init_pair` et :func:`curses."
+"pair_content`. Une nouvelle fonction, :func:`curses."
+"has_extended_color_support`, indique si la prise en charge des couleurs "
+"étendues est fournie par la bibliothèque *ncurses* sous-jacente "
+"(contribution de *Jeffrey Kintscher* et de *Hans Petter Jansson* dans :issue:"
+"`36982`)."
 
 #: whatsnew/3.10.rst:983
 msgid ""
@@ -1374,24 +1485,29 @@ msgid ""
 "they are provided by the underlying curses library. (Contributed by Zackery "
 "Spytz in :issue:`39273`.)"
 msgstr ""
+"Les constantes ``BUTTON5_*`` sont maintenant exposées dans le module :mod:"
+"`curses` si elles sont fournies par la bibliothèque *curses* sous-jacente "
+"(contribution de *Zackery Spytz* dans :issue:`39273`)."
 
 #: whatsnew/3.10.rst:988
 msgid "dataclasses"
-msgstr ""
+msgstr "``dataclasses``"
 
 #: whatsnew/3.10.rst:991
 msgid "__slots__"
-msgstr ""
+msgstr "``__slots__``"
 
 #: whatsnew/3.10.rst:993
 msgid ""
 "Added ``slots`` parameter in :func:`dataclasses.dataclass` decorator. "
 "(Contributed by Yurii Karabas in :issue:`42269`)"
 msgstr ""
+"Ajout du paramètre ``slots`` dans le décorateur :func:`dataclasses."
+"dataclass` (contribution de *Yurii Karabas* dans :issue:`42269`)."
 
 #: whatsnew/3.10.rst:997
 msgid "Keyword-only fields"
-msgstr ""
+msgstr "Champs obligatoirement nommés"
 
 #: whatsnew/3.10.rst:999
 msgid ""
@@ -1399,20 +1515,26 @@ msgid ""
 "__init__ method.  There are a number of ways of specifying keyword-only "
 "fields."
 msgstr ""
+"Les classes de données (``dataclass``) prennent maintenant en charge les "
+"champs obligatoirement nommés dans la méthode ``__init__`` générée. Il y a "
+"plusieurs façons de spécifier les champs obligatoirement nommés."
 
 #: whatsnew/3.10.rst:1003
 msgid "You can say that every field is keyword-only:"
-msgstr ""
+msgstr "Vous pouvez indiquer que tous les champs sont obligatoirement nommés :"
 
 #: whatsnew/3.10.rst:1014
 msgid ""
 "Both ``name`` and ``birthday`` are keyword-only parameters to the generated "
 "__init__ method."
 msgstr ""
+"Les paramètres ``name`` et ``birthday`` sont tous deux obligatoirement "
+"nommés dans la méthode ``__init__`` générée."
 
 #: whatsnew/3.10.rst:1017
 msgid "You can specify keyword-only on a per-field basis:"
 msgstr ""
+"Pour chaque champ, vous pouvez indiquer s'il est obligatoirement nommé :"
 
 #: whatsnew/3.10.rst:1028
 msgid ""
@@ -1421,18 +1543,28 @@ msgid ""
 "due to keyword-only fields needing to follow non-keyword-only fields.  See "
 "the full dataclasses documentation for details."
 msgstr ""
+"Ici, seulement ``birthday`` est obligatoirement nommé. Si vous assignez "
+"``kw_only`` sur un champ particulier, notez qu'il y a des règles concernant "
+"l'ordre des champs puisque les champs obligatoirement nommés doivent suivre "
+"les champs optionnellement nommés. Voir la documentation de ``dataclass`` "
+"pour plus de détails."
 
 #: whatsnew/3.10.rst:1033
 msgid ""
 "You can also specify that all fields following a KW_ONLY marker are keyword-"
 "only.  This will probably be the most common usage:"
 msgstr ""
+"Vous pouvez aussi indiquer que tous les champs qui suivent un marqueur "
+"``KW_ONLY`` sont obligatoirement nommés. Ceci sera probablement "
+"l'utilisation la plus commune :"
 
 #: whatsnew/3.10.rst:1048
 msgid ""
 "Here, ``z`` and ``t`` are keyword-only parameters, while ``x`` and ``y`` are "
 "not. (Contributed by Eric V. Smith in :issue:`43532`)"
 msgstr ""
+"Ici, ``z`` et ``t`` sont obligatoirement nommés, alors que ``x`` et ``y`` ne "
+"le sont pas (contribution d'*Eric V. Smith* dans :issue:`43532`)."
 
 #: whatsnew/3.10.rst:1055
 msgid "distutils"
@@ -1450,6 +1582,15 @@ msgid ""
 "functions should plan to make private copies of the code. Refer to :pep:"
 "`632` for discussion."
 msgstr ""
+"Le paquet ``distutil`` est entièrement obsolète et sera retiré dans Python "
+"3.12. Ses fonctionnalités pour spécifier la construction de paquets sont "
+"déjà complètement remplacées par les paquets tierce-parties  ``setuptools`` "
+"et ``packaging``. Les autres API régulièrement utilisées sont disponibles "
+"ailleurs dans la bibliothèque standard (tel que dans :mod:`platform`, :mod:"
+"`shutil`, :mod:`subprocess` ou :mod:`sysconfig`). Il n'est pas prévu de "
+"migrer d'autres fonctionnalités de ``distutils``, aussi les applications qui "
+"utilisent d'autres fonctions du module doivent faire des copies privées du "
+"code. Voir la discussion dans la :pep:`632`."
 
 #: whatsnew/3.10.rst:1067
 msgid ""
@@ -1457,6 +1598,10 @@ msgid ""
 "``bdist_wheel`` command is now recommended to distribute binary packages on "
 "Windows. (Contributed by Victor Stinner in :issue:`42802`.)"
 msgstr ""
+"La commande ``bdist_wininst`` qui est obsolète depuis Python 3.8 a été "
+"retirée. La commande ``bdist_wheel`` est maintenant recommandée pour "
+"distribuer des paquets binaires sous Windows (contribution de *Victor "
+"Stinner* dans :issue:`42802`)."
 
 #: whatsnew/3.10.rst:1073
 msgid "doctest"
@@ -1467,6 +1612,8 @@ msgid ""
 "When a module does not define ``__loader__``, fall back to ``__spec__."
 "loader``. (Contributed by Brett Cannon in :issue:`42133`.)"
 msgstr ""
+"Quand un module ne définit pas ``__loader__``, ``__spec__.loader`` est "
+"utilisé (contribution de *Brett Cannon* dans :issue:`42133`)."
 
 #: whatsnew/3.10.rst:1079
 msgid "encodings"
@@ -1477,6 +1624,8 @@ msgid ""
 ":func:`encodings.normalize_encoding` now ignores non-ASCII characters. "
 "(Contributed by Hai Shi in :issue:`39337`.)"
 msgstr ""
+"La fonction :func:`encodings.normalize_encoding` ignore maintenant les "
+"caractères non ASCII (contribution de *Hai Shi* dans :issue:`39337`)."
 
 #: whatsnew/3.10.rst:1085
 msgid "fileinput"
@@ -1487,6 +1636,9 @@ msgid ""
 "Add *encoding* and *errors* parameters in :func:`fileinput.input` and :class:"
 "`fileinput.FileInput`. (Contributed by Inada Naoki in :issue:`43712`.)"
 msgstr ""
+"Ajout des paramètres ``encoding`` et ``errors`` dans :func:`fileinput.input` "
+"et dans :class:`fileinput.FileInput` (contribution d'*Inada Naoki* dans :"
+"issue:`43712`)."
 
 #: whatsnew/3.10.rst:1091
 msgid ""
@@ -1494,10 +1646,14 @@ msgid ""
 "when *mode* is \"r\" and file is compressed, like uncompressed files. "
 "(Contributed by Inada Naoki in :issue:`5758`.)"
 msgstr ""
+":func:`fileinput.hook_compressed` renvoie maintenant un objet :class:"
+"`TextIOWrapper` quand ``mode`` est ``\"r\"`` et que le fichier est "
+"compressé, comme pour les fichiers non compressés (contribution d'*Inada "
+"Naoki* dans :issue:`5758`)."
 
 #: whatsnew/3.10.rst:1096
 msgid "faulthandler"
-msgstr ""
+msgstr "``faulthandler``"
 
 #: whatsnew/3.10.rst:1098
 msgid ""
@@ -1505,16 +1661,22 @@ msgid ""
 "garbage collector collection. (Contributed by Victor Stinner in :issue:"
 "`44466`.)"
 msgstr ""
+"Le module :mod:`faulthandler` détecte maintenant si une erreur fatale s'est "
+"produite pendant un passage du ramasse-miettes (contribution de *Victor "
+"Stinner* dans :issue:`44466`)."
 
 #: whatsnew/3.10.rst:1103
 msgid "gc"
-msgstr ""
+msgstr "``gc``"
 
 #: whatsnew/3.10.rst:1105
 msgid ""
 "Add audit hooks for :func:`gc.get_objects`, :func:`gc.get_referrers` and :"
 "func:`gc.get_referents`. (Contributed by Pablo Galindo in :issue:`43439`.)"
 msgstr ""
+"Ajout de fonctions de rappels d'audit pour :func:`gc.get_objects`, :func:`gc."
+"get_referrers` et :func:`gc.get_referents` (contribution de *Pablo Galindo* "
+"dans :issue:`43439`)."
 
 #: whatsnew/3.10.rst:1109
 msgid "glob"
@@ -1526,6 +1688,10 @@ msgid ""
 "`~glob.iglob` which allow to specify the root directory for searching. "
 "(Contributed by Serhiy Storchaka in :issue:`38144`.)"
 msgstr ""
+"Ajout des paramètres ``root_dir`` et ``dir_fd`` dans :func:`~glob.glob` et "
+"dans :func:`~glob.iglob` pour permettre la spécification du répertoire "
+"racine utilisé pour la recherche (contribution de *Serhiy Storchaka* dans :"
+"issue:`38144`)."
 
 #: whatsnew/3.10.rst:1116
 msgid "hashlib"
@@ -1536,12 +1702,18 @@ msgid ""
 "The hashlib module requires OpenSSL 1.1.1 or newer. (Contributed by "
 "Christian Heimes in :pep:`644` and :issue:`43669`.)"
 msgstr ""
+"La version minimale d'*OpenSSL* pour le module ``hashlib`` est maintenant "
+"1.1.1 (contribution de *Christian Heimes* dans :pep:`644` et dans :issue:"
+"`43669`)."
 
 #: whatsnew/3.10.rst:1121
 msgid ""
 "The hashlib module has preliminary support for OpenSSL 3.0.0. (Contributed "
 "by Christian Heimes in :issue:`38820` and other issues.)"
 msgstr ""
+"Le module *hashlib* offre une prise en charge préliminaire pour *OpenSSL* "
+"3.0.0 (contribution de *Christian Heimes* dans :issue:`38820` et autres "
+"tickets)."
 
 #: whatsnew/3.10.rst:1124
 msgid ""
@@ -1549,31 +1721,42 @@ msgid ""
 "the future PBKDF2-HMAC will only be available when Python has been built "
 "with OpenSSL support. (Contributed by Christian Heimes in :issue:`43880`.)"
 msgstr ""
+"Le repli vers la version en pur Python de :func:`~hashlib.pbkdf2_hmac` est "
+"obsolète. Dorénavant, ``PBKDF2-HMAC`` n'est disponible que si Python a été "
+"compilé avec la prise en charge d'*OpenSSL* (contribution de *Christian "
+"Heimes* dans :issue:`43880`)."
 
 #: whatsnew/3.10.rst:1130
 msgid "hmac"
-msgstr ""
+msgstr "``hmac``"
 
 #: whatsnew/3.10.rst:1132
 msgid ""
 "The hmac module now uses OpenSSL's HMAC implementation internally. "
 "(Contributed by Christian Heimes in :issue:`40645`.)"
 msgstr ""
+"L'implémentation interne du module ``hmac`` utilise maintenant *HMAC* "
+"d'*OpenSSL* (contribution de *Christian Heimes* dans :issue:`40645`)."
 
 #: whatsnew/3.10.rst:1136
 msgid "IDLE and idlelib"
-msgstr ""
+msgstr "IDLE et ``idlelib``"
 
 #: whatsnew/3.10.rst:1138
 msgid ""
 "Make IDLE invoke :func:`sys.excepthook` (when started without '-n'). User "
 "hooks were previously ignored.  (Patch by Ken Hilton in :issue:`43008`.)"
 msgstr ""
+"IDLE invoque maintenant :func:`sys.excepthook` (lorsque lancé sans ``'-"
+"n'``). Auparavant, les fonctions de rappel définies par l'utilisateur "
+"étaient ignorées (rustine par *Ken Hilton* dans :issue:`43008`)."
 
 #: whatsnew/3.10.rst:1142
 msgid "This change was backported to a 3.9 maintenance release."
 msgstr ""
+"Ce changement a été rétro-porté dans le cadre de la maintenance de 3.9."
 
+# L'utilisation du terme "zip" peut laisser croire que le contenu de clipboard après la copie est structuré, mais ce n'est pas le cas. Le clipboard est populé avec du texte non-structuré.
 #: whatsnew/3.10.rst:1144
 msgid ""
 "Add a Shell sidebar.  Move the primary prompt ('>>>') to the sidebar. Add "
@@ -1584,6 +1767,15 @@ msgid ""
 "the selected text.  This option also appears on the context menu for the "
 "text.  (Contributed by Tal Einat in :issue:`37903`.)"
 msgstr ""
+"Ajout d'une barre de côté à la console. Déplacement de l'invite de commande "
+"principale (``>>>``) vers cette barre. Ajout des invites secondaires (``..."
+"``) à la barre de côté. Le clic de gauche et le glisser optionnel "
+"sélectionnent une ou plusieurs lignes de texte, tout comme dans la barre de "
+"numéros de ligne de la fenêtre d'édition. Le clic droit après la sélection "
+"de lignes de texte affiche un menu contextuel pour copier avec invites "
+"(*'copy with prompts'*). Ceci combine les invites de la barre de côté avec "
+"le texte sélectionné. Cette option apparait aussi dans le menu contextuel "
+"pour le texte (contribution de *Tal Einat* dans :issue:`37903`)."
 
 #: whatsnew/3.10.rst:1153
 msgid ""
@@ -1592,13 +1784,20 @@ msgid ""
 "motivation for adding the shell sidebar.  Contributed by Terry Jan Reedy in :"
 "issue:`37892`.)"
 msgstr ""
+"Utilisation d'espaces plutôt que des tabulations pour indenter le code "
+"interactif. Ceci donne au code interactif la « bonne apparence ». Cette "
+"fonctionnalité est fortement corrélée à l'ajout de la barre de côté de la "
+"console (contribution de *Terry Jan Reedy* dans :issue:`37892`)."
 
 #: whatsnew/3.10.rst:1158
 msgid ""
 "We expect to backport these shell changes to a future 3.9 maintenance "
 "release."
 msgstr ""
+"Il est prévu de rétro-porter ces changements de la console dans le cadre de "
+"la maintenance de 3.9."
 
+# "Coloration" plutôt que "mise en évendence" ou "surlignage" pour rester cohérent avec library/idle.po
 #: whatsnew/3.10.rst:1161
 msgid ""
 "Highlight the new :ref:`soft keywords <soft-keywords>` :keyword:`match`, :"
@@ -1607,16 +1806,24 @@ msgid ""
 "incorrect in some rare cases, including some ``_``-s in ``case`` patterns.  "
 "(Contributed by Tal Einat in bpo-44010.)"
 msgstr ""
+"Coloration des nouveaux :ref:`mots clés ad-hoc <soft-keywords>` :keyword:"
+"`match`, :keyword:`case <match>` et :keyword:`_ <wildcard-patterns>` dans "
+"les instructions de filtrage par motifs (*pattern matching*). Par contre, "
+"cette coloration n'est pas parfaite et elle sera incorrecte dans quelques "
+"rares cas, y-compris certains ``_`` dans des instructions ``case`` "
+"(contribution de *Tal Einat* dans *bpo-44010*)."
 
 #: whatsnew/3.10.rst:1168
 msgid "importlib.metadata"
-msgstr ""
+msgstr "``importlib.metadata``"
 
 #: whatsnew/3.10.rst:1170
 msgid ""
 "Feature parity with ``importlib_metadata`` 4.6 (`history <https://importlib-"
 "metadata.readthedocs.io/en/latest/history.html>`_)."
 msgstr ""
+"Équivalence de fonctionnalités avec ``importlib_metadata`` 4.6 (`historique "
+"<https://importlib-metadata.readthedocs.io/en/latest/history.html>`_)."
 
 #: whatsnew/3.10.rst:1173
 msgid ""
@@ -1625,6 +1832,13 @@ msgid ""
 "`importlib.metadata.EntryPoints` class. See the Compatibility Note in the "
 "docs for more info on the deprecation and usage."
 msgstr ""
+"Les :ref:`points d'entrée de importlib.metadata <entry-points>` offrent "
+"maintenant une interface plus agréable pour choisir les points d'entrée par "
+"groupe et par nom par l'intermédiaire d'une nouvelle classe :class:"
+"`importlib.metadata.EntryPoints`. Voir la rubrique Note sur la Compatibilité "
+"(*Compatibility Note*) dans la documentation du module ``importlib."
+"metadata`` pour plus d'information sur son utilisation et ce qui devient "
+"obsolète."
 
 #: whatsnew/3.10.rst:1179
 msgid ""
@@ -1632,10 +1846,13 @@ msgid ""
 "level Python modules and packages to their :class:`importlib.metadata."
 "Distribution`."
 msgstr ""
+"Ajout de :func:`importlib.metadata.packages_distributions` pour résoudre les "
+"modules et paquets Python du niveau racine vers leur :class:`importlib."
+"metadata.Distribution`."
 
 #: whatsnew/3.10.rst:1184
 msgid "inspect"
-msgstr ""
+msgstr "``inspect``"
 
 #: whatsnew/3.10.rst:1189
 msgid ""
@@ -1654,20 +1871,38 @@ msgid ""
 "stringize stringized annotations. (Contributed by Larry Hastings in :issue:"
 "`43817`.)"
 msgstr ""
+"Ajout de :func:`inspect.get_annotations` qui calcule les annotations "
+"définies sur un objet de façon sécuritaire. Elle contourne les difficultés "
+"d’accéder aux annotations de différents types d'objets et présume très peu "
+"de l'objet examiné. :func:`inspect.get_annotations` peut également convertir "
+"pour vous les annotations contenues dans des chaînes de caractères en "
+"objets. :func:`inspect.get_annotations` est maintenant considérée comme la "
+"meilleure pratique pour accéder au dictionnaire d'annotations de tout objet "
+"qui prend en charge les annotations ; pour d'autre information sur les "
+"meilleures pratiques relatives aux annotations, voir :ref:`annotations-"
+"howto`. Dans le même esprit, :func:`inspect.signature`, :func:`inspect."
+"Signature.from_callable` et :func:`inspect.Signature.from_function` "
+"appellent maintenant :func:`inspect.get_annotations` pour récupérer les "
+"annotations. Ceci veut dire que :func:`inspect.signature` et :func:`inspect."
+"Signature.from_callable` peuvent maintenant convertir pour vous les "
+"annotations contenues dans des chaînes de caractères en objets (contribution "
+"de *Larry Hastings* dans :issue:`43817`)."
 
 #: whatsnew/3.10.rst:1205
 msgid "linecache"
-msgstr ""
+msgstr "``linecache``"
 
 #: whatsnew/3.10.rst:1211
 msgid "os"
-msgstr ""
+msgstr "``os``"
 
 #: whatsnew/3.10.rst:1213
 msgid ""
 "Add :func:`os.cpu_count()` support for VxWorks RTOS. (Contributed by Peixing "
 "Xin in :issue:`41440`.)"
 msgstr ""
+"Ajout de la prise en charge de *VxWorks RTOS* dans :func:`os.cpu_count()` "
+"(contribution de *Peixing Xin* dans :issue:`41440`)."
 
 #: whatsnew/3.10.rst:1216
 msgid ""
@@ -1675,6 +1910,9 @@ msgid ""
 "``eventfd2`` syscall on Linux. (Contributed by Christian Heimes in :issue:"
 "`41001`.)"
 msgstr ""
+"Ajout d'une nouvelle fonction :func:`os.eventfd` et des fonctions "
+"utilitaires associées pour encapsuler l'appel système ``eventfd2`` sur Linux "
+"(contribution de *Christian Heimes* dans :issue:`41001`)."
 
 #: whatsnew/3.10.rst:1220
 msgid ""
@@ -1683,6 +1921,10 @@ msgid ""
 "space, where one of the file descriptors must refer to a pipe. (Contributed "
 "by Pablo Galindo in :issue:`41625`.)"
 msgstr ""
+"Ajout de :func:`os.splice()` qui permet de déplacer des données entre deux "
+"descripteurs de fichiers sans copie entre les espaces noyau et utilisateur. "
+"Un des descripteurs de fichiers doit référencer un tube (*pipe*)  "
+"(contribution de *Pablo Galindo* dans :issue:`41625`)."
 
 #: whatsnew/3.10.rst:1225
 msgid ""
@@ -1693,7 +1935,7 @@ msgstr ""
 
 #: whatsnew/3.10.rst:1230
 msgid "os.path"
-msgstr ""
+msgstr "``os.path``"
 
 #: whatsnew/3.10.rst:1232
 msgid ""
@@ -1701,6 +1943,10 @@ msgid ""
 "set to ``True``, :exc:`OSError` is raised if a path doesn't exist or a "
 "symlink loop is encountered. (Contributed by Barney Gale in :issue:`43757`.)"
 msgstr ""
+":func:`os.path.realpath` accepte maintenant l'argument nommé *strict*. "
+"Lorsqu'il est ``True``, une :exc:`OSError` est levée si le chemin n'existe "
+"pas ou si une boucle de liens symboliques est rencontrée (contribution de "
+"*Barney Gale* dans :issue:`43757`)."
 
 #: whatsnew/3.10.rst:1238
 msgid "pathlib"
@@ -1711,12 +1957,18 @@ msgid ""
 "Add slice support to :attr:`PurePath.parents <pathlib.PurePath.parents>`. "
 "(Contributed by Joshua Cannon in :issue:`35498`)"
 msgstr ""
+"Ajout de la prise en charge des tranches dans :attr:`PurePath.parents "
+"<pathlib.PurePath.parents>` (contribution de *Joshua Cannon* dans :issue:"
+"`35498`)."
 
 #: whatsnew/3.10.rst:1243
 msgid ""
 "Add negative indexing support to :attr:`PurePath.parents <pathlib.PurePath."
 "parents>`. (Contributed by Yaroslav Pankovych in :issue:`21041`)"
 msgstr ""
+"Ajout de la prise en charge de l'indiçage négatif dans :attr:`PurePath."
+"parents <pathlib.PurePath.parents>` (contribution de *Yaroslav Pankovych* "
+"dans :issue:`21041`)."
 
 #: whatsnew/3.10.rst:1247
 msgid ""
@@ -1725,6 +1977,10 @@ msgid ""
 "argument order as :meth:`~pathlib.Path.symlink_to`. (Contributed by Barney "
 "Gale in :issue:`39950`.)"
 msgstr ""
+"Ajout de la méthode :meth:`Path.hardlink_to <pathlib.Path.hardlink_to>` qui "
+"remplace :meth:`~pathlib.Path.link_to`. L'ordre des arguments de la nouvelle "
+"méthode est le même que :meth:`~pathlib.Path.symlink_to` (contribution de "
+"*Barney Gale* dans :issue:`39950`)."
 
 #: whatsnew/3.10.rst:1252
 msgid ""
@@ -1733,10 +1989,14 @@ msgid ""
 "functions in the :mod:`os` module. (Contributed by Barney Gale in :issue:"
 "`39906`.)"
 msgstr ""
+":meth:`pathlib.Path.stat` et :meth:`~pathlib.Path.chmod` acceptent "
+"maintenant l'argument nommé *follow_symlinks* pour rester cohérent avec les "
+"fonctions correspondantes dans le module :mod:`os` (contribution de *Barney "
+"Gale* dans :issue:`39906`)."
 
 #: whatsnew/3.10.rst:1258
 msgid "platform"
-msgstr ""
+msgstr "``platform``"
 
 #: whatsnew/3.10.rst:1260
 msgid ""
@@ -1745,36 +2005,47 @@ msgid ""
 "software/systemd/man/os-release.html>`_ standard file. (Contributed by "
 "Christian Heimes in :issue:`28468`)"
 msgstr ""
+"Ajout de :func:`platform.freedesktop_os_release()` pour récupérer "
+"l'information d'identification du système d'exploitation selon le fichier "
+"standard des `versions de systèmes d'exploitations de freedesktop.org "
+"<https://www.freedesktop.org/software/systemd/man/os-release.html>`_ "
+"(contribution de *Christian Heimes* dans :issue:`28468`)."
 
 #: whatsnew/3.10.rst:1266
 msgid "pprint"
-msgstr ""
+msgstr "``pprint``"
 
 #: whatsnew/3.10.rst:1268
 msgid ""
 ":func:`pprint.pprint` now accepts a new ``underscore_numbers`` keyword "
 "argument. (Contributed by sblondon in :issue:`42914`.)"
 msgstr ""
+":func:`pprint.pprint` accepte maintenant le nouvel argument nommé "
+"``underscore_numbers`` (contribution de *sblondon* dans :issue:`42914`)."
 
 #: whatsnew/3.10.rst:1271
 msgid ""
 ":mod:`pprint` can now pretty-print :class:`dataclasses.dataclass` instances. "
 "(Contributed by Lewis Gaul in :issue:`43080`.)"
 msgstr ""
+":mod:`pprint` peut maintenant afficher élégamment les instances de :class:"
+"`dataclasses.dataclass` (contribution de *Lewis Gaul* dans :issue:`43080`)."
 
 #: whatsnew/3.10.rst:1275
 msgid "py_compile"
-msgstr ""
+msgstr "``py_compile``"
 
 #: whatsnew/3.10.rst:1277
 msgid ""
 "Add ``--quiet`` option to command-line interface of :mod:`py_compile`. "
 "(Contributed by Gregory Schevchenko in :issue:`38731`.)"
 msgstr ""
+"Ajout de l'option de ligne de commande ``--quiet`` à l'interface de :mod:"
+"`py_compile` (contribution de *Gregory Schevchenko* dans :issue:`38731`)."
 
 #: whatsnew/3.10.rst:1281
 msgid "pyclbr"
-msgstr ""
+msgstr "``pyclbr``"
 
 #: whatsnew/3.10.rst:1283
 msgid ""
@@ -1783,21 +2054,30 @@ msgid ""
 "readline_ex`.  It matches the existing (start) ``lineno``. (Contributed by "
 "Aviral Srivastava in :issue:`38307`.)"
 msgstr ""
+"Ajout d'un attribut ``end_lineno`` aux objets ``Function`` et ``Class`` dans "
+"l'arbre renvoyé par :func:`pyclbr.readline` et :func:`pyclbr.readline_ex`. "
+"Il complète l'attribut ``lineno`` déjà existant (contribution d'*Aviral "
+"Srivastava* dans :issue:`38307`)."
 
 #: whatsnew/3.10.rst:1289
 msgid "shelve"
-msgstr ""
+msgstr "``shelve``"
 
+# "objets shelf" plutôt que "objets shelves" pour être cohérent avec library/shelve.po
 #: whatsnew/3.10.rst:1291
 msgid ""
 "The :mod:`shelve` module now uses :data:`pickle.DEFAULT_PROTOCOL` by default "
 "instead of :mod:`pickle` protocol ``3`` when creating shelves. (Contributed "
 "by Zackery Spytz in :issue:`34204`.)"
 msgstr ""
+"Le module :mod:`shelve` utilise maintenant :data:`pickle.DEFAULT_PROTOCOL` "
+"par défaut plutôt que le protocole ``3`` du module :mod:`pickle` à la "
+"création des objets ``shelf`` (contribution de *Zackery Spytz* dans :issue:"
+"`34204`)."
 
 #: whatsnew/3.10.rst:1296
 msgid "statistics"
-msgstr ""
+msgstr "``statistics``"
 
 #: whatsnew/3.10.rst:1298
 msgid ""
@@ -1805,32 +2085,43 @@ msgid ""
 "correlation`, and simple :func:`~statistics.linear_regression` functions. "
 "(Contributed by Tymoteusz Wołodźko in :issue:`38490`.)"
 msgstr ""
+"Ajout des fonctions :func:`~statistics.covariance`, :func:`~statistics."
+"correlation` (corrélation de Pearson) et :func:`~statistics."
+"linear_regression` (régression linéaire simple) (contribution de *Tymoteusz "
+"Wołodźko* dans :issue:`38490`)."
 
 #: whatsnew/3.10.rst:1304
 msgid "site"
-msgstr ""
+msgstr "``site``"
 
 #: whatsnew/3.10.rst:1310
 msgid "socket"
-msgstr ""
+msgstr "``socket``"
 
 #: whatsnew/3.10.rst:1312
 msgid ""
 "The exception :exc:`socket.timeout` is now an alias of :exc:`TimeoutError`. "
 "(Contributed by Christian Heimes in :issue:`42413`.)"
 msgstr ""
+"L'exception :exc:`socket.timeout` est maintenant un alias de :exc:"
+"`TimeoutError` (contribution de *Christian Heimes* dans :issue:`42413`)."
 
 #: whatsnew/3.10.rst:1315
 msgid ""
 "Add option to create MPTCP sockets with ``IPPROTO_MPTCP`` (Contributed by "
 "Rui Cunha in :issue:`43571`.)"
 msgstr ""
+"Ajout d'une option pour créer des connecteurs (*socket*) *MPTCP* avec "
+"``IPPROTO_MPTCP`` (contribution de *Rui Cunha* dans :issue:`43571`)."
 
 #: whatsnew/3.10.rst:1318
 msgid ""
 "Add ``IP_RECVTOS`` option to receive the type of service (ToS) or DSCP/ECN "
 "fields (Contributed by Georg Sauthoff in :issue:`44077`.)"
 msgstr ""
+"Ajout de l'option ``IP_RECVTOS`` pour récupérer la valeur des champs *type "
+"of service (ToS)* ou *differentiated services code point (DSCP/ECN)* "
+"(contribution de *Georg Sauthoff* dans :issue:`44077`)."
 
 #: whatsnew/3.10.rst:1322
 msgid "ssl"
@@ -1841,6 +2132,8 @@ msgid ""
 "The ssl module requires OpenSSL 1.1.1 or newer. (Contributed by Christian "
 "Heimes in :pep:`644` and :issue:`43669`.)"
 msgstr ""
+"La version minimale d'*OpenSSL* pour le module ``ssl`` est maintenant 1.1.1 "
+"(contribution de *Christian Heimes* dans :pep:`644` et dans :issue:`43669`)."
 
 #: whatsnew/3.10.rst:1327
 msgid ""
@@ -1849,6 +2142,11 @@ msgid ""
 "issue:`38820`, :issue:`43794`, :issue:`43788`, :issue:`43791`, :issue:"
 "`43799`, :issue:`43920`, :issue:`43789`, and :issue:`43811`.)"
 msgstr ""
+"Le module ``ssl`` offre une prise en charge préliminaire pour *OpenSSL* "
+"3.0.0 et la nouvelle option :data:`~ssl.OP_IGNORE_UNEXPECTED_EOF` "
+"(contribution de *Christian Heimes* dans :issue:`38820`, :issue:`43794`, :"
+"issue:`43788`, :issue:`43791`, :issue:`43799`, :issue:`43920`, :issue:"
+"`43789` et :issue:`43811`)."
 
 #: whatsnew/3.10.rst:1333
 msgid ""
@@ -1859,6 +2157,13 @@ msgid ""
 "<whatsnew310-deprecated>` has a list of deprecated features. (Contributed by "
 "Christian Heimes in :issue:`43880`.)"
 msgstr ""
+"Les fonctions obsolètes et l'accès aux constantes obsolètes lèvent "
+"maintenant un :exc:`DeprecationWarning`. :attr:`ssl.SSLContext.options` a "
+"options :data:`~ssl.OP_NO_SSLv2` et :data:`~ssl.OP_NO_SSLv3` définies par "
+"défaut ; par conséquent, il ne peut pas avertir si l'option est définie de "
+"nouveau. La section :ref:`obsolescence <whatsnew310-deprecated>` contient la "
+"liste des fonctionnalités obsolètes (contribution de *Christian Heimes* "
+"dans :issue:`43880`)."
 
 #: whatsnew/3.10.rst:1341
 msgid ""
@@ -1869,6 +2174,14 @@ msgid ""
 "on Hynek Schlawack's research. (Contributed by Christian Heimes in :issue:"
 "`43998`.)"
 msgstr ""
+"La configuration du module ``ssl`` est plus sécuritaire par défaut. Les "
+"algorithmes de chiffrement sans confidentialité persistante (*forward "
+"secrecy*) et le code d'authentification de message (MAC) *SHA-1* sont "
+"désactivés par défaut. Le niveau 2 de sécurité ne permet pas les clés "
+"faibles de moins de 112 bits pour *RSA*, *DH* et *ECC*. La version minimale "
+"du protocole *TLS* pour :class:`~ssl.SSLContext` est 1.2. La configuration "
+"est basée sur la recherche de *Hynek Schlawack* (contribution de *Christian "
+"Heimes* dans :issue:`43998`)."
 
 #: whatsnew/3.10.rst:1348
 msgid ""
@@ -1877,28 +2190,40 @@ msgid ""
 "build options, distro configurations, vendor patches, and cipher suites may "
 "prevent a successful handshake."
 msgstr ""
+"Les protocoles obsolètes *SSL* 3.0, *TLS* 1.0 et *TLS* 1.1 ne sont plus "
+"officiellement pris en charge. Python ne les bloque pas activement, mais les "
+"options de compilation d'*OpenSSL*, les configurations du système "
+"d'exploitation, les rustines des fabricants et les suites d'algorithmes de "
+"chiffrement peuvent empêcher l’établissement d'une connexion."
 
 #: whatsnew/3.10.rst:1353
 msgid ""
 "Add a *timeout* parameter to the :func:`ssl.get_server_certificate` "
 "function. (Contributed by Zackery Spytz in :issue:`31870`.)"
 msgstr ""
+"Ajout d'un paramètre *timeout* à la fonction :func:`ssl."
+"get_server_certificate` (contribution de *Zackery Spytz* dans :issue:"
+"`31870`)."
 
 #: whatsnew/3.10.rst:1356
 msgid ""
 "The ssl module uses heap-types and multi-phase initialization. (Contributed "
 "by Christian Heimes in :issue:`42333`.)"
 msgstr ""
+"Le module ``ssl`` utilise les types du tas et l'initialisation multi-phase "
+"(contribution de *Christian Heimes* dans :issue:`42333`)."
 
 #: whatsnew/3.10.rst:1359
 msgid ""
 "A new verify flag :data:`~ssl.VERIFY_X509_PARTIAL_CHAIN` has been added. "
 "(Contributed by l0x in :issue:`40849`.)"
 msgstr ""
+"Ajout d'en nouveau drapeau de vérification :data:`~ssl."
+"VERIFY_X509_PARTIAL_CHAIN` (contribution de *l0x* dans :issue:`40849`)."
 
 #: whatsnew/3.10.rst:1363
 msgid "sqlite3"
-msgstr ""
+msgstr "``sqlite3``"
 
 #: whatsnew/3.10.rst:1365
 msgid ""
@@ -1906,6 +2231,9 @@ msgid ""
 "Connection.enable_load_extension`, and :meth:`~sqlite3.Connection."
 "load_extension`. (Contributed by Erlend E. Aasland in :issue:`43762`.)"
 msgstr ""
+"Ajout d'événements d'audit pour :func:`~sqlite3.connect/handle`, :meth:"
+"`~sqlite3.Connection.enable_load_extension` et :meth:`~sqlite3.Connection."
+"load_extension` (contribution d'*Erlend E. Aasland* dans :issue:`43762`)."
 
 #: whatsnew/3.10.rst:1371
 msgid "sys"
@@ -1917,16 +2245,22 @@ msgid ""
 "arguments passed to the Python executable. (Contributed by Victor Stinner "
 "in :issue:`23427`.)"
 msgstr ""
+"Ajout de l'attribut :data:`sys.orig_argv` : la liste des arguments de ligne "
+"de commande originalement passée à l'exécutable Python (contribution de "
+"*Victor Stinner* dans :issue:`23427`)."
 
 #: whatsnew/3.10.rst:1377
 msgid ""
 "Add :data:`sys.stdlib_module_names`, containing the list of the standard "
 "library module names. (Contributed by Victor Stinner in :issue:`42955`.)"
 msgstr ""
+"Ajout de :data:`sys.stdlib_module_names` qui contient la liste des noms des "
+"modules de la bibliothèque standard (contribution de *Victor Stinner* dans :"
+"issue:`42955`)."
 
 #: whatsnew/3.10.rst:1382
 msgid "_thread"
-msgstr ""
+msgstr "``_thread``"
 
 #: whatsnew/3.10.rst:1384
 msgid ""
@@ -1934,6 +2268,10 @@ msgid ""
 "simulate (the default is still :data:`signal.SIGINT`). (Contributed by "
 "Antoine Pitrou in :issue:`43356`.)"
 msgstr ""
+":func:`_thread.interrupt_main` prend maintenant l'argument optionnel "
+"``signum`` : le numéro de signal à simuler (la valeur par défaut est "
+"toujours :data:`signal.SIGINT`) (contribution d'*Antoine Pitrou* dans :issue:"
+"`43356`)."
 
 #: whatsnew/3.10.rst:1389
 msgid "threading"
@@ -1945,6 +2283,10 @@ msgid ""
 "the functions set by :func:`threading.settrace` and :func:`threading."
 "setprofile` respectively. (Contributed by Mario Corchero in :issue:`42251`.)"
 msgstr ""
+"Ajout des fonctions :func:`threading.gettrace` et :func:`threading."
+"getprofile` pour récupérer les fonctions assignées par :func:`threading."
+"settrace` et :func:`threading.setprofile` respectivement (contribution de "
+"*Mario Corchero* dans :issue:`42251`)."
 
 #: whatsnew/3.10.rst:1396
 msgid ""
@@ -1952,10 +2294,14 @@ msgid ""
 "of :func:`threading.excepthook` in case it is set to a broken or a different "
 "value. (Contributed by Mario Corchero in :issue:`42308`.)"
 msgstr ""
+"Ajout de :data:`threading.__excepthook__` pour permettre la récupération de :"
+"func:`threading.excepthook` au cas où elle serait affectée à une valeur "
+"incorrecte ou différente (contribution de *Mario Corchero* dans :issue:"
+"`42308`)."
 
 #: whatsnew/3.10.rst:1402
 msgid "traceback"
-msgstr "traceback"
+msgstr "``traceback``"
 
 #: whatsnew/3.10.rst:1404
 msgid ""
@@ -1964,10 +2310,14 @@ msgid ""
 "now take an exception object as a positional-only argument. (Contributed by "
 "Zackery Spytz and Matthias Bussonnier in :issue:`26389`.)"
 msgstr ""
+"Les fonctions :func:`~traceback.format_exception`, :func:`~traceback."
+"format_exception_only` et :func:`~traceback.print_exception` peuvent "
+"maintenant prendre un objet exception en argument positionnel (contribution "
+"de *Zackery Spytz* et *Matthias Bussonnier* dans :issue:`26389`)."
 
 #: whatsnew/3.10.rst:1411
 msgid "types"
-msgstr ""
+msgstr "``types``"
 
 #: whatsnew/3.10.rst:1413
 msgid ""
@@ -1976,29 +2326,40 @@ msgid ""
 "interpretable by type checkers. (Contributed by Bas van Beek in :issue:"
 "`41810`.)"
 msgstr ""
+"Les classes :data:`types.EllipsisType`, :data:`types.NoneType` et :data:"
+"`types.NotImplementedType` sont ajoutées de nouveau. Elles fournissent un "
+"nouvel ensemble de types facilement interprétable par les vérificateurs de "
+"types (contribution de *Bas van Beek* dans :issue:`41810`)."
 
 #: whatsnew/3.10.rst:1419
 msgid "typing"
-msgstr ""
+msgstr "``typing``"
 
 #: whatsnew/3.10.rst:1421
 msgid "For major changes, see `New Features Related to Type Hints`_."
 msgstr ""
+"Pour les changements majeurs, voir `Nouvelles fonctionnalités reliées aux "
+"indications de types`_."
 
 #: whatsnew/3.10.rst:1423
 msgid ""
 "The behavior of :class:`typing.Literal` was changed to conform with :pep:"
 "`586` and to match the behavior of static type checkers specified in the PEP."
 msgstr ""
+"Le comportement de :class:`typing.Literal` a été changé pour être conforme "
+"avec la :pep:`586` et pour correspondre au comportement des vérificateurs de "
+"types statiques défini dans la PEP."
 
 #: whatsnew/3.10.rst:1426
 msgid "``Literal`` now de-duplicates parameters."
-msgstr ""
+msgstr "``Literal`` dé-duplique maintenant les paramètres."
 
 #: whatsnew/3.10.rst:1427
 msgid ""
 "Equality comparisons between ``Literal`` objects are now order independent."
 msgstr ""
+"La comparaison d'égalité entre objets ``Literal`` ne tient plus compte de "
+"l'ordre."
 
 #: whatsnew/3.10.rst:1428
 msgid ""
@@ -2007,6 +2368,11 @@ msgid ""
 "support this change, the internally used type cache now supports "
 "differentiating types."
 msgstr ""
+"Les comparaisons de ``Literal`` respectent maintenant les types. Par "
+"exemple, ``Literal[0] == Literal[False]`` était préalablement évaluée à "
+"``True``. Elle est maintenant ``False``. Pour prendre en charge ce "
+"changement, le cache des types de l'implémentation interne peut maintenant "
+"différencier entre les types."
 
 #: whatsnew/3.10.rst:1432
 msgid ""
@@ -2015,10 +2381,14 @@ msgid ""
 "Note that declaring ``Literal`` with unhashable parameters will not throw an "
 "error::"
 msgstr ""
+"Les objets ``Literal`` lèvent maintenant une exception :exc:`TypeError` "
+"pendant la comparaison d'égalité si au moins un de leurs paramètres n'est "
+"pas :term:`hachable`. Notez que déclarer un ``Literal`` avec des paramètres "
+"non hachables ne lève pas d'erreur ::"
 
 #: whatsnew/3.10.rst:1444
 msgid "(Contributed by Yurii Karabas in :issue:`42345`.)"
-msgstr ""
+msgstr "(contribution de *Yurii Karabas* dans :issue:`42345`)."
 
 #: whatsnew/3.10.rst:1446
 msgid ""
@@ -2026,6 +2396,9 @@ msgid ""
 "is a :class:`typing.TypedDict`. (Contributed by Patrick Reader in :issue:"
 "`41792`)"
 msgstr ""
+"Ajout d'une nouvelle fonction :func:`typing.is_typeddict` pour inspecter si "
+"une annotation est une :class:`typing.TypedDict` (contribution de *Patrick "
+"Reader* dans :issue:`41792`)."
 
 #: whatsnew/3.10.rst:1450
 msgid ""
@@ -2036,6 +2409,13 @@ msgid ""
 "`runtime_checkable` decorator if they want runtime protocols. (Contributed "
 "by Yurii Karabas in :issue:`38908`)"
 msgstr ""
+"Les sous-classes de ``typing.Protocol`` qui ne contiennent que des "
+"déclarations de variables de données vont maintenant lever une ``TypeError`` "
+"quand elles sont testées avec ``isinstance``, sauf si elles sont décorées "
+"par :func:`runtime_checkable`. Auparavant, ces tests passaient "
+"silencieusement. Les utilisateurs doivent décorer leurs sous-classes avec le "
+"décorateur :func:`runtime_checkable` s'ils désirent les protocoles à "
+"l'exécution (contribution de *Yurii Karabas* dans :issue:`38908`)."
 
 #: whatsnew/3.10.rst:1458
 msgid ""
@@ -2045,6 +2425,12 @@ msgid ""
 "belonging to those submodules should be imported directly from :mod:`typing` "
 "instead. (Contributed by Sebastian Rittau in :issue:`38291`)"
 msgstr ""
+"Importer quoi que ce soit des sous-modules ``typing.io`` et ``typing.re`` "
+"émet maintenant un :exc:`DeprecationWarning`. Ces sous-modules sont "
+"obsolètes depuis Python 3.8 et seront retirés dans une version future de "
+"Python. Tout ce qui appartient à ces modules doit plutôt être importé "
+"directement du module :mod:`typing` (contribution de *Sebastian Rittau* "
+"dans :issue:`38291`)."
 
 #: whatsnew/3.10.rst:1466
 msgid "unittest"
@@ -2056,6 +2442,9 @@ msgid ""
 "existing :meth:`~unittest.TestCase.assertLogs`. (Contributed by Kit Yan Choi "
 "in :issue:`39385`.)"
 msgstr ""
+"Ajout d'une nouvelle méthode :meth:`~unittest.TestCase.assertNoLogs` pour "
+"complémenter la méthode existante :meth:`~unittest.TestCase.assertLogs` "
+"(contribution de *Kit Yan Choi* dans :issue:`39385`)."
 
 #: whatsnew/3.10.rst:1473
 msgid "urllib.parse"
@@ -2073,6 +2462,16 @@ msgid ""
 "documentation. (Contributed by Adam Goldschmidt, Senthil Kumaran and Ken Jin "
 "in :issue:`42967`.)"
 msgstr ""
+"Les versions préalables à Python 3.10 acceptaient les deux caractères ``;`` "
+"et ``&`` comme séparateurs de paramètres de requêtes dans :func:`urllib."
+"parse.parse_qs` et :func:`urllib.parse.parse_qsl`. Pour prévenir des failles "
+"de sécurité potentielles et pour respecter les dernières recommandations du "
+"W3C, ceci a été changé pour ne permettre qu'une seule clé de séparation, "
+"avec ``&`` par défaut. Ce changement affecte aussi l'implémentation interne "
+"de :func:`cgi.parse` et de :func:`cgi.parse_multipart` puisqu'elles "
+"utilisent les fonctions affectées. Pour plus de détails, voir la "
+"documentation respective de ces fonctions (contribution d'*Adam "
+"Goldschmidt*, de *Senthil Kumaran* et de *Ken Jin* dans :issue:`42967`)."
 
 #: whatsnew/3.10.rst:1485
 msgid ""
@@ -2083,10 +2482,17 @@ msgid ""
 "attacks. The removal characters are controlled by a new module level "
 "variable ``urllib.parse._UNSAFE_URL_BYTES_TO_REMOVE``. (See :issue:`43882`)"
 msgstr ""
+"La présence de caractères de saut de ligne ou de tabulation dans une URL "
+"permet certaines formes d'attaques. En conformité avec la spécification du "
+"*WHATWG* qui met à jour la :rfc:`3986`, les caractères *ASCII* de saut de "
+"ligne ``\\n``, ``\\r`` et de tabulation ``\\t`` sont retirés des URL par "
+"l'analyseur dans :mod:`urllib.parse` pour contrer ces attaques. Le jeu de "
+"caractères à retirer est contrôlé par une nouvelle variable de module "
+"``urllib.parse._UNSAFE_URL_BYTES_TO_REMOVE`` (voir :issue:`43882`)."
 
 #: whatsnew/3.10.rst:1493
 msgid "xml"
-msgstr ""
+msgstr "``xml``"
 
 #: whatsnew/3.10.rst:1495
 msgid ""
@@ -2094,10 +2500,13 @@ msgid ""
 "handler` module. (Contributed by Jonathan Gossage and Zackery Spytz in :"
 "issue:`35018`.)"
 msgstr ""
+"Ajout d'une classe :class:`~xml.sax.handler.LexicalHandler` au module :mod:"
+"`xml.sax.handler` (contribution de *Jonathan Gossage* de *Zackery Spytz* "
+"dans :issue:`35018`)."
 
 #: whatsnew/3.10.rst:1500
 msgid "zipimport"
-msgstr ""
+msgstr "``zipimport``"
 
 #: whatsnew/3.10.rst:1501
 msgid ""
@@ -2106,16 +2515,22 @@ msgid ""
 "`zipimport.zipimporter.exec_module`. (Contributed by Brett Cannon in :issue:"
 "`42131`.)"
 msgstr ""
+"Ajout des méthodes relatives à la :pep:`451` : :meth:`~zipimport.zipimporter."
+"find_spec`, :meth:`zipimport.zipimporter.create_module` et :meth:`zipimport."
+"zipimporter.exec_module` (contribution de *Brett Cannon* dans :issue:"
+"`42131`)."
 
 #: whatsnew/3.10.rst:1506
 msgid ""
 "Add :meth:`~zipimport.zipimporter.invalidate_caches` method. (Contributed by "
 "Desmond Cheong in :issue:`14678`.)"
 msgstr ""
+"Ajout de la méthode :meth:`~zipimport.zipimporter.invalidate_caches` "
+"(contribution de *Desmond Cheong* dans :issue:`14678`)."
 
 #: whatsnew/3.10.rst:1511
 msgid "Optimizations"
-msgstr ""
+msgstr "Optimisations"
 
 #: whatsnew/3.10.rst:1513
 msgid ""
@@ -2123,6 +2538,9 @@ msgid ""
 "(around 30--40% for small objects). (Contributed by Serhiy Storchaka in :"
 "issue:`41334`.)"
 msgstr ""
+"Les constructeurs de :func:`str`, :func:`bytes` et :func:`bytearray` sont "
+"maintenant plus rapides (environ 30—40 % pour les petits objets) "
+"(contribution de *Serhiy Storchaka* dans :issue:`41334`)."
 
 #: whatsnew/3.10.rst:1517
 msgid ""
@@ -2132,6 +2550,12 @@ msgid ""
 "51 modules (-18) on Python 3.10. (Contributed by Victor Stinner in :issue:"
 "`41006` and :issue:`41718`.)"
 msgstr ""
+"Le module :mod:`runpy` importe maintenant moins de modules. Le temps de "
+"démarrage de la commande ``python3 -m module-name`` est en moyenne 1,4 fois "
+"plus rapide. Sur Linux ``python3 -I -m module-name`` importe 69 modules dans "
+"Python 3.9, alors qu'elle n'en importe que 51 (18 de moins) dans Python 3.10 "
+"(contribution de *Victor Stinner* dans :issue:`41006` et dans :issue:"
+"`41718`)."
 
 #: whatsnew/3.10.rst:1523
 msgid ""
@@ -2141,6 +2565,12 @@ msgid ""
 "van Rossum in :issue:`42927`, based on ideas implemented originally in PyPy "
 "and MicroPython.)"
 msgstr ""
+"L'instruction ``LOAD_ATTR`` utilise maintenant le mécanisme de cache par "
+"code d'opération. Elle est environ 36 % plus rapide pour les attributs "
+"ordinaires et 44 % plus rapide pour les *slots* (contribution de *Pablo "
+"Galindo* et de *Yury Selivanov* dans :issue:`42093` et *Guido van Rossum* "
+"dans :issue:`42927`, basée sur des idées originalement mises en œuvre dans "
+"*PyPy* et dans *MicroPython*)."
 
 #: whatsnew/3.10.rst:1529
 msgid ""
@@ -2152,6 +2582,14 @@ msgid ""
 "python-3-8-run-speeds/>`_ for more details. (Contributed by Victor Stinner "
 "and Pablo Galindo in :issue:`38980`.)"
 msgstr ""
+"Lors de la construction de Python avec :option:`--enable-optimizations`, ``-"
+"fno-semantic-interposition`` est maintenant ajouté aux lignes de commande de "
+"compilation et d'édition des liens. Ceci accélère les binaires de "
+"l'interpréteur Python créés avec :option:`--enable-shared` et ``gcc`` "
+"jusqu'à 30 %. Voir `cet article <https://developers.redhat.com/"
+"blog/2020/06/25/red-hat-enterprise-linux-8-2-brings-faster-python-3-8-run-"
+"speeds/>`_ (en anglais) pour plus de détails (contribution de *Victor "
+"Stinner* et *Pablo Galindo* dans :issue:`38980`)."
 
 #: whatsnew/3.10.rst:1537
 msgid ""
@@ -2162,6 +2600,12 @@ msgid ""
 "faster. (Contributed by Ma Lin, reviewed by Gregory P. Smith, in :issue:"
 "`41486`)"
 msgstr ""
+"Ré-usinage du code assurant la gestion du tampon de sortie pour les modules :"
+"mod:`bz2`, :mod:`lzma` et :mod:`zlib`. Ajout de la fonction ``.readall()`` à "
+"la classe ``_compression.DecompressReader``. La décompression *bz2* est 1,09 "
+"à 1,17 fois plus rapide, la décompression *lzma* est 1,20 à 1,32 fois plus "
+"rapide, ``GzipFile.read(-1)`` est 1,11 à 1,18 fois plus rapide (contribution "
+"de *Ma Lin*, révision par *Gregory P. Smith* dans :issue:`41486`)."
 
 #: whatsnew/3.10.rst:1543
 msgid ""
@@ -2172,6 +2616,13 @@ msgid ""
 "define an annotated function by half. (Contributed by Yurii Karabas and "
 "Inada Naoki in :issue:`42202`)"
 msgstr ""
+"Quand les annotations sous forme de chaînes sont utilisées, les "
+"dictionnaires d'annotations ne sont plus créés à la création de la fonction. "
+"À la place, elles sont stockées dans des *n*-uplets de chaînes et l'objet "
+"fonction les convertit vers le dictionnaire d'annotations de façon "
+"paresseuse (c.-à-d. au besoin). Cette optimisation réduit de moitié le temps "
+"CPU nécessaire à la définition d'une fonction annotée (contribution de "
+"*Yurii Karabas* et *Inada Naoki* dans :issue:`42202`)."
 
 #: whatsnew/3.10.rst:1550
 msgid ""
@@ -2180,6 +2631,11 @@ msgid ""
 "algorithm to avoid quadratic behavior on long strings.  (Contributed by "
 "Dennis Sweeney in :issue:`41972`)"
 msgstr ""
+"Les fonctions de recherche de sous-chaînes telles que ``str1 in str2`` et "
+"``str2.find(str1)`` peuvent utiliser maintenant l'algorithme "
+"« bidirectionnel » de recherche de chaînes *Crochemore et Perrin* pour "
+"éviter le comportement quadratique sur les longues chaînes (contribution de "
+"*Dennis Sweeney* dans :issue:`41972`)."
 
 #: whatsnew/3.10.rst:1555
 msgid ""
@@ -2188,6 +2644,11 @@ msgid ""
 "interpreter 1.04 times faster on average. (Contributed by Dino Viehland in :"
 "issue:`43452`)"
 msgstr ""
+"Ajout d'une micro-optimisation dans ``_PyType_Lookup()`` pour améliorer la "
+"performance de la recherche du type des attributs dans le cache, dans le cas "
+"le plus commun où il est dans le cache. Ceci accélère l'interpréteur d'un "
+"facteur de 1,04 en moyenne (contribution de *Dino Viehland* dans :issue:"
+"`43452`)."
 
 #: whatsnew/3.10.rst:1559
 msgid ""
@@ -2197,6 +2658,11 @@ msgid ""
 "Jeroen Demeyer in :issue:`43575`, :issue:`43287`, :issue:`41922`, :issue:"
 "`41873` and :issue:`41870`)"
 msgstr ""
+"Les fonctions natives suivantes prennent maintenant en charge la convention "
+"d'appel plus performante *vectorcall* définie dans la :pep:`590` : :func:"
+"`map`, :func:`filter`, :func:`reversed`, :func:`bool` et :func:`float` "
+"(contribution de *Dong-hee Na* et *Jeroen Demeyer* dans :issue:`43575`, :"
+"issue:`43287`, :issue:`41922`, :issue:`41873` et :issue:`41870`)."
 
 #: whatsnew/3.10.rst:1563
 msgid ""
@@ -2206,10 +2672,16 @@ msgid ""
 "`gzip` and :mod:`lzma` have always been.  (Contributed by Inada Naoki in :"
 "issue:`43785`)."
 msgstr ""
+"La performance de :class:`BZ2File` est améliorée par le retrait d'un verrou "
+"``RLock`` interne. Ceci rend :class:`BZ2File` incompatible avec les fils "
+"d'exécutions multiples quand il y a plusieurs lecteurs ou écrivains "
+"concurrents, tout comme les classes équivalentes dans :mod:`gzip` et :mod:"
+"`lzma` qui l'ont toujours été (contribution de *Inada Naoki* dans :issue:"
+"`43785`)."
 
 #: whatsnew/3.10.rst:2192
 msgid "Deprecated"
-msgstr ""
+msgstr "Obsolescence"
 
 #: whatsnew/3.10.rst:1573
 msgid ""
@@ -2223,6 +2695,17 @@ msgid ""
 "will be changed to syntax warning, and finally to syntax error. (Contributed "
 "by Serhiy Storchaka in :issue:`43833`)."
 msgstr ""
+"Actuellement, Python accepte les littéraux numériques immédiatement suivis "
+"par un mot clé, par exemple : ``0in x``, ``1or x``, ``0if 1else 2``. Ceci "
+"peut donner lieu à des expressions ambigües ou déroutantes telles que "
+"``[0x1for x in y]`` (qui peut être interprétée comme ``[0x1 for x in y]`` ou "
+"comme ``[0x1f or x in y]``). À partir de cette version, un avertissement "
+"indiquant l'obsolescence programmée est levé si un littéral numérique est "
+"immédiatement suivi d'un des mots clés suivants : :keyword:`and`, :keyword:"
+"`else`, :keyword:`for`, :keyword:`if`, :keyword:`in`, :keyword:`is` et :"
+"keyword:`or`. Dans une version future, un avertissement sur la syntaxe sera "
+"levé, et ultérieurement ce sera une erreur de syntaxe (contribution de "
+"*Serhiy Storchaka* dans :issue:`43833`)."
 
 #: whatsnew/3.10.rst:1584
 msgid ""
@@ -2241,6 +2724,20 @@ msgid ""
 "appropriate to help identify code which needs updating during this "
 "transition."
 msgstr ""
+"À partir de la version présente, il y aura un effort coordonné pour "
+"commencer le nettoyage des anciennes sémantiques d'importation qui étaient "
+"gardées pour la compatibilité avec Python 2.7. Plus spécifiquement, :meth:"
+"`~importlib.abc.PathEntryFinder.find_loader`/:meth:`~importlib.abc.Finder."
+"find_module` (remplacées par :meth:`~importlib.abc.Finder.find_spec`), :meth:"
+"`~importlib.abc.Loader.load_module` (remplacée par :meth:`~importlib.abc."
+"Loader.exec_module`), :meth:`~importlib.abc.Loader.module_repr` (qui est "
+"géré par le système d'importation pour vous), l'attribut ``__package__`` "
+"(remplacé par ``__spec__.parent``), l'attribut ``__loader__`` (remplacé par "
+"``__spec__.loader``) et l'attribut ``__cached__`` (remplacé par ``__spec__."
+"cached``) seront progressivement retirés (de même que d'autres classes et "
+"méthodes dans :mod:`importlib`). Des :exc:`ImportWarning` ou :exc:"
+"`DeprecationWarning` seront levés le cas échéant pendant cette transition "
+"pour aider à identifier le code qui doit être mis à jour."
 
 #: whatsnew/3.10.rst:1601
 msgid ""
@@ -2248,6 +2745,9 @@ msgid ""
 "3.12. Refer to the :ref:`module changes <distutils-deprecated>` section for "
 "more information."
 msgstr ""
+"L'espace de noms ``distutils`` est complètement obsolète et sera retiré dans "
+"Python 3.12. Voir la section sur les :ref:`changements aux modules "
+"<distutils-deprecated>` pour plus d'information."
 
 #: whatsnew/3.10.rst:1605
 msgid ""
@@ -2255,6 +2755,10 @@ msgid ""
 "`ValueError` is deprecated in favor of a :exc:`TypeError`. (Contributed by "
 "Serhiy Storchaka and Raymond Hettinger in :issue:`37319`.)"
 msgstr ""
+"Les arguments non entiers de :func:`random.randrange` sont obsolètes. La "
+"levée de :exc:`ValueError` dans ce cas est obsolète et est remplacée par :"
+"exc:`TypeError` (contribution de *Serhiy Storchaka* et *Raymond Hettinger* "
+"dans :issue:`37319`)."
 
 #: whatsnew/3.10.rst:1609
 msgid ""
@@ -2263,6 +2767,10 @@ msgid ""
 "`DeprecationWarning`. Use :meth:`~importlib.abc.Loader.exec_module` instead. "
 "(Contributed by Brett Cannon in :issue:`26131`.)"
 msgstr ""
+"Les multiples méthodes ``load_module()`` de :mod:`importlib` étaient "
+"documentées comme obsolètes depuis Python 3.6, mais elles vont maintenant "
+"aussi lever un :exc:`DeprecationWarning`. Utilisez plutôt :meth:`~importlib."
+"abc.Loader.exec_module` (contribution de *Brett Cannon* dans :issue:`26131`)."
 
 #: whatsnew/3.10.rst:1615
 msgid ""
@@ -2270,6 +2778,9 @@ msgid ""
 "for :meth:`~zipimport.zipimporter.exec_module`. (Contributed by Brett Cannon "
 "in :issue:`26131`.)"
 msgstr ""
+":meth:`zimport.zipimporter.load_module` est obsolète. Utilisez plutôt :meth:"
+"`~zipimport.zipimporter.exec_module` (contribution de *Brett Cannon* dans :"
+"issue:`26131`)."
 
 #: whatsnew/3.10.rst:1619
 msgid ""
@@ -2277,6 +2788,10 @@ msgid ""
 "now triggers an :exc:`ImportWarning` as :meth:`~importlib.abc.Loader."
 "exec_module` is preferred. (Contributed by Brett Cannon in :issue:`26131`.)"
 msgstr ""
+"L'utilisation de :meth:`~importlib.abc.Loader.load_module` par le système "
+"d'importation lève maintenant un :exc:`ImportWarning` car :meth:`~importlib."
+"abc.Loader.exec_module` est recommandée (contribution de (*Brett Cannon* "
+"dans :issue:`26131`)."
 
 #: whatsnew/3.10.rst:1624
 msgid ""
@@ -2287,6 +2802,13 @@ msgid ""
 "respectively. You can use :func:`importlib.util.spec_from_loader` to help in "
 "porting. (Contributed by Brett Cannon in :issue:`42134`.)"
 msgstr ""
+"L'utilisation de :meth:`importlib.abc.MetaPathFinder.find_module` et de :"
+"meth:`importlib.abc.PathEntryFinder.find_module` par le système "
+"d'importation lève maintenant un :exc:`ImportWarning` car :meth:`importlib."
+"abc.MetaPathFinder.find_spec` et :meth:`importlib.abc.PathEntryFinder."
+"find_spec` sont recommandées, respectivement. Vous pouvez utiliser :func:"
+"`importlib.util.spec_from_loader` pour faciliter le portage (contribution de "
+"*Brett Cannon* dans :issue:`42134`)."
 
 #: whatsnew/3.10.rst:1633
 msgid ""
@@ -2296,6 +2818,12 @@ msgid ""
 "spec_from_loader` to help in porting. (Contributed by Brett Cannon in :issue:"
 "`43672`.)"
 msgstr ""
+"L'utilisation de :meth:`importlib.abc.PathEntryFinder.find_loader` par le "
+"système d'importation lève maintenant un :exc:`ImportWarning`. Son "
+"remplacement par :meth:`importlib.abc.PathEntryFinder.find_spec` est "
+"recommandé. Vous pouvez utiliser :func:`importlib.util.spec_from_loader` "
+"pour faciliter le portage (contribution de *Brett Cannon* dans :issue:"
+"`43672`)."
 
 #: whatsnew/3.10.rst:1639
 msgid ""
@@ -2311,6 +2839,17 @@ msgid ""
 "removal in Python 3.12 (previously they were documented as deprecated in "
 "Python 3.4). (Contributed by Brett Cannon in :issue:`42135`.)"
 msgstr ""
+"Plusieurs implémentations de :meth:`importlib.abc.MetaPathFinder."
+"find_module` (:meth:`importlib.machinery.BuiltinImporter.find_module`, :meth:"
+"`importlib.machinery.FrozenImporter.find_module`, :meth:`importlib.machinery."
+"WindowsRegistryFinder.find_module`, :meth:`importlib.machinery.PathFinder."
+"find_module` et :meth:`importlib.abc.MetaPathFinder.find_module`), :meth:"
+"`importlib.abc.PathEntryFinder.find_module` (:meth:`importlib.machinery."
+"FileFinder.find_module`) et :meth:`importlib.abc.PathEntryFinder."
+"find_loader` (:meth:`importlib.machinery.FileFinder.find_loader`) lèvent "
+"maintenant :exc:`DeprecationWarning` et seront retirées dans Python 3.12 "
+"(elles étaient documentées comme obsolètes depuis Python 3.4) (contribution "
+"de *Brett Cannon* dans :issue:`42135`)."
 
 #: whatsnew/3.10.rst:1655
 msgid ""
@@ -2320,6 +2859,11 @@ msgid ""
 "from the class. Users should inherit from one of these two classes as "
 "appropriate instead. (Contributed by Brett Cannon in :issue:`42135`.)"
 msgstr ""
+":class:`importlib.abc.Finder` est obsolète (incluant sa seule méthode, :meth:"
+"`~importlib.abc.Finder.find_module`). Les deux classes :class:`importlib.abc."
+"MetaPathFinder` et :class:`importlib.abc.PathEntryFinder` n'héritent plus de "
+"``Finder``. Les utilisateurs doivent hériter d'une de ces deux classes le "
+"cas échéant (contribution de *Brett Cannon* dans :issue:`42135`)."
 
 #: whatsnew/3.10.rst:1662
 msgid ""
@@ -2331,6 +2875,13 @@ msgid ""
 "exc:`DeprecationWarning` in previous versions of Python). (Contributed by "
 "Brett Cannon in :issue:`43720`.)"
 msgstr ""
+"Les déclarations d'obsolescence de :mod:`imp`, :func:`importlib."
+"find_loader`, :func:`importlib.util.set_package_wrapper`, :func:`importlib."
+"util.set_loader_wrapper`, :func:`importlib.util.module_for_loader`, :class:"
+"`pkgutil.ImpImporter` et :class:`pkgutil.ImpLoader` ont étés mises à jour "
+"pour indiquer Python 3.12 comme la version où elles seront retirées (elles "
+"lèvent un :exc:`DeprecationWarning` depuis les précédentes versions de "
+"Python) (contribution de *Brett Cannon* dans :issue:`43720`)."
 
 #: whatsnew/3.10.rst:1672
 msgid ""
@@ -2339,6 +2890,11 @@ msgid ""
 "``__repr__()`` method. Removal of the use of ``module_repr()`` is scheduled "
 "for Python 3.12. (Contributed by Brett Cannon in :issue:`42137`.)"
 msgstr ""
+"Le système d'importation utilise maintenant l'attribut ``__spec__`` des "
+"modules avant de se rabattre sur :meth:`~importlib.abc.Loader.module_repr` "
+"pour la méthode ``__repr__()`` des modules. Le retrait de l'utilisation de "
+"``module_repr()`` est planifié pour Python 3.12 (contribution de *Brett "
+"Cannon* dans :issue:`42137`)."
 
 #: whatsnew/3.10.rst:1678
 msgid ""
@@ -2347,6 +2903,10 @@ msgid ""
 "module_repr` are deprecated and slated for removal in Python 3.12. "
 "(Contributed by Brett Cannon in :issue:`42136`.)"
 msgstr ""
+":meth:`importlib.abc.Loader.module_repr`, :meth:`importlib.machinery."
+"FrozenLoader.module_repr` et :meth:`importlib.machinery.BuiltinLoader."
+"module_repr` sont obsolètes et seront retirées dans Python 3.12 "
+"(contribution de *Brett Cannon* dans :issue:`42136`)."
 
 #: whatsnew/3.10.rst:1684
 msgid ""
