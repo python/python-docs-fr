@@ -525,6 +525,7 @@ roughly                    approximativement, à peu près (on ne traduit pas
 setter                     mutateur
 simple quote               guillemet simple
 socket                     connecteur ou interface de connexion
+sort                       trier (préféré), ordonner, classer
 specify                    définir, préciser (plutôt que « spécifier »)
 statement                  instruction
 subprocess                 sous-processus
