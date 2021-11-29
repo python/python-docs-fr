@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-21 15:04+0200\n"
-"PO-Revision-Date: 2021-11-27 10:06-0700\n"
+"PO-Revision-Date: 2021-11-28 19:22-0700\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -132,7 +132,7 @@ msgid ""
 ":pep:`623`, Deprecate and prepare for the removal of the wstr member in "
 "PyUnicodeObject."
 msgstr ""
-":pep:`623`, obsolescence et préparation du retrait du membre ``wstr`` de "
+":pep:`623`, obsolescence et préparation du retrait du champ ``wstr`` de "
 "``PyUnicodeObject`` ;"
 
 #: whatsnew/3.10.rst:88
@@ -3663,7 +3663,7 @@ msgid ""
 "structure: the list of the original command line arguments passed to the "
 "Python executable. (Contributed by Victor Stinner in :issue:`23427`.)"
 msgstr ""
-"Ajout d'un nouveau membre :c:member:`~PyConfig.orig_argv` à la structure :c:"
+"Ajout d'un nouveau champ :c:member:`~PyConfig.orig_argv` à la structure :c:"
 "type:`PyConfig` : la liste des arguments de ligne de commande originalement "
 "passée à l'exécutable Python (contribution de *Victor Stinner* dans :issue:"
 "`23427`)."
@@ -4024,6 +4024,9 @@ msgid ""
 "``ceval.recursion_limit`` of the :c:type:`PyInterpreterState` structure. "
 "(Contributed by Victor Stinner in :issue:`41834`.)"
 msgstr ""
+"Retrait de la variable ``_Py_CheckRecursionLimit`` : elle a été remplacée "
+"par le champ ``ceval.recursion_limit`` de la structure :c:type:"
+"`PyInterpreterState` (contribution de *Victor Stinner* dans :issue:`41834`)."
 
 #: whatsnew/3.10.rst:2230
 msgid ""
@@ -4032,6 +4035,10 @@ msgid ""
 "type:`PyInterpreterState` structure. (Contributed by Serhiy Storchaka in :"
 "issue:`41936`.)"
 msgstr ""
+"Retrait de macros non-documentées ``Py_ALLOW_RECURSION`` et "
+"``Py_END_ALLOW_RECURSION`` et du champ ``recursion_critical`` de la "
+"structure :c:type:`PyInterpreterState` (contribution de *Serhiy Storchaka* "
+"dans :issue:`41936`)."
 
 #: whatsnew/3.10.rst:2235
 msgid ""
@@ -4039,6 +4046,10 @@ msgid ""
 "Python already implicitly installs signal handlers: see :c:member:`PyConfig."
 "install_signal_handlers`. (Contributed by Victor Stinner in :issue:`41713`.)"
 msgstr ""
+"Retrait de la fonction non-documentée ``PyOS_InitInterrupts()``. "
+"L'initialisation de Python installe déjà les gestionnaires de signaux de "
+"façon implicite : voir :c:member:`PyConfig.install_signal_handlers` "
+"(contribution de *Victor Stinner* dans :issue:`41713`)."
 
 #: whatsnew/3.10.rst:2240
 msgid ""
@@ -4047,34 +4058,40 @@ msgid ""
 "already excluded from the limited C API (:pep:`384`). (Contributed by Victor "
 "Stinner in :issue:`43244`.)"
 msgstr ""
+"Retrait de la fonction ``PyAST_Validate()``. Il n'est plus possible de "
+"construire un objet *AST* (type ``mod_ty``) l'API C publique. La fonction "
+"était déjà retirée de l'API C limitée (:pep:`384`) (contribution de *Victor "
+"Stinner* dans :issue:`43244`)."
 
 #: whatsnew/3.10.rst:2245
 msgid "Remove the ``symtable.h`` header file and the undocumented functions:"
 msgstr ""
+"Retrait du fichier d'en-tête ``symtable.h`` et des fonctions non-"
+"documentées :"
 
 #: whatsnew/3.10.rst:2247
 msgid "``PyST_GetScope()``"
-msgstr ""
+msgstr "``PyST_GetScope()`` ;"
 
 #: whatsnew/3.10.rst:2248
 msgid "``PySymtable_Build()``"
-msgstr ""
+msgstr "``PySymtable_Build()`` ;"
 
 #: whatsnew/3.10.rst:2249
 msgid "``PySymtable_BuildObject()``"
-msgstr ""
+msgstr "``PySymtable_BuildObject()`` ;"
 
 #: whatsnew/3.10.rst:2250
 msgid "``PySymtable_Free()``"
-msgstr ""
+msgstr "``PySymtable_Free()`` ;"
 
 #: whatsnew/3.10.rst:2251
 msgid "``Py_SymtableString()``"
-msgstr ""
+msgstr "``Py_SymtableString()`` ;"
 
 #: whatsnew/3.10.rst:2252
 msgid "``Py_SymtableStringObject()``"
-msgstr ""
+msgstr "``Py_SymtableStringObject()``."
 
 #: whatsnew/3.10.rst:2254
 msgid ""
@@ -4082,12 +4099,17 @@ msgid ""
 "it could not be used, because the ``symtable.h`` header file was excluded "
 "from the limited C API."
 msgstr ""
+"Par erreur, la fonction ``Py_SymtableString()`` faisait partie de l'*ABI* "
+"stable, mais elle ne pouvait pas être utilisée car le fichier d'en-tête "
+"``symtable.h`` était exclus de l'API C limitée."
 
 #: whatsnew/3.10.rst:2258
 msgid ""
 "Use Python :mod:`symtable` module instead. (Contributed by Victor Stinner "
 "in :issue:`43244`.)"
 msgstr ""
+"Utilisez plutôt le module Python :mod:`symtable` (contribution de *Victor "
+"Stinner* dans :issue:`43244`)."
 
 #: whatsnew/3.10.rst:2261
 msgid ""
@@ -4096,6 +4118,11 @@ msgid ""
 "Windows. Since the function takes a ``FILE*`` argument, its ABI stability "
 "cannot be guaranteed. (Contributed by Petr Viktorin in :issue:`43868`.)"
 msgstr ""
+"Retrait de :c:func:`PyOS_ReadlineFunctionPointer` des fichiers d'en-tête de "
+"l'API C limitée et de ``python3.dll``, la bibliothèque qui fournie l'*ABI* "
+"stable sur Windows. Étant donné que la fonction prend un ``FILE*`` en "
+"argument, la stabilité de son interface binaire-programme ne peut pas être "
+"garantie (contribution de *Petr Viktorin* dans :issue:`43868`)."
 
 #: whatsnew/3.10.rst:2267
 msgid ""
@@ -4107,78 +4134,91 @@ msgid ""
 "``<winbase.h>`` header. Use the Python :mod:`ast` module instead. "
 "(Contributed by Victor Stinner in :issue:`43244`.)"
 msgstr ""
+"Retrait des fichiers d'en-tête ``ast.h``, ``asdl.h`` et ``Python-ast.h``. "
+"Ces fonctions étaient non-documentées et exclues de l'API C limitée. La "
+"majorité des noms définis dans ces fichiers d'en-tête n'avaient pas le "
+"préfixe ``Py`` et pouvaient ainsi causer des conflits de noms. Par exemple, "
+"``Python-ast.h`` définit une macro ``Yield`` qui était en conflit avec le "
+"nom ``Yield`` utilisé dans le fichier d'en-tête ``<winbase.h>`` de Windows. "
+"Utilisez plutôt le module Python :mod:`ast` (contribution de *Victor "
+"Stinner* dans :issue:`43244`)."
 
 #: whatsnew/3.10.rst:2275
 msgid ""
 "Remove the compiler and parser functions using ``struct _mod`` type, because "
 "the public AST C API was removed:"
 msgstr ""
+"Retrait des fonctions d'analyses syntaxique et de compilation qui utilise le "
+"type ``struct _mod`` car l'API C publique pour manipuler les *AST* a été "
+"retirée :"
 
 #: whatsnew/3.10.rst:2278
 msgid "``PyAST_Compile()``"
-msgstr ""
+msgstr "``PyAST_Compile()`` ;"
 
 #: whatsnew/3.10.rst:2279
 msgid "``PyAST_CompileEx()``"
-msgstr ""
+msgstr "``PyAST_CompileEx()`` ;"
 
 #: whatsnew/3.10.rst:2280
 msgid "``PyAST_CompileObject()``"
-msgstr ""
+msgstr "``PyAST_CompileObject()`` ;"
 
 #: whatsnew/3.10.rst:2281
 msgid "``PyFuture_FromAST()``"
-msgstr ""
+msgstr "``PyFuture_FromAST()`` ;"
 
 #: whatsnew/3.10.rst:2282
 msgid "``PyFuture_FromASTObject()``"
-msgstr ""
+msgstr "``PyFuture_FromASTObject()`` ;"
 
 #: whatsnew/3.10.rst:2283
 msgid "``PyParser_ASTFromFile()``"
-msgstr ""
+msgstr "``PyParser_ASTFromFile()`` ;"
 
 #: whatsnew/3.10.rst:2284
 msgid "``PyParser_ASTFromFileObject()``"
-msgstr ""
+msgstr "``PyParser_ASTFromFileObject()`` ;"
 
 #: whatsnew/3.10.rst:2285
 msgid "``PyParser_ASTFromFilename()``"
-msgstr ""
+msgstr "``PyParser_ASTFromFilename()`` ;"
 
 #: whatsnew/3.10.rst:2286
 msgid "``PyParser_ASTFromString()``"
-msgstr ""
+msgstr "``PyParser_ASTFromString()`` ;"
 
 #: whatsnew/3.10.rst:2287
 msgid "``PyParser_ASTFromStringObject()``"
-msgstr ""
+msgstr "``PyParser_ASTFromStringObject()``."
 
 #: whatsnew/3.10.rst:2289
 msgid ""
 "These functions were undocumented and excluded from the limited C API. "
 "(Contributed by Victor Stinner in :issue:`43244`.)"
 msgstr ""
+"Ces fonctions étaient non-documentées et exclues de l'API C limitée "
+"(contribution de *Victor Stinner* dans :issue:`43244`)."
 
 #: whatsnew/3.10.rst:2292
 msgid "Remove the ``pyarena.h`` header file with functions:"
-msgstr ""
+msgstr "Retrait du fichier d'en-tête ``pyarena.h`` et des fonctions :"
 
 #: whatsnew/3.10.rst:2294
 msgid "``PyArena_New()``"
-msgstr ""
+msgstr "``PyArena_New()`` ;"
 
 #: whatsnew/3.10.rst:2295
 msgid "``PyArena_Free()``"
-msgstr ""
+msgstr "``PyArena_Free()`` ;"
 
 #: whatsnew/3.10.rst:2296
 msgid "``PyArena_Malloc()``"
-msgstr ""
+msgstr "``PyArena_Malloc()`` ;"
 
 #: whatsnew/3.10.rst:2297
 msgid "``PyArena_AddPyObject()``"
-msgstr ""
+msgstr "``PyArena_AddPyObject()``."
 
 #: whatsnew/3.10.rst:2299
 msgid ""
@@ -4186,9 +4226,14 @@ msgid ""
 "only used internally by the compiler. (Contributed by Victor Stinner in :"
 "issue:`43244`.)"
 msgstr ""
+"Ces fonctions étaient non-documentées et exclues de l'API C limitée ; elles "
+"n'étaient utilisées que par le compilateur dans l'implémentation interne "
+"(contribution de *Victor Stinner* dans :issue:`43244`)."
 
 #: whatsnew/3.10.rst:2303
 msgid ""
 "The ``PyThreadState.use_tracing`` member has been removed to optimize "
 "Python. (Contributed by Mark Shannon in :issue:`43760`.)"
 msgstr ""
+"Retrait du champ ``PyThreadState.use_tracing`` pour optimiser Python "
+"(contribution de *Mark Shannon* dans :issue:`43760`)."
