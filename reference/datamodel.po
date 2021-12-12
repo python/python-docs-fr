@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 18:14+0100\n"
+"POT-Creation-Date: 2021-11-27 10:27+0100\n"
 "PO-Revision-Date: 2021-10-21 23:42+0200\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -1180,16 +1180,17 @@ msgid "Generator functions"
 msgstr "Fonctions générateurs"
 
 #: reference/datamodel.rst:649
+#, fuzzy
 msgid ""
 "A function or method which uses the :keyword:`yield` statement (see section :"
 "ref:`yield`) is called a :dfn:`generator function`.  Such a function, when "
-"called, always returns an iterator object which can be used to execute the "
-"body of the function:  calling the iterator's :meth:`iterator.__next__` "
-"method will cause the function to execute until it provides a value using "
-"the :keyword:`!yield` statement.  When the function executes a :keyword:"
-"`return` statement or falls off the end, a :exc:`StopIteration` exception is "
-"raised and the iterator will have reached the end of the set of values to be "
-"returned."
+"called, always returns an :term:`iterator` object which can be used to "
+"execute the body of the function:  calling the iterator's :meth:`iterator."
+"__next__` method will cause the function to execute until it provides a "
+"value using the :keyword:`!yield` statement.  When the function executes a :"
+"keyword:`return` statement or falls off the end, a :exc:`StopIteration` "
+"exception is raised and the iterator will have reached the end of the set of "
+"values to be returned."
 msgstr ""
 "Une fonction ou une méthode qui utilise l'instruction :keyword:`yield` (voir "
 "la section :ref:`yield`) est appelée :dfn:`fonction générateur`. Une telle "
@@ -1224,12 +1225,13 @@ msgid "Asynchronous generator functions"
 msgstr "Fonctions générateurs asynchrones"
 
 #: reference/datamodel.rst:674
+#, fuzzy
 msgid ""
 "A function or method which is defined using :keyword:`async def` and which "
 "uses the :keyword:`yield` statement is called a :dfn:`asynchronous generator "
-"function`.  Such a function, when called, returns an asynchronous iterator "
-"object which can be used in an :keyword:`async for` statement to execute the "
-"body of the function."
+"function`.  Such a function, when called, returns an :term:`asynchronous "
+"iterator` object which can be used in an :keyword:`async for` statement to "
+"execute the body of the function."
 msgstr ""
 "Une fonction ou une méthode définie avec :keyword:`async def` et qui utilise "
 "l'instruction :keyword:`yield` est appelée :dfn:`fonction générateur "
@@ -3533,7 +3535,7 @@ msgstr ""
 "qui est utilisé à la place de la classe de base. Le *n*-uplet peut être "
 "vide, dans ce cas la classe de base originale est ignorée."
 
-#: reference/datamodel.rst:2198
+#: reference/datamodel.rst:2008
 msgid ":pep:`560` - Core support for typing module and generic types"
 msgstr ""
 ":pep:`560` — Gestion de base pour les types modules et les types génériques"
@@ -3882,14 +3884,48 @@ msgstr "Émulation de types génériques"
 
 #: reference/datamodel.rst:2183
 msgid ""
-"One can implement the generic class syntax as specified by :pep:`484` (for "
-"example ``List[int]``) by defining a special method:"
+"When using :term:`type annotations<annotation>`, it is often useful to "
+"*parameterize* a :term:`generic type` using Python's square-brackets "
+"notation. For example, the annotation ``list[int]`` might be used to signify "
+"a :class:`list` in which all the elements are of type :class:`int`."
 msgstr ""
-"Vous pouvez implémenter la syntaxe générique des classes comme spécifié par "
-"la :pep:`484` (par exemple ``List[int]``) en définissant une méthode "
-"spéciale :"
 
-#: reference/datamodel.rst:2188
+#: reference/datamodel.rst:2191
+#, fuzzy
+msgid ":pep:`484` - Type Hints"
+msgstr ":pep:`343` — L'instruction ``with``"
+
+#: reference/datamodel.rst:2191
+msgid "Introducing Python's framework for type annotations"
+msgstr ""
+
+#: reference/datamodel.rst:2194
+msgid ":ref:`Generic Alias Types<types-genericalias>`"
+msgstr ""
+
+#: reference/datamodel.rst:2194
+msgid "Documentation for objects representing parameterized generic classes"
+msgstr ""
+
+#: reference/datamodel.rst:2197
+msgid ""
+":ref:`Generics`, :ref:`user-defined generics<user-defined-generics>` and :"
+"class:`typing.Generic`"
+msgstr ""
+
+#: reference/datamodel.rst:2197
+msgid ""
+"Documentation on how to implement generic classes that can be parameterized "
+"at runtime and understood by static type-checkers."
+msgstr ""
+
+#: reference/datamodel.rst:2200
+msgid ""
+"A class can *generally* only be parameterized if it defines the special "
+"class method ``__class_getitem__()``."
+msgstr ""
+
+#: reference/datamodel.rst:2205
 msgid ""
 "Return an object representing the specialization of a generic class by type "
 "arguments found in *key*."
@@ -3897,24 +3933,97 @@ msgstr ""
 "Renvoie un objet représentant la spécialisation d'une classe générique en "
 "fonction des arguments types trouvés dans *key*."
 
-#: reference/datamodel.rst:2191
+#: reference/datamodel.rst:2208
 msgid ""
-"This method is looked up on the class object itself, and when defined in the "
-"class body, this method is implicitly a class method.  Note, this mechanism "
-"is primarily reserved for use with static type hints, other usage is "
-"discouraged."
+"When defined on a class, ``__class_getitem__()`` is automatically a class "
+"method. As such, there is no need for it to be decorated with :func:"
+"`@classmethod<classmethod>` when it is defined."
 msgstr ""
-"Python recherche cette méthode dans l'objet de classe lui-même et, "
-"lorsqu'elle est définie dans le corps de la classe, cette méthode est "
-"implicitement une méthode de classe. Notez que ce mécanisme est "
-"principalement réservé à une utilisation avec des indications de type "
-"statiques, d'autres utilisations sont déconseillées."
 
-#: reference/datamodel.rst:2204
+#: reference/datamodel.rst:2214
+msgid "The purpose of *__class_getitem__*"
+msgstr ""
+
+#: reference/datamodel.rst:2216
+msgid ""
+"The purpose of :meth:`~object.__class_getitem__` is to allow runtime "
+"parameterization of standard-library generic classes in order to more easily "
+"apply :term:`type hints<type hint>` to these classes."
+msgstr ""
+
+#: reference/datamodel.rst:2220
+msgid ""
+"To implement custom generic classes that can be parameterized at runtime and "
+"understood by static type-checkers, users should either inherit from a "
+"standard library class that already implements :meth:`~object."
+"__class_getitem__`, or inherit from :class:`typing.Generic`, which has its "
+"own implementation of ``__class_getitem__()``."
+msgstr ""
+
+#: reference/datamodel.rst:2226
+msgid ""
+"Custom implementations of :meth:`~object.__class_getitem__` on classes "
+"defined outside of the standard library may not be understood by third-party "
+"type-checkers such as mypy. Using ``__class_getitem__()`` on any class for "
+"purposes other than type hinting is discouraged."
+msgstr ""
+
+#: reference/datamodel.rst:2236
+msgid "*__class_getitem__* versus *__getitem__*"
+msgstr ""
+
+#: reference/datamodel.rst:2238
+msgid ""
+"Usually, the :ref:`subscription<subscriptions>` of an object using square "
+"brackets will call the :meth:`~object.__getitem__` instance method defined "
+"on the object's class. However, if the object being subscribed is itself a "
+"class, the class method :meth:`~object.__class_getitem__` may be called "
+"instead. ``__class_getitem__()`` should return a :ref:`GenericAlias<types-"
+"genericalias>` object if it is properly defined."
+msgstr ""
+
+#: reference/datamodel.rst:2245
+msgid ""
+"Presented with the :term:`expression` ``obj[x]``, the Python interpreter "
+"follows something like the following process to decide whether :meth:"
+"`~object.__getitem__` or :meth:`~object.__class_getitem__` should be called::"
+msgstr ""
+
+#: reference/datamodel.rst:2273
+msgid ""
+"In Python, all classes are themselves instances of other classes. The class "
+"of a class is known as that class's :term:`metaclass`, and most classes have "
+"the :class:`type` class as their metaclass. :class:`type` does not define :"
+"meth:`~object.__getitem__`, meaning that expressions such as ``list[int]``, "
+"``dict[str, float]`` and ``tuple[str, bytes]`` all result in :meth:`~object."
+"__class_getitem__` being called::"
+msgstr ""
+
+#: reference/datamodel.rst:2292
+msgid ""
+"However, if a class has a custom metaclass that defines :meth:`~object."
+"__getitem__`, subscribing the class may result in different behaviour. An "
+"example of this can be found in the :mod:`enum` module::"
+msgstr ""
+
+#: reference/datamodel.rst:2317
+#, fuzzy
+msgid ":pep:`560` - Core Support for typing module and generic types"
+msgstr ""
+":pep:`560` — Gestion de base pour les types modules et les types génériques"
+
+#: reference/datamodel.rst:2316
+msgid ""
+"Introducing :meth:`~object.__class_getitem__`, and outlining when a :ref:"
+"`subscription<subscriptions>` results in ``__class_getitem__()`` being "
+"called instead of :meth:`~object.__getitem__`"
+msgstr ""
+
+#: reference/datamodel.rst:2324
 msgid "Emulating callable objects"
 msgstr "Émulation d'objets appelables"
 
-#: reference/datamodel.rst:2211
+#: reference/datamodel.rst:2331
 msgid ""
 "Called when the instance is \"called\" as a function; if this method is "
 "defined, ``x(arg1, arg2, ...)`` roughly translates to ``type(x).__call__(x, "
@@ -3924,11 +4033,11 @@ msgstr ""
 "méthode est définie, ``x(arg1, arg2, …)`` est un raccourci pour ``type(x)."
 "__call__(x, arg1, …)``."
 
-#: reference/datamodel.rst:2218
+#: reference/datamodel.rst:2338
 msgid "Emulating container types"
 msgstr "Émulation de types conteneurs"
 
-#: reference/datamodel.rst:2220
+#: reference/datamodel.rst:2340
 msgid ""
 "The following methods can be defined to implement container objects.  "
 "Containers usually are sequences (such as lists or tuples) or mappings (like "
@@ -3995,7 +4104,7 @@ msgstr ""
 "de correspondances, :meth:`__iter__` doit itérer sur les clés de l'objet ; "
 "pour les séquences, elle doit itérer sur les valeurs."
 
-#: reference/datamodel.rst:2255
+#: reference/datamodel.rst:2375
 msgid ""
 "Called to implement the built-in function :func:`len`.  Should return the "
 "length of the object, an integer ``>=`` 0.  Also, an object that doesn't "
@@ -4007,7 +4116,7 @@ msgstr ""
 "définit pas de méthode :meth:`__bool__` et dont la méthode :meth:`__len__` "
 "renvoie zéro est considéré comme valant ``False`` dans un contexte booléen."
 
-#: reference/datamodel.rst:2262
+#: reference/datamodel.rst:2382
 msgid ""
 "In CPython, the length is required to be at most :attr:`sys.maxsize`. If the "
 "length is larger than :attr:`!sys.maxsize` some features (such as :func:"
@@ -4021,7 +4130,7 @@ msgstr ""
 "exc:`!OverflowError` lors de tests booléens, un objet doit définir la "
 "méthode :meth:`__bool__`."
 
-#: reference/datamodel.rst:2271
+#: reference/datamodel.rst:2391
 msgid ""
 "Called to implement :func:`operator.length_hint`. Should return an estimated "
 "length for the object (which may be greater or less than the actual length). "
@@ -4038,31 +4147,33 @@ msgstr ""
 "méthode est utilisée uniquement pour optimiser les traitements et n'est "
 "jamais tenue de renvoyer un résultat exact."
 
-#: reference/datamodel.rst:2285
+#: reference/datamodel.rst:2405
 msgid ""
 "Slicing is done exclusively with the following three methods.  A call like ::"
 msgstr ""
 "Le découpage est effectué uniquement à l'aide des trois méthodes suivantes. "
 "Un appel comme ::"
 
-#: reference/datamodel.rst:2289
+#: reference/datamodel.rst:2409
 msgid "is translated to ::"
 msgstr "est traduit en ::"
 
-#: reference/datamodel.rst:2293
+#: reference/datamodel.rst:2413
 msgid "and so forth.  Missing slice items are always filled in with ``None``."
 msgstr "et ainsi de suite. Les éléments manquants sont remplacés par ``None``."
 
-#: reference/datamodel.rst:2298
+#: reference/datamodel.rst:2418
+#, fuzzy
 msgid ""
-"Called to implement evaluation of ``self[key]``. For sequence types, the "
-"accepted keys should be integers and slice objects.  Note that the special "
-"interpretation of negative indexes (if the class wishes to emulate a "
-"sequence type) is up to the :meth:`__getitem__` method. If *key* is of an "
-"inappropriate type, :exc:`TypeError` may be raised; if of a value outside "
-"the set of indexes for the sequence (after any special interpretation of "
-"negative values), :exc:`IndexError` should be raised. For mapping types, if "
-"*key* is missing (not in the container), :exc:`KeyError` should be raised."
+"Called to implement evaluation of ``self[key]``. For :term:`sequence` types, "
+"the accepted keys should be integers and slice objects.  Note that the "
+"special interpretation of negative indexes (if the class wishes to emulate "
+"a :term:`sequence` type) is up to the :meth:`__getitem__` method. If *key* "
+"is of an inappropriate type, :exc:`TypeError` may be raised; if of a value "
+"outside the set of indexes for the sequence (after any special "
+"interpretation of negative values), :exc:`IndexError` should be raised. For :"
+"term:`mapping` types, if *key* is missing (not in the container), :exc:"
+"`KeyError` should be raised."
 msgstr ""
 "Appelée pour implémenter l'évaluation de ``self[key]``. Pour les types "
 "séquences, les clés autorisées sont les entiers et les objets tranches "
@@ -4074,7 +4185,7 @@ msgstr ""
 "`IndexError` doit être levée. Pour les tableaux de correspondances, si *key* "
 "n'existe pas dans le conteneur, une :exc:`KeyError` doit être levée."
 
-#: reference/datamodel.rst:2309
+#: reference/datamodel.rst:2430
 msgid ""
 ":keyword:`for` loops expect that an :exc:`IndexError` will be raised for "
 "illegal indexes to allow proper detection of the end of the sequence."
@@ -4082,7 +4193,14 @@ msgstr ""
 ":keyword:`for` s'attend à ce qu'une :exc:`IndexError` soit levée en cas "
 "d'indice illégal afin de détecter correctement la fin de la séquence."
 
-#: reference/datamodel.rst:2315
+#: reference/datamodel.rst:2435
+msgid ""
+"When :ref:`subscripting<subscriptions>` a *class*, the special class method :"
+"meth:`~object.__class_getitem__` may be called instead of ``__getitem__()``. "
+"See :ref:`classgetitem-versus-getitem` for more details."
+msgstr ""
+
+#: reference/datamodel.rst:2443
 msgid ""
 "Called to implement assignment to ``self[key]``.  Same note as for :meth:"
 "`__getitem__`.  This should only be implemented for mappings if the objects "
@@ -4098,7 +4216,7 @@ msgstr ""
 "exceptions que pour la méthode :meth:`__getitem__` doivent être levées en "
 "cas de mauvaises valeurs de clés."
 
-#: reference/datamodel.rst:2324
+#: reference/datamodel.rst:2452
 msgid ""
 "Called to implement deletion of ``self[key]``.  Same note as for :meth:"
 "`__getitem__`.  This should only be implemented for mappings if the objects "
@@ -4113,7 +4231,7 @@ msgstr ""
 "Les mêmes exceptions que pour la méthode :meth:`__getitem__` doivent être "
 "levées en cas de mauvaises valeurs de clés."
 
-#: reference/datamodel.rst:2333
+#: reference/datamodel.rst:2461
 msgid ""
 "Called by :class:`dict`\\ .\\ :meth:`__getitem__` to implement ``self[key]`` "
 "for dict subclasses when key is not in the dictionary."
@@ -4122,29 +4240,20 @@ msgstr ""
 "``self[key]`` dans les sous-classes de dictionnaires lorsque la clé n'est "
 "pas dans le dictionnaire."
 
-#: reference/datamodel.rst:2339
+#: reference/datamodel.rst:2467
+#, fuzzy
 msgid ""
-"This method is called when an iterator is required for a container. This "
-"method should return a new iterator object that can iterate over all the "
-"objects in the container.  For mappings, it should iterate over the keys of "
-"the container."
+"This method is called when an :term:`iterator` is required for a container. "
+"This method should return a new iterator object that can iterate over all "
+"the objects in the container.  For mappings, it should iterate over the keys "
+"of the container."
 msgstr ""
 "Cette méthode est appelée quand un itérateur est requis pour un conteneur. "
 "Cette méthode doit renvoyer un nouvel objet itérateur qui peut itérer sur "
 "tous les objets du conteneur. Pour les tableaux de correspondances, elle "
 "doit itérer sur les clés du conteneur."
 
-#: reference/datamodel.rst:2343
-msgid ""
-"Iterator objects also need to implement this method; they are required to "
-"return themselves.  For more information on iterator objects, see :ref:"
-"`typeiter`."
-msgstr ""
-"Les objets itérateurs doivent aussi implémenter cette méthode ; ils doivent "
-"alors se renvoyer eux-mêmes. Pour plus d'information sur les objets "
-"itérateurs, lisez :ref:`typeiter`."
-
-#: reference/datamodel.rst:2349
+#: reference/datamodel.rst:2475
 msgid ""
 "Called (if present) by the :func:`reversed` built-in to implement reverse "
 "iteration.  It should return a new iterator object that iterates over all "
@@ -4154,7 +4263,7 @@ msgstr ""
 "implémenter l'itération en sens inverse. Elle doit renvoyer un nouvel objet "
 "itérateur qui itère sur tous les objets du conteneur en sens inverse."
 
-#: reference/datamodel.rst:2353
+#: reference/datamodel.rst:2479
 msgid ""
 "If the :meth:`__reversed__` method is not provided, the :func:`reversed` "
 "built-in will fall back to using the sequence protocol (:meth:`__len__` and :"
@@ -4168,7 +4277,7 @@ msgstr ""
 "doivent fournir :meth:`__reversed__` que si l'implémentation qu'ils "
 "proposent est plus efficace que celle de :func:`reversed`."
 
-#: reference/datamodel.rst:2360
+#: reference/datamodel.rst:2486
 msgid ""
 "The membership test operators (:keyword:`in` and :keyword:`not in`) are "
 "normally implemented as an iteration through a container. However, container "
@@ -4181,7 +4290,7 @@ msgstr ""
 "suivantes avec une implémentation plus efficace, qui ne requièrent "
 "d'ailleurs pas que l'objet soit itérable."
 
-#: reference/datamodel.rst:2367
+#: reference/datamodel.rst:2493
 msgid ""
 "Called to implement membership test operators.  Should return true if *item* "
 "is in *self*, false otherwise.  For mapping objects, this should consider "
@@ -4192,7 +4301,7 @@ msgstr ""
 "tableaux de correspondances, seules les clés sont considérées (pas les "
 "valeurs des paires clés-valeurs)."
 
-#: reference/datamodel.rst:2371
+#: reference/datamodel.rst:2497
 msgid ""
 "For objects that don't define :meth:`__contains__`, the membership test "
 "first tries iteration via :meth:`__iter__`, then the old sequence iteration "
@@ -4205,11 +4314,11 @@ msgstr ""
 "reportez-vous à :ref:`cette section dans la référence du langage <membership-"
 "test-details>`."
 
-#: reference/datamodel.rst:2380
+#: reference/datamodel.rst:2506
 msgid "Emulating numeric types"
 msgstr "Émulation de types numériques"
 
-#: reference/datamodel.rst:2382
+#: reference/datamodel.rst:2508
 msgid ""
 "The following methods can be defined to emulate numeric objects. Methods "
 "corresponding to operations that are not supported by the particular kind of "
@@ -4222,7 +4331,7 @@ msgstr ""
 "opérations bit à bit pour les nombres qui ne sont pas entiers) doivent être "
 "laissées indéfinies."
 
-#: reference/datamodel.rst:2408
+#: reference/datamodel.rst:2534
 msgid ""
 "These methods are called to implement the binary arithmetic operations (``"
 "+``, ``-``, ``*``, ``@``, ``/``, ``//``, ``%``, :func:`divmod`, :func:`pow`, "
@@ -4245,7 +4354,7 @@ msgstr ""
 "accepter un troisième argument optionnel si la version ternaire de la "
 "fonction native :func:`pow` est autorisée."
 
-#: reference/datamodel.rst:2419
+#: reference/datamodel.rst:2545
 msgid ""
 "If one of those methods does not support the operation with the supplied "
 "arguments, it should return ``NotImplemented``."
@@ -4253,7 +4362,7 @@ msgstr ""
 "Si l'une de ces méthodes n'autorise pas l'opération avec les arguments "
 "donnés, elle doit renvoyer ``NotImplemented``."
 
-#: reference/datamodel.rst:2442
+#: reference/datamodel.rst:2568
 msgid ""
 "These methods are called to implement the binary arithmetic operations (``"
 "+``, ``-``, ``*``, ``@``, ``/``, ``//``, ``%``, :func:`divmod`, :func:`pow`, "
@@ -4274,7 +4383,7 @@ msgstr ""
 "`__rsub__`, ``y.__rsub__(x)`` est appelée si ``x.__sub__(y)`` renvoie "
 "*NotImplemented*."
 
-#: reference/datamodel.rst:2453
+#: reference/datamodel.rst:2579
 msgid ""
 "Note that ternary :func:`pow` will not try calling :meth:`__rpow__` (the "
 "coercion rules would become too complicated)."
@@ -4282,7 +4391,7 @@ msgstr ""
 "Notez que la fonction ternaire :func:`pow` n'essaie pas d'appeler :meth:"
 "`__rpow__` (les règles de coercition seraient trop compliquées)."
 
-#: reference/datamodel.rst:2458
+#: reference/datamodel.rst:2584
 msgid ""
 "If the right operand's type is a subclass of the left operand's type and "
 "that subclass provides a different implementation of the reflected method "
@@ -4296,7 +4405,7 @@ msgstr ""
 "méthode originelle de l'opérande gauche. Ce comportement permet à des sous-"
 "classes de surcharger les opérations de leurs ancêtres."
 
-#: reference/datamodel.rst:2479
+#: reference/datamodel.rst:2605
 msgid ""
 "These methods are called to implement the augmented arithmetic assignments "
 "(``+=``, ``-=``, ``*=``, ``@=``, ``/=``, ``//=``, ``%=``, ``**=``, ``<<=``, "
@@ -4325,7 +4434,7 @@ msgstr ""
 "erreurs inattendues (voir :ref:`faq-augmented-assignment-tuple-error`), mais "
 "ce comportement est en fait partie intégrante du modèle de données."
 
-#: reference/datamodel.rst:2500
+#: reference/datamodel.rst:2626
 msgid ""
 "Called to implement the unary arithmetic operations (``-``, ``+``, :func:"
 "`abs` and ``~``)."
@@ -4333,7 +4442,7 @@ msgstr ""
 "Appelée pour implémenter les opérations arithmétiques unaires (``-``, ``"
 "+``, :func:`abs` et ``~``)."
 
-#: reference/datamodel.rst:2513
+#: reference/datamodel.rst:2639
 msgid ""
 "Called to implement the built-in functions :func:`complex`, :func:`int` and :"
 "func:`float`.  Should return a value of the appropriate type."
@@ -4341,7 +4450,7 @@ msgstr ""
 "Appelées pour implémenter les fonctions natives :func:`complex`, :func:`int` "
 "et :func:`float`. Elles doivent renvoyer une valeur du type approprié."
 
-#: reference/datamodel.rst:2520
+#: reference/datamodel.rst:2646
 msgid ""
 "Called to implement :func:`operator.index`, and whenever Python needs to "
 "losslessly convert the numeric object to an integer object (such as in "
@@ -4355,7 +4464,7 @@ msgstr ""
 "`oct`). La présence de cette méthode indique que l'objet numérique est un "
 "type entier. Elle doit renvoyer un entier."
 
-#: reference/datamodel.rst:2526
+#: reference/datamodel.rst:2652
 msgid ""
 "If :meth:`__int__`, :meth:`__float__` and :meth:`__complex__` are not "
 "defined then corresponding built-in functions :func:`int`, :func:`float` "
@@ -4365,7 +4474,7 @@ msgstr ""
 "définies, alors les fonctions natives :func:`int`, :func:`float` et :func:"
 "`complex` redirigent par défaut vers :meth:`__index__`."
 
-#: reference/datamodel.rst:2538
+#: reference/datamodel.rst:2664
 msgid ""
 "Called to implement the built-in function :func:`round` and :mod:`math` "
 "functions :func:`~math.trunc`, :func:`~math.floor` and :func:`~math.ceil`. "
@@ -4379,17 +4488,17 @@ msgstr ""
 "toutes ces méthodes doivent renvoyer la valeur de l'objet tronquée pour "
 "donner un :class:`~numbers.Integral` (typiquement un :class:`int`)."
 
-#: reference/datamodel.rst:2544
+#: reference/datamodel.rst:2670
 msgid ""
 "The built-in function :func:`int` falls back to :meth:`__trunc__` if "
 "neither :meth:`__int__` nor :meth:`__index__` is defined."
 msgstr ""
 
-#: reference/datamodel.rst:2551
+#: reference/datamodel.rst:2677
 msgid "With Statement Context Managers"
 msgstr "Gestionnaire de contexte With"
 
-#: reference/datamodel.rst:2553
+#: reference/datamodel.rst:2679
 msgid ""
 "A :dfn:`context manager` is an object that defines the runtime context to be "
 "established when executing a :keyword:`with` statement. The context manager "
@@ -4406,7 +4515,7 @@ msgstr ""
 "dans la section :ref:`with`), mais ils peuvent aussi être directement "
 "invoqués par leurs méthodes."
 
-#: reference/datamodel.rst:2564
+#: reference/datamodel.rst:2690
 msgid ""
 "Typical uses of context managers include saving and restoring various kinds "
 "of global state, locking and unlocking resources, closing opened files, etc."
@@ -4415,14 +4524,14 @@ msgstr ""
 "et la restauration d'états divers, le verrouillage et le déverrouillage de "
 "ressources, la fermeture de fichiers ouverts, etc."
 
-#: reference/datamodel.rst:2567
+#: reference/datamodel.rst:2693
 msgid ""
 "For more information on context managers, see :ref:`typecontextmanager`."
 msgstr ""
 "Pour plus d'informations sur les gestionnaires de contexte, lisez :ref:"
 "`typecontextmanager`."
 
-#: reference/datamodel.rst:2572
+#: reference/datamodel.rst:2698
 msgid ""
 "Enter the runtime context related to this object. The :keyword:`with` "
 "statement will bind this method's return value to the target(s) specified in "
@@ -4433,7 +4542,7 @@ msgstr ""
 "cible spécifiée par la clause :keyword:`!as` de l'instruction, si elle est "
 "spécifiée."
 
-#: reference/datamodel.rst:2579
+#: reference/datamodel.rst:2705
 msgid ""
 "Exit the runtime context related to this object. The parameters describe the "
 "exception that caused the context to be exited. If the context was exited "
@@ -4443,7 +4552,7 @@ msgstr ""
 "l'exception qui a causé la sortie du contexte. Si l'on sort du contexte sans "
 "exception, les trois arguments sont à :const:`None`."
 
-#: reference/datamodel.rst:2583
+#: reference/datamodel.rst:2709
 msgid ""
 "If an exception is supplied, and the method wishes to suppress the exception "
 "(i.e., prevent it from being propagated), it should return a true value. "
@@ -4455,7 +4564,7 @@ msgstr ""
 "propagée), elle doit renvoyer ``True``. Sinon, l'exception est traitée "
 "normalement à la sortie de cette méthode."
 
-#: reference/datamodel.rst:2587
+#: reference/datamodel.rst:2713
 msgid ""
 "Note that :meth:`__exit__` methods should not reraise the passed-in "
 "exception; this is the caller's responsibility."
@@ -4463,11 +4572,11 @@ msgstr ""
 "Notez qu'une méthode :meth:`__exit__` ne doit pas lever à nouveau "
 "l'exception qu'elle reçoit ; c'est du ressort de l'appelant."
 
-#: reference/datamodel.rst:2594
+#: reference/datamodel.rst:2720
 msgid ":pep:`343` - The \"with\" statement"
 msgstr ":pep:`343` — L'instruction ``with``"
 
-#: reference/datamodel.rst:2594
+#: reference/datamodel.rst:2720
 msgid ""
 "The specification, background, and examples for the Python :keyword:`with` "
 "statement."
@@ -4475,11 +4584,11 @@ msgstr ""
 "La spécification, les motivations et des exemples de l'instruction :keyword:"
 "`with` en Python."
 
-#: reference/datamodel.rst:2601
+#: reference/datamodel.rst:2727
 msgid "Customizing positional arguments in class pattern matching"
 msgstr "Arguments positionnels dans le filtrage par motif sur les classes"
 
-#: reference/datamodel.rst:2603
+#: reference/datamodel.rst:2729
 msgid ""
 "When using a class name in a pattern, positional arguments in the pattern "
 "are not allowed by default, i.e. ``case MyClass(x, y)`` is typically invalid "
@@ -4491,7 +4600,7 @@ msgstr ""
 "fait rien pour cela. Afin de prendre en charge le filtrage par arguments "
 "positionnels, une classe doit définir ``__match_args__``."
 
-#: reference/datamodel.rst:2610
+#: reference/datamodel.rst:2736
 msgid ""
 "This class variable can be assigned a tuple of strings. When this class is "
 "used in a class pattern with positional arguments, each positional argument "
@@ -4505,7 +4614,7 @@ msgstr ""
 "n'est pas défini, tout se passe comme si sa valeur était le *n*-uplet vide "
 "``()``."
 
-#: reference/datamodel.rst:2616
+#: reference/datamodel.rst:2742
 msgid ""
 "For example, if ``MyClass.__match_args__`` is ``(\"left\", \"center\", "
 "\"right\")`` that means that ``case MyClass(x, y)`` is equivalent to ``case "
@@ -4520,19 +4629,19 @@ msgstr ""
 "d'arguments positionnels que la longueur ``__match_args__``. Dans le cas "
 "contraire, le filtrage lève l'exception :exc:`TypeError`."
 
-#: reference/datamodel.rst:2626
+#: reference/datamodel.rst:2752
 msgid ":pep:`634` - Structural Pattern Matching"
 msgstr ":pep:`634` — Filtrage par motif structurel"
 
-#: reference/datamodel.rst:2627
+#: reference/datamodel.rst:2753
 msgid "The specification for the Python ``match`` statement."
 msgstr "Spécification de l'instruction ``match``."
 
-#: reference/datamodel.rst:2633
+#: reference/datamodel.rst:2759
 msgid "Special method lookup"
 msgstr "Recherche des méthodes spéciales"
 
-#: reference/datamodel.rst:2635
+#: reference/datamodel.rst:2761
 msgid ""
 "For custom classes, implicit invocations of special methods are only "
 "guaranteed to work correctly if defined on an object's type, not in the "
@@ -4544,7 +4653,7 @@ msgstr ""
 "type d'objet, pas dans le dictionnaire de l'objet instance. Ce comportement "
 "explique pourquoi le code suivant lève une exception ::"
 
-#: reference/datamodel.rst:2650
+#: reference/datamodel.rst:2776
 msgid ""
 "The rationale behind this behaviour lies with a number of special methods "
 "such as :meth:`__hash__` and :meth:`__repr__` that are implemented by all "
@@ -4558,7 +4667,7 @@ msgstr ""
 "méthodes utilisait le processus normal de recherche, elles ne "
 "fonctionneraient pas si on les appelait sur l'objet type lui-même ::"
 
-#: reference/datamodel.rst:2663
+#: reference/datamodel.rst:2789
 msgid ""
 "Incorrectly attempting to invoke an unbound method of a class in this way is "
 "sometimes referred to as 'metaclass confusion', and is avoided by bypassing "
@@ -4568,7 +4677,7 @@ msgstr ""
 "parfois appelé « confusion de métaclasse » et se contourne en shuntant "
 "l'instance lors de la recherche des méthodes spéciales ::"
 
-#: reference/datamodel.rst:2672
+#: reference/datamodel.rst:2798
 msgid ""
 "In addition to bypassing any instance attributes in the interest of "
 "correctness, implicit special method lookup generally also bypasses the :"
@@ -4578,7 +4687,7 @@ msgstr ""
 "correctement, la recherche des méthodes spéciales implicites shunte aussi la "
 "méthode :meth:`__getattribute__` même dans la métaclasse de l'objet ::"
 
-#: reference/datamodel.rst:2698
+#: reference/datamodel.rst:2824
 msgid ""
 "Bypassing the :meth:`__getattribute__` machinery in this fashion provides "
 "significant scope for speed optimisations within the interpreter, at the "
@@ -4592,15 +4701,15 @@ msgstr ""
 "être définie sur l'objet classe lui-même afin d'être invoquée de manière "
 "cohérente par l'interpréteur)."
 
-#: reference/datamodel.rst:2709
+#: reference/datamodel.rst:2835
 msgid "Coroutines"
 msgstr "Coroutines"
 
-#: reference/datamodel.rst:2713
+#: reference/datamodel.rst:2839
 msgid "Awaitable Objects"
 msgstr "Objets *attendables* (*awaitable*)"
 
-#: reference/datamodel.rst:2715
+#: reference/datamodel.rst:2841
 msgid ""
 "An :term:`awaitable` object generally implements an :meth:`__await__` "
 "method. :term:`Coroutine objects <coroutine>` returned from :keyword:`async "
@@ -4610,7 +4719,7 @@ msgstr ""
 "`__await__`. Les objets :term:`coroutine` renvoyés par les fonctions :"
 "keyword:`async def` sont des *attendables* (*awaitable*)."
 
-#: reference/datamodel.rst:2721
+#: reference/datamodel.rst:2847
 msgid ""
 "The :term:`generator iterator` objects returned from generators decorated "
 "with :func:`types.coroutine` or :func:`asyncio.coroutine` are also "
@@ -4621,7 +4730,7 @@ msgstr ""
 "des *attendables* (*awaitable*), mais ils n'implémentent pas :meth:"
 "`__await__`."
 
-#: reference/datamodel.rst:2727
+#: reference/datamodel.rst:2853
 msgid ""
 "Must return an :term:`iterator`.  Should be used to implement :term:"
 "`awaitable` objects.  For instance, :class:`asyncio.Future` implements this "
@@ -4631,17 +4740,17 @@ msgstr ""
 "objets :term:`awaitable`. Par exemple, :class:`asyncio.Future` implémente "
 "cette méthode pour être compatible avec les expressions :keyword:`await`."
 
-#: reference/datamodel.rst:2733
+#: reference/datamodel.rst:2859
 msgid ":pep:`492` for additional information about awaitable objects."
 msgstr ""
 ":pep:`492` pour les informations relatives aux objets *attendables* "
 "(*awaitable*)."
 
-#: reference/datamodel.rst:2739
+#: reference/datamodel.rst:2865
 msgid "Coroutine Objects"
 msgstr "Objets coroutines"
 
-#: reference/datamodel.rst:2741
+#: reference/datamodel.rst:2867
 msgid ""
 ":term:`Coroutine objects <coroutine>` are :term:`awaitable` objects. A "
 "coroutine's execution can be controlled by calling :meth:`__await__` and "
@@ -4659,7 +4768,7 @@ msgstr ""
 "exception, elle est propagée par l'itérateur. Les coroutines ne doivent pas "
 "lever directement des exceptions :exc:`StopIteration` non gérées."
 
-#: reference/datamodel.rst:2749
+#: reference/datamodel.rst:2875
 msgid ""
 "Coroutines also have the methods listed below, which are analogous to those "
 "of generators (see :ref:`generator-methods`).  However, unlike generators, "
@@ -4670,13 +4779,13 @@ msgstr ""
 "contraire des générateurs, vous ne pouvez pas itérer directement sur des "
 "coroutines."
 
-#: reference/datamodel.rst:2753
+#: reference/datamodel.rst:2879
 msgid "It is a :exc:`RuntimeError` to await on a coroutine more than once."
 msgstr ""
 "Utiliser *await* plus d'une fois sur une coroutine lève une :exc:"
 "`RuntimeError`."
 
-#: reference/datamodel.rst:2759
+#: reference/datamodel.rst:2885
 msgid ""
 "Starts or resumes execution of the coroutine.  If *value* is ``None``, this "
 "is equivalent to advancing the iterator returned by :meth:`__await__`.  If "
@@ -4693,7 +4802,7 @@ msgstr ""
 "est le même que lorsque vous itérez sur la valeur de retour de :meth:"
 "`__await__`, décrite ci-dessus."
 
-#: reference/datamodel.rst:2769
+#: reference/datamodel.rst:2895
 msgid ""
 "Raises the specified exception in the coroutine.  This method delegates to "
 "the :meth:`~generator.throw` method of the iterator that caused the "
@@ -4711,7 +4820,7 @@ msgstr ""
 "retour de :meth:`__await__`, décrite ci-dessus. Si l'exception n'est pas "
 "gérée par la coroutine, elle est propagée à l'appelant."
 
-#: reference/datamodel.rst:2780
+#: reference/datamodel.rst:2906
 msgid ""
 "Causes the coroutine to clean itself up and exit.  If the coroutine is "
 "suspended, this method first delegates to the :meth:`~generator.close` "
@@ -4728,7 +4837,7 @@ msgstr ""
 "la coroutine est marquée comme ayant terminé son exécution, même si elle n'a "
 "jamais démarré."
 
-#: reference/datamodel.rst:2788
+#: reference/datamodel.rst:2914
 msgid ""
 "Coroutine objects are automatically closed using the above process when they "
 "are about to be destroyed."
@@ -4736,11 +4845,11 @@ msgstr ""
 "Les objets coroutines sont automatiquement fermés en utilisant le processus "
 "décrit au-dessus au moment où ils sont détruits."
 
-#: reference/datamodel.rst:2794
+#: reference/datamodel.rst:2920
 msgid "Asynchronous Iterators"
 msgstr "Itérateurs asynchrones"
 
-#: reference/datamodel.rst:2796
+#: reference/datamodel.rst:2922
 msgid ""
 "An *asynchronous iterator* can call asynchronous code in its ``__anext__`` "
 "method."
@@ -4748,18 +4857,18 @@ msgstr ""
 "Un *itérateur asynchrone* peut appeler du code asynchrone dans sa méthode "
 "``__anext__``."
 
-#: reference/datamodel.rst:2799
+#: reference/datamodel.rst:2925
 msgid ""
 "Asynchronous iterators can be used in an :keyword:`async for` statement."
 msgstr ""
 "Les itérateurs asynchrones peuvent être utilisés dans des instructions :"
 "keyword:`async for`."
 
-#: reference/datamodel.rst:2803
+#: reference/datamodel.rst:2929
 msgid "Must return an *asynchronous iterator* object."
 msgstr "Doit renvoyer un objet *itérateur asynchrone*."
 
-#: reference/datamodel.rst:2807
+#: reference/datamodel.rst:2933
 msgid ""
 "Must return an *awaitable* resulting in a next value of the iterator.  "
 "Should raise a :exc:`StopAsyncIteration` error when the iteration is over."
@@ -4768,11 +4877,11 @@ msgstr ""
 "suivante de l'itérateur. Doit lever une :exc:`StopAsyncIteration` quand "
 "l'itération est terminée."
 
-#: reference/datamodel.rst:2810
+#: reference/datamodel.rst:2936
 msgid "An example of an asynchronous iterable object::"
 msgstr "Un exemple d'objet itérateur asynchrone ::"
 
-#: reference/datamodel.rst:2827
+#: reference/datamodel.rst:2953
 msgid ""
 "Prior to Python 3.7, ``__aiter__`` could return an *awaitable* that would "
 "resolve to an :term:`asynchronous iterator <asynchronous iterator>`."
@@ -4781,7 +4890,7 @@ msgstr ""
 "(*awaitable*) qui se résolvait potentiellement en un :term:`itérateur "
 "asynchrone <asynchronous iterator>`."
 
-#: reference/datamodel.rst:2832
+#: reference/datamodel.rst:2958
 msgid ""
 "Starting with Python 3.7, ``__aiter__`` must return an asynchronous iterator "
 "object.  Returning anything else will result in a :exc:`TypeError` error."
@@ -4789,11 +4898,11 @@ msgstr ""
 "À partir de Python 3.7, ``__aiter__`` doit renvoyer un objet itérateur "
 "asynchrone. Renvoyer autre chose entraine une erreur :exc:`TypeError`."
 
-#: reference/datamodel.rst:2840
+#: reference/datamodel.rst:2966
 msgid "Asynchronous Context Managers"
 msgstr "Gestionnaires de contexte asynchrones"
 
-#: reference/datamodel.rst:2842
+#: reference/datamodel.rst:2968
 msgid ""
 "An *asynchronous context manager* is a *context manager* that is able to "
 "suspend execution in its ``__aenter__`` and ``__aexit__`` methods."
@@ -4802,7 +4911,7 @@ msgstr ""
 "qui est capable de suspendre son exécution dans ses méthodes ``__aenter__`` "
 "et ``__aexit__``."
 
-#: reference/datamodel.rst:2845
+#: reference/datamodel.rst:2971
 msgid ""
 "Asynchronous context managers can be used in an :keyword:`async with` "
 "statement."
@@ -4810,7 +4919,7 @@ msgstr ""
 "Les gestionnaires de contexte asynchrones peuvent être utilisés dans des "
 "instructions :keyword:`async with`."
 
-#: reference/datamodel.rst:2849
+#: reference/datamodel.rst:2975
 msgid ""
 "Semantically similar to :meth:`__enter__`, the only difference being that it "
 "must return an *awaitable*."
@@ -4818,7 +4927,7 @@ msgstr ""
 "Sémantiquement équivalente à :meth:`__enter__`, à la seule différence près "
 "qu'elle doit renvoyer un *attendable* (*awaitable*)."
 
-#: reference/datamodel.rst:2854
+#: reference/datamodel.rst:2980
 msgid ""
 "Semantically similar to :meth:`__exit__`, the only difference being that it "
 "must return an *awaitable*."
@@ -4826,15 +4935,15 @@ msgstr ""
 "Sémantiquement équivalente à :meth:`__exit__`, à la seule différence près "
 "qu'elle doit renvoyer un *attendable* (*awaitable*)."
 
-#: reference/datamodel.rst:2857
+#: reference/datamodel.rst:2983
 msgid "An example of an asynchronous context manager class::"
 msgstr "Un exemple de classe de gestionnaire de contexte asynchrone ::"
 
-#: reference/datamodel.rst:2870
+#: reference/datamodel.rst:2996
 msgid "Footnotes"
 msgstr "Notes de bas de page"
 
-#: reference/datamodel.rst:2871
+#: reference/datamodel.rst:2997
 msgid ""
 "It *is* possible in some cases to change an object's type, under certain "
 "controlled conditions. It generally isn't a good idea though, since it can "
@@ -4845,7 +4954,7 @@ msgstr ""
 "car cela peut conduire à un comportement très étrange si ce n'est pas géré "
 "correctement."
 
-#: reference/datamodel.rst:2875
+#: reference/datamodel.rst:3001
 msgid ""
 "The :meth:`__hash__`, :meth:`__iter__`, :meth:`__reversed__`, and :meth:"
 "`__contains__` methods have special handling for this; others will still "
@@ -4857,7 +4966,7 @@ msgstr ""
 "lèvent toujours :exc:`TypeError`, mais le font en considérant que ``None`` "
 "n'est pas un appelable."
 
-#: reference/datamodel.rst:2880
+#: reference/datamodel.rst:3006
 msgid ""
 "\"Does not support\" here means that the class has no such method, or the "
 "method returns ``NotImplemented``.  Do not set the method to ``None`` if you "
@@ -4869,7 +4978,7 @@ msgstr ""
 "``None`` à la méthode si vous voulez un repli vers la méthode symétrique de "
 "l'opérande de droite — cela aurait pour effet de *bloquer* un tel repli."
 
-#: reference/datamodel.rst:2886
+#: reference/datamodel.rst:3012
 msgid ""
 "For operands of the same type, it is assumed that if the non-reflected "
 "method -- such as :meth:`__add__` -- fails then the overall operation is not "
@@ -4878,6 +4987,35 @@ msgstr ""
 "Pour des opérandes de même type, on considère que si la méthode originelle "
 "(telle que :meth:`__add__`) échoue, alors l'opération en tant que telle "
 "n'est pas autorisée et donc la méthode symétrique n'est pas appelée."
+
+#~ msgid ""
+#~ "One can implement the generic class syntax as specified by :pep:`484` "
+#~ "(for example ``List[int]``) by defining a special method:"
+#~ msgstr ""
+#~ "Vous pouvez implémenter la syntaxe générique des classes comme spécifié "
+#~ "par la :pep:`484` (par exemple ``List[int]``) en définissant une méthode "
+#~ "spéciale :"
+
+#~ msgid ""
+#~ "This method is looked up on the class object itself, and when defined in "
+#~ "the class body, this method is implicitly a class method.  Note, this "
+#~ "mechanism is primarily reserved for use with static type hints, other "
+#~ "usage is discouraged."
+#~ msgstr ""
+#~ "Python recherche cette méthode dans l'objet de classe lui-même et, "
+#~ "lorsqu'elle est définie dans le corps de la classe, cette méthode est "
+#~ "implicitement une méthode de classe. Notez que ce mécanisme est "
+#~ "principalement réservé à une utilisation avec des indications de type "
+#~ "statiques, d'autres utilisations sont déconseillées."
+
+#~ msgid ""
+#~ "Iterator objects also need to implement this method; they are required to "
+#~ "return themselves.  For more information on iterator objects, see :ref:"
+#~ "`typeiter`."
+#~ msgstr ""
+#~ "Les objets itérateurs doivent aussi implémenter cette méthode ; ils "
+#~ "doivent alors se renvoyer eux-mêmes. Pour plus d'information sur les "
+#~ "objets itérateurs, lisez :ref:`typeiter`."
 
 #~ msgid ""
 #~ "If :meth:`__int__` is not defined then the built-in function :func:`int` "
