@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-21 15:04+0200\n"
-"PO-Revision-Date: 2021-12-16 19:44+0100\n"
+"PO-Revision-Date: 2021-12-16 21:00+0100\n"
 "Last-Translator: Antoine Wecxsteen\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
@@ -732,7 +732,7 @@ msgstr "0"
 
 #: library/logging.rst:387
 msgid "Handler Objects"
-msgstr "Objets gestionnaires"
+msgstr "Gestionnaires"
 
 #: library/logging.rst:389
 msgid ""
@@ -753,8 +753,8 @@ msgid ""
 "`createLock`) for serializing access to an I/O mechanism."
 msgstr ""
 "Initialise la classe :class:`Handler` en définissant le niveau de gravité, "
-"la liste des filtres à la liste vide et en créant un verrou (avec :meth:"
-"`createLock`) pour sérialiser l'accès au mécanisme d'E-S."
+"en initialisant la liste des filtres avec une liste vide et en créant un "
+"verrou (avec :meth:`createLock`) pour sérialiser l'accès au mécanisme d'E-S."
 
 #: library/logging.rst:405
 msgid ""
@@ -788,18 +788,20 @@ msgid ""
 "The *level* parameter now accepts a string representation of the level such "
 "as 'INFO' as an alternative to the integer constants such as :const:`INFO`."
 msgstr ""
+"le paramètre *level* peut être une chaîne de caractères, comme 'INFO', en "
+"plus d'une constante entière comme :const:`INFO`."
 
 #: library/logging.rst:436
 msgid "Sets the :class:`Formatter` for this handler to *fmt*."
-msgstr ""
+msgstr "Définit le :class:`Formatter` du gestionnaire à *fmt*."
 
 #: library/logging.rst:441
 msgid "Adds the specified filter *filter* to this handler."
-msgstr ""
+msgstr "Ajoute le filtre *filter* au gestionnaire."
 
 #: library/logging.rst:446
 msgid "Removes the specified filter *filter* from this handler."
-msgstr ""
+msgstr "Retire le filtre *filter* du gestionnaire."
 
 #: library/logging.rst:451
 msgid ""
@@ -809,12 +811,18 @@ msgid ""
 "be emitted. If one returns a false value, the handler will not emit the "
 "record."
 msgstr ""
+"Applique les filtres du gestionnaire à *record* et renvoie ``True`` si "
+"l'entrée doit être traitée. Les filtres sont appliqués l'un après l'autre, "
+"jusqu'à ce que l'un renvoie faux. Si aucun d'entre eux ne renvoie faux, "
+"l'entrée est enregistrée, sinon le gestionnaire ne traitera pas l'entrée."
 
 #: library/logging.rst:460
 msgid ""
 "Ensure all logging output has been flushed. This version does nothing and is "
 "intended to be implemented by subclasses."
 msgstr ""
+"Oblige toutes les entrées à être traitées. Cette fonction ne fait rien de "
+"spécial et doit être redéfinie par les sous-classes."
 
 #: library/logging.rst:466
 msgid ""
@@ -823,6 +831,10 @@ msgid ""
 "func:`shutdown` is called. Subclasses should ensure that this gets called "
 "from overridden :meth:`close` methods."
 msgstr ""
+"Recycle toutes les ressources utilisées par le gestionnaire. Cette version "
+"ne fait rien de particulier mais elle retire le gestionnaire de la liste "
+"interne des gestionnaires à recycler à l'appel de :func:`shutdown`. Les sous-"
+"classes doivent appeler cette méthode depuis leur surcharge de :meth:`close`."
 
 #: library/logging.rst:474
 msgid ""
@@ -830,6 +842,9 @@ msgid ""
 "may have been added to the handler. Wraps the actual emission of the record "
 "with acquisition/release of the I/O thread lock."
 msgstr ""
+"Traite ou non *record* selon les filtres ajoutés au gestionnaire. L'écriture "
+"effective de l'entrée est encapsulée dans du code d'acquisition-libération "
+"du verrou sur l'E-S."
 
 #: library/logging.rst:481
 msgid ""
@@ -843,12 +858,23 @@ msgid ""
 "occurred. (The default value of ``raiseExceptions`` is ``True``, as that is "
 "more useful during development)."
 msgstr ""
+"Cette méthode est appelée quand une exception est levée lors d'un appel à :"
+"meth:`emit`. Si l'attribut ``raiseExceptions`` du module est ``False``, les "
+"exceptions sont ignorées. C'est en général le comportement attendu d'un "
+"système de journalisation — la plupart des utilisateurs ne se préoccupent "
+"pas des erreurs du système de journalisation même, seulement des erreurs de "
+"l'application. Il est tout de même possible de redéfinir cette méthode ; "
+"*record* est l'entrée qui était en train d'être traitée quand l'exception a "
+"eu lieu. La valeur par défaut de ``raiseExceptions`` est ``True``, ce qui "
+"est pratique lors du développement."
 
 #: library/logging.rst:494
 msgid ""
 "Do formatting for a record - if a formatter is set, use it. Otherwise, use "
 "the default formatter for the module."
 msgstr ""
+"Formate *record* avec le formateur défini. S'il n'y en a pas, le formateur "
+"par défaut du module est utilisé."
 
 #: library/logging.rst:500
 msgid ""
@@ -856,11 +882,15 @@ msgid ""
 "version is intended to be implemented by subclasses and so raises a :exc:"
 "`NotImplementedError`."
 msgstr ""
+"Journalise « pour de bon » *record*. Cette version doit être redéfinie par "
+"les sous-classes et lève donc une :exc:`NotImplementedError`."
 
 #: library/logging.rst:504
 msgid ""
 "For a list of handlers included as standard, see :mod:`logging.handlers`."
 msgstr ""
+"Les gestionnaires de la bibliothèque standard sont répertoriés dans :mod:"
+"`logging.handlers`."
 
 #: library/logging.rst:509
 msgid "Formatter Objects"
