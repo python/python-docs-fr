@@ -20,7 +20,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 57100c86baa8451a568348646834380cd425b858
+CPYTHON_CURRENT_COMMIT := 1b37268ef10bd20c30d349b8401c88215c8a6be8
 LANGUAGE := fr
 BRANCH := 3.10
 
