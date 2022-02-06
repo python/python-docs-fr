@@ -174,9 +174,16 @@ documentation local :
     make serve
 
 
-La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_
-(ou tout autre port indiqué par la sortie de la commande précédente). Vous pouvez
-recommencer les étapes de cette section autant de fois que nécessaire.
+La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_.
+Si vous souhaitez modifier le port de ce serveur (par exemple 8080), utilisez :
+
+.. code-block:: bash
+
+    make serve SERVE_PORT=8080
+
+
+Vous pouvez recommencer les étapes de cette section autant de fois que
+nécessaire.
 
 Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 « la traduction devrait commencer par une majuscule » car c'est le cas pour
