@@ -44,6 +44,7 @@ PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
 JOBS := auto
+SERVE_PORT :=
 
 # Detect OS
 
@@ -98,7 +99,11 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 
 .PHONY: serve
 serve:
+ifdef SERVE_PORT
+	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
+else
 	$(MAKE) -C venv/cpython/Doc/ serve
+endif
 
 .PHONY: todo
 todo: ensure_prerequisites
