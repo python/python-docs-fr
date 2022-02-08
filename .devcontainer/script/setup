@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Setups the repository
+
+# Stop on errors
+set -e
+
+# Go to base directory
+cd "$(git rev-parse --show-toplevel)"
+
+# Install venv
+make venv/cpython/.git/HEAD
+
+# Install python deps
+python3 -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
+make ensure_prerequisites
+
+# Generate .vscode configuration
+if [ ! -d ".vscode" ]; then
+    mkdir .vscode
+    cp .devcontainer/vscode/*.json .vscode/
+fi

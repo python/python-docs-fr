@@ -84,9 +84,11 @@ all: ensure_prerequisites
 venv/cpython/.git/HEAD:
 	git clone https://github.com/python/cpython venv/cpython
 
+.git/refs/heads/$(BRANCH):
+	git fetch $(shell git remote | head -n 1) $(BRANCH):$(BRANCH)
 
 .PHONY: ensure_prerequisites
-ensure_prerequisites: venv/cpython/.git/HEAD
+ensure_prerequisites: venv/cpython/.git/HEAD .git/refs/heads/$(BRANCH)
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
 	    git -C venv/cpython/ checkout $(BRANCH); \
 	    echo "You're missing dependencies please install:"; \
