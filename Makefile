@@ -20,9 +20,9 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 1b37268ef10bd20c30d349b8401c88215c8a6be8
+CPYTHON_CURRENT_COMMIT := c62b944dfc98911a5050389fa6ac753e283fee1f
 LANGUAGE := fr
-BRANCH := 3.10
+BRANCH := 3.11
 
 EXCLUDED := \
 	whatsnew/2.?.po \
