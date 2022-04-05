@@ -34,7 +34,28 @@ EXCLUDED := \
 	library/distutils.po \
 	library/imp.po \
 	library/tkinter.tix.po \
-	library/test.po
+	library/test.po \
+	library/aifc.po \
+	library/asynchat.po \
+	library/asyncore.po \
+	library/audioop.po \
+	library/cgi.po \
+	library/cgitb.po \
+	library/chunk.po \
+	library/crypt.po \
+	library/imghdr.po \
+	library/msilib.po \
+	library/nntplib.po \
+	library/nis.po \
+	library/ossaudiodev.po \
+	library/pipes.po \
+	library/smtpd.po \
+	library/sndhdr.po \
+	library/spwd.po \
+	library/sunau.po \
+	library/telnetlib.po \
+	library/uu.po \
+	library/xdrlib.po
 
 # Internal variables
 
