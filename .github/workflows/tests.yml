@@ -20,7 +20,7 @@ jobs:
             apt_dependencies: hunspell hunspell-fr-comprehensive
             command: 'pospell -p dict -l fr_FR $CHANGED_PO_FILES'
           - name: Longueur des lignes
-            command: 'awk ''{if (length($0) > 80) {print FILENAME ":" FNR, "line too long:", $0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}'' $CHANGED_PO_FILES'
+            command: 'awk ''{if (length($0) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}'' $CHANGED_PO_FILES'
           - name: Grammaire
             package: padpo
             command: 'padpo -i $CHANGED_PO_FILES 2>&1 | grep -v -Ff padpo.ignore'
