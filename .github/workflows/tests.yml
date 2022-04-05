@@ -92,5 +92,12 @@ jobs:
           # see https://github.com/actions/setup-python/issues/170
           [ -d $HOME/cpython/Doc/venv/bin/ -a ! -e $HOME/cpython/Doc/venv/bin/python ] && rm -fr $HOME/cpython/Doc/venv
           make -C $HOME/cpython/Doc venv
+
+      - name: Check venv
+        run: |
+          cd $HOME/cpython/Doc
+          PATH=./venv/bin:$PATH blurb help
+          PATH=./venv/bin:$PATH sphinx-build --version
+
       - name: sphinx-build
         run: make -C $HOME/cpython/Doc SPHINXOPTS="-q -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
