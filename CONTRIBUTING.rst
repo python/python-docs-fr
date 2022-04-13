@@ -1,11 +1,11 @@
 Guide de contribution à la documentation via GitHub
-===================================================
+###################################################
 
 Instructions
-------------
+************
 
 Prérequis
-~~~~~~~~~
+=========
 
 - un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
@@ -13,14 +13,16 @@ Prérequis
 Équipez-vous aussi de quelques outils pour vous aider dans
 votre traduction (voir `Outils utiles pour la traduction`_).
 
+Première étape : créer et peupler son dépôt
+===========================================
 
-*fork* personnel sur Github
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sur Github
+----------
 
-Pour commencer vous aurez besoin de *forker* le dépôt des sources `python-docs-fr
-<https://github.com/python/python-docs-fr>`_ en cliquant sur son bouton
-``Fork``. Ceci crée une copie du projet sur votre compte Github, c'est un endroit
-où vous avez le droit de faire des modifications.
+Depuis votre compte GitHub, se rendre dans le dépôt des sources `python-docs-fr
+<https://github.com/python/python-docs-fr>`_ puis cliquer sur son bouton ``Fork``.
+Ceci crée une copie du projet sur votre compte Github. C'est sur cette copie
+que vous avez le droit de faire des modifications.
 
 Étape par étape :
 
@@ -40,12 +42,14 @@ où vous avez le droit de faire des modifications.
     git remote add upstream https://github.com/python/python-docs-fr.git
 
 
-*fork* personnel sur une autre forge
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sur une autre forge
+-------------------
 
-Si vous n'avez pas de compte Github, il est possible *fork* ce dépôt sur une autre forge.
+Si vous n'avez pas de compte Github, il est possible d'utiliser une autre forge.
 Vous devez dans un premier temps initier un dépôt vide sur la forge où vous voulez héberger le
-dépôt.
+dépôt puis le peupler.
+
+Étape par étape :
 
 .. code-block:: bash
 
@@ -66,21 +70,26 @@ dépôt.
     git push -u origin
 
 
-Réservation d'un fichier
-~~~~~~~~~~~~~~~~~~~~~~~~
+Seconde étape : trouver un fichier sur lequel travailler
+========================================================
 
-*Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
+Pour vous aiguiller, lisez la section `Que traduire ?`_.
 
-Ensuite, vous devez trouver un fichier sur lequel travailler
-(pour vous aiguiller, lisez la section `Que traduire ?`_). Nous vous conseillons
-de choisir, si possible, un fichier traitant d'un sujet que vous maitrisez, cela
-vous aidera grandement à produire une traduction de bonne qualité.
+Nous vous conseillons de choisir, si possible, un fichier traitant
+d'un sujet que vous maitrisez, cela vous aidera grandement à produire
+une traduction de bonne qualité.
 
 Si c'est votre première contribution, commencez par une toute petite
 traduction, de quelques paragraphes maximum, pour vous familiariser. Il n'est
 pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
+
+
+Troisième étape : réserver le fichier
+=====================================
+
+*Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
 
 Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez nous
 le signaler par différents moyens :
