@@ -149,11 +149,12 @@ Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 Configuration de Poedit
 -----------------------
-* Si vous utilisez Poedit, n'oubliez pas de configurer votre nom et votre adresse de courriel
-(Édition → Préférences → Général).
-* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79 caractères
-(Édition → Préférences → Avancé → Passer à la ligne à 79).
-
+* Si vous utilisez Poedit, n'oubliez pas de configurer votre nom et
+  votre adresse de courriel (Édition → Préférences → Général).
+* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79
+  caractères (Édition → Préférences → Avancé → Passer à la ligne à
+  79).
+  
 Traduire
 --------
 Vous pouvez dès à présent commencer à traduire le fichier en
@@ -209,8 +210,8 @@ Cinquième étape : publier sa traduction
 Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains de bien respecter les
 `Conventions`_ de traduction, vient le moment d'envoyer votre travail sur le dépôt local.
 
-* ``git add`` place nos modifications dans l'index de Git en
-attendant d'être propagées dans le dépôt local.
+* ``git add`` place nos modifications dans l'index de Git en attendant
+  d'être propagées dans le dépôt local.
 
 .. code-block:: bash
 
@@ -235,7 +236,7 @@ branche est liée à votre *fork* (et donc que vos futurs ``git pull`` et
     git push --set-upstream origin
 
 Sur Github
-++++++++++
+----------
 
 La commande précédente vous affiche un lien pour ouvrir une *pull request* sur
 Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
@@ -263,7 +264,7 @@ GitHub puis relancer ``powrap`` :
     git push
 
 Sur une autre forge
-+++++++++++++++++++
+-------------------
 
 Quand vous avez poussé vos modifications, il y a plusieurs possibilités.
 
@@ -321,7 +322,7 @@ les plus anciennes par l'`équipe de documentation
 
 
 Que traduire ?
---------------
+==============
 
 Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers *po*
 à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
@@ -351,7 +352,7 @@ idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 
 
 Conventions
------------
+===========
 
 Certaines conventions ont été édictées pour homogénéiser la traduction.
 Il faut suivre les règles de `style`_ imposées, les `règles rst`_ et
@@ -359,7 +360,7 @@ les traductions déjà définies dans le `glossaire`_.
 
 
 Style
-~~~~~
+-----
 
 Une bonne traduction est une traduction qui transcrit fidèlement l'idée originelle
 en français, sans rien ajouter ni enlever au fond, tout en restant claire, concise et
@@ -370,7 +371,7 @@ documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
 garde aux anglicismes.
 
 Utilisation du futur
-++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^
 
 Dans la description du comportement de Python (au sens large, c'est-à-dire
 l'interpréteur lui-même mais aussi toutes les bibliothèques), la version
@@ -383,7 +384,7 @@ processus de compilation n'est pas immédiat) ou pour des raisons de
 concordance des temps.
 
 Utilisation du conditionnel
-+++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La version originale est très polie envers le lecteur ; elle lui intime
 rarement des obligations, préférant employer « you should ». Cependant, en
@@ -397,17 +398,17 @@ phrase « these objects can be accessed by… » se traduit mieux par « on ac
 ces objets en… ».
 
 Utilisation du masculin
-+++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Dans un souci de lisibilité et en accord avec la préconisation de
 l'Académie française, nous utilisons le masculin pour indiquer un
 genre neutre. Par exemple : l'utilisateur ou le lecteur.
 
 Règles rst
-~~~~~~~~~~
+----------
 
 Prototypes et exemples
-++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^
 
 Il ne faut pas traduire le nom des éléments de la bibliothèque standard (noms
 de fonctions, paramètres de ces fonctions, constantes etc.) mais les laisser
@@ -441,7 +442,7 @@ mais pas en
 
 
 Liens hypertextes
-+++++++++++++++++
+^^^^^^^^^^^^^^^^^
 
 Il faut transformer les liens hypertextes qui redirigent vers une page dont il
 existe une version française (c'est notamment très souvent le cas pour les
@@ -452,7 +453,7 @@ doit devenir ```Jeu de la vie <https://fr.wikipedia.org/wiki/Jeu_de_la_vie>`_``.
 
 
 Balises
-+++++++
+^^^^^^^
 
 Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
@@ -465,7 +466,7 @@ terme que vous pouvez rencontrer.
 
 
 Glossaire
-~~~~~~~~~
+=========
 
 Afin d'assurer la cohérence de la traduction, voici quelques
 termes fréquents déjà traduits. Une liste blanche de noms propres, comme « Guido »,
@@ -565,7 +566,7 @@ whitespace                 caractère d'espacement
 ========================== ===============================================
 
 Ressources de traduction
-------------------------
+========================
 
 - les canaux IRC sur irc.libera.chat :
 
@@ -595,10 +596,10 @@ page et génèrent une documentation au style très « lourd ».
 
 
 Caractères spéciaux et typographie
-----------------------------------
+==================================
 
 La touche de composition
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Cette `touche <https://fr.wikipedia.org/wiki/Touche_de_composition>`_,
 absente par défaut des claviers, permet de saisir des
@@ -623,7 +624,7 @@ simplement fonctionner :
 - etc.
 
 Comment définir la touche de composition ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
@@ -661,7 +662,7 @@ modifier dans les « Paramètres » → « Clavier » → « Disposition » →
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
 Le cas de « --- », « -- »,  « ... »
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La version anglaise utilise les
 `smartquotes <http://docutils.sourceforge.net/docs/user/smartquotes.html>`_,
@@ -677,7 +678,7 @@ Les *smartquotes* sont normalement responsables de la transformation de
 | « ... » : faites :kbd:`Compose . . .`
 
 Le cas de « "…" »
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 Les guillemets français ``«`` et ``»`` ne sont pas identiques aux
 guillemets anglais ``"``. Cependant, Python utilise les guillemets
@@ -688,7 +689,7 @@ traduire les guillemets mais pas les délimiteurs de chaîne.
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
 
 Le cas de « :: »
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 | Du point de vue du langage *reStructuredText* (ou *rst*) utilisé dans la
   documentation nous voyons soit « bla bla:: », soit « bla bla. :: ».
@@ -704,7 +705,7 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 Pour saisir une espace insécable faites :kbd:`Compose SPACE SPACE`
 
 Les doubles-espaces
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 La documentation originale comporte beaucoup de doubles-espaces.
 Cela se fait en anglais, mais pas en français. De toute manière,
@@ -715,7 +716,7 @@ coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
 
 Les énumérations
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Chaque paragraphe d'une énumération introduite par un deux-point
 doit se terminer par un point-virgule (bien entendu précédé d'une
@@ -745,7 +746,7 @@ Outils utiles pour la traduction
 --------------------------------
 
 Poutils
-~~~~~~~
+^^^^^^^
 
 `Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
 regroupe un certain nombre d'outils liés à la traduction. Dans un
@@ -756,7 +757,7 @@ environnement disposant de Python 3.7 ou plus, installez-le avec ::
 Voici le détail des paquets qui nous intéressent dans Poutils :
 
 Pospell
-+++++++
+^^^^^^^
 
 Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
 Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
@@ -767,13 +768,13 @@ réformée. Installez celui qui contient les deux orthographes avec ::
   sudo apt install hunspell hunspell-fr-comprehensive
 
 Potodo
-++++++
+^^^^^^
 
 Permet d'identifier les parties de la documentation qu'il reste à
 traduire.  ``make todo`` fait appel à Potodo.
 
 Pogrep
-++++++
+^^^^^^
 
 Permet de rechercher dans la documentation des termes. Utile si on a un doute
 sur comment traduire un terme ou chercher la traduction d'un terme dans
@@ -782,13 +783,13 @@ d'autres fichiers. Pour connaître les options disponibles, tapez ::
   pogrep --help
 
 Powrap
-++++++
+^^^^^^
 
 Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
 wrap``.
 
 Padpo (beta)
-++++++++++++
+^^^^^^^^^^^^
 
 Analyseur de code qui encapsule notamment `Grammalecte
 <https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
@@ -796,7 +797,7 @@ et la syntaxe des fichiers *.po*.
 
 
 Affichage des modifications par Git
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
 de ligne, comme :
