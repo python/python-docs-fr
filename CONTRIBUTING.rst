@@ -131,12 +131,12 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
     git checkout -b library-sys upstream/3.10
 
 
-Vous pouvez maintenant travailler sur le fichier.
-Si vous utilisez Poedit, n'oubliez pas de configurer votre nom et votre adresse de courriel
-(Édition → Préférences → Général).
-Vérifiez aussi qu'il est configuré pour passer à la ligne à 79 caractères
-(Édition → Préférences → Avancé → Passer à la ligne à 79).
 
+Quatrième étape: Traduction
+===========================
+
+Exécuter Poedit
+---------------
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
 
 .. code-block:: bash
@@ -147,9 +147,15 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 
-Traduction
-~~~~~~~~~~
+Configuration de Poedit
+-----------------------
+* Si vous utilisez Poedit, n'oubliez pas de configurer votre nom et votre adresse de courriel
+(Édition → Préférences → Général).
+* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79 caractères
+(Édition → Préférences → Avancé → Passer à la ligne à 79).
 
+Traduire
+--------
 Vous pouvez dès à présent commencer à traduire le fichier en
 respectant les `conventions`_ du projet. Pour vous y aider, la commande :
 
@@ -166,8 +172,9 @@ Si ``make verifs`` trouve des problèmes de longueurs de ligne,
 vérifiez votre configuration ``poedit`` (Édition → Préférences →
 Avancé → Passer à la ligne à 79) ou utilisez ``make wrap``.
 
-Une fois la traduction finie, il faut compiler la documentation, c'est-à-dire générer les fichiers HTML
-affichés par le site, pour les relire. Si la commande précédente s'est exécutée sans erreur, la
+Une fois la traduction finie, il faut compiler la documentation,
+c'est-à-dire générer les fichiers HTML affichés par le site, pour les
+relire. Si la commande précédente s'est exécutée sans erreur, la
 compilation ne devrait pas échouer.
 
 .. code-block:: bash
@@ -184,12 +191,9 @@ documentation local :
 
 
 La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_.
-Si vous souhaitez modifier le port de ce serveur (par exemple 8080), utilisez :
 
-.. code-block:: bash
-
-    make serve SERVE_PORT=8080
-
+Attention: le port TCP/8000 ne peut être changé, il convient d'arrêter
+tout service qui écouterait sur celui-ci.
 
 Vous pouvez recommencer les étapes de cette section autant de fois que
 nécessaire.
@@ -199,13 +203,13 @@ Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
 *affichez et relisez la page HTML produite* avec ``make serve``.
 
-*pull request*
-~~~~~~~~~~~~~~
+Cinquième étape : publier sa traduction
+=======================================
 
 Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains de bien respecter les
 `Conventions`_ de traduction, vient le moment d'envoyer votre travail sur le dépôt local.
 
-``git add`` place nos modifications dans l'index de Git en
+* ``git add`` place nos modifications dans l'index de Git en
 attendant d'être propagées dans le dépôt local.
 
 .. code-block:: bash
@@ -213,7 +217,7 @@ attendant d'être propagées dans le dépôt local.
     git add library/sys.po
 
 
-``git commit`` permet de les propager :
+* ``git commit`` permet de les propager :
 
 .. code-block:: bash
 
