@@ -70,7 +70,7 @@ dépôt puis le peupler.
     git push -u origin
 
 
-Seconde étape : trouver un fichier sur lequel travailler
+Deuxième étape : trouver un fichier sur lequel travailler
 ========================================================
 
 Pour vous aiguiller, lisez la section `Que traduire ?`_.
@@ -135,7 +135,7 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 Quatrième étape: Traduction
 ===========================
 
-Exécuter Poedit
+Avec Poedit
 ---------------
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
 
@@ -149,14 +149,14 @@ Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 Configuration de Poedit
 -----------------------
-* Si vous utilisez Poedit, n'oubliez pas de configurer votre nom et
+* N'oubliez pas de configurer votre nom et
   votre adresse de courriel (Édition → Préférences → Général).
 * Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79
   caractères (Édition → Préférences → Avancé → Passer à la ligne à
   79).
   
-Traduire
---------
+Vérifications après traduction
+--------------------------------
 Vous pouvez dès à présent commencer à traduire le fichier en
 respectant les `conventions`_ du projet. Pour vous y aider, la commande :
 
