@@ -1,17 +1,97 @@
 Guide de contribution à la documentation via GitHub
 ###################################################
 
-Instructions
-************
-
 Prérequis
 =========
 
+Pour pouvoir participer à la traduction en commun, il est souhaitable d'installer :
 - un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
-Équipez-vous aussi de quelques outils pour vous aider dans
-votre traduction (voir `Outils utiles pour la traduction`_).
+
+De plus, il peut être utile, pour faciliter la traduction de s'équiper de :
+
+Poutils
+-------
+
+`Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
+regroupe un certain nombre d'outils liés à la traduction. Dans un
+environnement disposant de Python 3.7 ou plus, installez-le avec ::
+
+  python3 -m pip install poutils
+
+Voici le détail des paquets qui nous intéressent dans Poutils :
+
+Pospell
+-------
+
+Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
+Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
+dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
+dictionnaires français qui diffèrent en raison de l'orthographe
+réformée. Installez celui qui contient les deux orthographes avec ::
+
+  sudo apt install hunspell hunspell-fr-comprehensive
+
+Potodo
+------
+
+Permet d'identifier les parties de la documentation qu'il reste à
+traduire.  ``make todo`` fait appel à Potodo.
+
+Pogrep
+------
+
+Permet de rechercher dans la documentation des termes. Utile si on a un doute
+sur comment traduire un terme ou chercher la traduction d'un terme dans
+d'autres fichiers. Pour connaître les options disponibles, tapez ::
+
+  pogrep --help
+
+Powrap
+^^^^^^
+
+Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
+wrap``.
+
+Padpo (beta)
+------------
+
+Analyseur de code qui encapsule notamment `Grammalecte
+<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
+et la syntaxe des fichiers *.po*.
+
+
+Affichage des modifications par Git
+-----------------------------------
+
+Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
+de ligne, comme :
+
+.. code-block:: diff
+
+    -#: ../Doc/library/sys.rst:406
+    +#: ../Doc/library/sys.rst:408
+
+
+Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
+ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
+``PATH``.
+
+.. code-block:: bash
+
+    cat <<EOF > ~/.local/bin/podiff
+    #!/bin/sh
+    grep -v '^#:' "\$1"
+    EOF
+
+    chmod a+x ~/.local/bin/podiff
+
+    git config diff.podiff.textconv podiff
+
+
+Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
+les fichiers de la traduction, sans incidence sur les autres.
 
 Première étape : créer et peupler son dépôt
 ===========================================
@@ -742,87 +822,3 @@ Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
 les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
 avertissements.
 
-Outils utiles pour la traduction
---------------------------------
-
-Poutils
-^^^^^^^
-
-`Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
-regroupe un certain nombre d'outils liés à la traduction. Dans un
-environnement disposant de Python 3.7 ou plus, installez-le avec ::
-
-  python3 -m pip install poutils
-
-Voici le détail des paquets qui nous intéressent dans Poutils :
-
-Pospell
-^^^^^^^
-
-Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
-Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
-dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
-dictionnaires français qui diffèrent en raison de l'orthographe
-réformée. Installez celui qui contient les deux orthographes avec ::
-
-  sudo apt install hunspell hunspell-fr-comprehensive
-
-Potodo
-^^^^^^
-
-Permet d'identifier les parties de la documentation qu'il reste à
-traduire.  ``make todo`` fait appel à Potodo.
-
-Pogrep
-^^^^^^
-
-Permet de rechercher dans la documentation des termes. Utile si on a un doute
-sur comment traduire un terme ou chercher la traduction d'un terme dans
-d'autres fichiers. Pour connaître les options disponibles, tapez ::
-
-  pogrep --help
-
-Powrap
-^^^^^^
-
-Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
-wrap``.
-
-Padpo (beta)
-^^^^^^^^^^^^
-
-Analyseur de code qui encapsule notamment `Grammalecte
-<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
-et la syntaxe des fichiers *.po*.
-
-
-Affichage des modifications par Git
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
-de ligne, comme :
-
-.. code-block:: diff
-
-    -#: ../Doc/library/sys.rst:406
-    +#: ../Doc/library/sys.rst:408
-
-
-Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
-ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
-``PATH``.
-
-.. code-block:: bash
-
-    cat <<EOF > ~/.local/bin/podiff
-    #!/bin/sh
-    grep -v '^#:' "\$1"
-    EOF
-
-    chmod a+x ~/.local/bin/podiff
-
-    git config diff.podiff.textconv podiff
-
-
-Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
-les fichiers de la traduction, sans incidence sur les autres.
