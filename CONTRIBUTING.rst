@@ -13,7 +13,7 @@ d'installer :
 - un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS
   <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 
-  - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
+- un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
 
 Outils facultatifs
