@@ -240,12 +240,15 @@ dans les tickets et les *pull requests*.
   `irc://irc.libera.chat/#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_
   pour nous le signaler.
 
-Vous êtes maintenant prêt. Chaque fois que vous commencerez un nouveau fichier,
-suivez cette procédure :
 
-Pour travailler, nous avons besoin d'une branche, basée sur une version à jour
-(fraîchement récupérée) de la branche « upstream/3.10 ». On met donc à jour notre
-version locale.
+Création de la branche de traduction
+------------------------------------
+
+*Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
+
+Vous êtes maintenant prêt. Pour travailler, nous avons besoin d'une
+branche, basée sur une version à jour (fraîchement récupérée) de la
+branche « upstream/3.10 ». On met donc à jour notre version locale.
 
 .. code-block:: bash
 
@@ -278,8 +281,10 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 
-Vérifications après traduction -------------------------------- Après
-avoir modifié les fichiers, vérifiez que vous respectez les
+Vérifications après traduction
+------------------------------
+
+Après avoir modifié les fichiers, vérifiez que vous respectez les
 `conventions`_ du projet. Pour vous y aider, la commande :
 
 .. code-block:: bash
