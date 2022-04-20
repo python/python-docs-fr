@@ -4,15 +4,22 @@ Guide de contribution à la documentation via GitHub
 Prérequis
 =========
 
-Pour pouvoir participer à la traduction en commun, il est souhaitable d'installer :
-- un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
+Outils souhaitables
+-------------------
+Pour pouvoir participer à la traduction en commun, il est souhaitable
+d'installer :
+- un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS
+  <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
 - un éditeur de fichier ``.po`` (comme `Poedit <https://poedit.net/>`_).
 
 
-De plus, il peut être utile, pour faciliter la traduction de s'équiper de :
+Outils facultatifs
+------------------
+De plus, il peut être utile de s'équiper d'utilitaires pour faciliter
+la manipulation des fichiers ``.po`` et la traduction.
 
 Poutils
--------
+^^^^^^^
 
 `Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
 regroupe un certain nombre d'outils liés à la traduction. Dans un
@@ -23,7 +30,7 @@ environnement disposant de Python 3.7 ou plus, installez-le avec ::
 Voici le détail des paquets qui nous intéressent dans Poutils :
 
 Pospell
--------
+^^^^^^^
 
 Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
 Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
@@ -34,13 +41,13 @@ réformée. Installez celui qui contient les deux orthographes avec ::
   sudo apt install hunspell hunspell-fr-comprehensive
 
 Potodo
-------
+^^^^^^
 
 Permet d'identifier les parties de la documentation qu'il reste à
 traduire.  ``make todo`` fait appel à Potodo.
 
 Pogrep
-------
+^^^^^^
 
 Permet de rechercher dans la documentation des termes. Utile si on a un doute
 sur comment traduire un terme ou chercher la traduction d'un terme dans
@@ -55,15 +62,15 @@ Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
 wrap``.
 
 Padpo (beta)
-------------
+^^^^^^^^^^^^
 
 Analyseur de code qui encapsule notamment `Grammalecte
 <https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
 et la syntaxe des fichiers *.po*.
 
 
-Affichage des modifications par Git
------------------------------------
+Remarque : Affichage des modifications par Git
+----------------------------------------------
 
 Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
 de ligne, comme :
@@ -150,10 +157,40 @@ dépôt puis le peupler.
     git push -u origin
 
 
-Deuxième étape : trouver un fichier sur lequel travailler
-========================================================
+Deuxième étape : choisir un fichier sur lequel travailler
+=========================================================
 
-Pour vous aiguiller, lisez la section `Que traduire ?`_.
+Note liminaire
+--------------
+
+Il est vivcement conseillé de ne pas travailler sur fichiers de des
+répertoires *c-api/*, *whatsnew/*, *distutils/*_:
+- *c-api/* car c'est une partie très technique ;
+- *whatsnew/* car les anciennes versions de Python sont pour la plupart
+  obsolètes et leurs journaux de modifications ne sont pas les pages les plus
+  consultées ;
+- *distutils/*, *install/*, et quelques autres parties qui seront bientôt
+  obsolètes. De manière générale, il n'est pas utile de traduire un module que
+  sa documentation mentionne comme obsolète.
+
+
+Pour vous aiguiller dans votre choix, vous pouvez utiliser `potodo`,
+un outil recherchant des fichiers ``.po`` à traduire. Une fois
+installé, utilisez la commande ``make todo`` dans votre clone local.
+
+La liste renvoyée contient tous les fichiers qui ne sont pas encore complètement
+traduits. Vous pouvez choisir n'importe quel fichier non réservé dans la liste
+renvoyée (à l'exception des fichiers de ceux mentionnés plus haut).
+
+Vous pouvez commencer par des tâches faciles comme réviser les entrées
+*fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
+de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
+mais dont la source en anglais a été remodifiée depuis (correction orthographique,
+changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
+généralement plus « faciles » à traduire.
+
+Vous pouvez également relire des entrées déjà traduites pour vous faire une
+idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 
 Nous vous conseillons de choisir, si possible, un fichier traitant
 d'un sujet que vous maitrisez, cela vous aidera grandement à produire
@@ -401,34 +438,6 @@ les plus anciennes par l'`équipe de documentation
 <https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
 
 
-Que traduire ?
-==============
-
-Vous pouvez utiliser `potodo`_, un outil fait pour trouver des fichiers *po*
-à traduire. Une fois installé, utilisez la commande ``make todo`` dans votre clone
-local.
-
-Vous pouvez choisir n'importe quel fichier non réservé dans la liste renvoyée.
-Elle contient tous les fichiers qui ne sont pas encore complètement traduits, à
-l'exception des fichiers de :
-
-- *c-api/* car c'est une partie très technique ;
-- *whatsnew/* car les anciennes versions de Python sont pour la plupart
-  obsolètes et leurs journaux de modifications ne sont pas les pages les plus
-  consultées ;
-- *distutils/*, *install/*, et quelques autres parties qui seront bientôt
-  obsolètes. De manière générale, il n'est pas utile de traduire un module que
-  sa documentation mentionne comme obsolète.
-
-Vous pouvez commencer par des tâches faciles comme réviser les entrées
-*fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
-de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
-mais dont la source en anglais a été remodifiée depuis (correction orthographique,
-changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
-généralement plus « faciles » à traduire.
-
-Vous pouvez également relire des entrées déjà traduites pour vous faire une
-idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 
 
 Conventions
