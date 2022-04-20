@@ -21,9 +21,6 @@ Outils facultatifs
 De plus, il peut être utile de s'équiper d'utilitaires pour faciliter
 la manipulation des fichiers ``.po`` et la traduction.
 
-Poutils
-^^^^^^^
-
 `Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
 regroupe un certain nombre d'outils liés à la traduction. Dans un
 environnement disposant de Python 3.7 ou plus, installez-le avec ::
