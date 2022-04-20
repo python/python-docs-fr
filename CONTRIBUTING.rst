@@ -274,10 +274,9 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 
-Vérifications après traduction
---------------------------------
-Vous pouvez dès à présent commencer à traduire le fichier en
-respectant les `conventions`_ du projet. Pour vous y aider, la commande :
+Vérifications après traduction -------------------------------- Après
+avoir modifié les fichiers, vérifiez que vous respectez les
+`conventions`_ du projet. Pour vous y aider, la commande :
 
 .. code-block:: bash
 
