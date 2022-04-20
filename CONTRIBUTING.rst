@@ -79,8 +79,8 @@ Configuration de Poedit
   caractères (Édition → Préférences → Avancé → Passer à la ligne à
   79).
 
-Configuration de Git pour rendre plus lisible l'affichage des modifications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuration de Git (rendre plus lisible l'affichage des modifications)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
 de ligne, comme :
