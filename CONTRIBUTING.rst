@@ -68,9 +68,19 @@ Analyseur de code qui encapsule notamment `Grammalecte
 <https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
 et la syntaxe des fichiers *.po*.
 
+Configuration des outils
+------------------------
 
-Remarque : Affichage des modifications par Git
-----------------------------------------------
+Configuration de Poedit
+^^^^^^^^^^^^^^^^^^^^^^^
+* N'oubliez pas de configurer votre nom et
+  votre adresse de courriel (Édition → Préférences → Général).
+* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79
+  caractères (Édition → Préférences → Avancé → Passer à la ligne à
+  79).
+
+Configuration de Git pour rendre plus lisible l'affichage des modifications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
 de ligne, comme :
@@ -264,14 +274,6 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
 
-Configuration de Poedit
------------------------
-* N'oubliez pas de configurer votre nom et
-  votre adresse de courriel (Édition → Préférences → Général).
-* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79
-  caractères (Édition → Préférences → Avancé → Passer à la ligne à
-  79).
-  
 Vérifications après traduction
 --------------------------------
 Vous pouvez dès à présent commencer à traduire le fichier en
