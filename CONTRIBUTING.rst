@@ -27,7 +27,7 @@ environnement disposant de Python 3.7 ou plus, installez-le avec ::
 
   python3 -m pip install poutils
 
-Voici le détail des paquets qui nous intéressent dans Poutils :
+Dans notre cas, les utilitaires de `Poutils` qui nous intéressent sont :
 
 Pospell
 ^^^^^^^
