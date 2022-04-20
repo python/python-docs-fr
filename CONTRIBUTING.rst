@@ -174,7 +174,7 @@ Note liminaire
 --------------
 
 Il est vivement conseillé de ne pas travailler sur fichiers des
-répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/*_:
+répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/* _:
 
 - *c-api/* car c'est une partie très technique ;
 
