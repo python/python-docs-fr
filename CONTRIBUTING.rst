@@ -167,8 +167,8 @@ dépôt puis le peupler.
     git push -u origin
 
 
-Deuxième étape : choisir un fichier sur lequel travailler
-=========================================================
+Deuxième étape : choisir et réserver le fichier sur lequel travailler
+=====================================================================
 
 Note liminaire
 --------------
@@ -186,6 +186,8 @@ répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/* :
   obsolètes. De manière générale, il n'est pas utile de traduire un module que
   sa documentation mentionne comme obsolète.
 
+Trouver un fichier sur lequel travailler
+----------------------------------------
 
 Pour vous aiguiller dans votre choix, vous pouvez utiliser `potodo`,
 un outil recherchant des fichiers ``.po`` à traduire. Une fois
@@ -215,9 +217,8 @@ pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
 
-
-Troisième étape : réserver le fichier
-=====================================
+Réserver le fichier
+-------------------
 
 *Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
 
@@ -262,7 +263,7 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 
 
 
-Quatrième étape: Traduction
+Troisième étape: Traduction
 ===========================
 
 Avec Poedit
@@ -325,7 +326,7 @@ Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
 *affichez et relisez la page HTML produite* avec ``make serve``.
 
-Cinquième étape : publier sa traduction
+Quatrième étape : publier sa traduction
 =======================================
 
 Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains de bien respecter les
