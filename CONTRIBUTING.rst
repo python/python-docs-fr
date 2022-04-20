@@ -173,12 +173,15 @@ Deuxième étape : choisir un fichier sur lequel travailler
 Note liminaire
 --------------
 
-Il est vivcement conseillé de ne pas travailler sur fichiers de des
-répertoires *c-api/*, *whatsnew/*, *distutils/*_:
+Il est vivement conseillé de ne pas travailler sur fichiers des
+répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/*_:
+
 - *c-api/* car c'est une partie très technique ;
+
 - *whatsnew/* car les anciennes versions de Python sont pour la plupart
   obsolètes et leurs journaux de modifications ne sont pas les pages les plus
   consultées ;
+
 - *distutils/*, *install/*, et quelques autres parties qui seront bientôt
   obsolètes. De manière générale, il n'est pas utile de traduire un module que
   sa documentation mentionne comme obsolète.
