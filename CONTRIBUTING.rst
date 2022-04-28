@@ -195,12 +195,12 @@ installé, utilisez la commande ``make todo`` dans votre clone local.
 
 La liste renvoyée contient tous les fichiers qui ne sont pas encore complètement
 traduits. Vous pouvez choisir n'importe quel fichier non réservé dans la liste
-renvoyée (à l'exception des fichiers de ceux mentionnés plus haut).
+renvoyée (notez que ceux mentionnés plus haut sont automatiquement exclus).
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
 *fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
 de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
-mais dont la source en anglais a été remodifiée depuis (correction orthographique,
+mais dont la source en anglais a été modifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
 généralement plus « faciles » à traduire.
 
