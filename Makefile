@@ -58,14 +58,15 @@ EXCLUDED := \
 	library/xdrlib.po
 
 # Internal variables
-
 UPSTREAM := https://github.com/python/cpython
-
-PYTHON := $(shell which python3)
-MODE := html
 POSPELL_TMP_DIR := .pospell/
-JOBS := auto
-SERVE_PORT :=
+
+# You can set these variables from the command line.
+VENVDIR      = ./venv
+PYTHON       = $(VENVDIR)/bin/python3
+MODE         = html
+JOBS         = auto
+SERVE_PORT   =
 
 # Detect OS
 
@@ -90,6 +91,8 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C venv/cpython/Doc/ \
+	  PYTHON=../../../$(VENVDIR)/bin/python \
+	  VENVDIR=../../../$(VENVDIR) \
 	  SPHINXOPTS='-j$(JOBS)             \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
@@ -109,11 +112,11 @@ venv/cpython/.git/HEAD:
 
 .PHONY: ensure_prerequisites
 ensure_prerequisites: venv/cpython/.git/HEAD
-	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
+	@if ! ($(VENVDIR)/bin/blurb help >/dev/null 2>&1 && $(VENVDIR)/bin/sphinx-build --version >/dev/null 2>&1); then \
 	    git -C venv/cpython/ checkout $(BRANCH); \
 	    echo "You're missing dependencies please install:"; \
 	    echo ""; \
-	    echo "  python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
+	    echo $(VENVDIR)"/bin/python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
 	    exit 1; \
 	fi
 
