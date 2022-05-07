@@ -91,7 +91,7 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C venv/cpython/Doc/ \
-	  PYTHON=../../../$(VENVDIR)/bin/python \
+	  PYTHON=../../../$(PYTHON) \
 	  VENVDIR=../../../$(VENVDIR) \
 	  SPHINXOPTS='-j$(JOBS)             \
 	  -D locale_dirs=$(abspath locales) \
@@ -122,24 +122,27 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 
 .PHONY: update_venv
 update_venv: ensure_prerequisites
-	$(VENVDIR)/bin/python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
+	$(PYTHON) -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
 
-.PHONY: serve
+#.PHONY: serve
 serve:
 ifdef SERVE_PORT
-	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
+	$(MAKE) -C venv/cpython/Doc/ \
+	  PYTHON=../../../$(PYTHON) \
+	  SERVE_PORT=$(SERVE_PORT) \
+	  serve
 else
-	$(MAKE) -C venv/cpython/Doc/ serve
+	$(MAKE) -C venv/cpython/Doc/ PYTHON=../../../$(PYTHON) serve
 endif
 
 .PHONY: todo
 todo: ensure_prerequisites
-	potodo --exclude venv .venv $(EXCLUDED)
+	$(VENVDIR)/bin/potodo --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
 wrap: ensure_prerequisites
 	@echo "Re wrapping modified files"
-	powrap -m
+	$(VENVDIR)/bin/powrap -m
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
@@ -151,15 +154,15 @@ spell: ensure_prerequisites $(DESTS)
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Pospell checking $<..."
 	mkdir -p $(@D)
-	pospell -p dict -l fr_FR $< && touch $@
+	$(VENVDIR)/bin/pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
 fuzzy: ensure_prerequisites
-	potodo -f --exclude venv .venv $(EXCLUDED)
+	$(VENVDIR)/bin/potodo -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: verifs
 verifs: spell
-	powrap --check --quiet *.po */*.po
+	$(VENVDIR)/bin/powrap --check --quiet *.po */*.po
 
 .PHONY: clean
 clean:
