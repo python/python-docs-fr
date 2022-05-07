@@ -124,7 +124,7 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 update_venv: ensure_prerequisites
 	$(PYTHON) -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
 
-#.PHONY: serve
+.PHONY: serve
 serve:
 ifdef SERVE_PORT
 	$(MAKE) -C venv/cpython/Doc/ \
