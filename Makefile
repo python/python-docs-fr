@@ -114,12 +114,15 @@ venv/cpython/.git/HEAD:
 ensure_prerequisites: venv/cpython/.git/HEAD
 	@if ! ($(VENVDIR)/bin/blurb help >/dev/null 2>&1 && $(VENVDIR)/bin/sphinx-build --version >/dev/null 2>&1); then \
 	    git -C venv/cpython/ checkout $(BRANCH); \
-	    echo "You're missing dependencies please install:"; \
+	    echo "You're missing dependencies please install using:"; \
 	    echo ""; \
-	    echo $(VENVDIR)"/bin/python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
+	    echo "make update_venv"; \
 	    exit 1; \
 	fi
 
+.PHONY: update_venv
+update_venv: ensure_prerequisites
+	$(VENVDIR)/bin/python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
 
 .PHONY: serve
 serve:
