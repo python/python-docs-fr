@@ -91,8 +91,8 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C venv/cpython/Doc/ \
-	  PYTHON=../../../$(PYTHON) \
-	  VENVDIR=../../../$(VENVDIR) \
+	  PYTHON=$(abspath $(PYTHON)) \
+	  VENVDIR=$(abspath $(VENVDIR)) \
 	  SPHINXOPTS='-j$(JOBS)             \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
@@ -120,19 +120,46 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 	    exit 1; \
 	fi
 
+.PHONY: $(PYTHON)
+$(PYTHON):
+	@if [ ! -x $(PYTHON) ] || \
+		[ "`$(PYTHON) --version | cut --fields=1 --delimiter='.'`" != "Python 3" ] ; then \
+		echo "You don't have a suitable Python in: " $(abspath $(dir $(PYTHON))); \
+		echo "The recommended way to proceed is to install a virtual env in: "$(abspath $(VENVDIR)); \
+		echo "You can achieve this with:"; \
+		echo "make install_venv PYTHON_BASE=/your/version/of/python"; \
+		echo ""; \
+		echo "or you can customize the variable PYTHON of the Makefile"; \
+		exit 1; \
+	fi
+
+PYTHON_BASE = $(shell which python)
+PYTHON_BASE_VERSION = $(shell $(PYTHON_BASE) --version | cut --fields=1 --delimiter='.')
+
+.PHONY: install_venv
+install_venv:
+ifneq ($(PYTHON_BASE_VERSION), 	Python 3)
+	@echo $(PYTHON_BASE) " is not a Python executable" ; \
+	echo $(PYTHON_BASE_VERSION) ; \
+	exit 1
+endif
+	$(PYTHON_BASE) -m venv $(VENVDIR)
+	@echo "Python virtual env installed in $(abspath $(VENVDIR))"
+	make update_venv
+
 .PHONY: update_venv
-update_venv: ensure_prerequisites
+update_venv: $(PYTHON) venv/cpython/.git/HEAD
 	$(PYTHON) -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt
 
 .PHONY: serve
 serve:
 ifdef SERVE_PORT
 	$(MAKE) -C venv/cpython/Doc/ \
-	  PYTHON=../../../$(PYTHON) \
+	  PYTHON=$(abspath $(PYTHON)) \
 	  SERVE_PORT=$(SERVE_PORT) \
 	  serve
 else
-	$(MAKE) -C venv/cpython/Doc/ PYTHON=../../../$(PYTHON) serve
+	$(MAKE) -C venv/cpython/Doc/ PYTHON=$(abspath $(PYTHON)) serve
 endif
 
 .PHONY: todo
