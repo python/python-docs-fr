@@ -3,13 +3,12 @@
 # Here is what you can do:
 #
 # - make  # Automatically build an HTML local version
-# - make todo  # To list remaining tasks
+# - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
-# - make wrap  # To check for wrapping
+# - make wrap  # To rewrap modified files
 # - make spell  # To check for spelling
-# - make merge  # To merge pot from upstream
+# - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
-# - make progress  # To compute current progression
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -21,14 +20,42 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := cf739332bd039cd2303b58663a804f784883820d
-
-CPYTHON_PATH := ../cpython/
-
+CPYTHON_CURRENT_COMMIT := 857cf55cbdd65b7a9534dc35d89a19dfe8cbdba5
 LANGUAGE := fr
-BRANCH := 3.9
+BRANCH := 3.10
 
-EXCLUDED := whatsnew/ c-api/
+EXCLUDED := \
+	whatsnew/2.?.po \
+	whatsnew/3.[0-8].po \
+	c-api/ \
+	distutils/ \
+	install/ \
+	library/2to3.po \
+	library/distutils.po \
+	library/imp.po \
+	library/tkinter.tix.po \
+	library/test.po \
+	library/aifc.po \
+	library/asynchat.po \
+	library/asyncore.po \
+	library/audioop.po \
+	library/cgi.po \
+	library/cgitb.po \
+	library/chunk.po \
+	library/crypt.po \
+	library/imghdr.po \
+	library/msilib.po \
+	library/nntplib.po \
+	library/nis.po \
+	library/ossaudiodev.po \
+	library/pipes.po \
+	library/smtpd.po \
+	library/sndhdr.po \
+	library/spwd.po \
+	library/sunau.po \
+	library/telnetlib.po \
+	library/uu.po \
+	library/xdrlib.po
 
 # Internal variables
 
@@ -38,6 +65,7 @@ PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
 JOBS := auto
+SERVE_PORT :=
 
 # Detect OS
 
@@ -58,60 +86,45 @@ endif
 
 .PHONY: all
 all: ensure_prerequisites
-	git -C $(CPYTHON_PATH) checkout $(CPYTHON_CURRENT_COMMIT)
+	git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT) || (git -C venv/cpython fetch && git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT))
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
-	$(MAKE) -C $(CPYTHON_PATH)/Doc/     \
-	  SPHINXOPTS='-W -j$(JOBS)         \
+	$(MAKE) -C venv/cpython/Doc/ \
+	  SPHINXOPTS='-j$(JOBS)             \
 	  -D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
-	  -D gettext_compact=0           \
+	  -D gettext_compact=0              \
 	  -D latex_engine=xelatex           \
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
 	  $(MODE)
-	@echo "Build success, open file://$(abspath $(CPYTHON_PATH))/Doc/build/html/index.html or run 'make serve' to see them."
+	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make serve' to see them."
+
+
+# We clone cpython/ inside venv/ because venv/ is the only directory
+# excluded by cpython' Sphinx configuration.
+venv/cpython/.git/HEAD:
+	git clone https://github.com/python/cpython venv/cpython
 
 
 .PHONY: ensure_prerequisites
-ensure_prerequisites:
-	@if [ -z $(CPYTHON_PATH) ]; then \
-	    echo "Your CPYTHON_PATH is empty, please provide one."; \
-	    exit 1; \
-	fi
-	@if ! [ -d $(CPYTHON_PATH) ]; then \
-	    echo "Building the translation requires a cpython clone."; \
-	    echo "Please provide the path to a clone using the CPYTHON_PATH variable."; \
-	    echo "(Currently CPYTHON_PATH is $(CPYTHON_PATH)."; \
-	    echo "So you may want to run:"; \
-	    echo ""; \
-	    echo "  git clone $(UPSTREAM) $(CPYTHON_PATH)"; \
-	    exit 1; \
-	fi
-	@if [ -n "$$(git -C $(CPYTHON_PATH) status --porcelain)" ]; then \
-	    echo "Your cpython clone at $(CPYTHON_PATH) is not clean."; \
-	    echo "In order to avoid breaking things, please clean it first."; \
-	    exit 1; \
-	fi
+ensure_prerequisites: venv/cpython/.git/HEAD
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
-	    git -C $(CPYTHON_PATH) checkout $(BRANCH); \
-	    echo "You're missing dependencies, please enable a venv and install:"; \
+	    git -C venv/cpython/ checkout $(BRANCH); \
+	    echo "You're missing dependencies please install:"; \
 	    echo ""; \
-	    echo "  python -m pip install -r requirements.txt -r $(CPYTHON_PATH)/Doc/requirements.txt"; \
+	    echo "  python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
 	    exit 1; \
 	fi
+
 
 .PHONY: serve
 serve:
-	$(MAKE) -C $(CPYTHON_PATH)/Doc/ serve
-
-
-.PHONY: progress
-progress:
-	@$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
-	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
-	$(shell msgcat *.po */*.po | grep -c '^msgid')
-
+ifdef SERVE_PORT
+	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
+else
+	$(MAKE) -C venv/cpython/Doc/ serve
+endif
 
 .PHONY: todo
 todo: ensure_prerequisites
@@ -119,8 +132,8 @@ todo: ensure_prerequisites
 
 .PHONY: wrap
 wrap: ensure_prerequisites
-	@echo "Verify wrapping"
-	powrap --check --quiet *.po **/*.po
+	@echo "Re wrapping modified files"
+	powrap -m
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
@@ -139,34 +152,13 @@ fuzzy: ensure_prerequisites
 	potodo -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: verifs
-verifs: wrap spell
-
-.PHONY: merge
-merge: ensure_prerequisites
-	@echo "Merge from $(UPSTREAM)"
-	git -C $(CPYTHON_PATH) checkout $(BRANCH)
-	git -C $(CPYTHON_PATH) pull --ff-only
-	(cd $(CPYTHON_PATH)/Doc; sphinx-build -Q -b gettext -D gettext_compact=0 . ../pot)
-	find $(CPYTHON_PATH)/pot/ -name '*.pot' |\
-	    while read -r POT; \
-	    do \
-	        PO="./$$(echo "$$POT" | sed "s#$(CPYTHON_PATH)/pot/##; s#\.pot\$$#.po#")"; \
-	        mkdir -p "$$(dirname "$$PO")"; \
-	        if [ -f "$$PO" ]; \
-	        then \
-	            msgmerge --backup=off --force-po -U "$$PO" "$$POT"; \
-	        else \
-	            msgcat -o "$$PO" "$$POT"; \
-	        fi \
-	    done
-	rm -fr $(CPYTHON_PATH)/pot/
-	sed -i 's|^#: .*Doc/|#: |' *.po */*.po
-	powrap -m
-	@printf "\n%s %s\n" "Replace CPYTHON_CURRENT_COMMIT in Makefile by: " $(shell git -C $(CPYTHON_PATH) rev-parse HEAD)
-	@printf 'To add, you can use:\n  git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done\n'
+verifs: spell
+	powrap --check --quiet *.po */*.po
 
 .PHONY: clean
 clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
 	rm -fr $(POSPELL_TMP_DIR)
 	find -name '*.mo' -delete
+	@echo "Cleaning build directory"
+	$(MAKE) -C venv/cpython/Doc/ clean
