@@ -20,9 +20,7 @@ jobs:
             apt_dependencies: hunspell hunspell-fr-comprehensive
             command: 'pospell -p dict -l fr_FR $CHANGED_PO_FILES'
           - name: Longueur des lignes
-            package: powrap
-            apt_dependencies: gettext
-            command: 'powrap --check --quiet --diff $CHANGED_PO_FILES'
+            command: 'awk ''{if (length($0) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}'' $CHANGED_PO_FILES'
           - name: Grammaire
             package: padpo
             command: 'padpo -i $CHANGED_PO_FILES 2>&1 | grep -v -Ff padpo.ignore'
@@ -42,9 +40,13 @@ jobs:
           python-version: '3.9'
       - name: Install ${{ matrix.tool.package }}
         run: |
-          [ -n "${{ matrix.tool.apt_dependencies }}" ] && sudo apt-get update && sudo apt-get install -y ${{ matrix.tool.apt_dependencies }}
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install ${{ matrix.tool.package }}
+          if [ -n "${{ matrix.tool.apt_dependencies }}" ]; then
+              sudo apt-get update && sudo apt-get install -y ${{ matrix.tool.apt_dependencies }}
+          fi
+          if [ -n "${{ matrix.tool.package }}" ]; then
+              python -m pip install --upgrade pip setuptools wheel
+              python -m pip install ${{ matrix.tool.package }}
+          fi
       - name: Run ${{ matrix.tool.package }}
         env:
           ADDED_FILES: ${{ join(fromJSON(steps.changed_files.outputs.added), ' ') }}
