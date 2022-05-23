@@ -123,9 +123,8 @@ def main():
         for file in pot_path.glob("**/*.pot")
     }
     downstream = {
-        po
-        for po in Path(".").glob("**/*.po")
-        if not (po.is_relative_to(Path("locales")) or po.is_relative_to(Path(".git")))
+        Path(po)
+        for po in run("git", "ls-files", "*.po", stdout=PIPE).stdout.splitlines()
     }
     copy_new_files(upstream - downstream, pot_path=pot_path)
     update_known_files(upstream & downstream, pot_path=pot_path)
