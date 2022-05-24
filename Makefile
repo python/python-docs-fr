@@ -20,7 +20,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := 1b37268ef10bd20c30d349b8401c88215c8a6be8
+CPYTHON_CURRENT_COMMIT := 3c2a1e7f4af3c5c54e04dfe9ac3a68d2351b00fb
 LANGUAGE := fr
 BRANCH := 3.10
 
@@ -34,7 +34,28 @@ EXCLUDED := \
 	library/distutils.po \
 	library/imp.po \
 	library/tkinter.tix.po \
-	library/test.po
+	library/test.po \
+	library/aifc.po \
+	library/asynchat.po \
+	library/asyncore.po \
+	library/audioop.po \
+	library/cgi.po \
+	library/cgitb.po \
+	library/chunk.po \
+	library/crypt.po \
+	library/imghdr.po \
+	library/msilib.po \
+	library/nntplib.po \
+	library/nis.po \
+	library/ossaudiodev.po \
+	library/pipes.po \
+	library/smtpd.po \
+	library/sndhdr.po \
+	library/spwd.po \
+	library/sunau.po \
+	library/telnetlib.po \
+	library/uu.po \
+	library/xdrlib.po
 
 # Internal variables
 
@@ -44,6 +65,7 @@ PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
 JOBS := auto
+SERVE_PORT :=
 
 # Detect OS
 
@@ -98,7 +120,11 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 
 .PHONY: serve
 serve:
+ifdef SERVE_PORT
+	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
+else
 	$(MAKE) -C venv/cpython/Doc/ serve
+endif
 
 .PHONY: todo
 todo: ensure_prerequisites
