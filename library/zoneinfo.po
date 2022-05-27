@@ -235,6 +235,14 @@ msgid ""
 "other implementations are free to silently ignore the erroneous component or "
 "raise an exception."
 msgstr ""
+"Il s'agit d'une chaîne séparée par :data:`os.pathsep` contenant le chemin de "
+"recherche du fuseau horaire à utiliser. Elle doit être constituée uniquement "
+"de chemins absolus et non de chemins relatifs. Les composants relatifs "
+"spécifiés dans ``PYTHONTZPATH`` ne sont pas utilisés, mais le comportement "
+"reste défini par l'implémentation lorsqu'un chemin relatif est spécifié. "
+"CPython lève :exc:`InvalidTZPathWarning` dans ce cas. Les autres "
+"implémentations sont libres d'ignorer silencieusement le composant erroné ou "
+"de lever une exception."
 
 #: library/zoneinfo.rst:154
 msgid ""
@@ -256,6 +264,12 @@ msgid ""
 "a specific time zone path (or require disabling access to the system time "
 "zones)."
 msgstr ""
+"Le chemin de recherche *TZ* peut également être configuré au moment de "
+"l'exécution à l'aide de la fonction :func:`reset_tzpath`. Cette opération "
+"n'est généralement pas conseillée, bien qu'il soit raisonnable de l'utiliser "
+"dans les fonctions de test qui nécessitent l'utilisation d'un chemin de "
+"fuseau horaire spécifique (ou qui nécessitent de désactiver l'accès aux "
+"fuseaux horaires du système)."
 
 #: library/zoneinfo.rst:169
 msgid "The ``ZoneInfo`` class"
@@ -269,6 +283,12 @@ msgid ""
 "cache invalidation via :meth:`ZoneInfo.clear_cache`, for all values of "
 "``key``, the following assertion will always be true:"
 msgstr ""
+"Une sous-classe concrète de :class:`datetime.tzinfo` qui représente un "
+"fuseau horaire IANA spécifié par la chaîne ``key``. Les appels au "
+"constructeur principal renvoient toujours des objets dont la comparaison est "
+"identique ; autrement dit, sauf invalidation du cache via :meth:`ZoneInfo."
+"clear_cache`, pour toutes les valeurs de ``key``, l'assertion suivante est "
+"toujours vraie :"
 
 #: library/zoneinfo.rst:185
 msgid ""
@@ -276,16 +296,21 @@ msgid ""
 "level references. The constructor will raise :exc:`ValueError` if a non-"
 "conforming key is passed."
 msgstr ""
+"``key`` doit être sous la forme d'un chemin POSIX relatif et normalisé, sans "
+"références de niveau supérieur. Le constructeur lève :exc:`ValueError` si "
+"une clé non conforme est passée."
 
 #: library/zoneinfo.rst:189
 msgid ""
 "If no file matching ``key`` is found, the constructor will raise :exc:"
 "`ZoneInfoNotFoundError`."
 msgstr ""
+"Si aucun fichier correspondant à ``key`` n'est trouvé, le constructeur lève :"
+"exc:`ZoneInfoNotFoundError`."
 
 #: library/zoneinfo.rst:193
 msgid "The ``ZoneInfo`` class has two alternate constructors:"
-msgstr ""
+msgstr "La classe ``ZoneInfo`` possède deux constructeurs alternatifs :"
 
 #: library/zoneinfo.rst:197
 msgid ""
@@ -293,17 +318,25 @@ msgid ""
 "g. a file opened in binary mode or an :class:`io.BytesIO` object). Unlike "
 "the primary constructor, this always constructs a new object."
 msgstr ""
+"Construit un objet ``ZoneInfo`` à partir d'un objet fichier renvoyant des "
+"octets (par exemple, un fichier ouvert en mode binaire ou un objet :class:"
+"`io.BytesIO`). Contrairement au constructeur principal, il construit "
+"toujours un nouvel objet."
 
 #: library/zoneinfo.rst:201
 msgid ""
 "The ``key`` parameter sets the name of the zone for the purposes of :py:meth:"
 "`~object.__str__` and :py:meth:`~object.__repr__`."
 msgstr ""
+"Le paramètre ``key`` définit le nom de la zone pour les besoins de :py:meth:"
+"`~object.__str__` et :py:meth:`~object.__repr__`."
 
 #: library/zoneinfo.rst:204
 msgid ""
 "Objects created via this constructor cannot be pickled (see `pickling`_)."
 msgstr ""
+"Les objets créés via ce constructeur ne peuvent pas être sérialisés (voir "
+"`pickling`_)."
 
 #: library/zoneinfo.rst:208
 msgid ""
@@ -313,18 +346,28 @@ msgid ""
 "it can also be used to create a system with a different cache invalidation "
 "strategy."
 msgstr ""
+"Un constructeur alternatif qui contourne le cache du constructeur. Il est "
+"identique au constructeur principal, mais renvoie un nouvel objet à chaque "
+"appel. Il est surtout utile à des fins de test ou de démonstration, mais il "
+"peut également être utilisé pour créer un système avec une stratégie "
+"d'invalidation du cache différente."
 
 #: library/zoneinfo.rst:214
 msgid ""
 "Objects created via this constructor will also bypass the cache of a "
 "deserializing process when unpickled."
 msgstr ""
+"Les objets créés via ce constructeur contournent également le cache d'un "
+"processus de *désérialisation* lorsqu'ils sont désérialisés."
 
 #: library/zoneinfo.rst:221
 msgid ""
 "Using this constructor may change the semantics of your datetimes in "
 "surprising ways, only use it if you know that you need to."
 msgstr ""
+"L'utilisation de ce constructeur peut modifier la sémantique de vos "
+"*datetimes* de manière surprenante, ne l'utilisez que si vous en avez "
+"vraiment besoin."
 
 #: library/zoneinfo.rst:224
 msgid "The following class methods are also available:"
@@ -336,6 +379,9 @@ msgid ""
 "arguments are passed, all caches are invalidated and the next call to the "
 "primary constructor for each key will return a new instance."
 msgstr ""
+"Une méthode pour invalider le cache de la classe ``ZoneInfo``. Si aucun "
+"argument n'est passé, tous les caches sont invalidés et le prochain appel au "
+"constructeur principal pour chaque clé renverra une nouvelle instance."
 
 #: library/zoneinfo.rst:232
 msgid ""
@@ -343,6 +389,9 @@ msgid ""
 "the specified keys will be removed from the cache. Keys passed to "
 "``only_keys`` but not found in the cache are ignored."
 msgstr ""
+"Si un itérable de noms de clés est passé au paramètre ``only_keys``, seules "
+"les clés spécifiées sont retirées du cache. Les clés passées à ``only_keys`` "
+"mais non trouvées dans le cache sont ignorées."
 
 #: library/zoneinfo.rst:240
 msgid ""
@@ -350,6 +399,10 @@ msgid ""
 "``ZoneInfo`` in surprising ways; this modifies process-wide global state and "
 "thus may have wide-ranging effects. Only use it if you know that you need to."
 msgstr ""
+"L'invocation de cette fonction peut changer la sémantique des *datetimes* "
+"utilisant ``ZoneInfo`` de manière surprenante ; cela modifie l'état global "
+"du processus et peut donc avoir des effets étendus. Ne l'utilisez que si "
+"vous en avez vraiment besoin."
 
 #: library/zoneinfo.rst:245
 msgid "The class has one attribute:"
@@ -362,12 +415,18 @@ msgid ""
 "zone database (e.g. ``America/New_York``, ``Europe/Paris`` or ``Asia/"
 "Tokyo``)."
 msgstr ""
+"Il s'agit d'un :term:`attribut` en lecture seule qui renvoie la valeur de "
+"``key`` passée au constructeur, qui doit être une clé de recherche dans la "
+"base de données des fuseaux horaires de l'IANA (par exemple, ``America/"
+"New_York``, ``Europe/Paris`` ou ``Asia/Tokyo``)."
 
 #: library/zoneinfo.rst:254
 msgid ""
 "For zones constructed from file without specifying a ``key`` parameter, this "
 "will be set to ``None``."
 msgstr ""
+"Pour les zones construites à partir d'un fichier sans spécifier de paramètre "
+"``key``, cette valeur sera fixée à ``None``."
 
 #: library/zoneinfo.rst:259
 msgid ""
@@ -377,10 +436,16 @@ msgid ""
 "Unicode Common Locale Data Repository) can be used to get more user-friendly "
 "strings from these keys."
 msgstr ""
+"Bien qu'il soit assez courant de les exposer aux utilisateurs finaux, ces "
+"valeurs sont conçues pour être des clés primaires permettant de représenter "
+"les zones concernées et pas nécessairement des éléments destinés à "
+"l'utilisateur.  Des projets comme CLDR (Unicode Common Locale Data "
+"Repository) peuvent être utilisés pour obtenir des chaînes de caractères "
+"plus conviviales à partir de ces clés."
 
 #: library/zoneinfo.rst:266
 msgid "String representations"
-msgstr ""
+msgstr "Représentation sous forme de chaîne de caractères"
 
 #: library/zoneinfo.rst:268
 msgid ""
