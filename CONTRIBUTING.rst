@@ -75,7 +75,7 @@ Configuration de Poedit
 ^^^^^^^^^^^^^^^^^^^^^^^
 * N'oubliez pas de configurer votre nom et
   votre adresse de courriel (Édition → Préférences → Général).
-* Vérifiez égalemnt qu'il est configuré pour passer à la ligne à 79
+* Vérifiez également qu'il est configuré pour passer à la ligne à 79
   caractères (Édition → Préférences → Avancé → Passer à la ligne à
   79).
 
@@ -208,7 +208,7 @@ Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
 
 Nous vous conseillons de choisir, si possible, un fichier traitant
-d'un sujet que vous maitrisez, cela vous aidera grandement à produire
+d'un sujet que vous maîtrisez, cela vous aidera grandement à produire
 une traduction de bonne qualité.
 
 Si c'est votre première contribution, commencez par une toute petite
@@ -318,7 +318,7 @@ documentation local :
     make serve
 
 
-La documentation est publiée l'adresse `<http://localhost:8000/library/sys.html>`_.
+La documentation est publiée à l'adresse `<http://localhost:8000/library/sys.html>`_.
 
 Attention: le port TCP/8000 ne peut être changé, il convient d'arrêter
 tout service qui écouterait sur celui-ci.
@@ -489,7 +489,7 @@ La version originale est très polie envers le lecteur ; elle lui intime
 rarement des obligations, préférant employer « you should ». Cependant, en
 français, il est d'usage d'être plus direct pour être correctement compris :
 « vous devez ». *Vous devriez* est en effet généralement compris comme quelque
-chose dont l'on peut de temps en temps se passer, alors que c'est très
+chose dont on peut de temps en temps se passer, alors que c'est très
 rarement le cas pour les « you should » de cette documentation.
 De la même manière, « can » est souvent mieux traduit sans introduire de notion
 de possibilité, en particulier quand la phrase est à la voix passive ; la
@@ -510,7 +510,7 @@ Prototypes et exemples
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Il ne faut pas traduire le nom des éléments de la bibliothèque standard (noms
-de fonctions, paramètres de ces fonctions, constantes etc.) mais les laisser
+de fonctions, paramètres de ces fonctions, constantes, etc.) mais les laisser
 tels quel, entourés d'astérisques dans les blocs de texte.
 Si la documentation contient des exemples, vous *pouvez* traduire les noms
 utilisés, en prenant garde d'être cohérent. Vous pouvez ainsi traduire :
@@ -556,7 +556,7 @@ Balises
 
 Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
-un concept ou une primitive défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
+une primitive ou un concept défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
 ``:term:`dictionary``` en ``:term:`dictionnaire <dictionary>```.
 
@@ -671,7 +671,7 @@ Ressources de traduction
 - les canaux IRC sur irc.libera.chat :
 
   - `#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_ — communauté python autour de la documentation française,
-  - `#python-fr <https://web.libera.chat/#python-fr>`_  — communauté python francophone,
+  - `#python-fr <https://web.libera.chat/#python-fr>`_ — communauté python francophone,
   - `#python-doc <https://web.libera.chat/#python-doc>`_ — communauté python autour de la documentation anglophone ;
 - les listes de diffusion relatives à la documentation (courriel) :
 
@@ -680,8 +680,8 @@ Ressources de traduction
 - des glossaires et dictionnaires :
 
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
-  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le  `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
-  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version francaise pour voir comment le sujet de l'article est traduit ;
+  - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
+  - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version française pour voir comment le sujet de l'article est traduit ;
 - le `guide stylistique pour le français de localisation des produits Sun
   <https://web.archive.org/web/20160821182818/http://frenchmozilla.org/FTP/TEMP/guide_stylistique_December05.pdf>`_ donne
   beaucoup de conseils pour éviter une traduction trop mot à mot ;
@@ -743,7 +743,7 @@ ajouter l'équivalent de :
     keycode 115 = Multi_key
 
 
-Utilisez ``xev`` pour connaitre la bonne correspondance de la touche que vous
+Utilisez ``xev`` pour connaître la bonne correspondance de la touche que vous
 voulez assigner !
 
 Ensuite, dans votre fichier *~/.xsession*, ajoutez :
@@ -761,7 +761,7 @@ modifier dans les « Paramètres » → « Clavier » → « Disposition » →
 ⇒ Sous Windows, vous
 pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
-Le cas de « --- », « -- »,  « ... »
+Le cas de « --- », « -- », « ... »
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 La version anglaise utilise les
@@ -829,7 +829,7 @@ une virgule et le dernier par un point-virgule.
 Par exemple :
 
 - le premier paragraphe de l'énumération ;
-- le deuxième paragraphe, lui-aussi une énumération :
+- le deuxième paragraphe, lui aussi une énumération :
 
   - premier sous-paragraphe,
   - second sous-paragraphe ;
