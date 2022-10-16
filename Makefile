@@ -153,7 +153,6 @@ fuzzy: ensure_prerequisites
 
 .PHONY: verifs
 verifs: spell
-	powrap --check --quiet *.po */*.po
 
 .PHONY: clean
 clean:
