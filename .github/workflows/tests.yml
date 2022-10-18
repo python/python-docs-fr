@@ -66,14 +66,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: '~/cpython/'
           key: '1'
-      - uses: actions/setup-python@v2
+      - uses: actions/cache@v3
         with:
-          python-version: '3.9'
+          path: ~/.cache/pip
+          key: '1'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
       - name: Clone cpython
         run: |
           if [ ! -d ~/cpython ]; then
@@ -88,9 +92,7 @@ jobs:
           git -C ~/cpython checkout $(grep ^CPYTHON_CURRENT_COMMIT Makefile| cut -d= -f2)
       - name: Prepare venv
         run: |
-          # If the venv exists but is broken, drop it (happens on Python upgrades):
-          # see https://github.com/actions/setup-python/issues/170
-          [ -d $HOME/cpython/Doc/venv/bin/ -a ! -e $HOME/cpython/Doc/venv/bin/python ] && rm -fr $HOME/cpython/Doc/venv
+          make -C $HOME/cpython/Doc clean-venv
           make -C $HOME/cpython/Doc venv
       - name: sphinx-build
         run: make -C $HOME/cpython/Doc SPHINXOPTS="-q -j4 -D locale_dirs=$HOME/locales -D language=fr -D gettext_compact=0" autobuild-dev-html
