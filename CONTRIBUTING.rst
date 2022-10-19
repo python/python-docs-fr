@@ -189,7 +189,7 @@ répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/* :
 Trouver un fichier sur lequel travailler
 ----------------------------------------
 
-Pour vous aiguiller dans votre choix, vous pouvez utiliser `potodo`,
+Pour vous aiguiller dans votre choix, vous pouvez utiliser ``potodo``,
 un outil recherchant des fichiers ``.po`` à traduire. Une fois
 installé, utilisez la commande ``make todo`` dans votre clone local.
 
@@ -841,4 +841,3 @@ entre un paragraphe et sa traduction ; il faut passer outre ses avertissements.
 Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
 les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
 avertissements.
-
