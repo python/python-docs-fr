@@ -1,4 +1,4 @@
-Guide de contribution à la documentation via GitHub
+poGuide de contribution à la documentation via GitHub
 ###################################################
 
 Prérequis
