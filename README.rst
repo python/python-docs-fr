@@ -23,7 +23,7 @@ Vous pouvez contribuer :
   `mécène <https://liberapay.com/python-docs-fr>`_ du projet.
 
 Consultez le
-`guide <https://github.com/python/python-docs-fr/blob/3.10/CONTRIBUTING.rst>`_
+`guide <https://github.com/python/python-docs-fr/blob/3.11/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
 Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>`_ de
