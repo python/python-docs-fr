@@ -121,10 +121,14 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 .PHONY: serve
 serve:
 ifdef SERVE_PORT
-	$(MAKE) -C venv/cpython/Doc/ htmlview SERVE_PORT=$(SERVE_PORT)
+	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
 else
-	$(MAKE) -C venv/cpython/Doc/ htmlview
+	$(MAKE) -C venv/cpython/Doc/ serve
 endif
+
+.PHONY: htmlview
+htmlview: MODE=htmlview
+htmlview: all
 
 .PHONY: todo
 todo: ensure_prerequisites
