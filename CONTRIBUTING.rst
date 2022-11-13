@@ -315,7 +315,7 @@ documentation local :
 
 .. code-block:: bash
 
-    make serve
+    make htmlview
 
 
 La documentation est publiée à l'adresse `<http://localhost:8000/library/sys.html>`_.
@@ -329,7 +329,7 @@ nécessaire.
 Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 « la traduction devrait commencer par une majuscule » car c'est le cas pour
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
-*affichez et relisez la page HTML produite* avec ``make serve``.
+*affichez et relisez la page HTML produite* avec ``make htmlview``.
 
 Quatrième étape : publier sa traduction
 =======================================
