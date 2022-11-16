@@ -189,7 +189,7 @@ répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/* :
 Trouver un fichier sur lequel travailler
 ----------------------------------------
 
-Pour vous aiguiller dans votre choix, vous pouvez utiliser `potodo`,
+Pour vous aiguiller dans votre choix, vous pouvez utiliser ``potodo``,
 un outil recherchant des fichiers ``.po`` à traduire. Une fois
 installé, utilisez la commande ``make todo`` dans votre clone local.
 
@@ -315,7 +315,7 @@ documentation local :
 
 .. code-block:: bash
 
-    make serve
+    make htmlview
 
 
 La documentation est publiée à l'adresse `<http://localhost:8000/library/sys.html>`_.
@@ -329,7 +329,7 @@ nécessaire.
 Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 « la traduction devrait commencer par une majuscule » car c'est le cas pour
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
-*affichez et relisez la page HTML produite* avec ``make serve``.
+*affichez et relisez la page HTML produite* avec ``make htmlview``.
 
 Quatrième étape : publier sa traduction
 =======================================
@@ -841,4 +841,3 @@ entre un paragraphe et sa traduction ; il faut passer outre ses avertissements.
 Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
 les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
 avertissements.
-
