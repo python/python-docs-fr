@@ -110,61 +110,51 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
 les fichiers de la traduction, sans incidence sur les autres.
 
+.. _cloner:
+
 Première étape : créer et peupler son dépôt
 ===========================================
 
-Sur Github
-----------
+Si ce n'est pas déjà fait, créez un compte sur `le serveur Git de
+l'AFPy <https://git.afpy.org/>`_. Puis, allez sur le dépôt
+`python-docs-fr <https://git.afpy.org/AFPy/python-docs-fr>`_ et
+cliquez sur le bouton « Bifurcation » en haut à droite. Vous créez
+ainsi sur Gitea une copie privée du projet où vous avez le droit de
+faire des modifications.
 
-Depuis votre compte GitHub, se rendre dans le dépôt des sources `python-docs-fr
-<https://github.com/python/python-docs-fr>`_ puis cliquer sur son bouton ``Fork``.
-Ceci crée une copie du projet sur votre compte Github. C'est sur cette copie
-que vous avez le droit de faire des modifications.
+À ce stade, il est recommandé, bien que facultatif, de vous créer une
+clé SSH si vous n'en avez pas encore, et de l'ajouter à votre compte
+Gitea.  Pour générer la clé, consultez `le guide de GitLab
+<https://docs.gitlab.com/ee/user/ssh.html>`_ ou `celui de GitHub
+<https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/connecting-to-github-with-ssh>`_.
+Pour l'ajouter à votre compte Gitea, il suffit d'aller dans le menu de
+votre compte en haut à droite et de cliquer sur « Configuration »,
+puis d'aller dans l'onglet « Clés SSH / GPG », et de copier la clé
+SSH.
 
-Étape par étape :
+Si vous le préférez, vous pouvez également vous passer de cette
+configuration et utiliser le HTTPS à la place du SSH. Néanmoins,
+sachez que vous devrez taper votre nom d'utilisateur et votre mot de
+passe Gitea à chaque fois que vous ouvrez ou modifiez une
+contribution.
+
+Enfin, faites une copie locale du dépôt sur votre ordinateur afin de
+pouvoir éditer les fichiers, avec ces commandes :
 
 .. code-block:: bash
 
-    # Clonez votre fork Github avec `git` en utilisant ssh
-    git clone git@github.com:VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
+    # Clonez votre copie sur Gitea avec `git` en utilisant SSH :
+    git clone git@git.afpy.org:VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
 
-    # ou bien avec HTTPS
-    git clone https://github.com/VOTRE_NOM_DE_COMPTE_GITHUB/python-docs-fr.git
+    # ... ou bien avec HTTPS :
+    git clone https://git.afpy.org/VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
 
     # Allez dans le répertoire cloné
     cd python-docs-fr/
 
     # Ajoutez le dépôt officiel (nommé upstream),
-    # ceci permet à *git* de savoir quoi et où est *upstream*
-    git remote add upstream https://github.com/python/python-docs-fr.git
-
-
-Sur une autre forge
--------------------
-
-Si vous n'avez pas de compte Github, il est possible d'utiliser une autre forge.
-Vous devez dans un premier temps initier un dépôt vide sur la forge où vous voulez héberger le
-dépôt puis le peupler.
-
-Étape par étape :
-
-.. code-block:: bash
-
-    # Clonez en HTTPS le dépôt
-    git clone https://github.com/python/python-docs-fr
-
-    # Allez dans le répertoire cloné
-    cd python-docs-fr/
-
-    # Renommez *origin* en *upstream* pour avoir une référence vers le dépôt officiel
-    # Il permettra de récupérer les nouveaux commits
-    git remote rename origin upstream
-
-    # Rajoutez le *remote* de votre forge (en HTTPS ou SSH)
-    git remote add origin <url>
-
-    # Envoyez le dépôt sur votre forge et définir par défaut
-    git push -u origin
+    # ceci permet à `git` de savoir quoi et où est *upstream*
+    git remote add upstream https://git.afpy.org/AFPy/python-docs-fr.git
 
 
 Deuxième étape : choisir et réserver le fichier sur lequel travailler
@@ -841,3 +831,34 @@ entre un paragraphe et sa traduction ; il faut passer outre ses avertissements.
 Vous pouvez aussi rajouter un commentaire dans le fichier *.po* pour avertir
 les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
 avertissements.
+
+
+
+Migration vers Gitea
+====================
+
+En novembre 2022, le dépôt de cette traduction a migré de GitHub à une
+instance de Gitea hébergée par l'AFPy.  Si vous contribuiez auparavant
+sur GitHub, voici comment s'y prendre pour la migration :
+
+- Suivez le guide `plus haut <cloner_>`_ pour faire une copie (*fork*)
+  du dépôt sur Gitea. De manière facultative mais recommandée, ajoutez
+  votre clé SSH à votre profil Gitea comme expliqué ci-dessus (vous
+  aviez probablement une clé sur GitHub, auquel cas il suffit de
+  réutiliser la même, qui doit se trouver dans le fichier
+  ``~/.ssh/id_ed25519.pub`` ou un nom similaire).
+
+- Exécutez ces deux commandes pour mettre à jour votre dépôt local
+  afin qu'il interagisse avec Gitea au lieu de GitHub :
+
+  .. code-block:: bash
+
+     git remote set-url upstream https://git.afpy.org/AFPy/python-docs-fr.git
+     git remote set-url origin git@git.afpy.org:VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
+
+  Si vous avez choisi d'utiliser le HTTPS à la place du SSH, remplacez
+  la deuxième ligne par :
+
+  .. code-block:: bash
+
+     git remote set-url origin https://git.afpy.org/VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
