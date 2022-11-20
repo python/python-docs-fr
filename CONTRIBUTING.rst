@@ -548,7 +548,7 @@ Ne traduisez pas le contenu des balises comme ``:ref:...`` ou ``:class:...``.
 Vous devez cependant traduire les balises ``:term:...``, qui font référence à
 une primitive ou un concept défini dans le `glossaire Python <https://docs.python.org/fr/3/glossary.html>`_.
 La syntaxe est ``:term:nom_français<nom_anglais>``. Par exemple, traduisez
-``:term:`dictionary``` en ``:term:`dictionnaire <dictionary>```.
+`` :term:`dictionary` `` en `` :term:`dictionnaire <dictionary>` ``.
 
 Comme le glossaire est déjà traduit, il y a forcément une correspondance à chaque
 terme que vous pouvez rencontrer.
