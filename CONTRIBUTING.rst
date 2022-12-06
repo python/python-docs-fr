@@ -577,6 +577,7 @@ argument                   argument (à ne pas confondre avec *paramètre*)
 backslash                  antislash, *backslash*
 backtrace                  trace d'appels, trace de pile
 backport                   rétroporter
+base class                 classe mère
 bound                      lier
 bug                        bogue
 built-in                   natif
