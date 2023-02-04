@@ -65,7 +65,7 @@ PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
 JOBS := auto
-SERVE_PORT :=
+SPHINXERRORHANDLING = -W
 
 # Detect OS
 
@@ -90,13 +90,14 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C venv/cpython/Doc/ \
-	  SPHINXOPTS='-j$(JOBS)             \
-	  -D locale_dirs=$(abspath locales) \
+	  JOBS='$(JOBS)'             \
+	  SPHINXOPTS='-D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
 	  -D gettext_compact=0              \
 	  -D latex_engine=xelatex           \
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
+	  SPHINXERRORHANDLING=$(SPHINXERRORHANDLING) \
 	  $(MODE)
 	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make htmlview' to see them."
 
@@ -162,7 +163,7 @@ verifs: spell line-length sphinx-lint
 .PHONY: clean
 clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
-	rm -fr $(POSPELL_TMP_DIR)
+	rm -fr $(POSPELL_TMP_DIR) locales/$(LANGUAGE)/LC_MESSAGES/
 	find -name '*.mo' -delete
 	@echo "Cleaning build directory"
 	$(MAKE) -C venv/cpython/Doc/ clean
