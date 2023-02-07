@@ -157,8 +157,27 @@ $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 fuzzy: ensure_prerequisites
 	potodo -f --exclude venv .venv $(EXCLUDED)
 
+.PHONY: check-headers
+check-headers:
+	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the po comment in $$file"; \
+	done
+	@grep -L '^"Project-Id-Version: Python 3\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Project-Id-Version' header in $$file"; \
+	done
+	@grep -L '^"Language: fr\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language' header in $$file"; \
+	done
+	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language-Team' header in $$file"; \
+	done
+
 .PHONY: verifs
-verifs: spell line-length sphinx-lint
+verifs: spell line-length sphinx-lint check-headers
 
 .PHONY: clean
 clean:
