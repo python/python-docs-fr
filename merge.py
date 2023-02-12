@@ -29,14 +29,20 @@ def parse_args():
         type=Path,
         help="Use this given cpython clone.",
     )
-    parser.add_argument("branch", help="Merge from this branch")
+    parser.add_argument(
+        "branch",
+        help="Merge from this branch or from this commit",
+    )
     return parser.parse_args()
 
 
 def setup_repo(repo_path: Path, branch: str):
     """Ensure we're up-to-date."""
-    run("git", "-C", repo_path, "checkout", branch)
-    run("git", "-C", repo_path, "pull", "--ff-only")
+    if branch.find('.') == 2:
+        run("git", "-C", repo_path, "checkout", branch)
+        run("git", "-C", repo_path, "pull", "--ff-only")
+    else: # it's a commit
+        run("git", "-C", repo_path, "checkout", branch)
 
 
 def copy_new_files(new_files: set[Path], pot_path: Path) -> None:
