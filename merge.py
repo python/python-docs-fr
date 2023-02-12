@@ -38,7 +38,7 @@ def parse_args():
 
 def setup_repo(repo_path: Path, branch: str):
     """Ensure we're up-to-date."""
-    if branch.find('.') == 2:
+    if branch.find('.') == 1:
         run("git", "-C", repo_path, "checkout", branch)
         run("git", "-C", repo_path, "pull", "--ff-only")
     else: # it's a commit
