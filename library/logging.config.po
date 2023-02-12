@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2023-02-12 11:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -661,19 +661,27 @@ msgstr ""
 
 #: library/logging.config.rst:528
 msgid ""
+"The values for keys such as ``bar``, ``spam`` and ``answer`` in the above "
+"example should not be configuration dictionaries or references such as "
+"``cfg://foo`` or ``ext://bar``, because they will not be processed by the "
+"configuration machinery, but passed to the callable as-is."
+msgstr ""
+
+#: library/logging.config.rst:533
+msgid ""
 "The key ``'()'`` has been used as the special key because it is not a valid "
 "keyword parameter name, and so will not clash with the names of the keyword "
 "arguments used in the call.  The ``'()'`` also serves as a mnemonic that the "
 "corresponding value is a callable."
 msgstr ""
 
-#: library/logging.config.rst:533
+#: library/logging.config.rst:538
 msgid ""
 "The ``filters`` member of ``handlers`` and ``loggers`` can take filter "
 "instances in addition to ids."
 msgstr ""
 
-#: library/logging.config.rst:537
+#: library/logging.config.rst:542
 msgid ""
 "You can also specify a special key ``'.'`` whose value is a dictionary is a "
 "mapping of attribute names to values. If found, the specified attributes "
@@ -681,17 +689,50 @@ msgid ""
 "following configuration::"
 msgstr ""
 
-#: library/logging.config.rst:553
+#: library/logging.config.rst:558
 msgid ""
 "the returned formatter will have attribute ``foo`` set to ``'bar'`` and "
 "attribute ``baz`` set to ``'bozz'``."
 msgstr ""
 
-#: library/logging.config.rst:560
+#: library/logging.config.rst:561
+msgid ""
+"The values for attributes such as ``foo`` and ``baz`` in the above example "
+"should not be configuration dictionaries or references such as ``cfg://foo`` "
+"or ``ext://bar``, because they will not be processed by the configuration "
+"machinery, but set as attribute values as-is."
+msgstr ""
+
+#: library/logging.config.rst:570
+msgid "Handler configuration order"
+msgstr ""
+
+#: library/logging.config.rst:572
+msgid ""
+"Handlers are configured in alphabetical order of their keys, and a "
+"configured handler replaces the configuration dictionary in (a working copy "
+"of) the ``handlers`` dictionary in the schema. If you use a construct such "
+"as ``cfg://handlers.foo``, then initially ``handlers['foo']`` points to the "
+"configuration dictionary for the handler named ``foo``, and later (once that "
+"handler has been configured) it points to the configured handler instance. "
+"Thus, ``cfg://handlers.foo`` could resolve to either a dictionary or a "
+"handler instance. In general, it is wise to name handlers in a way such that "
+"dependent handlers are configured _after_ any handlers they depend on; that "
+"allows something like ``cfg://handlers.foo`` to be used in configuring a "
+"handler that depends on handler ``foo``. If that dependent handler were "
+"named ``bar``, problems would result, because the configuration of ``bar`` "
+"would be attempted before that of ``foo``, and ``foo`` would not yet have "
+"been configured. However, if the dependent handler were named ``foobar``, it "
+"would be configured after ``foo``, with the result that ``cfg://handlers."
+"foo`` would resolve to configured handler ``foo``, and not its configuration "
+"dictionary."
+msgstr ""
+
+#: library/logging.config.rst:593
 msgid "Access to external objects"
 msgstr ""
 
-#: library/logging.config.rst:562
+#: library/logging.config.rst:595
 msgid ""
 "There are times where a configuration needs to refer to objects external to "
 "the configuration, for example ``sys.stderr``.  If the configuration dict is "
@@ -706,7 +747,7 @@ msgid ""
 "import mechanisms."
 msgstr ""
 
-#: library/logging.config.rst:575
+#: library/logging.config.rst:608
 msgid ""
 "The handling of such prefixes is done in a way analogous to protocol "
 "handling: there is a generic mechanism to look for prefixes which match the "
@@ -716,11 +757,11 @@ msgid ""
 "prefix is not recognised, then the string value will be left as-is."
 msgstr ""
 
-#: library/logging.config.rst:587
+#: library/logging.config.rst:620
 msgid "Access to internal objects"
 msgstr ""
 
-#: library/logging.config.rst:589
+#: library/logging.config.rst:622
 msgid ""
 "As well as external objects, there is sometimes also a need to refer to "
 "objects in the configuration.  This will be done implicitly by the "
@@ -731,7 +772,7 @@ msgid ""
 "and resolve to the appropriate destination object."
 msgstr ""
 
-#: library/logging.config.rst:597
+#: library/logging.config.rst:630
 msgid ""
 "However, a more generic mechanism is needed for user-defined objects which "
 "are not known to the :mod:`logging` module.  For example, consider :class:"
@@ -745,7 +786,7 @@ msgid ""
 "resolution system allows the user to specify:"
 msgstr ""
 
-#: library/logging.config.rst:619
+#: library/logging.config.rst:652
 msgid ""
 "The literal string ``'cfg://handlers.file'`` will be resolved in an "
 "analogous way to strings with the ``ext://`` prefix, but looking in the "
@@ -754,7 +795,7 @@ msgid ""
 "format``.  Thus, given the following snippet:"
 msgstr ""
 
-#: library/logging.config.rst:637
+#: library/logging.config.rst:670
 msgid ""
 "in the configuration, the string ``'cfg://handlers'`` would resolve to the "
 "dict with key ``handlers``, the string ``'cfg://handlers.email`` would "
@@ -770,7 +811,7 @@ msgid ""
 "to the string value if needed."
 msgstr ""
 
-#: library/logging.config.rst:651
+#: library/logging.config.rst:684
 msgid ""
 "Given a string ``cfg://handlers.myhandler.mykey.123``, this will resolve to "
 "``config_dict['handlers']['myhandler']['mykey']['123']``. If the string is "
@@ -780,11 +821,11 @@ msgid ""
 "['mykey']['123']`` if that fails."
 msgstr ""
 
-#: library/logging.config.rst:663
+#: library/logging.config.rst:696
 msgid "Import resolution and custom importers"
 msgstr ""
 
-#: library/logging.config.rst:665
+#: library/logging.config.rst:698
 msgid ""
 "Import resolution, by default, uses the builtin :func:`__import__` function "
 "to do its importing. You may want to replace this with your own importing "
@@ -796,17 +837,17 @@ msgid ""
 "instance level, you need to wrap it with :func:`staticmethod`. For example::"
 msgstr ""
 
-#: library/logging.config.rst:680
+#: library/logging.config.rst:713
 msgid ""
 "You don't need to wrap with :func:`staticmethod` if you're setting the "
 "import callable on a configurator *instance*."
 msgstr ""
 
-#: library/logging.config.rst:687
+#: library/logging.config.rst:720
 msgid "Configuration file format"
 msgstr ""
 
-#: library/logging.config.rst:689
+#: library/logging.config.rst:722
 msgid ""
 "The configuration file format understood by :func:`fileConfig` is based on :"
 "mod:`configparser` functionality. The file must contain sections called "
@@ -823,7 +864,7 @@ msgid ""
 "specified in a section called ``[logger_root]``."
 msgstr ""
 
-#: library/logging.config.rst:704
+#: library/logging.config.rst:737
 msgid ""
 "The :func:`fileConfig` API is older than the :func:`dictConfig` API and does "
 "not provide functionality to cover certain aspects of logging. For example, "
@@ -836,17 +877,17 @@ msgid ""
 "when it's convenient to do so."
 msgstr ""
 
-#: library/logging.config.rst:714
+#: library/logging.config.rst:747
 msgid "Examples of these sections in the file are given below."
 msgstr ""
 
-#: library/logging.config.rst:727
+#: library/logging.config.rst:760
 msgid ""
 "The root logger must specify a level and a list of handlers. An example of a "
 "root logger section is given below."
 msgstr ""
 
-#: library/logging.config.rst:736
+#: library/logging.config.rst:769
 msgid ""
 "The ``level`` entry can be one of ``DEBUG, INFO, WARNING, ERROR, CRITICAL`` "
 "or ``NOTSET``. For the root logger only, ``NOTSET`` means that all messages "
@@ -854,7 +895,7 @@ msgid ""
 "of the ``logging`` package's namespace."
 msgstr ""
 
-#: library/logging.config.rst:741
+#: library/logging.config.rst:774
 msgid ""
 "The ``handlers`` entry is a comma-separated list of handler names, which "
 "must appear in the ``[handlers]`` section. These names must appear in the "
@@ -862,13 +903,13 @@ msgid ""
 "file."
 msgstr ""
 
-#: library/logging.config.rst:746
+#: library/logging.config.rst:779
 msgid ""
 "For loggers other than the root logger, some additional information is "
 "required. This is illustrated by the following example."
 msgstr ""
 
-#: library/logging.config.rst:757
+#: library/logging.config.rst:790
 msgid ""
 "The ``level`` and ``handlers`` entries are interpreted as for the root "
 "logger, except that if a non-root logger's level is specified as ``NOTSET``, "
@@ -881,20 +922,20 @@ msgid ""
 "application to get the logger."
 msgstr ""
 
-#: library/logging.config.rst:766
+#: library/logging.config.rst:799
 msgid ""
 "Sections which specify handler configuration are exemplified by the "
 "following."
 msgstr ""
 
-#: library/logging.config.rst:776
+#: library/logging.config.rst:809
 msgid ""
 "The ``class`` entry indicates the handler's class (as determined by :func:"
 "`eval` in the ``logging`` package's namespace). The ``level`` is interpreted "
 "as for loggers, and ``NOTSET`` is taken to mean 'log everything'."
 msgstr ""
 
-#: library/logging.config.rst:780
+#: library/logging.config.rst:813
 msgid ""
 "The ``formatter`` entry indicates the key name of the formatter for this "
 "handler. If blank, a default formatter (``logging._defaultFormatter``) is "
@@ -902,7 +943,7 @@ msgid ""
 "and have a corresponding section in the configuration file."
 msgstr ""
 
-#: library/logging.config.rst:785
+#: library/logging.config.rst:818
 msgid ""
 "The ``args`` entry, when :ref:`evaluated <func-eval>` in the context of the "
 "``logging`` package's namespace, is the list of arguments to the constructor "
@@ -911,7 +952,7 @@ msgid ""
 "provided, it defaults to ``()``."
 msgstr ""
 
-#: library/logging.config.rst:791
+#: library/logging.config.rst:824
 msgid ""
 "The optional ``kwargs`` entry, when :ref:`evaluated <func-eval>` in the "
 "context of the ``logging`` package's namespace, is the keyword argument dict "
@@ -919,19 +960,19 @@ msgid ""
 "``{}``."
 msgstr ""
 
-#: library/logging.config.rst:848
+#: library/logging.config.rst:881
 msgid ""
 "Sections which specify formatter configuration are typified by the following."
 msgstr ""
 
-#: library/logging.config.rst:859
+#: library/logging.config.rst:892
 msgid ""
 "The arguments for the formatter configuration are the same as the keys in "
 "the dictionary schema :ref:`formatters section <logging-config-dictschema-"
 "formatters>`."
 msgstr ""
 
-#: library/logging.config.rst:865
+#: library/logging.config.rst:898
 msgid ""
 "Due to the use of :func:`eval` as described above, there are potential "
 "security risks which result from using the :func:`listen` to send and "
@@ -940,18 +981,18 @@ msgid ""
 "`listen` documentation for more information."
 msgstr ""
 
-#: library/logging.config.rst:874
+#: library/logging.config.rst:907
 msgid "Module :mod:`logging`"
 msgstr "Module :mod:`logging`"
 
-#: library/logging.config.rst:874
+#: library/logging.config.rst:907
 msgid "API reference for the logging module."
 msgstr "Référence d'API pour le module de journalisation."
 
-#: library/logging.config.rst:876
+#: library/logging.config.rst:909
 msgid "Module :mod:`logging.handlers`"
 msgstr "Module :mod:`logging.handlers`"
 
-#: library/logging.config.rst:877
+#: library/logging.config.rst:910
 msgid "Useful handlers included with the logging module."
 msgstr "Gestionnaires utiles inclus avec le module de journalisation."
