@@ -124,7 +124,7 @@ htmlview: all
 
 .PHONY: todo
 todo: ensure_prerequisites
-	potodo --exclude venv .venv $(EXCLUDED)
+	potodo --offline --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
 wrap: ensure_prerequisites
