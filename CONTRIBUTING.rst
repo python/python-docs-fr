@@ -1,5 +1,5 @@
-Guide de contribution à la documentation via GitHub
-###################################################
+Guide de contribution à la documentation
+########################################
 
 Prérequis
 =========
@@ -192,7 +192,7 @@ Vous pouvez commencer par des tâches faciles comme réviser les entrées
 de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
 mais dont la source en anglais a été modifiée depuis (correction orthographique,
 changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
-généralement plus « faciles » à traduire.
+généralement plus « faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
@@ -215,12 +215,12 @@ Réserver le fichier
 Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez nous
 le signaler par différents moyens :
 
-* Soit en ouvrant un `ticket sur Github <https://github.com/python/python-docs-fr/issues>`_
+* Soit en ouvrant un `ticket sur Gitea <https://git.afpy.org/AFPy/python-docs-fr/issues>`_
   en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
   (par exemple « Je travaille sur library/sys.po »).
 
-Ceci permet à `potodo`_ de détecter via l'API Github les fichiers ``.po`` réservés
-dans les tickets et les *pull requests*.
+Ceci permet à `potodo`_ de détecter via l'API Gitea les fichiers ``.po`` réservés
+dans les tickets et les demandes d'ajout.
 
 * Soit en créant un sujet sur le
   `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
@@ -252,7 +252,7 @@ fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 
 .. code-block:: bash
 
-    git checkout -b library-sys upstream/3.11
+    git switch -c library-sys upstream/3.11
 
 
 
@@ -300,7 +300,7 @@ compilation ne devrait pas échouer.
     make
 
 
-Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
+Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
 documentation local :
 
 .. code-block:: bash
@@ -317,14 +317,14 @@ Vous pouvez recommencer les étapes de cette section autant de fois que
 nécessaire.
 
 Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
-« la traduction devrait commencer par une majuscule » car c'est le cas pour
+« la traduction devrait commencer par une majuscule » car c'est le cas pour
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
 *affichez et relisez la page HTML produite* avec ``make htmlview``.
 
 Quatrième étape : publier sa traduction
 =======================================
 
-Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains de bien respecter les
+Une fois que le ``make verifs`` ne lève pas d'erreur et que vous êtes certains de bien respecter les
 `Conventions`_ de traduction, vient le moment d'envoyer votre travail sur le dépôt local.
 
 * ``git add`` place nos modifications dans l'index de Git en attendant
@@ -343,34 +343,35 @@ Une fois que le *make verifs* ne lève pas d'erreur et que vous êtes certains d
 
 
 
-Poussez ensuite vos modifications sur votre *fork* avec ``git push``.
+Poussez ensuite vos modifications sur votre bifurcation (*fork*) avec ``git push``.
 Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
-branche est liée à votre *fork* (et donc que vos futurs ``git pull`` et
+branche est liée à votre bifurcation (et donc que vos futurs ``git pull`` et
 ``git push`` sachent quoi tirer).
 
 .. code-block:: bash
 
     git push --set-upstream origin
 
-Sur Github
-----------
+Sur Gitea
+---------
 
-La commande précédente vous affiche un lien pour ouvrir une *pull request* sur
-Github. Si vous l'avez manqué, allez simplement sur https://github.com/python/python-docs-fr/pulls
-et un joli bouton « Compare & pull request » devrait apparaître au bout de
-quelques secondes vous indiquant que vous pouvez demander une *pull request*.
+La commande précédente vous affiche un lien pour ouvrir une demande d'ajout sur
+Gitea. Si vous l'avez manqué, allez simplement sur
+https://git.afpy.org/AFPy/python-docs-fr/pulls et cliquez
+sur le bouton « Nouvelle demande d'ajout ».
 
-Mettez dans le commentaire de la *pull request* le texte suivant :
-« Closes #XXXX » où XXXX est le numéro du ticket GitHub créé pour réserver le fichier traduit.
-Cela permet à Github de lier la *pull request* au ticket de réservation.
+Mettez dans le commentaire de la demande d'ajout le texte suivant :
+« Closes #XXXX » où XXXX est le numéro du ticket Gitea créé pour réserver le
+fichier traduit. Cela permet à Gitea de lier la demande d'ajout au ticket de
+réservation.
 
-Il peut arriver que vous ayez besoin de reprendre votre PR sur votre
-ordinateur après avoir fait des modifications en ligne sur GitHub,
-par exemple lorsque GitHub vous offre la possibilité de faire un commit
+Il peut arriver que vous ayez besoin de reprendre votre demande d'ajout sur votre
+ordinateur après avoir fait des modifications en ligne sur Gitea,
+par exemple lorsque Gitea vous offre la possibilité de faire un commit
 automatique contenant les suggestions proposées pendant la revue.
 Cela fonctionne bien, mais le résultat n'est pas toujours accepté par
 ``powrap``. Si cela arrive, vous pouvez récupérer le commit fait par
-GitHub puis relancer ``powrap`` :
+Gitea puis relancer ``powrap`` :
 
 .. code-block:: bash
 
@@ -380,50 +381,16 @@ GitHub puis relancer ``powrap`` :
     git commit -m "Formatage après commit automatique"
     git push
 
-Sur une autre forge
--------------------
-
-Quand vous avez poussé vos modifications, il y a plusieurs possibilités.
-
-Soit vous signalez via le `discuss de l'AFPy <https://discuss.afpy.org/>`_ ou sur IRC que
-vous avez traduit une section. Nous viendrons récupérer les modifications pour les intégrer
-sur Github.
-
-Soit en créant un *`bundle <https://git-scm.com/book/fr/v2/Utilitaires-Git-Empaquetage-bundling>`_* Git,
-pour cela, il faut créer un fichier contenant les différentes modifications effectuées.
-
-.. code-block:: bash
-
-    git bundle create <name>.bundle <commit_id1>..<commit_id2>
-
-Puis nous partager ce *bundle* sur le `discuss de l'AFPy <https://discuss.afpy.org/>`_ pour pouvoir l'intégrer.
-
-
-À partir de là, quelqu'un passera en revue vos modifications, et vous fera des
-suggestions et corrections. Pour les prendre en compte, retournez sur votre branche
-contenant le fichier concerné (au cas où vous auriez commencé quelque chose d'autre
-sur une autre branche) :
-
-.. code-block:: bash
-
-    git checkout library-sys
-    git pull  # pour rapatrier les modifications que vous auriez acceptées
-              # sur l'interface web.
-
-    # Réglez les problèmes, puis commitez à nouveau :
-    git commit --all --message "prise en compte des remarques"
-    git push
-
 
 Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
-segment manquant :
+segment manquant :
 
-- vous récupérez depuis *upstream* (le dépôt commun public sur Github) ;
-- vous poussez sur *origin* (votre clone sur Github).
+- vous récupérez depuis *upstream* (le dépôt commun public sur Gitea) ;
+- vous poussez sur *origin* (votre clone sur Gitea).
 
 C'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
 de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
-rôle des personnes qui *fusionnent* les *pull requests* après les avoir relues.
+rôle des personnes qui fusionnent les demandes d'ajout après les avoir relues.
 
 Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
 branche de version (3.9, 3.10, etc.), seulement récupéré les
@@ -842,7 +809,7 @@ En novembre 2022, le dépôt de cette traduction a migré de GitHub à une
 instance de Gitea hébergée par l'AFPy.  Si vous contribuiez auparavant
 sur GitHub, voici comment s'y prendre pour la migration :
 
-- Suivez le guide `plus haut <cloner_>`_ pour faire une copie (*fork*)
+- Suivez le guide `plus haut <cloner_>`_ pour faire une bifurcation (*fork*)
   du dépôt sur Gitea. De manière facultative mais recommandée, ajoutez
   votre clé SSH à votre profil Gitea comme expliqué ci-dessus (vous
   aviez probablement une clé sur GitHub, auquel cas il suffit de
