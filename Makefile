@@ -155,7 +155,7 @@ $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 
 .PHONY: fuzzy
 fuzzy: ensure_prerequisites
-	potodo -f --exclude venv .venv $(EXCLUDED)
+	potodo --offline -f --exclude venv .venv $(EXCLUDED)
 
 .PHONY: check-headers
 check-headers:
