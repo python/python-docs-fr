@@ -104,6 +104,10 @@ ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
 
     chmod a+x ~/.local/bin/podiff
 
+Allez ensuite dans le répertoire du dépôt récupéré (``python-docs-fr``) et faites :
+
+.. code-block:: bash
+
     git config diff.podiff.textconv podiff
 
 
