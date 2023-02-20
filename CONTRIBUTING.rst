@@ -556,6 +556,7 @@ bytecode                   code intermédiaire
 callback                   fonction de rappel
 call stack                 pile d'appels
 caught (exception)         interceptée
+code points                points de code
 daemon                     *daemon*
 debugging                  débogage
 deep copy                  copie récursive (préféré), ou copie profonde
