@@ -124,7 +124,7 @@ htmlview: all
 
 .PHONY: todo
 todo: ensure_prerequisites
-	potodo --offline --exclude venv .venv $(EXCLUDED)
+	potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
 wrap: ensure_prerequisites
@@ -155,7 +155,7 @@ $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 
 .PHONY: fuzzy
 fuzzy: ensure_prerequisites
-	potodo --offline -f --exclude venv .venv $(EXCLUDED)
+	potodo --only-fuzzy --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: check-headers
 check-headers:
