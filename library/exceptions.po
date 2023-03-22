@@ -81,9 +81,8 @@ msgstr ""
 "chapitre :ref:`tut-userexceptions`."
 
 #: library/exceptions.rst:39
-#, fuzzy
 msgid "Exception context"
-msgstr "Hiérarchie des exceptions"
+msgstr "Contexte des exceptions"
 
 #: library/exceptions.rst:41
 msgid ""
@@ -93,20 +92,21 @@ msgid ""
 "`except` or :keyword:`finally` clause, or a :keyword:`with` statement, is "
 "used."
 msgstr ""
+"Quand une exception est levée pendant qu'une autre exception est déjà en "
+"traitement, l'attribut :attr:`__context__` de la nouvelle exception est "
+"automatiquement affecté à l'exception qui est en cours de traitement. Une "
+"exception peut être traitée quand une clause :keyword:`except` ou :keyword:"
+"`finally`, ou une instruction :keyword:`with` est utilisée."
 
 #: library/exceptions.rst:47
-#, fuzzy
 msgid ""
 "This implicit exception context can be supplemented with an explicit cause "
 "by using :keyword:`!from` with :keyword:`raise`::"
 msgstr ""
-"En levant une nouvelle exception (plutôt que d'utiliser un simple ``raise`` "
-"pour lever à nouveau l'exception en cours de traitement), le contexte "
-"implicite d'exception peut être complété par une cause explicite en "
-"utilisant :keyword:`from` avec :keyword:`raise` ::"
+"Ce contexte implicite d'exception peut être complété par une cause explicite "
+"en utilisant :keyword:`!from` avec :keyword:`raise` ::"
 
 #: library/exceptions.rst:53
-#, fuzzy
 msgid ""
 "The expression following :keyword:`from<raise>` must be an exception or "
 "``None``. It will be set as :attr:`__cause__` on the raised exception. "
@@ -117,12 +117,12 @@ msgid ""
 "while leaving the old exception available in :attr:`__context__` for "
 "introspection when debugging."
 msgstr ""
-"L'expression suivant :keyword:`from` doit être une exception ou ``None``. "
-"Elle sera assignée en tant que :attr:`__cause__` dans l'exception levée. "
-"Changer :attr:`__cause__` change aussi implicitement l'attribut :attr:"
+"L'expression suivant :keyword:`from<raise>` doit être une exception ou "
+"``None``. Elle sera assignée en tant que :attr:`__cause__` dans l'exception "
+"levée. Changer :attr:`__cause__` change aussi implicitement l'attribut :attr:"
 "`__suppress_context__` à ``True``, de sorte que l'utilisation de ``raise "
 "new_exc from None`` remplace bien l'ancienne exception avec la nouvelle à "
-"des fins d'affichage (e.g., convertir :exc:`KeyError` en :exc:"
+"des fins d'affichage (par exemple, convertir :exc:`KeyError` en :exc:"
 "`AttributeError`), tout en laissant l'ancienne exception disponible dans :"
 "attr:`__context__` pour introspection lors du débogage."
 
@@ -152,9 +152,8 @@ msgstr ""
 "d'appels montre toujours la dernière exception qui a été levée."
 
 #: library/exceptions.rst:74
-#, fuzzy
 msgid "Inheriting from built-in exceptions"
-msgstr "La hiérarchie de classes pour les exceptions natives est la suivante :"
+msgstr "Hériter des exceptions natives"
 
 #: library/exceptions.rst:76
 msgid ""
@@ -163,6 +162,11 @@ msgid ""
 "possible conflicts between how the bases handle the ``args`` attribute, as "
 "well as due to possible memory layout incompatibilities."
 msgstr ""
+"Le code de l'utilisateur peut créer des sous-classes qui dérivent d'un type "
+"d'exception. Il est recommandé de ne dériver que d'un seul type d'exception "
+"à la fois pour éviter des conflits possibles dans la façon dont les classes "
+"mères traitent l'argument ``args`` ainsi que des incompatibilités "
+"potentielles avec l'utilisation de la mémoire."
 
 #: library/exceptions.rst:83
 msgid ""
@@ -173,6 +177,13 @@ msgid ""
 "between Python versions, leading to new conflicts in the future.  Therefore, "
 "it's recommended to avoid subclassing multiple exception types altogether."
 msgstr ""
+"La majorité des exceptions natives sont implémentées en C pour des raisons "
+"d'efficacité, voir :source:`Objects/exceptions.c`. L'architecture interne de "
+"certaines est telle que cela rend impossible la création de sous-classes qui "
+"dérivent de plusieurs types d'exceptions. L'agencement de la mémoire est un "
+"détail d'implémentation qui est sujet à changement d'une version de Python à "
+"l'autre, ce qui peut poser conflit dans le futur. Il est donc déconseillé de "
+"dériver de plusieurs types d'exceptions."
 
 #: library/exceptions.rst:93
 msgid "Base classes"
@@ -386,6 +397,12 @@ msgid ""
 "allow :exc:`KeyboardInterrupt` to end the program as quickly as possible or "
 "avoid raising it entirely. (See :ref:`handlers-and-exceptions`.)"
 msgstr ""
+"Attraper une :exc:`KeyboardInterrupt` demande une considération "
+"particulière. Comme elle peut être levée à des moments imprévisibles, elle "
+"peut dans certains cas laisser le programme en cours d'exécution dans un "
+"état incohérent. Il est généralement préférable de laisser :exc:"
+"`KeyboardInterrupt` arrêter le programme aussi rapidement que possible ou "
+"d'éviter catégoriquement de la lever (voir :ref:`handlers-and-exceptions`)."
 
 #: library/exceptions.rst:249
 msgid ""
@@ -689,7 +706,6 @@ msgstr ""
 "`asynchronous iterator` pour arrêter l'itération."
 
 #: library/exceptions.rst:426
-#, fuzzy
 msgid ""
 "Raised when the parser encounters a syntax error.  This may occur in an :"
 "keyword:`import` statement, in a call to the built-in functions :func:"
@@ -698,36 +714,42 @@ msgid ""
 msgstr ""
 "Levée lorsque l'analyseur syntaxique rencontre une erreur de syntaxe. Cela "
 "peut se produire dans une instruction :keyword:`import`, dans un appel aux "
-"fonctions natives :func:`exec` ou :func:`eval`, ou lors de la lecture du "
-"script initial ou de l'entrée standard (également de manière interactive)."
+"fonctions natives :func:`compile`, :func:`exec` ou :func:`eval`, ou lors de "
+"la lecture du script initial ou de l'entrée standard (également de manière "
+"interactive)."
 
 #: library/exceptions.rst:432
 msgid ""
 "The :func:`str` of the exception instance returns only the error message. "
 "Details is a tuple whose members are also available as separate attributes."
 msgstr ""
+"La conversion en chaîne avec :func:`str` de l'instance de l'exception ne "
+"renvoie que le message d'erreur. L'argument ``details`` est un *n*-uplet "
+"dont les membres sont disponibles en tant qu'attributs séparés."
 
 #: library/exceptions.rst:437
-#, fuzzy
 msgid "The name of the file the syntax error occurred in."
-msgstr "Le nom de l'encodage qui a provoqué l'erreur."
+msgstr "Le nom du fichier dans lequel l'erreur de syntaxe a été rencontrée."
 
 #: library/exceptions.rst:441
 msgid ""
 "Which line number in the file the error occurred in. This is 1-indexed: the "
 "first line in the file has a ``lineno`` of 1."
 msgstr ""
+"Le numéro de la ligne dans le fichier où l'erreur s'est produite. L'indiçage "
+"commence à 1 : ``lineno`` vaut 1 pour la première ligne du fichier."
 
 #: library/exceptions.rst:446
 msgid ""
 "The column in the line where the error occurred. This is 1-indexed: the "
 "first character in the line has an ``offset`` of 1."
 msgstr ""
+"La colonne dans la ligne où l'erreur s'est produite. L'indiçage commence à "
+"1 : ``offset`` vaut 1 pour le premier caractère de la ligne."
 
 #: library/exceptions.rst:451
-#, fuzzy
 msgid "The source code text involved in the error."
-msgstr "Le nom de l'encodage qui a provoqué l'erreur."
+msgstr "Le texte du code source impliqué dans l'erreur."
 
 #: library/exceptions.rst:453
 msgid ""
@@ -980,7 +1002,6 @@ msgstr ""
 "levées en fonction du code d'erreur système."
 
 #: library/exceptions.rst:614
-#, fuzzy
 msgid ""
 "Raised when an operation would block on an object (e.g. socket) set for non-"
 "blocking operation. Corresponds to :c:data:`errno` :py:data:`~errno."
@@ -988,8 +1009,9 @@ msgid ""
 "data:`~errno.EINPROGRESS`."
 msgstr ""
 "Levée lorsqu'une opération bloque sur un objet (par exemple un connecteur) "
-"configuré pour une opération non-bloquante. Correspond à :c:data:`errno` "
-"``EAGAIN``, ``EALREADY``, ``EWOULDBLOCK`` et ``EINPROGRESS``."
+"configuré pour une opération non-bloquante. Correspond à :c:data:`errno` :py:"
+"data:`~errno.EAGAIN`, :py:data:`~errno.EALREADY`, :py:data:`~errno."
+"EWOULDBLOCK` et :py:data:`~errno.EINPROGRESS`."
 
 #: library/exceptions.rst:619
 msgid ""
@@ -1010,13 +1032,12 @@ msgstr ""
 "classes tampon entrées-sorties du module :mod:`io`."
 
 #: library/exceptions.rst:630
-#, fuzzy
 msgid ""
 "Raised when an operation on a child process failed. Corresponds to :c:data:"
 "`errno` :py:data:`~errno.ECHILD`."
 msgstr ""
 "Levée lorsqu'une opération sur un processus enfant a échoué. Correspond à :c:"
-"data:`errno` ``ECHILD``."
+"data:`errno` :py:data:`~errno.ECHILD`."
 
 #: library/exceptions.rst:635
 msgid "A base class for connection-related issues."
@@ -1032,7 +1053,6 @@ msgstr ""
 "`ConnectionResetError`."
 
 #: library/exceptions.rst:642
-#, fuzzy
 msgid ""
 "A subclass of :exc:`ConnectionError`, raised when trying to write on a pipe "
 "while the other end has been closed, or trying to write on a socket which "
@@ -1042,56 +1062,53 @@ msgstr ""
 "Une sous-classe de :exc:`ConnectionError`, levé en essayant d'écrire sur un "
 "*pipe* alors que l'autre extrémité a été fermée, ou en essayant d'écrire sur "
 "un connecteur (*socket* en anglais) qui a été fermé pour l'écriture. "
-"Correspond à :c:data:`errno` ``EPIPE`` et ``ESHUTDOWN``."
+"Correspond à :c:data:`errno` :py:data:`~errno.EPIPE` et :py:data:`~errno."
+"ESHUTDOWN`."
 
 #: library/exceptions.rst:649
-#, fuzzy
 msgid ""
 "A subclass of :exc:`ConnectionError`, raised when a connection attempt is "
 "aborted by the peer. Corresponds to :c:data:`errno` :py:data:`~errno."
 "ECONNABORTED`."
 msgstr ""
 "Une sous-classe de :exc:`ConnectionError`, levée lorsqu'une tentative de "
-"connexion est interrompue par le pair. Correspond à :c:data:`errno` "
-"``ECONNABORTED``."
+"connexion est interrompue par le pair. Correspond à :c:data:`errno` :py:data:"
+"`~errno.ECONNABORTED`."
 
 #: library/exceptions.rst:655
-#, fuzzy
 msgid ""
 "A subclass of :exc:`ConnectionError`, raised when a connection attempt is "
 "refused by the peer. Corresponds to :c:data:`errno` :py:data:`~errno."
 "ECONNREFUSED`."
 msgstr ""
 "Une sous-classe de :exc:`ConnectionError`, levée lorsqu'une tentative de "
-"connexion est refusée par le pair. Correspond à :c:data:`errno` "
-"``ECONNREFUSED``."
+"connexion est refusée par le pair. Correspond à :c:data:`errno` :py:data:"
+"`~errno.ECONNREFUSED`."
 
 #: library/exceptions.rst:661
-#, fuzzy
 msgid ""
 "A subclass of :exc:`ConnectionError`, raised when a connection is reset by "
 "the peer. Corresponds to :c:data:`errno` :py:data:`~errno.ECONNRESET`."
 msgstr ""
 "Une sous-classe de :exc:`ConnectionError`, levée lorsqu'une connexion est "
-"réinitialisée par le pair. Correspond à :c:data:`errno` ``ECONNRESET``."
+"réinitialisée par le pair. Correspond à :c:data:`errno` :py:data:`~errno."
+"ECONNRESET`."
 
 #: library/exceptions.rst:667
-#, fuzzy
 msgid ""
 "Raised when trying to create a file or directory which already exists. "
 "Corresponds to :c:data:`errno` :py:data:`~errno.EEXIST`."
 msgstr ""
-"Levée en essayant de créer un fichier ou un répertoire qui existe déjà. "
-"Correspond à :c:data:`errno` ``EEXIST``."
+"Levée pendant la tentative de création d'un fichier ou d'un répertoire qui "
+"existe déjà. Correspond à :c:data:`errno` :py:data:`~errno.EEXIST`."
 
 #: library/exceptions.rst:672
-#, fuzzy
 msgid ""
 "Raised when a file or directory is requested but doesn't exist. Corresponds "
 "to :c:data:`errno` :py:data:`~errno.ENOENT`."
 msgstr ""
 "Levée lorsqu'un fichier ou répertoire est demandé mais n'existe pas. "
-"Correspond à :c:data:`errno` ``ENOENT``."
+"Correspond à :c:data:`errno` :py:data:`~errno.ENOENT`."
 
 #: library/exceptions.rst:677
 msgid ""
@@ -1112,16 +1129,15 @@ msgstr ""
 "`475` pour les raisons), au lieu de lever :exc:`InterruptedError`."
 
 #: library/exceptions.rst:687
-#, fuzzy
 msgid ""
 "Raised when a file operation (such as :func:`os.remove`) is requested on a "
 "directory. Corresponds to :c:data:`errno` :py:data:`~errno.EISDIR`."
 msgstr ""
 "Levée lorsqu'une opération sur un fichier (comme :func:`os.remove`) est "
-"demandée sur un répertoire. Correspond à :c:data:`errno` ``EISDIR``."
+"demandée sur un répertoire. Correspond à :c:data:`errno` :py:data:`~errno."
+"EISDIR`."
 
 #: library/exceptions.rst:693
-#, fuzzy
 msgid ""
 "Raised when a directory operation (such as :func:`os.listdir`) is requested "
 "on something which is not a directory.  On most POSIX platforms, it may also "
@@ -1130,8 +1146,10 @@ msgid ""
 "ENOTDIR`."
 msgstr ""
 "Levée lorsqu'une opération sur un répertoire (comme :func:`os.listdir`) est "
-"demandée sur autre chose qu'un répertoire. Correspond à :c:data:`errno` "
-"``ENOTDIR``."
+"demandée sur autre chose qu'un répertoire. Sur la majorité des plateformes "
+"*POSIX*, elle est aussi levée quand une opération tente d'ouvrir ou de "
+"traverser un fichier qui n'est pas un répertoire comme s'il en était un. "
+"Correspond à :c:data:`errno` :py:data:`~errno.ENOTDIR`."
 
 #: library/exceptions.rst:701
 #, fuzzy
@@ -1145,22 +1163,20 @@ msgstr ""
 "c:data:`errno` ``EACCES`` et ``EPERM``."
 
 #: library/exceptions.rst:707
-#, fuzzy
 msgid ""
 "Raised when a given process doesn't exist. Corresponds to :c:data:`errno` :"
 "py:data:`~errno.ESRCH`."
 msgstr ""
-"Levée lorsqu'un processus donné n'existe pas. Correspond à :c:data:`errno` "
-"``ESRCH``."
+"Levée lorsqu'un processus donné n'existe pas. Correspond à :c:data:`errno` :"
+"py:data:`~errno.ESRCH`."
 
 #: library/exceptions.rst:712
-#, fuzzy
 msgid ""
 "Raised when a system function timed out at the system level. Corresponds to :"
 "c:data:`errno` :py:data:`~errno.ETIMEDOUT`."
 msgstr ""
 "Levée lorsqu'une fonction système a expiré au niveau système. Correspond à :"
-"c:data:`errno` ``ETIMEDOUT``."
+"c:data:`errno` :py:data:`~errno.ETIMEDOUT`."
 
 #: library/exceptions.rst:715
 msgid "All the above :exc:`OSError` subclasses were added."
@@ -1205,10 +1221,13 @@ msgid ""
 "pep:`565`). Enabling the :ref:`Python Development Mode <devmode>` shows this "
 "warning."
 msgstr ""
+"Ignoré par les filtres d'avertissements par défaut, sauf dans le module "
+"``__main__`` (:pep:`565`). Activer le :ref:`mode de développement de Python "
+"<devmode>` affiche cet avertissement."
 
 #: library/exceptions.rst:767
 msgid "The deprecation policy is described in :pep:`387`."
-msgstr ""
+msgstr "La politique relative à l'obsolescence est décrite dans la :pep:`387`."
 
 #: library/exceptions.rst:756
 msgid ""
@@ -1234,6 +1253,8 @@ msgid ""
 "Ignored by the default warning filters. Enabling the :ref:`Python "
 "Development Mode <devmode>` shows this warning."
 msgstr ""
+"Ignoré par les filtres d'avertissements par défaut. Activer le :ref:`mode de "
+"développement de Python <devmode>` affiche cet avertissement."
 
 #: library/exceptions.rst:772
 msgid "Base class for warnings about dubious syntax."
@@ -1272,9 +1293,9 @@ msgstr ""
 "`bytearray`."
 
 #: library/exceptions.rst:806
-#, fuzzy
 msgid "Base class for warnings related to resource usage."
-msgstr "Classe de base pour les avertissements liés à l'Unicode."
+msgstr ""
+"Classe mère pour les avertissements liés à l'utilisation des ressources."
 
 #: library/exceptions.rst:816
 msgid "Exception hierarchy"

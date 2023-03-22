@@ -343,12 +343,19 @@ msgid ""
 "argument.) No % formatting operation is performed on *msg* when no *args* "
 "are supplied."
 msgstr ""
+"Enregistre un message de niveau :const:`DEBUG` dans cet enregistreur. *msg* "
+"est la chaîne du message qui sera formatée avec *args* en utilisant "
+"l'opérateur de formatage. Cela signifie qu'il est possible de mettre des "
+"mots-clé dans la chaîne et de passer un dictionnaire en argument. Si *args* "
+"n'est pas fourni, aucun formatage « à la % » n'est appliqué."
 
 #: library/logging.rst:173
 msgid ""
 "There are four keyword arguments in *kwargs* which are inspected: "
 "*exc_info*, *stack_info*, *stacklevel* and *extra*."
 msgstr ""
+"Quatre mots-clés de *kwargs* sont analysés : *exc_info*, *stack_info*, "
+"*stacklevel* et *extra*."
 
 #: library/logging.rst:176
 msgid ""
@@ -358,6 +365,12 @@ msgid ""
 "is used; otherwise, :func:`sys.exc_info` is called to get the exception "
 "information."
 msgstr ""
+"Si la valeur booléenne de *exc_info* est vraie, les informations des "
+"exceptions sont ajoutées au message. Si *exc_info* est un *n*-uplet "
+"d'exception (au format identique aux valeurs renvoyées par :func:`sys."
+"exc_info`) ou une instance d'exception, sa valeur est utilisée. Dans le cas "
+"contraire, les informations sur l'exception sont déterminées par un appel à :"
+"func:`sys.exc_info`."
 
 #: library/logging.rst:979
 msgid ""
@@ -370,6 +383,15 @@ msgid ""
 "have been unwound, following an exception, while searching for exception "
 "handlers."
 msgstr ""
+"Le deuxième argument par mot-clé optionnel est *stack_info*, valant "
+"``False`` par défaut. S'il est vrai, les informations de la pile d'appels "
+"sont ajoutées à l'entrée de journal, en incluant aussi l'appel à la fonction "
+"de journalisation. Ce ne sont pas les mêmes informations que celles "
+"affichées en définissant *exc_info* : les premières représentent les appels "
+"de fonctions successifs, du bas de la pile jusqu'à l'appel de la fonction de "
+"journalisation dans le fil d'exécution actuel, alors que les secondes "
+"portent des informations sur les appels successifs déclenchés par la levée "
+"d'une exception et la recherche de gestionnaires pour cette exception."
 
 #: library/logging.rst:988
 msgid ""
@@ -377,12 +399,18 @@ msgid ""
 "how you got to a certain point in your code, even when no exceptions were "
 "raised. The stack frames are printed following a header line which says:"
 msgstr ""
+"Il est possible de définir *stack_info* indépendamment de *exc_info*, p. ex. "
+"pour s'assurer que l'exécution a atteint un certain point dans le code, même "
+"si aucune exception n'a été levée. La pile d'appels est alors affichée après "
+"la ligne d'en-tête suivante :"
 
 #: library/logging.rst:996
 msgid ""
 "This mimics the ``Traceback (most recent call last):`` which is used when "
 "displaying exception frames."
 msgstr ""
+"Elle imite la ligne ``Traceback (most recent call last):`` affichée avec la "
+"pile d'appels d'une exception."
 
 #: library/logging.rst:201
 msgid ""
@@ -395,6 +423,14 @@ msgid ""
 "name of this parameter mirrors the equivalent one in the :mod:`warnings` "
 "module."
 msgstr ""
+"Le troisième argument par mot-clé optionnel est *stacklevel*, valant ``1`` "
+"par défaut. S'il est supérieur à 1, il correspond au nombre d'entrées dans "
+"la pile qui sont ignorées en déterminant le numéro de ligne et le nom de la "
+"fonction dans la classe :class:`LogRecord` créée pour l'évènement de "
+"journalisation. C'est utile pour les utilitaires de journalisation car cela "
+"permet d'ignorer les informations (nom de fonction, fichier source et ligne) "
+"de l'utilitaire et de ne traiter que celles de l'appelant. Le nom de ce "
+"paramètre est le même que son équivalent dans le module :mod:`warnings`."
 
 #: library/logging.rst:209
 msgid ""
@@ -404,10 +440,15 @@ msgid ""
 "attributes can then be used as you like. For example, they could be "
 "incorporated into logged messages. For example::"
 msgstr ""
+"Le quatrième argument par mot-clé est *extra* qui permet de remplir le "
+"dictionnaire *__dict__* du :class:`LogRecord` créé pour l'évènement de "
+"journalisation, avec des attributs personnalisés. Ces attributs peuvent être "
+"utilisés comme bon vous semble. Ils peuvent ainsi être incorporés aux "
+"entrées de journalisation. Par exemple ::"
 
 #: library/logging.rst:221
 msgid "would print something like"
-msgstr ""
+msgstr "affiche"
 
 #: library/logging.rst:1016
 msgid ""
@@ -415,6 +456,10 @@ msgid ""
 "used by the logging system. (See the :class:`Formatter` documentation for "
 "more information on which keys are used by the logging system.)"
 msgstr ""
+"Les clés du dictionnaire passé dans *extra* ne doivent pas être les mêmes "
+"que les clés utilisées par le système de journalisation. Voir la "
+"documentation de la classe :class:`Formatter` pour plus de précisions sur "
+"les clés utilisées par le système de journalisation."
 
 #: library/logging.rst:231
 msgid ""
@@ -426,6 +471,12 @@ msgid ""
 "exception will occur. So in this case, you always need to pass the *extra* "
 "dictionary with these keys."
 msgstr ""
+"Si vous choisissez d'utiliser des attributs dans les messages à journaliser, "
+"il faut être prudent. Ainsi, dans l'exemple précédent, le :class:`Formatter` "
+"a été configuré avec une chaîne qui attend *clientip* et *user* dans le "
+"dictionnaire d'attributs du :class:`LogRecord`. S'ils sont manquants, le "
+"message n'est pas enregistré car une exception de formatage de chaîne est "
+"levée. Il faut alors toujours passer un dictionnaire *extra* avec ces clés."
 
 #: library/logging.rst:1027
 msgid ""
@@ -437,30 +488,41 @@ msgid ""
 "likely that specialized :class:`Formatter`\\ s would be used with "
 "particular :class:`Handler`\\ s."
 msgstr ""
+"Même si elle peut sembler gênante, cette fonctionnalité est nécessaire dans "
+"certains cas, comme sur des serveurs à fils d'exécution multiples, où le "
+"même code s'exécute dans des contextes différents et où les évènements "
+"significatifs dépendent du contexte (comme l'adresse IP du client et le nom "
+"d'utilisateur dans l'exemple précédent). Dans ces circonstances, il est "
+"clair que les classes :class:`Formatter`\\ s spécialisées doivent être "
+"utilisées avec des :class:`Handler`\\ s particuliers."
 
 #: library/logging.rst:1034
 msgid "The *stack_info* parameter was added."
-msgstr ""
+msgstr "ajout du paramètre *stack_info*."
 
 #: library/logging.rst:248
 msgid "The *exc_info* parameter can now accept exception instances."
-msgstr ""
+msgstr "le paramètre *exc_info* peut être une instance d'exception."
 
 #: library/logging.rst:251
 msgid "The *stacklevel* parameter was added."
-msgstr ""
+msgstr "ajout du paramètre *stacklevel*."
 
 #: library/logging.rst:257
 msgid ""
 "Logs a message with level :const:`INFO` on this logger. The arguments are "
 "interpreted as for :meth:`debug`."
 msgstr ""
+"Enregistre un message avec le niveau de gravité :const:`INFO`. Les arguments "
+"ont la même signification que pour :meth:`debug`."
 
 #: library/logging.rst:263
 msgid ""
 "Logs a message with level :const:`WARNING` on this logger. The arguments are "
 "interpreted as for :meth:`debug`."
 msgstr ""
+"Enregistre un message avec le niveau de gravité :const:`WARNING`. Les "
+"arguments ont la même signification que pour :meth:`debug`."
 
 #: library/logging.rst:266
 msgid ""
@@ -468,24 +530,33 @@ msgid ""
 "``warning``. As ``warn`` is deprecated, please do not use it - use "
 "``warning`` instead."
 msgstr ""
+"Il existe une méthode obsolète ``warn`` qui est identique à ``warning``. "
+"``warn`` n'est plus maintenue, prière de ne plus l'utiliser et de la "
+"remplacer par ``warning``."
 
 #: library/logging.rst:272
 msgid ""
 "Logs a message with level :const:`ERROR` on this logger. The arguments are "
 "interpreted as for :meth:`debug`."
 msgstr ""
+"Enregistre un message avec le niveau de gravité :const:`ERROR`. Les "
+"arguments ont la même signification que pour :meth:`debug`."
 
 #: library/logging.rst:278
 msgid ""
 "Logs a message with level :const:`CRITICAL` on this logger. The arguments "
 "are interpreted as for :meth:`debug`."
 msgstr ""
+"Enregistre un message avec le niveau de gravité :const:`CRITICAL`. Les "
+"arguments ont la même signification que pour :meth:`debug`."
 
 #: library/logging.rst:284
 msgid ""
 "Logs a message with integer level *level* on this logger. The other "
 "arguments are interpreted as for :meth:`debug`."
 msgstr ""
+"Enregistre un message avec le niveau de gravité *level*. Les arguments ont "
+"la même signification que pour :meth:`debug`."
 
 #: library/logging.rst:290
 msgid ""
@@ -493,14 +564,18 @@ msgid ""
 "interpreted as for :meth:`debug`. Exception info is added to the logging "
 "message. This method should only be called from an exception handler."
 msgstr ""
+"Enregistre un message avec le niveau de gravité :const:`ERROR`. Les "
+"arguments ont la même signification que pour :meth:`debug`. Des informations "
+"sur l'exception sont ajoutées au message. Cette méthode doit être appelée "
+"depuis un gestionnaire d'exceptions."
 
 #: library/logging.rst:297
 msgid "Adds the specified filter *filter* to this logger."
-msgstr ""
+msgstr "Ajoute le filtre *filter* à l'enregistreur."
 
 #: library/logging.rst:302
 msgid "Removes the specified filter *filter* from this logger."
-msgstr ""
+msgstr "Retire le filtre *filter* de cet enregistreur."
 
 #: library/logging.rst:307
 msgid ""
@@ -510,14 +585,20 @@ msgid ""
 "be processed (passed to handlers). If one returns a false value, no further "
 "processing of the record occurs."
 msgstr ""
+"Applique les filtres associés à l'enregistreur et renvoie ``True`` si "
+"l'entrée doit être traitée. Les filtres sont appliqués les uns après les "
+"autres, jusqu'à ce que l'un renvoie faux. Si ce n'est pas le cas, le "
+"traitement de l'entrée se poursuit (elle est alors passée aux "
+"gestionnaires). Si l'un d'entre eux renvoie faux, le traitement de l'entrée "
+"s'arrête."
 
 #: library/logging.rst:316
 msgid "Adds the specified handler *hdlr* to this logger."
-msgstr ""
+msgstr "Ajoute le gestionnaire *hdlr* à l'enregistreur."
 
 #: library/logging.rst:321
 msgid "Removes the specified handler *hdlr* from this logger."
-msgstr ""
+msgstr "Retire le gestionnaire *hdlr* de l'enregistreur."
 
 #: library/logging.rst:326
 msgid ""
@@ -525,6 +606,10 @@ msgid ""
 "line number, function name and stack information as a 4-element tuple. The "
 "stack information is returned as ``None`` unless *stack_info* is ``True``."
 msgstr ""
+"Détermine le fichier source et la ligne de l'appelant. Renvoie un quadruplet "
+"contenant le nom du fichier source, le numéro de ligne, le nom de la "
+"fonction et la pile d'appels. La pile vaut ``None`` si *stack_info* n'est "
+"pas ``True``."
 
 #: library/logging.rst:330
 msgid ""
@@ -535,6 +620,12 @@ msgid ""
 "in the event log refers not to the helper/wrapper code, but to the code that "
 "calls it."
 msgstr ""
+"Le paramètre *stacklevel* est passé par le code appelant :meth:`debug` "
+"(entre autres). S'il est supérieur à 1, *n*-1 entrées de la pile sont "
+"supprimées avant de renvoyer la pile. C'est pratique quand on appelle des "
+"APIs de journalisation à travers du code d'encapsulation car cela permet de "
+"retirer les informations sur ce code de l'entrée, tout en conservant celles "
+"sur le code au-dessus du code d'encapsulation."
 
 #: library/logging.rst:340
 msgid ""
@@ -544,12 +635,19 @@ msgid ""
 "created locally. Logger-level filtering is applied using :meth:`~Logger."
 "filter`."
 msgstr ""
+"Traite une entrée en la passant à tous les gestionnaires de l'enregistreur "
+"et à tous ses parents (jusqu'à ce qu'un *propagate* soit faux). C'est "
+"pratique pour désérialiser les entrées reçues d'un connecteur et celles "
+"créées localement. Du filtrage au niveau de l'enregistreur est appliqué en "
+"appelant :meth:`~Logger.filter`."
 
 #: library/logging.rst:348
 msgid ""
 "This is a factory method which can be overridden in subclasses to create "
 "specialized :class:`LogRecord` instances."
 msgstr ""
+"Fabrique qui peut être redéfinie pour créer des instances de :class:"
+"`LogRecord`."
 
 #: library/logging.rst:353
 msgid ""
@@ -560,10 +658,16 @@ msgid ""
 "set to false is found - that will be the last logger which is checked for "
 "the existence of handlers."
 msgstr ""
+"Vérifie si l'enregistreur a des gestionnaires associés. Elle recherche les "
+"gestionnaires de l'enregistreur et ceux de ses parents. Renvoie ``True`` si "
+"au moins un gestionnaire a été trouvé et ``False`` sinon. Cette méthode "
+"arrête de remonter la hiérarchie dès qu'un enregistreur avec l'attribut "
+"*propagate* à faux est rencontré ­— cet enregistreur est alors le dernier "
+"dans lequel la méthode cherche des gestionnaires."
 
 #: library/logging.rst:362
 msgid "Loggers can now be pickled and unpickled."
-msgstr ""
+msgstr "les enregistreurs peuvent être sérialisés et désérialisés."
 
 #: library/logging.rst:368
 msgid "Logging Levels"
@@ -641,7 +745,7 @@ msgstr "0"
 
 #: library/logging.rst:396
 msgid "Handler Objects"
-msgstr ""
+msgstr "Gestionnaires"
 
 #: library/logging.rst:398
 msgid ""
@@ -650,6 +754,10 @@ msgid ""
 "useful subclasses. However, the :meth:`__init__` method in subclasses needs "
 "to call :meth:`Handler.__init__`."
 msgstr ""
+"Les gestionnaires ont les attributs et méthodes suivants. :class:`Handler` "
+"est une classe de base pour des sous-classes plus utiles et ne doit pas être "
+"instanciée directement. Les méthodes :meth:`__init__` des sous-classes "
+"doivent toutefois appeler :meth:`Handler.__init__`."
 
 #: library/logging.rst:407
 msgid ""
@@ -657,20 +765,25 @@ msgid ""
 "list of filters to the empty list and creating a lock (using :meth:"
 "`createLock`) for serializing access to an I/O mechanism."
 msgstr ""
+"Initialise l'objet :class:`Handler` en définissant le niveau de gravité, en "
+"initialisant la liste des filtres avec une liste vide et en créant un verrou "
+"(avec :meth:`createLock`) pour sérialiser l'accès au mécanisme d'E-S."
 
 #: library/logging.rst:414
 msgid ""
 "Initializes a thread lock which can be used to serialize access to "
 "underlying I/O functionality which may not be threadsafe."
 msgstr ""
+"Instancie un verrou qui peut être utilisé pour sérialiser l'accès au système "
+"d'E-S sous-jacent (qui peut ne pas être à fil d'exécution sécurisé)."
 
 #: library/logging.rst:420
 msgid "Acquires the thread lock created with :meth:`createLock`."
-msgstr ""
+msgstr "Acquiert le verrou créé par :meth:`createLock`."
 
 #: library/logging.rst:425
 msgid "Releases the thread lock acquired with :meth:`acquire`."
-msgstr ""
+msgstr "Relâche le verrou acquis par :meth:`acquire`."
 
 #: library/logging.rst:430
 msgid ""
@@ -678,24 +791,30 @@ msgid ""
 "less severe than *level* will be ignored. When a handler is created, the "
 "level is set to :const:`NOTSET` (which causes all messages to be processed)."
 msgstr ""
+"Ajuste le seuil déclenchement du gestionnaire au niveau *level*. Les "
+"messages de gravité moindre que *level* sont alors ignorés. Ce seuil est "
+"fixé à :const:`NOTSET` lors de la création d'un gestionnaire (ce qui "
+"signifie que tous les messages seront traités)."
 
 #: library/logging.rst:437
 msgid ""
 "The *level* parameter now accepts a string representation of the level such "
 "as 'INFO' as an alternative to the integer constants such as :const:`INFO`."
 msgstr ""
+"le paramètre *level* peut être une chaîne de caractères, comme ``'INFO'``, "
+"en plus d'une constante entière comme :const:`INFO`."
 
 #: library/logging.rst:445
 msgid "Sets the :class:`Formatter` for this handler to *fmt*."
-msgstr ""
+msgstr "Définit le :class:`Formatter` du gestionnaire à *fmt*."
 
 #: library/logging.rst:450
 msgid "Adds the specified filter *filter* to this handler."
-msgstr ""
+msgstr "Ajoute le filtre *filter* au gestionnaire."
 
 #: library/logging.rst:455
 msgid "Removes the specified filter *filter* from this handler."
-msgstr ""
+msgstr "Retire le filtre *filter* du gestionnaire."
 
 #: library/logging.rst:460
 msgid ""
@@ -705,12 +824,18 @@ msgid ""
 "be emitted. If one returns a false value, the handler will not emit the "
 "record."
 msgstr ""
+"Applique les filtres du gestionnaire à *record* et renvoie ``True`` si "
+"l'entrée doit être traitée. Les filtres sont appliqués l'un après l'autre, "
+"jusqu'à ce que l'un renvoie faux. Si aucun d'entre eux ne renvoie faux, "
+"l'entrée est enregistrée, sinon le gestionnaire ne traitera pas l'entrée."
 
 #: library/logging.rst:469
 msgid ""
 "Ensure all logging output has been flushed. This version does nothing and is "
 "intended to be implemented by subclasses."
 msgstr ""
+"Oblige toutes les entrées à être traitées. Cette fonction ne fait rien de "
+"spécial et doit être redéfinie par les sous-classes."
 
 #: library/logging.rst:475
 msgid ""
@@ -719,6 +844,10 @@ msgid ""
 "func:`shutdown` is called. Subclasses should ensure that this gets called "
 "from overridden :meth:`close` methods."
 msgstr ""
+"Recycle toutes les ressources utilisées par le gestionnaire. Cette version "
+"ne fait rien de particulier mais elle retire le gestionnaire de la liste "
+"interne des gestionnaires à recycler à l'appel de :func:`shutdown`. Les sous-"
+"classes doivent appeler cette méthode depuis leur surcharge de :meth:`close`."
 
 #: library/logging.rst:483
 msgid ""
@@ -726,6 +855,8 @@ msgid ""
 "may have been added to the handler. Wraps the actual emission of the record "
 "with acquisition/release of the I/O thread lock."
 msgstr ""
+"Traite ou non *record* selon les filtres ajoutés au gestionnaire. Un verrou "
+"sur l'E-S. est mis en place durant l'écriture effective."
 
 #: library/logging.rst:490
 msgid ""
@@ -739,12 +870,23 @@ msgid ""
 "occurred. (The default value of ``raiseExceptions`` is ``True``, as that is "
 "more useful during development)."
 msgstr ""
+"Cette méthode est appelée quand une exception est levée lors d'un appel à :"
+"meth:`emit`. Si l'attribut ``raiseExceptions`` du module est ``False``, les "
+"exceptions sont ignorées. C'est en général le comportement attendu d'un "
+"système de journalisation — la plupart des utilisateurs ne se préoccupent "
+"pas des erreurs du système de journalisation même, seulement des erreurs de "
+"l'application. Il est tout de même possible de redéfinir cette méthode ; "
+"*record* est l'entrée qui était en train d'être traitée quand l'exception a "
+"eu lieu. La valeur par défaut de ``raiseExceptions`` est ``True``, ce qui "
+"est pratique lors du développement."
 
 #: library/logging.rst:503
 msgid ""
 "Do formatting for a record - if a formatter is set, use it. Otherwise, use "
 "the default formatter for the module."
 msgstr ""
+"Formate *record* avec le formateur défini. S'il n'y en a pas, le formateur "
+"par défaut du module est utilisé."
 
 #: library/logging.rst:509
 msgid ""
@@ -752,15 +894,19 @@ msgid ""
 "version is intended to be implemented by subclasses and so raises a :exc:"
 "`NotImplementedError`."
 msgstr ""
+"Journalise *record* « pour de bon ». Cette version doit être redéfinie par "
+"les sous-classes et lève donc une :exc:`NotImplementedError`."
 
 #: library/logging.rst:513
 msgid ""
 "For a list of handlers included as standard, see :mod:`logging.handlers`."
 msgstr ""
+"Les gestionnaires de la bibliothèque standard sont répertoriés dans :mod:"
+"`logging.handlers`."
 
 #: library/logging.rst:518
 msgid "Formatter Objects"
-msgstr ""
+msgstr "Formateurs"
 
 #: library/logging.rst:522
 msgid ""
@@ -809,9 +955,8 @@ msgid ""
 msgstr ""
 
 #: library/logging.rst:557
-#, fuzzy
 msgid "The *style* parameter was added."
-msgstr "Ajout du paramètre *start*."
+msgstr "Ajout du paramètre *style*."
 
 #: library/logging.rst:560
 msgid ""
@@ -903,7 +1048,7 @@ msgstr ""
 
 #: library/logging.rst:639
 msgid "Filter Objects"
-msgstr ""
+msgstr "Filtres"
 
 #: library/logging.rst:641
 msgid ""
@@ -970,7 +1115,7 @@ msgstr ""
 
 #: library/logging.rst:694
 msgid "LogRecord Objects"
-msgstr ""
+msgstr "Objets LogRecord"
 
 #: library/logging.rst:696
 msgid ""
@@ -992,9 +1137,8 @@ msgid ""
 msgstr ""
 
 #: library/logging.rst:0
-#, fuzzy
 msgid "Parameters"
-msgstr "Paramètres :"
+msgstr "Paramètres"
 
 #: library/logging.rst:710
 msgid ""
@@ -1291,7 +1435,7 @@ msgstr ""
 
 #: library/logging.rst:0
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: library/logging.rst:841
 msgid "``%(name)s``"
