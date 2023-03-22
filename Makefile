@@ -20,7 +20,7 @@
 # from which we generated our po files.  We use it here so when we
 # test build, we're building with the .rst files that generated our
 # .po files.
-CPYTHON_CURRENT_COMMIT := b2db1c208066b67bdf57bf3799de50352fe63416
+CPYTHON_CURRENT_COMMIT := 100da7c31aeb3888962bf33c8cc3594272964815
 LANGUAGE := fr
 BRANCH := 3.10
 
@@ -65,7 +65,7 @@ PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
 JOBS := auto
-SERVE_PORT :=
+SPHINXERRORHANDLING = -W
 
 # Detect OS
 
@@ -90,15 +90,16 @@ all: ensure_prerequisites
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
 	$(MAKE) -C venv/cpython/Doc/ \
-	  SPHINXOPTS='-j$(JOBS)             \
-	  -D locale_dirs=$(abspath locales) \
+	  JOBS='$(JOBS)'             \
+	  SPHINXOPTS='-D locale_dirs=$(abspath locales) \
 	  -D language=$(LANGUAGE)           \
 	  -D gettext_compact=0              \
 	  -D latex_engine=xelatex           \
 	  -D latex_elements.inputenc=       \
 	  -D latex_elements.fontenc='       \
+	  SPHINXERRORHANDLING=$(SPHINXERRORHANDLING) \
 	  $(MODE)
-	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make serve' to see them."
+	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make htmlview' to see them."
 
 
 # We clone cpython/ inside venv/ because venv/ is the only directory
@@ -117,18 +118,13 @@ ensure_prerequisites: venv/cpython/.git/HEAD
 	    exit 1; \
 	fi
 
-
-.PHONY: serve
-serve:
-ifdef SERVE_PORT
-	$(MAKE) -C venv/cpython/Doc/ serve SERVE_PORT=$(SERVE_PORT)
-else
-	$(MAKE) -C venv/cpython/Doc/ serve
-endif
+.PHONY: htmlview
+htmlview: MODE=htmlview
+htmlview: all
 
 .PHONY: todo
 todo: ensure_prerequisites
-	potodo --exclude venv .venv $(EXCLUDED)
+	potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
 wrap: ensure_prerequisites
@@ -142,22 +138,51 @@ DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 .PHONY: spell
 spell: ensure_prerequisites $(DESTS)
 
+.PHONY: line-length
+line-length:
+	@echo "Searching for long lines..."
+	@awk '{if (length(gensub(/శ్రీనివాస్/, ".", "g", $$0)) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $$0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}' *.po */*.po
+
+.PHONY: sphinx-lint
+sphinx-lint:
+	@echo "Checking all files using sphinx-lint..."
+	@sphinx-lint --enable all --disable line-too-long *.po */*.po
+
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Pospell checking $<..."
-	mkdir -p $(@D)
+	@mkdir -p $(@D)
 	pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
 fuzzy: ensure_prerequisites
-	potodo -f --exclude venv .venv $(EXCLUDED)
+	potodo --only-fuzzy --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
+
+.PHONY: check-headers
+check-headers:
+	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the po comment in $$file"; \
+	done
+	@grep -L '^"Project-Id-Version: Python 3\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Project-Id-Version' header in $$file"; \
+	done
+	@grep -L '^"Language: fr\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language' header in $$file"; \
+	done
+	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language-Team' header in $$file"; \
+	done
 
 .PHONY: verifs
-verifs: spell
+verifs: spell line-length sphinx-lint check-headers
 
 .PHONY: clean
 clean:
 	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
-	rm -fr $(POSPELL_TMP_DIR)
+	rm -fr $(POSPELL_TMP_DIR) locales/$(LANGUAGE)/LC_MESSAGES/
 	find -name '*.mo' -delete
 	@echo "Cleaning build directory"
 	$(MAKE) -C venv/cpython/Doc/ clean
