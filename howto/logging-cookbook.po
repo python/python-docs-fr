@@ -526,7 +526,6 @@ msgstr ""
 "Journalisation en production à l'aide d'un connecteur en écoute sur le réseau"
 
 #: howto/logging-cookbook.rst:770
-#, fuzzy
 msgid ""
 "To run a logging listener in production, you may need to use a process-"
 "management tool such as `Supervisor <http://supervisord.org/>`_. `Here is a "
@@ -534,84 +533,90 @@ msgid ""
 "the above functionality using Supervisor. It consists of the following files:"
 msgstr ""
 "Pour de la journalisation en production *via* un connecteur réseau en "
-"écoute, il est probable que vous ayez besoin d'utiliser un outil de "
+"écoute, il est probable que vous ayez besoin d’utiliser un outil de "
 "surveillance tel que `Supervisor <http://supervisord.org/>`_. Vous trouverez "
-"dans ce `Gist <https://gist.github.com/"
-"vsajip/4b227eeec43817465ca835ca66f75e2b>`_ des gabarits pour assurer cette "
-"fonction avec *Supervisor* : vous aurez besoin de modifier les parties ``/"
-"path/to/`` du *Gist* pour refléter les chemins réels que vous utilisez."
+"dans ce `Gist <socket-listener-gist_>`__ des gabarits pour assurer cette "
+"fonction avec *Supervisor*. Il est composé des fichiers suivants :"
 
 #: howto/logging-cookbook.rst:777
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
 #: howto/logging-cookbook.rst:777
 msgid "Purpose"
-msgstr ""
+msgstr "Objectif"
 
 #: howto/logging-cookbook.rst:779
 msgid ":file:`prepare.sh`"
-msgstr ""
+msgstr ":file:`prepare.sh`"
 
 #: howto/logging-cookbook.rst:779
 msgid "A Bash script to prepare the environment for testing"
-msgstr ""
+msgstr "Script Bash pour préparer l'environnement de test"
 
 #: howto/logging-cookbook.rst:782
 msgid ":file:`supervisor.conf`"
-msgstr ""
+msgstr ":file:`supervisor.conf`"
 
 #: howto/logging-cookbook.rst:782
 msgid ""
 "The Supervisor configuration file, which has entries for the listener and a "
 "multi-process web application"
 msgstr ""
+"Fichier de configuration de *Supervisor*, avec les entrées pour le "
+"connecteur en écoute et l'application web multi-processus"
 
 #: howto/logging-cookbook.rst:786
 msgid ":file:`ensure_app.sh`"
-msgstr ""
+msgstr ":file:`ensure_app.sh`"
 
 #: howto/logging-cookbook.rst:786
 msgid ""
 "A Bash script to ensure that Supervisor is running with the above "
 "configuration"
 msgstr ""
+"Script Bash pour s'assurer que *Supervisor* fonctionne bien avec la "
+"configuration ci-dessus"
 
 #: howto/logging-cookbook.rst:789
 msgid ":file:`log_listener.py`"
-msgstr ""
+msgstr ":file:`log_listener.py`"
 
 #: howto/logging-cookbook.rst:789
 msgid ""
 "The socket listener program which receives log events and records them to a "
 "file"
 msgstr ""
+"Programme en écoute sur le réseau qui reçoit les événements de "
+"journalisation et les enregistre dans un fichier"
 
 #: howto/logging-cookbook.rst:792
 msgid ":file:`main.py`"
-msgstr ""
+msgstr ":file:`main.py`"
 
 #: howto/logging-cookbook.rst:792
 msgid ""
 "A simple web application which performs logging via a socket connected to "
 "the listener"
-msgstr ""
+msgstr "Application web simple qui journalise *via* un connecteur réseau"
 
 #: howto/logging-cookbook.rst:795
 msgid ":file:`webapp.json`"
-msgstr ""
+msgstr ":file:`webapp.json`"
 
 #: howto/logging-cookbook.rst:795
 msgid "A JSON configuration file for the web application"
-msgstr ""
+msgstr "Fichier JSON de configuration de l'application web"
 
 #: howto/logging-cookbook.rst:797
 msgid ":file:`client.py`"
-msgstr ""
+msgstr ":file:`client.py`"
 
 #: howto/logging-cookbook.rst:797
 msgid "A Python script to exercise the web application"
 msgstr ""
+"Script Python qui interagit avec l'application web pour effectuer des appels "
+"à la journalisation"
 
 #: howto/logging-cookbook.rst:800
 msgid ""
@@ -621,20 +626,30 @@ msgid ""
 "same log file without conflicting with one another --- they all go through "
 "the socket listener."
 msgstr ""
+"L'application Web utilise `Gunicorn <https://gunicorn.org/>`_, qui est un "
+"serveur d'applications Web populaire qui démarre plusieurs processus de "
+"travail pour gérer les demandes. Cet exemple de configuration montre comment "
+"les processus peuvent écrire dans le même fichier journal sans entrer en "
+"conflit les uns avec les autres — ils passent tous par le connecteur en "
+"écoute."
 
 #: howto/logging-cookbook.rst:805
 msgid "To test these files, do the following in a POSIX environment:"
 msgstr ""
+"Pour tester ces fichiers, suivez cette procédure dans un environnement "
+"POSIX :"
 
 #: howto/logging-cookbook.rst:807
 msgid ""
 "Download `the Gist <socket-listener-gist_>`__ as a ZIP archive using the :"
 "guilabel:`Download ZIP` button."
 msgstr ""
+"Téléchargez l'archive ZIP du `Gist  <socket-listener-gist_>`__  à l'aide du "
+"bouton :guilabel:`Download ZIP`."
 
 #: howto/logging-cookbook.rst:810
 msgid "Unzip the above files from the archive into a scratch directory."
-msgstr ""
+msgstr "Décompressez les fichiers de l'archive dans un répertoire de travail."
 
 #: howto/logging-cookbook.rst:812
 msgid ""
@@ -643,18 +658,27 @@ msgid ""
 "files, and a :file:`venv` subdirectory to contain a virtual environment into "
 "which ``bottle``, ``gunicorn`` and ``supervisor`` are installed."
 msgstr ""
+"Dans le répertoire de travail, exécutez le script de préparation par ``bash "
+"prepare.sh``. Cela crée un sous-répertoire :file:`run` pour contenir les "
+"fichiers journaux et ceux relatifs à *Supervisor*, ainsi qu'un sous-"
+"répertoire :file:`venv` pour contenir un environnement virtuel dans lequel "
+"``bottle``, ``gunicorn`` et ``supervisor`` sont installés."
 
 #: howto/logging-cookbook.rst:817
 msgid ""
 "Run ``bash ensure_app.sh`` to ensure that Supervisor is running with the "
 "above configuration."
 msgstr ""
+"Exécutez ``bash ensure_app.sh`` pour vous assurer que *Supervisor* s'exécute "
+"avec la configuration ci-dessus."
 
 #: howto/logging-cookbook.rst:820
 msgid ""
 "Run ``venv/bin/python client.py`` to exercise the web application, which "
 "will lead to records being written to the log."
 msgstr ""
+"Exécutez ``venv/bin/python client.py`` pour tester l'application Web, ce qui "
+"entraîne l'écriture d'enregistrements dans le journal."
 
 #: howto/logging-cookbook.rst:823
 msgid ""
@@ -663,18 +687,28 @@ msgid ""
 "won't be in any particular order, since they have been handled concurrently "
 "by different worker processes in a non-deterministic way."
 msgstr ""
+"Inspectez les fichiers journaux dans le sous-répertoire :file:`run`. Vous "
+"devriez voir les lignes de journal les plus récentes dans les fichiers de "
+"type :file:`app.log*`. Ils ne seront pas dans un ordre particulier, car ils "
+"ont été traités par les différents processus de travail de manière non "
+"déterministe."
 
 #: howto/logging-cookbook.rst:828
 msgid ""
 "You can shut down the listener and the web application by running ``venv/bin/"
 "supervisorctl -c supervisor.conf shutdown``."
 msgstr ""
+"Vous pouvez arrêter le connecteur en écoute et l'application Web en "
+"exécutant ``venv/bin/supervisorctl -c supervisor.conf shutdown``."
 
 #: howto/logging-cookbook.rst:831
 msgid ""
 "You may need to tweak the configuration files in the unlikely event that the "
 "configured ports clash with something else in your test environment."
 msgstr ""
+"Vous devrez peut-être modifier les fichiers de configuration dans le cas peu "
+"probable où les ports configurés entrent en conflit avec autre chose dans "
+"votre environnement de test."
 
 #: howto/logging-cookbook.rst:837
 msgid "Adding contextual information to your logging output"
@@ -1596,11 +1630,15 @@ msgid ""
 "An example of how you can define a namer and rotator is given in the "
 "following runnable script, which shows gzip compression of the log file::"
 msgstr ""
+"L’extrait de code suivant fournit un exemple de la façon dont vous pouvez "
+"définir un nom et un rotateur, avec la compression par *zlib* du journal ::"
 
 #: howto/logging-cookbook.rst:2015
 msgid ""
 "After running this, you will see six new files, five of which are compressed:"
 msgstr ""
+"Après l'avoir exécuté, vous verrez six nouveaux fichiers, dont cinq sont "
+"compressés :"
 
 #: howto/logging-cookbook.rst:2028
 msgid "A more elaborate multiprocessing example"

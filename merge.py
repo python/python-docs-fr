@@ -2,13 +2,16 @@
 given branch.
 """
 
+import argparse
 import re
 import shutil
-from pathlib import Path
-import argparse
 import subprocess
+from pathlib import Path
 from subprocess import PIPE
+
 from tqdm import tqdm
+
+NOT_TO_TRANSLATE = {Path("whatsnew/changelog.po")}
 
 
 def run(*args: str | Path, **kwargs) -> subprocess.CompletedProcess:
@@ -26,14 +29,20 @@ def parse_args():
         type=Path,
         help="Use this given cpython clone.",
     )
-    parser.add_argument("branch", help="Merge from this branch")
+    parser.add_argument(
+        "branch",
+        help="Merge from this branch or from this commit",
+    )
     return parser.parse_args()
 
 
 def setup_repo(repo_path: Path, branch: str):
     """Ensure we're up-to-date."""
-    run("git", "-C", repo_path, "checkout", branch)
-    run("git", "-C", repo_path, "pull", "--ff-only")
+    if branch.find('.') == 1:
+        run("git", "-C", repo_path, "checkout", branch)
+        run("git", "-C", repo_path, "pull", "--ff-only")
+    else: # it's a commit
+        run("git", "-C", repo_path, "checkout", branch)
 
 
 def copy_new_files(new_files: set[Path], pot_path: Path) -> None:
@@ -43,6 +52,7 @@ def copy_new_files(new_files: set[Path], pot_path: Path) -> None:
         file.parent.mkdir(parents=True, exist_ok=True)
         src = (pot_path / file).with_suffix(".pot")
         run("msgcat", "-o", file, src)
+        run("git", "add", file)
 
 
 def update_known_files(known_files: set[Path], pot_path: Path) -> None:
@@ -107,7 +117,6 @@ def git_add_relevant_files():
             run("git", "add", file)
         else:
             run("git", "checkout", "--", file)
-    run("rm", "-f", "whatsnew/changelog.po")  # We don't translate this file.
 
 
 def main():
@@ -121,7 +130,7 @@ def main():
     upstream = {
         file.relative_to(pot_path).with_suffix(".po")
         for file in pot_path.glob("**/*.pot")
-    }
+    } - NOT_TO_TRANSLATE
     downstream = {
         Path(po)
         for po in run("git", "ls-files", "*.po", stdout=PIPE).stdout.splitlines()
@@ -129,7 +138,7 @@ def main():
     copy_new_files(upstream - downstream, pot_path=pot_path)
     update_known_files(upstream & downstream, pot_path=pot_path)
     remove_old_files(downstream - upstream)
-    clean_paths((upstream - downstream) | (upstream & downstream))
+    clean_paths(upstream)
     shutil.rmtree(pot_path)
     run("powrap", "-m")
     update_makefile(args.cpython_repo)
