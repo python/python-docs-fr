@@ -52,27 +52,35 @@ msgstr ""
 
 #: library/sqlite3.rst:34
 msgid "This document includes four main sections:"
-msgstr ""
+msgstr "Ce document inclus 4 sections principales :"
 
 #: library/sqlite3.rst:36
 msgid ":ref:`sqlite3-tutorial` teaches how to use the :mod:`!sqlite3` module."
 msgstr ""
+":ref:`tutoriel sqlite3 <sqlite3-tutorial>` explique comment utiliser le "
+"module :mod:`!sqlite3`."
 
 #: library/sqlite3.rst:37
 msgid ""
 ":ref:`sqlite3-reference` describes the classes and functions this module "
 "defines."
 msgstr ""
+":ref:`référence sqlite3 <sqlite3-reference>` décrit les classes et les "
+"fonctions que ce module définit."
 
 #: library/sqlite3.rst:39
 msgid ":ref:`sqlite3-howtos` details how to handle specific tasks."
 msgstr ""
+":ref:`guide sqlite3 <sqlite3-howtos>` détaille comment gérer des tâches "
+"spécifiques."
 
 #: library/sqlite3.rst:40
 msgid ""
 ":ref:`sqlite3-explanation` provides in-depth background on transaction "
 "control."
 msgstr ""
+":ref:`explications sqlite3 <sqlite3-explanation>` propose un contexte "
+"détaillé du contrôle de transaction."
 
 #: library/sqlite3.rst:47
 msgid "https://www.sqlite.org"
@@ -104,7 +112,7 @@ msgstr "PEP écrite par Marc-André Lemburg."
 
 #: library/sqlite3.rst:66
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutoriel"
 
 #: library/sqlite3.rst:68
 msgid ""
@@ -112,6 +120,10 @@ msgid ""
 "basic :mod:`!sqlite3` functionality. It assumes a fundamental understanding "
 "of database concepts, including `cursors`_ and `transactions`_."
 msgstr ""
+"Dans ce tutoriel, vous allez créer une base de données des films des Monty "
+"Python en utilisant les fonctionnalités de base de :mod:`!sqlite3`. Cela "
+"nécessite une compréhension élémentaire des concepts des bases de données, "
+"notamment les `curseurs`_ et les `transactions`_."
 
 #: library/sqlite3.rst:73
 msgid ""
@@ -120,12 +132,19 @@ msgid ""
 "create a connection to the database :file:`tutorial.db` in the current "
 "working directory, implicitly creating it if it does not exist:"
 msgstr ""
+"Tout d’abord, nous devons créer une nouvelle base de données et ouvrir une "
+"connexion à la base de données pour permettre à :mod:`!sqlite3` de "
+"travailler avec elle. Appelez :func:`sqlite3.connect` pour créer une "
+"connexion à la base de données :file:`tutorial.db` dans le répertoire de "
+"travail actuel, en la créant implicitement si elle n’existe pas :"
 
 #: library/sqlite3.rst:84
 msgid ""
 "The returned :class:`Connection` object ``con`` represents the connection to "
 "the on-disk database."
 msgstr ""
+"L’objet :class:`Connection` renvoyé — ``con`` — représente la connexion à la "
+"base de données sur disque."
 
 #: library/sqlite3.rst:87
 msgid ""
@@ -133,6 +152,9 @@ msgid ""
 "will need to use a database cursor. Call :meth:`con.cursor() <Connection."
 "cursor>` to create the :class:`Cursor`:"
 msgstr ""
+"Afin d’exécuter les instructions SQL et de récupérer les résultats des "
+"requêtes SQL, nous devrons utiliser un curseur de base de données. Appelez :"
+"meth:`con.cursor() <Connection.cursor>` pour créer la :class:`Cursor` :"
 
 #: library/sqlite3.rst:95
 msgid ""
@@ -143,6 +165,14 @@ msgid ""
 "types is optional. Execute the ``CREATE TABLE`` statement by calling :meth:"
 "`cur.execute(...) <Cursor.execute>`:"
 msgstr ""
+"Maintenant que nous avons une connexion à la base de données et un curseur, "
+"nous pouvons créer une table ``movie`` avec des colonnes pour le titre, "
+"l’année de sortie et la note de la critique. Pour plus de simplicité, nous "
+"pouvons simplement utiliser les noms des colonnes dans la déclaration de la "
+"table — grâce à la fonctionnalité de `typage flexible <flexible typing_>`_ "
+"de SQLite, spécifier les types de données est facultatif. Exécutez "
+"l’instruction ``CREATE TABLE`` en appelant :meth:`cur.execute(…) <Cursor."
+"execute>` :"
 
 #: library/sqlite3.rst:111
 msgid ""
@@ -153,6 +183,13 @@ msgid ""
 "execute>`, assign the result to ``res``, and call :meth:`res.fetchone() "
 "<Cursor.fetchone>` to fetch the resulting row:"
 msgstr ""
+"Nous pouvons vérifier que la nouvelle table a été créée en interrogeant la "
+"table ``sqlite_master`` intégrée à SQLite, qui devrait maintenant contenir "
+"une entrée pour la définition de la table ``movie`` (voir `le schéma Table "
+"<The Schema Table_>`_ pour plus de détails). Exécutez cette requête en "
+"appelant :meth:`cur.execute(…) <Cursor.execute>`, affectez le résultat à "
+"``res``, et appelez :meth:`res.fetchone() <Cursor.fetchone>` pour récupérer "
+"la ligne résultante :"
 
 #: library/sqlite3.rst:125
 msgid ""
@@ -160,6 +197,10 @@ msgid ""
 "`tuple` containing the table's name. If we query ``sqlite_master`` for a non-"
 "existent table ``spam``, :meth:`!res.fetchone()` will return ``None``:"
 msgstr ""
+"Nous pouvons voir que la table a été créée, puisque la requête retourne un :"
+"class:`tuple` contenant le nom de la table. Si nous interrogeons "
+"``sqlite_master`` pour une table ``spam`` inexistante, :meth:`!res."
+"fetchone()`` retournera ``None`` :"
 
 #: library/sqlite3.rst:136
 msgid ""
@@ -167,6 +208,9 @@ msgid ""
 "``INSERT`` statement, once again by calling :meth:`cur.execute(...) <Cursor."
 "execute>`:"
 msgstr ""
+"Maintenant, ajoutez deux lignes de données en tant que littéraux SQL en "
+"exécutant une instruction ``INSERT``, une fois encore en appelant :meth:`cur."
+"execute(…) <Cursor.execute>` :"
 
 #: library/sqlite3.rst:148
 msgid ""
@@ -175,6 +219,11 @@ msgid ""
 "controlling-transactions` for details). Call :meth:`con.commit() <Connection."
 "commit>` on the connection object to commit the transaction:"
 msgstr ""
+"L’instruction ``INSERT`` ouvre implicitement une transaction, qui doit être "
+"validée avant que les modifications ne soient enregistrées dans la base de "
+"données (voir :ref:`contrôle des transactions SQL <sqlite3-controlling-"
+"transactions>` pour plus de détails). Appelez :meth:`con.commit() "
+"<Connection.commit>` sur l’objet de connexion pour valider la transaction :"
 
 #: library/sqlite3.rst:158
 msgid ""
@@ -183,18 +232,27 @@ msgid ""
 "assign the result to ``res``, and call :meth:`res.fetchall() <Cursor."
 "fetchall>` to return all resulting rows:"
 msgstr ""
+"Nous pouvons vérifier que les données ont été insérées correctement en "
+"exécutant une requête ``SELECT``. Utilisez la désormais familière :meth:`cur."
+"execute(…) <Cursor.execute>` pour affecter le résultat à ``res``, et "
+"appelez :meth:`res.fetchall() <Cursor.fetchall>` pour retourner toutes les "
+"lignes résultantes :"
 
 #: library/sqlite3.rst:170
 msgid ""
 "The result is a :class:`list` of two :class:`!tuple`\\s, one per row, each "
 "containing that row's ``score`` value."
 msgstr ""
+"Le résultat est une :class:`liste <list>` de deux :class:`!tuple`\\s, une "
+"par ligne, chacun contenant la valeur ``score`` de cette ligne."
 
 #: library/sqlite3.rst:173
 msgid ""
 "Now, insert three more rows by calling :meth:`cur.executemany(...) <Cursor."
 "executemany>`:"
 msgstr ""
+"Maintenant, insérez trois lignes supplémentaires en appelant :meth:`cur."
+"executemany(…) <Cursor.executemany>` :"
 
 #: library/sqlite3.rst:186
 msgid ""
@@ -203,18 +261,28 @@ msgid ""
 "to bind Python values to SQL statements, to avoid `SQL injection attacks`_ "
 "(see :ref:`sqlite3-placeholders` for more details)."
 msgstr ""
+"Remarquez que les marqueurs ``?`` sont utilisés pour lier les ``data`` à la "
+"requête. Utilisez toujours les marqueurs au lieu d’:ref:`expressions "
+"formatées <tut-formatting>` pour lier les valeurs Python aux instructions "
+"SQL, afin d’éviter les `injections SQL`_ (voir :ref:`placeholder SQL "
+"<sqlite3-placeholders>` pour plus de détails)."
 
 #: library/sqlite3.rst:192
 msgid ""
 "We can verify that the new rows were inserted by executing a ``SELECT`` "
 "query, this time iterating over the results of the query:"
 msgstr ""
+"Nous pouvons vérifier que les nouvelles lignes ont été insérées en exécutant "
+"une requête ``SELECT``, cette fois-ci en itérant sur les résultats de la "
+"requête :"
 
 #: library/sqlite3.rst:206
 msgid ""
 "Each row is a two-item :class:`tuple` of ``(year, title)``, matching the "
 "columns selected in the query."
 msgstr ""
+"Chaque ligne est un :class:`tuple` de deux éléments ``(année, titre)``, "
+"correspondant aux colonnes sélectionnées dans la requête."
 
 #: library/sqlite3.rst:209
 msgid ""
@@ -222,41 +290,51 @@ msgid ""
 "`con.close() <Connection.close>` to close the existing connection, opening a "
 "new one, creating a new cursor, then querying the database:"
 msgstr ""
+"Enfin, vérifiez que la base de données a été écrite sur le disque en "
+"appelant :meth:`con.close() <Connection.close>` pour fermer la connexion "
+"existante, en ouvrir une nouvelle, créer un nouveau curseur, puis interroger "
+"la base de données :"
 
 #: library/sqlite3.rst:224
 msgid ""
 "You've now created an SQLite database using the :mod:`!sqlite3` module, "
 "inserted data and retrieved values from it in multiple ways."
 msgstr ""
+"Vous avez maintenant créé une base de données SQLite à l’aide du module :mod:"
+"`!sqlite3`, inséré des données et récupéré des valeurs de plusieurs façons."
 
 #: library/sqlite3.rst:236
 msgid ":ref:`sqlite3-howtos` for further reading:"
-msgstr ""
+msgstr ":ref:`guide sqlite3 <sqlite3-howtos>` pour une lecture plus poussée:"
 
 #: library/sqlite3.rst:238
 msgid ":ref:`sqlite3-placeholders`"
-msgstr ""
+msgstr ":ref:`placeholders sqlite3 <sqlite3-placeholders>`"
 
 #: library/sqlite3.rst:239
 msgid ":ref:`sqlite3-adapters`"
-msgstr ""
+msgstr ":ref:`adaptateurs sqlite3 <sqlite3-adapters>`"
 
 #: library/sqlite3.rst:240
 msgid ":ref:`sqlite3-converters`"
-msgstr ""
+msgstr ":ref:`convertisseurs sqlite3 <sqlite3-converters>`"
 
 #: library/sqlite3.rst:514
 msgid ":ref:`sqlite3-connection-context-manager`"
 msgstr ""
+":ref:`gestionnaire de contexte de connexion sqlite3 <sqlite3-connection-"
+"context-manager>`"
 
 #: library/sqlite3.rst:243
 msgid ""
 ":ref:`sqlite3-explanation` for in-depth background on transaction control."
 msgstr ""
+":ref:`explications sqlite3 <sqlite3-explanation>` pour un contexte détaillé "
+"du contrôle de transaction."
 
 #: library/sqlite3.rst:248
 msgid "Reference"
-msgstr ""
+msgstr "Référence"
 
 #: library/sqlite3.rst:256
 #, fuzzy
@@ -265,17 +343,20 @@ msgstr "Fonctions et constantes du module"
 
 #: library/sqlite3.rst:263
 msgid "Open a connection to an SQLite database."
-msgstr ""
+msgstr "Ouvrez une connexion à une base de données SQLite."
 
 #: library/sqlite3.rst:0
 msgid "Parameters"
-msgstr ""
+msgstr "Paramètres"
 
 #: library/sqlite3.rst:265
 msgid ""
 "The path to the database file to be opened. Pass ``\":memory:\"`` to open a "
 "connection to a database that is in RAM instead of on disk."
 msgstr ""
+"Le chemin d’accès au fichier de la base de données à ouvrir. Passez ``\":"
+"memory:\"`` pour ouvrir une connexion à une base de données qui est dans la "
+"RAM plutôt que sur le disque."
 
 #: library/sqlite3.rst:271
 msgid ""
@@ -284,6 +365,11 @@ msgid ""
 "transaction to modify the database, it will be locked until that transaction "
 "is committed. Default five seconds."
 msgstr ""
+"Le temps (en secondes) que la connexion doit attendre avant de lever une "
+"exception, si la base de données est verrouillée par une autre connexion. Si "
+"une autre connexion ouvre une transaction pour modifier la base de données, "
+"celle-ci sera verrouillée jusqu’à ce que cette transaction soit validée. Par "
+"défaut, cinq secondes."
 
 #: library/sqlite3.rst:278
 msgid ""
@@ -297,6 +383,17 @@ msgid ""
 "class:`str` will be returned instead. By default (``0``), type detection is "
 "disabled."
 msgstr ""
+"Contrôle si et comment les types de données non :ref:`nativement pris en "
+"charge par SQLite <sqlite3-types>` sont recherchés pour être convertis en "
+"types Python, en utilisant les convertisseurs enregistrés avec :func:"
+"`register_converter`. Définissez-le à n’importe quelle combinaison (en "
+"utilisant ``|``, opérateurs bit-à-bit OR) de :const:`PARSE_DECLTYPES` et :"
+"const:`PARSE_COLNAMES` pour activer ceci. Les noms de colonnes ont la "
+"priorité sur les types déclarés si les deux drapeaux sont activés. Les types "
+"ne peuvent pas être détectés pour les champs générés (par exemple "
+"``max(data)``), même si le paramètre *detect_types* est activé ; :class:"
+"`str` sera retourné à la place. Par défaut (``0``), la détection des types "
+"est désactivée."
 
 #: library/sqlite3.rst:292
 msgid ""
@@ -306,6 +403,12 @@ msgid ""
 "opening transactions implicitly. See :ref:`sqlite3-controlling-transactions` "
 "for more."
 msgstr ""
+"L’attribut :attr:`~Connection.isolation_level` de la connexion, contrôlant "
+"si et comment les transactions sont ouvertes implicitement. Peut être "
+"``\"DEFERRED\"`` (par défaut), ``\"EXCLUSIVE\"`` ou ``\"IMMEDIATE\"`` ; ou "
+"``None`` pour désactiver l’ouverture implicite des transactions. Voir :ref:"
+"`contrôle des transactions sqlite3 <sqlite3-controlling-transactions>` pour "
+"en savoir plus."
 
 #: library/sqlite3.rst:300
 msgid ""
@@ -319,6 +422,8 @@ msgid ""
 "A custom subclass of :class:`Connection` to create the connection with, if "
 "not the default :class:`Connection` class."
 msgstr ""
+"Une sous-classe personnalisée de :class:`Connection` pour créer la "
+"connexion, si ce n’est pas la classe par défaut :class:`Connection`."
 
 #: library/sqlite3.rst:310
 msgid ""
@@ -334,6 +439,12 @@ msgid ""
 "absolute. The query string allows passing parameters to SQLite, enabling "
 "various :ref:`sqlite3-uri-tricks`."
 msgstr ""
+"Si elle a pour valeur ``True``, la base de données est interprétée comme un :"
+"abbr:`URI (Uniform Resource Identifier)` avec un chemin d’accès au fichier "
+"et une chaîne de requête facultative. La partie schéma *doit* être ``\"file:"
+"\"``, et le chemin peut être relatif ou absolu. La chaîne d’interrogation "
+"permet de passer des paramètres à SQLite, ce qui permet d’activer diverses :"
+"ref:`astuces d’URI sqlite3 <sqlite3-uri-tricks>`."
 
 #: library/sqlite3.rst:0
 #, fuzzy
@@ -360,6 +471,8 @@ msgstr ""
 msgid ""
 "*database* can now also be a :term:`path-like object`, not only a string."
 msgstr ""
+"*database* peut maintenant aussi être un :term:`objet de type chemin <path-"
+"like object>`, et pas seulement une chaîne de caractères."
 
 #: library/sqlite3.rst:335
 msgid "The ``sqlite3.connect/handle`` auditing event."
@@ -372,6 +485,11 @@ msgid ""
 "performed, other than checking that there are no unclosed string literals "
 "and the statement is terminated by a semicolon."
 msgstr ""
+"Renvoie ``True`` si la déclaration de la chaîne semble contenir une ou "
+"plusieurs déclarations SQL complètes. Aucune vérification syntaxique ou "
+"analyse syntaxique d’aucune sorte n’est effectuée, si ce n’est la "
+"vérification qu’il n’y a pas de chaîne littérale non fermée et que "
+"l’instruction se termine par un point-virgule."
 
 #: library/sqlite3.rst:346
 #, fuzzy
@@ -384,6 +502,10 @@ msgid ""
 "entered text seems to form a complete SQL statement, or if additional input "
 "is needed before calling :meth:`~Cursor.execute`."
 msgstr ""
+"Cette fonction peut être utile pendant la saisie en ligne de commande pour "
+"déterminer si le texte saisi semble former une instruction SQL complète, ou "
+"si une saisie supplémentaire est nécessaire avant d’appeler :meth:`~Cursor."
+"execute`."
 
 #: library/sqlite3.rst:361
 msgid ""
@@ -401,6 +523,10 @@ msgid ""
 "its sole argument, and must return a value of a :ref:`type that SQLite "
 "natively understands <sqlite3-types>`."
 msgstr ""
+"Enregistre un *adaptateur* appelable pour adapter le type Python *type* en "
+"un type SQLite. L’adaptateur est appelé avec un objet Python de type *type* "
+"comme unique argument, et doit retourner une valeur d’un :ref:`type que "
+"SQLite comprend nativement <sqlite3-types>`."
 
 #: library/sqlite3.rst:378
 msgid ""
@@ -411,12 +537,20 @@ msgid ""
 "parameter *detect_types* of :func:`connect` for information regarding how "
 "type detection works."
 msgstr ""
+"Enregistre le *convertisseur* appelable pour convertir les objets SQLite de "
+"type *typename* en un objet Python d’un type spécifique. Le convertisseur "
+"est invoqué pour toutes les valeurs SQLite de type *typename* ; on lui passe "
+"un objet :class:`bytes` et il doit retourner un objet du type Python désiré. "
+"Consultez le paramètre *detect_types* de :func:`connect` pour des "
+"informations sur le fonctionnement de la détection des types."
 
 #: library/sqlite3.rst:386
 msgid ""
 "Note: *typename* and the name of the type in your query are matched case-"
 "insensitively."
 msgstr ""
+"Remarque : *typename* et le nom du type dans votre requête sont comparés "
+"sans tenir compte de la casse."
 
 #: library/sqlite3.rst:393
 #, fuzzy
@@ -1287,7 +1421,7 @@ msgstr "SQLite type"
 
 #: library/sqlite3.rst:1378
 msgid "``None``"
-msgstr ""
+msgstr "``None``"
 
 #: library/sqlite3.rst:1378
 msgid "``NULL``"

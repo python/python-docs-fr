@@ -23,10 +23,12 @@ msgid ""
 "The macros in this section are used for managing reference counts of Python "
 "objects."
 msgstr ""
+"Les macros dans cette section permettent de gérer le compteur de références "
+"des objets Python."
 
 #: c-api/refcounting.rst:16
 msgid "Increment the reference count for object *o*."
-msgstr ""
+msgstr "Incrémente le compteur de références de l'objet *o*."
 
 #: c-api/refcounting.rst:18
 msgid ""
@@ -34,40 +36,54 @@ msgid ""
 "term:`strong reference` in-place. The :c:func:`Py_NewRef` function can be "
 "used to create a new :term:`strong reference`."
 msgstr ""
+"Cette fonction est souvent utilisée pour convertir une :term:`référence "
+"empruntée` en une :term:`référence forte` *sur place*. La fonction :c:func:"
+"`Py_NewRef` peut être utilisée pour créer une nouvelle :term:`référence "
+"forte`."
 
 #: c-api/refcounting.rst:22
 msgid ""
 "The object must not be ``NULL``; if you aren't sure that it isn't ``NULL``, "
 "use :c:func:`Py_XINCREF`."
 msgstr ""
+"L'objet ne doit pas être ``NULL``, la fonction :c:func:`Py_XINCREF` doit "
+"être utilisée s'il est possible qu'il soit ``NULL``."
 
 #: c-api/refcounting.rst:28
 msgid ""
 "Increment the reference count for object *o*.  The object may be ``NULL``, "
 "in which case the macro has no effect."
 msgstr ""
+"Incrémente le compteur de références de l'objet *o*. La macro n'a pas "
+"d'effet si l'objet est ``NULL``."
 
 #: c-api/refcounting.rst:31
 msgid "See also :c:func:`Py_XNewRef`."
-msgstr ""
+msgstr "Voir aussi :c:func:`Py_XNewRef`."
 
 #: c-api/refcounting.rst:36
 msgid ""
 "Create a new :term:`strong reference` to an object: increment the reference "
 "count of the object *o* and return the object *o*."
 msgstr ""
+"Créer une nouvelle :term:`référence forte` d'un objet : incrémente le "
+"compteur de référence de l'objet *o* et renvoie l'objet *o*."
 
 #: c-api/refcounting.rst:39
 msgid ""
 "When the :term:`strong reference` is no longer needed, :c:func:`Py_DECREF` "
 "should be called on it to decrement the object reference count."
 msgstr ""
+":c:func:`Py_DECREF` doit être appelée quand la :term:`référence forte` n'est "
+"plus utilisée pour décrémenter le compteur de références de l'objet."
 
 #: c-api/refcounting.rst:42
 msgid ""
 "The object *o* must not be ``NULL``; use :c:func:`Py_XNewRef` if *o* can be "
 "``NULL``."
 msgstr ""
+"L'objet *o* ne doit pas être ``NULL`` et la fonction :c:func:`Py_XNewRef` "
+"doit être utilisée si *o* peut être ``NULL``."
 
 #: c-api/refcounting.rst:45
 msgid "For example::"
@@ -75,41 +91,47 @@ msgstr "Par exemple ::"
 
 #: c-api/refcounting.rst:50
 msgid "can be written as::"
-msgstr ""
+msgstr "peut s'écrire ::"
 
 #: c-api/refcounting.rst:54
 msgid "See also :c:func:`Py_INCREF`."
-msgstr ""
+msgstr "Voir aussi :c:func:`Py_INCREF`."
 
 #: c-api/refcounting.rst:61
 msgid "Similar to :c:func:`Py_NewRef`, but the object *o* can be NULL."
-msgstr ""
+msgstr "Semblable à :c:func:`Py_NewRef` mais l'objet *o* peut être ``NULL``."
 
 #: c-api/refcounting.rst:63
 msgid "If the object *o* is ``NULL``, the function just returns ``NULL``."
-msgstr ""
+msgstr "Cette fonction renvoie ``NULL`` si l'objet *o* est ``NULL``."
 
 #: c-api/refcounting.rst:70
 msgid "Decrement the reference count for object *o*."
-msgstr ""
+msgstr "Décrémente le compteur de références de l'objet *o*."
 
 #: c-api/refcounting.rst:72
 msgid ""
 "If the reference count reaches zero, the object's type's deallocation "
 "function (which must not be ``NULL``) is invoked."
 msgstr ""
+"Si le compteur de références atteint zéro, la fonction de dés-allocation du "
+"type de l'objet (qui ne doit pas être ``NULL``) est invoquée."
 
 #: c-api/refcounting.rst:75
 msgid ""
 "This function is usually used to delete a :term:`strong reference` before "
 "exiting its scope."
 msgstr ""
+"Cette fonction est généralement utilisée pour supprimer une :term:`référence "
+"forte` avant qu'elle ne soit plus accessible."
 
 #: c-api/refcounting.rst:78
 msgid ""
 "The object must not be ``NULL``; if you aren't sure that it isn't ``NULL``, "
 "use :c:func:`Py_XDECREF`."
 msgstr ""
+"L'objet en argument ne doit pas être ``NULL``. :c:func:`Py_XDECREF` doit "
+"être utilisée si l'objet peut être ``NULL``."
 
 #: c-api/refcounting.rst:83
 msgid ""
@@ -123,6 +145,15 @@ msgid ""
 "update the list data structure, and then call :c:func:`Py_DECREF` for the "
 "temporary variable."
 msgstr ""
+"La fonction de dés-allocation peut invoquer du code Python arbitraire (par "
+"exemple quand une instance d'une classe avec une méthode :meth:`__del__` est "
+"supprimée). Le code exécuté a accès à toutes les variables Python globales "
+"mais les exceptions lors de l'exécution de ce code ne sont pas propagées. "
+"Tous les objets qui peuvent être atteints à partir d'une variable globale "
+"doivent être dans un état cohérent avant d'appeler :c:func:`Py_DECREF`. Par "
+"exemple le code pour supprimer un élément d'une liste doit copier une "
+"référence à l'objet dans une variable temporaire, mettre à jour la liste, et "
+"enfin appeler :c:func:`Py_DECREF` avec la variable temporaire."
 
 #: c-api/refcounting.rst:95
 msgid ""
@@ -130,6 +161,10 @@ msgid ""
 "in which case the macro has no effect; otherwise the effect is the same as "
 "for :c:func:`Py_DECREF`, and the same warning applies."
 msgstr ""
+"Décrémente le compteur de références de l'objet *o*. L'objet peut être "
+"``NULL``, dans ce cas la macro n'a pas d'effet. Dans le cas contraire le "
+"comportement est identique à :c:func:`Py_DECREF` et les mêmes avertissements "
+"sont de rigueur."
 
 #: c-api/refcounting.rst:102
 msgid ""
@@ -140,24 +175,38 @@ msgid ""
 "object passed because the macro carefully uses a temporary variable and sets "
 "the argument to ``NULL`` before decrementing its reference count."
 msgstr ""
+"Décrémente le compteur de références de l'objet *o*. L'objet peut être "
+"``NULL``, dans ce cas la macro n'a pas d'effet. Dans le cas contraire le "
+"comportement est identique à :c:func:`Py_DECREF`, puis l'argument est mis à "
+"``NULL``. L'avertissement au sujet de l'objet passé en argument à :c:func:"
+"`Py_DECREF` ne s'applique pas car la macro utilise une variable temporaire "
+"et met l'objet à ``NULL`` avant de décrémenter le compteur de références."
 
 #: c-api/refcounting.rst:109
 msgid ""
 "It is a good idea to use this macro whenever decrementing the reference "
 "count of an object that might be traversed during garbage collection."
 msgstr ""
+"Il est recommandé d'utiliser cette macro lorsqu'on décrémente le compteur de "
+"référence d'un objet qui peut être parcouru par le ramasse-miette."
 
 #: c-api/refcounting.rst:114
 msgid ""
 "Increment the reference count for object *o*. A function version of :c:func:"
 "`Py_XINCREF`. It can be used for runtime dynamic embedding of Python."
 msgstr ""
+"Incrémente le compteur de références de l'objet *o*. C'est la version "
+"fonctionnelle de :c:func:`Py_XINCREF`. Elle peut être utilisée lorsque "
+"Python est embarqué dynamiquement dans une application."
 
 #: c-api/refcounting.rst:120
 msgid ""
 "Decrement the reference count for object *o*. A function version of :c:func:"
 "`Py_XDECREF`. It can be used for runtime dynamic embedding of Python."
 msgstr ""
+"Décrémente le compteur de références de l'objet *o*. C'est la version "
+"fonctionnelle de :c:func:`Py_XDECREF`. Elle peut être utilisée lorsque "
+"Python est embarqué dynamiquement dans une application."
 
 #: c-api/refcounting.rst:124
 msgid ""
@@ -165,3 +214,7 @@ msgid ""
 "core: :c:func:`_Py_Dealloc`, :c:func:`_Py_ForgetReference`, :c:func:"
 "`_Py_NewReference`, as well as the global variable :c:data:`_Py_RefTotal`."
 msgstr ""
+"Les fonctions ou macros suivantes doivent être uniquement utilisées au sein "
+"de l'interpréteur et ne font pas partie de l'API publique : :c:func:"
+"`_Py_Dealloc`, :c:func:`_Py_ForgetReference`, :c:func:`_Py_NewReference`, "
+"ainsi que la variable globale :c:data:`_Py_RefTotal`."

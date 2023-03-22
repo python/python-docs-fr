@@ -3365,6 +3365,8 @@ msgstr ""
 #: reference/datamodel.rst:1880
 msgid "Any non-string :term:`iterable` may be assigned to *__slots__*."
 msgstr ""
+"Tout :term:`itérable <iterable>`, sauf les chaînes de caractères, peuvent "
+"être affectés à *__slots__*."
 
 #: reference/datamodel.rst:1882
 msgid ""
@@ -3373,6 +3375,11 @@ msgid ""
 "can be used to provide per-attribute docstrings that will be recognised by :"
 "func:`inspect.getdoc` and displayed in the output of :func:`help`."
 msgstr ""
+"Si vous affectez *__slots__* à un :class:`dictionnaire <dict>`, les clés du "
+"dictionnaires seront les noms du *slot*. Les valeurs du dictionnaire peuvent "
+"être utilisées en tant que chaines de description (*docstrings*) et sont "
+"reconnues par :func:`inspect.getdoc` qui les affiche dans la sortie de :func:"
+"`help`."
 
 #: reference/datamodel.rst:1887
 #, fuzzy
@@ -3939,6 +3946,11 @@ msgid ""
 "notation. For example, the annotation ``list[int]`` might be used to signify "
 "a :class:`list` in which all the elements are of type :class:`int`."
 msgstr ""
+"Lors de l'utilisation d':term:`annotations de types<annotation>`, il est "
+"souvent utile de *paramètrer* un :term:`type générique <generic type>` en se "
+"servant de la notation crochets de Python. Par exemple, l'annotation "
+"``list[int]`` peut être utilisée pour signifier une :class:`liste <list>` "
+"dans laquelle tous les éléments sont de type :class:`entiers <int>`."
 
 #: reference/datamodel.rst:2208
 #, fuzzy
@@ -3947,33 +3959,43 @@ msgstr ":pep:`343` — L'instruction ``with``"
 
 #: reference/datamodel.rst:2208
 msgid "Introducing Python's framework for type annotations"
-msgstr ""
+msgstr "Introduction à l'annotation de types en Python (document en anglais)"
 
 #: reference/datamodel.rst:2211
 msgid ":ref:`Generic Alias Types<types-genericalias>`"
-msgstr ""
+msgstr ":ref:`Types alias génériques <types-genericalias>`"
 
 #: reference/datamodel.rst:2211
 msgid "Documentation for objects representing parameterized generic classes"
 msgstr ""
+"Documentation pour les objets qui représentent des classes génériques "
+"paramétrées"
 
 #: reference/datamodel.rst:2214
 msgid ""
 ":ref:`Generics`, :ref:`user-defined generics<user-defined-generics>` and :"
 "class:`typing.Generic`"
 msgstr ""
+":ref:`Generics`, :ref:`Types génériques définis par l'utilisateur <user-"
+"defined-generics>` et classe :class:`typing.Generic (classe de base "
+"abstraite pour les types génériques) <typing.Generic>`"
 
 #: reference/datamodel.rst:2214
 msgid ""
 "Documentation on how to implement generic classes that can be parameterized "
 "at runtime and understood by static type-checkers."
 msgstr ""
+"Documentation sur la manière d'implémenter des classes génériques qui "
+"peuvent être paramétrées à l'exécution et comprises par les vérificateurs "
+"statiques de types."
 
 #: reference/datamodel.rst:2217
 msgid ""
 "A class can *generally* only be parameterized if it defines the special "
 "class method ``__class_getitem__()``."
 msgstr ""
+"*Généralement*, une classe ne peut être paramétrée que si elle définit une "
+"méthode spéciale de classe ``__class_getitem__()``."
 
 #: reference/datamodel.rst:2222
 msgid ""
@@ -3989,10 +4011,13 @@ msgid ""
 "method. As such, there is no need for it to be decorated with :func:"
 "`@classmethod<classmethod>` when it is defined."
 msgstr ""
+"Lorsqu'elle est définie dans une classe, ``__class_getitem__()`` est "
+"automatiquement une méthode de classe. Ainsi, il est superflu de la décorer "
+"avec :func:`@classmethod<classmethod>` lors de sa définition."
 
 #: reference/datamodel.rst:2231
 msgid "The purpose of *__class_getitem__*"
-msgstr ""
+msgstr "Intention de *__class_getitem__*"
 
 #: reference/datamodel.rst:2233
 msgid ""
@@ -4000,6 +4025,10 @@ msgid ""
 "parameterization of standard-library generic classes in order to more easily "
 "apply :term:`type hints<type hint>` to these classes."
 msgstr ""
+"Le but de :meth:`~object.__class_getitem__` est de permettre la "
+"paramétrisation à l'exécution des classes génériques de la bibliothèque "
+"standard de façon à pouvoir appliquer plus facilement des :term:`annotations "
+"de type <type hint>` à ces classes."
 
 #: reference/datamodel.rst:2237
 msgid ""
@@ -4009,6 +4038,11 @@ msgid ""
 "__class_getitem__`, or inherit from :class:`typing.Generic`, which has its "
 "own implementation of ``__class_getitem__()``."
 msgstr ""
+"Pour implémenter des classes génériques particularisées pouvant être "
+"paramétrées à l'exécution, et comprises par les vérificateurs statiques de "
+"type, vous pouvez soit hériter d'une classe de la bibliothèque standard qui "
+"implémente déjà :meth:`~object.__class_getitem__`, ou hériter de :class:"
+"`typing.Generic`, qui a sa propre implémentation de ``__class_getitem__()``."
 
 #: reference/datamodel.rst:2243
 msgid ""
@@ -4017,10 +4051,15 @@ msgid ""
 "type-checkers such as mypy. Using ``__class_getitem__()`` on any class for "
 "purposes other than type hinting is discouraged."
 msgstr ""
+"Les implémentations particularisées de :meth:`~object.__class_getitem__` sur "
+"des classes définies ailleurs que la bibliothèque standard peuvent ne pas "
+"être comprises par des vérificateurs de types tiers tels que *mypy*. "
+"L'utilisation de ``__class_getitem__()`` pour tout autre objectif que "
+"l'annotation de type n'est pas conseillée."
 
 #: reference/datamodel.rst:2253
 msgid "*__class_getitem__* versus *__getitem__*"
-msgstr ""
+msgstr "*__class_getitem__* contre *__getitem__*"
 
 #: reference/datamodel.rst:2255
 msgid ""
@@ -4031,6 +4070,13 @@ msgid ""
 "instead. ``__class_getitem__()`` should return a :ref:`GenericAlias<types-"
 "genericalias>` object if it is properly defined."
 msgstr ""
+"D'habitude, l':ref:`indiçage <subscriptions>` d'un objet en utilisant des "
+"crochets appelle la méthode :meth:`~object.__getitem__` de l'instance, "
+"définie dans la classe de l'objet. Cependant, si l'objet dont on cherche un "
+"indice est lui-même une classe, la méthode de classe :meth:`~object."
+"__class_getitem__` peut être appelée à la place. ``__class_getitem__()`` "
+"doit renvoyer un objet :ref:`GenericAlias<types-genericalias>` si elle est "
+"correctement définie."
 
 #: reference/datamodel.rst:2262
 msgid ""
@@ -4038,6 +4084,9 @@ msgid ""
 "follows something like the following process to decide whether :meth:"
 "`~object.__getitem__` or :meth:`~object.__class_getitem__` should be called::"
 msgstr ""
+"Lorsqu'on lui présente l':term:`expression` ``obj[x]``, l'interpréteur "
+"Python suit une sorte de processus suivant pour décider s'il faut appeler :"
+"meth:`~object.__getitem__` ou :meth:`~object.__class_getitem__` ::"
 
 #: reference/datamodel.rst:2290
 msgid ""
@@ -4048,6 +4097,12 @@ msgid ""
 "``dict[str, float]`` and ``tuple[str, bytes]`` all result in :meth:`~object."
 "__class_getitem__` being called::"
 msgstr ""
+"En Python, toutes les classes sont des instances d'autres classes. La classe "
+"d'une classe est appelée la :term:`métaclasse <metaclass>` de la classe et "
+"la plupart des classes ont la classe :class:`type` comme métaclasse. :class:"
+"`type` ne définit pas :meth:`~object.__getitem__`, ce qui veut dire que des "
+"expressions telles que ``list[int]``, ``dict[str, float]`` et ``tuple[str, "
+"bytes]`` aboutissent toutes à l'appel de :meth:`~object.__class_getitem__` ::"
 
 #: reference/datamodel.rst:2309
 msgid ""
@@ -4055,6 +4110,10 @@ msgid ""
 "__getitem__`, subscribing the class may result in different behaviour. An "
 "example of this can be found in the :mod:`enum` module::"
 msgstr ""
+"Cependant, si une classe a une métaclasse particularisée qui définit :meth:"
+"`~object.__getitem__`, l'indiçage de la classe peut conduire à un "
+"comportement différent. Un exemple peut être trouvé dans le module :mod:"
+"`enum` ::"
 
 #: reference/datamodel.rst:2334
 #, fuzzy
@@ -4068,6 +4127,9 @@ msgid ""
 "`subscription<subscriptions>` results in ``__class_getitem__()`` being "
 "called instead of :meth:`~object.__getitem__`"
 msgstr ""
+"Introduction de :meth:`~object.__class_getitem__`, et présentation des cas "
+"où un :ref:`indiçage<subscriptions>` conduit à l'appel de "
+"``__class_getitem__()`` au lieu de :meth:`~object.__getitem__`"
 
 #: reference/datamodel.rst:2341
 msgid "Emulating callable objects"
@@ -4253,6 +4315,10 @@ msgid ""
 "meth:`~object.__class_getitem__` may be called instead of ``__getitem__()``. "
 "See :ref:`classgetitem-versus-getitem` for more details."
 msgstr ""
+"quand on vous :ref:`spécifiez un indice <subscriptions>` pour une *classe*, "
+"la méthode de classe spéciale :meth:`~object.__class_getitem__` peut être "
+"appelée au lieu de ``__getitem__()``. Reportez-vous à :ref:`classgetitem-"
+"versus-getitem` pour plus de détails."
 
 #: reference/datamodel.rst:2465
 msgid ""
@@ -4548,6 +4614,8 @@ msgid ""
 "The built-in function :func:`int` falls back to :meth:`__trunc__` if "
 "neither :meth:`__int__` nor :meth:`__index__` is defined."
 msgstr ""
+"La fonction native :func:`int` se replie sur :meth:`__trunc__` dans le cas "
+"où ni :meth:`__int__` ni :meth:`__index__` ne sont définies."
 
 #: reference/datamodel.rst:2699
 msgid "With Statement Context Managers"
