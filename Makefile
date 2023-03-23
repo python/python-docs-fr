@@ -2,14 +2,13 @@
 #
 # Here is what you can do:
 #
-# - make  # Automatically build an html local version
-# - make todo  # To list remaining tasks
+# - make  # Automatically build an HTML local version
+# - make todo  # To list remaining tasks and show current progression
 # - make verifs  # To check for correctness: wrapping, spelling
-# - make wrap  # To check for wrapping
+# - make wrap  # To rewrap modified files
 # - make spell  # To check for spelling
-# - make merge  # To merge pot from upstream
+# - make clean # To remove build artifacts
 # - make fuzzy  # To find fuzzy strings
-# - make progress  # To compute current progression
 #
 # Modes are: autobuild-stable, autobuild-dev, and autobuild-html,
 # documented in gen/src/3.6/Doc/Makefile as we're only delegating the
@@ -22,24 +21,51 @@
 # test build, we're building with the .rst files that generated our
 # .po files.
 CPYTHON_CURRENT_COMMIT := dc3239177ff26cb6a12e437a1f507be730fe8ba7
-
-CPYTHON_PATH := ../cpython/
-
 LANGUAGE := fr
-BRANCH := 3.8
+BRANCH := 3.9
 
-.SILENT:
+EXCLUDED := \
+	whatsnew/2.?.po \
+	whatsnew/3.[0-8].po \
+	c-api/ \
+	distutils/ \
+	install/ \
+	library/2to3.po \
+	library/distutils.po \
+	library/imp.po \
+	library/tkinter.tix.po \
+	library/test.po \
+	library/aifc.po \
+	library/asynchat.po \
+	library/asyncore.po \
+	library/audioop.po \
+	library/cgi.po \
+	library/cgitb.po \
+	library/chunk.po \
+	library/crypt.po \
+	library/imghdr.po \
+	library/msilib.po \
+	library/nntplib.po \
+	library/nis.po \
+	library/ossaudiodev.po \
+	library/pipes.po \
+	library/smtpd.po \
+	library/sndhdr.po \
+	library/spwd.po \
+	library/sunau.po \
+	library/telnetlib.po \
+	library/uu.po \
+	library/xdrlib.po
 
 # Internal variables
 
 UPSTREAM := https://github.com/python/cpython
-VENV := $(shell pwd)/venv/
+
 PYTHON := $(shell which python3)
 MODE := html
 POSPELL_TMP_DIR := .pospell/
-WORKTREES := $(VENV)/worktrees/
-WORKTREE := $(WORKTREES)/$(CPYTHON_CURRENT_COMMIT)/
 JOBS := auto
+SPHINXERRORHANDLING = -W
 
 # Detect OS
 
@@ -59,126 +85,104 @@ else
 endif
 
 .PHONY: all
-all: setup
-	mkdir -p $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/
-	$(CP_CMD) -uv --parents *.po */*.po $(WORKTREE)/locales/$(LANGUAGE)/LC_MESSAGES/ | cut -d"'" -f2
-	$(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) \
-	  SPHINXOPTS='-qW -j$(JOBS)   \
-	  -D locale_dirs=../locales   \
-	  -D language=$(LANGUAGE)     \
-	  -D gettext_compact=0        \
-	  -D latex_engine=xelatex     \
-	  -D latex_elements.inputenc= \
-	  -D latex_elements.fontenc=' \
-	  $(MODE) && echo "Build success, open file://$(WORKTREE)/Doc/build/html/index.html or run 'make serve' to see them."
+all: ensure_prerequisites
+	git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT) || (git -C venv/cpython fetch && git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT))
+	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
+	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
+	$(MAKE) -C venv/cpython/Doc/ \
+	  JOBS='$(JOBS)'             \
+	  SPHINXOPTS='-D locale_dirs=$(abspath locales) \
+	  -D language=$(LANGUAGE)           \
+	  -D gettext_compact=0              \
+	  -D latex_engine=xelatex           \
+	  -D latex_elements.inputenc=       \
+	  -D latex_elements.fontenc='       \
+	  SPHINXERRORHANDLING=$(SPHINXERRORHANDLING) \
+	  $(MODE)
+	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make htmlview' to see them."
 
 
-.PHONY: setup
-setup: venv
-	# Setup the main clone
-	if ! [ -d $(CPYTHON_PATH) ]; then \
-	    git clone --depth 16 --branch $(BRANCH) $(UPSTREAM) $(CPYTHON_PATH); \
+# We clone cpython/ inside venv/ because venv/ is the only directory
+# excluded by cpython' Sphinx configuration.
+venv/cpython/.git/HEAD:
+	git clone https://github.com/python/cpython venv/cpython
+
+
+.PHONY: ensure_prerequisites
+ensure_prerequisites: venv/cpython/.git/HEAD
+	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
+	    git -C venv/cpython/ checkout $(BRANCH); \
+	    echo "You're missing dependencies please install:"; \
+	    echo ""; \
+	    echo "  python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
+	    exit 1; \
 	fi
 
-	# Setup the current worktree
-	if ! [ -d $(WORKTREE) ]; then                                                        \
-	    rm -fr $(WORKTREES);                                                             \
-	    git -C $(CPYTHON_PATH) worktree prune;                                           \
-	    mkdir -p $(WORKTREES);                                                           \
-	    if [ -n "$(CPYTHON_CURRENT_COMMIT)" ];                                           \
-	    then                                                                             \
-	        depth=32;                                                                    \
-	        while ! git -C $(CPYTHON_PATH) cat-file -e $(CPYTHON_CURRENT_COMMIT);        \
-	        do                                                                           \
-	            depth=$$((depth * 2));                                                   \
-	            git -C $(CPYTHON_PATH) fetch --depth $$depth $(UPSTREAM) $(BRANCH);      \
-	        done                                                                         \
-	    else                                                                             \
-	        git -C $(CPYTHON_PATH) fetch --depth 1 $(UPSTREAM);                          \
-	    fi;                                                                              \
-	    git -C $(CPYTHON_PATH) worktree add $(WORKTREE)/ $(CPYTHON_CURRENT_COMMIT);      \
-	    $(MAKE) -C $(WORKTREE)/Doc/ VENVDIR=$(WORKTREE)/Doc/venv/ PYTHON=$(PYTHON) venv; \
-	    $(WORKTREE)/Doc/venv/bin/python -m pip install Sphinx==2.2.2 docutils==0.15;                      \
-	fi
-
-
-.PHONY: venv
-venv:
-	if [ ! -d $(VENV) ]; then $(PYTHON) -m venv --prompt python-docs-fr $(VENV); fi
-	$(VENV)/bin/python -m pip install -q -r requirements.txt 2> $(VENV)/pip-install.log
-	if grep -q 'pip install --upgrade pip' $(VENV)/pip-install.log; then \
-	    $(VENV)/bin/pip install -q --upgrade pip; \
-	fi
-
-
-.PHONY: serve
-serve:
-	$(MAKE) -C $(WORKTREE)/Doc/ serve
-
-
-.PHONY: progress
-progress:
-	$(PYTHON) -c 'import sys; print("{:.1%}".format(int(sys.argv[1]) / int(sys.argv[2])))'  \
-	$(shell msgcat *.po */*.po | msgattrib --translated | grep -c '^msgid') \
-	$(shell msgcat *.po */*.po | grep -c '^msgid')
-
+.PHONY: htmlview
+htmlview: MODE=htmlview
+htmlview: all
 
 .PHONY: todo
-todo: venv
-	$(VENV)/bin/potodo
+todo: ensure_prerequisites
+	potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
-wrap: venv
-	$(VENV)/bin/powrap --check --quiet *.po **/*.po
+wrap: ensure_prerequisites
+	@echo "Re wrapping modified files"
+	powrap -m
 
 SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
 DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: spell
-spell: venv $(DESTS)
+spell: ensure_prerequisites $(DESTS)
+
+.PHONY: line-length
+line-length:
+	@echo "Searching for long lines..."
+	@awk '{if (length(gensub(/శ్రీనివాస్/, ".", "g", $$0)) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $$0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}' *.po */*.po
+
+.PHONY: sphinx-lint
+sphinx-lint:
+	@echo "Checking all files using sphinx-lint..."
+	@sphinx-lint --enable all --disable line-too-long *.po */*.po
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
-	echo "Checking $<..."
-	mkdir -p $(@D)
-	$(VENV)/bin/pospell -p dict -l fr_FR $< && touch $@
+	@echo "Pospell checking $<..."
+	@mkdir -p $(@D)
+	pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
-fuzzy: venv
-	$(VENV)/bin/potodo -f
+fuzzy: ensure_prerequisites
+	potodo --only-fuzzy --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
+
+.PHONY: check-headers
+check-headers:
+	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the po comment in $$file"; \
+	done
+	@grep -L '^"Project-Id-Version: Python 3\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Project-Id-Version' header in $$file"; \
+	done
+	@grep -L '^"Language: fr\\n"$$' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language' header in $$file"; \
+	done
+	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' *.po */*.po | while read -r file;\
+	do \
+		echo "Please update the 'Language-Team' header in $$file"; \
+	done
 
 .PHONY: verifs
-verifs: wrap spell
-
-.PHONY: merge
-merge: setup
-	git -C $(CPYTHON_PATH) fetch $(UPSTREAM)
-	rm -fr $(WORKTREES)/$(BRANCH)
-	git -C $(CPYTHON_PATH) worktree prune
-	git -C $(CPYTHON_PATH) worktree add $(WORKTREES)/$(BRANCH) $(word 1,$(shell git -C $(CPYTHON_PATH) remote -v | grep python/cpython))/$(BRANCH)
-	$(MAKE) -C $(WORKTREES)/$(BRANCH)/Doc/ VENVDIR=$(WORKTREES)/$(BRANCH)/Doc/venv/ PYTHON=$(PYTHON) venv;
-	(cd $(WORKTREES)/$(BRANCH); $(WORKTREES)/$(BRANCH)/Doc/venv/bin/sphinx-build -Q -b gettext -D gettext_compact=0 Doc pot/)
-	find $(WORKTREES)/$(BRANCH) -name '*.pot' |\
-	    while read -r POT;\
-	    do\
-	        PO="./$$(echo "$$POT" | sed "s#$(WORKTREES)/$(BRANCH)/pot/##; s#\.pot\$$#.po#")";\
-	        mkdir -p "$$(dirname "$$PO")";\
-	        if [ -f "$$PO" ];\
-	        then\
-	            case "$$POT" in\
-	            *whatsnew*) msgmerge --backup=off --force-po --no-fuzzy-matching -U "$$PO" "$$POT" ;;\
-	            *)          msgmerge --backup=off --force-po -U "$$PO" "$$POT" ;;\
-	            esac\
-	        else\
-	            msgcat -o "$$PO" "$$POT";\
-	        fi\
-	    done
-	sed -i 's/^CPYTHON_CURRENT_COMMIT :=.*/CPYTHON_CURRENT_COMMIT := $(shell git -C $(WORKTREES)/$(BRANCH) rev-parse HEAD)/' Makefile
-	rm -fr $(WORKTREES)/$(BRANCH)
-	git -C $(CPYTHON_PATH) worktree prune
-	echo 'To add, you can use git status -s | grep "^ M .*\.po" | cut -d" " -f3 | while read -r file; do if [ $$(git diff "$$file" | wc -l) -gt 13 ]; then git add "$$file"; fi ; done'
+verifs: spell line-length sphinx-lint check-headers
 
 .PHONY: clean
 clean:
-	rm -fr $(VENV) $(POSPELL_TMP_DIR)
+	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
+	rm -fr $(POSPELL_TMP_DIR) locales/$(LANGUAGE)/LC_MESSAGES/
 	find -name '*.mo' -delete
+	@echo "Cleaning build directory"
+	$(MAKE) -C venv/cpython/Doc/ clean
