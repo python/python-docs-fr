@@ -311,7 +311,6 @@ msgid "Format String Syntax"
 msgstr "Syntaxe de formatage de chaîne"
 
 #: library/string.rst:188
-#, fuzzy
 msgid ""
 "The :meth:`str.format` method and the :class:`Formatter` class share the "
 "same syntax for format strings (although in the case of :class:`Formatter`, "
@@ -324,7 +323,8 @@ msgstr ""
 "même syntaxe pour les chaînes de formatage (bien que dans le cas de :class:"
 "`Formatter` les sous-classes puissent définir leur propre syntaxe).  La "
 "syntaxe est liée à celle des :ref:`chaînes de formatage littérales <f-"
-"strings>`, mais il y a quelques différences."
+"strings>`, mais elle est moins sophistiquée, et surtout ne permet pas "
+"d'inclure des expressions arbitraires."
 
 #: library/string.rst:201
 msgid ""
@@ -516,15 +516,14 @@ msgstr ""
 "numériques."
 
 #: library/string.rst:305
-#, fuzzy
 msgid ""
 "A general convention is that an empty format specification produces the same "
 "result as if you had called :func:`str` on the value. A non-empty format "
 "specification typically modifies the result."
 msgstr ""
-"Une convention généralement admise est qu'une chaîne vide (``\"\"``) produit "
-"le même résultat que si vous aviez appelé :func:`str` sur la valeur. Une "
-"chaîne de format non vide modifie typiquement le résultat."
+"Une convention généralement admise est qu'une chaîne vide produit le même "
+"résultat que si vous aviez appelé :func:`str` sur la valeur. Une chaîne de "
+"format non vide modifie habituellement le résultat."
 
 #: library/string.rst:309
 msgid "The general form of a *standard format specifier* is:"
@@ -724,15 +723,15 @@ msgid "Added the ``'_'`` option (see also :pep:`515`)."
 msgstr "Ajout de l'option ``'_'`` (voir aussi :pep:`515`)."
 
 #: library/string.rst:418
-#, fuzzy
 msgid ""
 "*width* is a decimal integer defining the minimum total field width, "
 "including any prefixes, separators, and other formatting characters. If not "
 "specified, then the field width will be determined by the content."
 msgstr ""
-"*width* est un entier en base 10 qui définit la longueur minimale du champ. "
-"Si elle n'est pas spécifiée, alors le champ *width* est déterminé par le "
-"contenu."
+"*width* est un entier en base 10 qui définit la longueur minimale de tout le "
+"champ, y compris les préfixes, séparateurs et autres caractères de "
+"formatage. Si elle n'est pas spécifiée, alors le champ *width* est déterminé "
+"par le contenu."
 
 #: library/string.rst:422
 msgid ""
@@ -891,13 +890,12 @@ msgstr ""
 "formatage."
 
 #: library/string.rst:479
-#, fuzzy
 msgid ""
 "The available presentation types for :class:`float` and :class:`~decimal."
 "Decimal` values are:"
 msgstr ""
-"Les types de représentation pour les nombres flottants et les valeurs "
-"décimales sont :"
+"Les représentations possibles pour les :class:`float` et les :class:"
+"`~decimal.Decimal` sont :"
 
 #: library/string.rst:485
 msgid "``'e'``"
@@ -914,18 +912,27 @@ msgid ""
 "Decimal`. If no digits follow the decimal point, the decimal point is also "
 "removed unless the ``#`` option is used."
 msgstr ""
+"Notation scientifique. Pour une précision donnée ``p``, formate le nombre en "
+"notation scientifique avec la lettre ``'e'`` séparant la mantisse de "
+"l'exposant. La mantisse possède un chiffre devant et ``p`` chiffres après la "
+"virgule (représentée par un point en Python, conformément à la convention "
+"anglo-saxonne), ce qui donne ``p+1`` chiffres significatifs. Si la précision "
+"n'est pas donnée, utilise une précision de ``6`` chiffres après la virgule "
+"pour les :class:`float` et affiche tous les chiffres de la mantisse pour "
+"les :class:`~decimal.Decimal`. S'il n'y a pas de chiffre après la virgule, "
+"la virgule (c.-à-d. le point décimal en Python) n'est pas affichée à moins "
+"que l'option ``#`` ne soit utilisée."
 
 #: library/string.rst:497
 msgid "``'E'``"
 msgstr "``'E'``"
 
 #: library/string.rst:497
-#, fuzzy
 msgid ""
 "Scientific notation. Same as ``'e'`` except it uses an upper case 'E' as the "
 "separator character."
 msgstr ""
-"Notation par exposant. Pareil que ``'e'`` sauf l'utilisation de la lettre "
+"Notation scientifique. Pareil que ``'e'`` sauf que Python utilise la lettre "
 "majuscule 'E' comme séparateur."
 
 #: library/string.rst:500
@@ -942,6 +949,14 @@ msgid ""
 "decimal point, the decimal point is also removed unless the ``#`` option is "
 "used."
 msgstr ""
+"Notation en virgule fixe. Pour une précision donnée ``p``, formate le nombre "
+"sous la forme décimale avec exactement ``p`` chiffres après la virgule "
+"(représentée par un point en Python, conformément à la convention anglo-"
+"saxonne). Si la précision n'est pas donnée, utilise une précision de ``6`` "
+"chiffres après la virgule pour les :class:`float` et affiche tous les "
+"chiffres pour les :class:`~decimal.Decimal`. S'il n'y a pas de chiffre après "
+"la virgule, la virgule (c.-à-d. le point décimal en Python) n'est pas "
+"affichée à moins que l'option ``#`` ne soit utilisée."
 
 #: library/string.rst:510
 msgid "``'F'``"
@@ -960,16 +975,16 @@ msgid "``'g'``"
 msgstr "``'g'``"
 
 #: library/string.rst:513
-#, fuzzy
 msgid ""
 "General format.  For a given precision ``p >= 1``, this rounds the number to "
 "``p`` significant digits and then formats the result in either fixed-point "
 "format or in scientific notation, depending on its magnitude. A precision of "
 "``0`` is treated as equivalent to a precision of ``1``."
 msgstr ""
-"Format général. Pour une précision donnée ``p >= 1``, ceci arrondit le "
+"Format général. Pour une précision donnée ``p >= 1``, Python arrondit le "
 "nombre à ``p`` chiffres significatifs et puis formate le résultat soit en "
-"virgule fixe soit en notation scientifique, en fonction de la magnitude."
+"virgule fixe soit en notation scientifique, en fonction de la magnitude. Une "
+"précision de ``0`` est considérée équivalente à une précision de ``1``."
 
 #: library/string.rst:520
 msgid ""
@@ -1003,6 +1018,12 @@ msgid ""
 "place value of the least significant digit is larger than 1, and fixed-point "
 "notation is used otherwise."
 msgstr ""
+"Si la précision n'est pas donnée, utilise une précision de ``6`` chiffres "
+"significatifs pour les :class:`float`. Pour les :class:`~decimal.Decimal`, "
+"la mantisse du résultat dépend de la valeur : la notation scientifique est "
+"utilisée pour les valeurs inférieures à ``1e-6`` en valeur absolue et pour "
+"celles dont le dernier chiffre significatif a une position supérieure à 1 ; "
+"dans les autres cas, la notation en virgule fixe est utilisée."
 
 #: library/string.rst:542
 msgid ""
@@ -1048,18 +1069,16 @@ msgstr ""
 "(``'f'``), suivi d'un symbole pourcent ``'%'``."
 
 #: library/string.rst:558
-#, fuzzy
 msgid ""
 "For :class:`float` this is the same as ``'g'``, except that when fixed-point "
 "notation is used to format the result, it always includes at least one digit "
 "past the decimal point. The precision used is as large as needed to "
 "represent the given value faithfully."
 msgstr ""
-"Pareil que ``'g'``, si ce n'est que lorsque la notation en virgule fixe est "
-"utilisée, il y a toujours au moins un chiffre derrière la virgule. La "
-"précision par défaut celle nécessaire pour afficher la valeur donnée. "
-"L'effet visé est de le faire correspondre à la valeur renvoyée par :func:"
-"`str` altérée par les autres modificateurs de format."
+"Pour les :class:`float`, c'est identique à ``'g'``, si ce n'est que lorsque "
+"la notation en virgule fixe est utilisée, il y a toujours au moins un "
+"chiffre après la virgule. La précision utilisée est celle nécessaire pour "
+"afficher la valeur donnée fidèlement."
 
 #: library/string.rst:564
 msgid ""
@@ -1067,12 +1086,16 @@ msgid ""
 "depending on the value of ``context.capitals`` for the current decimal "
 "context."
 msgstr ""
+"Pour les :class:`~decimal.Decimal`, c'est identique à ``'g'`` ou ``'G'`` en "
+"fonction de la valeur de ``context.capitals`` du contexte décimal courant."
 
 #: library/string.rst:568
 msgid ""
 "The overall effect is to match the output of :func:`str` as altered by the "
 "other format modifiers."
 msgstr ""
+"L'effet visé est de coller à la valeur renvoyée par :func:`str` telle que "
+"modifiée par les autres modificateurs de format."
 
 #: library/string.rst:576
 msgid "Format examples"

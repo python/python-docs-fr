@@ -28,7 +28,6 @@ msgid "Introduction"
 msgstr "Introduction"
 
 #: library/multiprocessing.rst:14
-#, fuzzy
 msgid ""
 ":mod:`multiprocessing` is a package that supports spawning processes using "
 "an API similar to the :mod:`threading` module.  The :mod:`multiprocessing` "
@@ -40,12 +39,13 @@ msgid ""
 msgstr ""
 ":mod:`multiprocessing` est un paquet qui permet l'instanciation de processus "
 "via la même API que le module :mod:`threading`. Le paquet :mod:"
-"`multiprocessing` offre à la fois des possibilités de programmation "
-"concurrente locale ou à distance, contournant les problèmes du :term:`Global "
-"Interpreter Lock` en utilisant des processus plutôt que des fils "
-"d'exécution. Ainsi, le module :mod:`multiprocessing` permet au développeur "
-"de bénéficier entièrement des multiples processeurs sur une machine. Il "
-"tourne à la fois sur les systèmes Unix et Windows."
+"`multiprocessing` permet la programmation concurrente sur une même machine "
+"ou entre machines. Il permet de contourner les problèmes du :term:`verrou "
+"global de  l'interpréteur (GIL) <verrou global de l'interpréteur>` en "
+"utilisant des processus plutôt que des fils d'exécution. Ainsi, le module :"
+"mod:`multiprocessing` permet au développeur d'exploiter au mieux tous les "
+"processeurs d'une machine. Il tourne à la fois sur les systèmes Unix et "
+"Windows."
 
 #: library/multiprocessing.rst:23
 msgid ""
@@ -1514,7 +1514,6 @@ msgstr ""
 "``None`` est renvoyé."
 
 #: library/multiprocessing.rst:1020
-#, fuzzy
 msgid ""
 "The return value can be ``'fork'``, ``'spawn'``, ``'forkserver'`` or "
 "``None``.  ``'fork'`` is the default on Unix, while ``'spawn'`` is the "
@@ -1522,7 +1521,7 @@ msgid ""
 msgstr ""
 "La valeur de retour peut être ``'fork'``, ``'spawn'``, ``'forkserver'`` ou "
 "``None``. ``'fork'`` est la valeur par défaut sous Unix, ``'spawn'`` est "
-"celle sous Windows."
+"celle sous Windows et macsOS."
 
 #: library/multiprocessing.rst:1034
 msgid ""
@@ -3265,12 +3264,12 @@ msgstr ""
 "plus, *func* est exécutée sur un seul des *workers* du bassin."
 
 #: library/multiprocessing.rst:2173
-#, fuzzy
 msgid ""
 "A variant of the :meth:`apply` method which returns a :class:"
 "`~multiprocessing.pool.AsyncResult` object."
 msgstr ""
-"Une variante de la méthode :meth:`apply` qui renvoie un objet résultat."
+"Une variante de la méthode :meth:`apply` qui renvoie un objet :class:"
+"`~multiprocessing.pool.AsyncResult`."
 
 #: library/multiprocessing.rst:2176 library/multiprocessing.rst:2207
 msgid ""
@@ -3334,11 +3333,12 @@ msgstr ""
 "efficacité."
 
 #: library/multiprocessing.rst:2204
-#, fuzzy
 msgid ""
 "A variant of the :meth:`.map` method which returns a :class:"
 "`~multiprocessing.pool.AsyncResult` object."
-msgstr "Une variante de la méthode :meth:`.map` qui renvoie un objet résultat."
+msgstr ""
+"Une variante de la méthode :meth:`.map` qui renvoie un objet :class:"
+"`~multiprocessing.pool.AsyncResult`."
 
 #: library/multiprocessing.rst:2221
 msgid "A lazier version of :meth:`.map`."
@@ -3979,6 +3979,10 @@ msgid ""
 "class:`Pool` that supports all the same method calls but uses a pool of "
 "worker threads rather than worker processes."
 msgstr ""
+"En particulier, la fonction ``Pool`` du module :mod:`multiprocessing.dummy` "
+"renvoie une instance de :class:`ThreadPool`, qui est une sous-classe de :"
+"class:`Pool`. Elle a la même interface, mais elle utilise un pool de fils "
+"d'exécution plutôt qu'un pool de processus."
 
 #: library/multiprocessing.rst:2670
 msgid ""
@@ -3989,20 +3993,27 @@ msgid ""
 "calling :meth:`~multiprocessing.pool.Pool.close` and :meth:`~multiprocessing."
 "pool.Pool.terminate` manually."
 msgstr ""
+"Un objet qui contrôle un pool de fils d'exécution auquel des tâches peuvent "
+"être envoyées. L'interface des instances de :class:`ThreadPool` est "
+"entièrement compatible avec celle des instances de :class:`Pool`, et leur "
+"ressources doivent être aussi correctement gérées, soit en utilisant le pool "
+"avec un contexte, soit en appelant explicitement :meth:`~multiprocessing."
+"pool.Pool.close` et :meth:`~multiprocessing.pool.Pool.terminate`."
 
 #: library/multiprocessing.rst:2677
-#, fuzzy
 msgid ""
 "*processes* is the number of worker threads to use.  If *processes* is "
 "``None`` then the number returned by :func:`os.cpu_count` is used."
 msgstr ""
-"*processes* est le nombre de processus *workers* à utiliser. Si *processes* "
-"est ``None``, le nombre renvoyé par :func:`os.cpu_count` est utilisé."
+"*processes* est le nombre de fils d'exécution à utiliser. Si *processes* est "
+"``None``, le nombre renvoyé par :func:`os.cpu_count` est utilisé."
 
 #: library/multiprocessing.rst:2683
 msgid ""
 "Unlike :class:`Pool`, *maxtasksperchild* and *context* cannot be provided."
 msgstr ""
+"À la différence de :class:`Pool`, *maxtasksperchild* et *context* ne peuvent "
+"pas être passés en arguments."
 
 #: library/multiprocessing.rst:2687
 msgid ""
@@ -4013,6 +4024,13 @@ msgid ""
 "for representing the status of asynchronous jobs, :class:`AsyncResult`, that "
 "is not understood by any other libraries."
 msgstr ""
+"La classe :class:`ThreadPool` a la même interface que la classe :class:"
+"`Pool`, dont l'implémentation repose sur un pool de processus, et a été "
+"introduite avant le module :class:`concurrent.futures`. Par conséquent elle "
+"implémente des opérations qui n'ont pas vraiment de sens pour un pool "
+"implémenté avec des fils d'exécution et possède son propre type pour "
+"représenter le statut de tâches asynchrones, :class:`AsyncResult`, qui n'est "
+"pas géré par les autres modules."
 
 #: library/multiprocessing.rst:2694
 msgid ""
@@ -4022,6 +4040,11 @@ msgid ""
 "instances that are compatible with many other libraries, including :mod:"
 "`asyncio`."
 msgstr ""
+"Il est souvent plus judicieux d'utiliser :class:`concurrent.futures."
+"ThreadPoolExecutor` qui a une interface plus simple, qui a été pensée dès "
+"l'origine pour les fils d'exécution et qui renvoie des instances de :class:"
+"`concurrent.futures.Future` qui sont compatibles avec de nombreux modules, "
+"dont :mod:`asyncio`."
 
 #: library/multiprocessing.rst:2704
 msgid "Programming guidelines"

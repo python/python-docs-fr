@@ -1397,15 +1397,14 @@ msgstr ""
 "autre, donc mieux vaut sortir de la boucle quand on lit l'entrée ``NULL`` ::"
 
 #: library/ctypes.rst:1120
-#, fuzzy
 msgid ""
 "The fact that standard Python has a frozen module and a frozen package "
 "(indicated by the negative ``size`` member) is not well known, it is only "
 "used for testing. Try it out with ``import __hello__`` for example."
 msgstr ""
-"Le fait que le standard Python possède un module et un paquet gelés (indiqué "
-"par la valeur négative du membre *size*) est peu connu, cela ne sert qu'aux "
-"tests. Essayez avec ``import __hello__`` par exemple."
+"Le fait que le standard Python possède un module et un paquet figés "
+"(indiqués par la valeur négative du membre *size*) est peu connu, cela ne "
+"sert qu'aux tests. Essayez avec ``import __hello__`` par exemple."
 
 #: library/ctypes.rst:1128
 msgid "Surprises"
@@ -1679,12 +1678,22 @@ msgid ""
 "which DLL is not found, you need to find the list of dependent DLLs and "
 "determine which one is not found using Windows debugging and tracing tools."
 msgstr ""
+"En Windows, créer une instance de :class:`CDLL` peut échouer, même si une "
+"DLL du bon nom existe. Quand une des dépendances de la DLL à charger ne peut "
+"pas être trouvée, une :exc:`OSError` est levée avec le message *\"[WinError "
+"126] The specified module could not be found\".* Ce message d'erreur ne "
+"contient pas le nom de la DLL manquante car l'API Windows ne fournit pas "
+"cette information. Cela rend l'erreur délicate à analyser ; pour la "
+"résoudre, il faut lister toutes les dépendances de la DLL et trouver celle "
+"qui manque en utilisant des outils de débogage et de traçage Windows."
 
 #: library/ctypes.rst:1341
 msgid ""
 "`Microsoft DUMPBIN tool <https://docs.microsoft.com/cpp/build/reference/"
 "dependents>`_ -- A tool to find DLL dependents."
 msgstr ""
+"`DUMPBIN <https://docs.microsoft.com/cpp/build/reference/dependents>`_ — un "
+"utilitaire Microsoft pour lister les dépendances d'une DLL."
 
 #: library/ctypes.rst:1347
 msgid ""
@@ -1893,7 +1902,7 @@ msgstr ""
 
 #: library/ctypes.rst:1460
 msgid "The system handle used to access the library."
-msgstr ""
+msgstr "Le lien système d'accès à la bibliothèque."
 
 #: library/ctypes.rst:1465
 msgid "The name of the library passed in the constructor."
@@ -2246,6 +2255,15 @@ msgid ""
 "decorator factories, and as such, be applied to functions through the "
 "``@wrapper`` syntax. See :ref:`ctypes-callback-functions` for examples."
 msgstr ""
+"Il est aussi possible de créer des fonctions externes en instanciant des "
+"prototypes de fonction. Les prototypes de fonction ressemblent beaucoup aux "
+"prototypes de fonctions en C ; ils décrivent une fonction (type de retour, "
+"type des arguments, convention d'appel) sans préciser son implémentation. "
+"Les fabriques de fonctions prennent en entrée le type de retour et le type "
+"des arguments de la fonction, et peuvent être utilisées comme des "
+"décorateurs-fabrique et ainsi s'appliquer à des fonctions avec la syntaxe "
+"``@décorateur``. Ceci est illustré dans la section :ref:`ctypes-callback-"
+"functions`."
 
 #: library/ctypes.rst:1657
 msgid ""
@@ -2255,6 +2273,11 @@ msgid ""
 "`errno` variable is exchanged with the real :data:`errno` value before and "
 "after the call; *use_last_error* does the same for the Windows error code."
 msgstr ""
+"Renvoie un prototype de fonction qui crée des fonctions qui suivent la "
+"convention d'appel standard C. Les fonctions libèreront le GIL lors de leur "
+"exécution. Si *use_errno* est vrai, la copie privée *ctypes* de la variable "
+"système :data:`errno` est échangée avec la vraie valeur de :data:`errno` "
+"avant et après l'appel ; *use_last_error* a le même effet sous Windows."
 
 #: library/ctypes.rst:1667
 msgid ""
@@ -2270,6 +2293,9 @@ msgid ""
 "The returned function prototype creates functions that use the Python "
 "calling convention.  The function will *not* release the GIL during the call."
 msgstr ""
+"Renvoie un prototype de fonction qui crée des fonctions qui suivent la "
+"convention d'appel Python. Les fonctions ne libèreront *pas* le GIL lors de "
+"leur exécution."
 
 #: library/ctypes.rst:1679
 msgid ""
@@ -2277,16 +2303,21 @@ msgid ""
 "in different ways, depending on the type and number of the parameters in the "
 "call:"
 msgstr ""
+"Il y a plusieurs façons d'instancier les prototypes de fonction créés par "
+"ces fabriques, selon le type et le nombre de paramètres de l'appel :"
 
 #: library/ctypes.rst:1687
 msgid ""
 "Returns a foreign function at the specified address which must be an integer."
 msgstr ""
+"Renvoie une fonction externe sur l'adresse donnée sous la forme d'un entier."
 
 #: library/ctypes.rst:1694
 msgid ""
 "Create a C callable function (a callback function) from a Python *callable*."
 msgstr ""
+"Crée une fonction appelable depuis du code C (une fonction de rappel) d'un "
+"appelable Python donné en paramètre."
 
 #: library/ctypes.rst:1701
 msgid ""
@@ -2295,6 +2326,11 @@ msgid ""
 "exported function as string, or the ordinal of the exported function as "
 "small integer.  The second item is the shared library instance."
 msgstr ""
+"Renvoie une fonction externe exposée par une bibliothèque partagée. "
+"*func_spec* est un couple ``(nom_ou_indice, bibliothèque)``. Le premier "
+"élément est le nom de la fonction à passer comme une chaîne ou bien son "
+"indice (dans la table des symboles) à passer comme un entier. Le second "
+"élément est l'instance de la bibliothèque partagée."
 
 #: library/ctypes.rst:1711
 msgid ""
@@ -2303,6 +2339,11 @@ msgid ""
 "is name of the COM method. *iid* is an optional pointer to the interface "
 "identifier which is used in extended error reporting."
 msgstr ""
+"Renvoie une fonction qui appelle une méthode COM. *vtbl_index* est l'indice "
+"de la fonction dans la table virtuelle, un petit entier positif. *name* est "
+"le nom de la méthode COM. *iid* est un pointeur optionnel vers "
+"l'identificateur de plateforme, qui est utilisé dans la remontée d'erreurs "
+"étendue."
 
 #: library/ctypes.rst:1716
 msgid ""
@@ -2310,28 +2351,39 @@ msgid ""
 "COM interface as first argument, in addition to those parameters that are "
 "specified in the :attr:`argtypes` tuple."
 msgstr ""
+"Les méthodes COM ont une convention d'appel particulière : elles requièrent "
+"de passer un pointeur vers l'interface COM en premier argument, en sus des "
+"arguments passés dans le *n*-uplet :attr:`argtypes`."
 
 #: library/ctypes.rst:1720
 msgid ""
 "The optional *paramflags* parameter creates foreign function wrappers with "
 "much more functionality than the features described above."
 msgstr ""
+"Le paramètre optionnel *paramflags* crée une fabrique de fonction externes "
+"avec des fonctionnalités supplémentaires par rapport à celles décrites ci-"
+"dessus."
 
 #: library/ctypes.rst:1723
 msgid "*paramflags* must be a tuple of the same length as :attr:`argtypes`."
-msgstr ""
+msgstr "*paramflags* est un *n*-uplet de la même taille que :attr:`argtypes`."
 
 #: library/ctypes.rst:1725
 msgid ""
 "Each item in this tuple contains further information about a parameter, it "
 "must be a tuple containing one, two, or three items."
 msgstr ""
+"Chaque élément de ce *n*-uplet contient des informations supplémentaires sur "
+"le paramètre correspondant. Ce doit être aussi un *n*-uplet, avec un, deux "
+"ou trois éléments."
 
 #: library/ctypes.rst:1728
 msgid ""
 "The first item is an integer containing a combination of direction flags for "
 "the parameter:"
 msgstr ""
+"Le premier élément est un entier qui contient une combinaison de drapeaux "
+"qui précisent le sens des paramètres (entrée ou sortie) :"
 
 #: library/ctypes.rst:1732
 msgid "1"
@@ -2339,7 +2391,7 @@ msgstr "1"
 
 #: library/ctypes.rst:1732
 msgid "Specifies an input parameter to the function."
-msgstr ""
+msgstr "Paramètre d'entrée."
 
 #: library/ctypes.rst:1735
 msgid "2"
@@ -2347,7 +2399,7 @@ msgstr "2"
 
 #: library/ctypes.rst:1735
 msgid "Output parameter.  The foreign function fills in a value."
-msgstr ""
+msgstr "Paramètre de sortie. La fonction externe va modifier cette valeur."
 
 #: library/ctypes.rst:1738
 msgid "4"
@@ -2355,17 +2407,21 @@ msgstr "4"
 
 #: library/ctypes.rst:1738
 msgid "Input parameter which defaults to the integer zero."
-msgstr ""
+msgstr "Paramètre d'entrée, valant 0 par défaut."
 
 #: library/ctypes.rst:1740
 msgid ""
 "The optional second item is the parameter name as string.  If this is "
 "specified, the foreign function can be called with named parameters."
 msgstr ""
+"Le deuxième élément (optionnel) est une chaîne de caractères représentant le "
+"nom du paramètre. Si cet élément est donné, la fonction externe pourra être "
+"appelée avec des paramètres nommés."
 
 #: library/ctypes.rst:1743
 msgid "The optional third item is the default value for this parameter."
 msgstr ""
+"Le troisième élément (optionnel) est la valeur par défaut du paramètre."
 
 #: library/ctypes.rst:1745
 msgid ""
@@ -2373,14 +2429,20 @@ msgid ""
 "so that it supports default parameters and named arguments. The C "
 "declaration from the windows header file is this::"
 msgstr ""
+"L'exemple suivant montre comment encapsuler la fonction Windows "
+"``MessageBoxW`` afin que celle-ci prenne en charge des paramètres par défaut "
+"et des arguments nommés. Sa déclaration C dans le fichier d'en-tête des "
+"fenêtres est ::"
 
 #: library/ctypes.rst:1779
 msgid "Here is the wrapping with :mod:`ctypes`::"
-msgstr ""
+msgstr "L'encapsulation :mod:`ctypes` correspondante est alors ::"
 
 #: library/ctypes.rst:1764
 msgid "The ``MessageBox`` foreign function can now be called in these ways::"
 msgstr ""
+"La fonction ``MessageBox`` peut désormais être appelée des manières "
+"suivantes ::"
 
 #: library/ctypes.rst:1770
 msgid ""
@@ -2389,6 +2451,9 @@ msgid ""
 "copying them into ``RECT`` structure that the caller has to supply.  Here is "
 "the C declaration::"
 msgstr ""
+"L'exemple qui suit traite des paramètres en sortie. La fonction win32 "
+"``GetWindowRect`` donne les dimensions d'une fenêtre en les copiant dans une "
+"structure ``RECT`` que l'appelant doit fournir. Sa déclaration en C est ::"
 
 #: library/ctypes.rst:1788
 msgid ""
@@ -2397,6 +2462,11 @@ msgid ""
 "parameter values when there are more than one, so the GetWindowRect function "
 "now returns a RECT instance, when called."
 msgstr ""
+"Les fonctions avec des paramètres en sortie renvoient automatiquement la "
+"valeur du paramètre de sortie s'il n'y en a qu'un seul, ou un *n*-uplet avec "
+"les valeurs de sortie de chaque paramètre s'il y en a plusieurs. Ici, la "
+"fonction *GetWindowRect* renvoie donc une instance de *RECT* quand elle est "
+"appelée."
 
 #: library/ctypes.rst:1793
 msgid ""
@@ -2406,6 +2476,11 @@ msgid ""
 "function could do the error checking, and raises an exception when the api "
 "call failed::"
 msgstr ""
+"Il est possible de combiner des paramètres en sortie avec le protocole :attr:"
+"`errcheck` pour post-traiter les sorties et faire de la vérification "
+"d'erreur. La fonction de l'API win32 ``GetWindowRect`` renvoie un ``BOOL`` "
+"pour indiquer le succès ou l'échec de l'exécution, donc cette fonction peut "
+"vérifier le résultat et lever une exception quand l'appel à l'API a échoué ::"
 
 #: library/ctypes.rst:1806
 msgid ""
@@ -2415,6 +2490,12 @@ msgid ""
 "instead of a ``RECT`` instance, you can retrieve the fields in the function "
 "and return them instead, the normal processing will no longer take place::"
 msgstr ""
+"Si la fonction :attr:`errcheck` renvoie le *n*-uplet passé en paramètre sans "
+"rien y changer, :mod:`ctypes` continue l'exécution habituelle des paramètres "
+"en sortie. Si on préfère renvoyer un *n*-uplet de coordonnées au lieu de "
+"renvoyer une instance de ``RECT``, il faut récupérer les champs "
+"correspondants et les renvoyer en retour. Dans ce cas, l'exécution "
+"habituelle n'a plus lieu ::"
 
 #: library/ctypes.rst:1825
 msgid "Utility functions"

@@ -16,7 +16,7 @@ msgstr ""
 
 #: extending/newtypes_tutorial.rst:7
 msgid "Defining Extension Types: Tutorial"
-msgstr ""
+msgstr "Tutoriel : définir des types dans des extensions"
 
 #: extending/newtypes_tutorial.rst:14
 msgid ""
@@ -26,10 +26,15 @@ msgid ""
 "pattern, but there are some details that you need to understand before you "
 "can get started.  This document is a gentle introduction to the topic."
 msgstr ""
+"Python permet à l'auteur d'un module d'extension C de définir de nouveaux "
+"types qui peuvent être manipulés depuis du code Python, à la manière des "
+"types natifs :class:`str` et :class:`list`. Les implémentations de tous les "
+"types d'extension ont des similarités, mais quelques subtilités doivent être "
+"abordées avant de commencer."
 
 #: extending/newtypes_tutorial.rst:24
 msgid "The Basics"
-msgstr ""
+msgstr "Les bases"
 
 #: extending/newtypes_tutorial.rst:26
 msgid ""
@@ -48,6 +53,8 @@ msgid ""
 "So, if you want to define a new extension type, you need to create a new "
 "type object."
 msgstr ""
+"Donc, pour définir un nouveau type dans une extension, vous devez créer un "
+"nouvel objet type."
 
 #: extending/newtypes_tutorial.rst:38
 msgid ""
@@ -55,6 +62,9 @@ msgid ""
 "but complete, module that defines a new type named :class:`Custom` inside a "
 "C extension module :mod:`custom`:"
 msgstr ""
+"Ce genre de chose ne s'explique correctement qu'avec des exemples, voici "
+"donc un module minimaliste mais suffisant qui définit un nouveau type nommé :"
+"class:`Custom` dans le module d'extension :mod:`custom` :"
 
 #: extending/newtypes_tutorial.rst:43
 msgid ""
@@ -63,18 +73,27 @@ msgid ""
 "allows defining heap-allocated extension types using the :c:func:"
 "`PyType_FromSpec` function, which isn't covered in this tutorial."
 msgstr ""
+"Ce qui est montré ici est la manière traditionnelle de définir des types "
+"d'extension *statiques*, et cela convient dans la majorité des cas. L'API C "
+"permet aussi de définir des types alloués sur le tas, via la fonction :c:"
+"func:`PyType_FromSpec`, mais ce n'est pas couvert par ce tutoriel."
 
 #: extending/newtypes_tutorial.rst:50
 msgid ""
 "Now that's quite a bit to take in at once, but hopefully bits will seem "
 "familiar from the previous chapter.  This file defines three things:"
 msgstr ""
+"C'est un peu long, mais vous devez déjà reconnaître quelques morceaux "
+"expliqués au chapitre précédent. Ce fichier définit trois choses :"
 
 #: extending/newtypes_tutorial.rst:53
 msgid ""
 "What a :class:`Custom` **object** contains: this is the ``CustomObject`` "
 "struct, which is allocated once for each :class:`Custom` instance."
 msgstr ""
+"Ce qu'un **objet** :class:`Custom` contient : c'est la structure "
+"``CustomObject``, qui est allouée une fois pour chaque instance de :class:"
+"`Custom`."
 
 #: extending/newtypes_tutorial.rst:55
 msgid ""
@@ -82,16 +101,21 @@ msgid ""
 "which defines a set of flags and function pointers that the interpreter "
 "inspects when specific operations are requested."
 msgstr ""
+"Comment le **type** :class:`Custom` se comporte : c'est la structure "
+"``CustomType``, qui définit l'ensemble des options et pointeurs de fonction "
+"utilisés par l'interpréteur."
 
 #: extending/newtypes_tutorial.rst:58
 msgid ""
 "How to initialize the :mod:`custom` module: this is the ``PyInit_custom`` "
 "function and the associated ``custommodule`` struct."
 msgstr ""
+"Comment initialiser le module :mod:`custom` : c'est la fonction "
+"``PyInit_custom`` et la structure associée ``custommodule``."
 
 #: extending/newtypes_tutorial.rst:61
 msgid "The first bit is::"
-msgstr ""
+msgstr "Commençons par ::"
 
 #: extending/newtypes_tutorial.rst:67
 msgid ""
@@ -108,6 +132,9 @@ msgid ""
 "There is no semicolon above after the :c:macro:`PyObject_HEAD` macro. Be "
 "wary of adding one by accident: some compilers will complain."
 msgstr ""
+"Il n'y a pas de point-virgule après la macro :c:macro:`PyObject_HEAD`. "
+"Attention à ne pas l'ajouter par accident : certains compilateurs pourraient "
+"s'en plaindre."
 
 #: extending/newtypes_tutorial.rst:78
 msgid ""
@@ -115,10 +142,13 @@ msgid ""
 "``PyObject_HEAD`` boilerplate; for example, here is the definition for "
 "standard Python floats::"
 msgstr ""
+"Bien sûr, les objets ajoutent généralement des données supplémentaires après "
+"l'entête standard ``PyObject_HEAD``. Par exemple voici la définition du type "
+"standard Python ``float`` ::"
 
 #: extending/newtypes_tutorial.rst:87
 msgid "The second bit is the definition of the type object. ::"
-msgstr ""
+msgstr "La deuxième partie est la définition de l'objet type ::"
 
 #: extending/newtypes_tutorial.rst:100
 msgid ""
@@ -126,6 +156,10 @@ msgid ""
 "listing all the :c:type:`PyTypeObject` fields that you don't care about and "
 "also to avoid caring about the fields' declaration order."
 msgstr ""
+"Nous recommandons d'utiliser la syntaxe d'initialisation nommée (C99) pour "
+"remplir la structure, comme ci-dessus, afin d'éviter d'avoir à lister les "
+"champs de :c:type:`PyTypeObject` dont vous n'avez pas besoin, et de ne pas "
+"vous soucier de leur ordre."
 
 #: extending/newtypes_tutorial.rst:104
 msgid ""
@@ -134,22 +168,31 @@ msgid ""
 "fields will be filled with zeros by the C compiler, and it's common practice "
 "to not specify them explicitly unless you need them."
 msgstr ""
+"La définition de :c:type:`PyTypeObject` dans :file:`object.h` contient en "
+"fait bien plus de :ref:`champs <type-structs>` que la définition ci-dessus. "
+"Les champs restants sont mis à zéro par le compilateur C, et c'est une "
+"pratique répandue de ne pas spécifier les champs dont vous n'avez pas besoin."
 
 #: extending/newtypes_tutorial.rst:109
 msgid "We're going to pick it apart, one field at a time::"
-msgstr ""
+msgstr "Regardons les champs de cette structure, un par un ::"
 
 #: extending/newtypes_tutorial.rst:113
 msgid ""
 "This line is mandatory boilerplate to initialize the ``ob_base`` field "
 "mentioned above. ::"
 msgstr ""
+"Cette ligne, obligatoire, initialise le champ ``ob_base`` mentionné "
+"précédemment."
 
 #: extending/newtypes_tutorial.rst:118
 msgid ""
 "The name of our type.  This will appear in the default textual "
 "representation of our objects and in some error messages, for example:"
 msgstr ""
+"C'est le nom de notre type. Il apparaît dans la représentation textuelle par "
+"défaut de nos objets, ainsi que dans quelques messages d'erreur, par "
+"exemple :"
 
 #: extending/newtypes_tutorial.rst:128
 msgid ""
@@ -159,6 +202,11 @@ msgid ""
 "`custom.Custom`. Using the real dotted import path is important to make your "
 "type compatible with the :mod:`pydoc` and :mod:`pickle` modules. ::"
 msgstr ""
+"Notez que le nom comporte un point : il inclut le nom du module et le nom du "
+"type. Dans ce cas le module  est :mod:`custom`, et le type est :class:"
+"`Custom`, donc nous donnons comme nom :class:`custom.Custom`. Nommer "
+"correctement son type, avec le point, est important pour le rendre "
+"compatible avec :mod:`pydoc` et :mod:`pickle`. ::"
 
 #: extending/newtypes_tutorial.rst:137
 msgid ""
@@ -166,6 +214,10 @@ msgid ""
 "class:`Custom` instances.  :c:member:`~PyTypeObject.tp_itemsize` is only "
 "used for variable-sized objects and should otherwise be zero."
 msgstr ""
+"C'est pour que Python sache combien de mémoire allouer à la création d'une "
+"nouvelle instance de :class:`Custom`. :c:member:`~PyTypeObject.tp_itemsize` "
+"n'est utilisé que pour les objets de taille variable, sinon il doit rester à "
+"zéro."
 
 #: extending/newtypes_tutorial.rst:143
 msgid ""
@@ -180,10 +232,22 @@ msgid ""
 "type will be :class:`object`, or else you will be adding data members to "
 "your base type, and therefore increasing its size."
 msgstr ""
+"Si vous voulez qu'une classe en Python puisse hériter de votre type, et que "
+"votre type a le même :c:member:`~PyTypeObject.tp_basicsize` que son parent, "
+"vous rencontrerez des problèmes avec l'héritage multiple. Une sous-classe "
+"Python de votre type devra lister votre type en premier dans son :attr:"
+"`~class.__bases__`, sans quoi elle ne sera pas capable d'appeler la méthode :"
+"meth:`__new__` de votre type sans erreur. Vous pouvez éviter ce problème en "
+"vous assurant que votre type a un :c:member:`~PyTypeObject.tp_basicsize` "
+"plus grand que son parent. La plupart du temps ce sera vrai (soit son parent "
+"sera :class:`object`, soit vous ajouterez des attributs à votre type, "
+"augmentant ainsi sa taille)."
 
 #: extending/newtypes_tutorial.rst:153
 msgid "We set the class flags to :const:`Py_TPFLAGS_DEFAULT`. ::"
 msgstr ""
+"On utilise la constante :const:`Py_TPFLAGS_DEFAULT` comme seule option de "
+"type. ::"
 
 #: extending/newtypes_tutorial.rst:157
 msgid ""
@@ -191,11 +255,17 @@ msgid ""
 "the members defined until at least Python 3.3.  If you need further members, "
 "you will need to OR the corresponding flags."
 msgstr ""
+"Chaque type doit inclure cette constante dans ses options : elle active tous "
+"les membres définis jusqu'à au moins Python 3.3. Si vous avez besoin de plus "
+"de membres, vous pouvez la combiner à d'autres constantes avec un *ou* "
+"binaire."
 
 #: extending/newtypes_tutorial.rst:161
 msgid ""
 "We provide a doc string for the type in :c:member:`~PyTypeObject.tp_doc`. ::"
 msgstr ""
+"On fournit une *docstring* pour ce type via le membre :c:member:"
+"`~PyTypeObject.tp_doc`. ::"
 
 #: extending/newtypes_tutorial.rst:165
 msgid ""
@@ -205,12 +275,19 @@ msgid ""
 "use the default implementation provided by the API function :c:func:"
 "`PyType_GenericNew`. ::"
 msgstr ""
+"Pour permettre la création d'une instance, nous devons fournir un *handler* :"
+"c:member:`~PyTypeObject.tp_new`, qui est l'équivalent de la méthode Python :"
+"meth:`__new__`, mais elle a besoin d'être spécifiée explicitement. Dans ce "
+"cas, on se contente de l'implémentation par défaut fournie par la fonction :"
+"c:func:`PyType_GenericNew` de l'API."
 
 #: extending/newtypes_tutorial.rst:172
 msgid ""
 "Everything else in the file should be familiar, except for some code in :c:"
 "func:`PyInit_custom`::"
 msgstr ""
+"Le reste du fichier doit vous être familier, en dehors du code de :c:func:"
+"`PyInit_custom` ::"
 
 #: extending/newtypes_tutorial.rst:178
 msgid ""
@@ -218,18 +295,25 @@ msgid ""
 "the appropriate default values, including :attr:`ob_type` that we initially "
 "set to ``NULL``. ::"
 msgstr ""
+"Il initialise le type :class:`Custom`, en assignant quelques membres à leurs "
+"valeurs par défaut, tel que :attr:`ob_type` qui valait initialement "
+"``NULL``. ::"
 
 #: extending/newtypes_tutorial.rst:189
 msgid ""
 "This adds the type to the module dictionary.  This allows us to create :"
 "class:`Custom` instances by calling the :class:`Custom` class:"
 msgstr ""
+"Ici on ajoute le type au dictionnaire du module. Cela permet de créer une "
+"instance de :class:`Custom` en appelant la classe :class:`Custom` :"
 
 #: extending/newtypes_tutorial.rst:197
 msgid ""
 "That's it!  All that remains is to build it; put the above code in a file "
 "called :file:`custom.c` and:"
 msgstr ""
+"C'est tout ! Il ne reste plus qu'à compiler, placez le code ci-dessus dans "
+"un fichier :file:`custom.c` et :"
 
 #: extending/newtypes_tutorial.rst:206
 msgid "in a file called :file:`setup.py`; then typing"
