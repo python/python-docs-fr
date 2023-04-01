@@ -4,7 +4,10 @@ pipeline:
   test:
     image: python
     commands:
+      - apt-get update
+      - apt-get install -y hunspell hunspell-fr-comprehensive
       - python3 -m pip install -r requirements.txt
-      - sphinx-lint --enable all --disable line-too-long *.po */*.po
-      - pospell -p dict -l fr_FR *.po */*.po
-      - awk '{if (length(gensub(/శ్రీనివాస్/, ".", "g", $$0)) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $$0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}' *.po */*.po
+      - BRANCH="$(grep ^BRANCH Makefile | awk '{print $3}')"
+      - git fetch origin --no-tags +refs/heads/$BRANCH
+      - git branch $BRANCH origin/$BRANCH
+      - make verifs

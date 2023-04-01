@@ -85,7 +85,7 @@ else
 endif
 
 .PHONY: all
-all: ensure_prerequisites
+all: ensure_build_prerequisites
 	git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT) || (git -C venv/cpython fetch && git -C venv/cpython checkout $(CPYTHON_CURRENT_COMMIT))
 	mkdir -p locales/$(LANGUAGE)/LC_MESSAGES/
 	$(CP_CMD) -u --parents *.po */*.po locales/$(LANGUAGE)/LC_MESSAGES/
@@ -108,13 +108,22 @@ venv/cpython/.git/HEAD:
 	git clone https://github.com/python/cpython venv/cpython
 
 
-.PHONY: ensure_prerequisites
-ensure_prerequisites: venv/cpython/.git/HEAD
+.PHONY: ensure_test_prerequisites
+ensure_test_prerequisites:
+	@if ! (pospell --help >/dev/null 2>&1 && potodo --help >/dev/null 2>&1); then \
+	    echo "You're missing dependencies please install:"; \
+	    echo ""; \
+	    echo "  python -m pip install -r requirements.txt"; \
+	    exit 1; \
+	fi
+
+.PHONY: ensure_build_prerequisites
+ensure_build_prerequisites: venv/cpython/.git/HEAD
 	@if ! (blurb help >/dev/null 2>&1 && sphinx-build --version >/dev/null 2>&1); then \
 	    git -C venv/cpython/ checkout $(BRANCH); \
 	    echo "You're missing dependencies please install:"; \
 	    echo ""; \
-	    echo "  python -m pip install -r requirements.txt -r venv/cpython/Doc/requirements.txt"; \
+	    echo "  python -m pip install -r venv/cpython/Doc/requirements.txt"; \
 	    exit 1; \
 	fi
 
@@ -123,11 +132,11 @@ htmlview: MODE=htmlview
 htmlview: all
 
 .PHONY: todo
-todo: ensure_prerequisites
+todo: ensure_test_prerequisites
 	potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
-wrap: ensure_prerequisites
+wrap: ensure_test_prerequisites
 	@echo "Re wrapping modified files"
 	powrap -m
 
@@ -136,15 +145,15 @@ SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
 DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
 .PHONY: spell
-spell: ensure_prerequisites $(DESTS)
+spell: ensure_test_prerequisites $(DESTS)
 
 .PHONY: line-length
 line-length:
 	@echo "Searching for long lines..."
-	@awk '{if (length(gensub(/శ్రీనివాస్/, ".", "g", $$0)) > 80 && length(gensub(/[^ ]/, "", "g")) > 1) {print FILENAME ":" FNR, "line too long:", $$0; ERRORS+=1}} END {if (ERRORS>0) {exit 1}}' *.po */*.po
+	@python .scripts/line-length.py *.po */*.po
 
 .PHONY: sphinx-lint
-sphinx-lint:
+sphinx-lint: ensure_test_prerequisites
 	@echo "Checking all files using sphinx-lint..."
 	@sphinx-lint --enable all --disable line-too-long *.po */*.po
 
@@ -154,7 +163,7 @@ $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	pospell -p dict -l fr_FR $< && touch $@
 
 .PHONY: fuzzy
-fuzzy: ensure_prerequisites
+fuzzy: ensure_test_prerequisites
 	potodo --only-fuzzy --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: check-headers
