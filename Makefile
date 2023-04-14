@@ -149,13 +149,13 @@ spell: ensure_test_prerequisites $(DESTS)
 
 .PHONY: line-length
 line-length:
-	@echo "Searching for long lines..."
-	@python .scripts/line-length.py *.po */*.po
+	@echo Checking line length...
+	@python .scripts/line-length.py $(SRCS)
 
 .PHONY: sphinx-lint
 sphinx-lint: ensure_test_prerequisites
-	@echo "Checking all files using sphinx-lint..."
-	@sphinx-lint --enable all --disable line-too-long *.po */*.po
+	@echo Checking reStructuredText syntax...
+	@sphinx-lint --enable all --disable line-too-long $(SRCS)
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Pospell checking $<..."
@@ -168,25 +168,31 @@ fuzzy: ensure_test_prerequisites
 
 .PHONY: check-headers
 check-headers:
-	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' *.po */*.po | while read -r file;\
+	@echo Checking po headers...
+	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' $(SRCS) | while read -r file;\
 	do \
 		echo "Please update the po comment in $$file"; \
 	done
-	@grep -L '^"Project-Id-Version: Python 3\\n"$$' *.po */*.po | while read -r file;\
+	@grep -L '^"Project-Id-Version: Python 3\\n"$$' $(SRCS) | while read -r file;\
 	do \
 		echo "Please update the 'Project-Id-Version' header in $$file"; \
 	done
-	@grep -L '^"Language: fr\\n"$$' *.po */*.po | while read -r file;\
+	@grep -L '^"Language: fr\\n"$$' $(SRCS) | while read -r file;\
 	do \
 		echo "Please update the 'Language' header in $$file"; \
 	done
-	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' *.po */*.po | while read -r file;\
+	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' $(SRCS) | while read -r file;\
 	do \
 		echo "Please update the 'Language-Team' header in $$file"; \
 	done
 
+.PHONY: check-colons
+check-colons:
+	@echo Checking colons...
+	@python .scripts/check-colon.py --check $(SRCS)
+
 .PHONY: verifs
-verifs: spell line-length sphinx-lint check-headers
+verifs: spell line-length check-headers check-colons sphinx-lint
 
 .PHONY: clean
 clean:
