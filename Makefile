@@ -150,12 +150,12 @@ spell: ensure_test_prerequisites $(DESTS)
 .PHONY: line-length
 line-length:
 	@echo Checking line length...
-	@python .scripts/line-length.py $(SRCS)
+	@if [ -n "$(SRCS)" ]; then python .scripts/line-length.py $(SRCS); fi
 
 .PHONY: sphinx-lint
 sphinx-lint: ensure_test_prerequisites
 	@echo Checking reStructuredText syntax...
-	@sphinx-lint --enable all --disable line-too-long $(SRCS)
+	@if [ -n "$(SRCS)" ]; then sphinx-lint --enable all --disable line-too-long $(SRCS); fi
 
 $(POSPELL_TMP_DIR)/%.po.out: %.po dict
 	@echo "Pospell checking $<..."
@@ -169,22 +169,7 @@ fuzzy: ensure_test_prerequisites
 .PHONY: check-headers
 check-headers:
 	@echo Checking po headers...
-	@grep -L '^# Copyright (C) [0-9-]*, Python Software Foundation' $(SRCS) | while read -r file;\
-	do \
-		echo "Please update the po comment in $$file"; \
-	done
-	@grep -L '^"Project-Id-Version: Python 3\\n"$$' $(SRCS) | while read -r file;\
-	do \
-		echo "Please update the 'Project-Id-Version' header in $$file"; \
-	done
-	@grep -L '^"Language: fr\\n"$$' $(SRCS) | while read -r file;\
-	do \
-		echo "Please update the 'Language' header in $$file"; \
-	done
-	@grep -L '^"Language-Team: FRENCH <traductions@lists.afpy.org>\\n"' $(SRCS) | while read -r file;\
-	do \
-		echo "Please update the 'Language-Team' header in $$file"; \
-	done
+	@sh .scripts/check-headers.sh $(SRCS)
 
 .PHONY: check-colons
 check-colons:
