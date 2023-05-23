@@ -110,6 +110,12 @@ venv/cpython/.git/HEAD:
 
 .PHONY: ensure_test_prerequisites
 ensure_test_prerequisites:
+	@if ! (hunspell -v >/dev/null 2>&1); then \
+	    echo "You're missing dependencies please install: hunspell and the fr-toutesvariantes dictionary."; \
+	    echo "The dictionary is available here http://grammalecte.net:8080/dir?ci=tip&name=gc_lang/fr/oxt/Dictionnaires/dictionaries"; \
+	    echo "and also included in the hunspell-fr-comprehensive Debian package."; \
+	    exit 1; \
+	fi
 	@if ! (pospell --help >/dev/null 2>&1 && potodo --help >/dev/null 2>&1); then \
 	    echo "You're missing dependencies please install:"; \
 	    echo ""; \
