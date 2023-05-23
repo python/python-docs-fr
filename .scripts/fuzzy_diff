@@ -1,0 +1,66 @@
+#!/bin/sh
+
+
+_usage() {
+    echo "Usage: $0 [-n] PO_FILE"
+    echo "Ease the correction of fuzzies inserted by merge commits"
+    echo
+    echo "-n, --no-edit    do not launch po editor"
+    exit
+}
+
+LAUNCH_EDIT=1
+if [ $# -eq 2 ]; then
+    if [ "$1" -eq "-n" ] || [ "$1" -eq "--no-edit" ]; then
+        LAUNCH_EDIT=0
+    else
+        _usage
+    fi
+    shift
+fi
+
+if [ $# -ne 1 ]; then
+    _usage
+fi
+
+if [ ! -f "$1" ]; then
+    echo "$1: file not found"
+    _usage
+fi
+
+# Temp directory to filter files before display
+TMP_DIR=$(mktemp -d /tmp/fuzzy_diff.XXXXXX || exit 1)
+trap 'rm --force --recursive "${TMP_DIR}"' EXIT
+
+
+PO_EDITOR=poedit
+DIFFTOOL=$(which $(git config diff.tool))
+
+if [ ! -x "$DIFFTOOL" ]; then
+    echo "git diff.tool seems not configured"
+    _usage
+fi
+
+PO_FILE=$1
+
+# search for revs where fuzzy was added or suppressed
+# and filter where commit message contains 'merge'
+FUZZY_REVS=$(git log --oneline -S '#, fuzzy' ${PO_FILE} | \
+             grep -i 'merge' | \
+             awk '{ print $1 }')
+
+if [ ${LAUNCH_EDIT} -eq 1 ]; then
+    ${PO_EDITOR} "${PO_FILE}" 2>/dev/null &
+fi
+
+for sha in ${FUZZY_REVS} ; do
+    # filter files à la mode textconv
+    git show ${sha}:${PO_FILE} | grep -v -e '^#:' -e '^"PO' > ${TMP_DIR}/right.po
+    git show ${sha}^:${PO_FILE} | grep -v -e '^#:' -e '^"PO' > ${TMP_DIR}/left.po
+    "${DIFFTOOL}" ${TMP_DIR}/left.po ${TMP_DIR}/right.po
+done
+
+# clean up temp directory
+rm --force --recursive "${TMP_DIR}"
+trap - EXIT
+
