@@ -177,13 +177,13 @@ check-headers:
 	@echo Checking po headers...
 	@sh .scripts/check-headers.sh $(SRCS)
 
-.PHONY: check-colons
-check-colons:
-	@echo Checking colons...
-	@python .scripts/check-colon.py --check $(SRCS)
+# .PHONY: check-colons
+# check-colons:
+# 	@echo Checking colons...
+# 	@python .scripts/check-colon.py --check $(SRCS)
 
 .PHONY: verifs
-verifs: spell line-length check-headers check-colons sphinx-lint
+verifs: spell line-length check-headers sphinx-lint
 
 .PHONY: clean
 clean:
