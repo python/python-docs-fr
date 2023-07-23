@@ -146,7 +146,7 @@ wrap: ensure_test_prerequisites
 	@echo "Re wrapping modified files"
 	powrap -m
 
-SRCS = $(shell git diff --name-only $(BRANCH) | grep '.po$$')
+SRCS = $(shell git diff --name-only --diff-filter=d $(BRANCH) | grep '.po$$')
 # foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
 DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
 
