@@ -6,25 +6,26 @@ msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-24 09:01+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2023-11-21 23:04+0100\n"
+"Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: library/email.contentmanager.rst:2
 msgid ":mod:`email.contentmanager`: Managing MIME Content"
-msgstr ""
+msgstr ":mod:`email.contentmanager` : gestion du contenu MIME"
 
 #: library/email.contentmanager.rst:10
 msgid "**Source code:** :source:`Lib/email/contentmanager.py`"
-msgstr ""
+msgstr "**Code source :** :source:`Lib/email/contentmanager.py`"
 
 #: library/email.contentmanager.rst:14
 msgid "[1]_"
-msgstr ""
+msgstr "[1]_"
 
 #: library/email.contentmanager.rst:19
 msgid ""
@@ -32,6 +33,10 @@ msgid ""
 "to register converters between MIME content and other representations, as "
 "well as the ``get_content`` and ``set_content`` dispatch methods."
 msgstr ""
+"Classe mère pour les gestionnaires de contenu. Fournit les mécanismes de "
+"registre standard pour enregistrer les convertisseurs entre le contenu MIME "
+"et d'autres représentations, ainsi que les méthodes de répartition "
+"``get_content`` et ``set_content``."
 
 #: library/email.contentmanager.rst:26
 msgid ""
@@ -40,30 +45,39 @@ msgid ""
 "the call.  The expectation is that the handler will extract the payload from "
 "*msg* and return an object that encodes information about the extracted data."
 msgstr ""
+"Recherche une fonction de gestion en se basant sur le ``mimetype`` de *msg* "
+"(voir le paragraphe suivant), l'appelle en lui passant tous les arguments et "
+"renvoie le résultat de l'appel. Le gestionnaire doit extraire la charge "
+"utile de *msg* et renvoyer un objet qui encode les informations relatives "
+"aux données extraites."
 
 #: library/email.contentmanager.rst:32
 msgid ""
 "To find the handler, look for the following keys in the registry, stopping "
 "with the first one found:"
 msgstr ""
+"Pour trouver le gestionnaire, recherche les clés suivantes dans le registre, "
+"en s'arrêtant à la première trouvée :"
 
 #: library/email.contentmanager.rst:35
 msgid "the string representing the full MIME type (``maintype/subtype``)"
-msgstr ""
+msgstr "une chaîne représentant le type MIME complet (``maintype/subtype``) ;"
 
 #: library/email.contentmanager.rst:36
 msgid "the string representing the ``maintype``"
-msgstr ""
+msgstr "une chaîne représentant le ``maintype`` ;"
 
 #: library/email.contentmanager.rst:37
 msgid "the empty string"
-msgstr ""
+msgstr "une chaîne vide."
 
 #: library/email.contentmanager.rst:39
 msgid ""
 "If none of these keys produce a handler, raise a :exc:`KeyError` for the "
 "full MIME type."
 msgstr ""
+"Si aucune de ces clés ne produit de gestionnaire, lève une :exc:`KeyError` "
+"pour le type MIME complet."
 
 #: library/email.contentmanager.rst:45
 msgid ""
@@ -75,6 +89,14 @@ msgid ""
 "making other changes to *msg* as well, such as adding various MIME headers "
 "to encode information needed to interpret the stored data."
 msgstr ""
+"Si le ``maintype`` est ``multipart``, lève une :exc:`TypeError` ; sinon "
+"recherche une fonction de gestion en se basant sur le type de *obj* (voir le "
+"paragraphe suivant), appelle :meth:`~email.message.EmailMessage."
+"clear_content` sur le *msg* et appelle la fonction de gestion en lui passant "
+"tous les arguments. Le gestionnaire doit transformer et stocker *obj* en "
+"*msg*, apportant éventuellement d'autres modifications à *msg* également, "
+"comme l'ajout de divers en-têtes MIME pour coder les informations "
+"nécessaires à l'interprétation des données stockées."
 
 #: library/email.contentmanager.rst:54
 msgid ""
@@ -82,24 +104,27 @@ msgid ""
 "look for the following keys in the registry, stopping with the first one "
 "found:"
 msgstr ""
+"Pour trouver le gestionnaire, récupère le type de *obj* (``typ = "
+"type(obj)``) et recherche les clés suivantes dans le registre, en s'arrêtant "
+"à la première trouvée :"
 
 #: library/email.contentmanager.rst:58
 msgid "the type itself (``typ``)"
-msgstr ""
+msgstr "le type lui-même (``typ``) ;"
 
 #: library/email.contentmanager.rst:59
 msgid ""
 "the type's fully qualified name (``typ.__module__ + '.' + typ."
 "__qualname__``)."
-msgstr ""
+msgstr "le nom complet du type (``typ.__module__ + '.' + typ.__qualname__``) ;"
 
 #: library/email.contentmanager.rst:61
 msgid "the type's qualname (``typ.__qualname__``)"
-msgstr ""
+msgstr "le nom qualifié du type (``typ.__qualname__``) ;"
 
 #: library/email.contentmanager.rst:62
 msgid "the type's name (``typ.__name__``)."
-msgstr ""
+msgstr "le nom du type (``typ.__name__``)."
 
 #: library/email.contentmanager.rst:64
 msgid ""
@@ -109,18 +134,27 @@ msgid ""
 "for ``None``, raise a :exc:`KeyError` for the fully qualified name of the "
 "type."
 msgstr ""
+"Si aucune de ces clés ne correspond, répète toutes les vérifications ci-"
+"dessus pour chacun des types en suivant le :term:`MRO` (``typ.__mro__``). "
+"Enfin, si aucune clé ne produit de gestionnaire, recherche un gestionnaire "
+"pour la clé ``None``. S'il n'y a pas de gestionnaire pour ``None``, lève "
+"une :exc:`KeyError` pour le nom complet du type."
 
 #: library/email.contentmanager.rst:70
 msgid ""
 "Also add a :mailheader:`MIME-Version` header if one is not present (see "
 "also :class:`.MIMEPart`)."
 msgstr ""
+"Ajoute également un en-tête :mailheader:`MIME-Version` s'il n'y en a pas "
+"(voir aussi :class:`.MIMEPart`)."
 
 #: library/email.contentmanager.rst:76
 msgid ""
 "Record the function *handler* as the handler for *key*.  For the possible "
 "values of *key*, see :meth:`get_content`."
 msgstr ""
+"Enregistre la fonction *handler* comme gestionnaire pour *key*. Pour les "
+"valeurs possibles de *key*, voir :meth:`get_content`."
 
 #: library/email.contentmanager.rst:82
 msgid ""
@@ -128,10 +162,13 @@ msgid ""
 "*typekey* is passed to :meth:`set_content`.  For the possible values of "
 "*typekey*, see :meth:`set_content`."
 msgstr ""
+"Enregistre *handler* comme fonction à appeler lorsqu'un objet d'un type "
+"correspondant à *typekey* est passé à :meth:`set_content`. Pour les valeurs "
+"possibles de *typekey*, voir :meth:`set_content`."
 
 #: library/email.contentmanager.rst:88
 msgid "Content Manager Instances"
-msgstr ""
+msgstr "Instances de gestionnaires de contenus"
 
 #: library/email.contentmanager.rst:90
 msgid ""
@@ -140,6 +177,11 @@ msgid ""
 "`raw_data_manager` is the :attr:`~email.policy.EmailPolicy.content_manager` "
 "provided by :attr:`~email.policy.EmailPolicy` and its derivatives."
 msgstr ""
+"Actuellement, le paquet *email* ne fournit qu'un seul gestionnaire de "
+"contenu concret, :data:`raw_data_manager`, bien que d'autres puissent être "
+"ajoutés à l'avenir. :data:`raw_data_manager` est le :attr:`~email.policy."
+"EmailPolicy.content_manager` fourni par :attr:`~email.policy.EmailPolicy` et "
+"ses dérivés."
 
 #: library/email.contentmanager.rst:99
 msgid ""
@@ -153,6 +195,16 @@ msgid ""
 "encoding, and it enables the use of the various ``add_`` methods, thereby "
 "simplifying the creation of multipart messages."
 msgstr ""
+"Ce gestionnaire de contenu ne fournit qu'une interface minimale au-delà de "
+"celle fournie par :class:`~email.message.Message` lui-même : il  prend "
+"seulement en charge le texte, les chaînes d'octets brutes et les objets :"
+"class:`~email.message.Message`. Néanmoins, il offre des avantages "
+"significatifs par rapport à l'API de base : ``get_content`` sur une partie "
+"de texte renvoie une chaîne Unicode sans que l'application ait besoin de la "
+"décoder manuellement, ``set_content`` fournit de nombreuses options pour "
+"contrôler les en-têtes ajoutés à une partie et l'encodage du transfert de "
+"contenu, et il permet l'utilisation des différentes méthodes ``add_``, ce "
+"qui simplifie la création de messages en plusieurs parties."
 
 #: library/email.contentmanager.rst:111
 msgid ""
@@ -163,27 +215,41 @@ msgid ""
 "*errors* is specified, use it as the error handler when decoding the payload "
 "to unicode.  The default error handler is ``replace``."
 msgstr ""
+"Renvoie la charge utile de la partie sous la forme d'une chaîne (pour les "
+"parties ``text``), d'un objet :class:`~email.message.EmailMessage` (pour les "
+"parties ``message/rfc822``) ou d'un objet ``bytes`` (pour tous les autres "
+"types à l'exception de *multipart*). Lève une :exc:`KeyError` si cette "
+"méthode est appelée sur un ``multipart``. S'il s'agit d'une partie ``text`` "
+"et que *errors* est spécifié, ce paramètre est utilisé comme gestionnaire "
+"d'erreurs lors du décodage de la charge utile en Unicode. Le gestionnaire "
+"d'erreurs par défaut est ``replace``."
 
 #: library/email.contentmanager.rst:130
 msgid "Add headers and payload to *msg*:"
-msgstr ""
+msgstr "Ajoute des en-têtes et une charge utile à *msg* :"
 
 #: library/email.contentmanager.rst:132
 msgid ""
 "Add a :mailheader:`Content-Type` header with a ``maintype/subtype`` value."
 msgstr ""
+"Ajoute un en-tête :mailheader:`Content-Type` avec une valeur ``maintype/"
+"subtype``."
 
 #: library/email.contentmanager.rst:135
 msgid ""
 "For ``str``, set the MIME ``maintype`` to ``text``, and set the subtype to "
 "*subtype* if it is specified, or ``plain`` if it is not."
 msgstr ""
+"Pour ``str``, définit le ``maintype`` MIME à ``text`` et définit le sous-"
+"type à *subtype* s'il est spécifié, ou à ``plain`` s'il ne l'est pas."
 
 #: library/email.contentmanager.rst:137
 msgid ""
 "For ``bytes``, use the specified *maintype* and *subtype*, or raise a :exc:"
 "`TypeError` if they are not specified."
 msgstr ""
+"Pour ``bytes``, utilise les *maintype* et *subtype* spécifiés, ou lève une :"
+"exc:`TypeError` s'ils ne sont pas spécifiés."
 
 #: library/email.contentmanager.rst:139
 msgid ""
@@ -192,6 +258,11 @@ msgid ""
 "``rfc822`` if it is not.  If *subtype* is ``partial``, raise an error "
 "(``bytes`` objects must be used to construct ``message/partial`` parts)."
 msgstr ""
+"Pour les objets :class:`~email.message.EmailMessage`, définit le type "
+"principal (*maintype*) à ``message`` et définit le sous-type à *subtype* "
+"s'il est spécifié ou à ``rfc822`` s'il ne l'est pas. Si *subtype* est "
+"``partial``, lève une erreur (les objets ``bytes`` doivent être utilisés "
+"pour construire les parties ``message/partial``)."
 
 #: library/email.contentmanager.rst:145
 msgid ""
@@ -200,6 +271,11 @@ msgid ""
 "``utf-8``.  If the specified *charset* is a known alias for a standard MIME "
 "charset name, use the standard charset instead."
 msgstr ""
+"Si *charset* est fourni (qui n'est valide que pour ``str``), encode la "
+"chaîne en octets en utilisant le jeu de caractères spécifié. La valeur par "
+"défaut est ``utf-8``. Si le *charset* spécifié est un alias connu pour un "
+"nom de jeu de caractères MIME standard, utilise plutôt le jeu de caractères "
+"standard."
 
 #: library/email.contentmanager.rst:150
 msgid ""
@@ -210,12 +286,21 @@ msgid ""
 "specified encoding (for example, specifying a *cte* of ``7bit`` for an input "
 "that contains non-ASCII values), raise a :exc:`ValueError`."
 msgstr ""
+"Si *cte* est défini, encode la charge utile à l'aide de l'encodage de "
+"transfert de contenu spécifié et définit l'en-tête :mailheader:`Content-"
+"Transfer-Encoding` à cette valeur. Les valeurs possibles pour *cte* sont "
+"``quoted-printable``, ``base64``, ``7bit``, ``8bit`` et ``binary``. Si "
+"l'entrée ne peut pas être encodée dans l'encodage spécifié (par exemple, en "
+"spécifiant un *cte* de ``7bit`` pour une entrée qui contient des valeurs non-"
+"ASCII), lève une :exc:`ValueError`."
 
 #: library/email.contentmanager.rst:158
 msgid ""
 "For ``str`` objects, if *cte* is not set use heuristics to determine the "
 "most compact encoding."
 msgstr ""
+"Pour les objets ``str``, si *cte* n'est pas défini, utilise une heuristique "
+"pour déterminer l'encodage le plus compact."
 
 #: library/email.contentmanager.rst:160
 msgid ""
@@ -225,13 +310,24 @@ msgid ""
 "body``.  For ``message/rfc822``, use ``8bit`` if *cte* is not specified.  "
 "For all other values of *subtype*, use ``7bit``."
 msgstr ""
+"Pour :class:`~email.message.EmailMessage`, selon la :rfc:`2046`, pour le "
+"*subtype* ``rfc822`, lève une erreur pour un *cte* valant ``quoted-"
+"printable`` ou ``base64``. Pour le *subtype* ``external-body``, lève une "
+"erreur pour tout *cte* autre que ``7bit``. Pour ``message/rfc822``, la "
+"valeur par défaut de *cte* est ``8bit``. Pour toutes les autres valeurs de "
+"*sous-type*, la valeur par défaut de *cte* est ``7bit``."
 
+# suit un :
 #: library/email.contentmanager.rst:167
 msgid ""
 "A *cte* of ``binary`` does not actually work correctly yet. The "
 "``EmailMessage`` object as modified by ``set_content`` is correct, but :"
 "class:`~email.generator.BytesGenerator` does not serialize it correctly."
 msgstr ""
+"la valeur ``binary`` pour *cte* ne fonctionne pas encore correctement. "
+"L'objet ``EmailMessage`` tel que modifié par ``set_content`` est correct, "
+"mais :class:`~email.generator.BytesGenerator` ne le sérialise pas "
+"correctement."
 
 #: library/email.contentmanager.rst:172
 msgid ""
@@ -241,18 +337,27 @@ msgid ""
 "*filename* is also not specified, do not add the header.  The only valid "
 "values for *disposition* are ``attachment`` and ``inline``."
 msgstr ""
+"Si *disposition* est spécifié, utilise cette valeur pour l'en-tête :"
+"mailheader:`Content-Disposition`. S'il n'est pas spécifié et que *filename* "
+"est spécifié, utilise la valeur ``attachment`` pour l'en-tête. Si ni "
+"*disposition* ni *filename* ne sont spécifiés, n'ajoute pas cet en-tête. Les "
+"seules valeurs valides pour *disposition* sont ``attachment`` et ``inline``."
 
 #: library/email.contentmanager.rst:179
 msgid ""
 "If *filename* is specified, use it as the value of the ``filename`` "
 "parameter of the :mailheader:`Content-Disposition` header."
 msgstr ""
+"Si *filename* est spécifié, utilise cette valeur pour le paramètre "
+"``filename`` de l'en-tête :mailheader:`Content-Disposition`."
 
 #: library/email.contentmanager.rst:182
 msgid ""
 "If *cid* is specified, add a :mailheader:`Content-ID` header with *cid* as "
 "its value."
 msgstr ""
+"Si *cid* est spécifié, ajoute un en-tête :mailheader:`Content-ID` avec cette "
+"valeur."
 
 #: library/email.contentmanager.rst:185
 msgid ""
@@ -260,6 +365,9 @@ msgid ""
 "``(key, value)`` pairs to set additional parameters on the :mailheader:"
 "`Content-Type` header."
 msgstr ""
+"Si *params* est spécifié, itère sur sa méthode ``items`` et utilise les "
+"paires ``(clé, valeur)`` résultantes pour définir des paramètres "
+"supplémentaires dans l'en-tête :mailheader:`Content-Type`."
 
 #: library/email.contentmanager.rst:189
 msgid ""
@@ -267,6 +375,9 @@ msgid ""
 "headervalue`` or a list of ``header`` objects (distinguished from strings by "
 "having a ``name`` attribute), add the headers to *msg*."
 msgstr ""
+"Si *headers* est spécifié et est une liste de chaînes de la forme "
+"``headername: headervalue`` ou une liste d'objets ``header`` (distingués des "
+"chaînes par l'attribut ``name``), ajoute ces en-têtes à *msg*."
 
 #: library/email.contentmanager.rst:196
 msgid "Footnotes"
@@ -276,3 +387,5 @@ msgstr "Notes"
 msgid ""
 "Originally added in 3.4 as a :term:`provisional module <provisional package>`"
 msgstr ""
+"Initialement ajouté dans 3.4 en tant que :term:`paquet provisoire "
+"<provisional package>`."
