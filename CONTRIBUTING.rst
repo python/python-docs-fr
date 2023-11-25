@@ -613,6 +613,7 @@ roughly                    approximativement, à peu près (on ne traduit pas
                            « roughly equivalent » par « sensiblement équivalent »)
 setter                     mutateur
 simple quote               guillemet simple
+slot                       emplacement
 socket                     connecteur ou interface de connexion
 sort                       trier (préféré), ordonner, classer
 specify                    définir, préciser (plutôt que « spécifier »)
