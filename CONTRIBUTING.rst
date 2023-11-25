@@ -264,7 +264,8 @@ Troisième étape: Traduction
 ===========================
 
 Avec Poedit
----------------
+-----------
+
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
 
 .. code-block:: bash
@@ -272,7 +273,12 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
     poedit library/sys.po
 
 
-Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
+Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
+
+Il n'est pas obligatoire de terminer un fichier, ni de le travailler
+de haut en bas, chacun traduit ce qu'il souhaite. Cependant évitons de
+changer plus de 200 lignes par *pull request* (pour le confort des
+relecteurs). Faire plusieurs *pull requests* est bien sûr autorisé.
 
 
 Vérifications après traduction
