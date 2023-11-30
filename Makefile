@@ -192,3 +192,11 @@ clean:
 	find -name '*.mo' -delete
 	@echo "Cleaning build directory"
 	$(MAKE) -C venv/cpython/Doc/ clean
+
+.PHONY: diff
+diff:
+	@echo "Files changed between $(BRANCH) and HEAD:"
+	@echo $(shell git diff --name-only --diff-filter=d $(BRANCH))
+
+print-%:
+	@echo $($*)

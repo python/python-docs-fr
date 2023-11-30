@@ -1,13 +1,37 @@
 ---
 
-pipeline:
+# `make verifs` only checks changed files, so it make sense only on
+# pull requests.
+
+# Also we're using `branch: "$CI_COMMIT_SOURCE_BRANCH"` because the
+# default branch name is the target branch, conflicting with the fact
+# the Makefile tries to compare the current branch to the target
+# branch...
+
+when:
+  event: pull_request
+
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    pull: true
+    settings:
+      branch: ${CI_COMMIT_SOURCE_BRANCH}
+
+steps:
+  fetch target branch:
+    image: python
+    commands:
+      - BRANCH="$(make print-BRANCH)"
+      - git fetch origin --no-tags +refs/heads/$BRANCH
+      - git branch $BRANCH origin/$BRANCH
+      - git branch -va
+
   test:
     image: python
     commands:
       - apt-get update
       - apt-get install -y hunspell hunspell-fr-comprehensive
       - python3 -m pip install -r requirements.txt
-      - BRANCH="$(grep ^BRANCH Makefile | awk '{print $3}')"
-      - git fetch origin --no-tags +refs/heads/$BRANCH
-      - 'git branch $BRANCH origin/$BRANCH ||:'
+      - make diff
       - make verifs
