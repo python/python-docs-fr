@@ -604,7 +604,7 @@ list comprehension         liste en compréhension (liste en intension est
 little-endian, big-endian  `petit-boutiste, gros-boutiste
                            <https://fr.wikipedia.org/wiki/Endianness>`_
 mixin type                 type de mélange
-mutable                    muable
+mutable                    `mutable <https://git.afpy.org/AFPy/python-docs-fr/issues/123>`_
 namespace                  espace de nommage
                            (sauf pour le XML où c'est espace de noms)
 parameter                  paramètre
