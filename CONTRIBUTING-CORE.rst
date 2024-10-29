@@ -1,3 +1,14 @@
+Nouvelle branche upstream
+-------------------------
+
+Lorsque cpython crée une nouvelle branche, il debient possible de la
+traduire ::
+
+    git switch -c 3.13
+    python .scripts/merge.py --cpython_repo ../cpython/ origin/3.13
+    make verifs
+
+
 Maintenance
 -----------
 
