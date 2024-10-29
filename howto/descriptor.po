@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-03-27 16:50+0200\n"
 "Last-Translator: Mathieu Dupuy\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: howto/descriptor.rst:5
-msgid "Descriptor HowTo Guide"
+#, fuzzy
+msgid "Descriptor Guide"
 msgstr "Guide pour l'utilisation des descripteurs"
 
 #: howto/descriptor.rst:0
@@ -119,6 +120,13 @@ msgstr ""
 "La classe :class:`Ten` est un descripteur dont la méthode :meth:`__get__` "
 "renvoie toujours la constante ``10`` :"
 
+#: howto/descriptor.rst:48
+msgid ""
+"class Ten:\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        return 10"
+msgstr ""
+
 #: howto/descriptor.rst:54
 msgid ""
 "To use the descriptor, it must be stored as a class variable in another "
@@ -127,6 +135,13 @@ msgstr ""
 "Pour utiliser le descripteur, il doit être stocké en tant que variable de "
 "classe dans une autre classe :"
 
+#: howto/descriptor.rst:56
+msgid ""
+"class A:\n"
+"    x = 5                       # Regular class attribute\n"
+"    y = Ten()                   # Descriptor instance"
+msgstr ""
+
 #: howto/descriptor.rst:62
 msgid ""
 "An interactive session shows the difference between normal attribute lookup "
@@ -134,6 +149,15 @@ msgid ""
 msgstr ""
 "Une session interactive montre la différence entre la recherche d'attribut "
 "normale et la recherche *via* un descripteur :"
+
+#: howto/descriptor.rst:65
+msgid ""
+">>> a = A()                     # Make an instance of class A\n"
+">>> a.x                         # Normal attribute lookup\n"
+"5\n"
+">>> a.y                         # Descriptor lookup\n"
+"10"
+msgstr ""
 
 #: howto/descriptor.rst:73
 msgid ""
@@ -184,6 +208,23 @@ msgstr ""
 "Les descripteurs intéressants exécutent généralement des calculs au lieu de "
 "renvoyer des constantes :"
 
+#: howto/descriptor.rst:93
+msgid ""
+"import os\n"
+"\n"
+"class DirectorySize:\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        return len(os.listdir(obj.dirname))\n"
+"\n"
+"class Directory:\n"
+"\n"
+"    size = DirectorySize()              # Descriptor instance\n"
+"\n"
+"    def __init__(self, dirname):\n"
+"        self.dirname = dirname          # Regular instance attribute"
+msgstr ""
+
 #: howto/descriptor.rst:109
 msgid ""
 "An interactive session shows that the lookup is dynamic — it computes "
@@ -191,6 +232,22 @@ msgid ""
 msgstr ""
 "Une session interactive montre que la recherche est dynamique — elle calcule "
 "des réponses différentes, mises à jour à chaque fois ::"
+
+#: howto/descriptor.rst:112
+msgid ""
+">>> s = Directory('songs')\n"
+">>> g = Directory('games')\n"
+">>> s.size                              # The songs directory has twenty "
+"files\n"
+"20\n"
+">>> g.size                              # The games directory has three "
+"files\n"
+"3\n"
+">>> os.remove('games/chess')            # Delete a game\n"
+">>> g.size                              # File count is automatically "
+"updated\n"
+"2"
+msgstr ""
 
 #: howto/descriptor.rst:122
 msgid ""
@@ -237,6 +294,35 @@ msgstr ""
 "l'attribut privé. Lors de l'accès à l'attribut public, le descripteur "
 "journalise la recherche ou la mise à jour :"
 
+#: howto/descriptor.rst:143
+msgid ""
+"import logging\n"
+"\n"
+"logging.basicConfig(level=logging.INFO)\n"
+"\n"
+"class LoggedAgeAccess:\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        value = obj._age\n"
+"        logging.info('Accessing %r giving %r', 'age', value)\n"
+"        return value\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        logging.info('Updating %r to %r', 'age', value)\n"
+"        obj._age = value\n"
+"\n"
+"class Person:\n"
+"\n"
+"    age = LoggedAgeAccess()             # Descriptor instance\n"
+"\n"
+"    def __init__(self, name, age):\n"
+"        self.name = name                # Regular instance attribute\n"
+"        self.age = age                  # Calls __set__()\n"
+"\n"
+"    def birthday(self):\n"
+"        self.age += 1                   # Calls both __get__() and __set__()"
+msgstr ""
+
 #: howto/descriptor.rst:172
 msgid ""
 "An interactive session shows that all access to the managed attribute *age* "
@@ -245,6 +331,36 @@ msgstr ""
 "Une session interactive montre que tous les accès à l'attribut géré *age* "
 "sont consignés, mais que rien n'est journalisé pour l'attribut normal "
 "*name* :"
+
+#: howto/descriptor.rst:181
+msgid ""
+">>> mary = Person('Mary M', 30)         # The initial age update is logged\n"
+"INFO:root:Updating 'age' to 30\n"
+">>> dave = Person('David D', 40)\n"
+"INFO:root:Updating 'age' to 40\n"
+"\n"
+">>> vars(mary)                          # The actual data is in a private "
+"attribute\n"
+"{'name': 'Mary M', '_age': 30}\n"
+">>> vars(dave)\n"
+"{'name': 'David D', '_age': 40}\n"
+"\n"
+">>> mary.age                            # Access the data and log the "
+"lookup\n"
+"INFO:root:Accessing 'age' giving 30\n"
+"30\n"
+">>> mary.birthday()                     # Updates are logged as well\n"
+"INFO:root:Accessing 'age' giving 30\n"
+"INFO:root:Updating 'age' to 31\n"
+"\n"
+">>> dave.name                           # Regular attribute lookup isn't "
+"logged\n"
+"'David D'\n"
+">>> dave.age                            # Only the managed attribute is "
+"logged\n"
+"INFO:root:Accessing 'age' giving 40\n"
+"40"
+msgstr ""
 
 #: howto/descriptor.rst:206
 msgid ""
@@ -284,6 +400,40 @@ msgstr ""
 "*LoggedAccess* afin que les noms de champs puissent être enregistrés, en "
 "donnant à chaque descripteur ses propres *public_name* et *private_name* :"
 
+#: howto/descriptor.rst:223
+msgid ""
+"import logging\n"
+"\n"
+"logging.basicConfig(level=logging.INFO)\n"
+"\n"
+"class LoggedAccess:\n"
+"\n"
+"    def __set_name__(self, owner, name):\n"
+"        self.public_name = name\n"
+"        self.private_name = '_' + name\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        value = getattr(obj, self.private_name)\n"
+"        logging.info('Accessing %r giving %r', self.public_name, value)\n"
+"        return value\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        logging.info('Updating %r to %r', self.public_name, value)\n"
+"        setattr(obj, self.private_name, value)\n"
+"\n"
+"class Person:\n"
+"\n"
+"    name = LoggedAccess()                # First descriptor instance\n"
+"    age = LoggedAccess()                 # Second descriptor instance\n"
+"\n"
+"    def __init__(self, name, age):\n"
+"        self.name = name                 # Calls the first descriptor\n"
+"        self.age = age                   # Calls the second descriptor\n"
+"\n"
+"    def birthday(self):\n"
+"        self.age += 1"
+msgstr ""
+
 #: howto/descriptor.rst:256
 msgid ""
 "An interactive session shows that the :class:`Person` class has called :meth:"
@@ -294,14 +444,40 @@ msgstr ""
 "`__set_name__` pour que les noms des champs soient enregistrés. Ici, nous "
 "appelons :func:`vars` pour rechercher le descripteur sans le déclencher :"
 
+#: howto/descriptor.rst:260
+msgid ""
+">>> vars(vars(Person)['name'])\n"
+"{'public_name': 'name', 'private_name': '_name'}\n"
+">>> vars(vars(Person)['age'])\n"
+"{'public_name': 'age', 'private_name': '_age'}"
+msgstr ""
+
 #: howto/descriptor.rst:267
 msgid "The new class now logs access to both *name* and *age*:"
 msgstr ""
 "La nouvelle classe enregistre désormais l'accès à la fois à *name* et *age* :"
 
+#: howto/descriptor.rst:275
+msgid ""
+">>> pete = Person('Peter P', 10)\n"
+"INFO:root:Updating 'name' to 'Peter P'\n"
+"INFO:root:Updating 'age' to 10\n"
+">>> kate = Person('Catherine C', 20)\n"
+"INFO:root:Updating 'name' to 'Catherine C'\n"
+"INFO:root:Updating 'age' to 20"
+msgstr ""
+
 #: howto/descriptor.rst:284
 msgid "The two *Person* instances contain only the private names:"
 msgstr "Les deux instances de *Person* ne contiennent que les noms privés :"
+
+#: howto/descriptor.rst:286
+msgid ""
+">>> vars(pete)\n"
+"{'_name': 'Peter P', '_age': 10}\n"
+">>> vars(kate)\n"
+"{'_name': 'Catherine C', '_age': 20}"
+msgstr ""
 
 #: howto/descriptor.rst:295
 msgid "Closing thoughts"
@@ -416,6 +592,27 @@ msgstr ""
 "Cette classe :class:`Validator` est à la fois une :term:`classe mère "
 "abstraite <abstract base class>` et un descripteur d'attributs gérés :"
 
+#: howto/descriptor.rst:343
+msgid ""
+"from abc import ABC, abstractmethod\n"
+"\n"
+"class Validator(ABC):\n"
+"\n"
+"    def __set_name__(self, owner, name):\n"
+"        self.private_name = '_' + name\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        return getattr(obj, self.private_name)\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        self.validate(value)\n"
+"        setattr(obj, self.private_name, value)\n"
+"\n"
+"    @abstractmethod\n"
+"    def validate(self, value):\n"
+"        pass"
+msgstr ""
+
 #: howto/descriptor.rst:363
 msgid ""
 "Custom validators need to inherit from :class:`Validator` and must supply a :"
@@ -462,6 +659,61 @@ msgstr ""
 "données. Il peut également valider un `prédicat <https://fr.wikipedia.org/"
 "wiki/Pr%C3%A9dicat_(logique_math%C3%A9matique)>`_ défini par l'utilisateur."
 
+#: howto/descriptor.rst:383
+msgid ""
+"class OneOf(Validator):\n"
+"\n"
+"    def __init__(self, *options):\n"
+"        self.options = set(options)\n"
+"\n"
+"    def validate(self, value):\n"
+"        if value not in self.options:\n"
+"            raise ValueError(f'Expected {value!r} to be one of {self.options!"
+"r}')\n"
+"\n"
+"class Number(Validator):\n"
+"\n"
+"    def __init__(self, minvalue=None, maxvalue=None):\n"
+"        self.minvalue = minvalue\n"
+"        self.maxvalue = maxvalue\n"
+"\n"
+"    def validate(self, value):\n"
+"        if not isinstance(value, (int, float)):\n"
+"            raise TypeError(f'Expected {value!r} to be an int or float')\n"
+"        if self.minvalue is not None and value < self.minvalue:\n"
+"            raise ValueError(\n"
+"                f'Expected {value!r} to be at least {self.minvalue!r}'\n"
+"            )\n"
+"        if self.maxvalue is not None and value > self.maxvalue:\n"
+"            raise ValueError(\n"
+"                f'Expected {value!r} to be no more than {self.maxvalue!r}'\n"
+"            )\n"
+"\n"
+"class String(Validator):\n"
+"\n"
+"    def __init__(self, minsize=None, maxsize=None, predicate=None):\n"
+"        self.minsize = minsize\n"
+"        self.maxsize = maxsize\n"
+"        self.predicate = predicate\n"
+"\n"
+"    def validate(self, value):\n"
+"        if not isinstance(value, str):\n"
+"            raise TypeError(f'Expected {value!r} to be an str')\n"
+"        if self.minsize is not None and len(value) < self.minsize:\n"
+"            raise ValueError(\n"
+"                f'Expected {value!r} to be no smaller than {self.minsize!"
+"r}'\n"
+"            )\n"
+"        if self.maxsize is not None and len(value) > self.maxsize:\n"
+"            raise ValueError(\n"
+"                f'Expected {value!r} to be no bigger than {self.maxsize!r}'\n"
+"            )\n"
+"        if self.predicate is not None and not self.predicate(value):\n"
+"            raise ValueError(\n"
+"                f'Expected {self.predicate} to be true for {value!r}'\n"
+"            )"
+msgstr ""
+
 #: howto/descriptor.rst:437
 msgid "Practical application"
 msgstr "Application pratique"
@@ -472,9 +724,49 @@ msgstr ""
 "Voici comment les validateurs de données peuvent être utilisés par une "
 "classe réelle :"
 
+#: howto/descriptor.rst:441
+msgid ""
+"class Component:\n"
+"\n"
+"    name = String(minsize=3, maxsize=10, predicate=str.isupper)\n"
+"    kind = OneOf('wood', 'metal', 'plastic')\n"
+"    quantity = Number(minvalue=0)\n"
+"\n"
+"    def __init__(self, name, kind, quantity):\n"
+"        self.name = name\n"
+"        self.kind = kind\n"
+"        self.quantity = quantity"
+msgstr ""
+
 #: howto/descriptor.rst:454
 msgid "The descriptors prevent invalid instances from being created:"
 msgstr "Les descripteurs empêchent la création d'instances non valides :"
+
+#: howto/descriptor.rst:456
+msgid ""
+">>> Component('Widget', 'metal', 5)      # Blocked: 'Widget' is not all "
+"uppercase\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"ValueError: Expected <method 'isupper' of 'str' objects> to be true for "
+"'Widget'\n"
+"\n"
+">>> Component('WIDGET', 'metle', 5)      # Blocked: 'metle' is misspelled\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"ValueError: Expected 'metle' to be one of {'metal', 'plastic', 'wood'}\n"
+"\n"
+">>> Component('WIDGET', 'metal', -5)     # Blocked: -5 is negative\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"ValueError: Expected -5 to be at least 0\n"
+">>> Component('WIDGET', 'metal', 'V')    # Blocked: 'V' isn't a number\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"TypeError: Expected 'V' to be an int or float\n"
+"\n"
+">>> c = Component('WIDGET', 'metal', 5)  # Allowed:  The inputs are valid"
+msgstr ""
 
 #: howto/descriptor.rst:481
 msgid "Technical Tutorial"
@@ -549,12 +841,13 @@ msgstr ""
 "recherche dépend des méthodes définies par le descripteur."
 
 #: howto/descriptor.rst:514
+#, fuzzy
 msgid ""
 "Descriptors are a powerful, general purpose protocol.  They are the "
 "mechanism behind properties, methods, static methods, class methods, and :"
-"func:`super()`.  They are used throughout Python itself.  Descriptors "
-"simplify the underlying C code and offer a flexible set of new tools for "
-"everyday Python programs."
+"func:`super`.  They are used throughout Python itself.  Descriptors simplify "
+"the underlying C code and offer a flexible set of new tools for everyday "
+"Python programs."
 msgstr ""
 "Les descripteurs sont un protocole puissant et à usage général. Ils "
 "constituent le mécanisme qui met en œuvre les propriétés, les méthodes, les "
@@ -568,15 +861,18 @@ msgid "Descriptor protocol"
 msgstr "Protocole descripteur"
 
 #: howto/descriptor.rst:524
-msgid "``descr.__get__(self, obj, type=None) -> value``"
+#, fuzzy
+msgid "``descr.__get__(self, obj, type=None)``"
 msgstr "``descr.__get__(self, obj, type=None) -> valeur``"
 
 #: howto/descriptor.rst:526
-msgid "``descr.__set__(self, obj, value) -> None``"
+#, fuzzy
+msgid "``descr.__set__(self, obj, value)``"
 msgstr "``descr.__set__(self, obj, valeur) -> None``"
 
 #: howto/descriptor.rst:528
-msgid "``descr.__delete__(self, obj) -> None``"
+#, fuzzy
+msgid "``descr.__delete__(self, obj)``"
 msgstr "``descr.__delete__(self, obj) -> None``"
 
 #: howto/descriptor.rst:530
@@ -652,11 +948,12 @@ msgstr ""
 "partir d'un accès à un attribut."
 
 #: howto/descriptor.rst:560
+#, fuzzy
 msgid ""
 "The expression ``obj.x`` looks up the attribute ``x`` in the chain of "
 "namespaces for ``obj``.  If the search finds a descriptor outside of the "
-"instance ``__dict__``, its :meth:`__get__` method is invoked according to "
-"the precedence rules listed below."
+"instance :attr:`~object.__dict__`, its :meth:`~object.__get__` method is "
+"invoked according to the precedence rules listed below."
 msgstr ""
 "L'expression ``obj.x`` recherche l'attribut ``x`` dans les espaces de noms "
 "pour ``obj``. Si la recherche trouve un descripteur en dehors de l'instance "
@@ -703,6 +1000,35 @@ msgstr ""
 "La logique d'une recherche « après un point » se trouve dans :meth:`object."
 "__getattribute__`. Voici un équivalent en Python pur :"
 
+#: howto/descriptor.rst:583
+msgid ""
+"def find_name_in_mro(cls, name, default):\n"
+"    \"Emulate _PyType_Lookup() in Objects/typeobject.c\"\n"
+"    for base in cls.__mro__:\n"
+"        if name in vars(base):\n"
+"            return vars(base)[name]\n"
+"    return default\n"
+"\n"
+"def object_getattribute(obj, name):\n"
+"    \"Emulate PyObject_GenericGetAttr() in Objects/object.c\"\n"
+"    null = object()\n"
+"    objtype = type(obj)\n"
+"    cls_var = find_name_in_mro(objtype, name, null)\n"
+"    descr_get = getattr(type(cls_var), '__get__', null)\n"
+"    if descr_get is not null:\n"
+"        if (hasattr(type(cls_var), '__set__')\n"
+"            or hasattr(type(cls_var), '__delete__')):\n"
+"            return descr_get(cls_var, obj, objtype)     # data descriptor\n"
+"    if hasattr(obj, '__dict__') and name in vars(obj):\n"
+"        return vars(obj)[name]                          # instance variable\n"
+"    if descr_get is not null:\n"
+"        return descr_get(cls_var, obj, objtype)         # non-data "
+"descriptor\n"
+"    if cls_var is not null:\n"
+"        return cls_var                                  # class variable\n"
+"    raise AttributeError(name)"
+msgstr ""
+
 #: howto/descriptor.rst:719
 msgid ""
 "Note, there is no :meth:`__getattr__` hook in the :meth:`__getattribute__` "
@@ -725,6 +1051,18 @@ msgstr ""
 "responsables de l'appel de :meth:`__getattr__` chaque fois que :meth:"
 "`__getattribute__` déclenche une :exc:`AttributeError`. Cette logique est "
 "présentée encapsulée dans une fonction utilitaire :"
+
+#: howto/descriptor.rst:728
+msgid ""
+"def getattr_hook(obj, name):\n"
+"    \"Emulate slot_tp_getattr_hook() in Objects/typeobject.c\"\n"
+"    try:\n"
+"        return obj.__getattribute__(name)\n"
+"    except AttributeError:\n"
+"        if not hasattr(type(obj), '__getattr__'):\n"
+"            raise\n"
+"    return type(obj).__getattr__(obj, name)             # __getattr__"
+msgstr ""
 
 #: howto/descriptor.rst:773
 msgid "Invocation from a class"
@@ -749,9 +1087,10 @@ msgstr ""
 "Si un descripteur est trouvé, il est appelé par ``desc.__get__(None, A)``."
 
 #: howto/descriptor.rst:782
+#, fuzzy
 msgid ""
-"The full C implementation can be found in :c:func:`type_getattro()` and :c:"
-"func:`_PyType_Lookup()` in :source:`Objects/typeobject.c`."
+"The full C implementation can be found in :c:func:`!type_getattro` and :c:"
+"func:`!_PyType_Lookup` in :source:`Objects/typeobject.c`."
 msgstr ""
 "L'implémentation C complète peut être trouvée dans :c:func:`type_getattro()` "
 "et :c:func:`_PyType_Lookup()` dans :source:`Objects/typeobject.c`."
@@ -761,9 +1100,10 @@ msgid "Invocation from super"
 msgstr "Appel depuis super"
 
 #: howto/descriptor.rst:789
+#, fuzzy
 msgid ""
 "The logic for super's dotted lookup is in the :meth:`__getattribute__` "
-"method for object returned by :class:`super()`."
+"method for object returned by :func:`super`."
 msgstr ""
 "La logique de la recherche « après un point » de super se trouve dans la "
 "méthode :meth:`__getattribute__` de l'objet renvoyé par :class:`super()`."
@@ -781,8 +1121,9 @@ msgstr ""
 "renvoyé inchangé."
 
 #: howto/descriptor.rst:797
+#, fuzzy
 msgid ""
-"The full C implementation can be found in :c:func:`super_getattro()` in :"
+"The full C implementation can be found in :c:func:`!super_getattro` in :"
 "source:`Objects/typeobject.c`.  A pure Python equivalent can be found in "
 "`Guido's Tutorial <https://www.python.org/download/releases/2.2.3/descrintro/"
 "#cooperation>`_."
@@ -797,8 +1138,9 @@ msgid "Summary of invocation logic"
 msgstr "Résumé de la logique d'appel"
 
 #: howto/descriptor.rst:806
+#, fuzzy
 msgid ""
-"The mechanism for descriptors is embedded in the :meth:`__getattribute__()` "
+"The mechanism for descriptors is embedded in the :meth:`__getattribute__` "
 "methods for :class:`object`, :class:`type`, and :func:`super`."
 msgstr ""
 "Le fonctionnement des descripteurs se trouve dans les méthodes :meth:"
@@ -875,9 +1217,10 @@ msgstr ""
 "variable de classe à laquelle le descripteur a été assigné."
 
 #: howto/descriptor.rst:839
+#, fuzzy
 msgid ""
-"The implementation details are in :c:func:`type_new()` and :c:func:"
-"`set_names()` in :source:`Objects/typeobject.c`."
+"The implementation details are in :c:func:`!type_new` and :c:func:`!"
+"set_names` in :source:`Objects/typeobject.c`."
 msgstr ""
 "Les détails d'implémentation sont dans :c:func:`type_new()` et :c:func:"
 "`set_names()` dans :source:`Objects/typeobject.c`."
@@ -919,6 +1262,24 @@ msgstr ""
 "de la base de données. Les descripteurs s'occupent des recherches et des "
 "mises à jour :"
 
+#: howto/descriptor.rst:858
+msgid ""
+"class Field:\n"
+"\n"
+"    def __set_name__(self, owner, name):\n"
+"        self.fetch = f'SELECT {name} FROM {owner.table} WHERE {owner.key}"
+"=?;'\n"
+"        self.store = f'UPDATE {owner.table} SET {name}=? WHERE {owner.key}"
+"=?;'\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        return conn.execute(self.fetch, [obj.key]).fetchone()[0]\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        conn.execute(self.store, [value, obj.key])\n"
+"        conn.commit()"
+msgstr ""
+
 #: howto/descriptor.rst:873
 msgid ""
 "We can use the :class:`Field` class to define `models <https://en.wikipedia."
@@ -929,10 +1290,38 @@ msgstr ""
 "<https://en.wikipedia.org/wiki/Database_model>`_ qui décrivent le schéma de "
 "chaque table d'une base de données :"
 
+#: howto/descriptor.rst:877
+msgid ""
+"class Movie:\n"
+"    table = 'Movies'                    # Table name\n"
+"    key = 'title'                       # Primary key\n"
+"    director = Field()\n"
+"    year = Field()\n"
+"\n"
+"    def __init__(self, key):\n"
+"        self.key = key\n"
+"\n"
+"class Song:\n"
+"    table = 'Music'\n"
+"    key = 'title'\n"
+"    artist = Field()\n"
+"    year = Field()\n"
+"    genre = Field()\n"
+"\n"
+"    def __init__(self, key):\n"
+"        self.key = key"
+msgstr ""
+
 #: howto/descriptor.rst:898
 msgid "To use the models, first connect to the database::"
 msgstr ""
 "Pour utiliser les modèles, connectons-nous d'abord à la base de données ::"
+
+#: howto/descriptor.rst:900
+msgid ""
+">>> import sqlite3\n"
+">>> conn = sqlite3.connect('entertainment.db')"
+msgstr ""
 
 #: howto/descriptor.rst:903
 msgid ""
@@ -942,11 +1331,27 @@ msgstr ""
 "Une session interactive montre comment les données sont extraites de la base "
 "de données et comment elles peuvent être mises à jour :"
 
-#: howto/descriptor.rst:948
+#: howto/descriptor.rst:931
+msgid ""
+">>> Movie('Star Wars').director\n"
+"'George Lucas'\n"
+">>> jaws = Movie('Jaws')\n"
+">>> f'Released in {jaws.year} by {jaws.director}'\n"
+"'Released in 1975 by Steven Spielberg'\n"
+"\n"
+">>> Song('Country Roads').artist\n"
+"'John Denver'\n"
+"\n"
+">>> Movie('Star Wars').director = 'J.J. Abrams'\n"
+">>> Movie('Star Wars').director\n"
+"'J.J. Abrams'"
+msgstr ""
+
+#: howto/descriptor.rst:952
 msgid "Pure Python Equivalents"
 msgstr "Équivalents en Python pur"
 
-#: howto/descriptor.rst:950
+#: howto/descriptor.rst:954
 msgid ""
 "The descriptor protocol is simple and offers exciting possibilities.  "
 "Several use cases are so common that they have been prepackaged into built-"
@@ -959,11 +1364,11 @@ msgstr ""
 "méthodes statiques et les méthodes de classe sont toutes basées sur le "
 "protocole descripteur."
 
-#: howto/descriptor.rst:957
+#: howto/descriptor.rst:961
 msgid "Properties"
 msgstr "Propriétés"
 
-#: howto/descriptor.rst:959
+#: howto/descriptor.rst:963
 msgid ""
 "Calling :func:`property` is a succinct way of building a data descriptor "
 "that triggers a function call upon access to an attribute.  Its signature "
@@ -973,14 +1378,27 @@ msgstr ""
 "données qui déclenche un appel de fonction lors de l'accès à un attribut. Sa "
 "signature est ::"
 
-#: howto/descriptor.rst:964
+#: howto/descriptor.rst:966
+msgid "property(fget=None, fset=None, fdel=None, doc=None) -> property"
+msgstr ""
+
+#: howto/descriptor.rst:968
 msgid ""
 "The documentation shows a typical use to define a managed attribute ``x``:"
 msgstr ""
 "La documentation montre une utilisation caractéristique pour définir un "
 "attribut géré ``x`` :"
 
-#: howto/descriptor.rst:988
+#: howto/descriptor.rst:970
+msgid ""
+"class C:\n"
+"    def getx(self): return self.__x\n"
+"    def setx(self, value): self.__x = value\n"
+"    def delx(self): del self.__x\n"
+"    x = property(getx, setx, delx, \"I'm the 'x' property.\")"
+msgstr ""
+
+#: howto/descriptor.rst:992
 msgid ""
 "To see how :func:`property` is implemented in terms of the descriptor "
 "protocol, here is a pure Python equivalent:"
@@ -988,7 +1406,66 @@ msgstr ""
 "Pour voir comment :func:`property` est implémentée dans le protocole du "
 "descripteur, voici un équivalent en Python pur :"
 
-#: howto/descriptor.rst:1091
+#: howto/descriptor.rst:995
+msgid ""
+"class Property:\n"
+"    \"Emulate PyProperty_Type() in Objects/descrobject.c\"\n"
+"\n"
+"    def __init__(self, fget=None, fset=None, fdel=None, doc=None):\n"
+"        self.fget = fget\n"
+"        self.fset = fset\n"
+"        self.fdel = fdel\n"
+"        if doc is None and fget is not None:\n"
+"            doc = fget.__doc__\n"
+"        self.__doc__ = doc\n"
+"        self._name = ''\n"
+"\n"
+"    def __set_name__(self, owner, name):\n"
+"        self._name = name\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        if obj is None:\n"
+"            return self\n"
+"        if self.fget is None:\n"
+"            raise AttributeError(\n"
+"                f'property {self._name!r} of {type(obj).__name__!r} object "
+"has no getter'\n"
+"             )\n"
+"        return self.fget(obj)\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        if self.fset is None:\n"
+"            raise AttributeError(\n"
+"                f'property {self._name!r} of {type(obj).__name__!r} object "
+"has no setter'\n"
+"             )\n"
+"        self.fset(obj, value)\n"
+"\n"
+"    def __delete__(self, obj):\n"
+"        if self.fdel is None:\n"
+"            raise AttributeError(\n"
+"                f'property {self._name!r} of {type(obj).__name__!r} object "
+"has no deleter'\n"
+"             )\n"
+"        self.fdel(obj)\n"
+"\n"
+"    def getter(self, fget):\n"
+"        prop = type(self)(fget, self.fset, self.fdel, self.__doc__)\n"
+"        prop._name = self._name\n"
+"        return prop\n"
+"\n"
+"    def setter(self, fset):\n"
+"        prop = type(self)(self.fget, fset, self.fdel, self.__doc__)\n"
+"        prop._name = self._name\n"
+"        return prop\n"
+"\n"
+"    def deleter(self, fdel):\n"
+"        prop = type(self)(self.fget, self.fset, fdel, self.__doc__)\n"
+"        prop._name = self._name\n"
+"        return prop"
+msgstr ""
+
+#: howto/descriptor.rst:1132
 msgid ""
 "The :func:`property` builtin helps whenever a user interface has granted "
 "attribute access and then subsequent changes require the intervention of a "
@@ -998,7 +1475,7 @@ msgstr ""
 "utilisateur a accordé l'accès à un attribut et que des modifications "
 "ultérieures nécessitent l'intervention d'une méthode."
 
-#: howto/descriptor.rst:1095
+#: howto/descriptor.rst:1136
 msgid ""
 "For instance, a spreadsheet class may grant access to a cell value through "
 "``Cell('b10').value``. Subsequent improvements to the program require the "
@@ -1014,7 +1491,19 @@ msgstr ""
 "directement à l'attribut. La solution consiste à envelopper l'accès à "
 "l'attribut *value* dans un descripteur de données :"
 
-#: howto/descriptor.rst:1112
+#: howto/descriptor.rst:1142
+msgid ""
+"class Cell:\n"
+"    ...\n"
+"\n"
+"    @property\n"
+"    def value(self):\n"
+"        \"Recalculate the cell before returning value\"\n"
+"        self.recalc()\n"
+"        return self._value"
+msgstr ""
+
+#: howto/descriptor.rst:1153
 msgid ""
 "Either the built-in :func:`property` or our :func:`Property` equivalent "
 "would work in this example."
@@ -1022,11 +1511,11 @@ msgstr ""
 "Soit la :func:`property` native, soit notre équivalent :func:`Property` "
 "fonctionnent dans cet exemple."
 
-#: howto/descriptor.rst:1117
+#: howto/descriptor.rst:1158
 msgid "Functions and methods"
 msgstr "Fonctions et méthodes"
 
-#: howto/descriptor.rst:1119
+#: howto/descriptor.rst:1160
 msgid ""
 "Python's object oriented features are built upon a function based "
 "environment. Using non-data descriptors, the two are merged seamlessly."
@@ -1035,7 +1524,7 @@ msgstr ""
 "environnement basé sur des fonctions. À l'aide de descripteurs hors-données, "
 "les deux sont fusionnés de façon transparente."
 
-#: howto/descriptor.rst:1122
+#: howto/descriptor.rst:1163
 msgid ""
 "Functions stored in class dictionaries get turned into methods when invoked. "
 "Methods only differ from regular functions in that the object instance is "
@@ -1049,7 +1538,7 @@ msgstr ""
 "*self*, bien qu'il soit possible de l'appeler *this* ou tout autre nom de "
 "variable."
 
-#: howto/descriptor.rst:1127
+#: howto/descriptor.rst:1168
 msgid ""
 "Methods can be created manually with :class:`types.MethodType` which is "
 "roughly equivalent to:"
@@ -1057,7 +1546,22 @@ msgstr ""
 "Les méthodes peuvent être créées manuellement avec :class:`types."
 "MethodType`, qui équivaut à peu près à :"
 
-#: howto/descriptor.rst:1144
+#: howto/descriptor.rst:1171
+msgid ""
+"class MethodType:\n"
+"    \"Emulate PyMethod_Type in Objects/classobject.c\"\n"
+"\n"
+"    def __init__(self, func, obj):\n"
+"        self.__func__ = func\n"
+"        self.__self__ = obj\n"
+"\n"
+"    def __call__(self, *args, **kwargs):\n"
+"        func = self.__func__\n"
+"        obj = self.__self__\n"
+"        return func(obj, *args, **kwargs)"
+msgstr ""
+
+#: howto/descriptor.rst:1185
 msgid ""
 "To support automatic creation of methods, functions include the :meth:"
 "`__get__` method for binding methods during attribute access.  This means "
@@ -1070,7 +1574,19 @@ msgstr ""
 "hors-données qui renvoient des méthodes liées au cours d'une recherche "
 "d'attribut d'une instance. Cela fonctionne ainsi :"
 
-#: howto/descriptor.rst:1160
+#: howto/descriptor.rst:1190
+msgid ""
+"class Function:\n"
+"    ...\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        \"Simulate func_descr_get() in Objects/funcobject.c\"\n"
+"        if obj is None:\n"
+"            return self\n"
+"        return MethodType(self, obj)"
+msgstr ""
+
+#: howto/descriptor.rst:1201
 msgid ""
 "Running the following class in the interpreter shows how the function "
 "descriptor works in practice:"
@@ -1078,14 +1594,27 @@ msgstr ""
 "L'exécution de la classe suivante dans l'interpréteur montre comment le "
 "descripteur de fonction se comporte en pratique :"
 
-#: howto/descriptor.rst:1169
+#: howto/descriptor.rst:1204
+msgid ""
+"class D:\n"
+"    def f(self, x):\n"
+"         return x"
+msgstr ""
+
+#: howto/descriptor.rst:1210
 msgid ""
 "The function has a :term:`qualified name` attribute to support introspection:"
 msgstr ""
 "La fonction possède un attribut ``__qualname__`` (:term:`nom "
 "qualifié<qualified name>`) pour prendre en charge l'introspection :"
 
-#: howto/descriptor.rst:1176
+#: howto/descriptor.rst:1212
+msgid ""
+">>> D.f.__qualname__\n"
+"'D.f'"
+msgstr ""
+
+#: howto/descriptor.rst:1217
 msgid ""
 "Accessing the function through the class dictionary does not invoke :meth:"
 "`__get__`.  Instead, it just returns the underlying function object::"
@@ -1094,7 +1623,13 @@ msgstr ""
 "`__get__`. À la place, il renvoie simplement l'objet de fonction sous-"
 "jacent ::"
 
-#: howto/descriptor.rst:1182
+#: howto/descriptor.rst:1220
+msgid ""
+">>> D.__dict__['f']\n"
+"<function D.f at 0x00C45070>"
+msgstr ""
+
+#: howto/descriptor.rst:1223
 msgid ""
 "Dotted access from a class calls :meth:`__get__` which just returns the "
 "underlying function unchanged::"
@@ -1102,7 +1637,13 @@ msgstr ""
 "La recherche d'attribut depuis une classe appelle :meth:`__get__`, qui "
 "renvoie simplement la fonction sous-jacente inchangée ::"
 
-#: howto/descriptor.rst:1188
+#: howto/descriptor.rst:1226
+msgid ""
+">>> D.f\n"
+"<function D.f at 0x00C45070>"
+msgstr ""
+
+#: howto/descriptor.rst:1229
 msgid ""
 "The interesting behavior occurs during dotted access from an instance.  The "
 "dotted lookup calls :meth:`__get__` which returns a bound method object::"
@@ -1111,7 +1652,14 @@ msgstr ""
 "partir d'une instance. La recherche d'attribut appelle :meth:`__get__` qui "
 "renvoie un objet « méthode liée » ::"
 
-#: howto/descriptor.rst:1195
+#: howto/descriptor.rst:1232
+msgid ""
+">>> d = D()\n"
+">>> d.f\n"
+"<bound method D.f of <__main__.D object at 0x00B18C90>>"
+msgstr ""
+
+#: howto/descriptor.rst:1236
 msgid ""
 "Internally, the bound method stores the underlying function and the bound "
 "instance::"
@@ -1119,7 +1667,16 @@ msgstr ""
 "En interne, la méthode liée stocke la fonction sous-jacente et l'instance "
 "liée ::"
 
-#: howto/descriptor.rst:1204
+#: howto/descriptor.rst:1239
+msgid ""
+">>> d.f.__func__\n"
+"<function D.f at 0x00C45070>\n"
+"\n"
+">>> d.f.__self__\n"
+"<__main__.D object at 0x00B18C90>"
+msgstr ""
+
+#: howto/descriptor.rst:1245
 msgid ""
 "If you have ever wondered where *self* comes from in regular methods or "
 "where *cls* comes from in class methods, this is it!"
@@ -1127,11 +1684,11 @@ msgstr ""
 "Si vous vous êtes déjà demandé d'où vient *self* dans les méthodes "
 "ordinaires ou d'où vient *cls* dans les méthodes de classe, c'est ça !"
 
-#: howto/descriptor.rst:1209
+#: howto/descriptor.rst:1250
 msgid "Kinds of methods"
 msgstr "Types de méthodes"
 
-#: howto/descriptor.rst:1211
+#: howto/descriptor.rst:1252
 msgid ""
 "Non-data descriptors provide a simple mechanism for variations on the usual "
 "patterns of binding functions into methods."
@@ -1139,7 +1696,7 @@ msgstr ""
 "Les descripteurs hors-données constituent un moyen simple pour modifier le "
 "modèle usuel de transformation des fonctions en méthodes."
 
-#: howto/descriptor.rst:1214
+#: howto/descriptor.rst:1255
 msgid ""
 "To recap, functions have a :meth:`__get__` method so that they can be "
 "converted to a method when accessed as attributes.  The non-data descriptor "
@@ -1151,57 +1708,57 @@ msgstr ""
 "descripteur hors-données transforme un appel ``obj.f(*args)`` en ``f(obj, "
 "*args)``. L'appel ``cls.f(*args)`` devient ``f(*args)``."
 
-#: howto/descriptor.rst:1219
+#: howto/descriptor.rst:1260
 msgid "This chart summarizes the binding and its two most useful variants:"
 msgstr ""
 "Ce tableau résume le lien classique (*binding*) et ses deux variantes les "
 "plus utiles :"
 
-#: howto/descriptor.rst:1222
+#: howto/descriptor.rst:1263
 msgid "Transformation"
 msgstr "Transformation"
 
-#: howto/descriptor.rst:1222
+#: howto/descriptor.rst:1263
 msgid "Called from an object"
 msgstr "Appelée depuis un objet"
 
-#: howto/descriptor.rst:1222
+#: howto/descriptor.rst:1263
 msgid "Called from a class"
 msgstr "Appelée depuis une classe"
 
-#: howto/descriptor.rst:1225
+#: howto/descriptor.rst:1266
 msgid "function"
 msgstr "fonction"
 
-#: howto/descriptor.rst:1225
+#: howto/descriptor.rst:1266
 msgid "f(obj, \\*args)"
 msgstr "f(obj, \\*args)"
 
-#: howto/descriptor.rst:1227
+#: howto/descriptor.rst:1268
 msgid "f(\\*args)"
 msgstr "f(\\*args)"
 
-#: howto/descriptor.rst:1227
+#: howto/descriptor.rst:1268
 msgid "staticmethod"
 msgstr "méthode statique"
 
-#: howto/descriptor.rst:1229
+#: howto/descriptor.rst:1270
 msgid "classmethod"
 msgstr "méthode de classe"
 
-#: howto/descriptor.rst:1229
+#: howto/descriptor.rst:1270
 msgid "f(type(obj), \\*args)"
 msgstr "f(type(obj), \\*args)"
 
-#: howto/descriptor.rst:1229
+#: howto/descriptor.rst:1270
 msgid "f(cls, \\*args)"
 msgstr "f(cls, \\*args)"
 
-#: howto/descriptor.rst:1234
+#: howto/descriptor.rst:1275
 msgid "Static methods"
 msgstr "Méthodes statiques"
 
-#: howto/descriptor.rst:1236
+#: howto/descriptor.rst:1277
 msgid ""
 "Static methods return the underlying function without changes.  Calling "
 "either ``c.f`` or ``C.f`` is the equivalent of a direct lookup into ``object."
@@ -1215,7 +1772,7 @@ msgstr ""
 "\"f\")``. Par conséquent, l'accès à la fonction devient identique que ce "
 "soit à partir d'un objet ou d'une classe."
 
-#: howto/descriptor.rst:1242
+#: howto/descriptor.rst:1283
 msgid ""
 "Good candidates for static methods are methods that do not reference the "
 "``self`` variable."
@@ -1223,7 +1780,7 @@ msgstr ""
 "Les bonnes candidates pour être méthode statique sont des méthodes qui ne "
 "font pas référence à la variable ``self``."
 
-#: howto/descriptor.rst:1245
+#: howto/descriptor.rst:1286
 msgid ""
 "For instance, a statistics package may include a container class for "
 "experimental data.  The class provides normal methods for computing the "
@@ -1245,7 +1802,7 @@ msgstr ""
 "partir d'un objet ou de la classe :  ``s.erf(1.5) --> .9332`` ou ``Sample."
 "erf(1.5) --> .9332``."
 
-#: howto/descriptor.rst:1254
+#: howto/descriptor.rst:1295
 msgid ""
 "Since static methods return the underlying function with no changes, the "
 "example calls are unexciting:"
@@ -1253,7 +1810,23 @@ msgstr ""
 "Puisque les méthodes statiques renvoient la fonction sous-jacente sans "
 "changement, les exemples d’appels sont d'une grande banalité :"
 
-#: howto/descriptor.rst:1271
+#: howto/descriptor.rst:1298
+msgid ""
+"class E:\n"
+"    @staticmethod\n"
+"    def f(x):\n"
+"        return x * 10"
+msgstr ""
+
+#: howto/descriptor.rst:1305
+msgid ""
+">>> E.f(3)\n"
+"30\n"
+">>> E().f(3)\n"
+"30"
+msgstr ""
+
+#: howto/descriptor.rst:1312
 msgid ""
 "Using the non-data descriptor protocol, a pure Python version of :func:"
 "`staticmethod` would look like this:"
@@ -1261,19 +1834,38 @@ msgstr ""
 "En utilisant le protocole de descripteur hors-données, une version Python "
 "pure de :func:`staticmethod` ressemblerait à ceci :"
 
-#: howto/descriptor.rst:1291
+#: howto/descriptor.rst:1315
+msgid ""
+"import functools\n"
+"\n"
+"class StaticMethod:\n"
+"    \"Emulate PyStaticMethod_Type() in Objects/funcobject.c\"\n"
+"\n"
+"    def __init__(self, f):\n"
+"        self.f = f\n"
+"        functools.update_wrapper(self, f)\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        return self.f\n"
+"\n"
+"    def __call__(self, *args, **kwds):\n"
+"        return self.f(*args, **kwds)"
+msgstr ""
+
+#: howto/descriptor.rst:1332
 msgid ""
 "The :func:`functools.update_wrapper` call adds a ``__wrapped__`` attribute "
 "that refers to the underlying function.  Also it carries forward the "
-"attributes necessary to make the wrapper look like the wrapped function: "
-"``__name__``, ``__qualname__``, ``__doc__``, and ``__annotations__``."
+"attributes necessary to make the wrapper look like the wrapped function: :"
+"attr:`~function.__name__`, :attr:`~function.__qualname__`, :attr:`~function."
+"__doc__`, and :attr:`~function.__annotations__`."
 msgstr ""
 
-#: howto/descriptor.rst:1359
+#: howto/descriptor.rst:1401
 msgid "Class methods"
 msgstr "Méthodes de classe"
 
-#: howto/descriptor.rst:1361
+#: howto/descriptor.rst:1403
 msgid ""
 "Unlike static methods, class methods prepend the class reference to the "
 "argument list before calling the function.  This format is the same for "
@@ -1283,7 +1875,23 @@ msgstr ""
 "référence de classe en tête de la liste d'arguments, avant d'appeler la "
 "fonction. C'est le même format que l'appelant soit un objet ou une classe :"
 
-#: howto/descriptor.rst:1379
+#: howto/descriptor.rst:1407
+msgid ""
+"class F:\n"
+"    @classmethod\n"
+"    def f(cls, x):\n"
+"        return cls.__name__, x"
+msgstr ""
+
+#: howto/descriptor.rst:1414
+msgid ""
+">>> F.f(3)\n"
+"('F', 3)\n"
+">>> F().f(3)\n"
+"('F', 3)"
+msgstr ""
+
+#: howto/descriptor.rst:1421
 msgid ""
 "This behavior is useful whenever the method only needs to have a class "
 "reference and does not rely on data stored in a specific instance.  One use "
@@ -1298,13 +1906,34 @@ msgstr ""
 "func:`dict.fromkeys` crée un nouveau dictionnaire à partir d'une liste de "
 "clés.  L'équivalent Python pur est :"
 
-#: howto/descriptor.rst:1396
+#: howto/descriptor.rst:1427
+msgid ""
+"class Dict(dict):\n"
+"    @classmethod\n"
+"    def fromkeys(cls, iterable, value=None):\n"
+"        \"Emulate dict_fromkeys() in Objects/dictobject.c\"\n"
+"        d = cls()\n"
+"        for key in iterable:\n"
+"            d[key] = value\n"
+"        return d"
+msgstr ""
+
+#: howto/descriptor.rst:1438
 msgid "Now a new dictionary of unique keys can be constructed like this:"
 msgstr ""
 "Maintenant un nouveau dictionnaire de clés uniques peut être construit comme "
 "ceci :"
 
-#: howto/descriptor.rst:1406
+#: howto/descriptor.rst:1440
+msgid ""
+">>> d = Dict.fromkeys('abracadabra')\n"
+">>> type(d) is Dict\n"
+"True\n"
+">>> d\n"
+"{'a': None, 'b': None, 'r': None, 'c': None, 'd': None}"
+msgstr ""
+
+#: howto/descriptor.rst:1448
 msgid ""
 "Using the non-data descriptor protocol, a pure Python version of :func:"
 "`classmethod` would look like this:"
@@ -1312,7 +1941,28 @@ msgstr ""
 "En utilisant le protocole de descripteur hors-données, une version Python "
 "pure de :func:`classmethod` ressemblerait à ceci :"
 
-#: howto/descriptor.rst:1484
+#: howto/descriptor.rst:1451
+msgid ""
+"import functools\n"
+"\n"
+"class ClassMethod:\n"
+"    \"Emulate PyClassMethod_Type() in Objects/funcobject.c\"\n"
+"\n"
+"    def __init__(self, f):\n"
+"        self.f = f\n"
+"        functools.update_wrapper(self, f)\n"
+"\n"
+"    def __get__(self, obj, cls=None):\n"
+"        if cls is None:\n"
+"            cls = type(obj)\n"
+"        if hasattr(type(self.f), '__get__'):\n"
+"            # This code path was added in Python 3.9\n"
+"            # and was deprecated in Python 3.11.\n"
+"            return self.f.__get__(cls, cls)\n"
+"        return MethodType(self.f, cls)"
+msgstr ""
+
+#: howto/descriptor.rst:1526
 msgid ""
 "The code path for ``hasattr(type(self.f), '__get__')`` was added in Python "
 "3.9 and makes it possible for :func:`classmethod` to support chained "
@@ -1325,20 +1975,36 @@ msgstr ""
 "être chaîné à un décorateur « propriété ». Dans Python 3.11, cette "
 "fonctionnalité est devenue obsolète."
 
-#: howto/descriptor.rst:1502
+#: howto/descriptor.rst:1531
+msgid ""
+"class G:\n"
+"    @classmethod\n"
+"    @property\n"
+"    def __doc__(cls):\n"
+"        return f'A doc for {cls.__name__!r}'"
+msgstr ""
+
+#: howto/descriptor.rst:1539
+msgid ""
+">>> G.__doc__\n"
+"\"A doc for 'G'\""
+msgstr ""
+
+#: howto/descriptor.rst:1544
 msgid ""
 "The :func:`functools.update_wrapper` call in ``ClassMethod`` adds a "
 "``__wrapped__`` attribute that refers to the underlying function.  Also it "
 "carries forward the attributes necessary to make the wrapper look like the "
-"wrapped function: ``__name__``, ``__qualname__``, ``__doc__``, and "
-"``__annotations__``."
+"wrapped function: :attr:`~function.__name__`, :attr:`~function."
+"__qualname__`, :attr:`~function.__doc__`, and :attr:`~function."
+"__annotations__`."
 msgstr ""
 
-#: howto/descriptor.rst:1510
+#: howto/descriptor.rst:1553
 msgid "Member objects and __slots__"
 msgstr "Objets membres et *__slots__*"
 
-#: howto/descriptor.rst:1512
+#: howto/descriptor.rst:1555
 msgid ""
 "When a class defines ``__slots__``, it replaces instance dictionaries with a "
 "fixed-length array of slot values.  From a user point of view that has "
@@ -1348,7 +2014,7 @@ msgstr ""
 "d'instance par un tableau de longueur fixe de créneaux prédéfinis. D'un "
 "point de vue utilisateur, cela :"
 
-#: howto/descriptor.rst:1516
+#: howto/descriptor.rst:1559
 msgid ""
 "1. Provides immediate detection of bugs due to misspelled attribute "
 "assignments.  Only attribute names specified in ``__slots__`` are allowed:"
@@ -1357,7 +2023,22 @@ msgstr ""
 "d'attributs mal orthographiés. Seuls les noms d'attribut spécifiés dans "
 "``__slots__`` sont autorisés :"
 
-#: howto/descriptor.rst:1532
+#: howto/descriptor.rst:1562
+msgid ""
+"class Vehicle:\n"
+"    __slots__ = ('id_number', 'make', 'model')"
+msgstr ""
+
+#: howto/descriptor.rst:1567
+msgid ""
+">>> auto = Vehicle()\n"
+">>> auto.id_nubmer = 'VYE483814LQEX'\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"AttributeError: 'Vehicle' object has no attribute 'id_nubmer'"
+msgstr ""
+
+#: howto/descriptor.rst:1575
 msgid ""
 "2. Helps create immutable objects where descriptors manage access to private "
 "attributes stored in ``__slots__``:"
@@ -1365,7 +2046,42 @@ msgstr ""
 "2/ aide à créer des objets immuables où les descripteurs gèrent l'accès aux "
 "attributs privés stockés dans ``__slots__`` :"
 
-#: howto/descriptor.rst:1567
+#: howto/descriptor.rst:1578
+msgid ""
+"class Immutable:\n"
+"\n"
+"    __slots__ = ('_dept', '_name')          # Replace the instance "
+"dictionary\n"
+"\n"
+"    def __init__(self, dept, name):\n"
+"        self._dept = dept                   # Store to private attribute\n"
+"        self._name = name                   # Store to private attribute\n"
+"\n"
+"    @property                               # Read-only descriptor\n"
+"    def dept(self):\n"
+"        return self._dept\n"
+"\n"
+"    @property\n"
+"    def name(self):                         # Read-only descriptor\n"
+"        return self._name"
+msgstr ""
+
+#: howto/descriptor.rst:1596
+msgid ""
+">>> mark = Immutable('Botany', 'Mark Watney')\n"
+">>> mark.dept\n"
+"'Botany'\n"
+">>> mark.dept = 'Space Pirate'\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"AttributeError: property 'dept' of 'Immutable' object has no setter\n"
+">>> mark.location = 'Mars'\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"AttributeError: 'Immutable' object has no attribute 'location'"
+msgstr ""
+
+#: howto/descriptor.rst:1610
 msgid ""
 "3. Saves memory.  On a 64-bit Linux build, an instance with two attributes "
 "takes 48 bytes with ``__slots__`` and 152 bytes without.  This `flyweight "
@@ -1378,7 +2094,7 @@ msgstr ""
 "mouche_(patron_de_conception)>`_ n'a probablement d'importance que si un "
 "grand nombre d'instances doivent être créées ;"
 
-#: howto/descriptor.rst:1572
+#: howto/descriptor.rst:1615
 msgid ""
 "4. Improves speed.  Reading instance variables is 35% faster with "
 "``__slots__`` (as measured with Python 3.10 on an Apple M1 processor)."
@@ -1387,7 +2103,7 @@ msgstr ""
 "rapide avec ``__slots__`` (mesure effectuée avec Python 3.10 sur un "
 "processeur Apple M1) ;"
 
-#: howto/descriptor.rst:1575
+#: howto/descriptor.rst:1618
 msgid ""
 "5. Blocks tools like :func:`functools.cached_property` which require an "
 "instance dictionary to function correctly:"
@@ -1395,7 +2111,28 @@ msgstr ""
 "5/ bloque les outils comme :func:`functools.cached_property` qui nécessitent "
 "un dictionnaire d'instance pour fonctionner correctement :"
 
-#: howto/descriptor.rst:1597
+#: howto/descriptor.rst:1621
+msgid ""
+"from functools import cached_property\n"
+"\n"
+"class CP:\n"
+"    __slots__ = ()                          # Eliminates the instance dict\n"
+"\n"
+"    @cached_property                        # Requires an instance dict\n"
+"    def pi(self):\n"
+"        return 4 * sum((-1.0)**n / (2.0*n + 1.0)\n"
+"                       for n in reversed(range(100_000)))"
+msgstr ""
+
+#: howto/descriptor.rst:1633
+msgid ""
+">>> CP().pi\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"TypeError: No '__dict__' attribute on 'CP' instance to cache 'pi' property."
+msgstr ""
+
+#: howto/descriptor.rst:1640
 msgid ""
 "It is not possible to create an exact drop-in pure Python version of "
 "``__slots__`` because it requires direct access to C structures and control "
@@ -1412,7 +2149,46 @@ msgstr ""
 "écritures dans cette structure privée sont gérées par des descripteurs de "
 "membres :"
 
-#: howto/descriptor.rst:1642
+#: howto/descriptor.rst:1647
+msgid ""
+"null = object()\n"
+"\n"
+"class Member:\n"
+"\n"
+"    def __init__(self, name, clsname, offset):\n"
+"        'Emulate PyMemberDef in Include/structmember.h'\n"
+"        # Also see descr_new() in Objects/descrobject.c\n"
+"        self.name = name\n"
+"        self.clsname = clsname\n"
+"        self.offset = offset\n"
+"\n"
+"    def __get__(self, obj, objtype=None):\n"
+"        'Emulate member_get() in Objects/descrobject.c'\n"
+"        # Also see PyMember_GetOne() in Python/structmember.c\n"
+"        if obj is None:\n"
+"            return self\n"
+"        value = obj._slotvalues[self.offset]\n"
+"        if value is null:\n"
+"            raise AttributeError(self.name)\n"
+"        return value\n"
+"\n"
+"    def __set__(self, obj, value):\n"
+"        'Emulate member_set() in Objects/descrobject.c'\n"
+"        obj._slotvalues[self.offset] = value\n"
+"\n"
+"    def __delete__(self, obj):\n"
+"        'Emulate member_delete() in Objects/descrobject.c'\n"
+"        value = obj._slotvalues[self.offset]\n"
+"        if value is null:\n"
+"            raise AttributeError(self.name)\n"
+"        obj._slotvalues[self.offset] = null\n"
+"\n"
+"    def __repr__(self):\n"
+"        'Emulate member_repr() in Objects/descrobject.c'\n"
+"        return f'<Member {self.name!r} of {self.clsname!r}>'"
+msgstr ""
+
+#: howto/descriptor.rst:1685
 msgid ""
 "The :meth:`type.__new__` method takes care of adding member objects to class "
 "variables:"
@@ -1420,7 +2196,21 @@ msgstr ""
 "La méthode :meth:`type.__new__` s'occupe d'ajouter des objets membres aux "
 "variables de classe :"
 
-#: howto/descriptor.rst:1658
+#: howto/descriptor.rst:1688
+msgid ""
+"class Type(type):\n"
+"    'Simulate how the type metaclass adds member objects for slots'\n"
+"\n"
+"    def __new__(mcls, clsname, bases, mapping, **kwargs):\n"
+"        'Emulate type_new() in Objects/typeobject.c'\n"
+"        # type_new() calls PyTypeReady() which calls add_methods()\n"
+"        slot_names = mapping.get('slot_names', [])\n"
+"        for offset, name in enumerate(slot_names):\n"
+"            mapping[name] = Member(name, clsname, offset)\n"
+"        return type.__new__(mcls, clsname, bases, mapping, **kwargs)"
+msgstr ""
+
+#: howto/descriptor.rst:1701
 msgid ""
 "The :meth:`object.__new__` method takes care of creating instances that have "
 "slots instead of an instance dictionary.  Here is a rough simulation in pure "
@@ -1430,7 +2220,39 @@ msgstr ""
 "des *slots* au lieu d'un dictionnaire d'instances. Voici une simulation "
 "approximative en Python pur :"
 
-#: howto/descriptor.rst:1693
+#: howto/descriptor.rst:1705
+msgid ""
+"class Object:\n"
+"    'Simulate how object.__new__() allocates memory for __slots__'\n"
+"\n"
+"    def __new__(cls, *args, **kwargs):\n"
+"        'Emulate object_new() in Objects/typeobject.c'\n"
+"        inst = super().__new__(cls)\n"
+"        if hasattr(cls, 'slot_names'):\n"
+"            empty_slots = [null] * len(cls.slot_names)\n"
+"            object.__setattr__(inst, '_slotvalues', empty_slots)\n"
+"        return inst\n"
+"\n"
+"    def __setattr__(self, name, value):\n"
+"        'Emulate _PyObject_GenericSetAttrWithDict() Objects/object.c'\n"
+"        cls = type(self)\n"
+"        if hasattr(cls, 'slot_names') and name not in cls.slot_names:\n"
+"            raise AttributeError(\n"
+"                f'{cls.__name__!r} object has no attribute {name!r}'\n"
+"            )\n"
+"        super().__setattr__(name, value)\n"
+"\n"
+"    def __delattr__(self, name):\n"
+"        'Emulate _PyObject_GenericSetAttrWithDict() Objects/object.c'\n"
+"        cls = type(self)\n"
+"        if hasattr(cls, 'slot_names') and name not in cls.slot_names:\n"
+"            raise AttributeError(\n"
+"                f'{cls.__name__!r} object has no attribute {name!r}'\n"
+"            )\n"
+"        super().__delattr__(name)"
+msgstr ""
+
+#: howto/descriptor.rst:1736
 msgid ""
 "To use the simulation in a real class, just inherit from :class:`Object` and "
 "set the :term:`metaclass` to :class:`Type`:"
@@ -1439,13 +2261,37 @@ msgstr ""
 "class:`Object` et définissez la :term:`métaclasse <metaclass>` à :class:"
 "`Type` :"
 
-#: howto/descriptor.rst:1707
+#: howto/descriptor.rst:1739
+msgid ""
+"class H(Object, metaclass=Type):\n"
+"    'Instance variables stored in slots'\n"
+"\n"
+"    slot_names = ['x', 'y']\n"
+"\n"
+"    def __init__(self, x, y):\n"
+"        self.x = x\n"
+"        self.y = y"
+msgstr ""
+
+#: howto/descriptor.rst:1750
 msgid ""
 "At this point, the metaclass has loaded member objects for *x* and *y*::"
 msgstr ""
 "À ce stade, la métaclasse a chargé des objets membres pour *x* et *y* ::"
 
-#: howto/descriptor.rst:1728
+#: howto/descriptor.rst:1752
+msgid ""
+">>> from pprint import pp\n"
+">>> pp(dict(vars(H)))\n"
+"{'__module__': '__main__',\n"
+" '__doc__': 'Instance variables stored in slots',\n"
+" 'slot_names': ['x', 'y'],\n"
+" '__init__': <function H.__init__ at 0x7fb5d302f9d0>,\n"
+" 'x': <Member 'x' of 'H'>,\n"
+" 'y': <Member 'y' of 'H'>}"
+msgstr ""
+
+#: howto/descriptor.rst:1771
 msgid ""
 "When instances are created, they have a ``slot_values`` list where the "
 "attributes are stored:"
@@ -1453,10 +2299,28 @@ msgstr ""
 "Lorsque les instances sont créées, elles ont une liste ``slot_values`` où "
 "les attributs sont stockés :"
 
-#: howto/descriptor.rst:1740
+#: howto/descriptor.rst:1774
+msgid ""
+">>> h = H(10, 20)\n"
+">>> vars(h)\n"
+"{'_slotvalues': [10, 20]}\n"
+">>> h.x = 55\n"
+">>> vars(h)\n"
+"{'_slotvalues': [55, 20]}"
+msgstr ""
+
+#: howto/descriptor.rst:1783
 msgid "Misspelled or unassigned attributes will raise an exception:"
 msgstr ""
 "Les attributs mal orthographiés ou non attribués lèvent une exception :"
+
+#: howto/descriptor.rst:1785
+msgid ""
+">>> h.xz\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"AttributeError: 'H' object has no attribute 'xz'"
+msgstr ""
 
 #~ msgid ""
 #~ "Defines descriptors, summarizes the protocol, and shows how descriptors "

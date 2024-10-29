@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 14:55+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2022-05-23 00:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/importlib.resources.rst:2
-msgid ":mod:`importlib.resources` -- Resources"
+msgid ""
+":mod:`!importlib.resources` -- Package resource reading, opening and access"
 msgstr ""
 
 #: library/importlib.resources.rst:7
@@ -25,12 +26,26 @@ msgstr ""
 #: library/importlib.resources.rst:13
 msgid ""
 "This module leverages Python's import system to provide access to "
-"*resources* within *packages*.  If you can import a package, you can access "
-"resources within that package.  Resources can be opened or read, in either "
-"binary or text mode."
+"*resources* within *packages*."
 msgstr ""
 
-#: library/importlib.resources.rst:18
+#: library/importlib.resources.rst:16
+msgid ""
+"\"Resources\" are file-like resources associated with a module or package in "
+"Python. The resources may be contained directly in a package, within a "
+"subdirectory contained in that package, or adjacent to modules outside a "
+"package. Resources may be text or binary. As a result, Python module sources "
+"(.py) of a package and compilation artifacts (pycache) are technically de-"
+"facto resources of that package. In practice, however, resources are "
+"primarily those non-Python artifacts exposed specifically by the package "
+"author."
+msgstr ""
+
+#: library/importlib.resources.rst:25
+msgid "Resources can be opened or read in either binary or text mode."
+msgstr ""
+
+#: library/importlib.resources.rst:27
 msgid ""
 "Resources are roughly akin to files inside directories, though it's "
 "important to keep in mind that this is just a metaphor.  Resources and "
@@ -39,7 +54,7 @@ msgid ""
 "zip file using :py:mod:`zipimport`."
 msgstr ""
 
-#: library/importlib.resources.rst:26
+#: library/importlib.resources.rst:35
 msgid ""
 "This module provides functionality similar to `pkg_resources <https://"
 "setuptools.readthedocs.io/en/latest/pkg_resources.html>`_ `Basic Resource "
@@ -49,7 +64,7 @@ msgid ""
 "consistent semantics."
 msgstr ""
 
-#: library/importlib.resources.rst:34
+#: library/importlib.resources.rst:43
 msgid ""
 "The standalone backport of this module provides more information on `using "
 "importlib.resources <https://importlib-resources.readthedocs.io/en/latest/"
@@ -57,64 +72,73 @@ msgid ""
 "<https://importlib-resources.readthedocs.io/en/latest/migration.html>`_."
 msgstr ""
 
-#: library/importlib.resources.rst:40
+#: library/importlib.resources.rst:49
 msgid ""
 ":class:`Loaders <importlib.abc.Loader>` that wish to support resource "
 "reading should implement a ``get_resource_reader(fullname)`` method as "
 "specified by :class:`importlib.resources.abc.ResourceReader`."
 msgstr ""
 
-#: library/importlib.resources.rst:46
-msgid ""
-"Whenever a function accepts a ``Package`` argument, you can pass in either "
-"a :class:`module object <types.ModuleType>` or a module name as a string.  "
-"You can only pass module objects whose ``__spec__."
-"submodule_search_locations`` is not ``None``."
-msgstr ""
-
-#: library/importlib.resources.rst:51
-msgid "The ``Package`` type is defined as ``Union[str, ModuleType]``."
-msgstr ""
-
 #: library/importlib.resources.rst:55
 msgid ""
+"Represents an anchor for resources, either a :class:`module object <types."
+"ModuleType>` or a module name as a string. Defined as ``Union[str, "
+"ModuleType]``."
+msgstr ""
+
+#: library/importlib.resources.rst:61
+msgid ""
 "Returns a :class:`~importlib.resources.abc.Traversable` object representing "
-"the resource container for the package (think directory) and its resources "
-"(think files). A Traversable may contain other containers (think "
-"subdirectories)."
+"the resource container (think directory) and its resources (think files). A "
+"Traversable may contain other containers (think subdirectories)."
 msgstr ""
 
-#: library/importlib.resources.rst:60
+#: library/importlib.resources.rst:66
 msgid ""
-"*package* is either a name or a module object which conforms to the :data:"
-"`Package` requirements."
+"*anchor* is an optional :class:`Anchor`. If the anchor is a package, "
+"resources are resolved from that package. If a module, resources are "
+"resolved adjacent to that module (in the same package or the package root). "
+"If the anchor is omitted, the caller's module is used."
 msgstr ""
 
-#: library/importlib.resources.rst:67
+#: library/importlib.resources.rst:74
 msgid ""
-"Given a :class:`~importlib.resources.abc.Traversable` object representing a "
-"file, typically from :func:`importlib.resources.files`, return a context "
-"manager for use in a :keyword:`with` statement. The context manager provides "
-"a :class:`pathlib.Path` object."
-msgstr ""
-
-#: library/importlib.resources.rst:72
-msgid ""
-"Exiting the context manager cleans up any temporary file created when the "
-"resource was extracted from e.g. a zip file."
-msgstr ""
-
-#: library/importlib.resources.rst:75
-msgid ""
-"Use ``as_file`` when the Traversable methods (``read_text``, etc) are "
-"insufficient and an actual file on the file system is required."
-msgstr ""
-
-#: library/importlib.resources.rst:82
-msgid "Deprecated functions"
+"*package* parameter was renamed to *anchor*. *anchor* can now be a non-"
+"package module and if omitted will default to the caller's module. *package* "
+"is still accepted for compatibility but will raise a :exc:"
+"`DeprecationWarning`. Consider passing the anchor positionally or using "
+"``importlib_resources >= 5.10`` for a compatible interface on older Pythons."
 msgstr ""
 
 #: library/importlib.resources.rst:84
+msgid ""
+"Given a :class:`~importlib.resources.abc.Traversable` object representing a "
+"file or directory, typically from :func:`importlib.resources.files`, return "
+"a context manager for use in a :keyword:`with` statement. The context "
+"manager provides a :class:`pathlib.Path` object."
+msgstr ""
+
+#: library/importlib.resources.rst:89
+msgid ""
+"Exiting the context manager cleans up any temporary file or directory "
+"created when the resource was extracted from e.g. a zip file."
+msgstr ""
+
+#: library/importlib.resources.rst:92
+msgid ""
+"Use ``as_file`` when the Traversable methods (``read_text``, etc) are "
+"insufficient and an actual file or directory on the file system is required."
+msgstr ""
+
+#: library/importlib.resources.rst:98
+msgid "Added support for *traversable* representing a directory."
+msgstr ""
+
+#: library/importlib.resources.rst:103
+msgid "Deprecated functions"
+msgstr ""
+
+#: library/importlib.resources.rst:105
 msgid ""
 "An older, deprecated set of functions is still available, but is scheduled "
 "for removal in a future version of Python. The main drawback of these "
@@ -122,21 +146,33 @@ msgid ""
 "are located directly within a *package*."
 msgstr ""
 
-#: library/importlib.resources.rst:91
+#: library/importlib.resources.rst:112
+msgid ""
+"Whenever a function accepts a ``Package`` argument, you can pass in either "
+"a :class:`module object <types.ModuleType>` or a module name as a string.  "
+"You can only pass module objects whose ``__spec__."
+"submodule_search_locations`` is not ``None``."
+msgstr ""
+
+#: library/importlib.resources.rst:117
+msgid "The ``Package`` type is defined as ``Union[str, ModuleType]``."
+msgstr ""
+
+#: library/importlib.resources.rst:124
 msgid ""
 "For *resource* arguments of the functions below, you can pass in the name of "
 "a resource as a string or a :class:`path-like object <os.PathLike>`."
 msgstr ""
 
-#: library/importlib.resources.rst:95
+#: library/importlib.resources.rst:128
 msgid "The ``Resource`` type is defined as ``Union[str, os.PathLike]``."
 msgstr ""
 
-#: library/importlib.resources.rst:99
+#: library/importlib.resources.rst:133
 msgid "Open for binary reading the *resource* within *package*."
 msgstr ""
 
-#: library/importlib.resources.rst:101
+#: library/importlib.resources.rst:135
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements.  *resource* is the name of the resource to open "
@@ -145,19 +181,23 @@ msgid ""
 "BinaryIO`` instance, a binary I/O stream open for reading."
 msgstr ""
 
-#: library/importlib.resources.rst:109 library/importlib.resources.rst:130
-#: library/importlib.resources.rst:148 library/importlib.resources.rst:167
-#: library/importlib.resources.rst:203 library/importlib.resources.rst:219
+#: library/importlib.resources.rst:143 library/importlib.resources.rst:164
+#: library/importlib.resources.rst:182 library/importlib.resources.rst:201
+#: library/importlib.resources.rst:237 library/importlib.resources.rst:253
 msgid "Calls to this function can be replaced by::"
 msgstr ""
 
-#: library/importlib.resources.rst:116
+#: library/importlib.resources.rst:145
+msgid "files(package).joinpath(resource).open('rb')"
+msgstr ""
+
+#: library/importlib.resources.rst:150
 msgid ""
 "Open for text reading the *resource* within *package*.  By default, the "
 "resource is opened for reading as UTF-8."
 msgstr ""
 
-#: library/importlib.resources.rst:119
+#: library/importlib.resources.rst:153
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements.  *resource* is the name of the resource to open "
@@ -166,18 +206,22 @@ msgid ""
 "same meaning as with built-in :func:`open`."
 msgstr ""
 
-#: library/importlib.resources.rst:125
+#: library/importlib.resources.rst:159
 msgid ""
 "This function returns a ``typing.TextIO`` instance, a text I/O stream open "
 "for reading."
 msgstr ""
 
-#: library/importlib.resources.rst:137
+#: library/importlib.resources.rst:166
+msgid "files(package).joinpath(resource).open('r', encoding=encoding)"
+msgstr ""
+
+#: library/importlib.resources.rst:171
 msgid ""
 "Read and return the contents of the *resource* within *package* as ``bytes``."
 msgstr ""
 
-#: library/importlib.resources.rst:140
+#: library/importlib.resources.rst:174
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements.  *resource* is the name of the resource to open "
@@ -186,13 +230,17 @@ msgid ""
 "contents of the resource as :class:`bytes`."
 msgstr ""
 
-#: library/importlib.resources.rst:155
+#: library/importlib.resources.rst:184
+msgid "files(package).joinpath(resource).read_bytes()"
+msgstr ""
+
+#: library/importlib.resources.rst:189
 msgid ""
 "Read and return the contents of *resource* within *package* as a ``str``. By "
 "default, the contents are read as strict UTF-8."
 msgstr ""
 
-#: library/importlib.resources.rst:158
+#: library/importlib.resources.rst:192
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements.  *resource* is the name of the resource to open "
@@ -202,20 +250,24 @@ msgid ""
 "contents of the resource as :class:`str`."
 msgstr ""
 
-#: library/importlib.resources.rst:174
+#: library/importlib.resources.rst:203
+msgid "files(package).joinpath(resource).read_text(encoding=encoding)"
+msgstr ""
+
+#: library/importlib.resources.rst:208
 msgid ""
 "Return the path to the *resource* as an actual file system path.  This "
 "function returns a context manager for use in a :keyword:`with` statement. "
 "The context manager provides a :class:`pathlib.Path` object."
 msgstr ""
 
-#: library/importlib.resources.rst:178
+#: library/importlib.resources.rst:212
 msgid ""
 "Exiting the context manager cleans up any temporary file created when the "
 "resource needs to be extracted from e.g. a zip file."
 msgstr ""
 
-#: library/importlib.resources.rst:181
+#: library/importlib.resources.rst:215
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements.  *resource* is the name of the resource to open "
@@ -223,11 +275,15 @@ msgid ""
 "resources (i.e. it cannot be a directory)."
 msgstr ""
 
-#: library/importlib.resources.rst:188
+#: library/importlib.resources.rst:222
 msgid "Calls to this function can be replaced using :func:`as_file`::"
 msgstr ""
 
-#: library/importlib.resources.rst:195
+#: library/importlib.resources.rst:224
+msgid "as_file(files(package).joinpath(resource))"
+msgstr ""
+
+#: library/importlib.resources.rst:229
 msgid ""
 "Return ``True`` if there is a resource named *name* in the package, "
 "otherwise ``False``. This function does not consider directories to be "
@@ -235,15 +291,25 @@ msgid ""
 "the ``Package`` requirements."
 msgstr ""
 
-#: library/importlib.resources.rst:210
+#: library/importlib.resources.rst:239
+msgid "files(package).joinpath(resource).is_file()"
+msgstr ""
+
+#: library/importlib.resources.rst:244
 msgid ""
 "Return an iterable over the named items within the package.  The iterable "
 "returns :class:`str` resources (e.g. files) and non-resources (e.g. "
 "directories).  The iterable does not recurse into subdirectories."
 msgstr ""
 
-#: library/importlib.resources.rst:214
+#: library/importlib.resources.rst:248
 msgid ""
 "*package* is either a name or a module object which conforms to the "
 "``Package`` requirements."
+msgstr ""
+
+#: library/importlib.resources.rst:255
+msgid ""
+"(resource.name for resource in files(package).iterdir() if resource."
+"is_file())"
 msgstr ""

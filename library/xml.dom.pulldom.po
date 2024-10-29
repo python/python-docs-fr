@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 18:39+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2024-03-23 16:23+0100\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: library/xml.dom.pulldom.rst:2
-msgid ":mod:`xml.dom.pulldom` --- Support for building partial DOM trees"
+#, fuzzy
+msgid ":mod:`!xml.dom.pulldom` --- Support for building partial DOM trees"
 msgstr ""
 ":mod:`xml.dom.pulldom` — gestion de la construction partielle des arbres DOM"
 
@@ -68,9 +69,32 @@ msgstr ""
 "pour augmenter la sécurité par défaut. Pour activer le traitement des "
 "entités externes, transmettez une instance d'analyseur personnalisée à ::"
 
+#: library/xml.dom.pulldom.rst:34
+msgid ""
+"from xml.dom.pulldom import parse\n"
+"from xml.sax import make_parser\n"
+"from xml.sax.handler import feature_external_ges\n"
+"\n"
+"parser = make_parser()\n"
+"parser.setFeature(feature_external_ges, True)\n"
+"parse(filename, parser=parser)"
+msgstr ""
+
 #: library/xml.dom.pulldom.rst:43
 msgid "Example::"
 msgstr "Exemple ::"
+
+#: library/xml.dom.pulldom.rst:45
+msgid ""
+"from xml.dom import pulldom\n"
+"\n"
+"doc = pulldom.parse('sales_items.xml')\n"
+"for event, node in doc:\n"
+"    if event == pulldom.START_ELEMENT and node.tagName == 'item':\n"
+"        if int(node.getAttribute('price')) > 50:\n"
+"            doc.expandNode(node)\n"
+"            print(node.toxml())"
+msgstr ""
 
 #: library/xml.dom.pulldom.rst:54
 msgid "``event`` is a constant and can be one of:"
@@ -189,7 +213,8 @@ msgstr "Objets *DOMEventStream*"
 
 # suit un :
 #: library/xml.dom.pulldom.rst:117
-msgid "Support for :meth:`__getitem__` method has been removed."
+#, fuzzy
+msgid "Support for :meth:`~object.__getitem__` method has been removed."
 msgstr "la méthode :meth:`__getitem__` n'est plus prise en charge."
 
 #: library/xml.dom.pulldom.rst:122
@@ -212,3 +237,20 @@ msgstr ""
 #: library/xml.dom.pulldom.rst:132
 msgid "Expands all children of *node* into *node*. Example::"
 msgstr "Développe tous les enfants de *node* dans *node*. Par exemple ::"
+
+#: library/xml.dom.pulldom.rst:134
+msgid ""
+"from xml.dom import pulldom\n"
+"\n"
+"xml = '<html><title>Foo</title> <p>Some text <div>and more</div></p> </"
+"html>'\n"
+"doc = pulldom.parseString(xml)\n"
+"for event, node in doc:\n"
+"    if event == pulldom.START_ELEMENT and node.tagName == 'p':\n"
+"        # Following statement only prints '<p/>'\n"
+"        print(node.toxml())\n"
+"        doc.expandNode(node)\n"
+"        # Following statement prints node with all its children '<p>Some "
+"text <div>and more</div></p>'\n"
+"        print(node.toxml())"
+msgstr ""

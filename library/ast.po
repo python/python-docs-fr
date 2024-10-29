@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-09-15 23:54+0200\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: library/ast.rst:2
-msgid ":mod:`ast` --- Abstract Syntax Trees"
+#, fuzzy
+msgid ":mod:`!ast` --- Abstract Syntax Trees"
 msgstr ":mod:`ast` — Arbres Syntaxiques Abstraits"
 
 #: library/ast.rst:14
@@ -60,6 +61,180 @@ msgstr "Grammaire abstraite"
 msgid "The abstract grammar is currently defined as follows:"
 msgstr "La grammaire abstraite est actuellement définie comme suit :"
 
+#: library/ast.rst:37
+msgid ""
+"-- ASDL's 4 builtin types are:\n"
+"-- identifier, int, string, constant\n"
+"\n"
+"module Python\n"
+"{\n"
+"    mod = Module(stmt* body, type_ignore* type_ignores)\n"
+"        | Interactive(stmt* body)\n"
+"        | Expression(expr body)\n"
+"        | FunctionType(expr* argtypes, expr returns)\n"
+"\n"
+"    stmt = FunctionDef(identifier name, arguments args,\n"
+"                       stmt* body, expr* decorator_list, expr? returns,\n"
+"                       string? type_comment, type_param* type_params)\n"
+"          | AsyncFunctionDef(identifier name, arguments args,\n"
+"                             stmt* body, expr* decorator_list, expr? "
+"returns,\n"
+"                             string? type_comment, type_param* type_params)\n"
+"\n"
+"          | ClassDef(identifier name,\n"
+"             expr* bases,\n"
+"             keyword* keywords,\n"
+"             stmt* body,\n"
+"             expr* decorator_list,\n"
+"             type_param* type_params)\n"
+"          | Return(expr? value)\n"
+"\n"
+"          | Delete(expr* targets)\n"
+"          | Assign(expr* targets, expr value, string? type_comment)\n"
+"          | TypeAlias(expr name, type_param* type_params, expr value)\n"
+"          | AugAssign(expr target, operator op, expr value)\n"
+"          -- 'simple' indicates that we annotate simple name without parens\n"
+"          | AnnAssign(expr target, expr annotation, expr? value, int "
+"simple)\n"
+"\n"
+"          -- use 'orelse' because else is a keyword in target languages\n"
+"          | For(expr target, expr iter, stmt* body, stmt* orelse, string? "
+"type_comment)\n"
+"          | AsyncFor(expr target, expr iter, stmt* body, stmt* orelse, "
+"string? type_comment)\n"
+"          | While(expr test, stmt* body, stmt* orelse)\n"
+"          | If(expr test, stmt* body, stmt* orelse)\n"
+"          | With(withitem* items, stmt* body, string? type_comment)\n"
+"          | AsyncWith(withitem* items, stmt* body, string? type_comment)\n"
+"\n"
+"          | Match(expr subject, match_case* cases)\n"
+"\n"
+"          | Raise(expr? exc, expr? cause)\n"
+"          | Try(stmt* body, excepthandler* handlers, stmt* orelse, stmt* "
+"finalbody)\n"
+"          | TryStar(stmt* body, excepthandler* handlers, stmt* orelse, stmt* "
+"finalbody)\n"
+"          | Assert(expr test, expr? msg)\n"
+"\n"
+"          | Import(alias* names)\n"
+"          | ImportFrom(identifier? module, alias* names, int? level)\n"
+"\n"
+"          | Global(identifier* names)\n"
+"          | Nonlocal(identifier* names)\n"
+"          | Expr(expr value)\n"
+"          | Pass | Break | Continue\n"
+"\n"
+"          -- col_offset is the byte offset in the utf8 string the parser "
+"uses\n"
+"          attributes (int lineno, int col_offset, int? end_lineno, int? "
+"end_col_offset)\n"
+"\n"
+"          -- BoolOp() can use left & right?\n"
+"    expr = BoolOp(boolop op, expr* values)\n"
+"         | NamedExpr(expr target, expr value)\n"
+"         | BinOp(expr left, operator op, expr right)\n"
+"         | UnaryOp(unaryop op, expr operand)\n"
+"         | Lambda(arguments args, expr body)\n"
+"         | IfExp(expr test, expr body, expr orelse)\n"
+"         | Dict(expr* keys, expr* values)\n"
+"         | Set(expr* elts)\n"
+"         | ListComp(expr elt, comprehension* generators)\n"
+"         | SetComp(expr elt, comprehension* generators)\n"
+"         | DictComp(expr key, expr value, comprehension* generators)\n"
+"         | GeneratorExp(expr elt, comprehension* generators)\n"
+"         -- the grammar constrains where yield expressions can occur\n"
+"         | Await(expr value)\n"
+"         | Yield(expr? value)\n"
+"         | YieldFrom(expr value)\n"
+"         -- need sequences for compare to distinguish between\n"
+"         -- x < 4 < 3 and (x < 4) < 3\n"
+"         | Compare(expr left, cmpop* ops, expr* comparators)\n"
+"         | Call(expr func, expr* args, keyword* keywords)\n"
+"         | FormattedValue(expr value, int conversion, expr? format_spec)\n"
+"         | JoinedStr(expr* values)\n"
+"         | Constant(constant value, string? kind)\n"
+"\n"
+"         -- the following expression can appear in assignment context\n"
+"         | Attribute(expr value, identifier attr, expr_context ctx)\n"
+"         | Subscript(expr value, expr slice, expr_context ctx)\n"
+"         | Starred(expr value, expr_context ctx)\n"
+"         | Name(identifier id, expr_context ctx)\n"
+"         | List(expr* elts, expr_context ctx)\n"
+"         | Tuple(expr* elts, expr_context ctx)\n"
+"\n"
+"         -- can appear only in Subscript\n"
+"         | Slice(expr? lower, expr? upper, expr? step)\n"
+"\n"
+"          -- col_offset is the byte offset in the utf8 string the parser "
+"uses\n"
+"          attributes (int lineno, int col_offset, int? end_lineno, int? "
+"end_col_offset)\n"
+"\n"
+"    expr_context = Load | Store | Del\n"
+"\n"
+"    boolop = And | Or\n"
+"\n"
+"    operator = Add | Sub | Mult | MatMult | Div | Mod | Pow | LShift\n"
+"                 | RShift | BitOr | BitXor | BitAnd | FloorDiv\n"
+"\n"
+"    unaryop = Invert | Not | UAdd | USub\n"
+"\n"
+"    cmpop = Eq | NotEq | Lt | LtE | Gt | GtE | Is | IsNot | In | NotIn\n"
+"\n"
+"    comprehension = (expr target, expr iter, expr* ifs, int is_async)\n"
+"\n"
+"    excepthandler = ExceptHandler(expr? type, identifier? name, stmt* body)\n"
+"                    attributes (int lineno, int col_offset, int? end_lineno, "
+"int? end_col_offset)\n"
+"\n"
+"    arguments = (arg* posonlyargs, arg* args, arg? vararg, arg* kwonlyargs,\n"
+"                 expr* kw_defaults, arg? kwarg, expr* defaults)\n"
+"\n"
+"    arg = (identifier arg, expr? annotation, string? type_comment)\n"
+"           attributes (int lineno, int col_offset, int? end_lineno, int? "
+"end_col_offset)\n"
+"\n"
+"    -- keyword arguments supplied to call (NULL identifier for **kwargs)\n"
+"    keyword = (identifier? arg, expr value)\n"
+"               attributes (int lineno, int col_offset, int? end_lineno, int? "
+"end_col_offset)\n"
+"\n"
+"    -- import name with optional 'as' alias.\n"
+"    alias = (identifier name, identifier? asname)\n"
+"             attributes (int lineno, int col_offset, int? end_lineno, int? "
+"end_col_offset)\n"
+"\n"
+"    withitem = (expr context_expr, expr? optional_vars)\n"
+"\n"
+"    match_case = (pattern pattern, expr? guard, stmt* body)\n"
+"\n"
+"    pattern = MatchValue(expr value)\n"
+"            | MatchSingleton(constant value)\n"
+"            | MatchSequence(pattern* patterns)\n"
+"            | MatchMapping(expr* keys, pattern* patterns, identifier? rest)\n"
+"            | MatchClass(expr cls, pattern* patterns, identifier* kwd_attrs, "
+"pattern* kwd_patterns)\n"
+"\n"
+"            | MatchStar(identifier? name)\n"
+"            -- The optional \"rest\" MatchMapping parameter handles "
+"capturing extra mapping keys\n"
+"\n"
+"            | MatchAs(pattern? pattern, identifier? name)\n"
+"            | MatchOr(pattern* patterns)\n"
+"\n"
+"             attributes (int lineno, int col_offset, int end_lineno, int "
+"end_col_offset)\n"
+"\n"
+"    type_ignore = TypeIgnore(int lineno, string tag)\n"
+"\n"
+"    type_param = TypeVar(identifier name, expr? bound)\n"
+"               | ParamSpec(identifier name)\n"
+"               | TypeVarTuple(identifier name)\n"
+"               attributes (int lineno, int col_offset, int end_lineno, int "
+"end_col_offset)\n"
+"}\n"
+msgstr ""
+
 #: library/ast.rst:42
 msgid "Node classes"
 msgstr "Classes de nœuds"
@@ -69,7 +244,7 @@ msgstr "Classes de nœuds"
 msgid ""
 "This is the base of all AST node classes.  The actual node classes are "
 "derived from the :file:`Parser/Python.asdl` file, which is reproduced :ref:"
-"`above <abstract-grammar>`.  They are defined in the :mod:`_ast` C module "
+"`above <abstract-grammar>`.  They are defined in the :mod:`!_ast` C module "
 "and re-exported in :mod:`ast`."
 msgstr ""
 "C'est la classe de base de toute classe de nœuds des d'arbres syntaxiques "
@@ -195,9 +370,27 @@ msgstr ""
 "Par exemple, pour créer et peupler un nœud :class:`ast.UnaryOp`, on peut "
 "utiliser ::"
 
+#: library/ast.rst:106
+msgid ""
+"node = ast.UnaryOp()\n"
+"node.op = ast.USub()\n"
+"node.operand = ast.Constant()\n"
+"node.operand.value = 5\n"
+"node.operand.lineno = 0\n"
+"node.operand.col_offset = 0\n"
+"node.lineno = 0\n"
+"node.col_offset = 0"
+msgstr ""
+
 #: library/ast.rst:115
 msgid "or the more compact ::"
 msgstr "ou, plus compact ::"
+
+#: library/ast.rst:117
+msgid ""
+"node = ast.UnaryOp(ast.USub(), ast.Constant(5, lineno=0, col_offset=0),\n"
+"                   lineno=0, col_offset=0)"
+msgstr ""
 
 #: library/ast.rst:122
 msgid "Class :class:`ast.Constant` is now used for all constants."
@@ -212,11 +405,12 @@ msgid ""
 msgstr ""
 
 #: library/ast.rst:131
+#, fuzzy
 msgid ""
-"Old classes :class:`ast.Num`, :class:`ast.Str`, :class:`ast.Bytes`, :class:"
-"`ast.NameConstant` and :class:`ast.Ellipsis` are still available, but they "
-"will be removed in future Python releases.  In the meantime, instantiating "
-"them will return an instance of a different class."
+"Old classes :class:`!ast.Num`, :class:`!ast.Str`, :class:`!ast.Bytes`, :"
+"class:`!ast.NameConstant` and :class:`!ast.Ellipsis` are still available, "
+"but they will be removed in future Python releases.  In the meantime, "
+"instantiating them will return an instance of a different class."
 msgstr ""
 "les classes :class:`ast.Num`, :class:`ast.Str`, :class:`ast.Bytes`, :class:"
 "`ast.NameConstant` et :class:`ast.Ellipsis` sont toujours présentes, mais "
@@ -224,8 +418,9 @@ msgstr ""
 "constructeurs renvoient des instances de classes différentes."
 
 #: library/ast.rst:138
+#, fuzzy
 msgid ""
-"Old classes :class:`ast.Index` and :class:`ast.ExtSlice` are still "
+"Old classes :class:`!ast.Index` and :class:`!ast.ExtSlice` are still "
 "available, but they will be removed in future Python releases. In the "
 "meantime, instantiating them will return an instance of a different class."
 msgstr ""
@@ -255,13 +450,25 @@ msgid ""
 msgstr ""
 
 #: library/ast.rst:160
-msgid "*body* is a :class:`list` of the module's :ref:`ast-statements`."
+msgid "``body`` is a :class:`list` of the module's :ref:`ast-statements`."
 msgstr ""
 
 #: library/ast.rst:162
 msgid ""
-"*type_ignores* is a :class:`list` of the module's type ignore comments; see :"
-"func:`ast.parse` for more details."
+"``type_ignores`` is a :class:`list` of the module's type ignore comments; "
+"see :func:`ast.parse` for more details."
+msgstr ""
+
+#: library/ast.rst:165
+msgid ""
+">>> print(ast.dump(ast.parse('x = 1'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Name(id='x', ctx=Store())],\n"
+"            value=Constant(value=1))],\n"
+"    type_ignores=[])"
 msgstr ""
 
 #: library/ast.rst:179
@@ -272,8 +479,15 @@ msgstr ""
 
 #: library/ast.rst:182
 msgid ""
-"*body* is a single node, one of the :ref:`expression types <ast-"
+"``body`` is a single node, one of the :ref:`expression types <ast-"
 "expressions>`."
+msgstr ""
+
+#: library/ast.rst:255
+msgid ""
+">>> print(ast.dump(ast.parse('123', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Constant(value=123))"
 msgstr ""
 
 #: library/ast.rst:194
@@ -283,7 +497,22 @@ msgid ""
 msgstr ""
 
 #: library/ast.rst:197
-msgid "*body* is a :class:`list` of :ref:`statement nodes <ast-statements>`."
+msgid "``body`` is a :class:`list` of :ref:`statement nodes <ast-statements>`."
+msgstr ""
+
+#: library/ast.rst:199
+msgid ""
+">>> print(ast.dump(ast.parse('x = 1; y = 2', mode='single'), indent=4))\n"
+"Interactive(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Name(id='x', ctx=Store())],\n"
+"            value=Constant(value=1)),\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Name(id='y', ctx=Store())],\n"
+"            value=Constant(value=2))])"
 msgstr ""
 
 #: library/ast.rst:216
@@ -297,13 +526,34 @@ msgstr ""
 msgid "Such type comments would look like this::"
 msgstr ""
 
+#: library/ast.rst:222
+msgid ""
+"def sum_two_number(a, b):\n"
+"    # type: (int, int) -> int\n"
+"    return a + b"
+msgstr ""
+
 #: library/ast.rst:226
 msgid ""
-"*argtypes* is a :class:`list` of :ref:`expression nodes <ast-expressions>`."
+"``argtypes`` is a :class:`list` of :ref:`expression nodes <ast-expressions>`."
 msgstr ""
 
 #: library/ast.rst:228
-msgid "*returns* is a single :ref:`expression node <ast-expressions>`."
+msgid "``returns`` is a single :ref:`expression node <ast-expressions>`."
+msgstr ""
+
+#: library/ast.rst:230
+msgid ""
+">>> print(ast.dump(ast.parse('(int, str) -> List[int]', mode='func_type'), "
+"indent=4))\n"
+"FunctionType(\n"
+"    argtypes=[\n"
+"        Name(id='int', ctx=Load()),\n"
+"        Name(id='str', ctx=Load())],\n"
+"    returns=Subscript(\n"
+"        value=Name(id='List', ctx=Load()),\n"
+"        slice=Name(id='int', ctx=Load()),\n"
+"        ctx=Load()))"
 msgstr ""
 
 #: library/ast.rst:246
@@ -380,6 +630,30 @@ msgstr ""
 "Chaîne littérale formatée (*f-string*), qui contient une liste de nœuds :"
 "class:`FormattedValue` et :class:`Constant`."
 
+#: library/ast.rst:287
+msgid ""
+">>> print(ast.dump(ast.parse('f\"sin({a}) is {sin(a):.3}\"', mode='eval'), "
+"indent=4))\n"
+"Expression(\n"
+"    body=JoinedStr(\n"
+"        values=[\n"
+"            Constant(value='sin('),\n"
+"            FormattedValue(\n"
+"                value=Name(id='a', ctx=Load()),\n"
+"                conversion=-1),\n"
+"            Constant(value=') is '),\n"
+"            FormattedValue(\n"
+"                value=Call(\n"
+"                    func=Name(id='sin', ctx=Load()),\n"
+"                    args=[\n"
+"                        Name(id='a', ctx=Load())],\n"
+"                    keywords=[]),\n"
+"                conversion=-1,\n"
+"                format_spec=JoinedStr(\n"
+"                    values=[\n"
+"                        Constant(value='.3')]))]))"
+msgstr ""
+
 #: library/ast.rst:313
 msgid ""
 "A list or tuple. ``elts`` holds a list of nodes representing the elements. "
@@ -391,9 +665,40 @@ msgstr ""
 "cible d'une affectation (par exemple ``(x, y) = quelque_chose``). Sinon, "
 "c'est une instance de :class:`Load`."
 
+#: library/ast.rst:317
+msgid ""
+">>> print(ast.dump(ast.parse('[1, 2, 3]', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=List(\n"
+"        elts=[\n"
+"            Constant(value=1),\n"
+"            Constant(value=2),\n"
+"            Constant(value=3)],\n"
+"        ctx=Load()))\n"
+">>> print(ast.dump(ast.parse('(1, 2, 3)', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Tuple(\n"
+"        elts=[\n"
+"            Constant(value=1),\n"
+"            Constant(value=2),\n"
+"            Constant(value=3)],\n"
+"        ctx=Load()))"
+msgstr ""
+
 #: library/ast.rst:339
 msgid "A set. ``elts`` holds a list of nodes representing the set's elements."
 msgstr "Ensemble. *elts* est la liste de ses éléments."
+
+#: library/ast.rst:341
+msgid ""
+">>> print(ast.dump(ast.parse('{1, 2, 3}', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Set(\n"
+"        elts=[\n"
+"            Constant(value=1),\n"
+"            Constant(value=2),\n"
+"            Constant(value=3)]))"
+msgstr ""
 
 #: library/ast.rst:354
 msgid ""
@@ -417,6 +722,19 @@ msgstr ""
 "déballer, elle est intégrée dans *values*, et ``None`` est mis à la place "
 "correspondante dans *keys*."
 
+#: library/ast.rst:362
+msgid ""
+">>> print(ast.dump(ast.parse('{\"a\":1, **d}', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Dict(\n"
+"        keys=[\n"
+"            Constant(value='a'),\n"
+"            None],\n"
+"        values=[\n"
+"            Constant(value=1),\n"
+"            Name(id='d', ctx=Load())]))"
+msgstr ""
+
 #: library/ast.rst:376
 msgid "Variables"
 msgstr "Variables"
@@ -439,6 +757,33 @@ msgstr ""
 "utilisées pour lire la valeur, mettre la variable à une nouvelle valeur, ou "
 "supprimer la variable."
 
+#: library/ast.rst:392
+msgid ""
+">>> print(ast.dump(ast.parse('a'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Expr(\n"
+"            value=Name(id='a', ctx=Load()))],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('a = 1'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Name(id='a', ctx=Store())],\n"
+"            value=Constant(value=1))],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('del a'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Delete(\n"
+"            targets=[\n"
+"                Name(id='a', ctx=Del())])],\n"
+"    type_ignores=[])"
+msgstr ""
+
 #: library/ast.rst:421
 msgid ""
 "A ``*var`` variable reference. ``value`` holds the variable, typically a :"
@@ -449,6 +794,24 @@ msgstr ""
 "souvent, *value* est une instance de :class:`Name`. Ce type est notamment "
 "nécessaire pour les appels de fonction avec déballage d'arguments (par "
 "exemple ``fonction(*args)`` ; voir aussi :class:`Call`)."
+
+#: library/ast.rst:425
+msgid ""
+">>> print(ast.dump(ast.parse('a, *b = it'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Tuple(\n"
+"                    elts=[\n"
+"                        Name(id='a', ctx=Store()),\n"
+"                        Starred(\n"
+"                            value=Name(id='b', ctx=Store()),\n"
+"                            ctx=Store())],\n"
+"                    ctx=Store())],\n"
+"            value=Name(id='it', ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
 
 #: library/ast.rst:446
 msgid "Expressions"
@@ -469,6 +832,18 @@ msgstr ""
 "class:`Constant`, :class:`Name`, :class:`Lambda`, :class:`Yield` et :class:"
 "`YieldFrom`."
 
+#: library/ast.rst:455
+msgid ""
+">>> print(ast.dump(ast.parse('-a'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Expr(\n"
+"            value=UnaryOp(\n"
+"                op=USub(),\n"
+"                operand=Name(id='a', ctx=Load())))],\n"
+"    type_ignores=[])"
+msgstr ""
+
 #: library/ast.rst:469
 msgid ""
 "A unary operation. ``op`` is the operator, and ``operand`` any expression "
@@ -485,6 +860,15 @@ msgstr ""
 "Unités lexicales désignant des opérations unaires. :class:`Not` correspond "
 "au mot-clé ``not``, :class:`Invert` à l'opérateur ``~``."
 
+#: library/ast.rst:481
+msgid ""
+">>> print(ast.dump(ast.parse('not x', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=UnaryOp(\n"
+"        op=Not(),\n"
+"        operand=Name(id='x', ctx=Load())))"
+msgstr ""
+
 #: library/ast.rst:492
 msgid ""
 "A binary operation (like addition or division). ``op`` is the operator, and "
@@ -492,6 +876,16 @@ msgid ""
 msgstr ""
 "Opération binaire (comme l'addition ou la division). L'opérateur est *op*, "
 "les opérandes *left* et *right* sont des nœuds d'expression quelconques."
+
+#: library/ast.rst:495
+msgid ""
+">>> print(ast.dump(ast.parse('x + y', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=BinOp(\n"
+"        left=Name(id='x', ctx=Load()),\n"
+"        op=Add(),\n"
+"        right=Name(id='y', ctx=Load())))"
+msgstr ""
 
 #: library/ast.rst:519
 msgid "Binary operator tokens."
@@ -516,6 +910,17 @@ msgstr ""
 "L'opérateur ``not`` n'est pas implémenté ici, mais bien dans :class:"
 "`UnaryOp`."
 
+#: library/ast.rst:531
+msgid ""
+">>> print(ast.dump(ast.parse('x or y', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=BoolOp(\n"
+"        op=Or(),\n"
+"        values=[\n"
+"            Name(id='x', ctx=Load()),\n"
+"            Name(id='y', ctx=Load())]))"
+msgstr ""
+
 #: library/ast.rst:545
 msgid "Boolean operator tokens."
 msgstr "Unités lexicales pour les opérations booléennes."
@@ -529,6 +934,20 @@ msgstr ""
 "Comparaison de deux valeurs ou plus. *left* est le premier élément de la "
 "comparaison, *ops* la liste des opérateurs, et *comparators* la liste des "
 "éléments restants de la comparaison."
+
+#: library/ast.rst:554
+msgid ""
+">>> print(ast.dump(ast.parse('1 <= a < 10', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Compare(\n"
+"        left=Constant(value=1),\n"
+"        ops=[\n"
+"            LtE(),\n"
+"            Lt()],\n"
+"        comparators=[\n"
+"            Name(id='a', ctx=Load()),\n"
+"            Constant(value=10)]))"
+msgstr ""
 
 #: library/ast.rst:579
 msgid "Comparison operator tokens."
@@ -550,9 +969,10 @@ msgstr ""
 "positionnels) ;"
 
 #: library/ast.rst:588
+#, fuzzy
 msgid ""
-"``keywords`` holds a list of :class:`keyword` objects representing arguments "
-"passed by keyword."
+"``keywords`` holds a list of :class:`.keyword` objects representing "
+"arguments passed by keyword."
 msgstr ""
 "*keywords*, la liste des arguments nommés sous forme de nœuds :class:"
 "`keyword`."
@@ -566,6 +986,26 @@ msgstr ""
 "Les arguments *args* et *keywords* du constructeur de ``Call`` sont "
 "obligatoires (mais peuvent être des listes vides). *starargs* (arguments "
 "étoilés) et *kwargs* (arguments nommés) sont facultatifs."
+
+#: library/ast.rst:594
+msgid ""
+">>> print(ast.dump(ast.parse('func(a, b=c, *d, **e)', mode='eval'), "
+"indent=4))\n"
+"Expression(\n"
+"    body=Call(\n"
+"        func=Name(id='func', ctx=Load()),\n"
+"        args=[\n"
+"            Name(id='a', ctx=Load()),\n"
+"            Starred(\n"
+"                value=Name(id='d', ctx=Load()),\n"
+"                ctx=Load())],\n"
+"        keywords=[\n"
+"            keyword(\n"
+"                arg='b',\n"
+"                value=Name(id='c', ctx=Load())),\n"
+"            keyword(\n"
+"                value=Name(id='e', ctx=Load()))]))"
+msgstr ""
 
 #: library/ast.rst:615
 msgid ""
@@ -581,6 +1021,16 @@ msgstr ""
 "Expression ternaire (``a if b else c``). Chaque champ contient un unique "
 "nœud. Dans l'exemple suivant, les trois sont de la classe :class:`Name`."
 
+#: library/ast.rst:624
+msgid ""
+">>> print(ast.dump(ast.parse('a if b else c', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=IfExp(\n"
+"        test=Name(id='b', ctx=Load()),\n"
+"        body=Name(id='a', ctx=Load()),\n"
+"        orelse=Name(id='c', ctx=Load())))"
+msgstr ""
+
 #: library/ast.rst:636
 msgid ""
 "Attribute access, e.g. ``d.keys``. ``value`` is a node, typically a :class:"
@@ -592,6 +1042,16 @@ msgstr ""
 "classe :class:`Name`. *attr* est le nom de l'attribut, sous forme de chaîne "
 "de caractères. *ctx* est de classe :class:`Load`, :class:`Store` ou :class:"
 "`Del` selon le type de l'action effectuée sur l'attribut."
+
+#: library/ast.rst:641
+msgid ""
+">>> print(ast.dump(ast.parse('snake.colour', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Attribute(\n"
+"        value=Name(id='snake', ctx=Load()),\n"
+"        attr='colour',\n"
+"        ctx=Load()))"
+msgstr ""
 
 #: library/ast.rst:653
 msgid ""
@@ -605,11 +1065,20 @@ msgstr ""
 "qui peut contenir plusieurs cibles, les arguments *target* et *value* sont "
 "ici des nœuds simples."
 
-#: library/ast.rst:668
+#: library/ast.rst:658
+msgid ""
+">>> print(ast.dump(ast.parse('(x := 4)', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=NamedExpr(\n"
+"        target=Name(id='x', ctx=Store()),\n"
+"        value=Constant(value=4)))"
+msgstr ""
+
+#: library/ast.rst:669
 msgid "Subscripting"
 msgstr "Indiçage"
 
-#: library/ast.rst:672
+#: library/ast.rst:673
 msgid ""
 "A subscript, such as ``l[1]``. ``value`` is the subscripted object (usually "
 "sequence or mapping). ``slice`` is an index, slice or key. It can be a :"
@@ -623,7 +1092,23 @@ msgstr ""
 "*ctx* est de type :class:`Load`, :class:`Store` ou :class:`Del` selon "
 "l'action appliquée à l'indice."
 
-#: library/ast.rst:696
+#: library/ast.rst:679
+msgid ""
+">>> print(ast.dump(ast.parse('l[1:2, 3]', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Subscript(\n"
+"        value=Name(id='l', ctx=Load()),\n"
+"        slice=Tuple(\n"
+"            elts=[\n"
+"                Slice(\n"
+"                    lower=Constant(value=1),\n"
+"                    upper=Constant(value=2)),\n"
+"                Constant(value=3)],\n"
+"            ctx=Load()),\n"
+"        ctx=Load()))"
+msgstr ""
+
+#: library/ast.rst:697
 msgid ""
 "Regular slicing (on the form ``lower:upper`` or ``lower:upper:step``). Can "
 "occur only inside the *slice* field of :class:`Subscript`, either directly "
@@ -634,11 +1119,23 @@ msgstr ""
 "d'un :class:`Subscript`, que ce soit directement ou en tant qu'élément d'un :"
 "class:`Tuple`."
 
-#: library/ast.rst:713
+#: library/ast.rst:701
+msgid ""
+">>> print(ast.dump(ast.parse('l[1:2]', mode='eval'), indent=4))\n"
+"Expression(\n"
+"    body=Subscript(\n"
+"        value=Name(id='l', ctx=Load()),\n"
+"        slice=Slice(\n"
+"            lower=Constant(value=1),\n"
+"            upper=Constant(value=2)),\n"
+"        ctx=Load()))"
+msgstr ""
+
+#: library/ast.rst:714
 msgid "Comprehensions"
 msgstr "Compréhensions"
 
-#: library/ast.rst:720
+#: library/ast.rst:721
 msgid ""
 "List and set comprehensions, generator expressions, and dictionary "
 "comprehensions. ``elt`` (or ``key`` and ``value``) is a single node "
@@ -649,11 +1146,52 @@ msgstr ""
 "Il est remplacé par *key* (expression pour la clé) et *value* (expression "
 "pour la valeur) dans le cas des dictionnaires."
 
-#: library/ast.rst:724
+#: library/ast.rst:725
 msgid "``generators`` is a list of :class:`comprehension` nodes."
 msgstr "*generators* est une liste de nœuds :class:`comprehension`."
 
-#: library/ast.rst:766
+#: library/ast.rst:727
+msgid ""
+">>> print(ast.dump(ast.parse('[x for x in numbers]', mode='eval'), "
+"indent=4))\n"
+"Expression(\n"
+"    body=ListComp(\n"
+"        elt=Name(id='x', ctx=Load()),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='x', ctx=Store()),\n"
+"                iter=Name(id='numbers', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=0)]))\n"
+">>> print(ast.dump(ast.parse('{x: x**2 for x in numbers}', mode='eval'), "
+"indent=4))\n"
+"Expression(\n"
+"    body=DictComp(\n"
+"        key=Name(id='x', ctx=Load()),\n"
+"        value=BinOp(\n"
+"            left=Name(id='x', ctx=Load()),\n"
+"            op=Pow(),\n"
+"            right=Constant(value=2)),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='x', ctx=Store()),\n"
+"                iter=Name(id='numbers', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=0)]))\n"
+">>> print(ast.dump(ast.parse('{x for x in numbers}', mode='eval'), "
+"indent=4))\n"
+"Expression(\n"
+"    body=SetComp(\n"
+"        elt=Name(id='x', ctx=Load()),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='x', ctx=Store()),\n"
+"                iter=Name(id='numbers', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=0)]))"
+msgstr ""
+
+#: library/ast.rst:767
 msgid ""
 "One ``for`` clause in a comprehension. ``target`` is the reference to use "
 "for each element - typically a :class:`Name` or :class:`Tuple` node. "
@@ -666,7 +1204,7 @@ msgstr ""
 "*ifs* contient les tests  qui décident si l'élément doit être inséré. C'est "
 "une liste, car chaque ``for`` peut être suivi de plusieurs ``if``."
 
-#: library/ast.rst:771
+#: library/ast.rst:772
 msgid ""
 "``is_async`` indicates a comprehension is asynchronous (using an ``async "
 "for`` instead of ``for``). The value is an integer (0 or 1)."
@@ -675,11 +1213,76 @@ msgstr ""
 "si la compréhension est asynchrone, c'est-à-dire qu'elle a été écrite avec "
 "``async for`` au lieu de ``for``."
 
-#: library/ast.rst:840
+#: library/ast.rst:775
+msgid ""
+">>> print(ast.dump(ast.parse('[ord(c) for line in file for c in line]', "
+"mode='eval'),\n"
+"...                indent=4)) # Multiple comprehensions in one.\n"
+"Expression(\n"
+"    body=ListComp(\n"
+"        elt=Call(\n"
+"            func=Name(id='ord', ctx=Load()),\n"
+"            args=[\n"
+"                Name(id='c', ctx=Load())],\n"
+"            keywords=[]),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='line', ctx=Store()),\n"
+"                iter=Name(id='file', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=0),\n"
+"            comprehension(\n"
+"                target=Name(id='c', ctx=Store()),\n"
+"                iter=Name(id='line', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=0)]))\n"
+"\n"
+">>> print(ast.dump(ast.parse('(n**2 for n in it if n>5 if n<10)', "
+"mode='eval'),\n"
+"...                indent=4)) # generator comprehension\n"
+"Expression(\n"
+"    body=GeneratorExp(\n"
+"        elt=BinOp(\n"
+"            left=Name(id='n', ctx=Load()),\n"
+"            op=Pow(),\n"
+"            right=Constant(value=2)),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='n', ctx=Store()),\n"
+"                iter=Name(id='it', ctx=Load()),\n"
+"                ifs=[\n"
+"                    Compare(\n"
+"                        left=Name(id='n', ctx=Load()),\n"
+"                        ops=[\n"
+"                            Gt()],\n"
+"                        comparators=[\n"
+"                            Constant(value=5)]),\n"
+"                    Compare(\n"
+"                        left=Name(id='n', ctx=Load()),\n"
+"                        ops=[\n"
+"                            Lt()],\n"
+"                        comparators=[\n"
+"                            Constant(value=10)])],\n"
+"                is_async=0)]))\n"
+"\n"
+">>> print(ast.dump(ast.parse('[i async for i in soc]', mode='eval'),\n"
+"...                indent=4)) # Async comprehension\n"
+"Expression(\n"
+"    body=ListComp(\n"
+"        elt=Name(id='i', ctx=Load()),\n"
+"        generators=[\n"
+"            comprehension(\n"
+"                target=Name(id='i', ctx=Store()),\n"
+"                iter=Name(id='soc', ctx=Load()),\n"
+"                ifs=[],\n"
+"                is_async=1)]))"
+msgstr ""
+
+#: library/ast.rst:841
 msgid "Statements"
 msgstr "Instructions"
 
-#: library/ast.rst:844
+#: library/ast.rst:845
 msgid ""
 "An assignment. ``targets`` is a list of nodes, and ``value`` is a single "
 "node."
@@ -687,7 +1290,7 @@ msgstr ""
 "Affectation. *targets* est une liste de nœuds, *value* est simplement un "
 "nœud."
 
-#: library/ast.rst:846
+#: library/ast.rst:847
 msgid ""
 "Multiple nodes in ``targets`` represents assigning the same value to each. "
 "Unpacking is represented by putting a :class:`Tuple` or :class:`List` within "
@@ -698,21 +1301,46 @@ msgstr ""
 "représenté par des nœuds :class:`Tuple` ou :class:`List` comme éléments de "
 "*targets*."
 
-#: library/ast.rst:1139 library/ast.rst:1764
+#: library/ast.rst:1165 library/ast.rst:1895
 msgid ""
 "``type_comment`` is an optional string with the type annotation as a comment."
 msgstr ""
 "Le champ facultatif *type_comment* contient une annotation de type fournie "
 "par un commentaire, et ce sous la forme d'une chaîne de caractères."
 
-#: library/ast.rst:882
+#: library/ast.rst:855
+msgid ""
+">>> print(ast.dump(ast.parse('a = b = 1'), indent=4)) # Multiple assignment\n"
+"Module(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Name(id='a', ctx=Store()),\n"
+"                Name(id='b', ctx=Store())],\n"
+"            value=Constant(value=1))],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('a,b = c'), indent=4)) # Unpacking\n"
+"Module(\n"
+"    body=[\n"
+"        Assign(\n"
+"            targets=[\n"
+"                Tuple(\n"
+"                    elts=[\n"
+"                        Name(id='a', ctx=Store()),\n"
+"                        Name(id='b', ctx=Store())],\n"
+"                    ctx=Store())],\n"
+"            value=Name(id='c', ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:883
+#, fuzzy
 msgid ""
 "An assignment with a type annotation. ``target`` is a single node and can be "
-"a :class:`Name`, a :class:`Attribute` or a :class:`Subscript`. "
+"a :class:`Name`, an :class:`Attribute` or a :class:`Subscript`. "
 "``annotation`` is the annotation, such as a :class:`Constant` or :class:"
-"`Name` node. ``value`` is a single optional node. ``simple`` is a boolean "
-"integer set to True for a :class:`Name` node in ``target`` that do not "
-"appear in between parenthesis and are hence pure names and not expressions."
+"`Name` node. ``value`` is a single optional node."
 msgstr ""
 "Affectation accompagnée d'une annotation de type. La cible *target* est un "
 "nœud de type :class:`Name`, :class:`Attribute` ou :class:`Subscript`. "
@@ -723,7 +1351,64 @@ msgstr ""
 "*target* est de type :class:`Name` et provient d'un nom sans parenthèses, "
 "donc un nom simple plutôt qu'une expression."
 
-#: library/ast.rst:937
+#: library/ast.rst:888
+msgid ""
+"``simple`` is always either 0 (indicating a \"complex\" target) or 1 "
+"(indicating a \"simple\" target). A \"simple\" target consists solely of a :"
+"class:`Name` node that does not appear between parentheses; all other "
+"targets are considered complex. Only simple targets appear in the :attr:"
+"`~object.__annotations__` dictionary of modules and classes."
+msgstr ""
+
+#: library/ast.rst:894
+msgid ""
+">>> print(ast.dump(ast.parse('c: int'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        AnnAssign(\n"
+"            target=Name(id='c', ctx=Store()),\n"
+"            annotation=Name(id='int', ctx=Load()),\n"
+"            simple=1)],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('(a): int = 1'), indent=4)) # Annotation with "
+"parenthesis\n"
+"Module(\n"
+"    body=[\n"
+"        AnnAssign(\n"
+"            target=Name(id='a', ctx=Store()),\n"
+"            annotation=Name(id='int', ctx=Load()),\n"
+"            value=Constant(value=1),\n"
+"            simple=0)],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('a.b: int'), indent=4)) # Attribute annotation\n"
+"Module(\n"
+"    body=[\n"
+"        AnnAssign(\n"
+"            target=Attribute(\n"
+"                value=Name(id='a', ctx=Load()),\n"
+"                attr='b',\n"
+"                ctx=Store()),\n"
+"            annotation=Name(id='int', ctx=Load()),\n"
+"            simple=0)],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('a[1]: int'), indent=4)) # Subscript "
+"annotation\n"
+"Module(\n"
+"    body=[\n"
+"        AnnAssign(\n"
+"            target=Subscript(\n"
+"                value=Name(id='a', ctx=Load()),\n"
+"                slice=Constant(value=1),\n"
+"                ctx=Store()),\n"
+"            annotation=Name(id='int', ctx=Load()),\n"
+"            simple=0)],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:942
 msgid ""
 "Augmented assignment, such as ``a += 1``. In the following example, "
 "``target`` is a :class:`Name` node for ``x`` (with the :class:`Store` "
@@ -735,7 +1420,7 @@ msgstr ""
 "class:`Store`), *op* est une instance de :class:`Add`, et *value* est un "
 "nœud :class:`Constant` contenant la valeur 1."
 
-#: library/ast.rst:942
+#: library/ast.rst:947
 #, fuzzy
 msgid ""
 "The ``target`` attribute cannot be of class :class:`Tuple` or :class:`List`, "
@@ -744,7 +1429,19 @@ msgstr ""
 "Contrairement aux cibles acceptées par :class:`Assign`, le champ *target* ne "
 "peut pas être ici de type :class:`Tuple` ou :class:`List`."
 
-#: library/ast.rst:959
+#: library/ast.rst:950
+msgid ""
+">>> print(ast.dump(ast.parse('x += 2'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        AugAssign(\n"
+"            target=Name(id='x', ctx=Store()),\n"
+"            op=Add(),\n"
+"            value=Constant(value=2))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:964
 msgid ""
 "A ``raise`` statement. ``exc`` is the exception object to be raised, "
 "normally a :class:`Call` or :class:`Name`, or ``None`` for a standalone "
@@ -755,7 +1452,18 @@ msgstr ""
 "cas d'un ``raise`` sans rien d'autre. Le champ facultatif *cause* correspond "
 "à la partie après le ``from`` dans ``raise ... from ...``."
 
-#: library/ast.rst:976
+#: library/ast.rst:968
+msgid ""
+">>> print(ast.dump(ast.parse('raise x from y'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Raise(\n"
+"            exc=Name(id='x', ctx=Load()),\n"
+"            cause=Name(id='y', ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:981
 msgid ""
 "An assertion. ``test`` holds the condition, such as a :class:`Compare` node. "
 "``msg`` holds the failure message."
@@ -763,7 +1471,18 @@ msgstr ""
 "Assertion. *test* est la condition, par exemple un nœud :class:`Compare`. "
 "*msg* est le message d'erreur affiché si le test s'évalue comme faux."
 
-#: library/ast.rst:992
+#: library/ast.rst:984
+msgid ""
+">>> print(ast.dump(ast.parse('assert x,y'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Assert(\n"
+"            test=Name(id='x', ctx=Load()),\n"
+"            msg=Name(id='y', ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:997
 msgid ""
 "Represents a ``del`` statement. ``targets`` is a list of nodes, such as :"
 "class:`Name`, :class:`Attribute` or :class:`Subscript` nodes."
@@ -772,11 +1491,53 @@ msgstr ""
 "*target*. Ce sont généralement des nœuds de type :class:`Name`, :class:"
 "`Attribute` ou :class:`Subscript`."
 
-#: library/ast.rst:1010
+#: library/ast.rst:1000
+msgid ""
+">>> print(ast.dump(ast.parse('del x,y,z'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Delete(\n"
+"            targets=[\n"
+"                Name(id='x', ctx=Del()),\n"
+"                Name(id='y', ctx=Del()),\n"
+"                Name(id='z', ctx=Del())])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1015
 msgid "A ``pass`` statement."
 msgstr "Instruction ``pass``."
 
-#: library/ast.rst:1021
+#: library/ast.rst:1017
+msgid ""
+">>> print(ast.dump(ast.parse('pass'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Pass()],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1028
+msgid ""
+"A :ref:`type alias <type-aliases>` created through the :keyword:`type` "
+"statement. ``name`` is the name of the alias, ``type_params`` is a list of :"
+"ref:`type parameters <ast-type-params>`, and ``value`` is the value of the "
+"type alias."
+msgstr ""
+
+#: library/ast.rst:1033
+msgid ""
+">>> print(ast.dump(ast.parse('type Alias = int'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        TypeAlias(\n"
+"            name=Name(id='Alias', ctx=Store()),\n"
+"            type_params=[],\n"
+"            value=Name(id='int', ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1046
 msgid ""
 "Other statements which are only applicable inside functions or loops are "
 "described in other sections."
@@ -785,17 +1546,30 @@ msgstr ""
 "contextes spécifiques comme l'intérieur d'une fonction ou d'une boucle. "
 "Elles sont décrites dans d'autres sections de ce document."
 
-#: library/ast.rst:1025
+#: library/ast.rst:1050
 msgid "Imports"
 msgstr "Importations"
 
-#: library/ast.rst:1029
+#: library/ast.rst:1054
 msgid "An import statement. ``names`` is a list of :class:`alias` nodes."
 msgstr ""
 "Instruction ``import``. *names* prend la forme d'une liste de nœuds :class:"
 "`alias`."
 
-#: library/ast.rst:1046
+#: library/ast.rst:1056
+msgid ""
+">>> print(ast.dump(ast.parse('import x,y,z'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Import(\n"
+"            names=[\n"
+"                alias(name='x'),\n"
+"                alias(name='y'),\n"
+"                alias(name='z')])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1071
 msgid ""
 "Represents ``from x import y``. ``module`` is a raw string of the 'from' "
 "name, without any leading dots, or ``None`` for statements such as ``from . "
@@ -809,7 +1583,22 @@ msgstr ""
 "import toto``, *module* vaut ``None``. *level* est le niveau d'importation "
 "relative sous forme d'entier (0 pour les importations absolues)."
 
-#: library/ast.rst:1068
+#: library/ast.rst:1076
+msgid ""
+">>> print(ast.dump(ast.parse('from y import x,y,z'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        ImportFrom(\n"
+"            module='y',\n"
+"            names=[\n"
+"                alias(name='x'),\n"
+"                alias(name='y'),\n"
+"                alias(name='z')],\n"
+"            level=0)],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1093
 msgid ""
 "Both parameters are raw strings of the names. ``asname`` can be ``None`` if "
 "the regular name is to be used."
@@ -819,11 +1608,25 @@ msgstr ""
 "as ...``. Dans les instructions sans ``as`` (où le module n'est pas "
 "renommé), *asname* vaut ``None``."
 
-#: library/ast.rst:1085
+#: library/ast.rst:1096
+msgid ""
+">>> print(ast.dump(ast.parse('from ..foo.bar import a as b, c'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        ImportFrom(\n"
+"            module='foo.bar',\n"
+"            names=[\n"
+"                alias(name='a', asname='b'),\n"
+"                alias(name='c')],\n"
+"            level=2)],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1110
 msgid "Control flow"
 msgstr "Contrôle de l'exécution"
 
-#: library/ast.rst:1088
+#: library/ast.rst:1113
 msgid ""
 "Optional clauses such as ``else`` are stored as an empty list if they're not "
 "present."
@@ -834,7 +1637,7 @@ msgstr ""
 # Il faut développer un peu plus que l'original car le lecteur ne
 # comprend pas forcément les termes « body » et « orelse ». La même
 # considération s'applique à bien des descriptions par la suite.
-#: library/ast.rst:1093
+#: library/ast.rst:1118
 msgid ""
 "An ``if`` statement. ``test`` holds a single node, such as a :class:"
 "`Compare` node. ``body`` and ``orelse`` each hold a list of nodes."
@@ -844,7 +1647,7 @@ msgstr ""
 "*orelse* contient les instructions dans le ``else`` (liste vide s'il n'y a "
 "pas de ``else``)."
 
-#: library/ast.rst:1096
+#: library/ast.rst:1121
 msgid ""
 "``elif`` clauses don't have a special representation in the AST, but rather "
 "appear as extra :class:`If` nodes within the ``orelse`` section of the "
@@ -854,13 +1657,44 @@ msgstr ""
 "sont simplement mises dans le *orelse* du ``if`` ou ``elif`` précédent, "
 "comme nœuds de type :class:`If`."
 
-#: library/ast.rst:1131
+#: library/ast.rst:1125
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... if x:\n"
+"...    ...\n"
+"... elif y:\n"
+"...    ...\n"
+"... else:\n"
+"...    ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        If(\n"
+"            test=Name(id='x', ctx=Load()),\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            orelse=[\n"
+"                If(\n"
+"                    test=Name(id='y', ctx=Load()),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))],\n"
+"                    orelse=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1156
+#, fuzzy
 msgid ""
 "A ``for`` loop. ``target`` holds the variable(s) the loop assigns to, as a "
-"single :class:`Name`, :class:`Tuple` or :class:`List` node. ``iter`` holds "
-"the item to be looped over, again as a single node. ``body`` and ``orelse`` "
-"contain lists of nodes to execute. Those in ``orelse`` are executed if the "
-"loop finishes normally, rather than via a ``break`` statement."
+"single :class:`Name`, :class:`Tuple`, :class:`List`, :class:`Attribute` or :"
+"class:`Subscript` node. ``iter`` holds the item to be looped over, again as "
+"a single node. ``body`` and ``orelse`` contain lists of nodes to execute. "
+"Those in ``orelse`` are executed if the loop finishes normally, rather than "
+"via a ``break`` statement."
 msgstr ""
 "Boucle ``for``. Elle porte sur l'itérable donné par le nœud *iter*. La cible "
 "des affectations successives est *target*, qui est un nœud de type :class:"
@@ -869,7 +1703,29 @@ msgstr ""
 "éventuelle clause ``else`` et sont exécutées si la boucle se termine par "
 "épuisement de l'itérable, et non pas par un ``break``."
 
-#: library/ast.rst:1165
+#: library/ast.rst:1167
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... for x in y:\n"
+"...     ...\n"
+"... else:\n"
+"...     ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        For(\n"
+"            target=Name(id='x', ctx=Store()),\n"
+"            iter=Name(id='y', ctx=Load()),\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            orelse=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1191
 msgid ""
 "A ``while`` loop. ``test`` holds the condition, such as a :class:`Compare` "
 "node."
@@ -880,11 +1736,63 @@ msgstr ""
 "termine parce que la condition devient fausse et non pas à cause d'une "
 "instruction ``break``."
 
-#: library/ast.rst:1192
+#: library/ast.rst:1194
+msgid ""
+">> print(ast.dump(ast.parse(\"\"\"\n"
+"... while x:\n"
+"...    ...\n"
+"... else:\n"
+"...    ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        While(\n"
+"            test=Name(id='x', ctx=Load()),\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            orelse=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1218
 msgid "The ``break`` and ``continue`` statements."
 msgstr "Instructions ``break`` et ``continue``."
 
-#: library/ast.rst:1227
+#: library/ast.rst:1220
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... for a in b:\n"
+"...     if a > 5:\n"
+"...         break\n"
+"...     else:\n"
+"...         continue\n"
+"...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        For(\n"
+"            target=Name(id='a', ctx=Store()),\n"
+"            iter=Name(id='b', ctx=Load()),\n"
+"            body=[\n"
+"                If(\n"
+"                    test=Compare(\n"
+"                        left=Name(id='a', ctx=Load()),\n"
+"                        ops=[\n"
+"                            Gt()],\n"
+"                        comparators=[\n"
+"                            Constant(value=5)]),\n"
+"                    body=[\n"
+"                        Break()],\n"
+"                    orelse=[\n"
+"                        Continue()])],\n"
+"            orelse=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1253
 msgid ""
 "``try`` blocks. All attributes are list of nodes to execute, except for "
 "``handlers``, which is a list of :class:`ExceptHandler` nodes."
@@ -895,14 +1803,80 @@ msgstr ""
 "contiennent respectivement les instructions se trouvant dans d'éventuels "
 "blocs ``else`` et ``finally``."
 
-#: library/ast.rst:1273
+#: library/ast.rst:1256
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... try:\n"
+"...    ...\n"
+"... except Exception:\n"
+"...    ...\n"
+"... except OtherException as e:\n"
+"...    ...\n"
+"... else:\n"
+"...    ...\n"
+"... finally:\n"
+"...    ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Try(\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            handlers=[\n"
+"                ExceptHandler(\n"
+"                    type=Name(id='Exception', ctx=Load()),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                ExceptHandler(\n"
+"                    type=Name(id='OtherException', ctx=Load()),\n"
+"                    name='e',\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])],\n"
+"            orelse=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            finalbody=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1299
 msgid ""
 "``try`` blocks which are followed by ``except*`` clauses. The attributes are "
 "the same as for :class:`Try` but the :class:`ExceptHandler` nodes in "
 "``handlers`` are interpreted as ``except*`` blocks rather then ``except``."
 msgstr ""
 
-#: library/ast.rst:1304
+#: library/ast.rst:1303
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... try:\n"
+"...    ...\n"
+"... except* Exception:\n"
+"...    ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        TryStar(\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Constant(value=Ellipsis))],\n"
+"            handlers=[\n"
+"                ExceptHandler(\n"
+"                    type=Name(id='Exception', ctx=Load()),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])],\n"
+"            orelse=[],\n"
+"            finalbody=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1331
 msgid ""
 "A single ``except`` clause. ``type`` is the exception type it will match, "
 "typically a :class:`Name` node (or ``None`` for a catch-all ``except:`` "
@@ -916,7 +1890,34 @@ msgstr ""
 "de caractères *name* (``None`` s'il n'y a pas de ``as``). Les instructions "
 "sous le ``except`` sont dans la liste *body*."
 
-#: library/ast.rst:1338
+#: library/ast.rst:1336
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... try:\n"
+"...     a + 1\n"
+"... except TypeError:\n"
+"...     pass\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Try(\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=BinOp(\n"
+"                        left=Name(id='a', ctx=Load()),\n"
+"                        op=Add(),\n"
+"                        right=Constant(value=1)))],\n"
+"            handlers=[\n"
+"                ExceptHandler(\n"
+"                    type=Name(id='TypeError', ctx=Load()),\n"
+"                    body=[\n"
+"                        Pass()])],\n"
+"            orelse=[],\n"
+"            finalbody=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1365
 msgid ""
 "A ``with`` block. ``items`` is a list of :class:`withitem` nodes "
 "representing the context managers, and ``body`` is the indented block inside "
@@ -926,7 +1927,7 @@ msgstr ""
 "instances de :class:`withitem`. Les instructions sous le ``with`` forment la "
 "liste *body*."
 
-#: library/ast.rst:1348
+#: library/ast.rst:1375
 msgid ""
 "A single context manager in a ``with`` block. ``context_expr`` is the "
 "context manager, often a :class:`Call` node. ``optional_vars`` is a :class:"
@@ -939,18 +1940,45 @@ msgstr ""
 "de type :class:`Name`, :class:`Tuple` ou :class:`List`. Sinon, "
 "*optional_vars* vaut ``None``."
 
-#: library/ast.rst:1381
+#: library/ast.rst:1380
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... with a as b, c as d:\n"
+"...    something(b, d)\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        With(\n"
+"            items=[\n"
+"                withitem(\n"
+"                    context_expr=Name(id='a', ctx=Load()),\n"
+"                    optional_vars=Name(id='b', ctx=Store())),\n"
+"                withitem(\n"
+"                    context_expr=Name(id='c', ctx=Load()),\n"
+"                    optional_vars=Name(id='d', ctx=Store()))],\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Call(\n"
+"                        func=Name(id='something', ctx=Load()),\n"
+"                        args=[\n"
+"                            Name(id='b', ctx=Load()),\n"
+"                            Name(id='d', ctx=Load())],\n"
+"                        keywords=[]))])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1408
 msgid "Pattern matching"
 msgstr ""
 
-#: library/ast.rst:1386
+#: library/ast.rst:1413
 msgid ""
 "A ``match`` statement. ``subject`` holds the subject of the match (the "
 "object that is being matched against the cases) and ``cases`` contains an "
 "iterable of :class:`match_case` nodes with the different cases."
 msgstr ""
 
-#: library/ast.rst:1392
+#: library/ast.rst:1421
 msgid ""
 "A single case pattern in a ``match`` statement. ``pattern`` contains the "
 "match pattern that the subject will be matched against. Note that the :class:"
@@ -958,19 +1986,58 @@ msgid ""
 "expressions, even when they share the same syntax."
 msgstr ""
 
-#: library/ast.rst:1397
+#: library/ast.rst:1426
 msgid ""
 "The ``guard`` attribute contains an expression that will be evaluated if the "
 "pattern matches the subject."
 msgstr ""
 
-#: library/ast.rst:1400
+#: library/ast.rst:1429
 msgid ""
 "``body`` contains a list of nodes to execute if the pattern matches and the "
 "result of evaluating the guard expression is true."
 msgstr ""
 
-#: library/ast.rst:1443
+#: library/ast.rst:1432
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case [x] if x>0:\n"
+"...         ...\n"
+"...     case tuple():\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchSequence(\n"
+"                        patterns=[\n"
+"                            MatchAs(name='x')]),\n"
+"                    guard=Compare(\n"
+"                        left=Name(id='x', ctx=Load()),\n"
+"                        ops=[\n"
+"                            Gt()],\n"
+"                        comparators=[\n"
+"                            Constant(value=0)]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                match_case(\n"
+"                    pattern=MatchClass(\n"
+"                        cls=Name(id='tuple', ctx=Load()),\n"
+"                        patterns=[],\n"
+"                        kwd_attrs=[],\n"
+"                        kwd_patterns=[]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1474
 msgid ""
 "A match literal or value pattern that compares by equality. ``value`` is an "
 "expression node. Permitted value nodes are restricted as described in the "
@@ -978,14 +2045,55 @@ msgid ""
 "equal to the evaluated value."
 msgstr ""
 
-#: library/ast.rst:1470
+#: library/ast.rst:1479
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case \"Relevant\":\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchValue(\n"
+"                        value=Constant(value='Relevant')),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1503
 msgid ""
 "A match literal pattern that compares by identity. ``value`` is the "
 "singleton to be compared against: ``None``, ``True``, or ``False``. This "
 "pattern succeeds if the match subject is the given constant."
 msgstr ""
 
-#: library/ast.rst:1495
+#: library/ast.rst:1507
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case None:\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchSingleton(value=None),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1530
 msgid ""
 "A match sequence pattern. ``patterns`` contains the patterns to be matched "
 "against the subject elements if the subject is a sequence. Matches a "
@@ -993,7 +2101,32 @@ msgid ""
 "otherwise matches a fixed length sequence."
 msgstr ""
 
-#: library/ast.rst:1526
+#: library/ast.rst:1535
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case [1, 2]:\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchSequence(\n"
+"                        patterns=[\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=1)),\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=2))]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1563
 msgid ""
 "Matches the rest of the sequence in a variable length match sequence "
 "pattern. If ``name`` is not ``None``, a list containing the remaining "
@@ -1001,7 +2134,42 @@ msgid ""
 "successful."
 msgstr ""
 
-#: library/ast.rst:1566
+#: library/ast.rst:1567
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case [1, 2, *rest]:\n"
+"...         ...\n"
+"...     case [*_]:\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchSequence(\n"
+"                        patterns=[\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=1)),\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=2)),\n"
+"                            MatchStar(name='rest')]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                match_case(\n"
+"                    pattern=MatchSequence(\n"
+"                        patterns=[\n"
+"                            MatchStar()]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1605
 msgid ""
 "A match mapping pattern. ``keys`` is a sequence of expression nodes. "
 "``patterns`` is a corresponding sequence of pattern nodes. ``rest`` is an "
@@ -1010,7 +2178,7 @@ msgid ""
 "statement documentation."
 msgstr ""
 
-#: library/ast.rst:1572
+#: library/ast.rst:1611
 msgid ""
 "This pattern succeeds if the subject is a mapping, all evaluated key "
 "expressions are present in the mapping, and the value corresponding to each "
@@ -1019,7 +2187,41 @@ msgid ""
 "overall mapping pattern is successful."
 msgstr ""
 
-#: library/ast.rst:1612
+#: library/ast.rst:1617
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case {1: _, 2: _}:\n"
+"...         ...\n"
+"...     case {**rest}:\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchMapping(\n"
+"                        keys=[\n"
+"                            Constant(value=1),\n"
+"                            Constant(value=2)],\n"
+"                        patterns=[\n"
+"                            MatchAs(),\n"
+"                            MatchAs()]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                match_case(\n"
+"                    pattern=MatchMapping(keys=[], patterns=[], "
+"rest='rest'),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1653
 msgid ""
 "A match class pattern. ``cls`` is an expression giving the nominal class to "
 "be matched. ``patterns`` is a sequence of pattern nodes to be matched "
@@ -1030,21 +2232,69 @@ msgid ""
 "pattern)."
 msgstr ""
 
-#: library/ast.rst:1619
+#: library/ast.rst:1660
 msgid ""
 "This pattern succeeds if the subject is an instance of the nominated class, "
 "all positional patterns match the corresponding class-defined attributes, "
 "and any specified keyword attributes match their corresponding pattern."
 msgstr ""
 
-#: library/ast.rst:1623
+#: library/ast.rst:1664
 msgid ""
 "Note: classes may define a property that returns self in order to match a "
 "pattern node against the instance being matched. Several builtin types are "
 "also matched that way, as described in the match statement documentation."
 msgstr ""
 
-#: library/ast.rst:1676
+#: library/ast.rst:1668
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case Point2D(0, 0):\n"
+"...         ...\n"
+"...     case Point3D(x=0, y=0, z=0):\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchClass(\n"
+"                        cls=Name(id='Point2D', ctx=Load()),\n"
+"                        patterns=[\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=0)),\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=0))],\n"
+"                        kwd_attrs=[],\n"
+"                        kwd_patterns=[]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                match_case(\n"
+"                    pattern=MatchClass(\n"
+"                        cls=Name(id='Point3D', ctx=Load()),\n"
+"                        patterns=[],\n"
+"                        kwd_attrs=[\n"
+"                            'x',\n"
+"                            'y',\n"
+"                            'z'],\n"
+"                        kwd_patterns=[\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=0)),\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=0)),\n"
+"                            MatchValue(\n"
+"                                value=Constant(value=0))]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1719
 msgid ""
 "A match \"as-pattern\", capture pattern or wildcard pattern. ``pattern`` "
 "contains the match pattern that the subject will be matched against. If the "
@@ -1052,14 +2302,45 @@ msgid ""
 "and will always succeed."
 msgstr ""
 
-#: library/ast.rst:1681
+#: library/ast.rst:1724
 msgid ""
 "The ``name`` attribute contains the name that will be bound if the pattern "
 "is successful. If ``name`` is ``None``, ``pattern`` must also be ``None`` "
 "and the node represents the wildcard pattern."
 msgstr ""
 
-#: library/ast.rst:1717
+#: library/ast.rst:1728
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case [x] as y:\n"
+"...         ...\n"
+"...     case _:\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchAs(\n"
+"                        pattern=MatchSequence(\n"
+"                            patterns=[\n"
+"                                MatchAs(name='x')]),\n"
+"                        name='y'),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))]),\n"
+"                match_case(\n"
+"                    pattern=MatchAs(),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1762
 msgid ""
 "A match \"or-pattern\". An or-pattern matches each of its subpatterns in "
 "turn to the subject, until one succeeds. The or-pattern is then deemed to "
@@ -1068,31 +2349,145 @@ msgid ""
 "matched against the subject."
 msgstr ""
 
-#: library/ast.rst:1749
+#: library/ast.rst:1768
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\n"
+"... match x:\n"
+"...     case [x] | (y):\n"
+"...         ...\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Match(\n"
+"            subject=Name(id='x', ctx=Load()),\n"
+"            cases=[\n"
+"                match_case(\n"
+"                    pattern=MatchOr(\n"
+"                        patterns=[\n"
+"                            MatchSequence(\n"
+"                                patterns=[\n"
+"                                    MatchAs(name='x')]),\n"
+"                            MatchAs(name='y')]),\n"
+"                    body=[\n"
+"                        Expr(\n"
+"                            value=Constant(value=Ellipsis))])])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1797
+msgid "Type parameters"
+msgstr ""
+
+#: library/ast.rst:1799
+msgid ""
+":ref:`Type parameters <type-params>` can exist on classes, functions, and "
+"type aliases."
+msgstr ""
+
+#: library/ast.rst:1804
+msgid ""
+"A :class:`typing.TypeVar`. ``name`` is the name of the type variable. "
+"``bound`` is the bound or constraints, if any. If ``bound`` is a :class:"
+"`Tuple`, it represents constraints; otherwise it represents the bound."
+msgstr ""
+
+#: library/ast.rst:1808
+msgid ""
+">>> print(ast.dump(ast.parse(\"type Alias[T: int] = list[T]\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        TypeAlias(\n"
+"            name=Name(id='Alias', ctx=Store()),\n"
+"            type_params=[\n"
+"                TypeVar(\n"
+"                    name='T',\n"
+"                    bound=Name(id='int', ctx=Load()))],\n"
+"            value=Subscript(\n"
+"                value=Name(id='list', ctx=Load()),\n"
+"                slice=Name(id='T', ctx=Load()),\n"
+"                ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1829
+msgid ""
+"A :class:`typing.ParamSpec`. ``name`` is the name of the parameter "
+"specification."
+msgstr ""
+
+#: library/ast.rst:1831
+msgid ""
+">>> print(ast.dump(ast.parse(\"type Alias[**P] = Callable[P, int]\"), "
+"indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        TypeAlias(\n"
+"            name=Name(id='Alias', ctx=Store()),\n"
+"            type_params=[\n"
+"                ParamSpec(name='P')],\n"
+"            value=Subscript(\n"
+"                value=Name(id='Callable', ctx=Load()),\n"
+"                slice=Tuple(\n"
+"                    elts=[\n"
+"                        Name(id='P', ctx=Load()),\n"
+"                        Name(id='int', ctx=Load())],\n"
+"                    ctx=Load()),\n"
+"                ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1854
+msgid ""
+"A :class:`typing.TypeVarTuple`. ``name`` is the name of the type variable "
+"tuple."
+msgstr ""
+
+#: library/ast.rst:1856
+msgid ""
+">>> print(ast.dump(ast.parse(\"type Alias[*Ts] = tuple[*Ts]\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        TypeAlias(\n"
+"            name=Name(id='Alias', ctx=Store()),\n"
+"            type_params=[\n"
+"                TypeVarTuple(name='Ts')],\n"
+"            value=Subscript(\n"
+"                value=Name(id='tuple', ctx=Load()),\n"
+"                slice=Tuple(\n"
+"                    elts=[\n"
+"                        Starred(\n"
+"                            value=Name(id='Ts', ctx=Load()),\n"
+"                            ctx=Load())],\n"
+"                    ctx=Load()),\n"
+"                ctx=Load()))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1879
 msgid "Function and class definitions"
 msgstr "Définition de fonctions et de classes"
 
-#: library/ast.rst:1753
+#: library/ast.rst:1883
 msgid "A function definition."
 msgstr "Définition d'une fonction."
 
-#: library/ast.rst:1755
+#: library/ast.rst:1885
 msgid "``name`` is a raw string of the function name."
 msgstr ""
 "*name* donne le nom de la fonction sous forme d'une chaîne de caractères."
 
-#: library/ast.rst:1756
+#: library/ast.rst:1886
 #, fuzzy
 msgid "``args`` is an :class:`arguments` node."
 msgstr ""
 "*args* est un nœud de type :class:`arguments` qui contient les arguments de "
 "la signature."
 
-#: library/ast.rst:1757
+#: library/ast.rst:1887
 msgid "``body`` is the list of nodes inside the function."
 msgstr "*body* est la liste des instructions dans le corps de la fonction."
 
-#: library/ast.rst:1758
+#: library/ast.rst:1888
 msgid ""
 "``decorator_list`` is the list of decorators to be applied, stored outermost "
 "first (i.e. the first in the list will be applied last)."
@@ -1101,11 +2496,19 @@ msgstr ""
 "sont rangés dans leur ordre d'apparition, c'est-à-dire que le premier de la "
 "liste est appliqué en dernier."
 
-#: library/ast.rst:1760
+#: library/ast.rst:1890
 msgid "``returns`` is the return annotation."
 msgstr "*returns* est l'annotation de renvoi éventuelle."
 
-#: library/ast.rst:1769
+#: library/ast.rst:2067
+msgid "``type_params`` is a list of :ref:`type parameters <ast-type-params>`."
+msgstr ""
+
+#: library/ast.rst:2096 library/ast.rst:2107
+msgid "Added ``type_params``."
+msgstr ""
+
+#: library/ast.rst:1903
 msgid ""
 "``lambda`` is a minimal function definition that can be used inside an "
 "expression. Unlike :class:`FunctionDef`, ``body`` holds a single node."
@@ -1116,11 +2519,30 @@ msgstr ""
 "*args* est une instance de ``arguments`` qui contient les arguments de la "
 "signature."
 
-#: library/ast.rst:1793
+#: library/ast.rst:1906
+msgid ""
+">>> print(ast.dump(ast.parse('lambda x,y: ...'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Expr(\n"
+"            value=Lambda(\n"
+"                args=arguments(\n"
+"                    posonlyargs=[],\n"
+"                    args=[\n"
+"                        arg(arg='x'),\n"
+"                        arg(arg='y')],\n"
+"                    kwonlyargs=[],\n"
+"                    kw_defaults=[],\n"
+"                    defaults=[]),\n"
+"                body=Constant(value=Ellipsis)))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1927
 msgid "The arguments for a function."
 msgstr "Arguments d'une fonction."
 
-#: library/ast.rst:1795
+#: library/ast.rst:1929
 msgid ""
 "``posonlyargs``, ``args`` and ``kwonlyargs`` are lists of :class:`arg` nodes."
 msgstr ""
@@ -1128,7 +2550,7 @@ msgstr ""
 "qui correspondent respectivement aux arguments obligatoirement positionnels, "
 "positionnels ou nommés et obligatoirement nommés."
 
-#: library/ast.rst:1796
+#: library/ast.rst:1930
 msgid ""
 "``vararg`` and ``kwarg`` are single :class:`arg` nodes, referring to the "
 "``*args, **kwargs`` parameters."
@@ -1137,7 +2559,7 @@ msgstr ""
 "capture des arguments restants, positionnels (``*arguments_positionnels``) "
 "et nommés (``**arguments_nommés``)."
 
-#: library/ast.rst:1798
+#: library/ast.rst:1932
 msgid ""
 "``kw_defaults`` is a list of default values for keyword-only arguments. If "
 "one is ``None``, the corresponding argument is required."
@@ -1147,7 +2569,7 @@ msgstr ""
 "``None``, il n'y a pas de valeur par défaut et l'argument correspondant doit "
 "être passé obligatoirement à la fonction."
 
-#: library/ast.rst:1800
+#: library/ast.rst:1934
 msgid ""
 "``defaults`` is a list of default values for arguments that can be passed "
 "positionally. If there are fewer defaults, they correspond to the last n "
@@ -1159,28 +2581,80 @@ msgstr ""
 "positionnels, ces éléments donnent les valeurs par défaut des *n* derniers "
 "arguments positionnels (avec *n* la longueur de *defaults*)."
 
-#: library/ast.rst:1807
+#: library/ast.rst:1941
 msgid ""
-"A single argument in a list. ``arg`` is a raw string of the argument name, "
-"``annotation`` is its annotation, such as a :class:`Str` or :class:`Name` "
-"node."
+"A single argument in a list. ``arg`` is a raw string of the argument name; "
+"``annotation`` is its annotation, such as a :class:`Name` node."
 msgstr ""
 
-#: library/ast.rst:1813
+#: library/ast.rst:1946
 msgid ""
 "``type_comment`` is an optional string with the type annotation as a comment"
 msgstr ""
 "Le champ facultatif *type_comment* est, sous forme de chaîne, une annotation "
 "de type fournie par un commentaire."
 
-#: library/ast.rst:1857
+#: library/ast.rst:1948
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... @decorator1\n"
+"... @decorator2\n"
+"... def f(a: 'annotation', b=1, c=2, *d, e, f=3, **g) -> 'return "
+"annotation':\n"
+"...     pass\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        FunctionDef(\n"
+"            name='f',\n"
+"            args=arguments(\n"
+"                posonlyargs=[],\n"
+"                args=[\n"
+"                    arg(\n"
+"                        arg='a',\n"
+"                        annotation=Constant(value='annotation')),\n"
+"                    arg(arg='b'),\n"
+"                    arg(arg='c')],\n"
+"                vararg=arg(arg='d'),\n"
+"                kwonlyargs=[\n"
+"                    arg(arg='e'),\n"
+"                    arg(arg='f')],\n"
+"                kw_defaults=[\n"
+"                    None,\n"
+"                    Constant(value=3)],\n"
+"                kwarg=arg(arg='g'),\n"
+"                defaults=[\n"
+"                    Constant(value=1),\n"
+"                    Constant(value=2)]),\n"
+"            body=[\n"
+"                Pass()],\n"
+"            decorator_list=[\n"
+"                Name(id='decorator1', ctx=Load()),\n"
+"                Name(id='decorator2', ctx=Load())],\n"
+"            returns=Constant(value='return annotation'),\n"
+"            type_params=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:1991
 msgid "A ``return`` statement."
 msgstr "Instruction ``return``, qui renvoie *value*."
 
-#: library/ast.rst:1872
+#: library/ast.rst:1993
+msgid ""
+">>> print(ast.dump(ast.parse('return 4'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Return(\n"
+"            value=Constant(value=4))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:2006
+#, fuzzy
 msgid ""
 "A ``yield`` or ``yield from`` expression. Because these are expressions, "
-"they must be wrapped in a :class:`Expr` node if the value sent back is not "
+"they must be wrapped in an :class:`Expr` node if the value sent back is not "
 "used."
 msgstr ""
 "Expression ``yield`` ou ``yield from``. Ce sont bien des expressions, non "
@@ -1188,53 +2662,123 @@ msgstr ""
 "la valeur qu'elles renvoient n'est pas utilisée dans une expression plus "
 "large."
 
-#: library/ast.rst:1897
+#: library/ast.rst:2009
+msgid ""
+">>> print(ast.dump(ast.parse('yield x'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Expr(\n"
+"            value=Yield(\n"
+"                value=Name(id='x', ctx=Load())))],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('yield from x'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Expr(\n"
+"            value=YieldFrom(\n"
+"                value=Name(id='x', ctx=Load())))],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:2031
 msgid ""
 "``global`` and ``nonlocal`` statements. ``names`` is a list of raw strings."
 msgstr ""
 "Instruction ``global`` ou ``nonlocal``. Elle s'applique aux noms de "
 "variables donnés dans *names*, une liste de chaînes de caractères."
 
-#: library/ast.rst:1924
+#: library/ast.rst:2033
+msgid ""
+">>> print(ast.dump(ast.parse('global x,y,z'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Global(\n"
+"            names=[\n"
+"                'x',\n"
+"                'y',\n"
+"                'z'])],\n"
+"    type_ignores=[])\n"
+"\n"
+">>> print(ast.dump(ast.parse('nonlocal x,y,z'), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        Nonlocal(\n"
+"            names=[\n"
+"                'x',\n"
+"                'y',\n"
+"                'z'])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:2058
 msgid "A class definition."
 msgstr "Définition d'une classe."
 
-#: library/ast.rst:1926
+#: library/ast.rst:2060
 msgid "``name`` is a raw string for the class name"
 msgstr "*name* est le nom de la classe sous forme de chaîne de caractères ;"
 
-#: library/ast.rst:1927
+#: library/ast.rst:2061
 msgid "``bases`` is a list of nodes for explicitly specified base classes."
 msgstr "*bases* est la liste des classes mères données explicitement ;"
 
-#: library/ast.rst:1928
+#: library/ast.rst:2062
 #, fuzzy
 msgid ""
-"``keywords`` is a list of :class:`keyword` nodes, principally for "
-"'metaclass'. Other keywords will be passed to the metaclass, as per "
-"`PEP-3115 <https://peps.python.org/pep-3115/>`_."
+"``keywords`` is a list of :class:`.keyword` nodes, principally for "
+"'metaclass'. Other keywords will be passed to the metaclass, as per :pep:"
+"`3115`."
 msgstr ""
 "*keywords* est une liste de nœuds de type :class:`keyword`. Le principal mot-"
 "clé qui peut y apparaître est ``metaclass``. Les autres sont passés à la "
 "métaclasse (voir la :pep:`3115`) ;"
 
-#: library/ast.rst:1931
+#: library/ast.rst:2064
 msgid ""
 "``body`` is a list of nodes representing the code within the class "
 "definition."
 msgstr ""
 "*body* est la liste des instructions contenues dans la définition de classe ;"
 
-#: library/ast.rst:1933
+#: library/ast.rst:2066
 msgid "``decorator_list`` is a list of nodes, as in :class:`FunctionDef`."
 msgstr ""
 "*decorators_list* est une liste de nœuds, comme pour :class:`FunctionDef`."
 
-#: library/ast.rst:1962
+#: library/ast.rst:2069
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... @decorator1\n"
+"... @decorator2\n"
+"... class Foo(base1, base2, metaclass=meta):\n"
+"...     pass\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        ClassDef(\n"
+"            name='Foo',\n"
+"            bases=[\n"
+"                Name(id='base1', ctx=Load()),\n"
+"                Name(id='base2', ctx=Load())],\n"
+"            keywords=[\n"
+"                keyword(\n"
+"                    arg='metaclass',\n"
+"                    value=Name(id='meta', ctx=Load()))],\n"
+"            body=[\n"
+"                Pass()],\n"
+"            decorator_list=[\n"
+"                Name(id='decorator1', ctx=Load()),\n"
+"                Name(id='decorator2', ctx=Load())],\n"
+"            type_params=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:2100
 msgid "Async and await"
 msgstr "``async`` et ``await``"
 
-#: library/ast.rst:1966
+#: library/ast.rst:2104
 msgid ""
 "An ``async def`` function definition. Has the same fields as :class:"
 "`FunctionDef`."
@@ -1242,7 +2786,7 @@ msgstr ""
 "Fonction déclarée avec ``async def``. Les champs sont les mêmes que dans :"
 "class:`FunctionDef`."
 
-#: library/ast.rst:1972
+#: library/ast.rst:2113
 msgid ""
 "An ``await`` expression. ``value`` is what it waits for. Only valid in the "
 "body of an :class:`AsyncFunctionDef`."
@@ -1250,7 +2794,35 @@ msgstr ""
 "Expression ``await``, qui attend *value*. Ces nœuds ne peuvent apparaître "
 "qu'à l'intérieur de :class:`AsyncFunctionDef`."
 
-#: library/ast.rst:2005
+#: library/ast.rst:2116
+msgid ""
+">>> print(ast.dump(ast.parse(\"\"\"\\\n"
+"... async def f():\n"
+"...     await other_func()\n"
+"... \"\"\"), indent=4))\n"
+"Module(\n"
+"    body=[\n"
+"        AsyncFunctionDef(\n"
+"            name='f',\n"
+"            args=arguments(\n"
+"                posonlyargs=[],\n"
+"                args=[],\n"
+"                kwonlyargs=[],\n"
+"                kw_defaults=[],\n"
+"                defaults=[]),\n"
+"            body=[\n"
+"                Expr(\n"
+"                    value=Await(\n"
+"                        value=Call(\n"
+"                            func=Name(id='other_func', ctx=Load()),\n"
+"                            args=[],\n"
+"                            keywords=[])))],\n"
+"            decorator_list=[],\n"
+"            type_params=[])],\n"
+"    type_ignores=[])"
+msgstr ""
+
+#: library/ast.rst:2147
 msgid ""
 "``async for`` loops and ``async with`` context managers. They have the same "
 "fields as :class:`For` and :class:`With`, respectively. Only valid in the "
@@ -1260,7 +2832,7 @@ msgstr ""
 "ceux de :class:`For` et :class:`With`. Ces nœuds ne peuvent apparaître qu'à "
 "l'intérieur de :class:`AsyncFunctionDef`."
 
-#: library/ast.rst:2010
+#: library/ast.rst:2152
 msgid ""
 "When a string is parsed by :func:`ast.parse`, operator nodes (subclasses of :"
 "class:`ast.operator`, :class:`ast.unaryop`, :class:`ast.cmpop`, :class:`ast."
@@ -1276,11 +2848,11 @@ msgstr ""
 "muté, la modification sera visible sur toutes les autres apparitions de "
 "l'opérateur."
 
-#: library/ast.rst:2018
+#: library/ast.rst:2160
 msgid ":mod:`ast` Helpers"
 msgstr "Outils du module :mod:`ast`"
 
-#: library/ast.rst:2020
+#: library/ast.rst:2162
 msgid ""
 "Apart from the node classes, the :mod:`ast` module defines these utility "
 "functions and classes for traversing abstract syntax trees:"
@@ -1289,7 +2861,7 @@ msgstr ""
 "fonctions et classes utilitaires pour traverser les arbres syntaxiques "
 "abstraits :"
 
-#: library/ast.rst:2025
+#: library/ast.rst:2167
 msgid ""
 "Parse the source into an AST node.  Equivalent to ``compile(source, "
 "filename, mode, ast.PyCF_ONLY_AST)``."
@@ -1297,12 +2869,13 @@ msgstr ""
 "Analyse le code source et renvoie un arbre syntaxique. Équivalent à "
 "``compile(source, filename, mode, ast.PyCF_ONLY_AST)``."
 
-#: library/ast.rst:2028
+#: library/ast.rst:2170
+#, fuzzy
 msgid ""
 "If ``type_comments=True`` is given, the parser is modified to check and "
 "return type comments as specified by :pep:`484` and :pep:`526`. This is "
 "equivalent to adding :data:`ast.PyCF_TYPE_COMMENTS` to the flags passed to :"
-"func:`compile()`.  This will report syntax errors for misplaced type "
+"func:`compile`.  This will report syntax errors for misplaced type "
 "comments.  Without this flag, type comments will be ignored, and the "
 "``type_comment`` field on selected AST nodes will always be ``None``.  In "
 "addition, the locations of ``# type: ignore`` comments will be returned as "
@@ -1320,34 +2893,32 @@ msgstr ""
 "ignorés tout comme les commentaires ordinaires, et l'attribut *type_comment* "
 "des nœuds dont le type possède ce champ sera toujours mis à ``None``."
 
-#: library/ast.rst:2038
+#: library/ast.rst:2180
 msgid ""
 "In addition, if ``mode`` is ``'func_type'``, the input syntax is modified to "
 "correspond to :pep:`484` \"signature type comments\", e.g. ``(str, int) -> "
 "List[str]``."
 msgstr ""
 
-#: library/ast.rst:2042
+#: library/ast.rst:2184
 msgid ""
-"Also, setting ``feature_version`` to a tuple ``(major, minor)`` will attempt "
-"to parse using that Python version's grammar. Currently ``major`` must equal "
-"to ``3``.  For example, setting ``feature_version=(3, 4)`` will allow the "
-"use of ``async`` and ``await`` as variable names.  The lowest supported "
-"version is ``(3, 4)``; the highest is ``sys.version_info[0:2]``."
-msgstr ""
-"Si *feature_version* est défini à une version de Python, sous la forme d'un "
-"couple ``(version_majeure, version_mineure)``, l'analyseur tentera de lire "
-"la source en se conformant à la syntaxe de cette version. Ainsi, avec "
-"``feature_version=(3, 4)``, les noms ``async`` et ``await`` peuvent nommer "
-"des variables. La version la plus ancienne prise en charge est actuellement "
-"``(3, 4)`` ; la plus récente est ``sys.version_info[0:2]``."
-
-#: library/ast.rst:2049
-msgid ""
-"If source contains a null character ('\\0'), :exc:`ValueError` is raised."
+"Setting ``feature_version`` to a tuple ``(major, minor)`` will result in a "
+"\"best-effort\" attempt to parse using that Python version's grammar. For "
+"example, setting ``feature_version=(3, 9)`` will attempt to disallow parsing "
+"of :keyword:`match` statements. Currently ``major`` must equal to ``3``. The "
+"lowest supported version is ``(3, 4)`` (and this may increase in future "
+"Python versions); the highest is ``sys.version_info[0:2]``. \"Best-effort\" "
+"attempt means there is no guarantee that the parse (or success of the parse) "
+"is the same as when run on the Python version corresponding to "
+"``feature_version``."
 msgstr ""
 
-#: library/ast.rst:2052
+#: library/ast.rst:2194
+msgid ""
+"If source contains a null character (``\\0``), :exc:`ValueError` is raised."
+msgstr ""
+
+#: library/ast.rst:2197
 msgid ""
 "Note that successfully parsing source code into an AST object doesn't "
 "guarantee that the source code provided is valid Python code that can be "
@@ -1357,13 +2928,13 @@ msgid ""
 "inside a function node)."
 msgstr ""
 
-#: library/ast.rst:2059
+#: library/ast.rst:2204
 msgid ""
 "In particular, :func:`ast.parse` won't do any scoping checks, which the "
 "compilation step does."
 msgstr ""
 
-#: library/ast.rst:2063
+#: library/ast.rst:2208
 msgid ""
 "It is possible to crash the Python interpreter with a sufficiently large/"
 "complex string due to stack depth limitations in Python's AST compiler."
@@ -1372,13 +2943,13 @@ msgstr ""
 "suffisamment grandes ou complexes lors de la compilation d'un arbre "
 "syntaxique en raison de la limitation de la profondeur de la pile d'appels."
 
-#: library/ast.rst:2067
+#: library/ast.rst:2212
 msgid "Added ``type_comments``, ``mode='func_type'`` and ``feature_version``."
 msgstr ""
 "ajout des paramètres *type_comments* et *feature_version* ainsi que de la "
 "valeur ``'func_type'`` pour *mode*."
 
-#: library/ast.rst:2073
+#: library/ast.rst:2218
 msgid ""
 "Unparse an :class:`ast.AST` object and generate a string with code that "
 "would produce an equivalent :class:`ast.AST` object if parsed back with :"
@@ -1388,14 +2959,14 @@ msgstr ""
 "forme de chaîne de caractères. S'il est passé à :func:`ast.parse`, le "
 "résultat produit un arbre :class:`ast.AST` équivalent à l'original."
 
-#: library/ast.rst:2078
+#: library/ast.rst:2223
 msgid ""
 "The produced code string will not necessarily be equal to the original code "
 "that generated the :class:`ast.AST` object (without any compiler "
 "optimizations, such as constant tuples/frozensets)."
 msgstr ""
 
-#: library/ast.rst:2083
+#: library/ast.rst:2228
 msgid ""
 "Trying to unparse a highly complex expression would result with :exc:"
 "`RecursionError`."
@@ -1403,7 +2974,7 @@ msgstr ""
 "Une :exc:`RecursionError` est levée si l'expression comporte de très "
 "nombreux niveaux d'imbrication."
 
-#: library/ast.rst:2091
+#: library/ast.rst:2236
 #, fuzzy
 msgid ""
 "Evaluate an expression node or a string containing only a Python literal or "
@@ -1417,7 +2988,7 @@ msgstr ""
 "des littéraux parmi les types suivants : chaînes de caractères, octets, "
 "nombres, *n*-uplets, listes, dictionnaires, ensembles, booléens, et ``None``."
 
-#: library/ast.rst:2096
+#: library/ast.rst:2241
 #, fuzzy
 msgid ""
 "This can be used for evaluating strings containing Python values without the "
@@ -1430,7 +3001,7 @@ msgstr ""
 "d'évaluer des expressions arbitrairement complexes, par exemple impliquant "
 "des opérateurs ou de l'indiçage."
 
-#: library/ast.rst:2101
+#: library/ast.rst:2246
 msgid ""
 "This function had been documented as \"safe\" in the past without defining "
 "what that meant. That was misleading. This is specifically designed not to "
@@ -1442,7 +3013,7 @@ msgid ""
 "untrusted data is thus not recommended."
 msgstr ""
 
-#: library/ast.rst:2111
+#: library/ast.rst:2256
 #, fuzzy
 msgid ""
 "It is possible to crash the Python interpreter due to stack depth "
@@ -1452,25 +3023,25 @@ msgstr ""
 "suffisamment grandes ou complexes lors de la compilation d'un arbre "
 "syntaxique en raison de la limitation de la profondeur de la pile d'appels."
 
-#: library/ast.rst:2114
+#: library/ast.rst:2259
 msgid ""
 "It can raise :exc:`ValueError`, :exc:`TypeError`, :exc:`SyntaxError`, :exc:"
 "`MemoryError` and :exc:`RecursionError` depending on the malformed input."
 msgstr ""
 
-#: library/ast.rst:2118
+#: library/ast.rst:2263
 msgid "Now allows bytes and set literals."
 msgstr "accepte maintenant les octets et ensembles littéraux."
 
-#: library/ast.rst:2121
+#: library/ast.rst:2266
 msgid "Now supports creating empty sets with ``'set()'``."
 msgstr "accepte ``set()`` pour les ensembles vides."
 
-#: library/ast.rst:2124
+#: library/ast.rst:2269
 msgid "For string inputs, leading spaces and tabs are now stripped."
 msgstr ""
 
-#: library/ast.rst:2130
+#: library/ast.rst:2275
 msgid ""
 "Return the docstring of the given *node* (which must be a :class:"
 "`FunctionDef`, :class:`AsyncFunctionDef`, :class:`ClassDef`, or :class:"
@@ -1482,34 +3053,38 @@ msgstr ""
 "n'a pas de *docstring*. Si *clean* est vrai, cette fonction nettoie "
 "l'indentation de la *docstring* avec :func:`inspect.cleandoc`."
 
-#: library/ast.rst:2136
+#: library/ast.rst:2281
 msgid ":class:`AsyncFunctionDef` is now supported."
 msgstr ":class:`AsyncFunctionDef` est maintenant gérée."
 
-#: library/ast.rst:2142
+#: library/ast.rst:2287
+#, fuzzy
 msgid ""
 "Get source code segment of the *source* that generated *node*. If some "
-"location information (:attr:`lineno`, :attr:`end_lineno`, :attr:"
-"`col_offset`, or :attr:`end_col_offset`) is missing, return ``None``."
+"location information (:attr:`~ast.AST.lineno`, :attr:`~ast.AST.end_lineno`, :"
+"attr:`~ast.AST.col_offset`, or :attr:`~ast.AST.end_col_offset`) is missing, "
+"return ``None``."
 msgstr ""
 "Donne la partie de *source* (le code source) qui a donné lieu à *node*. Si "
 "l'un des attributs de localisation du nœud (:attr:`lineno`, :attr:"
 "`end_lineno`, :attr:`col_offset` et :attr:`end_col_offset`) n'est pas "
 "rempli, cette fonction renvoie ``None``."
 
-#: library/ast.rst:2146
+#: library/ast.rst:2291
 msgid ""
 "If *padded* is ``True``, the first line of a multi-line statement will be "
 "padded with spaces to match its original position."
 msgstr ""
 
-#: library/ast.rst:2154
+#: library/ast.rst:2299
+#, fuzzy
 msgid ""
 "When you compile a node tree with :func:`compile`, the compiler expects :"
-"attr:`lineno` and :attr:`col_offset` attributes for every node that supports "
-"them.  This is rather tedious to fill in for generated nodes, so this helper "
-"adds these attributes recursively where not already set, by setting them to "
-"the values of the parent node.  It works recursively starting at *node*."
+"attr:`~ast.AST.lineno` and :attr:`~ast.AST.col_offset` attributes for every "
+"node that supports them.  This is rather tedious to fill in for generated "
+"nodes, so this helper adds these attributes recursively where not already "
+"set, by setting them to the values of the parent node.  It works recursively "
+"starting at *node*."
 msgstr ""
 "Lorsque l'on compile un arbre avec :func:`compile`, le compilateur attend "
 "les attributs :attr:`lineno` et :attr:`col_offset` pour tous les nœuds qui "
@@ -1519,7 +3094,7 @@ msgstr ""
 "comme les valeurs du nœud parent. Elle fonctionne récursivement en démarrant "
 "de *node*."
 
-#: library/ast.rst:2163
+#: library/ast.rst:2308
 msgid ""
 "Increment the line number and end line number of each node in the tree "
 "starting at *node* by *n*. This is useful to \"move code\" to a different "
@@ -1529,18 +3104,19 @@ msgstr ""
 "nœud dans l'arbre, en commençant par le nœud *node*. C'est utile pour "
 "« déplacer du code » à un endroit différent dans un fichier."
 
-#: library/ast.rst:2170
+#: library/ast.rst:2315
+#, fuzzy
 msgid ""
-"Copy source location (:attr:`lineno`, :attr:`col_offset`, :attr:"
-"`end_lineno`, and :attr:`end_col_offset`) from *old_node* to *new_node* if "
-"possible, and return *new_node*."
+"Copy source location (:attr:`~ast.AST.lineno`, :attr:`~ast.AST.col_offset`, :"
+"attr:`~ast.AST.end_lineno`, and :attr:`~ast.AST.end_col_offset`) from "
+"*old_node* to *new_node* if possible, and return *new_node*."
 msgstr ""
 "Copie la position dans la source (attributs :attr:`lineno`, :attr:"
 "`col_offset`, :attr:`end_lineno` et :attr:`end_col_offset`) de l'ancien nœud "
 "*old_node* vers le nouveau nœud *new_node*, si possible, et renvoie "
 "*new_node*."
 
-#: library/ast.rst:2177
+#: library/ast.rst:2322
 msgid ""
 "Yield a tuple of ``(fieldname, value)`` for each field in ``node._fields`` "
 "that is present on *node*."
@@ -1548,7 +3124,7 @@ msgstr ""
 "Produit un *n*-uplet de couples ``(nom_du_champ, valeur)`` pour chaque champ "
 "de ``node._fields`` qui est présent dans *node*."
 
-#: library/ast.rst:2183
+#: library/ast.rst:2328
 msgid ""
 "Yield all direct child nodes of *node*, that is, all fields that are nodes "
 "and all items of fields that are lists of nodes."
@@ -1557,7 +3133,7 @@ msgstr ""
 "champs qui sont des nœuds et tous les éléments des champs qui sont des "
 "listes de nœuds."
 
-#: library/ast.rst:2189
+#: library/ast.rst:2334
 msgid ""
 "Recursively yield all descendant nodes in the tree starting at *node* "
 "(including *node* itself), in no specified order.  This is useful if you "
@@ -1568,7 +3144,7 @@ msgstr ""
 "lorsque l'on souhaite modifier les nœuds sur place sans prêter attention au "
 "contexte."
 
-#: library/ast.rst:2196
+#: library/ast.rst:2341
 msgid ""
 "A node visitor base class that walks the abstract syntax tree and calls a "
 "visitor function for every node found.  This function may return a value "
@@ -1579,7 +3155,7 @@ msgstr ""
 "Cette fonction peut renvoyer une valeur, qui est transmise par la méthode :"
 "meth:`visit`."
 
-#: library/ast.rst:2200
+#: library/ast.rst:2345
 msgid ""
 "This class is meant to be subclassed, with the subclass adding visitor "
 "methods."
@@ -1587,7 +3163,7 @@ msgstr ""
 "Cette classe est faite pour être dérivée, en ajoutant des méthodes de visite "
 "à la sous-classe."
 
-#: library/ast.rst:2205
+#: library/ast.rst:2350
 msgid ""
 "Visit a node.  The default implementation calls the method called :samp:"
 "`self.visit_{classname}` where *classname* is the name of the node class, "
@@ -1597,12 +3173,12 @@ msgstr ""
 "visit_{classe}` où *classe* représente le nom de la classe du nœud, ou :meth:"
 "`generic_visit` si cette méthode n'existe pas."
 
-#: library/ast.rst:2211
+#: library/ast.rst:2356
 msgid "This visitor calls :meth:`visit` on all children of the node."
 msgstr ""
 "Le visiteur appelle la méthode :meth:`visit` de tous les enfants du nœud."
 
-#: library/ast.rst:2213
+#: library/ast.rst:2358
 msgid ""
 "Note that child nodes of nodes that have a custom visitor method won't be "
 "visited unless the visitor calls :meth:`generic_visit` or visits them itself."
@@ -1611,7 +3187,11 @@ msgstr ""
 "sont pas visités à moins que le visiteur n'appelle la méthode :meth:"
 "`generic_visit` ou ne les visite lui-même."
 
-#: library/ast.rst:2217
+#: library/ast.rst:2364
+msgid "Handles all constant nodes."
+msgstr ""
+
+#: library/ast.rst:2366
 msgid ""
 "Don't use the :class:`NodeVisitor` if you want to apply changes to nodes "
 "during traversal.  For this a special visitor exists (:class:"
@@ -1621,12 +3201,13 @@ msgstr ""
 "changements sur les nœuds lors du parcours. Pour cela, un visiteur spécial "
 "existe (:class:`NodeTransformer`) qui permet les modifications."
 
-#: library/ast.rst:2223
+#: library/ast.rst:2372
+#, fuzzy
 msgid ""
-"Methods :meth:`visit_Num`, :meth:`visit_Str`, :meth:`visit_Bytes`, :meth:"
-"`visit_NameConstant` and :meth:`visit_Ellipsis` are deprecated now and will "
-"not be called in future Python versions.  Add the :meth:`visit_Constant` "
-"method to handle all constant nodes."
+"Methods :meth:`!visit_Num`, :meth:`!visit_Str`, :meth:`!visit_Bytes`, :meth:"
+"`!visit_NameConstant` and :meth:`!visit_Ellipsis` are deprecated now and "
+"will not be called in future Python versions.  Add the :meth:"
+"`visit_Constant` method to handle all constant nodes."
 msgstr ""
 "les méthodes :meth:`visit_Num`, :meth:`visit_Str`, :meth:`visit_Bytes`, :"
 "meth:`visit_NameConstant` et :meth:`visit_Ellipsis` sont devenues obsolètes "
@@ -1634,7 +3215,7 @@ msgstr ""
 "une méthode :meth:`visit_Constant` pour traiter tous les nœuds qui "
 "représentent des valeurs constantes."
 
-#: library/ast.rst:2231
+#: library/ast.rst:2380
 msgid ""
 "A :class:`NodeVisitor` subclass that walks the abstract syntax tree and "
 "allows modification of nodes."
@@ -1642,7 +3223,7 @@ msgstr ""
 "Une sous-classe de :class:`NodeVisitor` qui traverse l'arbre syntaxique "
 "abstrait et permet de modifier les nœuds."
 
-#: library/ast.rst:2234
+#: library/ast.rst:2383
 msgid ""
 "The :class:`NodeTransformer` will walk the AST and use the return value of "
 "the visitor methods to replace or remove the old node.  If the return value "
@@ -1656,7 +3237,7 @@ msgstr ""
 "est supprimé de sa position, sinon il est remplacé par cette valeur. Elle "
 "peut être le nœud original, auquel cas il n'y a pas de remplacement."
 
-#: library/ast.rst:2240
+#: library/ast.rst:2389
 msgid ""
 "Here is an example transformer that rewrites all occurrences of name lookups "
 "(``foo``) to ``data['foo']``::"
@@ -1664,17 +3245,30 @@ msgstr ""
 "Voici un exemple de transformation qui réécrit tous les accès à la valeur "
 "d'une variable ``toto`` en ``data['toto']`` ::"
 
-#: library/ast.rst:2252
+#: library/ast.rst:2392
+msgid ""
+"class RewriteName(NodeTransformer):\n"
+"\n"
+"    def visit_Name(self, node):\n"
+"        return Subscript(\n"
+"            value=Name(id='data', ctx=Load()),\n"
+"            slice=Constant(value=node.id),\n"
+"            ctx=node.ctx\n"
+"        )"
+msgstr ""
+
+#: library/ast.rst:2401
+#, fuzzy
 msgid ""
 "Keep in mind that if the node you're operating on has child nodes you must "
-"either transform the child nodes yourself or call the :meth:`generic_visit` "
-"method for the node first."
+"either transform the child nodes yourself or call the :meth:`~ast."
+"NodeVisitor.generic_visit` method for the node first."
 msgstr ""
 "Gardez en tête que si un nœud sur lequel vous travaillez a des nœuds "
 "enfants, vous devez transformer également ces nœuds enfants vous-même ou "
 "appeler d'abord la méthode :meth:`generic_visit` sur le nœud."
 
-#: library/ast.rst:2256
+#: library/ast.rst:2405
 msgid ""
 "For nodes that were part of a collection of statements (that applies to all "
 "statement nodes), the visitor may also return a list of nodes rather than "
@@ -1684,23 +3278,34 @@ msgstr ""
 "instructions), le visiteur peut aussi renvoyer une liste des nœuds plutôt "
 "qu'un seul nœud."
 
-#: library/ast.rst:2260
+#: library/ast.rst:2409
+#, fuzzy
 msgid ""
 "If :class:`NodeTransformer` introduces new nodes (that weren't part of "
-"original tree) without giving them location information (such as :attr:"
-"`lineno`), :func:`fix_missing_locations` should be called with the new sub-"
-"tree to recalculate the location information::"
+"original tree) without giving them location information (such as :attr:`~ast."
+"AST.lineno`), :func:`fix_missing_locations` should be called with the new "
+"sub-tree to recalculate the location information::"
 msgstr ""
 "Si :class:`NodeTransformer` ajoute de nouveaux nœuds à l'original sans leur "
 "donner les attributs de position dans la source (:attr:`lineno` et "
 "consorts), il faut passer le nouvel arbre (ou la nouvelle partie de l'arbre) "
 "à :func:`fix_missing_locations` pour calculer les positions manquantes ::"
 
-#: library/ast.rst:2268
+#: library/ast.rst:2414
+msgid ""
+"tree = ast.parse('foo', mode='eval')\n"
+"new_tree = fix_missing_locations(RewriteName().visit(tree))"
+msgstr ""
+
+#: library/ast.rst:2417
 msgid "Usually you use the transformer like this::"
 msgstr "Utilisation typique des transformations ::"
 
-#: library/ast.rst:2275
+#: library/ast.rst:2419
+msgid "node = YourTransformer().visit(node)"
+msgstr ""
+
+#: library/ast.rst:2424
 msgid ""
 "Return a formatted dump of the tree in *node*.  This is mainly useful for "
 "debugging purposes.  If *annotate_fields* is true (by default), the returned "
@@ -1720,7 +3325,7 @@ msgstr ""
 "masqués par défaut, mais on peut les inclure en mettant *include_attributes* "
 "à ``True``."
 
-#: library/ast.rst:2283
+#: library/ast.rst:2432
 msgid ""
 "If *indent* is a non-negative integer or string, then the tree will be "
 "pretty-printed with that indent level.  An indent level of 0, negative, or "
@@ -1737,15 +3342,15 @@ msgstr ""
 "0 ou la chaîne vide, c'est-à-dire des retours à la ligne sans indentation. "
 "Avec la valeur par défaut de ``None``, la sortie tient sur une seule ligne."
 
-#: library/ast.rst:2290
+#: library/ast.rst:2439
 msgid "Added the *indent* option."
 msgstr "ajout du paramètre *indent*."
 
-#: library/ast.rst:2297
+#: library/ast.rst:2446
 msgid "Compiler Flags"
 msgstr "Options du compilateur"
 
-#: library/ast.rst:2299
+#: library/ast.rst:2448
 msgid ""
 "The following flags may be passed to :func:`compile` in order to change "
 "effects on the compilation of a program:"
@@ -1753,7 +3358,7 @@ msgstr ""
 "Les options suivantes sont prises en charge par la fonction :func:`compile`. "
 "Elles permettent de modifier le comportement de la compilation :"
 
-#: library/ast.rst:2304
+#: library/ast.rst:2453
 msgid ""
 "Enables support for top-level ``await``, ``async for``, ``async with`` and "
 "async comprehensions."
@@ -1761,14 +3366,14 @@ msgstr ""
 "Active la reconnaissance de ``await``, ``async for``, ``async with`` et des "
 "compréhensions asynchrones au niveau le plus haut."
 
-#: library/ast.rst:2311
+#: library/ast.rst:2460
 msgid ""
 "Generates and returns an abstract syntax tree instead of returning a "
 "compiled code object."
 msgstr ""
 "Génère et renvoie un arbre syntaxique au lieu d'un objet de code compilé."
 
-#: library/ast.rst:2316
+#: library/ast.rst:2465
 msgid ""
 "Enables support for :pep:`484` and :pep:`526` style type comments (``# type: "
 "<type>``, ``# type: ignore <stuff>``)."
@@ -1776,11 +3381,11 @@ msgstr ""
 "Ajoute la prise en charge des commentaires de types tels que définis dans "
 "la :pep:`484` et la :pep:`526` (``# type: un_type`` et ``# type: ignore``)."
 
-#: library/ast.rst:2325
+#: library/ast.rst:2474
 msgid "Command-Line Usage"
 msgstr "Utilisation en ligne de commande"
 
-#: library/ast.rst:2329
+#: library/ast.rst:2478
 msgid ""
 "The :mod:`ast` module can be executed as a script from the command line. It "
 "is as simple as:"
@@ -1788,15 +3393,19 @@ msgstr ""
 "Le module :mod:`ast` peut être exécuté en tant que script en ligne de "
 "commande. C'est aussi simple que ceci :"
 
-#: library/ast.rst:2336
+#: library/ast.rst:2481
+msgid "python -m ast [-m <mode>] [-a] [infile]"
+msgstr ""
+
+#: library/ast.rst:2485
 msgid "The following options are accepted:"
 msgstr "Les options suivantes sont acceptées :"
 
-#: library/ast.rst:2342
+#: library/ast.rst:2491
 msgid "Show the help message and exit."
 msgstr "Affiche un message d'aide et quitte."
 
-#: library/ast.rst:2347
+#: library/ast.rst:2496
 msgid ""
 "Specify what kind of code must be compiled, like the *mode* argument in :"
 "func:`parse`."
@@ -1804,21 +3413,21 @@ msgstr ""
 "Précise le type de code à compiler, comme l'argument *mode* de la fonction :"
 "func:`parse`."
 
-#: library/ast.rst:2352
+#: library/ast.rst:2501
 msgid "Don't parse type comments."
 msgstr "Désactive la reconnaissance des commentaires de type."
 
-#: library/ast.rst:2356
+#: library/ast.rst:2505
 msgid "Include attributes such as line numbers and column offsets."
 msgstr ""
 "Affiche les attributs comme les numéros de lignes et les décalages par "
 "rapport aux débuts des lignes."
 
-#: library/ast.rst:2361
+#: library/ast.rst:2510
 msgid "Indentation of nodes in AST (number of spaces)."
 msgstr "Nombre d'espaces pour chaque niveau d'indentation dans la sortie."
 
-#: library/ast.rst:2363
+#: library/ast.rst:2512
 msgid ""
 "If :file:`infile` is specified its contents are parsed to AST and dumped to "
 "stdout.  Otherwise, the content is read from stdin."
@@ -1827,7 +3436,7 @@ msgstr ""
 "standard sinon. Le code source est transformé en un arbre syntaxique, qui "
 "est affiché sur la sortie standard."
 
-#: library/ast.rst:2369
+#: library/ast.rst:2518
 msgid ""
 "`Green Tree Snakes <https://greentreesnakes.readthedocs.io/>`_, an external "
 "documentation resource, has good details on working with Python ASTs."
@@ -1836,7 +3445,7 @@ msgstr ""
 "ressource documentaire externe, qui possède plus de détails pour travailler "
 "avec des arbres syntaxiques Python."
 
-#: library/ast.rst:2372
+#: library/ast.rst:2521
 msgid ""
 "`ASTTokens <https://asttokens.readthedocs.io/en/latest/user-guide.html>`_ "
 "annotates Python ASTs with the positions of tokens and text in the source "
@@ -1848,18 +3457,18 @@ msgstr ""
 "extraits de code source à partir desquels ils sont produits. Ceci est utile "
 "pour les outils qui transforment du code source."
 
-#: library/ast.rst:2377
+#: library/ast.rst:2526
 #, fuzzy
 msgid ""
-"`leoAst.py <https://leoeditor.com/appendices.html#leoast-py>`_ unifies the "
-"token-based and parse-tree-based views of python programs by inserting two-"
-"way links between tokens and ast nodes."
+"`leoAst.py <https://leo-editor.github.io/leo-editor/appendices.html#leoast-"
+"py>`_ unifies the token-based and parse-tree-based views of python programs "
+"by inserting two-way links between tokens and ast nodes."
 msgstr ""
 "`leoAst.py <http://leoeditor.com/appendices.html#leoast-py>`_ unifie les "
 "visions des lexèmes et des arbres syntaxiques en insérant des liens "
 "bidirectionnels entre les deux."
 
-#: library/ast.rst:2381
+#: library/ast.rst:2531
 msgid ""
 "`LibCST <https://libcst.readthedocs.io/>`_ parses code as a Concrete Syntax "
 "Tree that looks like an ast tree and keeps all formatting details. It's "
@@ -1870,12 +3479,13 @@ msgstr ""
 "abstraits et conservent tous les détails du formatage. Cette bibliothèque "
 "est utile aux outils de réusinage et d'analyse de code."
 
-#: library/ast.rst:2386
+#: library/ast.rst:2536
+#, fuzzy
 msgid ""
 "`Parso <https://parso.readthedocs.io>`_ is a Python parser that supports "
 "error recovery and round-trip parsing for different Python versions (in "
 "multiple Python versions). Parso is also able to list multiple syntax errors "
-"in your python file."
+"in your Python file."
 msgstr ""
 "`Parso <https://parso.readthedocs.io>`_ est un analyseur syntaxique de code "
 "Python qui gère la récupération d'erreurs et la génération de code (de "
@@ -1894,3 +3504,18 @@ msgstr ""
 #: library/ast.rst:60
 msgid "* (asterisk)"
 msgstr ""
+
+#~ msgid ""
+#~ "Also, setting ``feature_version`` to a tuple ``(major, minor)`` will "
+#~ "attempt to parse using that Python version's grammar. Currently ``major`` "
+#~ "must equal to ``3``.  For example, setting ``feature_version=(3, 4)`` "
+#~ "will allow the use of ``async`` and ``await`` as variable names.  The "
+#~ "lowest supported version is ``(3, 4)``; the highest is ``sys."
+#~ "version_info[0:2]``."
+#~ msgstr ""
+#~ "Si *feature_version* est défini à une version de Python, sous la forme "
+#~ "d'un couple ``(version_majeure, version_mineure)``, l'analyseur tentera "
+#~ "de lire la source en se conformant à la syntaxe de cette version. Ainsi, "
+#~ "avec ``feature_version=(3, 4)``, les noms ``async`` et ``await`` peuvent "
+#~ "nommer des variables. La version la plus ancienne prise en charge est "
+#~ "actuellement ``(3, 4)`` ; la plus récente est ``sys.version_info[0:2]``."

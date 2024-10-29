@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2020-07-20 15:08+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -44,6 +44,11 @@ msgstr ""
 msgid ""
 "Enabling the Python Development Mode is similar to the following command, "
 "but with additional effects described below::"
+msgstr ""
+
+#: library/devmode.rst:24
+msgid ""
+"PYTHONMALLOC=debug PYTHONASYNCIODEBUG=1 python -W default -X faulthandler"
 msgstr ""
 
 #: library/devmode.rst:26
@@ -130,48 +135,49 @@ msgstr ""
 #: library/devmode.rst:61
 msgid ""
 "Call :func:`faulthandler.enable` at Python startup to install handlers for "
-"the :const:`SIGSEGV`, :const:`SIGFPE`, :const:`SIGABRT`, :const:`SIGBUS` "
-"and :const:`SIGILL` signals to dump the Python traceback on a crash."
+"the :const:`~signal.SIGSEGV`, :const:`~signal.SIGFPE`, :const:`~signal."
+"SIGABRT`, :const:`~signal.SIGBUS` and :const:`~signal.SIGILL` signals to "
+"dump the Python traceback on a crash."
 msgstr ""
 
-#: library/devmode.rst:65
+#: library/devmode.rst:66
 msgid ""
 "It behaves as if the :option:`-X faulthandler <-X>` command line option is "
 "used or if the :envvar:`PYTHONFAULTHANDLER` environment variable is set to "
 "``1``."
 msgstr ""
 
-#: library/devmode.rst:69
+#: library/devmode.rst:70
 msgid ""
 "Enable :ref:`asyncio debug mode <asyncio-debug-mode>`. For example, :mod:"
 "`asyncio` checks for coroutines that were not awaited and logs them."
 msgstr ""
 
-#: library/devmode.rst:72
+#: library/devmode.rst:73
 msgid ""
 "It behaves as if the :envvar:`PYTHONASYNCIODEBUG` environment variable is "
 "set to ``1``."
 msgstr ""
 
-#: library/devmode.rst:75
+#: library/devmode.rst:76
 msgid ""
 "Check the *encoding* and *errors* arguments for string encoding and decoding "
 "operations. Examples: :func:`open`, :meth:`str.encode` and :meth:`bytes."
 "decode`."
 msgstr ""
 
-#: library/devmode.rst:79
+#: library/devmode.rst:80
 msgid ""
 "By default, for best performance, the *errors* argument is only checked at "
 "the first encoding/decoding error and the *encoding* argument is sometimes "
 "ignored for empty strings."
 msgstr ""
 
-#: library/devmode.rst:83
+#: library/devmode.rst:84
 msgid "The :class:`io.IOBase` destructor logs ``close()`` exceptions."
 msgstr ""
 
-#: library/devmode.rst:84
+#: library/devmode.rst:85
 #, fuzzy
 msgid ""
 "Set the :attr:`~sys.flags.dev_mode` attribute of :data:`sys.flags` to "
@@ -180,7 +186,7 @@ msgstr ""
 "Définit l'attribut :attr:`~sys.flags.dev_mode` de :attr:`sys.flags` à "
 "``True``"
 
-#: library/devmode.rst:87
+#: library/devmode.rst:88
 msgid ""
 "The Python Development Mode does not enable the :mod:`tracemalloc` module by "
 "default, because the overhead cost (to performance and memory) would be too "
@@ -191,63 +197,116 @@ msgid ""
 "allocated."
 msgstr ""
 
-#: library/devmode.rst:94
+#: library/devmode.rst:95
 msgid ""
 "The Python Development Mode does not prevent the :option:`-O` command line "
 "option from removing :keyword:`assert` statements nor from setting :const:"
 "`__debug__` to ``False``."
 msgstr ""
 
-#: library/devmode.rst:98
+#: library/devmode.rst:99
 msgid ""
 "The Python Development Mode can only be enabled at the Python startup. Its "
 "value can be read from :data:`sys.flags.dev_mode <sys.flags>`."
 msgstr ""
 
-#: library/devmode.rst:101
+#: library/devmode.rst:102
 msgid "The :class:`io.IOBase` destructor now logs ``close()`` exceptions."
 msgstr ""
 
-#: library/devmode.rst:104
+#: library/devmode.rst:105
 msgid ""
 "The *encoding* and *errors* arguments are now checked for string encoding "
 "and decoding operations."
 msgstr ""
 
-#: library/devmode.rst:110
+#: library/devmode.rst:111
 msgid "ResourceWarning Example"
 msgstr ""
 
-#: library/devmode.rst:112
+#: library/devmode.rst:113
 msgid ""
 "Example of a script counting the number of lines of the text file specified "
 "in the command line::"
 msgstr ""
 
-#: library/devmode.rst:126
+#: library/devmode.rst:116
+msgid ""
+"import sys\n"
+"\n"
+"def main():\n"
+"    fp = open(sys.argv[1])\n"
+"    nlines = len(fp.readlines())\n"
+"    print(nlines)\n"
+"    # The file is closed implicitly\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    main()"
+msgstr ""
+
+#: library/devmode.rst:127
 msgid ""
 "The script does not close the file explicitly. By default, Python does not "
 "emit any warning. Example using README.txt, which has 269 lines:"
 msgstr ""
 
-#: library/devmode.rst:134
+#: library/devmode.rst:130
+msgid ""
+"$ python script.py README.txt\n"
+"269"
+msgstr ""
+
+#: library/devmode.rst:135
 msgid ""
 "Enabling the Python Development Mode displays a :exc:`ResourceWarning` "
 "warning:"
 msgstr ""
 
-#: library/devmode.rst:144
+#: library/devmode.rst:137
+msgid ""
+"$ python -X dev script.py README.txt\n"
+"269\n"
+"script.py:10: ResourceWarning: unclosed file <_io.TextIOWrapper name='README."
+"rst' mode='r' encoding='UTF-8'>\n"
+"  main()\n"
+"ResourceWarning: Enable tracemalloc to get the object allocation traceback"
+msgstr ""
+
+#: library/devmode.rst:145
 msgid ""
 "In addition, enabling :mod:`tracemalloc` shows the line where the file was "
 "opened:"
 msgstr ""
 
-#: library/devmode.rst:159
+#: library/devmode.rst:148
+msgid ""
+"$ python -X dev -X tracemalloc=5 script.py README.rst\n"
+"269\n"
+"script.py:10: ResourceWarning: unclosed file <_io.TextIOWrapper name='README."
+"rst' mode='r' encoding='UTF-8'>\n"
+"  main()\n"
+"Object allocated at (most recent call last):\n"
+"  File \"script.py\", lineno 10\n"
+"    main()\n"
+"  File \"script.py\", lineno 4\n"
+"    fp = open(sys.argv[1])"
+msgstr ""
+
+#: library/devmode.rst:160
 msgid ""
 "The fix is to close explicitly the file. Example using a context manager::"
 msgstr ""
 
-#: library/devmode.rst:167
+#: library/devmode.rst:162
+msgid ""
+"def main():\n"
+"    # Close the file explicitly when exiting the with block\n"
+"    with open(sys.argv[1]) as fp:\n"
+"        nlines = len(fp.readlines())\n"
+"    print(nlines)"
+msgstr ""
+
+#: library/devmode.rst:168
 msgid ""
 "Not closing a resource explicitly can leave a resource open for way longer "
 "than expected; it can cause severe issues upon exiting Python. It is bad in "
@@ -255,25 +314,61 @@ msgid ""
 "application more deterministic and more reliable."
 msgstr ""
 
-#: library/devmode.rst:174
+#: library/devmode.rst:175
 msgid "Bad file descriptor error example"
 msgstr ""
 
-#: library/devmode.rst:176
+#: library/devmode.rst:177
 msgid "Script displaying the first line of itself::"
 msgstr ""
 
-#: library/devmode.rst:189
+#: library/devmode.rst:179
+msgid ""
+"import os\n"
+"\n"
+"def main():\n"
+"    fp = open(__file__)\n"
+"    firstline = fp.readline()\n"
+"    print(firstline.rstrip())\n"
+"    os.close(fp.fileno())\n"
+"    # The file is closed implicitly\n"
+"\n"
+"main()"
+msgstr ""
+
+#: library/devmode.rst:190
 msgid "By default, Python does not emit any warning:"
 msgstr ""
 
-#: library/devmode.rst:196
+#: library/devmode.rst:192
+msgid ""
+"$ python script.py\n"
+"import os"
+msgstr ""
+
+#: library/devmode.rst:197
 msgid ""
 "The Python Development Mode shows a :exc:`ResourceWarning` and logs a \"Bad "
 "file descriptor\" error when finalizing the file object:"
 msgstr ""
 
-#: library/devmode.rst:212
+#: library/devmode.rst:200
+msgid ""
+"$ python -X dev script.py\n"
+"import os\n"
+"script.py:10: ResourceWarning: unclosed file <_io.TextIOWrapper name='script."
+"py' mode='r' encoding='UTF-8'>\n"
+"  main()\n"
+"ResourceWarning: Enable tracemalloc to get the object allocation traceback\n"
+"Exception ignored in: <_io.TextIOWrapper name='script.py' mode='r' "
+"encoding='UTF-8'>\n"
+"Traceback (most recent call last):\n"
+"  File \"script.py\", line 10, in <module>\n"
+"    main()\n"
+"OSError: [Errno 9] Bad file descriptor"
+msgstr ""
+
+#: library/devmode.rst:213
 msgid ""
 "``os.close(fp.fileno())`` closes the file descriptor. When the file object "
 "finalizer tries to close the file descriptor again, it fails with the ``Bad "
@@ -282,7 +377,7 @@ msgid ""
 "`18748` for an example)."
 msgstr ""
 
-#: library/devmode.rst:218
+#: library/devmode.rst:219
 msgid ""
 "The fix is to remove the ``os.close(fp.fileno())`` line, or open the file "
 "with ``closefd=False``."

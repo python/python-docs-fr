@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-06-17 10:31+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -43,9 +43,37 @@ msgstr ""
 "Voici un exemple de comment *asyncio* peut lancer une commande shell et "
 "obtenir son résultat ::"
 
+#: library/asyncio-subprocess.rst:22
+msgid ""
+"import asyncio\n"
+"\n"
+"async def run(cmd):\n"
+"    proc = await asyncio.create_subprocess_shell(\n"
+"        cmd,\n"
+"        stdout=asyncio.subprocess.PIPE,\n"
+"        stderr=asyncio.subprocess.PIPE)\n"
+"\n"
+"    stdout, stderr = await proc.communicate()\n"
+"\n"
+"    print(f'[{cmd!r} exited with {proc.returncode}]')\n"
+"    if stdout:\n"
+"        print(f'[stdout]\\n{stdout.decode()}')\n"
+"    if stderr:\n"
+"        print(f'[stderr]\\n{stderr.decode()}')\n"
+"\n"
+"asyncio.run(run('ls /zzz'))"
+msgstr ""
+
 #: library/asyncio-subprocess.rst:40
 msgid "will print::"
 msgstr "affiche ::"
+
+#: library/asyncio-subprocess.rst:42
+msgid ""
+"['ls /zzz' exited with 1]\n"
+"[stderr]\n"
+"ls: /zzz: No such file or directory"
+msgstr ""
 
 #: library/asyncio-subprocess.rst:46
 msgid ""
@@ -59,6 +87,16 @@ msgstr ""
 "fonctions, il est facile d'exécuter et de surveiller de nombreux processus  "
 "en parallèle. Il est en effet trivial de modifier l'exemple ci-dessus pour "
 "exécuter plusieurs commandes simultanément ::"
+
+#: library/asyncio-subprocess.rst:51
+msgid ""
+"async def main():\n"
+"    await asyncio.gather(\n"
+"        run('ls /zzz'),\n"
+"        run('sleep 1; echo \"hello\"'))\n"
+"\n"
+"asyncio.run(main())"
+msgstr ""
 
 #: library/asyncio-subprocess.rst:58
 msgid "See also the `Examples`_ subsection."
@@ -310,16 +348,20 @@ msgid "send data to *stdin* (if *input* is not ``None``);"
 msgstr "envoie des données sur le *stdin* (si *input* n'est pas ``None``) ;"
 
 #: library/asyncio-subprocess.rst:210
+msgid "closes *stdin*;"
+msgstr ""
+
+#: library/asyncio-subprocess.rst:211
 msgid "read data from *stdout* and *stderr*, until EOF is reached;"
 msgstr ""
 "lit les données sur *stdout* et *stderr*, jusqu'à ce que le EOF soit "
 "atteint ;"
 
-#: library/asyncio-subprocess.rst:211
+#: library/asyncio-subprocess.rst:212
 msgid "wait for process to terminate."
 msgstr "attend que le processus s'arrête."
 
-#: library/asyncio-subprocess.rst:213
+#: library/asyncio-subprocess.rst:214
 msgid ""
 "The optional *input* argument is the data (:class:`bytes` object) that will "
 "be sent to the child process."
@@ -327,11 +369,11 @@ msgstr ""
 "Le paramètre optionnel *input* (objet de type :class:`bytes`) représente les "
 "données transmises au sous-processus."
 
-#: library/asyncio-subprocess.rst:216
+#: library/asyncio-subprocess.rst:217
 msgid "Return a tuple ``(stdout_data, stderr_data)``."
 msgstr "Renvoie un *n*-uplet ``(stdout_data, stderr_data)``."
 
-#: library/asyncio-subprocess.rst:218
+#: library/asyncio-subprocess.rst:219
 msgid ""
 "If either :exc:`BrokenPipeError` or :exc:`ConnectionResetError` exception is "
 "raised when writing *input* into *stdin*, the exception is ignored.  This "
@@ -343,7 +385,7 @@ msgstr ""
 "l'exception est ignorée. Cette condition se produit lorsque le processus se "
 "termine avant que toutes les données ne soient écrites dans *stdin*."
 
-#: library/asyncio-subprocess.rst:223
+#: library/asyncio-subprocess.rst:224
 msgid ""
 "If it is desired to send data to the process' *stdin*, the process needs to "
 "be created with ``stdin=PIPE``.  Similarly, to get anything other than "
@@ -355,7 +397,7 @@ msgstr ""
 "``None`` dans le *n*-uplet résultat, le processus doit être créé avec les "
 "arguments ``stdout=PIPE`` et/ou ``stderr=PIPE``."
 
-#: library/asyncio-subprocess.rst:229
+#: library/asyncio-subprocess.rst:230
 msgid ""
 "Note, that the data read is buffered in memory, so do not use this method if "
 "the data size is large or unlimited."
@@ -363,14 +405,19 @@ msgstr ""
 "Notez que les données lues sont mises en cache en mémoire, donc n'utilisez "
 "pas cette méthode si la taille des données est importante voire illimitée."
 
-#: library/asyncio-subprocess.rst:234
+#: library/asyncio-subprocess.rst:235
+msgid "*stdin* gets closed when `input=None` too."
+msgstr ""
+
+#: library/asyncio-subprocess.rst:239
 msgid "Sends the signal *signal* to the child process."
 msgstr "Envoie le signal *signal* au sous-processus."
 
 # suit un :
-#: library/asyncio-subprocess.rst:238
+#: library/asyncio-subprocess.rst:243
+#, fuzzy
 msgid ""
-"On Windows, :py:data:`SIGTERM` is an alias for :meth:`terminate`. "
+"On Windows, :py:const:`~signal.SIGTERM` is an alias for :meth:`terminate`. "
 "``CTRL_C_EVENT`` and ``CTRL_BREAK_EVENT`` can be sent to processes started "
 "with a *creationflags* parameter which includes ``CREATE_NEW_PROCESS_GROUP``."
 msgstr ""
@@ -379,43 +426,44 @@ msgstr ""
 "démarrés avec un paramètre *creationflags* incluant "
 "``CREATE_NEW_PROCESS_GROUP``."
 
-#: library/asyncio-subprocess.rst:245
+#: library/asyncio-subprocess.rst:250
 msgid "Stop the child process."
 msgstr "Arrête le sous-processus."
 
-#: library/asyncio-subprocess.rst:247
+#: library/asyncio-subprocess.rst:252
 #, fuzzy
 msgid ""
-"On POSIX systems this method sends :py:const:`signal.SIGTERM` to the child "
+"On POSIX systems this method sends :py:const:`~signal.SIGTERM` to the child "
 "process."
 msgstr ""
 "Sur les systèmes POSIX, cette méthode envoie :py:data:`signal.SIGTERM` au "
 "sous-processus."
 
-#: library/asyncio-subprocess.rst:250
+#: library/asyncio-subprocess.rst:255
+#, fuzzy
 msgid ""
-"On Windows the Win32 API function :c:func:`TerminateProcess` is called to "
+"On Windows the Win32 API function :c:func:`!TerminateProcess` is called to "
 "stop the child process."
 msgstr ""
 "Sous Windows, la fonction API Win32 :c:func:`TerminateProcess` est appelée "
 "pour arrêter le processus enfant."
 
-#: library/asyncio-subprocess.rst:255
+#: library/asyncio-subprocess.rst:260
 msgid "Kill the child process."
 msgstr "Arrête le sous-processus."
 
-#: library/asyncio-subprocess.rst:257
+#: library/asyncio-subprocess.rst:262
 msgid ""
 "On POSIX systems this method sends :py:data:`SIGKILL` to the child process."
 msgstr ""
 "Sur les systèmes POSIX, cette méthode envoie :py:data:`signal.SIGTERM` au "
 "sous-processus."
 
-#: library/asyncio-subprocess.rst:260
+#: library/asyncio-subprocess.rst:265
 msgid "On Windows this method is an alias for :meth:`terminate`."
 msgstr "Sous Windows, cette méthode est un alias pour :meth:`terminate`."
 
-#: library/asyncio-subprocess.rst:264
+#: library/asyncio-subprocess.rst:269
 msgid ""
 "Standard input stream (:class:`StreamWriter`) or ``None`` if the process was "
 "created with ``stdin=None``."
@@ -423,7 +471,7 @@ msgstr ""
 "Flux d'entrée standard (:class:`StreamWriter`) ou ``None`` si le processus a "
 "été créé avec ``stdin=None``."
 
-#: library/asyncio-subprocess.rst:269
+#: library/asyncio-subprocess.rst:274
 msgid ""
 "Standard output stream (:class:`StreamReader`) or ``None`` if the process "
 "was created with ``stdout=None``."
@@ -431,7 +479,7 @@ msgstr ""
 "Flux de sortie standard (:class:`StreamReader`) ou ``None`` si le processus "
 "a été créé avec ``stdout=None``."
 
-#: library/asyncio-subprocess.rst:274
+#: library/asyncio-subprocess.rst:279
 msgid ""
 "Standard error stream (:class:`StreamReader`) or ``None`` if the process was "
 "created with ``stderr=None``."
@@ -440,7 +488,7 @@ msgstr ""
 "été créé avec ``stderr=None``."
 
 # suit un :
-#: library/asyncio-subprocess.rst:279
+#: library/asyncio-subprocess.rst:284
 msgid ""
 "Use the :meth:`communicate` method rather than :attr:`process.stdin.write() "
 "<stdin>`, :attr:`await process.stdout.read() <stdout>` or :attr:`await "
@@ -452,13 +500,13 @@ msgstr ""
 "process.stderr.read() <stderr>`. Cela évite les interblocages dus aux flux "
 "qui interrompent la lecture ou l'écriture et bloquent le processus enfant."
 
-#: library/asyncio-subprocess.rst:288
+#: library/asyncio-subprocess.rst:293
 msgid "Process identification number (PID)."
 msgstr ""
 "Numéro d'identification du processus (PID, pour *Process Identification "
 "Number* en anglais)."
 
-#: library/asyncio-subprocess.rst:290
+#: library/asyncio-subprocess.rst:295
 msgid ""
 "Note that for processes created by the :func:`create_subprocess_shell` "
 "function, this attribute is the PID of the spawned shell."
@@ -466,15 +514,15 @@ msgstr ""
 "Notez que pour les processus créés par la fonction :func:"
 "`create_subprocess_shell`, cet attribut est le PID du shell généré."
 
-#: library/asyncio-subprocess.rst:295
+#: library/asyncio-subprocess.rst:300
 msgid "Return code of the process when it exits."
 msgstr "Code de retour du processus quand il se termine."
 
-#: library/asyncio-subprocess.rst:297
+#: library/asyncio-subprocess.rst:302
 msgid "A ``None`` value indicates that the process has not terminated yet."
 msgstr "Une valeur ``None`` indique que le processus n'est pas encore terminé."
 
-#: library/asyncio-subprocess.rst:299
+#: library/asyncio-subprocess.rst:304
 msgid ""
 "A negative value ``-N`` indicates that the child was terminated by signal "
 "``N`` (POSIX only)."
@@ -482,11 +530,11 @@ msgstr ""
 "Une valeur négative ``-N`` indique que le sous-processus a été terminé par "
 "le signal ``N`` (seulement sur les systèmes *POSIX*)."
 
-#: library/asyncio-subprocess.rst:306
+#: library/asyncio-subprocess.rst:311
 msgid "Subprocess and Threads"
 msgstr "Sous-processus et fils d'exécution"
 
-#: library/asyncio-subprocess.rst:308
+#: library/asyncio-subprocess.rst:313
 msgid ""
 "Standard asyncio event loop supports running subprocesses from different "
 "threads by default."
@@ -494,7 +542,7 @@ msgstr ""
 "La boucle d'événement asynchrone standard prend en charge l'exécution de "
 "sous-processus à partir de différents fils d'exécution par défaut."
 
-#: library/asyncio-subprocess.rst:311
+#: library/asyncio-subprocess.rst:316
 msgid ""
 "On Windows subprocesses are provided by :class:`ProactorEventLoop` only "
 "(default), :class:`SelectorEventLoop` has no subprocess support."
@@ -503,7 +551,7 @@ msgstr ""
 "uniquement (par défaut), :class:`SelectorEventLoop` ne prend pas en charge "
 "les sous-processus."
 
-#: library/asyncio-subprocess.rst:314
+#: library/asyncio-subprocess.rst:319
 msgid ""
 "On UNIX *child watchers* are used for subprocess finish waiting, see :ref:"
 "`asyncio-watchers` for more info."
@@ -512,7 +560,7 @@ msgstr ""
 "l'attente de fin de sous-processus, voir :ref:`asyncio-watchers` pour plus "
 "d'informations."
 
-#: library/asyncio-subprocess.rst:320
+#: library/asyncio-subprocess.rst:325
 msgid ""
 "UNIX switched to use :class:`ThreadedChildWatcher` for spawning subprocesses "
 "from different threads without any limitation."
@@ -520,7 +568,7 @@ msgstr ""
 "UNIX est passé à l'utilisation de :class:`ThreadedChildWatcher` pour générer "
 "des sous-processus à partir de différents threads sans aucune limitation."
 
-#: library/asyncio-subprocess.rst:323
+#: library/asyncio-subprocess.rst:328
 msgid ""
 "Spawning a subprocess with *inactive* current child watcher raises :exc:"
 "`RuntimeError`."
@@ -528,7 +576,7 @@ msgstr ""
 "Instancier un sous-processus avec un observateur enfant actuel *inactif* "
 "lève l'exception :exc:`RuntimeError`."
 
-#: library/asyncio-subprocess.rst:326
+#: library/asyncio-subprocess.rst:331
 msgid ""
 "Note that alternative event loop implementations might have own limitations; "
 "please refer to their documentation."
@@ -538,7 +586,7 @@ msgstr ""
 "documentation."
 
 # suit un :
-#: library/asyncio-subprocess.rst:331
+#: library/asyncio-subprocess.rst:336
 msgid ""
 "The :ref:`Concurrency and multithreading in asyncio <asyncio-"
 "multithreading>` section."
@@ -546,11 +594,11 @@ msgstr ""
 "la section :ref:`Exécution concurrente et multi-fils d'exécution <asyncio-"
 "multithreading>`."
 
-#: library/asyncio-subprocess.rst:336
+#: library/asyncio-subprocess.rst:341
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/asyncio-subprocess.rst:338
+#: library/asyncio-subprocess.rst:343
 msgid ""
 "An example using the :class:`~asyncio.subprocess.Process` class to control a "
 "subprocess and the :class:`StreamReader` class to read from its standard "
@@ -560,13 +608,39 @@ msgstr ""
 "contrôler un sous-processus et la classe :class:`StreamReader` pour lire sa "
 "sortie standard."
 
-#: library/asyncio-subprocess.rst:344
+#: library/asyncio-subprocess.rst:349
 msgid ""
 "The subprocess is created by the :func:`create_subprocess_exec` function::"
 msgstr ""
 "Le sous-processus est créé par la fonction :func:`create_subprocess_exec` ::"
 
-#: library/asyncio-subprocess.rst:371
+#: library/asyncio-subprocess.rst:352
+msgid ""
+"import asyncio\n"
+"import sys\n"
+"\n"
+"async def get_date():\n"
+"    code = 'import datetime; print(datetime.datetime.now())'\n"
+"\n"
+"    # Create the subprocess; redirect the standard output\n"
+"    # into a pipe.\n"
+"    proc = await asyncio.create_subprocess_exec(\n"
+"        sys.executable, '-c', code,\n"
+"        stdout=asyncio.subprocess.PIPE)\n"
+"\n"
+"    # Read one line of output.\n"
+"    data = await proc.stdout.readline()\n"
+"    line = data.decode('ascii').rstrip()\n"
+"\n"
+"    # Wait for the subprocess exit.\n"
+"    await proc.wait()\n"
+"    return line\n"
+"\n"
+"date = asyncio.run(get_date())\n"
+"print(f\"Current date: {date}\")"
+msgstr ""
+
+#: library/asyncio-subprocess.rst:376
 msgid ""
 "See also the :ref:`same example <asyncio_example_subprocess_proto>` written "
 "using low-level APIs."

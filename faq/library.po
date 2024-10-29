@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-03-27 18:03+0200\n"
 "Last-Translator: Mathieu Dupuy\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -99,6 +99,12 @@ msgstr ""
 "les modules écrits en C et liés à l'interpréteur ; pour obtenir leur liste, "
 "entrez ::"
 
+#: faq/library.rst:42
+msgid ""
+"import sys\n"
+"print(sys.builtin_module_names)"
+msgstr ""
+
 #: faq/library.rst:47
 msgid "How do I make a Python script executable on Unix?"
 msgstr "Comment rendre un script Python exécutable sous Unix ?"
@@ -129,6 +135,10 @@ msgstr ""
 "Il y a plusieurs façons de remplir la seconde. La plus simple consiste à "
 "écrire au tout début du fichier ::"
 
+#: faq/library.rst:59
+msgid "#!/usr/local/bin/python"
+msgstr ""
+
 #: faq/library.rst:61
 msgid ""
 "as the very first line of your file, using the pathname for where the Python "
@@ -147,6 +157,10 @@ msgstr ""
 "fonctionne sur la quasi-totalité des dérivés de Unix, à condition que "
 "l'interpréteur Python soit dans un dossier référencé dans la variable :"
 "envvar:`PATH` de l'utilisateur ::"
+
+#: faq/library.rst:69
+msgid "#!/usr/bin/env python"
+msgstr ""
 
 #: faq/library.rst:71
 msgid ""
@@ -169,6 +183,14 @@ msgstr ""
 "n'existe pas du tout. Dans ce cas, vous pouvez utiliser l'astuce suivante, "
 "élaborée par Alex Rezinsky :"
 
+#: faq/library.rst:79
+msgid ""
+"#! /bin/sh\n"
+"\"\"\":\"\n"
+"exec python $0 ${1+\"$@\"}\n"
+"\"\"\""
+msgstr ""
+
 #: faq/library.rst:86
 msgid ""
 "The minor disadvantage is that this defines the script's __doc__ string. "
@@ -176,6 +198,10 @@ msgid ""
 msgstr ""
 "Le léger inconvénient est que cela définit la variable *__doc__* du script. "
 "Cependant, il est possible de corriger cela en ajoutant ::"
+
+#: faq/library.rst:89
+msgid "__doc__ = \"\"\"...Whatever...\"\"\""
+msgstr ""
 
 #: faq/library.rst:94
 msgid "Is there a curses/termcap package for Python?"
@@ -215,9 +241,10 @@ msgid "Is there an equivalent to C's onexit() in Python?"
 msgstr "Existe-t-il un équivalent à la fonction C ``onexit()`` en Python ?"
 
 #: faq/library.rst:113
+#, fuzzy
 msgid ""
 "The :mod:`atexit` module provides a register function that is similar to "
-"C's :c:func:`onexit`."
+"C's :c:func:`!onexit`."
 msgstr ""
 "Le module :mod:`atexit` fournit une fonction d'enregistrement similaire à la "
 "fonction C :c:func:`onexit`."
@@ -234,9 +261,19 @@ msgstr ""
 "Le problème le plus courant est d'appeler le gestionnaire de signaux avec "
 "les mauvais arguments. Un gestionnaire est appelé de la façon suivante ::"
 
+#: faq/library.rst:123
+msgid "handler(signum, frame)"
+msgstr ""
+
 #: faq/library.rst:125
 msgid "so it should be declared with two parameters::"
 msgstr "donc il doit être déclaré avec deux paramètres ::"
+
+#: faq/library.rst:127
+msgid ""
+"def handler(signum, frame):\n"
+"    ..."
+msgstr ""
 
 #: faq/library.rst:132
 msgid "Common tasks"
@@ -288,6 +325,12 @@ msgid "The \"global main logic\" of your program may be as simple as ::"
 msgstr ""
 "La « logique générale » d'un programme devrait être aussi simple que ::"
 
+#: faq/library.rst:154
+msgid ""
+"if __name__ == \"__main__\":\n"
+"    main_logic()"
+msgstr ""
+
 #: faq/library.rst:157
 msgid "at the bottom of the main module of your program."
 msgstr "à la fin du module principal du programme."
@@ -321,6 +364,12 @@ msgid ""
 msgstr ""
 "Les « modules auxiliaires » qui n'ont pas vocation à être le module "
 "principal du programme peuvent inclure un test pour se vérifier eux-mêmes. ::"
+
+#: faq/library.rst:170
+msgid ""
+"if __name__ == \"__main__\":\n"
+"    self_test()"
+msgstr ""
 
 #: faq/library.rst:173
 msgid ""
@@ -401,6 +450,21 @@ msgstr ""
 "Une correction simple consiste à ajouter un temps d'attente suffisamment "
 "long à la fin du programme pour que tous les fils puissent se terminer ::"
 
+#: faq/library.rst:253
+msgid ""
+"import threading, time\n"
+"\n"
+"def thread_task(name, n):\n"
+"    for i in range(n):\n"
+"        print(name, i)\n"
+"\n"
+"for i in range(10):\n"
+"    T = threading.Thread(target=thread_task, args=(str(i), i))\n"
+"    T.start()\n"
+"\n"
+"time.sleep(10)  # <---------------------------!"
+msgstr ""
+
 #: faq/library.rst:265
 msgid ""
 "But now (on many platforms) the threads don't run in parallel, but appear to "
@@ -417,6 +481,20 @@ msgid "A simple fix is to add a tiny sleep to the start of the run function::"
 msgstr ""
 "Une correction simple consiste à ajouter un petit temps d'attente au début "
 "de la fonction ::"
+
+#: faq/library.rst:271
+msgid ""
+"def thread_task(name, n):\n"
+"    time.sleep(0.001)  # <--------------------!\n"
+"    for i in range(n):\n"
+"        print(name, i)\n"
+"\n"
+"for i in range(10):\n"
+"    T = threading.Thread(target=thread_task, args=(str(i), i))\n"
+"    T.start()\n"
+"\n"
+"time.sleep(10)"
+msgstr ""
 
 #: faq/library.rst:282
 msgid ""
@@ -469,9 +547,65 @@ msgstr ""
 msgid "Here's a trivial example::"
 msgstr "Voici un exemple trivial ::"
 
+#: faq/library.rst:304
+msgid ""
+"import threading, queue, time\n"
+"\n"
+"# The worker thread gets jobs off the queue.  When the queue is empty, it\n"
+"# assumes there will be no more work and exits.\n"
+"# (Realistically workers will run until terminated.)\n"
+"def worker():\n"
+"    print('Running worker')\n"
+"    time.sleep(0.1)\n"
+"    while True:\n"
+"        try:\n"
+"            arg = q.get(block=False)\n"
+"        except queue.Empty:\n"
+"            print('Worker', threading.current_thread(), end=' ')\n"
+"            print('queue empty')\n"
+"            break\n"
+"        else:\n"
+"            print('Worker', threading.current_thread(), end=' ')\n"
+"            print('running with argument', arg)\n"
+"            time.sleep(0.5)\n"
+"\n"
+"# Create queue\n"
+"q = queue.Queue()\n"
+"\n"
+"# Start a pool of 5 workers\n"
+"for i in range(5):\n"
+"    t = threading.Thread(target=worker, name='worker %i' % (i+1))\n"
+"    t.start()\n"
+"\n"
+"# Begin adding work to the queue\n"
+"for i in range(50):\n"
+"    q.put(i)\n"
+"\n"
+"# Give threads time to run\n"
+"print('Main thread sleeping')\n"
+"time.sleep(5)"
+msgstr ""
+
 #: faq/library.rst:340
 msgid "When run, this will produce the following output:"
 msgstr "Quand celui-ci est exécuté, il produit la sortie suivante :"
+
+#: faq/library.rst:342
+msgid ""
+"Running worker\n"
+"Running worker\n"
+"Running worker\n"
+"Running worker\n"
+"Running worker\n"
+"Main thread sleeping\n"
+"Worker <Thread(worker 1, started 130283832797456)> running with argument 0\n"
+"Worker <Thread(worker 2, started 130283824404752)> running with argument 1\n"
+"Worker <Thread(worker 3, started 130283816012048)> running with argument 2\n"
+"Worker <Thread(worker 4, started 130283807619344)> running with argument 3\n"
+"Worker <Thread(worker 5, started 130283799226640)> running with argument 4\n"
+"Worker <Thread(worker 1, started 130283832797456)> running with argument 5\n"
+"..."
+msgstr ""
 
 #: faq/library.rst:358
 msgid ""
@@ -527,16 +661,40 @@ msgstr ""
 "*L2* sont des listes, *D*, *D1* et *D2* sont des dictionnaires, *x* et *y* "
 "sont des objets, *i* et *j* des entiers) ::"
 
+#: faq/library.rst:380
+msgid ""
+"L.append(x)\n"
+"L1.extend(L2)\n"
+"x = L[i]\n"
+"x = L.pop()\n"
+"L1[i:j] = L2\n"
+"L.sort()\n"
+"x = y\n"
+"x.field = y\n"
+"D[x] = y\n"
+"D1.update(D2)\n"
+"D.keys()"
+msgstr ""
+
 #: faq/library.rst:392
 msgid "These aren't::"
 msgstr "Les suivantes ne le sont pas ::"
 
+#: faq/library.rst:394
+msgid ""
+"i = i+1\n"
+"L.append(L[-1])\n"
+"L[i] = L[j]\n"
+"D[x] = D[x] + 1"
+msgstr ""
+
 #: faq/library.rst:399
+#, fuzzy
 msgid ""
 "Operations that replace other objects may invoke those other objects' :meth:"
-"`__del__` method when their reference count reaches zero, and that can "
-"affect things.  This is especially true for the mass updates to dictionaries "
-"and lists.  When in doubt, use a mutex!"
+"`~object.__del__` method when their reference count reaches zero, and that "
+"can affect things.  This is especially true for the mass updates to "
+"dictionaries and lists.  When in doubt, use a mutex!"
 msgstr ""
 "Les opérations qui remplacent d'autres objets peuvent invoquer la méthode :"
 "meth:`__del__` de ces objets quand leur compteur de référence passe à zéro, "
@@ -755,6 +913,15 @@ msgstr ""
 "Par exemple, le code suivant lit, depuis un fichier, deux entiers codés sur "
 "2 octets et un entier codé sur 4 octets, en format gros-boutiste ::"
 
+#: faq/library.rst:506
+msgid ""
+"import struct\n"
+"\n"
+"with open(filename, \"rb\") as f:\n"
+"    s = f.read(8)\n"
+"    x, y, z = struct.unpack(\">hhl\", s)"
+msgstr ""
+
 #: faq/library.rst:512
 msgid ""
 "The '>' in the format string forces big-endian data; the letter 'h' reads "
@@ -808,34 +975,34 @@ msgstr ""
 "octets d'un tube *p* créé avec :func:`os.popen`, il faut utiliser ``p."
 "read(n)``."
 
-#: faq/library.rst:618
+#: faq/library.rst:617
 msgid "How do I access the serial (RS232) port?"
 msgstr "Comment accéder au port de transmission en série (RS-232) ?"
 
-#: faq/library.rst:620
+#: faq/library.rst:619
 msgid "For Win32, OSX, Linux, BSD, Jython, IronPython:"
 msgstr "Pour Win32, OSX, Linux, BSD, Jython et IronPython :"
 
-#: faq/library.rst:622
-msgid "https://pypi.org/project/pyserial/"
-msgstr "https://pypi.org/project/pyserial/"
+#: faq/library.rst:621
+msgid ":pypi:`pyserial`"
+msgstr ""
 
-#: faq/library.rst:624
+#: faq/library.rst:623
 msgid "For Unix, see a Usenet post by Mitch Chapman:"
 msgstr ""
 "Pour Unix, référez-vous à une publication sur Usenet de Mitch Chapman :"
 
-#: faq/library.rst:626
+#: faq/library.rst:625
 msgid "https://groups.google.com/groups?selm=34A04430.CF9@ohioee.com"
 msgstr "https://groups.google.com/groups?selm=34A04430.CF9@ohioee.com"
 
-#: faq/library.rst:630
+#: faq/library.rst:629
 msgid "Why doesn't closing sys.stdout (stdin, stderr) really close it?"
 msgstr ""
 "Pourquoi fermer *sys.stdout*, *sys.stdin*, *sys.stderr* ne les ferme pas "
 "réellement ?"
 
-#: faq/library.rst:632
+#: faq/library.rst:631
 msgid ""
 "Python :term:`file objects <file object>` are a high-level layer of "
 "abstraction on low-level C file descriptors."
@@ -843,7 +1010,7 @@ msgstr ""
 "Les :term:`objets fichiers <file object>` en Python sont des abstractions de "
 "haut niveau sur les descripteurs de fichier C de bas niveau."
 
-#: faq/library.rst:635
+#: faq/library.rst:634
 msgid ""
 "For most file objects you create in Python via the built-in :func:`open` "
 "function, ``f.close()`` marks the Python file object as being closed from "
@@ -857,7 +1024,7 @@ msgstr ""
 "enclenché automatiquement dans le destructeur de ``f``, lorsque ``f`` est "
 "recyclé."
 
-#: faq/library.rst:641
+#: faq/library.rst:640
 msgid ""
 "But stdin, stdout and stderr are treated specially by Python, because of the "
 "special status also given to them by C.  Running ``sys.stdout.close()`` "
@@ -869,7 +1036,7 @@ msgstr ""
 "close()`` marque l'objet fichier comme fermé du point de vue de Python, mais "
 "le descripteur de fichier C associé n'est *pas* fermé."
 
-#: faq/library.rst:646
+#: faq/library.rst:645
 msgid ""
 "To close the underlying C file descriptor for one of these three, you should "
 "first be sure that's what you really want to do (e.g., you may confuse "
@@ -880,21 +1047,28 @@ msgstr ""
 "exemple, perturber le bon fonctionnement de modules qui font des opérations "
 "d'entrée-sortie). Si c'est le cas, utilisez :func:`os.close` ::"
 
-#: faq/library.rst:654
+#: faq/library.rst:649
+msgid ""
+"os.close(stdin.fileno())\n"
+"os.close(stdout.fileno())\n"
+"os.close(stderr.fileno())"
+msgstr ""
+
+#: faq/library.rst:653
 msgid "Or you can use the numeric constants 0, 1 and 2, respectively."
 msgstr ""
 "Il est aussi possible de fermer respectivement les constantes numériques 0, "
 "1 ou 2."
 
-#: faq/library.rst:658
+#: faq/library.rst:657
 msgid "Network/Internet Programming"
 msgstr "Programmation réseau et Internet"
 
-#: faq/library.rst:661
+#: faq/library.rst:660
 msgid "What WWW tools are there for Python?"
 msgstr "Quels sont les outils Python dédiés à au web ?"
 
-#: faq/library.rst:663
+#: faq/library.rst:662
 msgid ""
 "See the chapters titled :ref:`internet` and :ref:`netdata` in the Library "
 "Reference Manual.  Python has many modules that will help you build server-"
@@ -904,7 +1078,7 @@ msgstr ""
 "le manuel de référence de la bibliothèque. Python a de nombreux modules pour "
 "construire des applications web côté client comme côté serveur."
 
-#: faq/library.rst:669
+#: faq/library.rst:668
 msgid ""
 "A summary of available frameworks is maintained by Paul Boddie at https://"
 "wiki.python.org/moin/WebProgramming\\ ."
@@ -912,7 +1086,7 @@ msgstr ""
 "Un résumé des cadriciels disponibles est maintenu par Paul Boddie à "
 "l'adresse https://wiki.python.org/moin/WebProgramming\\ ."
 
-#: faq/library.rst:672
+#: faq/library.rst:671
 msgid ""
 "Cameron Laird maintains a useful set of pages about Python web technologies "
 "at https://web.archive.org/web/20210224183619/http://phaseit.net/claird/comp."
@@ -922,11 +1096,11 @@ msgstr ""
 "technologies Python dédiées au web à l'adresse https://web.archive.org/"
 "web/20210224183619/http://phaseit.net/claird/comp.lang.python/web_python."
 
-#: faq/library.rst:677
+#: faq/library.rst:676
 msgid "How can I mimic CGI form submission (METHOD=POST)?"
 msgstr "Comment reproduire un envoi de formulaire CGI (``METHOD=POST``) ?"
 
-#: faq/library.rst:679
+#: faq/library.rst:678
 msgid ""
 "I would like to retrieve web pages that are the result of POSTing a form. Is "
 "there existing code that would let me do this easily?"
@@ -934,11 +1108,27 @@ msgstr ""
 "J'aimerais récupérer la page web d'un envoi de formulaire via POST. Existe-t-"
 "il déjà du code qui pourrait m'aider à le faire facilement ?"
 
-#: faq/library.rst:682
+#: faq/library.rst:681
 msgid "Yes. Here's a simple example that uses :mod:`urllib.request`::"
 msgstr "Oui. Voici un exemple simple d'utilisation de :mod:`urllib.request` ::"
 
-#: faq/library.rst:697
+#: faq/library.rst:683
+msgid ""
+"#!/usr/local/bin/python\n"
+"\n"
+"import urllib.request\n"
+"\n"
+"# build the query string\n"
+"qs = \"First=Josephine&MI=Q&Last=Public\"\n"
+"\n"
+"# connect and send the server a path\n"
+"req = urllib.request.urlopen('http://www.some-server.out-there'\n"
+"                             '/cgi-bin/some-cgi-script', data=qs)\n"
+"with req:\n"
+"    msg, hdrs = req.read(), req.info()"
+msgstr ""
+
+#: faq/library.rst:696
 msgid ""
 "Note that in general for percent-encoded POST operations, query strings must "
 "be quoted using :func:`urllib.parse.urlencode`.  For example, to send "
@@ -949,15 +1139,22 @@ msgstr ""
 "`urllib.parse.urlencode`. Par exemple pour envoyer ``name=Guy Steele, Jr."
 "`` ::"
 
-#: faq/library.rst:705
+#: faq/library.rst:700
+msgid ""
+">>> import urllib.parse\n"
+">>> urllib.parse.urlencode({'name': 'Guy Steele, Jr.'})\n"
+"'name=Guy+Steele%2C+Jr.'"
+msgstr ""
+
+#: faq/library.rst:704
 msgid ":ref:`urllib-howto` for extensive examples."
 msgstr ":ref:`urllib-howto` pour des exemples complets."
 
-#: faq/library.rst:709
+#: faq/library.rst:708
 msgid "What module should I use to help with generating HTML?"
 msgstr "Quel module utiliser pour générer du HTML ?"
 
-#: faq/library.rst:713
+#: faq/library.rst:712
 msgid ""
 "You can find a collection of useful links on the `Web Programming wiki page "
 "<https://wiki.python.org/moin/WebProgramming>`_."
@@ -965,15 +1162,15 @@ msgstr ""
 "La `page wiki de la programmation web <https://wiki.python.org/moin/"
 "WebProgramming>`_ (en anglais) répertorie un ensemble de liens pertinents."
 
-#: faq/library.rst:718
+#: faq/library.rst:717
 msgid "How do I send mail from a Python script?"
 msgstr "Comment envoyer un courriel avec un script Python ?"
 
-#: faq/library.rst:720
+#: faq/library.rst:719
 msgid "Use the standard library module :mod:`smtplib`."
 msgstr "Utilisez le module :mod:`smtplib` de la bibliothèque standard."
 
-#: faq/library.rst:722
+#: faq/library.rst:721
 msgid ""
 "Here's a very simple interactive mail sender that uses it.  This method will "
 "work on any host that supports an SMTP listener. ::"
@@ -981,7 +1178,27 @@ msgstr ""
 "Voici un exemple très simple d'un envoyeur de courriel qui l'utilise. Cette "
 "méthode fonctionne sur tous les serveurs qui implémentent SMTP. ::"
 
-#: faq/library.rst:742
+#: faq/library.rst:724
+msgid ""
+"import sys, smtplib\n"
+"\n"
+"fromaddr = input(\"From: \")\n"
+"toaddrs  = input(\"To: \").split(',')\n"
+"print(\"Enter message, end with ^D:\")\n"
+"msg = ''\n"
+"while True:\n"
+"    line = sys.stdin.readline()\n"
+"    if not line:\n"
+"        break\n"
+"    msg += line\n"
+"\n"
+"# The actual mail send\n"
+"server = smtplib.SMTP('localhost')\n"
+"server.sendmail(fromaddr, toaddrs, msg)\n"
+"server.quit()"
+msgstr ""
+
+#: faq/library.rst:741
 msgid ""
 "A Unix-only alternative uses sendmail.  The location of the sendmail program "
 "varies between systems; sometimes it is ``/usr/lib/sendmail``, sometimes ``/"
@@ -993,13 +1210,29 @@ msgstr ""
 "sendmail`` ou ``/usr/sbin/sendmail``, la page de manuel de *sendmail* peut "
 "vous aider. Par exemple ::"
 
-#: faq/library.rst:762
+#: faq/library.rst:746
+msgid ""
+"import os\n"
+"\n"
+"SENDMAIL = \"/usr/sbin/sendmail\"  # sendmail location\n"
+"p = os.popen(\"%s -t -i\" % SENDMAIL, \"w\")\n"
+"p.write(\"To: receiver@example.com\\n\")\n"
+"p.write(\"Subject: test\\n\")\n"
+"p.write(\"\\n\")  # blank line separating headers from body\n"
+"p.write(\"Some text\\n\")\n"
+"p.write(\"some more text\\n\")\n"
+"sts = p.close()\n"
+"if sts != 0:\n"
+"    print(\"Sendmail exit status\", sts)"
+msgstr ""
+
+#: faq/library.rst:761
 msgid "How do I avoid blocking in the connect() method of a socket?"
 msgstr ""
 "Comment éviter de bloquer dans la méthode ``connect()`` d'un connecteur "
 "réseau ?"
 
-#: faq/library.rst:764
+#: faq/library.rst:763
 msgid ""
 "The :mod:`select` module is commonly used to help with asynchronous I/O on "
 "sockets."
@@ -1007,14 +1240,16 @@ msgstr ""
 "Le module :mod:`select` est fréquemment utilisé pour effectuer des entrées-"
 "sorties asynchrones sur des connecteurs réseaux."
 
-#: faq/library.rst:767
+#: faq/library.rst:766
+#, fuzzy
 msgid ""
 "To prevent the TCP connect from blocking, you can set the socket to non-"
-"blocking mode.  Then when you do the :meth:`socket.connect`, you will either "
-"connect immediately (unlikely) or get an exception that contains the error "
-"number as ``.errno``. ``errno.EINPROGRESS`` indicates that the connection is "
-"in progress, but hasn't finished yet.  Different OSes will return different "
-"values, so you're going to have to check what's returned on your system."
+"blocking mode.  Then when you do the :meth:`~socket.socket.connect`, you "
+"will either connect immediately (unlikely) or get an exception that contains "
+"the error number as ``.errno``. ``errno.EINPROGRESS`` indicates that the "
+"connection is in progress, but hasn't finished yet.  Different OSes will "
+"return different values, so you're going to have to check what's returned on "
+"your system."
 msgstr ""
 "Pour empêcher une connexion TCP de se bloquer, il est possible de mettre le "
 "connecteur en mode lecture seule. Avec cela, au moment du :meth:`socket."
@@ -1025,12 +1260,13 @@ msgstr ""
 "renseignez-vous sur la valeur utilisée par votre système."
 
 #: faq/library.rst:774
+#, fuzzy
 msgid ""
-"You can use the :meth:`socket.connect_ex` method to avoid creating an "
-"exception.  It will just return the errno value.  To poll, you can call :"
-"meth:`socket.connect_ex` again later -- ``0`` or ``errno.EISCONN`` indicate "
-"that you're connected -- or you can pass this socket to :meth:`select."
-"select` to check if it's writable."
+"You can use the :meth:`~socket.socket.connect_ex` method to avoid creating "
+"an exception. It will just return the errno value. To poll, you can call :"
+"meth:`~socket.socket.connect_ex` again later -- ``0`` or ``errno.EISCONN`` "
+"indicate that you're connected -- or you can pass this socket to :meth:"
+"`select.select` to check if it's writable."
 msgstr ""
 ":meth:`socket.connect_ex` permet d'éviter la création de l'exception, et de "
 "ne renvoyer que la valeur de *errno*. Pour vérifier l'état de la connexion, "
@@ -1039,7 +1275,7 @@ msgstr ""
 "argument de :meth:`select.select` pour vérifier si le connecteur est prêt à "
 "recevoir des entrées."
 
-#: faq/library.rst:780
+#: faq/library.rst:782
 #, fuzzy
 msgid ""
 "The :mod:`asyncio` module provides a general purpose single-threaded and "
@@ -1052,20 +1288,20 @@ msgstr ""
 "`Twisted <https://twistedmatrix.com/trac/>`_ en est une alternative "
 "plébiscitée, avec un grand nombre de fonctionnalités."
 
-#: faq/library.rst:788
+#: faq/library.rst:790
 msgid "Databases"
 msgstr "Bases de données"
 
-#: faq/library.rst:791
+#: faq/library.rst:793
 msgid "Are there any interfaces to database packages in Python?"
 msgstr ""
 "Existe-t-il des modules Python pour s'interfacer avec des bases de données ?"
 
-#: faq/library.rst:793
+#: faq/library.rst:795
 msgid "Yes."
 msgstr "Oui."
 
-#: faq/library.rst:795
+#: faq/library.rst:797
 msgid ""
 "Interfaces to disk-based hashes such as :mod:`DBM <dbm.ndbm>` and :mod:`GDBM "
 "<dbm.gnu>` are also included with standard Python.  There is also the :mod:"
@@ -1077,7 +1313,7 @@ msgstr ""
 "aussi le module :mod:`sqlite3` qui implémente une base de données "
 "relationnelle légère sur disque."
 
-#: faq/library.rst:800
+#: faq/library.rst:802
 msgid ""
 "Support for most relational databases is available.  See the "
 "`DatabaseProgramming wiki page <https://wiki.python.org/moin/"
@@ -1087,11 +1323,11 @@ msgstr ""
 "Voir la page wiki `DatabaseProgramming <https://wiki.python.org/moin/"
 "DatabaseProgramming>`_ pour plus de détails."
 
-#: faq/library.rst:806
+#: faq/library.rst:808
 msgid "How do you implement persistent objects in Python?"
 msgstr "Comment implémenter la persistance d'objets en Python ?"
 
-#: faq/library.rst:808
+#: faq/library.rst:810
 msgid ""
 "The :mod:`pickle` library module solves this in a very general way (though "
 "you still can't store things like open files, sockets or windows), and the :"
@@ -1103,15 +1339,15 @@ msgstr ""
 "fenêtres par exemple), et le module :mod:`shelve` de la bibliothèque utilise "
 "*pickle* et *(g)dbm* pour créer des liens persistants vers des objets Python."
 
-#: faq/library.rst:815
+#: faq/library.rst:817
 msgid "Mathematics and Numerics"
 msgstr "Mathématiques et calcul numérique"
 
-#: faq/library.rst:818
+#: faq/library.rst:820
 msgid "How do I generate random numbers in Python?"
 msgstr "Comment générer des nombres aléatoires en Python ?"
 
-#: faq/library.rst:820
+#: faq/library.rst:822
 msgid ""
 "The standard module :mod:`random` implements a random number generator.  "
 "Usage is simple::"
@@ -1119,54 +1355,65 @@ msgstr ""
 "Le module :mod:`random` de la bibliothèque standard comprend un générateur "
 "de nombres aléatoires. Son utilisation est simple ::"
 
-#: faq/library.rst:826
-msgid "This returns a random floating point number in the range [0, 1)."
+#: faq/library.rst:825
+msgid ""
+"import random\n"
+"random.random()"
+msgstr ""
+
+#: faq/library.rst:828
+#, fuzzy
+msgid "This returns a random floating-point number in the range [0, 1)."
 msgstr ""
 "Le code précédent renvoie un nombre à virgule flottante aléatoire dans "
 "l'intervalle [0, 1[."
 
-#: faq/library.rst:828
+#: faq/library.rst:830
 msgid ""
 "There are also many other specialized generators in this module, such as:"
 msgstr "Ce module fournit beaucoup d'autres générateurs spécialisés comme :"
 
-#: faq/library.rst:830
+#: faq/library.rst:832
 msgid "``randrange(a, b)`` chooses an integer in the range [a, b)."
 msgstr "``randrange(a, b)`` génère un entier dans l'intervalle [a, b[."
 
-#: faq/library.rst:831
-msgid "``uniform(a, b)`` chooses a floating point number in the range [a, b)."
+#: faq/library.rst:833
+#, fuzzy
+msgid "``uniform(a, b)`` chooses a floating-point number in the range [a, b)."
 msgstr ""
 "``uniform(a, b)`` génère un nombre à virgule flottante aléatoire dans "
 "l'intervalle [a, b[."
 
-#: faq/library.rst:832
+#: faq/library.rst:834
 msgid ""
 "``normalvariate(mean, sdev)`` samples the normal (Gaussian) distribution."
 msgstr "``normalvariate(mean, sdev)`` simule la loi normale (Gaussienne)."
 
-#: faq/library.rst:834
+#: faq/library.rst:836
 msgid "Some higher-level functions operate on sequences directly, such as:"
 msgstr ""
 "Des fonctions de haut niveau opèrent directement sur des séquences comme :"
 
-#: faq/library.rst:836
+#: faq/library.rst:838
 msgid "``choice(S)`` chooses a random element from a given sequence."
 msgstr "``choice(S)`` sélectionne au hasard un élément d'une séquence donnée."
 
-#: faq/library.rst:837
+#: faq/library.rst:839
 msgid "``shuffle(L)`` shuffles a list in-place, i.e. permutes it randomly."
 msgstr ""
 "``shuffle(L)`` mélange une liste en-place, c.-à-d. lui applique une "
 "permutation aléatoire."
 
-#: faq/library.rst:839
+#: faq/library.rst:841
 msgid ""
 "There's also a ``Random`` class you can instantiate to create independent "
 "multiple random number generators."
 msgstr ""
 "Il existe aussi une classe ``Random`` qu'il est possible d'instancier pour "
 "créer des générateurs aléatoires indépendants."
+
+#~ msgid "https://pypi.org/project/pyserial/"
+#~ msgstr "https://pypi.org/project/pyserial/"
 
 #~ msgid ""
 #~ "The :mod:`shutil` module contains a :func:`~shutil.copyfile` function.  "

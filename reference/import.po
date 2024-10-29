@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-07-08 11:34+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -225,6 +225,18 @@ msgid ""
 msgstr ""
 "Par exemple, l'arborescence suivante définit un paquet ``parent`` au niveau "
 "le plus haut avec trois sous-paquets ::"
+
+#: reference/import.rst:111
+msgid ""
+"parent/\n"
+"    __init__.py\n"
+"    one/\n"
+"        __init__.py\n"
+"    two/\n"
+"        __init__.py\n"
+"    three/\n"
+"        __init__.py"
+msgstr ""
 
 #: reference/import.rst:120
 msgid ""
@@ -528,15 +540,16 @@ msgid "The meta path"
 msgstr "Méta-chemins"
 
 #: reference/import.rst:280
+#, fuzzy
 msgid ""
 "When the named module is not found in :data:`sys.modules`, Python next "
 "searches :data:`sys.meta_path`, which contains a list of meta path finder "
 "objects.  These finders are queried in order to see if they know how to "
 "handle the named module.  Meta path finders must implement a method called :"
-"meth:`~importlib.abc.MetaPathFinder.find_spec()` which takes three "
-"arguments: a name, an import path, and (optionally) a target module.  The "
-"meta path finder can use any strategy it wants to determine whether it can "
-"handle the named module or not."
+"meth:`~importlib.abc.MetaPathFinder.find_spec` which takes three arguments: "
+"a name, an import path, and (optionally) a target module.  The meta path "
+"finder can use any strategy it wants to determine whether it can handle the "
+"named module or not."
 msgstr ""
 "Quand le module demandé n'est pas trouvé dans :data:`sys.modules`, Python "
 "recherche alors dans :data:`sys.meta_path` qui contient une liste d'objets "
@@ -564,8 +577,9 @@ msgstr ""
 "simplement propagée à l'appelant, mettant fin au processus d'importation."
 
 #: reference/import.rst:295
+#, fuzzy
 msgid ""
-"The :meth:`~importlib.abc.MetaPathFinder.find_spec()` method of meta path "
+"The :meth:`~importlib.abc.MetaPathFinder.find_spec` method of meta path "
 "finders is called with two or three arguments.  The first is the fully "
 "qualified name of the module being imported, for example ``foo.bar.baz``. "
 "The second argument is the path entries to use for the module search.  For "
@@ -635,11 +649,13 @@ msgstr ""
 
 # suit un :
 #: reference/import.rst:325
+#, fuzzy
 msgid ""
 "The :meth:`~importlib.abc.MetaPathFinder.find_spec` method of meta path "
-"finders replaced :meth:`~importlib.abc.MetaPathFinder.find_module`, which is "
-"now deprecated.  While it will continue to work without change, the import "
-"machinery will try it only if the finder does not implement ``find_spec()``."
+"finders replaced :meth:`!find_module`, which is now deprecated.  While it "
+"will continue to work without change, the import machinery will try it only "
+"if the finder does not implement :meth:`~importlib.abc.MetaPathFinder."
+"find_spec`."
 msgstr ""
 "la méthode :meth:`~importlib.abc.MetaPathFinder.find_spec` des chercheurs "
 "dans les méta-chemins a remplacé :meth:`~importlib.abc.MetaPathFinder."
@@ -648,18 +664,25 @@ msgstr ""
 "chercheur n'implémente pas ``find_spec()``."
 
 #: reference/import.rst:332
+#, fuzzy
 msgid ""
-"Use of :meth:`~importlib.abc.MetaPathFinder.find_module` by the import "
-"system now raises :exc:`ImportWarning`."
+"Use of :meth:`!find_module` by the import system now raises :exc:"
+"`ImportWarning`."
 msgstr ""
 "l'utilisation de :meth:`~importlib.abc.MetaPathFinder.find_module` par le "
 "système d'importation lève maintenant un :exc:`ImportWarning`."
 
-#: reference/import.rst:338
+#: reference/import.rst:336
+msgid ""
+":meth:`!find_module` has been removed. Use :meth:`~importlib.abc."
+"MetaPathFinder.find_spec` instead."
+msgstr ""
+
+#: reference/import.rst:342
 msgid "Loading"
 msgstr "Chargement"
 
-#: reference/import.rst:340
+#: reference/import.rst:344
 msgid ""
 "If and when a module spec is found, the import machinery will use it (and "
 "the loader it contains) when loading the module.  Here is an approximation "
@@ -670,11 +693,43 @@ msgstr ""
 "peu près ce qui se passe au sein de l'importation pendant la phase de "
 "chargement ::"
 
-#: reference/import.rst:374
+#: reference/import.rst:348
+msgid ""
+"module = None\n"
+"if spec.loader is not None and hasattr(spec.loader, 'create_module'):\n"
+"    # It is assumed 'exec_module' will also be defined on the loader.\n"
+"    module = spec.loader.create_module(spec)\n"
+"if module is None:\n"
+"    module = ModuleType(spec.name)\n"
+"# The import-related module attributes get set here:\n"
+"_init_module_attrs(spec, module)\n"
+"\n"
+"if spec.loader is None:\n"
+"    # unsupported\n"
+"    raise ImportError\n"
+"if spec.origin is None and spec.submodule_search_locations is not None:\n"
+"    # namespace package\n"
+"    sys.modules[spec.name] = module\n"
+"elif not hasattr(spec.loader, 'exec_module'):\n"
+"    module = spec.loader.load_module(spec.name)\n"
+"else:\n"
+"    sys.modules[spec.name] = module\n"
+"    try:\n"
+"        spec.loader.exec_module(module)\n"
+"    except BaseException:\n"
+"        try:\n"
+"            del sys.modules[spec.name]\n"
+"        except KeyError:\n"
+"            pass\n"
+"        raise\n"
+"return sys.modules[spec.name]"
+msgstr ""
+
+#: reference/import.rst:377
 msgid "Note the following details:"
 msgstr "Notez les détails suivants :"
 
-#: reference/import.rst:376
+#: reference/import.rst:379
 msgid ""
 "If there is an existing module object with the given name in :data:`sys."
 "modules`, import will have already returned it."
@@ -682,7 +737,7 @@ msgstr ""
 "S'il existe un objet module dans :data:`sys.modules` avec le même nom, "
 "*import* l'aurait déjà renvoyé."
 
-#: reference/import.rst:379
+#: reference/import.rst:382
 msgid ""
 "The module will exist in :data:`sys.modules` before the loader executes the "
 "module code.  This is crucial because the module code may (directly or "
@@ -696,7 +751,7 @@ msgstr ""
 "évite les récursions infinies dans le pire cas et le chargement multiple "
 "dans le meilleur des cas."
 
-#: reference/import.rst:385
+#: reference/import.rst:388
 msgid ""
 "If loading fails, the failing module -- and only the failing module -- gets "
 "removed from :data:`sys.modules`.  Any module already in the :data:`sys."
@@ -710,7 +765,7 @@ msgstr ""
 "rester dans le cache. C'est différent dans le cas d'un rechargement où même "
 "le module qui a échoué est conservé dans :data:`sys.modules`."
 
-#: reference/import.rst:391
+#: reference/import.rst:394
 msgid ""
 "After the module is created but before execution, the import machinery sets "
 "the import-related module attributes (\"_init_module_attrs\" in the pseudo-"
@@ -723,7 +778,7 @@ msgstr ""
 "indiqué brièvement dans une :ref:`section <import-mod-attrs>` que nous "
 "abordons ensuite."
 
-#: reference/import.rst:396
+#: reference/import.rst:399
 msgid ""
 "Module execution is the key moment of loading in which the module's "
 "namespace gets populated.  Execution is entirely delegated to the loader, "
@@ -733,7 +788,7 @@ msgstr ""
 "de nommage du module est peuplé. L'exécution est entièrement déléguée au "
 "chargeur qui doit décider ce qui est peuplé et comment."
 
-#: reference/import.rst:400
+#: reference/import.rst:403
 msgid ""
 "The module created during loading and passed to exec_module() may not be the "
 "one returned at the end of import [#fnlo]_."
@@ -742,7 +797,7 @@ msgstr ""
 "pas être celui qui est renvoyé à la fin de l'importation [#fnlo]_."
 
 # suit un :
-#: reference/import.rst:403
+#: reference/import.rst:406
 msgid ""
 "The import system has taken over the boilerplate responsibilities of "
 "loaders.  These were previously performed by the :meth:`importlib.abc.Loader."
@@ -752,11 +807,11 @@ msgstr ""
 "Celles-ci étaient auparavant effectuées par la méthode :meth:`importlib.abc."
 "Loader.load_module`."
 
-#: reference/import.rst:409
+#: reference/import.rst:412
 msgid "Loaders"
 msgstr "Chargeurs"
 
-#: reference/import.rst:411
+#: reference/import.rst:414
 msgid ""
 "Module loaders provide the critical function of loading: module execution. "
 "The import machinery calls the :meth:`importlib.abc.Loader.exec_module` "
@@ -769,11 +824,11 @@ msgstr ""
 "exécuter. Toute valeur renvoyée par :meth:`~importlib.abc.Loader."
 "exec_module` est ignorée."
 
-#: reference/import.rst:416
+#: reference/import.rst:419
 msgid "Loaders must satisfy the following requirements:"
 msgstr "Les chargeurs doivent satisfaire les conditions suivantes :"
 
-#: reference/import.rst:418
+#: reference/import.rst:421
 msgid ""
 "If the module is a Python module (as opposed to a built-in module or a "
 "dynamically loaded extension), the loader should execute the module's code "
@@ -783,7 +838,7 @@ msgstr ""
 "extensions chargées dynamiquement), le chargeur doit exécuter le code du "
 "module dans l'espace des noms globaux du module (``module.__dict__``)."
 
-#: reference/import.rst:422
+#: reference/import.rst:425
 msgid ""
 "If the loader cannot execute the module, it should raise an :exc:"
 "`ImportError`, although any other exception raised during :meth:`~importlib."
@@ -793,7 +848,7 @@ msgstr ""
 "`ImportError`, alors que toute autre exception levée durant :meth:"
 "`~importlib.abc.Loader.exec_module` est propagée."
 
-#: reference/import.rst:426
+#: reference/import.rst:429
 msgid ""
 "In many cases, the finder and loader can be the same object; in such cases "
 "the :meth:`~importlib.abc.MetaPathFinder.find_spec` method would just return "
@@ -803,7 +858,7 @@ msgstr ""
 "méthode :meth:`~importlib.abc.MetaPathFinder.find_spec` doit juste renvoyer "
 "un spécificateur avec le chargeur défini à ``self``."
 
-#: reference/import.rst:430
+#: reference/import.rst:433
 msgid ""
 "Module loaders may opt in to creating the module object during loading by "
 "implementing a :meth:`~importlib.abc.Loader.create_module` method. It takes "
@@ -821,12 +876,12 @@ msgstr ""
 "le nouveau module lui-même."
 
 # suit un :
-#: reference/import.rst:437
+#: reference/import.rst:440
 msgid "The :meth:`~importlib.abc.Loader.create_module` method of loaders."
 msgstr "la méthode :meth:`~importlib.abc.Loader.create_module` des chargeurs."
 
 # suit un :
-#: reference/import.rst:440
+#: reference/import.rst:443
 msgid ""
 "The :meth:`~importlib.abc.Loader.load_module` method was replaced by :meth:"
 "`~importlib.abc.Loader.exec_module` and the import machinery assumed all the "
@@ -836,7 +891,7 @@ msgstr ""
 "meth:`~importlib.abc.Loader.exec_module` et le mécanisme d'import assume "
 "toutes les responsabilités du chargement."
 
-#: reference/import.rst:445
+#: reference/import.rst:448
 msgid ""
 "For compatibility with existing loaders, the import machinery will use the "
 "``load_module()`` method of loaders if it exists and the loader does not "
@@ -849,7 +904,7 @@ msgstr ""
 "est déclarée obsolète et les chargeurs doivent implémenter ``exec_module()`` "
 "à la place."
 
-#: reference/import.rst:450
+#: reference/import.rst:453
 msgid ""
 "The ``load_module()`` method must implement all the boilerplate loading "
 "functionality described above in addition to executing the module.  All the "
@@ -860,7 +915,7 @@ msgstr ""
 "les contraintes s'appliquent aussi, avec quelques précisions "
 "supplémentaires :"
 
-#: reference/import.rst:454
+#: reference/import.rst:457
 msgid ""
 "If there is an existing module object with the given name in :data:`sys."
 "modules`, the loader must use that existing module. (Otherwise, :func:"
@@ -874,7 +929,7 @@ msgstr ""
 "trouvé dans :data:`sys.modules`, le chargeur doit créer un nouvel objet "
 "module et l'ajouter à :data:`sys.modules`."
 
-#: reference/import.rst:460
+#: reference/import.rst:463
 msgid ""
 "The module *must* exist in :data:`sys.modules` before the loader executes "
 "the module code, to prevent unbounded recursion or multiple loading."
@@ -883,7 +938,7 @@ msgstr ""
 "n'exécute le code du module, afin d'éviter les récursions infinies ou le "
 "chargement multiple."
 
-#: reference/import.rst:464
+#: reference/import.rst:467
 msgid ""
 "If loading fails, the loader must remove any modules it has inserted into :"
 "data:`sys.modules`, but it must remove **only** the failing module(s), and "
@@ -894,7 +949,7 @@ msgstr ""
 "a chargé le module explicitement."
 
 # suit un :
-#: reference/import.rst:469
+#: reference/import.rst:472
 msgid ""
 "A :exc:`DeprecationWarning` is raised when ``exec_module()`` is defined but "
 "``create_module()`` is not."
@@ -903,7 +958,7 @@ msgstr ""
 "est définie mais ``create_module()`` ne l'est pas."
 
 # suit un :
-#: reference/import.rst:473
+#: reference/import.rst:476
 msgid ""
 "An :exc:`ImportError` is raised when ``exec_module()`` is defined but "
 "``create_module()`` is not."
@@ -911,15 +966,15 @@ msgstr ""
 "une exception :exc:`ImportError` est levée quand ``exec_module()`` est "
 "définie mais ``create_module()`` ne l'est pas."
 
-#: reference/import.rst:477
+#: reference/import.rst:480
 msgid "Use of ``load_module()`` will raise :exc:`ImportWarning`."
 msgstr "l'utilisation de ``load_module()`` lève un :exc:`ImportWarning`."
 
-#: reference/import.rst:481
+#: reference/import.rst:484
 msgid "Submodules"
 msgstr "Sous-modules"
 
-#: reference/import.rst:483
+#: reference/import.rst:486
 msgid ""
 "When a submodule is loaded using any mechanism (e.g. ``importlib`` APIs, the "
 "``import`` or ``import-from`` statements, or built-in ``__import__()``) a "
@@ -936,11 +991,22 @@ msgstr ""
 "possède un attribut ``foo`` qui est lié au sous-module. Supposons que nous "
 "ayons l'arborescence suivante ::"
 
-#: reference/import.rst:494
+#: reference/import.rst:493
+msgid ""
+"spam/\n"
+"    __init__.py\n"
+"    foo.py"
+msgstr ""
+
+#: reference/import.rst:497
 msgid "and ``spam/__init__.py`` has the following line in it::"
 msgstr "et que le contenu de ``spam/__init__.py`` contienne ::"
 
-#: reference/import.rst:498
+#: reference/import.rst:499
+msgid "from .foo import Foo"
+msgstr ""
+
+#: reference/import.rst:501
 msgid ""
 "then executing the following puts name bindings for ``foo`` and ``Foo`` in "
 "the ``spam`` module::"
@@ -948,7 +1014,16 @@ msgstr ""
 "alors exécuter les lignes suivantes crée des liens vers ``foo`` et ``Foo`` "
 "dans le module ``spam`` ::"
 
-#: reference/import.rst:507
+#: reference/import.rst:504
+msgid ""
+">>> import spam\n"
+">>> spam.foo\n"
+"<module 'spam.foo' from '/tmp/imports/spam/foo.py'>\n"
+">>> spam.Foo\n"
+"<class 'spam.foo.Foo'>"
+msgstr ""
+
+#: reference/import.rst:510
 msgid ""
 "Given Python's familiar name binding rules this might seem surprising, but "
 "it's actually a fundamental feature of the import system.  The invariant "
@@ -963,11 +1038,12 @@ msgstr ""
 "l'importation), alors le dernier doit apparaître comme l'attribut ``foo`` du "
 "premier."
 
-#: reference/import.rst:514
-msgid "Module spec"
+#: reference/import.rst:519
+#, fuzzy
+msgid "Module specs"
 msgstr "Spécificateurs de modules"
 
-#: reference/import.rst:516
+#: reference/import.rst:521
 msgid ""
 "The import machinery uses a variety of information about each module during "
 "import, especially before loading.  Most of the information is common to all "
@@ -980,7 +1056,7 @@ msgstr ""
 "module est d'encapsuler ces informations relatives à l'importation au sein "
 "de chaque module."
 
-#: reference/import.rst:521
+#: reference/import.rst:526
 msgid ""
 "Using a spec during import allows state to be transferred between import "
 "system components, e.g. between the finder that creates the module spec and "
@@ -995,97 +1071,13 @@ msgstr ""
 "opérations classiques de chargement, alors que c'était le chargeur qui en "
 "avait la responsabilité quand il n'y avait pas de spécificateur."
 
-#: reference/import.rst:527
-msgid ""
-"The module's spec is exposed as the ``__spec__`` attribute on a module "
-"object. See :class:`~importlib.machinery.ModuleSpec` for details on the "
-"contents of the module spec."
-msgstr ""
-"Le spécificateur de module est accessible par l'attribut ``__spec__`` de "
-"l'objet module. Lisez :class:`~importlib.machinery.ModuleSpec` pour "
-"davantage d'informations sur le contenu du spécificateur de module."
-
-#: reference/import.rst:536
-msgid "Import-related module attributes"
-msgstr "Attributs des modules importés"
-
-#: reference/import.rst:538
-msgid ""
-"The import machinery fills in these attributes on each module object during "
-"loading, based on the module's spec, before the loader executes the module."
-msgstr ""
-"Le mécanisme d'importation renseigne ces attributs pour chaque objet module "
-"pendant le chargement, sur la base du spécificateur de module et avant que "
-"le chargeur n'exécute le module."
-
-#: reference/import.rst:544
-msgid ""
-"The ``__name__`` attribute must be set to the fully qualified name of the "
-"module.  This name is used to uniquely identify the module in the import "
-"system."
-msgstr ""
-"L'attribut ``__name__`` doit contenir le nom complètement qualifié du "
-"module. Ce nom est utilisé pour identifier de manière non équivoque le "
-"module dans le mécanisme d'importation."
-
-#: reference/import.rst:550
-msgid ""
-"The ``__loader__`` attribute must be set to the loader object that the "
-"import machinery used when loading the module.  This is mostly for "
-"introspection, but can be used for additional loader-specific functionality, "
-"for example getting data associated with a loader."
-msgstr ""
-"L'attribut ``__loader__`` doit pointer vers l'objet chargeur que le "
-"mécanisme d'importation a utilisé pour charger le module. L'utilisation "
-"principale concerne l'introspection, mais il peut être utilisé pour d'autres "
-"fonctionnalités relatives au chargement. Par exemple, obtenir des données "
-"par l'intermédiaire du chargeur."
-
-#: reference/import.rst:557
+#: reference/import.rst:532
 #, fuzzy
 msgid ""
-"The module's ``__package__`` attribute must be set.  Its value must be a "
-"string, but it can be the same value as its ``__name__``.  When the module "
-"is a package, its ``__package__`` value should be set to its ``__name__``.  "
-"When the module is not a package, ``__package__`` should be set to the empty "
-"string for top-level modules, or for submodules, to the parent package's "
-"name.  See :pep:`366` for further details."
-msgstr ""
-"L'attribut ``__package__`` du module doit être défini. Sa valeur doit être "
-"une chaîne de caractères, qui peut être la même que son attribut "
-"``__name__``. Quand le module est un paquet, la valeur de ``__package__`` "
-"doit être définie à la même valeur que son ``__name__``. Quand le module "
-"n'est pas un paquet, ``__package__`` doit être la chaîne vide pour les "
-"modules de niveau le plus haut, et le nom du paquet parent pour les sous-"
-"modules. Voir la :pep:`366` pour plus de détails."
-
-#: reference/import.rst:565
-#, fuzzy
-msgid ""
-"This attribute is used instead of ``__name__`` to calculate explicit "
-"relative imports for main modules, as defined in :pep:`366`. It is expected "
-"to have the same value as ``__spec__.parent``."
-msgstr ""
-"Cet attribut est utilisé à la place de ``__name__`` pour calculer les "
-"importations relatives explicites des modules principaux, comme défini dans "
-"la :pep:`366`. Il devrait avoir la même valeur que ``__spec__.parent``."
-
-# suit un :
-#: reference/import.rst:569
-msgid ""
-"The value of ``__package__`` is expected to be the same as ``__spec__."
-"parent``."
-msgstr ""
-"la valeur de ``__package__`` devrait être la même que celle de ``__spec__."
-"parent``."
-
-#: reference/import.rst:575
-msgid ""
-"The ``__spec__`` attribute must be set to the module spec that was used when "
-"importing the module. Setting ``__spec__`` appropriately applies equally to :"
-"ref:`modules initialized during interpreter startup <programs>`.  The one "
-"exception is ``__main__``, where ``__spec__`` is :ref:`set to None in some "
-"cases <main_spec>`."
+"The module's spec is exposed as :attr:`module.__spec__`. Setting :attr:`!"
+"__spec__` appropriately applies equally to :ref:`modules initialized during "
+"interpreter startup <programs>`. The one exception is ``__main__``, where :"
+"attr:`!__spec__` is :ref:`set to None in some cases <main_spec>`."
 msgstr ""
 "L'attribut ``__spec__`` doit contenir un lien vers le spécificateur de "
 "module qui a été utilisé lors de l'importation du module. Définir "
@@ -1094,112 +1086,36 @@ msgstr ""
 "concerne ``__main__`` où la valeur de ``__spec__`` est :ref:`None dans "
 "certains cas <main_spec>`."
 
-#: reference/import.rst:581
+#: reference/import.rst:538
 #, fuzzy
 msgid ""
-"When ``__package__`` is not defined, ``__spec__.parent`` is used as a "
-"fallback."
+"See :class:`~importlib.machinery.ModuleSpec` for details on the contents of "
+"the module spec."
 msgstr ""
-"Quand ``__package__`` n'est pas défini, ``__spec__.parent`` est utilisé par "
-"défaut."
+"Le spécificateur de module est accessible par l'attribut ``__spec__`` de "
+"l'objet module. Lisez :class:`~importlib.machinery.ModuleSpec` pour "
+"davantage d'informations sur le contenu du spécificateur de module."
 
-#: reference/import.rst:586
+#: reference/import.rst:546
+msgid "__path__ attributes on modules"
+msgstr ""
+
+#: reference/import.rst:548
 msgid ""
-"``__spec__.parent`` is used as a fallback when ``__package__`` is not "
-"defined."
+"The :attr:`~module.__path__` attribute should be a (possibly empty) :term:"
+"`sequence` of strings enumerating the locations where the package's "
+"submodules will be found. By definition, if a module has a :attr:`!__path__` "
+"attribute, it is a :term:`package`."
 msgstr ""
-"``__spec__.parent`` est utilisé par défaut quand ``__package__`` n'est pas "
-"défini."
 
-#: reference/import.rst:592
+#: reference/import.rst:553
+#, fuzzy
 msgid ""
-"If the module is a package (either regular or namespace), the module "
-"object's ``__path__`` attribute must be set.  The value must be iterable, "
-"but may be empty if ``__path__`` has no further significance. If "
-"``__path__`` is not empty, it must produce strings when iterated over. More "
-"details on the semantics of ``__path__`` are given :ref:`below <package-path-"
-"rules>`."
-msgstr ""
-"Si le module est un paquet (classique ou espace de nommage), l'attribut "
-"``__path__`` de l'objet module doit être défini. La valeur doit être un "
-"itérable mais peut être vide si ``__path__`` n'a pas de sens dans le "
-"contexte. Si ``__path__`` n'est pas vide, il doit produire des chaînes "
-"lorsque l'on itère dessus. Vous trouvez plus de détails sur la sémantique de "
-"``__path__`` :ref:`plus loin ci-dessous <package-path-rules>`."
-
-#: reference/import.rst:599
-msgid "Non-package modules should not have a ``__path__`` attribute."
-msgstr ""
-"Les modules qui ne sont pas des paquets ne doivent pas avoir d'attribut "
-"``__path__``."
-
-#: reference/import.rst:604
-msgid ""
-"``__file__`` is optional (if set, value must be a string). It indicates the "
-"pathname of the file from which the module was loaded (if loaded from a "
-"file), or the pathname of the shared library file for extension modules "
-"loaded dynamically from a shared library. It might be missing for certain "
-"types of modules, such as C modules that are statically linked into the "
-"interpreter, and the import system may opt to leave it unset if it has no "
-"semantic meaning (e.g. a module loaded from a database)."
-msgstr ""
-"``__file__`` est optionnel (si elle est spécifiée, la valeur doit être une "
-"chaîne). Cela indique le chemin vers le fichier depuis lequel le module a "
-"été chargé (s'il a été chargé à partir d'un fichier) ou le chemin du fichier "
-"de la bibliothèque partagée  pour les modules d'extension chargés "
-"dynamiquement depuis une bibliothèque partagée. Il se peut qu'il n'existe "
-"pas pour certains types de modules, tels que les modules C qui sont liés "
-"statiquement à l'interpréteur, où le système d'importation le laisse "
-"indéfini parce que sa sémantique serait mauvaise (par exemple, un module "
-"chargé depuis une base de données)."
-
-#: reference/import.rst:613
-msgid ""
-"If ``__file__`` is set then the ``__cached__`` attribute might also be set,  "
-"which is the path to any compiled version of the code (e.g. byte-compiled "
-"file). The file does not need to exist to set this attribute; the path can "
-"simply point to where the compiled file would exist (see :pep:`3147`)."
-msgstr ""
-"Si ``__file__`` est défini, il peut être judicieux de définir l'attribut "
-"``__cached__`` dont la valeur est le chemin vers une version compilée du "
-"code (par exemple, le fichier *bytecode*). Le fichier n'a pas besoin "
-"d'exister pour définir cet attribut : le chemin peut simplement pointer vers "
-"l'endroit où le fichier compilé aurait été placé (voir la :pep:`3147`)."
-
-#: reference/import.rst:619
-msgid ""
-"Note that ``__cached__`` may be set even if ``__file__`` is not set.  "
-"However, that scenario is quite atypical.  Ultimately, the loader is what "
-"makes use of the module spec provided by the finder (from which ``__file__`` "
-"and ``__cached__`` are derived).  So if a loader can load from a cached "
-"module but otherwise does not load from a file, that atypical scenario may "
-"be appropriate."
-msgstr ""
-"Notez que  ``__cached__`` peut être défini même si ``__file__`` n'est pas "
-"défini. Cependant, ce scénario semble rare. Au final, c'est le chargeur qui "
-"utilise les spécifications du module fournies par le chercheur "
-"(spécifications à partir desquelles sont dérivées ``__file__`` et "
-"``__cached__``). Donc, si le chargeur peut charger depuis un module mis en "
-"cache mais ne peut pas charger depuis un fichier, ce scénario a du sens."
-
-#: reference/import.rst:629
-msgid "module.__path__"
-msgstr "module.__path__"
-
-#: reference/import.rst:631
-msgid ""
-"By definition, if a module has a ``__path__`` attribute, it is a package."
-msgstr ""
-"Par définition, si un module possède un attribut ``__path__``, c'est un "
-"paquet."
-
-#: reference/import.rst:633
-msgid ""
-"A package's ``__path__`` attribute is used during imports of its "
+"A package's :attr:`~module.__path__` attribute is used during imports of its "
 "subpackages. Within the import machinery, it functions much the same as :"
 "data:`sys.path`, i.e. providing a list of locations to search for modules "
-"during import. However, ``__path__`` is typically much more constrained "
-"than :data:`sys.path`."
+"during import. However, :attr:`!__path__` is typically much more constrained "
+"than :data:`!sys.path`."
 msgstr ""
 "L'attribut ``__path__`` d'un paquet est utilisé pendant l'importation des "
 "sous-paquets. Dans le mécanisme d'importation, son fonctionnement ressemble "
@@ -1207,26 +1123,27 @@ msgstr ""
 "d'emplacements où rechercher les modules pendant l'importation. Cependant, "
 "``__path__`` est beaucoup plus contraint que :data:`sys.path`."
 
-#: reference/import.rst:639
+#: reference/import.rst:560
+#, fuzzy
 msgid ""
-"``__path__`` must be an iterable of strings, but it may be empty. The same "
-"rules used for :data:`sys.path` also apply to a package's ``__path__``, and :"
-"data:`sys.path_hooks` (described below) are consulted when traversing a "
-"package's ``__path__``."
+"The same rules used for :data:`sys.path` also apply to a package's :attr:`!"
+"__path__`. :data:`sys.path_hooks` (described below) are consulted when "
+"traversing a package's :attr:`!__path__`."
 msgstr ""
 "``__path__`` doit être un itérable de chaînes de caractères, mais il peut "
 "être vide. Les mêmes règles que pour :data:`sys.path` s'appliquent au "
 "``__path__`` d'un paquet et :data:`sys.path_hooks` (dont la description est "
 "donnée plus bas) est consulté pendant le parcours de ``__path__`` du paquet."
 
-#: reference/import.rst:644
+#: reference/import.rst:564
+#, fuzzy
 msgid ""
-"A package's ``__init__.py`` file may set or alter the package's ``__path__`` "
-"attribute, and this was typically the way namespace packages were "
-"implemented prior to :pep:`420`.  With the adoption of :pep:`420`, namespace "
-"packages no longer need to supply ``__init__.py`` files containing only "
-"``__path__`` manipulation code; the import machinery automatically sets "
-"``__path__`` correctly for the namespace package."
+"A package's ``__init__.py`` file may set or alter the package's :attr:"
+"`~module.__path__` attribute, and this was typically the way namespace "
+"packages were implemented prior to :pep:`420`.  With the adoption of :pep:"
+"`420`, namespace packages no longer need to supply ``__init__.py`` files "
+"containing only :attr:`!__path__` manipulation code; the import machinery "
+"automatically sets :attr:`!__path__` correctly for the namespace package."
 msgstr ""
 "Le fichier ``__init__.py`` d'un paquet peut définir ou modifier l'attribut "
 "``__path__`` d'un paquet, et c'est ainsi qu'étaient implémentés les paquets-"
@@ -1236,11 +1153,11 @@ msgstr ""
 "mécanisme d'importation définit automatiquement ``__path__`` correctement "
 "pour un paquet-espace de nommage."
 
-#: reference/import.rst:652
+#: reference/import.rst:573
 msgid "Module reprs"
 msgstr "Représentation textuelle d'un module"
 
-#: reference/import.rst:654
+#: reference/import.rst:575
 msgid ""
 "By default, all modules have a usable repr, however depending on the "
 "attributes set above, and in the module's spec, you can more explicitly "
@@ -1251,7 +1168,7 @@ msgstr ""
 "spécificateur de module, vous pouvez explicitement mieux contrôler "
 "l'affichage des objets modules."
 
-#: reference/import.rst:658
+#: reference/import.rst:579
 msgid ""
 "If the module has a spec (``__spec__``), the import machinery will try to "
 "generate a repr from it.  If that fails or there is no spec, the import "
@@ -1268,11 +1185,11 @@ msgstr ""
 "__file__`` et ``module.__loader__`` comme entrées pour la représentation, "
 "avec des valeurs par défaut lorsque l'information est manquante."
 
-#: reference/import.rst:665
+#: reference/import.rst:586
 msgid "Here are the exact rules used:"
 msgstr "Les règles exactes utilisées sont :"
 
-#: reference/import.rst:667
+#: reference/import.rst:588
 msgid ""
 "If the module has a ``__spec__`` attribute, the information in the spec is "
 "used to generate the repr.  The \"name\", \"loader\", \"origin\", and "
@@ -1282,7 +1199,7 @@ msgstr ""
 "générer la représentation. Les attributs *name*, *loader*, *origin* et "
 "*has_location* sont consultés."
 
-#: reference/import.rst:671
+#: reference/import.rst:592
 msgid ""
 "If the module has a ``__file__`` attribute, this is used as part of the "
 "module's repr."
@@ -1290,7 +1207,7 @@ msgstr ""
 "Si le module possède un attribut ``__file__``, il est utilisé pour "
 "construire la représentation du module."
 
-#: reference/import.rst:674
+#: reference/import.rst:595
 msgid ""
 "If the module has no ``__file__`` but does have a ``__loader__`` that is not "
 "``None``, then the loader's repr is used as part of the module's repr."
@@ -1299,52 +1216,23 @@ msgstr ""
 "``__loader__`` qui n'est pas ``None``, alors la représentation du chargeur "
 "est utilisée pour construire la représentation du module."
 
-#: reference/import.rst:677
+#: reference/import.rst:598
 msgid "Otherwise, just use the module's ``__name__`` in the repr."
 msgstr ""
 "Sinon, il utilise juste le ``__name__`` du module dans la représentation."
 
-# suit un :
-#: reference/import.rst:679
+#: reference/import.rst:600
 msgid ""
-"Use of :meth:`loader.module_repr() <importlib.abc.Loader.module_repr>` has "
-"been deprecated and the module spec is now used by the import machinery to "
-"generate a module repr."
+"Use of :meth:`!module_repr`, having been deprecated since Python 3.4, was "
+"removed in Python 3.12 and is no longer called during the resolution of a "
+"module's repr."
 msgstr ""
-"l'utilisation de :meth:`loader.module_repr() <importlib.abc.Loader."
-"module_repr>` est devenue obsolète et le spécificateur de module est utilisé "
-"dorénavant par le mécanisme d'importation pour générer la représentation "
-"textuelle du module."
 
-#: reference/import.rst:684
-msgid ""
-"For backward compatibility with Python 3.3, the module repr will be "
-"generated by calling the loader's :meth:`~importlib.abc.Loader.module_repr` "
-"method, if defined, before trying either approach described above.  However, "
-"the method is deprecated."
-msgstr ""
-"Par compatibilité descendante avec Python 3.3, la représentation textuelle "
-"du module est générée en appelant la méthode :meth:`~importlib.abc.Loader."
-"module_repr` du chargeur, si elle est définie, avant même d'essayer "
-"l'approche décrite ci-dessus. Cependant, cette méthode est obsolète."
-
-#: reference/import.rst:691
-msgid ""
-"Calling :meth:`~importlib.abc.Loader.module_repr` now occurs after trying to "
-"use a module's ``__spec__`` attribute but before falling back on "
-"``__file__``. Use of :meth:`~importlib.abc.Loader.module_repr` is slated to "
-"stop in Python 3.12."
-msgstr ""
-"l'appel à :meth:`~importlib.abc.Loader.module_repr` a maintenant lieu après "
-"avoir essayé d'utiliser l'attribut ``__spec__`` du module mais avant de se "
-"rabattre vers ``__file__``. L'utilisation de :meth:`~importlib.abc.Loader."
-"module_repr` est prévue d'être arrêtée dans Python 3.12."
-
-#: reference/import.rst:699
+#: reference/import.rst:608
 msgid "Cached bytecode invalidation"
 msgstr "Invalidation de *bytecode* mis en cache"
 
-#: reference/import.rst:701
+#: reference/import.rst:610
 msgid ""
 "Before Python loads cached bytecode from a ``.pyc`` file, it checks whether "
 "the cache is up-to-date with the source ``.py`` file. By default, Python "
@@ -1361,7 +1249,7 @@ msgstr ""
 "fichier cache en comparant les métadonnées que le cache contient avec les "
 "métadonnées de la source."
 
-#: reference/import.rst:708
+#: reference/import.rst:617
 msgid ""
 "Python also supports \"hash-based\" cache files, which store a hash of the "
 "source file's contents rather than its metadata. There are two variants of "
@@ -1387,7 +1275,7 @@ msgstr ""
 "être définie avec l'option :option:`--check-hash-based-pycs`."
 
 # suit un :
-#: reference/import.rst:719
+#: reference/import.rst:628
 msgid ""
 "Added hash-based ``.pyc`` files. Previously, Python only supported timestamp-"
 "based invalidation of bytecode caches."
@@ -1395,11 +1283,11 @@ msgstr ""
 "ajout des fichiers ``.pyc`` avec empreinte. Auparavant, Python gérait les "
 "caches de *bytecode* sur la base de l'horodatage."
 
-#: reference/import.rst:725
+#: reference/import.rst:634
 msgid "The Path Based Finder"
 msgstr "Le chercheur dans *path*"
 
-#: reference/import.rst:730
+#: reference/import.rst:639
 msgid ""
 "As mentioned previously, Python comes with several default meta path "
 "finders. One of these, called the :term:`path based finder` (:class:"
@@ -1414,7 +1302,7 @@ msgstr ""
 "une liste :term:`d'entrées dans path <path entry>`. Chaque entrée désigne un "
 "emplacement où rechercher des modules."
 
-#: reference/import.rst:736
+#: reference/import.rst:645
 msgid ""
 "The path based finder itself doesn't know how to import anything. Instead, "
 "it traverses the individual path entries, associating each of them with a "
@@ -1425,7 +1313,7 @@ msgstr ""
 "chacune d'elle un « chercheur d'entrée dans *path* » qui sait comment gérer "
 "le type particulier de chemin considéré."
 
-#: reference/import.rst:740
+#: reference/import.rst:649
 msgid ""
 "The default set of path entry finders implement all the semantics for "
 "finding modules on the file system, handling special file types such as "
@@ -1444,7 +1332,7 @@ msgstr ""
 "dans *path* » par défaut savent aussi gérer tous ces types de fichiers "
 "(autres que les bibliothèques partagées) encapsulés dans des fichiers zip."
 
-#: reference/import.rst:747
+#: reference/import.rst:656
 msgid ""
 "Path entries need not be limited to file system locations.  They can refer "
 "to URLs, database queries, or any other location that can be specified as a "
@@ -1454,7 +1342,7 @@ msgstr ""
 "référence à des URL, des requêtes dans des bases de données ou tout autre "
 "emplacement qui peut être spécifié dans une chaîne de caractères."
 
-#: reference/import.rst:751
+#: reference/import.rst:660
 msgid ""
 "The path based finder provides additional hooks and protocols so that you "
 "can extend and customize the types of searchable path entries.  For example, "
@@ -1474,7 +1362,7 @@ msgstr ""
 "décrit plus bas et qui sera utilisé pour obtenir un chargeur de module sur "
 "la toile."
 
-#: reference/import.rst:759
+#: reference/import.rst:668
 msgid ""
 "A word of warning: this section and the previous both use the term *finder*, "
 "distinguishing between them by using the terms :term:`meta path finder` and :"
@@ -1494,7 +1382,7 @@ msgstr ""
 "chemins opèrent au début du processus d'importation, comme clé de parcours "
 "de :data:`sys.meta_path`."
 
-#: reference/import.rst:767
+#: reference/import.rst:676
 msgid ""
 "By contrast, path entry finders are in a sense an implementation detail of "
 "the path based finder, and in fact, if the path based finder were to be "
@@ -1506,11 +1394,11 @@ msgstr ""
 "chercheur dans *path* était enlevé de :data:`sys.meta_path`, aucune des "
 "sémantiques des « chercheurs d'entrée dans *path* » ne serait invoquée."
 
-#: reference/import.rst:774
+#: reference/import.rst:683
 msgid "Path entry finders"
 msgstr "Chercheurs d'entrée dans *path*"
 
-#: reference/import.rst:782
+#: reference/import.rst:691
 msgid ""
 "The :term:`path based finder` is responsible for finding and loading Python "
 "modules and packages whose location is specified with a string :term:`path "
@@ -1524,7 +1412,7 @@ msgstr ""
 "emplacements sur le système de fichiers, mais il n'y a aucune raison de les "
 "limiter à ça."
 
-#: reference/import.rst:787
+#: reference/import.rst:696
 msgid ""
 "As a meta path finder, the :term:`path based finder` implements the :meth:"
 "`~importlib.abc.MetaPathFinder.find_spec` protocol previously described, "
@@ -1538,7 +1426,7 @@ msgstr ""
 "utilisés pour personnaliser la façon dont les modules sont trouvés et "
 "chargés depuis le :term:`chemin des importations <import path>`."
 
-#: reference/import.rst:792
+#: reference/import.rst:701
 msgid ""
 "Three variables are used by the :term:`path based finder`, :data:`sys."
 "path`, :data:`sys.path_hooks` and :data:`sys.path_importer_cache`.  The "
@@ -1551,10 +1439,11 @@ msgstr ""
 "utilisé. Il permet de personnaliser encore davantage le mécanisme "
 "d'importation."
 
-#: reference/import.rst:797
+#: reference/import.rst:706
+#, fuzzy
 msgid ""
 ":data:`sys.path` contains a list of strings providing search locations for "
-"modules and packages.  It is initialized from the :data:`PYTHONPATH` "
+"modules and packages.  It is initialized from the :envvar:`PYTHONPATH` "
 "environment variable and various other installation- and implementation-"
 "specific defaults.  Entries in :data:`sys.path` can name directories on the "
 "file system, zip files, and potentially other \"locations\" (see the :mod:"
@@ -1573,7 +1462,7 @@ msgstr ""
 "path` ne doit contenir que des chaînes de caractères ; tous les autres types "
 "sont ignorés."
 
-#: reference/import.rst:806
+#: reference/import.rst:715
 msgid ""
 "The :term:`path based finder` is a :term:`meta path finder`, so the import "
 "machinery begins the :term:`import path` search by calling the path based "
@@ -1595,7 +1484,8 @@ msgstr ""
 "cela indique une importation de niveau le plus haut et :data:`sys.path` est "
 "utilisée."
 
-#: reference/import.rst:815
+#: reference/import.rst:724
+#, fuzzy
 msgid ""
 "The path based finder iterates over every entry in the search path, and for "
 "each of these, looks for an appropriate :term:`path entry finder` (:class:"
@@ -1608,7 +1498,7 @@ msgid ""
 "the expensive search for a particular :term:`path entry` location's :term:"
 "`path entry finder` need only be done once.  User code is free to remove "
 "cache entries from :data:`sys.path_importer_cache` forcing the path based "
-"finder to perform the path entry search again [#fnpic]_."
+"finder to perform the path entry search again."
 msgstr ""
 "Le chercheur dans *path* itère sur chaque entrée dans le *path* et, pour "
 "chacune, regarde s'il trouve un :term:`chercheur d'entrée dans path <path "
@@ -1626,7 +1516,7 @@ msgstr ""
 "chercheur dans *path* à effectuer une nouvelle fois la recherche sur chaque "
 "entrée [#fnpic]_."
 
-#: reference/import.rst:828
+#: reference/import.rst:737
 msgid ""
 "If the path entry is not present in the cache, the path based finder "
 "iterates over every callable in :data:`sys.path_hooks`.  Each of the :term:"
@@ -1657,7 +1547,7 @@ msgstr ""
 "de fichiers, de l'UTF-8 ou autre chose) et, si le point d'entrée n'arrive "
 "pas à décoder l'argument, il doit lever une :exc:`ImportError`."
 
-#: reference/import.rst:842
+#: reference/import.rst:751
 msgid ""
 "If :data:`sys.path_hooks` iteration ends with no :term:`path entry finder` "
 "being returned, then the path based finder's :meth:`~importlib.machinery."
@@ -1674,7 +1564,7 @@ msgstr ""
 "``None``, indiquant que ce :term:`chercheur dans les méta-chemins <meta path "
 "finder>` n'a pas trouvé le module."
 
-#: reference/import.rst:849
+#: reference/import.rst:758
 msgid ""
 "If a :term:`path entry finder` *is* returned by one of the :term:`path entry "
 "hook` callables on :data:`sys.path_hooks`, then the following protocol is "
@@ -1687,7 +1577,7 @@ msgstr ""
 "spécificateur de module au chercheur, spécificateur qui sera utilisé pour "
 "charger le module."
 
-#: reference/import.rst:854
+#: reference/import.rst:763
 msgid ""
 "The current working directory -- denoted by an empty string -- is handled "
 "slightly differently from other entries on :data:`sys.path`. First, if the "
@@ -1708,11 +1598,11 @@ msgstr ""
 "machinery.PathFinder.find_spec` est le nom réel du répertoire de travail "
 "courant et non pas la chaîne vide."
 
-#: reference/import.rst:864
+#: reference/import.rst:773
 msgid "Path entry finder protocol"
 msgstr "Protocole des chercheurs d'entrée dans *path*"
 
-#: reference/import.rst:866
+#: reference/import.rst:775
 msgid ""
 "In order to support imports of modules and initialized packages and also to "
 "contribute portions to namespace packages, path entry finders must implement "
@@ -1723,7 +1613,7 @@ msgstr ""
 "les chercheurs d'entrée dans *path* doivent implémenter la méthode :meth:"
 "`~importlib.abc.PathEntryFinder.find_spec`."
 
-#: reference/import.rst:870
+#: reference/import.rst:779
 msgid ""
 ":meth:`~importlib.abc.PathEntryFinder.find_spec` takes two arguments: the "
 "fully qualified name of the module being imported, and the (optional) target "
@@ -1736,10 +1626,11 @@ msgstr ""
 "de module pleinement peuplé. Ce spécificateur doit avoir son chargeur "
 "(attribut ``loader``) défini, à une exception près."
 
-#: reference/import.rst:875
+#: reference/import.rst:784
+#, fuzzy
 msgid ""
 "To indicate to the import machinery that the spec represents a namespace :"
-"term:`portion`, the path entry finder sets \"submodule_search_locations\" to "
+"term:`portion`, the path entry finder sets ``submodule_search_locations`` to "
 "a list containing the portion."
 msgstr ""
 "Pour indiquer au mécanisme d'importation que le spécificateur représente "
@@ -1748,19 +1639,19 @@ msgstr ""
 "contenant la portion."
 
 # suit un :
-#: reference/import.rst:879
+#: reference/import.rst:788
+#, fuzzy
 msgid ""
-":meth:`~importlib.abc.PathEntryFinder.find_spec` replaced :meth:`~importlib."
-"abc.PathEntryFinder.find_loader` and :meth:`~importlib.abc.PathEntryFinder."
-"find_module`, both of which are now deprecated, but will be used if "
-"``find_spec()`` is not defined."
+":meth:`~importlib.abc.PathEntryFinder.find_spec` replaced :meth:`!"
+"find_loader` and :meth:`!find_module`, both of which are now deprecated, but "
+"will be used if ``find_spec()`` is not defined."
 msgstr ""
 "la méthode :meth:`~importlib.abc.PathEntryFinder.find_spec` remplace :meth:"
 "`~importlib.abc.PathEntryFinder.find_loader` et :meth:`~importlib.abc."
 "PathEntryFinder.find_module`, ces deux méthodes étant dorénavant obsolètes "
 "mais restant utilisées si ``find_spec()`` n'est pas définie."
 
-#: reference/import.rst:885
+#: reference/import.rst:794
 msgid ""
 "Older path entry finders may implement one of these two deprecated methods "
 "instead of ``find_spec()``.  The methods are still respected for the sake of "
@@ -1773,19 +1664,19 @@ msgstr ""
 "si ``find_spec()`` est implémentée par le chercheur d'entrée dans *path*, "
 "les méthodes historiques sont ignorées."
 
-#: reference/import.rst:890
+#: reference/import.rst:799
+#, fuzzy
 msgid ""
-":meth:`~importlib.abc.PathEntryFinder.find_loader` takes one argument, the "
-"fully qualified name of the module being imported.  ``find_loader()`` "
-"returns a 2-tuple where the first item is the loader and the second item is "
-"a namespace :term:`portion`."
+":meth:`!find_loader` takes one argument, the fully qualified name of the "
+"module being imported.  ``find_loader()`` returns a 2-tuple where the first "
+"item is the loader and the second item is a namespace :term:`portion`."
 msgstr ""
 "La méthode :meth:`~importlib.abc.PathEntryFinder.find_spec` prend un "
 "argument : le nom complètement qualifié du module en cours d'importation. "
 "``find_loader()`` renvoie un couple dont le premier élément est le chargeur "
 "et le second est une :term:`portion <portion>` d'espace de nommage."
 
-#: reference/import.rst:895
+#: reference/import.rst:804
 msgid ""
 "For backwards compatibility with other implementations of the import "
 "protocol, many path entry finders also support the same, traditional "
@@ -1802,7 +1693,7 @@ msgstr ""
 "*path* (il est convenu qu'elles enregistrent les informations relatives au "
 "chemin approprié au moment de leur appel initial au point d'entrée)."
 
-#: reference/import.rst:902
+#: reference/import.rst:811
 msgid ""
 "The ``find_module()`` method on path entry finders is deprecated, as it does "
 "not allow the path entry finder to contribute portions to namespace "
@@ -1817,21 +1708,25 @@ msgstr ""
 "chercheur d'entrée dans *path*, le système d'importation utilise toujours "
 "``find_loader()`` plutôt que ``find_module()``."
 
-#: reference/import.rst:908
+#: reference/import.rst:817
+#, fuzzy
 msgid ""
-"Calls to :meth:`~importlib.abc.PathEntryFinder.find_module` and :meth:"
-"`~importlib.abc.PathEntryFinder.find_loader` by the import system will "
-"raise :exc:`ImportWarning`."
+"Calls to :meth:`!find_module` and :meth:`!find_loader` by the import system "
+"will raise :exc:`ImportWarning`."
 msgstr ""
 "les appels à :meth:`~importlib.abc.PathEntryFinder.find_module` et :meth:"
 "`~importlib.abc.PathEntryFinder.find_loader` par le système d'importation "
 "lèvent un :exc:`ImportWarning`."
 
-#: reference/import.rst:915
+#: reference/import.rst:822
+msgid "``find_module()`` and ``find_loader()`` have been removed."
+msgstr ""
+
+#: reference/import.rst:827
 msgid "Replacing the standard import system"
 msgstr "Remplacement du système d'importation standard"
 
-#: reference/import.rst:917
+#: reference/import.rst:829
 msgid ""
 "The most reliable mechanism for replacing the entire import system is to "
 "delete the default contents of :data:`sys.meta_path`, replacing them "
@@ -1841,7 +1736,7 @@ msgstr ""
 "supprimer le contenu par défaut de :data:`sys.meta_path` et de le remplacer "
 "complètement par un chercheur dans les méta-chemins sur mesure."
 
-#: reference/import.rst:921
+#: reference/import.rst:833
 msgid ""
 "If it is acceptable to only alter the behaviour of import statements without "
 "affecting other APIs that access the import system, then replacing the "
@@ -1855,7 +1750,7 @@ msgstr ""
 "technique peut aussi être employée au niveau d'un module pour n'altérer le "
 "comportement des importations qu'à l'intérieur de ce module."
 
-#: reference/import.rst:927
+#: reference/import.rst:839
 msgid ""
 "To selectively prevent the import of some modules from a hook early on the "
 "meta path (rather than disabling the standard import system entirely), it is "
@@ -1872,11 +1767,11 @@ msgstr ""
 "indique que la recherche dans le méta-chemin peut continuer alors que la "
 "levée de l'exception termine immédiatement la recherche."
 
-#: reference/import.rst:937
+#: reference/import.rst:849
 msgid "Package Relative Imports"
 msgstr "Importations relatives au paquet"
 
-#: reference/import.rst:939
+#: reference/import.rst:851
 msgid ""
 "Relative imports use leading dots. A single leading dot indicates a relative "
 "import, starting with the current package. Two or more leading dots indicate "
@@ -1889,7 +1784,21 @@ msgstr ""
 "paquet actuel, un niveau par point avant le premier. Par exemple, en ayant "
 "le contenu suivant ::"
 
-#: reference/import.rst:955
+#: reference/import.rst:856
+msgid ""
+"package/\n"
+"    __init__.py\n"
+"    subpackage1/\n"
+"        __init__.py\n"
+"        moduleX.py\n"
+"        moduleY.py\n"
+"    subpackage2/\n"
+"        __init__.py\n"
+"        moduleZ.py\n"
+"    moduleA.py"
+msgstr ""
+
+#: reference/import.rst:867
 msgid ""
 "In either ``subpackage1/moduleX.py`` or ``subpackage1/__init__.py``, the "
 "following are valid relative imports::"
@@ -1897,7 +1806,17 @@ msgstr ""
 "Dans ``subpackage1/moduleX.py`` ou ``subpackage1/__init__.py``, les "
 "importations suivantes sont des importations relatives valides ::"
 
-#: reference/import.rst:965
+#: reference/import.rst:870
+msgid ""
+"from .moduleY import spam\n"
+"from .moduleY import spam as ham\n"
+"from . import moduleY\n"
+"from ..subpackage1 import moduleY\n"
+"from ..subpackage2.moduleZ import eggs\n"
+"from ..moduleA import foo"
+msgstr ""
+
+#: reference/import.rst:877
 msgid ""
 "Absolute imports may use either the ``import <>`` or ``from <> import <>`` "
 "syntax, but relative imports may only use the second form; the reason for "
@@ -1907,7 +1826,11 @@ msgstr ""
 "soit ``from <> import <>``, mais les importations relatives doivent "
 "seulement utiliser la deuxième forme, la raison étant ::"
 
-#: reference/import.rst:971
+#: reference/import.rst:881
+msgid "import XXX.YYY.ZZZ"
+msgstr ""
+
+#: reference/import.rst:883
 msgid ""
 "should expose ``XXX.YYY.ZZZ`` as a usable expression, but .moduleY is not a "
 "valid expression."
@@ -1915,11 +1838,11 @@ msgstr ""
 "devrait exposer ``XXX.YYY.ZZZ`` comme une expression utilisable, mais ``."
 "moduleY`` n’est pas une expression valide."
 
-#: reference/import.rst:978
+#: reference/import.rst:890
 msgid "Special considerations for __main__"
 msgstr "Cas particulier de ``__main__``"
 
-#: reference/import.rst:980
+#: reference/import.rst:892
 msgid ""
 "The :mod:`__main__` module is a special case relative to Python's import "
 "system.  As noted :ref:`elsewhere <programs>`, the ``__main__`` module is "
@@ -1937,11 +1860,11 @@ msgstr ""
 "natif. Effectivement, la manière dont est initialisé ``__main__`` dépend des "
 "drapeaux et options avec lesquels l'interpréteur est lancé."
 
-#: reference/import.rst:991
+#: reference/import.rst:903
 msgid "__main__.__spec__"
 msgstr "``__main__.__spec__``"
 
-#: reference/import.rst:993
+#: reference/import.rst:905
 msgid ""
 "Depending on how :mod:`__main__` is initialized, ``__main__.__spec__`` gets "
 "set appropriately or to ``None``."
@@ -1949,7 +1872,7 @@ msgstr ""
 "En fonction de la manière dont :mod:`__main__` est initialisé, ``__main__."
 "__spec__`` est défini de manière conforme ou mis à ``None``."
 
-#: reference/import.rst:996
+#: reference/import.rst:908
 msgid ""
 "When Python is started with the :option:`-m` option, ``__spec__`` is set to "
 "the module spec of the corresponding module or package. ``__spec__`` is also "
@@ -1962,7 +1885,7 @@ msgstr ""
 "que partie de l'exécution d'un répertoire, d'un fichier zip ou d'une entrée "
 "de :data:`sys.path`."
 
-#: reference/import.rst:1001
+#: reference/import.rst:913
 msgid ""
 "In :ref:`the remaining cases <using-on-interface-options>` ``__main__."
 "__spec__`` is set to ``None``, as the code used to populate the :mod:"
@@ -1972,23 +1895,23 @@ msgstr ""
 "__spec__`` est mis à ``None``, car le code qui peuple :mod:`__main__` ne "
 "trouve pas de correspondance directe avec un module que l'on importe :"
 
-#: reference/import.rst:1005
+#: reference/import.rst:917
 msgid "interactive prompt"
 msgstr "invite de commande interactive"
 
-#: reference/import.rst:1006
+#: reference/import.rst:918
 msgid ":option:`-c` option"
 msgstr "l'option :option:`-c`"
 
-#: reference/import.rst:1007
+#: reference/import.rst:919
 msgid "running from stdin"
 msgstr "lecture depuis l'entrée standard"
 
-#: reference/import.rst:1008
+#: reference/import.rst:920
 msgid "running directly from a source or bytecode file"
 msgstr "lecture depuis un fichier de code source ou de *bytecode*"
 
-#: reference/import.rst:1010
+#: reference/import.rst:922
 msgid ""
 "Note that ``__main__.__spec__`` is always ``None`` in the last case, *even "
 "if* the file could technically be imported directly as a module instead. Use "
@@ -2000,7 +1923,7 @@ msgstr ""
 "que module. Utilisez l'option :option:`-m` si vous souhaitez disposer de "
 "métadonnées valides du module dans :mod:`__main__`."
 
-#: reference/import.rst:1015
+#: reference/import.rst:927
 msgid ""
 "Note also that even when ``__main__`` corresponds with an importable module "
 "and ``__main__.__spec__`` is set accordingly, they're still considered "
@@ -2015,11 +1938,11 @@ msgstr ""
 "module est utilisé pour peupler l'espace de nommage de ``__main__``, et pas "
 "durant une importation normale."
 
-#: reference/import.rst:1023
+#: reference/import.rst:935
 msgid "References"
 msgstr "Références"
 
-#: reference/import.rst:1025
+#: reference/import.rst:937
 msgid ""
 "The import machinery has evolved considerably since Python's early days.  "
 "The original `specification for packages <https://www.python.org/doc/essays/"
@@ -2031,7 +1954,7 @@ msgstr ""
 "packages/>`_ originale est toujours disponible, bien que quelques détails "
 "ont changé depuis l'écriture de ce document."
 
-#: reference/import.rst:1030
+#: reference/import.rst:942
 msgid ""
 "The original specification for :data:`sys.meta_path` was :pep:`302`, with "
 "subsequent extension in :pep:`420`."
@@ -2039,18 +1962,19 @@ msgstr ""
 "La spécification originale de :data:`sys.meta_path` se trouve dans la :pep:"
 "`302`. La :pep:`420` contient des extensions significatives."
 
-#: reference/import.rst:1033
+#: reference/import.rst:945
+#, fuzzy
 msgid ""
 ":pep:`420` introduced :term:`namespace packages <namespace package>` for "
-"Python 3.3.  :pep:`420` also introduced the :meth:`find_loader` protocol as "
-"an alternative to :meth:`find_module`."
+"Python 3.3.  :pep:`420` also introduced the :meth:`!find_loader` protocol as "
+"an alternative to :meth:`!find_module`."
 msgstr ""
 "La :pep:`420` a introduit les :term:`paquets-espaces de nommage <namespace "
 "package>` pour Python 3.3. La :pep:`420` a aussi introduit le protocole :"
 "meth:`recherche du chargeur <find_loader>` comme une alternative à :meth:"
 "`find_module`."
 
-#: reference/import.rst:1037
+#: reference/import.rst:949
 msgid ""
 ":pep:`366` describes the addition of the ``__package__`` attribute for "
 "explicit relative imports in main modules."
@@ -2058,7 +1982,7 @@ msgstr ""
 "La :pep:`366` décrit l'ajout de l'attribut ``__package__`` pour les "
 "importations relatives explicites dans les modules principaux."
 
-#: reference/import.rst:1040
+#: reference/import.rst:952
 msgid ""
 ":pep:`328` introduced absolute and explicit relative imports and initially "
 "proposed ``__name__`` for semantics :pep:`366` would eventually specify for "
@@ -2068,11 +1992,11 @@ msgstr ""
 "relatives explicites. Elle a aussi proposé ``__name__`` pour la sémantique "
 "que la :pep:`366` attribuait à ``__package__``."
 
-#: reference/import.rst:1044
+#: reference/import.rst:956
 msgid ":pep:`338` defines executing modules as scripts."
 msgstr ":pep:`338` définit l'exécution de modules en tant que scripts."
 
-#: reference/import.rst:1046
+#: reference/import.rst:958
 msgid ""
 ":pep:`451` adds the encapsulation of per-module import state in spec "
 "objects.  It also off-loads most of the boilerplate responsibilities of "
@@ -2086,15 +2010,15 @@ msgstr ""
 "changements permettent de supprimer plusieurs API dans le système "
 "d'importation et d'ajouter de nouvelles méthodes aux chercheurs et chargeurs."
 
-#: reference/import.rst:1053
+#: reference/import.rst:965
 msgid "Footnotes"
 msgstr "Notes"
 
-#: reference/import.rst:1054
+#: reference/import.rst:966
 msgid "See :class:`types.ModuleType`."
 msgstr "Voir :class:`types.ModuleType`."
 
-#: reference/import.rst:1056
+#: reference/import.rst:968
 msgid ""
 "The importlib implementation avoids using the return value directly. "
 "Instead, it gets the module object by looking the module name up in :data:"
@@ -2108,19 +2032,6 @@ msgstr ""
 "peut remplacer le module de même nom dans :data:`sys.modules`. C'est un "
 "comportement spécifique à l'implémentation dont le résultat n'est pas "
 "garanti pour les autres implémentations de Python."
-
-#: reference/import.rst:1063
-#, fuzzy
-msgid ""
-"In legacy code, it is possible to find instances of :class:`imp."
-"NullImporter` in the :data:`sys.path_importer_cache`.  It is recommended "
-"that code be changed to use ``None`` instead.  See :ref:`portingpythoncode` "
-"for more details."
-msgstr ""
-"Dans du code historique, il est possible de trouver des instances de :class:"
-"`imp.NullImporter` dans :data:`sys.path_importer_cache`. Il est recommandé "
-"de modifier ce code afin d'utiliser ``None`` à la place. Lisez :ref:"
-"`portingpythoncode` pour plus de détails."
 
 #: reference/import.rst:8
 msgid "import machinery"
@@ -2202,26 +2113,235 @@ msgstr "Méta-chemins"
 msgid "find_spec"
 msgstr ""
 
-#: reference/import.rst:727
+#: reference/import.rst:636
 #, fuzzy
 msgid "path based finder"
 msgstr "Le chercheur dans *path*"
 
-#: reference/import.rst:776
+#: reference/import.rst:685
 msgid "sys.path"
 msgstr ""
 
-#: reference/import.rst:776
+#: reference/import.rst:685
 msgid "sys.path_hooks"
 msgstr ""
 
-#: reference/import.rst:776
+#: reference/import.rst:685
 msgid "sys.path_importer_cache"
 msgstr ""
 
-#: reference/import.rst:776
+#: reference/import.rst:685
 msgid "PYTHONPATH"
 msgstr ""
+
+#~ msgid "Import-related module attributes"
+#~ msgstr "Attributs des modules importés"
+
+#~ msgid ""
+#~ "The import machinery fills in these attributes on each module object "
+#~ "during loading, based on the module's spec, before the loader executes "
+#~ "the module."
+#~ msgstr ""
+#~ "Le mécanisme d'importation renseigne ces attributs pour chaque objet "
+#~ "module pendant le chargement, sur la base du spécificateur de module et "
+#~ "avant que le chargeur n'exécute le module."
+
+#~ msgid ""
+#~ "The ``__name__`` attribute must be set to the fully qualified name of the "
+#~ "module.  This name is used to uniquely identify the module in the import "
+#~ "system."
+#~ msgstr ""
+#~ "L'attribut ``__name__`` doit contenir le nom complètement qualifié du "
+#~ "module. Ce nom est utilisé pour identifier de manière non équivoque le "
+#~ "module dans le mécanisme d'importation."
+
+#~ msgid ""
+#~ "The ``__loader__`` attribute must be set to the loader object that the "
+#~ "import machinery used when loading the module.  This is mostly for "
+#~ "introspection, but can be used for additional loader-specific "
+#~ "functionality, for example getting data associated with a loader."
+#~ msgstr ""
+#~ "L'attribut ``__loader__`` doit pointer vers l'objet chargeur que le "
+#~ "mécanisme d'importation a utilisé pour charger le module. L'utilisation "
+#~ "principale concerne l'introspection, mais il peut être utilisé pour "
+#~ "d'autres fonctionnalités relatives au chargement. Par exemple, obtenir "
+#~ "des données par l'intermédiaire du chargeur."
+
+#, fuzzy
+#~ msgid ""
+#~ "The module's ``__package__`` attribute must be set.  Its value must be a "
+#~ "string, but it can be the same value as its ``__name__``.  When the "
+#~ "module is a package, its ``__package__`` value should be set to its "
+#~ "``__name__``.  When the module is not a package, ``__package__`` should "
+#~ "be set to the empty string for top-level modules, or for submodules, to "
+#~ "the parent package's name.  See :pep:`366` for further details."
+#~ msgstr ""
+#~ "L'attribut ``__package__`` du module doit être défini. Sa valeur doit "
+#~ "être une chaîne de caractères, qui peut être la même que son attribut "
+#~ "``__name__``. Quand le module est un paquet, la valeur de ``__package__`` "
+#~ "doit être définie à la même valeur que son ``__name__``. Quand le module "
+#~ "n'est pas un paquet, ``__package__`` doit être la chaîne vide pour les "
+#~ "modules de niveau le plus haut, et le nom du paquet parent pour les sous-"
+#~ "modules. Voir la :pep:`366` pour plus de détails."
+
+#, fuzzy
+#~ msgid ""
+#~ "This attribute is used instead of ``__name__`` to calculate explicit "
+#~ "relative imports for main modules, as defined in :pep:`366`. It is "
+#~ "expected to have the same value as ``__spec__.parent``."
+#~ msgstr ""
+#~ "Cet attribut est utilisé à la place de ``__name__`` pour calculer les "
+#~ "importations relatives explicites des modules principaux, comme défini "
+#~ "dans la :pep:`366`. Il devrait avoir la même valeur que ``__spec__."
+#~ "parent``."
+
+# suit un :
+#~ msgid ""
+#~ "The value of ``__package__`` is expected to be the same as ``__spec__."
+#~ "parent``."
+#~ msgstr ""
+#~ "la valeur de ``__package__`` devrait être la même que celle de ``__spec__."
+#~ "parent``."
+
+#, fuzzy
+#~ msgid ""
+#~ "When ``__package__`` is not defined, ``__spec__.parent`` is used as a "
+#~ "fallback."
+#~ msgstr ""
+#~ "Quand ``__package__`` n'est pas défini, ``__spec__.parent`` est utilisé "
+#~ "par défaut."
+
+#~ msgid ""
+#~ "``__spec__.parent`` is used as a fallback when ``__package__`` is not "
+#~ "defined."
+#~ msgstr ""
+#~ "``__spec__.parent`` est utilisé par défaut quand ``__package__`` n'est "
+#~ "pas défini."
+
+#~ msgid ""
+#~ "If the module is a package (either regular or namespace), the module "
+#~ "object's ``__path__`` attribute must be set.  The value must be iterable, "
+#~ "but may be empty if ``__path__`` has no further significance. If "
+#~ "``__path__`` is not empty, it must produce strings when iterated over. "
+#~ "More details on the semantics of ``__path__`` are given :ref:`below "
+#~ "<package-path-rules>`."
+#~ msgstr ""
+#~ "Si le module est un paquet (classique ou espace de nommage), l'attribut "
+#~ "``__path__`` de l'objet module doit être défini. La valeur doit être un "
+#~ "itérable mais peut être vide si ``__path__`` n'a pas de sens dans le "
+#~ "contexte. Si ``__path__`` n'est pas vide, il doit produire des chaînes "
+#~ "lorsque l'on itère dessus. Vous trouvez plus de détails sur la sémantique "
+#~ "de ``__path__`` :ref:`plus loin ci-dessous <package-path-rules>`."
+
+#~ msgid "Non-package modules should not have a ``__path__`` attribute."
+#~ msgstr ""
+#~ "Les modules qui ne sont pas des paquets ne doivent pas avoir d'attribut "
+#~ "``__path__``."
+
+#~ msgid ""
+#~ "``__file__`` is optional (if set, value must be a string). It indicates "
+#~ "the pathname of the file from which the module was loaded (if loaded from "
+#~ "a file), or the pathname of the shared library file for extension modules "
+#~ "loaded dynamically from a shared library. It might be missing for certain "
+#~ "types of modules, such as C modules that are statically linked into the "
+#~ "interpreter, and the import system may opt to leave it unset if it has no "
+#~ "semantic meaning (e.g. a module loaded from a database)."
+#~ msgstr ""
+#~ "``__file__`` est optionnel (si elle est spécifiée, la valeur doit être "
+#~ "une chaîne). Cela indique le chemin vers le fichier depuis lequel le "
+#~ "module a été chargé (s'il a été chargé à partir d'un fichier) ou le "
+#~ "chemin du fichier de la bibliothèque partagée  pour les modules "
+#~ "d'extension chargés dynamiquement depuis une bibliothèque partagée. Il se "
+#~ "peut qu'il n'existe pas pour certains types de modules, tels que les "
+#~ "modules C qui sont liés statiquement à l'interpréteur, où le système "
+#~ "d'importation le laisse indéfini parce que sa sémantique serait mauvaise "
+#~ "(par exemple, un module chargé depuis une base de données)."
+
+#~ msgid ""
+#~ "If ``__file__`` is set then the ``__cached__`` attribute might also be "
+#~ "set,  which is the path to any compiled version of the code (e.g. byte-"
+#~ "compiled file). The file does not need to exist to set this attribute; "
+#~ "the path can simply point to where the compiled file would exist (see :"
+#~ "pep:`3147`)."
+#~ msgstr ""
+#~ "Si ``__file__`` est défini, il peut être judicieux de définir l'attribut "
+#~ "``__cached__`` dont la valeur est le chemin vers une version compilée du "
+#~ "code (par exemple, le fichier *bytecode*). Le fichier n'a pas besoin "
+#~ "d'exister pour définir cet attribut : le chemin peut simplement pointer "
+#~ "vers l'endroit où le fichier compilé aurait été placé (voir la :pep:"
+#~ "`3147`)."
+
+#~ msgid ""
+#~ "Note that ``__cached__`` may be set even if ``__file__`` is not set.  "
+#~ "However, that scenario is quite atypical.  Ultimately, the loader is what "
+#~ "makes use of the module spec provided by the finder (from which "
+#~ "``__file__`` and ``__cached__`` are derived).  So if a loader can load "
+#~ "from a cached module but otherwise does not load from a file, that "
+#~ "atypical scenario may be appropriate."
+#~ msgstr ""
+#~ "Notez que  ``__cached__`` peut être défini même si ``__file__`` n'est pas "
+#~ "défini. Cependant, ce scénario semble rare. Au final, c'est le chargeur "
+#~ "qui utilise les spécifications du module fournies par le chercheur "
+#~ "(spécifications à partir desquelles sont dérivées ``__file__`` et "
+#~ "``__cached__``). Donc, si le chargeur peut charger depuis un module mis "
+#~ "en cache mais ne peut pas charger depuis un fichier, ce scénario a du "
+#~ "sens."
+
+#~ msgid "module.__path__"
+#~ msgstr "module.__path__"
+
+#~ msgid ""
+#~ "By definition, if a module has a ``__path__`` attribute, it is a package."
+#~ msgstr ""
+#~ "Par définition, si un module possède un attribut ``__path__``, c'est un "
+#~ "paquet."
+
+# suit un :
+#~ msgid ""
+#~ "Use of :meth:`loader.module_repr() <importlib.abc.Loader.module_repr>` "
+#~ "has been deprecated and the module spec is now used by the import "
+#~ "machinery to generate a module repr."
+#~ msgstr ""
+#~ "l'utilisation de :meth:`loader.module_repr() <importlib.abc.Loader."
+#~ "module_repr>` est devenue obsolète et le spécificateur de module est "
+#~ "utilisé dorénavant par le mécanisme d'importation pour générer la "
+#~ "représentation textuelle du module."
+
+#~ msgid ""
+#~ "For backward compatibility with Python 3.3, the module repr will be "
+#~ "generated by calling the loader's :meth:`~importlib.abc.Loader."
+#~ "module_repr` method, if defined, before trying either approach described "
+#~ "above.  However, the method is deprecated."
+#~ msgstr ""
+#~ "Par compatibilité descendante avec Python 3.3, la représentation "
+#~ "textuelle du module est générée en appelant la méthode :meth:`~importlib."
+#~ "abc.Loader.module_repr` du chargeur, si elle est définie, avant même "
+#~ "d'essayer l'approche décrite ci-dessus. Cependant, cette méthode est "
+#~ "obsolète."
+
+#~ msgid ""
+#~ "Calling :meth:`~importlib.abc.Loader.module_repr` now occurs after trying "
+#~ "to use a module's ``__spec__`` attribute but before falling back on "
+#~ "``__file__``. Use of :meth:`~importlib.abc.Loader.module_repr` is slated "
+#~ "to stop in Python 3.12."
+#~ msgstr ""
+#~ "l'appel à :meth:`~importlib.abc.Loader.module_repr` a maintenant lieu "
+#~ "après avoir essayé d'utiliser l'attribut ``__spec__`` du module mais "
+#~ "avant de se rabattre vers ``__file__``. L'utilisation de :meth:"
+#~ "`~importlib.abc.Loader.module_repr` est prévue d'être arrêtée dans Python "
+#~ "3.12."
+
+#, fuzzy
+#~ msgid ""
+#~ "In legacy code, it is possible to find instances of :class:`imp."
+#~ "NullImporter` in the :data:`sys.path_importer_cache`.  It is recommended "
+#~ "that code be changed to use ``None`` instead.  See :ref:"
+#~ "`portingpythoncode` for more details."
+#~ msgstr ""
+#~ "Dans du code historique, il est possible de trouver des instances de :"
+#~ "class:`imp.NullImporter` dans :data:`sys.path_importer_cache`. Il est "
+#~ "recommandé de modifier ce code afin d'utiliser ``None`` à la place. "
+#~ "Lisez :ref:`portingpythoncode` pour plus de détails."
 
 #~ msgid "Open issues"
 #~ msgstr "Idées d'amélioration"

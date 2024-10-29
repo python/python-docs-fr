@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2022-04-27 06:17-0400\n"
 "Last-Translator: Edith Viau <info@eviau.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 
 #: library/http.server.rst:2
-msgid ":mod:`http.server` --- HTTP servers"
+#, fuzzy
+msgid ":mod:`!http.server` --- HTTP servers"
 msgstr ":mod:`http.server` --- serveurs HTTP"
 
 #: library/http.server.rst:7
@@ -37,7 +38,7 @@ msgstr ""
 "vérifications de sécurité implémentées ne sont qu'élémentaires."
 
 #: includes/wasm-notavail.rst:3
-msgid ":ref:`Availability <availability>`: not Emscripten, not WASI."
+msgid "Availability"
 msgstr ""
 
 #: includes/wasm-notavail.rst:5
@@ -58,6 +59,14 @@ msgstr ""
 "anglais) avant de rester à l'écoute des messages reçus sur celle-ci, les "
 "répartissant à un gestionnaire d'évènements (*handler* en anglais). Le code "
 "pour créer et exécuter le serveur ressemble à ceci ::"
+
+#: library/http.server.rst:31
+msgid ""
+"def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):\n"
+"    server_address = ('', 8000)\n"
+"    httpd = server_class(server_address, handler_class)\n"
+"    httpd.serve_forever()"
+msgstr ""
 
 #: library/http.server.rst:39
 msgid ""
@@ -111,13 +120,14 @@ msgstr ""
 "classes."
 
 #: library/http.server.rst:66
+#, fuzzy
 msgid ""
 "The handler will parse the request and the headers, then call a method "
 "specific to the request type. The method name is constructed from the "
-"request. For example, for the request method ``SPAM``, the :meth:`do_SPAM` "
+"request. For example, for the request method ``SPAM``, the :meth:`!do_SPAM` "
 "method will be called with no arguments. All of the relevant information is "
 "stored in instance variables of the handler.  Subclasses should not need to "
-"override or extend the :meth:`__init__` method."
+"override or extend the :meth:`!__init__` method."
 msgstr ""
 "Le gestionnaire d'évènements analysera la requête et les en-têtes avant "
 "d'appeler une méthode spécifique au type de requête. Le nom de la méthode "
@@ -314,13 +324,14 @@ msgstr ""
 msgid ""
 "Calls :meth:`handle_one_request` once (or, if persistent connections are "
 "enabled, multiple times) to handle incoming HTTP requests. You should never "
-"need to override it; instead, implement appropriate :meth:`do_\\*` methods."
+"need to override it; instead, implement appropriate :meth:`!do_\\*` methods."
 msgstr ""
 
 #: library/http.server.rst:195
+#, fuzzy
 msgid ""
-"This method will parse and dispatch the request to the appropriate :meth:"
-"`do_\\*` method.  You should never need to override it."
+"This method will parse and dispatch the request to the appropriate :meth:`!"
+"do_\\*` method.  You should never need to override it."
 msgstr ""
 "Cette méthode analyse la requête et la transmet à la méthode :meth:`do_\\*` "
 "appropriée. Il ne faut jamais l'écraser."
@@ -345,8 +356,8 @@ msgid ""
 "attribute holds the default values for *message* and *explain* that will be "
 "used if no value is provided; for unknown codes the default value for both "
 "is the string ``???``. The body will be empty if the method is HEAD or the "
-"response code is one of the following: ``1xx``, ``204 No Content``, ``205 "
-"Reset Content``, ``304 Not Modified``."
+"response code is one of the following: :samp:`1{xx}`, ``204 No Content``, "
+"``205 Reset Content``, ``304 Not Modified``."
 msgstr ""
 
 #: library/http.server.rst:223
@@ -396,7 +407,7 @@ msgstr ""
 #: library/http.server.rst:264
 msgid ""
 "Adds a blank line (indicating the end of the HTTP headers in the response) "
-"to the headers buffer and calls :meth:`flush_headers()`."
+"to the headers buffer and calls :meth:`flush_headers`."
 msgstr ""
 
 #: library/http.server.rst:268
@@ -471,7 +482,7 @@ msgid ""
 msgstr ""
 
 #: library/http.server.rst:331
-msgid "The *directory* parameter."
+msgid "Added the *directory* parameter."
 msgstr ""
 
 #: library/http.server.rst:334
@@ -542,7 +553,7 @@ msgstr ""
 msgid ""
 "If the request was mapped to a file, it is opened. Any :exc:`OSError` "
 "exception in opening the requested file is mapped to a ``404``, ``'File not "
-"found'`` error. If there was a ``'If-Modified-Since'`` header in the "
+"found'`` error. If there was an ``'If-Modified-Since'`` header in the "
 "request, and the file was not modified after this time, a ``304``, ``'Not "
 "Modified'`` response is sent. Otherwise, the content type is guessed by "
 "calling the :meth:`guess_type` method, which in turn uses the "
@@ -580,20 +591,49 @@ msgid ""
 "the current directory::"
 msgstr ""
 
-#: library/http.server.rst:418
+#: library/http.server.rst:405
+msgid ""
+"import http.server\n"
+"import socketserver\n"
+"\n"
+"PORT = 8000\n"
+"\n"
+"Handler = http.server.SimpleHTTPRequestHandler\n"
+"\n"
+"with socketserver.TCPServer((\"\", PORT), Handler) as httpd:\n"
+"    print(\"serving at port\", PORT)\n"
+"    httpd.serve_forever()"
+msgstr ""
+
+#: library/http.server.rst:417
+msgid ""
+":class:`SimpleHTTPRequestHandler` can also be subclassed to enhance "
+"behavior, such as using different index file names by overriding the class "
+"attribute :attr:`index_pages`."
+msgstr ""
+
+#: library/http.server.rst:423
 msgid ""
 ":mod:`http.server` can also be invoked directly using the :option:`-m` "
 "switch of the interpreter.  Similar to the previous example, this serves "
 "files relative to the current directory::"
 msgstr ""
 
-#: library/http.server.rst:424
+#: library/http.server.rst:427
+msgid "python -m http.server"
+msgstr ""
+
+#: library/http.server.rst:429
 msgid ""
 "The server listens to port 8000 by default. The default can be overridden by "
 "passing the desired port number as an argument::"
 msgstr ""
 
-#: library/http.server.rst:429
+#: library/http.server.rst:432
+msgid "python -m http.server 9000"
+msgstr ""
+
+#: library/http.server.rst:434
 msgid ""
 "By default, the server binds itself to all interfaces.  The option ``-b/--"
 "bind`` specifies a specific address to which it should bind. Both IPv4 and "
@@ -601,51 +641,63 @@ msgid ""
 "server to bind to localhost only::"
 msgstr ""
 
-#: library/http.server.rst:436
-msgid "``--bind`` argument was introduced."
-msgstr ""
-
 #: library/http.server.rst:439
-msgid "``--bind`` argument enhanced to support IPv6"
+msgid "python -m http.server --bind 127.0.0.1"
 msgstr ""
 
-#: library/http.server.rst:442
+#: library/http.server.rst:441
+msgid "Added the ``--bind`` option."
+msgstr ""
+
+#: library/http.server.rst:444
+msgid "Support IPv6 in the ``--bind`` option."
+msgstr ""
+
+#: library/http.server.rst:447
 msgid ""
 "By default, the server uses the current directory. The option ``-d/--"
 "directory`` specifies a directory to which it should serve the files. For "
 "example, the following command uses a specific directory::"
 msgstr ""
 
-#: library/http.server.rst:448
-msgid "``--directory`` argument was introduced."
+#: library/http.server.rst:451
+msgid "python -m http.server --directory /tmp/"
 msgstr ""
 
-#: library/http.server.rst:451
+#: library/http.server.rst:453
+msgid "Added the ``--directory`` option."
+msgstr ""
+
+#: library/http.server.rst:456
 msgid ""
 "By default, the server is conformant to HTTP/1.0. The option ``-p/--"
 "protocol`` specifies the HTTP version to which the server is conformant. For "
 "example, the following command runs an HTTP/1.1 conformant server::"
 msgstr ""
 
-#: library/http.server.rst:457
-msgid "``--protocol`` argument was introduced."
+#: library/http.server.rst:460
+msgid "python -m http.server --protocol HTTP/1.1"
 msgstr ""
 
 #: library/http.server.rst:462
+msgid "Added the ``--protocol`` option."
+msgstr ""
+
+#: library/http.server.rst:467
 msgid ""
 "This class is used to serve either files or output of CGI scripts from the "
 "current directory and below. Note that mapping HTTP hierarchic structure to "
 "local directory structure is exactly as in :class:`SimpleHTTPRequestHandler`."
 msgstr ""
 
-#: library/http.server.rst:468
+#: library/http.server.rst:473
 msgid ""
 "CGI scripts run by the :class:`CGIHTTPRequestHandler` class cannot execute "
 "redirects (HTTP code 302), because code 200 (script output follows) is sent "
 "prior to execution of the CGI script.  This pre-empts the status code."
 msgstr ""
 
-#: library/http.server.rst:473
+#: library/http.server.rst:478
 msgid ""
 "The class will however, run the CGI script, instead of serving it as a file, "
 "if it guesses it to be a CGI script.  Only directory-based CGI are used --- "
@@ -653,58 +705,69 @@ msgid ""
 "denoting CGI scripts."
 msgstr ""
 
-#: library/http.server.rst:478
+#: library/http.server.rst:483
 msgid ""
 "The :func:`do_GET` and :func:`do_HEAD` functions are modified to run CGI "
 "scripts and serve the output, instead of serving files, if the request leads "
 "to somewhere below the ``cgi_directories`` path."
 msgstr ""
 
-#: library/http.server.rst:482
+#: library/http.server.rst:487
 msgid "The :class:`CGIHTTPRequestHandler` defines the following data member:"
 msgstr ""
 
-#: library/http.server.rst:486
+#: library/http.server.rst:491
 msgid ""
 "This defaults to ``['/cgi-bin', '/htbin']`` and describes directories to "
 "treat as containing CGI scripts."
 msgstr ""
 
-#: library/http.server.rst:489
+#: library/http.server.rst:494
 msgid "The :class:`CGIHTTPRequestHandler` defines the following method:"
 msgstr ""
 
-#: library/http.server.rst:493
+#: library/http.server.rst:498
 msgid ""
 "This method serves the ``'POST'`` request type, only allowed for CGI "
 "scripts.  Error 501, \"Can only POST to CGI scripts\", is output when trying "
 "to POST to a non-CGI url."
 msgstr ""
 
-#: library/http.server.rst:497
+#: library/http.server.rst:502
 msgid ""
 "Note that CGI scripts will be run with UID of user nobody, for security "
 "reasons.  Problems with the CGI script will be translated to error 403."
 msgstr ""
 
-#: library/http.server.rst:500
+#: library/http.server.rst:505
 msgid ""
 ":class:`CGIHTTPRequestHandler` can be enabled in the command line by passing "
 "the ``--cgi`` option::"
 msgstr ""
 
 #: library/http.server.rst:508
-msgid "Security Considerations"
+msgid "python -m http.server --cgi"
 msgstr ""
 
 #: library/http.server.rst:512
+msgid ""
+":class:`CGIHTTPRequestHandler` and the ``--cgi`` command line option are not "
+"intended for use by untrusted clients and may be vulnerable to exploitation. "
+"Always use within a secure environment."
+msgstr ""
+
+#: library/http.server.rst:519
+msgid "Security Considerations"
+msgstr ""
+
+#: library/http.server.rst:523
 msgid ""
 ":class:`SimpleHTTPRequestHandler` will follow symbolic links when handling "
 "requests, this makes it possible for files outside of the specified "
 "directory to be served."
 msgstr ""
 
-#: library/http.server.rst:516
+#: library/http.server.rst:527
 msgid ""
 "Earlier versions of Python did not scrub control characters from the log "
 "messages emitted to stderr from ``python -m http.server`` or the default :"
@@ -713,7 +776,7 @@ msgid ""
 "codes to your terminal."
 msgstr ""
 
-#: library/http.server.rst:522
+#: library/http.server.rst:533
 msgid "Control characters are scrubbed in stderr logs."
 msgstr ""
 
@@ -741,10 +804,10 @@ msgstr ""
 msgid "httpd"
 msgstr ""
 
-#: library/http.server.rst:510
+#: library/http.server.rst:521
 msgid "http.server"
 msgstr ""
 
-#: library/http.server.rst:510
+#: library/http.server.rst:521
 msgid "security"
 msgstr ""

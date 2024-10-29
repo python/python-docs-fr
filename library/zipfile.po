@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2022-10-18 12:31+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,12 +16,13 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 
 #: library/zipfile.rst:2
-msgid ":mod:`zipfile` --- Work with ZIP archives"
+#, fuzzy
+msgid ":mod:`!zipfile` --- Work with ZIP archives"
 msgstr ":mod:`zipfile` — Travailler avec des archives ZIP"
 
 #: library/zipfile.rst:10
 #, fuzzy
-msgid "**Source code:** :source:`Lib/zipfile.py`"
+msgid "**Source code:** :source:`Lib/zipfile/`"
 msgstr "**Code source :** :source:`Lib/zipfile.py`"
 
 #: library/zipfile.rst:14
@@ -170,7 +171,7 @@ msgstr ""
 "compression et peuvent soit totalement refuser de traiter le fichier ZIP "
 "soit ne pas extraire certains fichiers."
 
-#: library/zipfile.rst:129
+#: library/zipfile.rst:127
 msgid "`PKZIP Application Note`_"
 msgstr "`PKZIP Application Note`_"
 
@@ -182,7 +183,7 @@ msgstr ""
 "Documentation sur le format de fichier ZIP par Phil Katz, créateur du format "
 "et des algorithmes utilisés."
 
-#: library/zipfile.rst:132
+#: library/zipfile.rst:131
 #, fuzzy
 msgid "`Info-ZIP Home Page <https://infozip.sourceforge.net/>`_"
 msgstr "`Info-ZIP Home Page <http://www.info-zip.org/>`_"
@@ -281,7 +282,7 @@ msgstr ""
 "de ``1`` à ``9`` sont acceptés (voir :class:`bz2 <bz2.BZ2File>` pour plus "
 "d'informations)."
 
-#: library/zipfile.rst:734
+#: library/zipfile.rst:735
 msgid ""
 "The *strict_timestamps* argument, when set to ``False``, allows to zip files "
 "older than 1980-01-01 at the cost of setting the timestamp to 1980-01-01. "
@@ -319,6 +320,12 @@ msgstr ""
 "*ZipFile* est aussi un gestionnaire de contexte et gère ainsi la "
 "déclaration :keyword:`with`. Dans l'exemple, *myzip* est fermé à la fin de "
 "la déclaration :keyword:`!with` --- même si une exception est levée ::"
+
+#: library/zipfile.rst:200
+msgid ""
+"with ZipFile('spam.zip', 'w') as myzip:\n"
+"    myzip.write('eggs.txt')"
+msgstr ""
 
 #: library/zipfile.rst:205
 msgid ""
@@ -377,8 +384,9 @@ msgstr ""
 msgid "Add the *compresslevel* parameter."
 msgstr "Ajout du paramètre *compresslevel*."
 
-#: library/zipfile.rst:745
-msgid "The *strict_timestamps* keyword-only argument"
+#: library/zipfile.rst:239
+#, fuzzy
+msgid "The *strict_timestamps* keyword-only parameter."
 msgstr "l'argument nommé *strict_timestamps*"
 
 #: library/zipfile.rst:242
@@ -441,6 +449,13 @@ msgid ""
 msgstr ""
 ":meth:`~ZipFile.open` est aussi un gestionnaire de contexte et gère ainsi la "
 "déclaration :keyword:`with` ::"
+
+#: library/zipfile.rst:283
+msgid ""
+"with ZipFile('spam.zip') as myzip:\n"
+"    with myzip.open('eggs.txt') as myfile:\n"
+"        print(myfile.read())"
+msgstr ""
 
 #: library/zipfile.rst:287
 #, fuzzy
@@ -962,6 +977,13 @@ msgid ""
 "following are equivalent::"
 msgstr ""
 
+#: library/zipfile.rst:621
+msgid ""
+">>> Path(...).joinpath('child').joinpath('grandchild')\n"
+">>> Path(...).joinpath('child', 'grandchild')\n"
+">>> Path(...) / 'child' / 'grandchild'"
+msgstr ""
+
 #: library/zipfile.rst:625
 msgid ""
 "Prior to 3.10, ``joinpath`` was undocumented and accepted exactly one "
@@ -970,9 +992,9 @@ msgstr ""
 
 #: library/zipfile.rst:629
 msgid ""
-"The `zipp <https://pypi.org/project/zipp>`_ project provides backports of "
-"the latest path object functionality to older Pythons. Use ``zipp.Path`` in "
-"place of ``zipfile.Path`` for early access to changes."
+"The :pypi:`zipp` project provides backports of the latest path object "
+"functionality to older Pythons. Use ``zipp.Path`` in place of ``zipfile."
+"Path`` for early access to changes."
 msgstr ""
 
 #: library/zipfile.rst:637
@@ -988,7 +1010,8 @@ msgstr ""
 "constructeur de :class:`ZipFile` avec un paramètre additionnel *optimize*."
 
 #: library/zipfile.rst:645
-msgid "The *optimize* parameter."
+#, fuzzy
+msgid "Added the *optimize* parameter."
 msgstr "Le paramètre *optimize*."
 
 #: library/zipfile.rst:651
@@ -1071,31 +1094,51 @@ msgstr ""
 "``test_``, nous pouvons utiliser une fonction *filterfunc* pour les "
 "exclure ::"
 
-#: library/zipfile.rst:691
+#: library/zipfile.rst:685
+msgid ""
+">>> zf = PyZipFile('myprog.zip')\n"
+">>> def notests(s):\n"
+"...     fn = os.path.basename(s)\n"
+"...     return (not (fn == 'test' or fn.startswith('test_')))\n"
+"...\n"
+">>> zf.writepy('myprog', filterfunc=notests)"
+msgstr ""
+
+#: library/zipfile.rst:692
 msgid "The :meth:`writepy` method makes archives with file names like this::"
 msgstr ""
 "La méthode :meth:`writepy` crée des archives avec des noms de fichier comme "
 "suit ::"
 
-#: library/zipfile.rst:700
-msgid "The *filterfunc* parameter."
+#: library/zipfile.rst:695
+msgid ""
+"string.pyc                   # Top level name\n"
+"test/__init__.pyc            # Package directory\n"
+"test/testall.pyc             # Module test.testall\n"
+"test/bogus/__init__.pyc      # Subpackage directory\n"
+"test/bogus/myfile.pyc        # Submodule test.bogus.myfile"
+msgstr ""
+
+#: library/zipfile.rst:701
+#, fuzzy
+msgid "Added the *filterfunc* parameter."
 msgstr "Le paramètre *filterfunc*."
 
-#: library/zipfile.rst:703
+#: library/zipfile.rst:704
 msgid "The *pathname* parameter accepts a :term:`path-like object`."
 msgstr ""
 "Le paramètre *pathname* accepte un objet chemin-compatible :term:`path-like "
 "object`."
 
-#: library/zipfile.rst:706
+#: library/zipfile.rst:707
 msgid "Recursion sorts directory entries."
 msgstr "La récursion trie les entrées de dossier."
 
-#: library/zipfile.rst:713
+#: library/zipfile.rst:714
 msgid "ZipInfo Objects"
 msgstr "Objets *ZipInfo*"
 
-#: library/zipfile.rst:715
+#: library/zipfile.rst:716
 msgid ""
 "Instances of the :class:`ZipInfo` class are returned by the :meth:`.getinfo` "
 "and :meth:`.infolist` methods of :class:`ZipFile` objects.  Each object "
@@ -1105,7 +1148,7 @@ msgstr ""
 "méthodes :meth:`.getinfo` et :meth:`.infolist` des objets :class:`ZipFile`. "
 "Chaque objet stocke des informations sur un seul membre de l'archive ZIP."
 
-#: library/zipfile.rst:719
+#: library/zipfile.rst:720
 msgid ""
 "There is one classmethod to make a :class:`ZipInfo` instance for a "
 "filesystem file:"
@@ -1113,7 +1156,7 @@ msgstr ""
 "Il y a une méthode de classe pour créer une instance de :class:`ZipInfo` "
 "pour un fichier du système de fichiers :"
 
-#: library/zipfile.rst:725
+#: library/zipfile.rst:726
 msgid ""
 "Construct a :class:`ZipInfo` instance for a file on the filesystem, in "
 "preparation for adding it to a zip file."
@@ -1121,13 +1164,13 @@ msgstr ""
 "Construit une instance de :class:`ZipInfo` pour le fichier du système de "
 "fichiers, en préparation de l'ajouter à un fichier ZIP."
 
-#: library/zipfile.rst:728
+#: library/zipfile.rst:729
 msgid "*filename* should be the path to a file or directory on the filesystem."
 msgstr ""
 "*filename* doit être un chemin vers un fichier ou un répertoire dans le "
 "système de fichiers."
 
-#: library/zipfile.rst:730
+#: library/zipfile.rst:731
 msgid ""
 "If *arcname* is specified, it is used as the name within the archive. If "
 "*arcname* is not specified, the name will be the same as *filename*, but "
@@ -1137,31 +1180,36 @@ msgstr ""
 "*arcname* n'est pas spécifié, le nom sera le même que *filename* mais sans "
 "lettre de disque et sans séparateur de chemin en première position."
 
-#: library/zipfile.rst:742
+#: library/zipfile.rst:743
 msgid "The *filename* parameter accepts a :term:`path-like object`."
 msgstr ""
 "Le paramètre  *filename* accepte un objet chemin-compatible :term:`path-like "
 "object`."
 
-#: library/zipfile.rst:749
+#: library/zipfile.rst:746
+#, fuzzy
+msgid "Added the *strict_timestamps* keyword-only parameter."
+msgstr "l'argument nommé *strict_timestamps*"
+
+#: library/zipfile.rst:750
 msgid "Instances have the following methods and attributes:"
 msgstr "Les instances ont les méthodes et attributs suivants :"
 
-#: library/zipfile.rst:753
+#: library/zipfile.rst:754
 msgid "Return ``True`` if this archive member is a directory."
 msgstr "Retourne ``True`` si le membre d'archive est un répertoire."
 
-#: library/zipfile.rst:755
+#: library/zipfile.rst:756
 msgid "This uses the entry's name: directories should always end with ``/``."
 msgstr ""
 "Utilise le nom de l'entrée : les répertoires doivent toujours se terminer "
 "par ``/``."
 
-#: library/zipfile.rst:762
+#: library/zipfile.rst:763
 msgid "Name of the file in the archive."
 msgstr "Nom du fichier dans l'archive."
 
-#: library/zipfile.rst:767
+#: library/zipfile.rst:768
 msgid ""
 "The time and date of the last modification to the archive member.  This is a "
 "tuple of six values:"
@@ -1169,77 +1217,77 @@ msgstr ""
 "Date et heure de dernière modification pour le membre de l'archive. *Tuple* "
 "de six valeurs :"
 
-#: library/zipfile.rst:771
+#: library/zipfile.rst:772
 msgid "Index"
 msgstr "Index"
 
-#: library/zipfile.rst:771
+#: library/zipfile.rst:772
 msgid "Value"
 msgstr "Valeur"
 
-#: library/zipfile.rst:773
+#: library/zipfile.rst:774
 msgid "``0``"
 msgstr "``0``"
 
-#: library/zipfile.rst:773
+#: library/zipfile.rst:774
 msgid "Year (>= 1980)"
 msgstr "Année (>= 1980)"
 
-#: library/zipfile.rst:775
+#: library/zipfile.rst:776
 msgid "``1``"
 msgstr "``1``"
 
-#: library/zipfile.rst:775
+#: library/zipfile.rst:776
 msgid "Month (one-based)"
 msgstr "Mois (indexé à partir de 1)"
 
-#: library/zipfile.rst:777
+#: library/zipfile.rst:778
 msgid "``2``"
 msgstr "``2``"
 
-#: library/zipfile.rst:777
+#: library/zipfile.rst:778
 msgid "Day of month (one-based)"
 msgstr "Jour du mois (indexé à partir de 1)"
 
-#: library/zipfile.rst:779
+#: library/zipfile.rst:780
 msgid "``3``"
 msgstr "``3``"
 
-#: library/zipfile.rst:779
+#: library/zipfile.rst:780
 msgid "Hours (zero-based)"
 msgstr "Heures (indexées à partir de 0)"
 
-#: library/zipfile.rst:781
+#: library/zipfile.rst:782
 msgid "``4``"
 msgstr "``4``"
 
-#: library/zipfile.rst:781
+#: library/zipfile.rst:782
 msgid "Minutes (zero-based)"
 msgstr "Minutes (indexées à partir de 0)"
 
-#: library/zipfile.rst:783
+#: library/zipfile.rst:784
 msgid "``5``"
 msgstr "``5``"
 
-#: library/zipfile.rst:783
+#: library/zipfile.rst:784
 msgid "Seconds (zero-based)"
 msgstr "Secondes (indexées à partir de 0)"
 
-#: library/zipfile.rst:788
+#: library/zipfile.rst:789
 msgid "The ZIP file format does not support timestamps before 1980."
 msgstr "Le format de fichier ZIP ne gère pas les horodatages avant 1980."
 
-#: library/zipfile.rst:793
+#: library/zipfile.rst:794
 msgid "Type of compression for the archive member."
 msgstr "Type de compression du membre d'archive."
 
-#: library/zipfile.rst:798
+#: library/zipfile.rst:799
 msgid "Comment for the individual archive member as a :class:`bytes` object."
 msgstr ""
 "Commentaire pour le membre d'archive individuel en tant qu'objet :class:"
 "`bytes`."
 
-#: library/zipfile.rst:803
+#: library/zipfile.rst:804
 msgid ""
 "Expansion field data.  The `PKZIP Application Note`_ contains some comments "
 "on the internal structure of the data contained in this :class:`bytes` "
@@ -1249,59 +1297,59 @@ msgstr ""
 "contient quelques commentaires sur la structure interne des données "
 "contenues dans cet objet :class:`bytes`."
 
-#: library/zipfile.rst:810
+#: library/zipfile.rst:811
 msgid "System which created ZIP archive."
 msgstr "Système ayant créé l'archive ZIP."
 
-#: library/zipfile.rst:815
+#: library/zipfile.rst:816
 msgid "PKZIP version which created ZIP archive."
 msgstr "Version de PKZIP ayant créé l'archive ZIP."
 
-#: library/zipfile.rst:820
+#: library/zipfile.rst:821
 msgid "PKZIP version needed to extract archive."
 msgstr "Version de PKZIP nécessaire à l'extraction de l'archive ZIP."
 
-#: library/zipfile.rst:825
+#: library/zipfile.rst:826
 msgid "Must be zero."
 msgstr "Doit être à zéro."
 
-#: library/zipfile.rst:830
+#: library/zipfile.rst:831
 msgid "ZIP flag bits."
 msgstr "Bits d'options ZIP."
 
-#: library/zipfile.rst:835
+#: library/zipfile.rst:836
 msgid "Volume number of file header."
 msgstr "Numéro de volume de l'entête du fichier."
 
-#: library/zipfile.rst:840
+#: library/zipfile.rst:841
 msgid "Internal attributes."
 msgstr "Attributs internes."
 
-#: library/zipfile.rst:845
+#: library/zipfile.rst:846
 msgid "External file attributes."
 msgstr "Attributs de fichier externes."
 
-#: library/zipfile.rst:850
+#: library/zipfile.rst:851
 msgid "Byte offset to the file header."
 msgstr "Longueur de l'entête du fichier en octets."
 
-#: library/zipfile.rst:855
+#: library/zipfile.rst:856
 msgid "CRC-32 of the uncompressed file."
 msgstr "CRC-32 du fichier décompressé."
 
-#: library/zipfile.rst:860
+#: library/zipfile.rst:861
 msgid "Size of the compressed data."
 msgstr "Taille des données décompressées."
 
-#: library/zipfile.rst:865
+#: library/zipfile.rst:866
 msgid "Size of the uncompressed file."
 msgstr "Taille du fichier décompressé."
 
-#: library/zipfile.rst:872
+#: library/zipfile.rst:873
 msgid "Command-Line Interface"
 msgstr "Interface en ligne de commande"
 
-#: library/zipfile.rst:874
+#: library/zipfile.rst:875
 msgid ""
 "The :mod:`zipfile` module provides a simple command-line interface to "
 "interact with ZIP archives."
@@ -1309,7 +1357,7 @@ msgstr ""
 "Le module :mod:`zipfile` fournit une interface en ligne de commande simple "
 "pour interagir avec des archives ZIP."
 
-#: library/zipfile.rst:877
+#: library/zipfile.rst:878
 msgid ""
 "If you want to create a new ZIP archive, specify its name after the :option:"
 "`-c` option and then list the filename(s) that should be included:"
@@ -1317,11 +1365,19 @@ msgstr ""
 "Si vous voulez créer une nouvelle archive ZIP, spécifiez son nom après "
 "l'option :option:`-c` et listez ensuite le(s) nom(s) de fichier à inclure :"
 
-#: library/zipfile.rst:884
+#: library/zipfile.rst:881
+msgid "$ python -m zipfile -c monty.zip spam.txt eggs.txt"
+msgstr ""
+
+#: library/zipfile.rst:885
 msgid "Passing a directory is also acceptable:"
 msgstr "Passer un répertoire est aussi possible :"
 
-#: library/zipfile.rst:890
+#: library/zipfile.rst:887
+msgid "$ python -m zipfile -c monty.zip life-of-brian_1979/"
+msgstr ""
+
+#: library/zipfile.rst:891
 msgid ""
 "If you want to extract a ZIP archive into the specified directory, use the :"
 "option:`-e` option:"
@@ -1329,44 +1385,52 @@ msgstr ""
 "Si vous voulez extraire une archive ZIP dans un répertoire donné, utilisez "
 "l'option :option:`-e` :"
 
-#: library/zipfile.rst:897
+#: library/zipfile.rst:894
+msgid "$ python -m zipfile -e monty.zip target-dir/"
+msgstr ""
+
+#: library/zipfile.rst:898
 msgid "For a list of the files in a ZIP archive, use the :option:`-l` option:"
 msgstr ""
 "Pour une liste des fichiers dans une archive ZIP, utilisez l'option :option:"
 "`-l` :"
 
-#: library/zipfile.rst:905
+#: library/zipfile.rst:900
+msgid "$ python -m zipfile -l monty.zip"
+msgstr ""
+
+#: library/zipfile.rst:906
 msgid "Command-line options"
 msgstr "Options de la ligne de commande"
 
-#: library/zipfile.rst:910
+#: library/zipfile.rst:911
 msgid "List files in a zipfile."
 msgstr "Liste les fichiers dans un fichier ZIP *zipfile*."
 
-#: library/zipfile.rst:915
+#: library/zipfile.rst:916
 msgid "Create zipfile from source files."
 msgstr "Crée un fichier ZIP *zipfile* à partir des fichiers *source*."
 
-#: library/zipfile.rst:920
+#: library/zipfile.rst:921
 msgid "Extract zipfile into target directory."
 msgstr ""
 "Extrait le fichier ZIP *zipfile* vers le répertoire cible *output_dir*."
 
-#: library/zipfile.rst:925
+#: library/zipfile.rst:926
 msgid "Test whether the zipfile is valid or not."
 msgstr "Teste si le fichier zip est valide."
 
-#: library/zipfile.rst:929
+#: library/zipfile.rst:930
 msgid ""
 "Specify encoding of member names for :option:`-l`, :option:`-e` and :option:"
 "`-t`."
 msgstr ""
 
-#: library/zipfile.rst:936
+#: library/zipfile.rst:937
 msgid "Decompression pitfalls"
 msgstr "Problèmes de décompression"
 
-#: library/zipfile.rst:938
+#: library/zipfile.rst:939
 msgid ""
 "The extraction in zipfile module might fail due to some pitfalls listed "
 "below."
@@ -1374,11 +1438,11 @@ msgstr ""
 "L'extraction d'une archive ZIP par le module *zipfile* peut échouer pour les "
 "raisons listées ci-dessous."
 
-#: library/zipfile.rst:941
+#: library/zipfile.rst:942
 msgid "From file itself"
 msgstr "À cause du fichier lui-même"
 
-#: library/zipfile.rst:943
+#: library/zipfile.rst:944
 msgid ""
 "Decompression may fail due to incorrect password / CRC checksum / ZIP format "
 "or unsupported compression method / decryption."
@@ -1387,11 +1451,11 @@ msgstr ""
 "contrôle CRC incorrectes. Elle peut aussi échouer si le format, la méthode "
 "de compression, ou de chiffrement n'est pas implémenté."
 
-#: library/zipfile.rst:947
+#: library/zipfile.rst:948
 msgid "File System limitations"
 msgstr "Limitations du système de fichiers"
 
-#: library/zipfile.rst:949
+#: library/zipfile.rst:950
 msgid ""
 "Exceeding limitations on different file systems can cause decompression "
 "failed. Such as allowable characters in the directory entries, length of the "
@@ -1403,11 +1467,11 @@ msgstr ""
 "nom de fichier, la longueur du nom du fichier ou du chemin, la taille d'un "
 "fichier, le nombre de fichiers, etc."
 
-#: library/zipfile.rst:956
+#: library/zipfile.rst:957
 msgid "Resources limitations"
 msgstr "Ressources limitées"
 
-#: library/zipfile.rst:958
+#: library/zipfile.rst:959
 msgid ""
 "The lack of memory or disk volume would lead to decompression failed. For "
 "example, decompression bombs (aka `ZIP bomb`_) apply to zipfile library that "
@@ -1417,11 +1481,11 @@ msgstr ""
 "décompression. Par exemple, une bombe de décompression (`ZIP bomb`_), "
 "décompressés avec *zifile* peut remplir l'espace disque."
 
-#: library/zipfile.rst:963
+#: library/zipfile.rst:964
 msgid "Interruption"
 msgstr "Interruption"
 
-#: library/zipfile.rst:965
+#: library/zipfile.rst:966
 msgid ""
 "Interruption during the decompression, such as pressing control-C or killing "
 "the decompression process may result in incomplete decompression of the "
@@ -1430,11 +1494,11 @@ msgstr ""
 "Une interruption durant la décompression, en utilisant *control-C* ou en "
 "tuant le processus, peut mener à une décompression partielle de l'archive."
 
-#: library/zipfile.rst:969
+#: library/zipfile.rst:970
 msgid "Default behaviors of extraction"
 msgstr "Comportements par défaut de l'extraction"
 
-#: library/zipfile.rst:971
+#: library/zipfile.rst:972
 msgid ""
 "Not knowing the default extraction behaviors can cause unexpected "
 "decompression results. For example, when extracting the same archive twice, "

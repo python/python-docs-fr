@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-12-16 17:25+0100\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/numbers.rst:2
-msgid ":mod:`numbers` --- Numeric abstract base classes"
+#, fuzzy
+msgid ":mod:`!numbers` --- Numeric abstract base classes"
 msgstr ":mod:`numbers` — Classes de base abstraites numériques"
 
 #: library/numbers.rst:7
@@ -25,10 +26,10 @@ msgstr "**Code source :** :source:`Lib/numbers.py`"
 #: library/numbers.rst:11
 #, fuzzy
 msgid ""
-"The :mod:`numbers` module (:pep:`3141`) defines a hierarchy of numeric :term:"
-"`abstract base classes <abstract base class>` which progressively define "
-"more operations.  None of the types defined in this module are intended to "
-"be instantiated."
+"The :mod:`!numbers` module (:pep:`3141`) defines a hierarchy of numeric :"
+"term:`abstract base classes <abstract base class>` which progressively "
+"define more operations.  None of the types defined in this module are "
+"intended to be instantiated."
 msgstr ""
 "Le module :mod:`numbers` (:pep:`3141`) définit une hiérarchie de :term:"
 "`classes de base abstraites<abstract base class>` numériques qui définissent "
@@ -80,8 +81,9 @@ msgstr ""
 "(1-3j)``."
 
 #: library/numbers.rst:48
+#, fuzzy
 msgid ""
-"To :class:`Complex`, :class:`Real` adds the operations that work on real "
+"To :class:`Complex`, :class:`!Real` adds the operations that work on real "
 "numbers."
 msgstr ""
 ":class:`Real` ajoute les opérations qui fonctionnent sur les nombres réels "
@@ -146,12 +148,14 @@ msgstr ""
 "``~``."
 
 #: library/numbers.rst:88
-msgid "Notes for type implementors"
+#, fuzzy
+msgid "Notes for type implementers"
 msgstr "Notes pour implémenter des types"
 
 #: library/numbers.rst:90
+#, fuzzy
 msgid ""
-"Implementors should be careful to make equal numbers equal and hash them to "
+"Implementers should be careful to make equal numbers equal and hash them to "
 "the same values. This may be subtle if there are two different extensions of "
 "the real numbers. For example, :class:`fractions.Fraction` implements :func:"
 "`hash` as follows::"
@@ -161,6 +165,21 @@ msgstr ""
 "Cela peut être subtil s'il y a deux dérivations différentes des nombres "
 "réels. Par exemple, :class:`fractions.Fraction` implémente :func:`hash` "
 "comme suit ::"
+
+#: library/numbers.rst:95
+msgid ""
+"def __hash__(self):\n"
+"    if self.denominator == 1:\n"
+"        # Get integers right.\n"
+"        return hash(self.numerator)\n"
+"    # Expensive check, but definitely correct.\n"
+"    if self == float(self):\n"
+"        return hash(float(self))\n"
+"    else:\n"
+"        # Use tuple's hash to avoid a high collision rate on\n"
+"        # simple fractions.\n"
+"        return hash((self.numerator, self.denominator))"
+msgstr ""
 
 #: library/numbers.rst:109
 msgid "Adding More Numeric ABCs"
@@ -177,17 +196,24 @@ msgstr ""
 "ajouter. Vous pouvez ajouter ``MyFoo`` entre :class:`Complex` et :class:"
 "`Real` ainsi ::"
 
+#: library/numbers.rst:116
+msgid ""
+"class MyFoo(Complex): ...\n"
+"MyFoo.register(Real)"
+msgstr ""
+
 #: library/numbers.rst:123
 msgid "Implementing the arithmetic operations"
 msgstr "Implémentation des opérations arithmétiques"
 
 #: library/numbers.rst:125
+#, fuzzy
 msgid ""
 "We want to implement the arithmetic operations so that mixed-mode operations "
 "either call an implementation whose author knew about the types of both "
 "arguments, or convert both to the nearest built in type and do the operation "
-"there. For subtypes of :class:`Integral`, this means that :meth:`__add__` "
-"and :meth:`__radd__` should be defined as::"
+"there. For subtypes of :class:`Integral`, this means that :meth:`~object."
+"__add__` and :meth:`~object.__radd__` should be defined as::"
 msgstr ""
 "Nous voulons implémenter les opérations arithmétiques de sorte que les "
 "opérations en mode mixte appellent une implémentation dont l'auteur connaît "
@@ -196,7 +222,34 @@ msgstr ""
 "class:`Integral`, cela signifie que :meth:`__add__` et :meth:`__radd__` "
 "devraient être définis comme suit ::"
 
-#: library/numbers.rst:156
+#: library/numbers.rst:132
+msgid ""
+"class MyIntegral(Integral):\n"
+"\n"
+"    def __add__(self, other):\n"
+"        if isinstance(other, MyIntegral):\n"
+"            return do_my_adding_stuff(self, other)\n"
+"        elif isinstance(other, OtherTypeIKnowAbout):\n"
+"            return do_my_other_adding_stuff(self, other)\n"
+"        else:\n"
+"            return NotImplemented\n"
+"\n"
+"    def __radd__(self, other):\n"
+"        if isinstance(other, MyIntegral):\n"
+"            return do_my_adding_stuff(other, self)\n"
+"        elif isinstance(other, OtherTypeIKnowAbout):\n"
+"            return do_my_other_adding_stuff(other, self)\n"
+"        elif isinstance(other, Integral):\n"
+"            return int(other) + int(self)\n"
+"        elif isinstance(other, Real):\n"
+"            return float(other) + float(self)\n"
+"        elif isinstance(other, Complex):\n"
+"            return complex(other) + complex(self)\n"
+"        else:\n"
+"            return NotImplemented"
+msgstr ""
+
+#: library/numbers.rst:157
 msgid ""
 "There are 5 different cases for a mixed-type operation on subclasses of :"
 "class:`Complex`. I'll refer to all of the above code that doesn't refer to "
@@ -211,17 +264,20 @@ msgstr ""
 "type de :class:`Complex` (``a : A <: Complex``) et ``b : B <: Complex``. "
 "Considérons ``a + b`` :"
 
-#: library/numbers.rst:163
-msgid "If ``A`` defines an :meth:`__add__` which accepts ``b``, all is well."
+#: library/numbers.rst:164
+#, fuzzy
+msgid ""
+"If ``A`` defines an :meth:`~object.__add__` which accepts ``b``, all is well."
 msgstr "Si ``A`` définit une :meth:`__add__` qui accepte ``b``, tout va bien."
 
-#: library/numbers.rst:165
+#: library/numbers.rst:166
+#, fuzzy
 msgid ""
 "If ``A`` falls back to the boilerplate code, and it were to return a value "
-"from :meth:`__add__`, we'd miss the possibility that ``B`` defines a more "
-"intelligent :meth:`__radd__`, so the boilerplate should return :const:"
-"`NotImplemented` from :meth:`__add__`. (Or ``A`` may not implement :meth:"
-"`__add__` at all.)"
+"from :meth:`~object.__add__`, we'd miss the possibility that ``B`` defines a "
+"more intelligent :meth:`~object.__radd__`, so the boilerplate should return :"
+"data:`NotImplemented` from :meth:`!__add__`. (Or ``A`` may not implement :"
+"meth:`!__add__` at all.)"
 msgstr ""
 "Si ``A`` fait appel au code générique et que celui-ci renvoie une valeur de :"
 "meth:`__add__`, nous manquons la possibilité que ``B`` définisse une :meth:"
@@ -229,15 +285,16 @@ msgstr ""
 "`NotImplemented` dans :meth:`__add__` (ou alors ``A`` ne doit pas "
 "implémenter :meth:`__add__` du tout.)"
 
-#: library/numbers.rst:171
+#: library/numbers.rst:172
+#, fuzzy
 msgid ""
-"Then ``B``'s :meth:`__radd__` gets a chance. If it accepts ``a``, all is "
-"well."
+"Then ``B``'s :meth:`~object.__radd__` gets a chance. If it accepts ``a``, "
+"all is well."
 msgstr ""
 "Alors :meth:`__radd__` de ``B`` a une chance. si elle accepte ``a``, tout va "
 "bien."
 
-#: library/numbers.rst:173
+#: library/numbers.rst:174
 msgid ""
 "If it falls back to the boilerplate, there are no more possible methods to "
 "try, so this is where the default implementation should live."
@@ -245,7 +302,7 @@ msgstr ""
 "Si elle fait appel au code générique, il n'y a plus de méthode possible à "
 "essayer, c'est donc ici que l'implémentation par défaut intervient."
 
-#: library/numbers.rst:176
+#: library/numbers.rst:177
 msgid ""
 "If ``B <: A``, Python tries ``B.__radd__`` before ``A.__add__``. This is ok, "
 "because it was implemented with knowledge of ``A``, so it can handle those "
@@ -255,17 +312,19 @@ msgstr ""
 "valable parce qu'elle est implémentée avec la connaissance de ``A``, donc "
 "elle peut gérer ces instances avant de déléguer à :class:`Complex`."
 
-#: library/numbers.rst:181
+#: library/numbers.rst:182
+#, fuzzy
 msgid ""
 "If ``A <: Complex`` and ``B <: Real`` without sharing any other knowledge, "
 "then the appropriate shared operation is the one involving the built in :"
-"class:`complex`, and both :meth:`__radd__` s land there, so ``a+b == b+a``."
+"class:`complex`, and both :meth:`~object.__radd__` s land there, so ``a+b == "
+"b+a``."
 msgstr ""
 "Si ``A <: Complex`` et ``B <: Real`` sans autre information, alors "
 "l'opération commune appropriée est celle impliquant :class:`complex` et les "
 "deux :meth:`__radd__` atterrissent à cet endroit, donc ``a+b == b+a``."
 
-#: library/numbers.rst:186
+#: library/numbers.rst:187
 msgid ""
 "Because most of the operations on any given type will be very similar, it "
 "can be useful to define a helper function which generates the forward and "
@@ -276,3 +335,44 @@ msgstr ""
 "peut être utile de définir une fonction accessoire qui génère les instances "
 "résultantes et inverses d'un opérateur donné. Par exemple, :class:`fractions."
 "Fraction` utilise ::"
+
+#: library/numbers.rst:192
+msgid ""
+"def _operator_fallbacks(monomorphic_operator, fallback_operator):\n"
+"    def forward(a, b):\n"
+"        if isinstance(b, (int, Fraction)):\n"
+"            return monomorphic_operator(a, b)\n"
+"        elif isinstance(b, float):\n"
+"            return fallback_operator(float(a), b)\n"
+"        elif isinstance(b, complex):\n"
+"            return fallback_operator(complex(a), b)\n"
+"        else:\n"
+"            return NotImplemented\n"
+"    forward.__name__ = '__' + fallback_operator.__name__ + '__'\n"
+"    forward.__doc__ = monomorphic_operator.__doc__\n"
+"\n"
+"    def reverse(b, a):\n"
+"        if isinstance(a, Rational):\n"
+"            # Includes ints.\n"
+"            return monomorphic_operator(a, b)\n"
+"        elif isinstance(a, Real):\n"
+"            return fallback_operator(float(a), float(b))\n"
+"        elif isinstance(a, Complex):\n"
+"            return fallback_operator(complex(a), complex(b))\n"
+"        else:\n"
+"            return NotImplemented\n"
+"    reverse.__name__ = '__r' + fallback_operator.__name__ + '__'\n"
+"    reverse.__doc__ = monomorphic_operator.__doc__\n"
+"\n"
+"    return forward, reverse\n"
+"\n"
+"def _add(a, b):\n"
+"    \"\"\"a + b\"\"\"\n"
+"    return Fraction(a.numerator * b.denominator +\n"
+"                    b.numerator * a.denominator,\n"
+"                    a.denominator * b.denominator)\n"
+"\n"
+"__add__, __radd__ = _operator_fallbacks(_add, operator.add)\n"
+"\n"
+"# ..."
+msgstr ""

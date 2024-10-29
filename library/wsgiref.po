@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 13:19+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/wsgiref.rst:2
-msgid ":mod:`wsgiref` --- WSGI Utilities and Reference Implementation"
+#, fuzzy
+msgid ":mod:`!wsgiref` --- WSGI Utilities and Reference Implementation"
 msgstr ":mod:`wsgiref` — Outils et implémentation de référence de WSGI"
 
 #: library/wsgiref.rst:10
@@ -196,9 +197,33 @@ msgstr ""
 "être utilisée dans une application ou un serveur WSGI, étant donné que les "
 "données sont factices !"
 
-#: library/wsgiref.rst:170 library/wsgiref.rst:425
+#: library/wsgiref.rst:170 library/wsgiref.rst:426
 msgid "Example usage::"
 msgstr "Exemple d'utilisation ::"
+
+#: library/wsgiref.rst:124
+msgid ""
+"from wsgiref.util import setup_testing_defaults\n"
+"from wsgiref.simple_server import make_server\n"
+"\n"
+"# A relatively simple WSGI application. It's going to print out the\n"
+"# environment dictionary after being updated by setup_testing_defaults\n"
+"def simple_app(environ, start_response):\n"
+"    setup_testing_defaults(environ)\n"
+"\n"
+"    status = '200 OK'\n"
+"    headers = [('Content-type', 'text/plain; charset=utf-8')]\n"
+"\n"
+"    start_response(status, headers)\n"
+"\n"
+"    ret = [(\"%s: %s\\n\" % (key, value)).encode(\"utf-8\")\n"
+"           for key, value in environ.items()]\n"
+"    return ret\n"
+"\n"
+"with make_server('', 8000, simple_app) as httpd:\n"
+"    print(\"Serving on port 8000...\")\n"
+"    httpd.serve_forever()"
+msgstr ""
 
 #: library/wsgiref.rst:146
 msgid ""
@@ -229,8 +254,21 @@ msgid ""
 "`close` method when called."
 msgstr ""
 
+#: library/wsgiref.rst:172
+msgid ""
+"from io import StringIO\n"
+"from wsgiref.util import FileWrapper\n"
+"\n"
+"# We're using a StringIO-buffer for as the file-like object\n"
+"filelike = StringIO(\"This is an example file-like object\"*10)\n"
+"wrapper = FileWrapper(filelike, blksize=5)\n"
+"\n"
+"for chunk in wrapper:\n"
+"    print(chunk)"
+msgstr ""
+
 #: library/wsgiref.rst:182
-msgid "Support for :meth:`__getitem__` method has been removed."
+msgid "Support for :meth:`~object.__getitem__` method has been removed."
 msgstr ""
 
 #: library/wsgiref.rst:187
@@ -253,16 +291,17 @@ msgstr ""
 #: library/wsgiref.rst:203
 msgid ""
 ":class:`Headers` objects support typical mapping operations including :meth:"
-"`__getitem__`, :meth:`get`, :meth:`__setitem__`, :meth:`setdefault`, :meth:"
-"`__delitem__` and :meth:`__contains__`.  For each of these methods, the key "
-"is the header name (treated case-insensitively), and the value is the first "
-"value associated with that header name.  Setting a header deletes any "
-"existing values for that header, then adds a new value at the end of the "
-"wrapped header list.  Headers' existing order is generally maintained, with "
-"new headers added to the end of the wrapped list."
+"`~object.__getitem__`, :meth:`~dict.get`, :meth:`~object.__setitem__`, :meth:"
+"`~dict.setdefault`, :meth:`~object.__delitem__` and :meth:`~object."
+"__contains__`.  For each of these methods, the key is the header name "
+"(treated case-insensitively), and the value is the first value associated "
+"with that header name.  Setting a header deletes any existing values for "
+"that header, then adds a new value at the end of the wrapped header list.  "
+"Headers' existing order is generally maintained, with new headers added to "
+"the end of the wrapped list."
 msgstr ""
 
-#: library/wsgiref.rst:212
+#: library/wsgiref.rst:213
 msgid ""
 "Unlike a dictionary, :class:`Headers` objects do not raise an error when you "
 "try to get or delete a key that isn't in the wrapped header list. Getting a "
@@ -270,7 +309,7 @@ msgid ""
 "does nothing."
 msgstr ""
 
-#: library/wsgiref.rst:217
+#: library/wsgiref.rst:218
 msgid ""
 ":class:`Headers` objects also support :meth:`keys`, :meth:`values`, and :"
 "meth:`items` methods.  The lists returned by :meth:`keys` and :meth:`items` "
@@ -281,7 +320,7 @@ msgid ""
 "list."
 msgstr ""
 
-#: library/wsgiref.rst:224
+#: library/wsgiref.rst:225
 msgid ""
 "Calling ``bytes()`` on a :class:`Headers` object returns a formatted "
 "bytestring suitable for transmission as HTTP response headers.  Each header "
@@ -290,18 +329,18 @@ msgid ""
 "terminated with a blank line."
 msgstr ""
 
-#: library/wsgiref.rst:230
+#: library/wsgiref.rst:231
 msgid ""
 "In addition to their mapping interface and formatting features, :class:"
 "`Headers` objects also have the following methods for querying and adding "
 "multi-valued headers, and for adding headers with MIME parameters:"
 msgstr ""
 
-#: library/wsgiref.rst:237
+#: library/wsgiref.rst:238
 msgid "Return a list of all the values for the named header."
 msgstr "Renvoie une liste de toutes les valeurs pour l'en-tête *name*."
 
-#: library/wsgiref.rst:239
+#: library/wsgiref.rst:240
 msgid ""
 "The returned list will be sorted in the order they appeared in the original "
 "header list or were added to this instance, and may contain duplicates.  Any "
@@ -309,13 +348,13 @@ msgid ""
 "no fields exist with the given name, returns an empty list."
 msgstr ""
 
-#: library/wsgiref.rst:247
+#: library/wsgiref.rst:248
 msgid ""
 "Add a (possibly multi-valued) header, with optional MIME parameters "
 "specified via keyword arguments."
 msgstr ""
 
-#: library/wsgiref.rst:250
+#: library/wsgiref.rst:251
 msgid ""
 "*name* is the header field to add.  Keyword arguments can be used to set "
 "MIME parameters for the header field.  Each parameter must be a string or "
@@ -327,19 +366,27 @@ msgid ""
 "a value.)  Example usage::"
 msgstr ""
 
-#: library/wsgiref.rst:260
+#: library/wsgiref.rst:259
+msgid "h.add_header('content-disposition', 'attachment', filename='bud.gif')"
+msgstr ""
+
+#: library/wsgiref.rst:261
 msgid "The above will add a header that looks like this::"
 msgstr "Le code ci-dessus ajoute un en-tête qui ressemble à ceci ::"
 
-#: library/wsgiref.rst:265
+#: library/wsgiref.rst:263
+msgid "Content-Disposition: attachment; filename=\"bud.gif\""
+msgstr ""
+
+#: library/wsgiref.rst:266
 msgid "*headers* parameter is optional."
 msgstr "Le paramètre *headers* est optionnel."
 
-#: library/wsgiref.rst:270
+#: library/wsgiref.rst:271
 msgid ":mod:`wsgiref.simple_server` -- a simple WSGI HTTP server"
 msgstr ""
 
-#: library/wsgiref.rst:276
+#: library/wsgiref.rst:277
 msgid ""
 "This module implements a simple HTTP server (based on :mod:`http.server`) "
 "that serves WSGI applications.  Each server instance serves a single WSGI "
@@ -350,7 +397,7 @@ msgid ""
 "`wsgiref.util`.)"
 msgstr ""
 
-#: library/wsgiref.rst:287
+#: library/wsgiref.rst:288
 msgid ""
 "Create a new WSGI server listening on *host* and *port*, accepting "
 "connections for *app*.  The return value is an instance of the supplied "
@@ -359,7 +406,21 @@ msgid ""
 "pep:`3333`."
 msgstr ""
 
-#: library/wsgiref.rst:308
+#: library/wsgiref.rst:295
+msgid ""
+"from wsgiref.simple_server import make_server, demo_app\n"
+"\n"
+"with make_server('', 8000, demo_app) as httpd:\n"
+"    print(\"Serving HTTP on port 8000...\")\n"
+"\n"
+"    # Respond to requests until process is killed\n"
+"    httpd.serve_forever()\n"
+"\n"
+"    # Alternative: serve one request, then exit\n"
+"    httpd.handle_request()"
+msgstr ""
+
+#: library/wsgiref.rst:309
 msgid ""
 "This function is a small but complete WSGI application that returns a text "
 "page containing the message \"Hello world!\" and a list of the key/value "
@@ -368,51 +429,51 @@ msgid ""
 "WSGI application correctly."
 msgstr ""
 
-#: library/wsgiref.rst:317
+#: library/wsgiref.rst:318
 msgid ""
 "Create a :class:`WSGIServer` instance.  *server_address* should be a ``(host,"
 "port)`` tuple, and *RequestHandlerClass* should be the subclass of :class:"
 "`http.server.BaseHTTPRequestHandler` that will be used to process requests."
 msgstr ""
 
-#: library/wsgiref.rst:322
+#: library/wsgiref.rst:323
 msgid ""
 "You do not normally need to call this constructor, as the :func:"
 "`make_server` function can handle all the details for you."
 msgstr ""
 
-#: library/wsgiref.rst:325
+#: library/wsgiref.rst:326
 msgid ""
 ":class:`WSGIServer` is a subclass of :class:`http.server.HTTPServer`, so all "
 "of its methods (such as :meth:`serve_forever` and :meth:`handle_request`) "
 "are available. :class:`WSGIServer` also provides these WSGI-specific methods:"
 msgstr ""
 
-#: library/wsgiref.rst:332
+#: library/wsgiref.rst:333
 msgid ""
 "Sets the callable *application* as the WSGI application that will receive "
 "requests."
 msgstr ""
 
-#: library/wsgiref.rst:338
+#: library/wsgiref.rst:339
 msgid "Returns the currently set application callable."
 msgstr ""
 
-#: library/wsgiref.rst:340
+#: library/wsgiref.rst:341
 msgid ""
 "Normally, however, you do not need to use these additional methods, as :meth:"
 "`set_app` is normally called by :func:`make_server`, and the :meth:`get_app` "
 "exists mainly for the benefit of request handler instances."
 msgstr ""
 
-#: library/wsgiref.rst:347
+#: library/wsgiref.rst:348
 msgid ""
 "Create an HTTP handler for the given *request* (i.e. a socket), "
 "*client_address* (a ``(host,port)`` tuple), and *server* (:class:"
 "`WSGIServer` instance)."
 msgstr ""
 
-#: library/wsgiref.rst:350
+#: library/wsgiref.rst:351
 msgid ""
 "You do not need to create instances of this class directly; they are "
 "automatically created as needed by :class:`WSGIServer` objects.  You can, "
@@ -421,7 +482,7 @@ msgid ""
 "subclasses:"
 msgstr ""
 
-#: library/wsgiref.rst:359
+#: library/wsgiref.rst:360
 msgid ""
 "Return a :data:`~wsgiref.types.WSGIEnvironment` dictionary for a request.  "
 "The default implementation copies the contents of the :class:`WSGIServer` "
@@ -431,24 +492,24 @@ msgid ""
 "variables as specified in :pep:`3333`."
 msgstr ""
 
-#: library/wsgiref.rst:370
+#: library/wsgiref.rst:371
 msgid ""
 "Return the object that should be used as the ``wsgi.errors`` stream. The "
 "default implementation just returns ``sys.stderr``."
 msgstr ""
 
-#: library/wsgiref.rst:376
+#: library/wsgiref.rst:377
 msgid ""
 "Process the HTTP request.  The default implementation creates a handler "
 "instance using a :mod:`wsgiref.handlers` class to implement the actual WSGI "
 "application interface."
 msgstr ""
 
-#: library/wsgiref.rst:382
+#: library/wsgiref.rst:383
 msgid ":mod:`wsgiref.validate` --- WSGI conformance checker"
 msgstr ""
 
-#: library/wsgiref.rst:388
+#: library/wsgiref.rst:389
 msgid ""
 "When creating new WSGI application objects, frameworks, servers, or "
 "middleware, it can be useful to validate the new code's conformance using :"
@@ -458,7 +519,7 @@ msgid ""
 "conformance."
 msgstr ""
 
-#: library/wsgiref.rst:395
+#: library/wsgiref.rst:396
 msgid ""
 "Note that this utility does not guarantee complete :pep:`3333` compliance; "
 "an absence of errors from this module does not necessarily mean that errors "
@@ -467,13 +528,13 @@ msgid ""
 "compliant."
 msgstr ""
 
-#: library/wsgiref.rst:400
+#: library/wsgiref.rst:401
 msgid ""
 "This module is based on the :mod:`paste.lint` module from Ian Bicking's "
 "\"Python Paste\" library."
 msgstr ""
 
-#: library/wsgiref.rst:406
+#: library/wsgiref.rst:407
 msgid ""
 "Wrap *application* and return a new WSGI application object.  The returned "
 "application will forward all requests to the original *application*, and "
@@ -481,7 +542,7 @@ msgid ""
 "conforming to the WSGI specification and to :rfc:`2616`."
 msgstr ""
 
-#: library/wsgiref.rst:411
+#: library/wsgiref.rst:412
 msgid ""
 "Any detected nonconformance results in an :exc:`AssertionError` being "
 "raised; note, however, that how these errors are handled is server-"
@@ -492,7 +553,7 @@ msgid ""
 "stream."
 msgstr ""
 
-#: library/wsgiref.rst:418
+#: library/wsgiref.rst:419
 msgid ""
 "This wrapper may also generate output using the :mod:`warnings` module to "
 "indicate behaviors that are questionable but which may not actually be "
@@ -502,11 +563,35 @@ msgid ""
 "object)."
 msgstr ""
 
-#: library/wsgiref.rst:450
+#: library/wsgiref.rst:428
+msgid ""
+"from wsgiref.validate import validator\n"
+"from wsgiref.simple_server import make_server\n"
+"\n"
+"# Our callable object which is intentionally not compliant to the\n"
+"# standard, so the validator is going to break\n"
+"def simple_app(environ, start_response):\n"
+"    status = '200 OK'  # HTTP Status\n"
+"    headers = [('Content-type', 'text/plain')]  # HTTP Headers\n"
+"    start_response(status, headers)\n"
+"\n"
+"    # This is going to break because we need to return a list, and\n"
+"    # the validator is going to inform us\n"
+"    return b\"Hello World\"\n"
+"\n"
+"# This is the application wrapped in a validator\n"
+"validator_app = validator(simple_app)\n"
+"\n"
+"with make_server('', 8000, validator_app) as httpd:\n"
+"    print(\"Listening on port 8000....\")\n"
+"    httpd.serve_forever()"
+msgstr ""
+
+#: library/wsgiref.rst:451
 msgid ":mod:`wsgiref.handlers` -- server/gateway base classes"
 msgstr ""
 
-#: library/wsgiref.rst:456
+#: library/wsgiref.rst:457
 msgid ""
 "This module provides base handler classes for implementing WSGI servers and "
 "gateways.  These base classes handle most of the work of communicating with "
@@ -514,7 +599,7 @@ msgid ""
 "with input, output, and error streams."
 msgstr ""
 
-#: library/wsgiref.rst:464
+#: library/wsgiref.rst:465
 msgid ""
 "CGI-based invocation via ``sys.stdin``, ``sys.stdout``, ``sys.stderr`` and "
 "``os.environ``.  This is useful when you have a WSGI application and want to "
@@ -522,7 +607,7 @@ msgid ""
 "``app`` is the WSGI application object you wish to invoke."
 msgstr ""
 
-#: library/wsgiref.rst:469
+#: library/wsgiref.rst:470
 msgid ""
 "This class is a subclass of :class:`BaseCGIHandler` that sets ``wsgi."
 "run_once`` to true, ``wsgi.multithread`` to false, and ``wsgi.multiprocess`` "
@@ -530,21 +615,21 @@ msgid ""
 "CGI streams and environment."
 msgstr ""
 
-#: library/wsgiref.rst:477
+#: library/wsgiref.rst:478
 msgid ""
 "A specialized alternative to :class:`CGIHandler`, for use when deploying on "
 "Microsoft's IIS web server, without having set the config allowPathInfo "
 "option (IIS>=7) or metabase allowPathInfoForScriptMappings (IIS<7)."
 msgstr ""
 
-#: library/wsgiref.rst:481
+#: library/wsgiref.rst:482
 msgid ""
 "By default, IIS gives a ``PATH_INFO`` that duplicates the ``SCRIPT_NAME`` at "
 "the front, causing problems for WSGI applications that wish to implement "
 "routing. This handler strips any such duplicated path."
 msgstr ""
 
-#: library/wsgiref.rst:485
+#: library/wsgiref.rst:486
 msgid ""
 "IIS can be configured to pass the correct ``PATH_INFO``, but this causes "
 "another bug where ``PATH_TRANSLATED`` is wrong. Luckily this variable is "
@@ -555,7 +640,7 @@ msgid ""
 "because there is still no UI for it.)."
 msgstr ""
 
-#: library/wsgiref.rst:493
+#: library/wsgiref.rst:494
 msgid ""
 "There is no way for CGI code to tell whether the option was set, so a "
 "separate handler class is provided.  It is used in the same way as :class:"
@@ -563,7 +648,7 @@ msgid ""
 "is the WSGI application object you wish to invoke."
 msgstr ""
 
-#: library/wsgiref.rst:503
+#: library/wsgiref.rst:504
 msgid ""
 "Similar to :class:`CGIHandler`, but instead of using the :mod:`sys` and :mod:"
 "`os` modules, the CGI environment and I/O streams are specified explicitly. "
@@ -572,7 +657,7 @@ msgid ""
 "the handler instance."
 msgstr ""
 
-#: library/wsgiref.rst:509
+#: library/wsgiref.rst:510
 msgid ""
 "This class is a subclass of :class:`SimpleHandler` intended for use with "
 "software other than HTTP \"origin servers\".  If you are writing a gateway "
@@ -581,58 +666,59 @@ msgid ""
 "this instead of :class:`SimpleHandler`."
 msgstr ""
 
-#: library/wsgiref.rst:518
+#: library/wsgiref.rst:519
 msgid ""
 "Similar to :class:`BaseCGIHandler`, but designed for use with HTTP origin "
 "servers.  If you are writing an HTTP server implementation, you will "
 "probably want to subclass this instead of :class:`BaseCGIHandler`."
 msgstr ""
 
-#: library/wsgiref.rst:522
+#: library/wsgiref.rst:523
 msgid ""
-"This class is a subclass of :class:`BaseHandler`.  It overrides the :meth:"
-"`__init__`, :meth:`get_stdin`, :meth:`get_stderr`, :meth:`add_cgi_vars`, :"
-"meth:`_write`, and :meth:`_flush` methods to support explicitly setting the "
-"environment and streams via the constructor.  The supplied environment and "
-"streams are stored in the :attr:`stdin`, :attr:`stdout`, :attr:`stderr`, "
-"and :attr:`environ` attributes."
+"This class is a subclass of :class:`BaseHandler`.  It overrides the :meth:`!"
+"__init__`, :meth:`~BaseHandler.get_stdin`, :meth:`~BaseHandler.get_stderr`, :"
+"meth:`~BaseHandler.add_cgi_vars`, :meth:`~BaseHandler._write`, and :meth:"
+"`~BaseHandler._flush` methods to support explicitly setting the environment "
+"and streams via the constructor.  The supplied environment and streams are "
+"stored in the :attr:`stdin`, :attr:`stdout`, :attr:`stderr`, and :attr:"
+"`environ` attributes."
 msgstr ""
 
-#: library/wsgiref.rst:529
+#: library/wsgiref.rst:532
 msgid ""
 "The :meth:`~io.BufferedIOBase.write` method of *stdout* should write each "
 "chunk in full, like :class:`io.BufferedIOBase`."
 msgstr ""
 
-#: library/wsgiref.rst:535
+#: library/wsgiref.rst:538
 msgid ""
 "This is an abstract base class for running WSGI applications.  Each instance "
 "will handle a single HTTP request, although in principle you could create a "
 "subclass that was reusable for multiple requests."
 msgstr ""
 
-#: library/wsgiref.rst:539
+#: library/wsgiref.rst:542
 msgid ""
 ":class:`BaseHandler` instances have only one method intended for external "
 "use:"
 msgstr ""
 
-#: library/wsgiref.rst:544
+#: library/wsgiref.rst:547
 msgid "Run the specified WSGI application, *app*."
 msgstr ""
 
-#: library/wsgiref.rst:546
+#: library/wsgiref.rst:549
 msgid ""
 "All of the other :class:`BaseHandler` methods are invoked by this method in "
 "the process of running the application, and thus exist primarily to allow "
 "customizing the process."
 msgstr ""
 
-#: library/wsgiref.rst:550
+#: library/wsgiref.rst:553
 msgid "The following methods MUST be overridden in a subclass:"
 msgstr ""
 
-#: library/wsgiref.rst:555
+#: library/wsgiref.rst:558
 msgid ""
 "Buffer the bytes *data* for transmission to the client.  It's okay if this "
 "method actually transmits the data; :class:`BaseHandler` just separates "
@@ -640,33 +726,33 @@ msgid ""
 "actually has such a distinction."
 msgstr ""
 
-#: library/wsgiref.rst:563
+#: library/wsgiref.rst:566
 msgid ""
 "Force buffered data to be transmitted to the client.  It's okay if this "
 "method is a no-op (i.e., if :meth:`_write` actually sends the data)."
 msgstr ""
 
-#: library/wsgiref.rst:569
+#: library/wsgiref.rst:572
 msgid ""
 "Return an object compatible with :class:`~wsgiref.types.InputStream` "
 "suitable for use as the ``wsgi.input`` of the request currently being "
 "processed."
 msgstr ""
 
-#: library/wsgiref.rst:576
+#: library/wsgiref.rst:579
 msgid ""
 "Return an object compatible with :class:`~wsgiref.types.ErrorStream` "
 "suitable for use as the ``wsgi.errors`` of the request currently being "
 "processed."
 msgstr ""
 
-#: library/wsgiref.rst:583
+#: library/wsgiref.rst:586
 msgid ""
 "Insert CGI variables for the current request into the :attr:`environ` "
 "attribute."
 msgstr ""
 
-#: library/wsgiref.rst:585
+#: library/wsgiref.rst:588
 msgid ""
 "Here are some other methods and attributes you may wish to override. This "
 "list is only a summary, however, and does not include every method that can "
@@ -675,32 +761,32 @@ msgid ""
 "`BaseHandler` subclass."
 msgstr ""
 
-#: library/wsgiref.rst:591
+#: library/wsgiref.rst:594
 msgid "Attributes and methods for customizing the WSGI environment:"
 msgstr ""
 
-#: library/wsgiref.rst:596
+#: library/wsgiref.rst:599
 msgid ""
 "The value to be used for the ``wsgi.multithread`` environment variable.  It "
 "defaults to true in :class:`BaseHandler`, but may have a different default "
 "(or be set by the constructor) in the other subclasses."
 msgstr ""
 
-#: library/wsgiref.rst:603
+#: library/wsgiref.rst:606
 msgid ""
 "The value to be used for the ``wsgi.multiprocess`` environment variable.  It "
 "defaults to true in :class:`BaseHandler`, but may have a different default "
 "(or be set by the constructor) in the other subclasses."
 msgstr ""
 
-#: library/wsgiref.rst:610
+#: library/wsgiref.rst:613
 msgid ""
 "The value to be used for the ``wsgi.run_once`` environment variable.  It "
 "defaults to false in :class:`BaseHandler`, but :class:`CGIHandler` sets it "
 "to true by default."
 msgstr ""
 
-#: library/wsgiref.rst:617
+#: library/wsgiref.rst:620
 msgid ""
 "The default environment variables to be included in every request's WSGI "
 "environment.  By default, this is a copy of ``os.environ`` at the time that :"
@@ -710,7 +796,7 @@ msgid ""
 "classes and instances."
 msgstr ""
 
-#: library/wsgiref.rst:627
+#: library/wsgiref.rst:630
 msgid ""
 "If the :attr:`origin_server` attribute is set, this attribute's value is "
 "used to set the default ``SERVER_SOFTWARE`` WSGI environment variable, and "
@@ -719,13 +805,13 @@ msgid ""
 "are not HTTP origin servers."
 msgstr ""
 
-#: library/wsgiref.rst:633
+#: library/wsgiref.rst:636
 msgid ""
 "The term \"Python\" is replaced with implementation specific term like "
 "\"CPython\", \"Jython\" etc."
 msgstr ""
 
-#: library/wsgiref.rst:639
+#: library/wsgiref.rst:642
 msgid ""
 "Return the URL scheme being used for the current request.  The default "
 "implementation uses the :func:`guess_scheme` function from :mod:`wsgiref."
@@ -733,7 +819,7 @@ msgid ""
 "the current request's :attr:`environ` variables."
 msgstr ""
 
-#: library/wsgiref.rst:647
+#: library/wsgiref.rst:650
 msgid ""
 "Set the :attr:`environ` attribute to a fully populated WSGI environment.  "
 "The default implementation uses all of the above methods and attributes, "
@@ -743,11 +829,11 @@ msgid ""
 "attribute is a true value and the :attr:`server_software` attribute is set."
 msgstr ""
 
-#: library/wsgiref.rst:654
+#: library/wsgiref.rst:657
 msgid "Methods and attributes for customizing exception handling:"
 msgstr ""
 
-#: library/wsgiref.rst:659
+#: library/wsgiref.rst:662
 msgid ""
 "Log the *exc_info* tuple in the server log.  *exc_info* is a ``(type, value, "
 "traceback)`` tuple.  The default implementation simply writes the traceback "
@@ -757,33 +843,33 @@ msgid ""
 "suitable."
 msgstr ""
 
-#: library/wsgiref.rst:668
+#: library/wsgiref.rst:671
 msgid ""
 "The maximum number of frames to include in tracebacks output by the default :"
 "meth:`log_exception` method.  If ``None``, all frames are included."
 msgstr ""
 
-#: library/wsgiref.rst:674
+#: library/wsgiref.rst:677
 msgid ""
 "This method is a WSGI application to generate an error page for the user.  "
 "It is only invoked if an error occurs before headers are sent to the client."
 msgstr ""
 
-#: library/wsgiref.rst:677
+#: library/wsgiref.rst:680
 msgid ""
 "This method can access the current error using ``sys.exception()``, and "
 "should pass that information to *start_response* when calling it (as "
 "described in the \"Error Handling\" section of :pep:`3333`)."
 msgstr ""
 
-#: library/wsgiref.rst:681
+#: library/wsgiref.rst:684
 msgid ""
 "The default implementation just uses the :attr:`error_status`, :attr:"
 "`error_headers`, and :attr:`error_body` attributes to generate an output "
 "page.  Subclasses can override this to produce more dynamic error output."
 msgstr ""
 
-#: library/wsgiref.rst:685
+#: library/wsgiref.rst:688
 msgid ""
 "Note, however, that it's not recommended from a security perspective to spit "
 "out diagnostics to any old user; ideally, you should have to do something "
@@ -791,40 +877,40 @@ msgid ""
 "doesn't include any."
 msgstr ""
 
-#: library/wsgiref.rst:693
+#: library/wsgiref.rst:696
 msgid ""
 "The HTTP status used for error responses.  This should be a status string as "
 "defined in :pep:`3333`; it defaults to a 500 code and message."
 msgstr ""
 
-#: library/wsgiref.rst:699
+#: library/wsgiref.rst:702
 msgid ""
 "The HTTP headers used for error responses.  This should be a list of WSGI "
 "response headers (``(name, value)`` tuples), as described in :pep:`3333`.  "
 "The default list just sets the content type to ``text/plain``."
 msgstr ""
 
-#: library/wsgiref.rst:706
+#: library/wsgiref.rst:709
 msgid ""
 "The error response body.  This should be an HTTP response body bytestring. "
 "It defaults to the plain text, \"A server error occurred.  Please contact "
 "the administrator.\""
 msgstr ""
 
-#: library/wsgiref.rst:710
+#: library/wsgiref.rst:713
 msgid ""
 "Methods and attributes for :pep:`3333`'s \"Optional Platform-Specific File "
 "Handling\" feature:"
 msgstr ""
 
-#: library/wsgiref.rst:716
+#: library/wsgiref.rst:719
 msgid ""
 "A ``wsgi.file_wrapper`` factory, compatible with :class:`wsgiref.types."
 "FileWrapper`, or ``None``.  The default value of this attribute is the :"
 "class:`wsgiref.util.FileWrapper` class."
 msgstr ""
 
-#: library/wsgiref.rst:723
+#: library/wsgiref.rst:726
 msgid ""
 "Override to implement platform-specific file transmission.  This method is "
 "called only if the application's return value is an instance of the class "
@@ -834,11 +920,11 @@ msgid ""
 "of this method just returns a false value."
 msgstr ""
 
-#: library/wsgiref.rst:730
+#: library/wsgiref.rst:733
 msgid "Miscellaneous methods and attributes:"
 msgstr ""
 
-#: library/wsgiref.rst:735
+#: library/wsgiref.rst:738
 msgid ""
 "This attribute should be set to a true value if the handler's :meth:`_write` "
 "and :meth:`_flush` are being used to communicate directly to the client, "
@@ -846,19 +932,19 @@ msgid ""
 "special ``Status:`` header."
 msgstr ""
 
-#: library/wsgiref.rst:740
+#: library/wsgiref.rst:743
 msgid ""
 "This attribute's default value is true in :class:`BaseHandler`, but false "
 "in :class:`BaseCGIHandler` and :class:`CGIHandler`."
 msgstr ""
 
-#: library/wsgiref.rst:746
+#: library/wsgiref.rst:749
 msgid ""
 "If :attr:`origin_server` is true, this string attribute is used to set the "
 "HTTP version of the response set to the client.  It defaults to ``\"1.0\"``."
 msgstr ""
 
-#: library/wsgiref.rst:752
+#: library/wsgiref.rst:755
 msgid ""
 "Transcode CGI variables from ``os.environ`` to :pep:`3333` \"bytes in "
 "unicode\" strings, returning a new dictionary.  This function is used by :"
@@ -870,66 +956,140 @@ msgid ""
 "than ISO-8859-1 (e.g. Unix systems using UTF-8)."
 msgstr ""
 
-#: library/wsgiref.rst:761
+#: library/wsgiref.rst:764
 msgid ""
 "If you are implementing a CGI-based handler of your own, you probably want "
 "to use this routine instead of just copying values out of ``os.environ`` "
 "directly."
 msgstr ""
 
-#: library/wsgiref.rst:769
+#: library/wsgiref.rst:772
 msgid ":mod:`wsgiref.types` -- WSGI types for static type checking"
 msgstr ""
 
-#: library/wsgiref.rst:775
+#: library/wsgiref.rst:778
 msgid ""
 "This module provides various types for static type checking as described in :"
 "pep:`3333`."
 msgstr ""
 
-#: library/wsgiref.rst:783
+#: library/wsgiref.rst:786
 msgid ""
-"A :class:`typing.Protocol` describing `start_response() <https://peps.python."
-"org/pep-3333/#the-start-response-callable>`_ callables (:pep:`3333`)."
+"A :class:`typing.Protocol` describing :pep:`start_response() <3333#the-start-"
+"response-callable>` callables (:pep:`3333`)."
 msgstr ""
 
-#: library/wsgiref.rst:789
+#: library/wsgiref.rst:792
 msgid "A type alias describing a WSGI environment dictionary."
 msgstr ""
 
-#: library/wsgiref.rst:793
+#: library/wsgiref.rst:796
 msgid "A type alias describing a WSGI application callable."
 msgstr ""
 
-#: library/wsgiref.rst:797
+#: library/wsgiref.rst:800
 msgid ""
-"A :class:`typing.Protocol` describing a `WSGI Input Stream <https://peps."
-"python.org/pep-3333/#input-and-error-streams>`_."
+"A :class:`typing.Protocol` describing a :pep:`WSGI Input Stream <3333#input-"
+"and-error-streams>`."
 msgstr ""
 
-#: library/wsgiref.rst:802
+#: library/wsgiref.rst:805
 msgid ""
-"A :class:`typing.Protocol` describing a `WSGI Error Stream <https://peps."
-"python.org/pep-3333/#input-and-error-streams>`_."
+"A :class:`typing.Protocol` describing a :pep:`WSGI Error Stream <3333#input-"
+"and-error-streams>`."
 msgstr ""
 
-#: library/wsgiref.rst:807
+#: library/wsgiref.rst:810
 msgid ""
-"A :class:`typing.Protocol` describing a `file wrapper <https://peps.python."
-"org/pep-3333/#optional-platform-specific-file-handling>`_. See :class:"
-"`wsgiref.util.FileWrapper` for a concrete implementation of this protocol."
+"A :class:`typing.Protocol` describing a :pep:`file wrapper <3333#optional-"
+"platform-specific-file-handling>`. See :class:`wsgiref.util.FileWrapper` for "
+"a concrete implementation of this protocol."
 msgstr ""
 
-#: library/wsgiref.rst:814
+#: library/wsgiref.rst:817
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/wsgiref.rst:816
+#: library/wsgiref.rst:819
 msgid "This is a working \"Hello World\" WSGI application::"
 msgstr ""
 
-#: library/wsgiref.rst:845
+#: library/wsgiref.rst:821
+msgid ""
+"\"\"\"\n"
+"Every WSGI application must have an application object - a callable\n"
+"object that accepts two arguments. For that purpose, we're going to\n"
+"use a function (note that you're not limited to a function, you can\n"
+"use a class for example). The first argument passed to the function\n"
+"is a dictionary containing CGI-style environment variables and the\n"
+"second variable is the callable object.\n"
+"\"\"\"\n"
+"from wsgiref.simple_server import make_server\n"
+"\n"
+"\n"
+"def hello_world_app(environ, start_response):\n"
+"    status = \"200 OK\"  # HTTP Status\n"
+"    headers = [(\"Content-type\", \"text/plain; charset=utf-8\")]  # HTTP "
+"Headers\n"
+"    start_response(status, headers)\n"
+"\n"
+"    # The returned object is going to be printed\n"
+"    return [b\"Hello World\"]\n"
+"\n"
+"with make_server(\"\", 8000, hello_world_app) as httpd:\n"
+"    print(\"Serving on port 8000...\")\n"
+"\n"
+"    # Serve until process is killed\n"
+"    httpd.serve_forever()"
+msgstr ""
+
+#: library/wsgiref.rst:848
 msgid ""
 "Example of a WSGI application serving the current directory, accept optional "
 "directory and port number (default: 8000) on the command line::"
+msgstr ""
+
+#: library/wsgiref.rst:851
+msgid ""
+"\"\"\"\n"
+"Small wsgiref based web server. Takes a path to serve from and an\n"
+"optional port number (defaults to 8000), then tries to serve files.\n"
+"MIME types are guessed from the file names, 404 errors are raised\n"
+"if the file is not found.\n"
+"\"\"\"\n"
+"import mimetypes\n"
+"import os\n"
+"import sys\n"
+"from wsgiref import simple_server, util\n"
+"\n"
+"\n"
+"def app(environ, respond):\n"
+"    # Get the file name and MIME type\n"
+"    fn = os.path.join(path, environ[\"PATH_INFO\"][1:])\n"
+"    if \".\" not in fn.split(os.path.sep)[-1]:\n"
+"        fn = os.path.join(fn, \"index.html\")\n"
+"    mime_type = mimetypes.guess_type(fn)[0]\n"
+"\n"
+"    # Return 200 OK if file exists, otherwise 404 Not Found\n"
+"    if os.path.exists(fn):\n"
+"        respond(\"200 OK\", [(\"Content-Type\", mime_type)])\n"
+"        return util.FileWrapper(open(fn, \"rb\"))\n"
+"    else:\n"
+"        respond(\"404 Not Found\", [(\"Content-Type\", \"text/plain\")])\n"
+"        return [b\"not found\"]\n"
+"\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    # Get the path and port from command-line arguments\n"
+"    path = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()\n"
+"    port = int(sys.argv[2]) if len(sys.argv) > 2 else 8000\n"
+"\n"
+"    # Make and start the server until control-c\n"
+"    httpd = simple_server.make_server(\"\", port, app)\n"
+"    print(f\"Serving {path} on port {port}, control-C to stop\")\n"
+"    try:\n"
+"        httpd.serve_forever()\n"
+"    except KeyboardInterrupt:\n"
+"        print(\"Shutting down.\")\n"
+"        httpd.server_close()"
 msgstr ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-11-06 19:31+0100\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -95,15 +95,27 @@ msgstr ""
 msgid "On a Linux machine, this can be done via::"
 msgstr "Sur une machine Linux, cela se fait via ::"
 
+#: howto/instrumentation.rst:42
+msgid "$ yum install systemtap-sdt-devel"
+msgstr ""
+
 #: howto/instrumentation.rst:44
 msgid "or::"
 msgstr "ou ::"
+
+#: howto/instrumentation.rst:46
+msgid "$ sudo apt-get install systemtap-sdt-dev"
+msgstr ""
 
 #: howto/instrumentation.rst:49
 msgid ""
 "CPython must then be :option:`configured with the --with-dtrace option <--"
 "with-dtrace>`:"
 msgstr "CPython doit être configuré avec l'option :option:`--with-dtrace` :"
+
+#: howto/instrumentation.rst:52
+msgid "checking for --with-dtrace... yes"
+msgstr ""
 
 #: howto/instrumentation.rst:56
 msgid ""
@@ -115,6 +127,28 @@ msgstr ""
 "un processus Python en arrière-plan et en listant toutes les sondes mises à "
 "disposition par le fournisseur Python ::"
 
+#: howto/instrumentation.rst:60
+msgid ""
+"$ python3.6 -q &\n"
+"$ sudo dtrace -l -P python$!  # or: dtrace -l -m python3.6\n"
+"\n"
+"   ID   PROVIDER            MODULE                          FUNCTION NAME\n"
+"29564 python18035        python3.6          _PyEval_EvalFrameDefault "
+"function-entry\n"
+"29565 python18035        python3.6             dtrace_function_entry "
+"function-entry\n"
+"29566 python18035        python3.6          _PyEval_EvalFrameDefault "
+"function-return\n"
+"29567 python18035        python3.6            dtrace_function_return "
+"function-return\n"
+"29568 python18035        python3.6                           collect gc-"
+"done\n"
+"29569 python18035        python3.6                           collect gc-"
+"start\n"
+"29570 python18035        python3.6          _PyEval_EvalFrameDefault line\n"
+"29571 python18035        python3.6                 maybe_dtrace_line line"
+msgstr ""
+
 #: howto/instrumentation.rst:73
 msgid ""
 "On Linux, you can verify if the SystemTap static markers are present in the "
@@ -123,6 +157,12 @@ msgstr ""
 "Sous Linux, pour vérifier que les marqueurs statiques *SystemTap* sont "
 "présents dans le binaire compilé, il suffit de regarder s'il contient une "
 "section ``.note.stapsdt``."
+
+#: howto/instrumentation.rst:78
+msgid ""
+"$ readelf -S ./python | grep .note.stapsdt\n"
+"[30] .note.stapsdt        NOTE         0000000000000000 00308d78"
+msgstr ""
 
 #: howto/instrumentation.rst:81
 msgid ""
@@ -134,11 +174,65 @@ msgstr ""
 "l'option :option:`--enable-shared` du script ``configure``), vous devez "
 "plutôt regarder dans la bibliothèque partagée. Par exemple ::"
 
+#: howto/instrumentation.rst:85
+msgid ""
+"$ readelf -S libpython3.3dm.so.1.0 | grep .note.stapsdt\n"
+"[29] .note.stapsdt        NOTE         0000000000000000 00365b68"
+msgstr ""
+
 #: howto/instrumentation.rst:88
 msgid "Sufficiently modern readelf can print the metadata::"
 msgstr ""
 "Une version suffisamment moderne de *readelf* peut afficher les "
 "métadonnées ::"
+
+#: howto/instrumentation.rst:90
+msgid ""
+"$ readelf -n ./python\n"
+"\n"
+"Displaying notes found at file offset 0x00000254 with length 0x00000020:\n"
+"    Owner                 Data size          Description\n"
+"    GNU                  0x00000010          NT_GNU_ABI_TAG (ABI version "
+"tag)\n"
+"        OS: Linux, ABI: 2.6.32\n"
+"\n"
+"Displaying notes found at file offset 0x00000274 with length 0x00000024:\n"
+"    Owner                 Data size          Description\n"
+"    GNU                  0x00000014          NT_GNU_BUILD_ID (unique build "
+"ID bitstring)\n"
+"        Build ID: df924a2b08a7e89f6e11251d4602022977af2670\n"
+"\n"
+"Displaying notes found at file offset 0x002d6c30 with length 0x00000144:\n"
+"    Owner                 Data size          Description\n"
+"    stapsdt              0x00000031          NT_STAPSDT (SystemTap probe "
+"descriptors)\n"
+"        Provider: python\n"
+"        Name: gc__start\n"
+"        Location: 0x00000000004371c3, Base: 0x0000000000630ce2, Semaphore: "
+"0x00000000008d6bf6\n"
+"        Arguments: -4@%ebx\n"
+"    stapsdt              0x00000030          NT_STAPSDT (SystemTap probe "
+"descriptors)\n"
+"        Provider: python\n"
+"        Name: gc__done\n"
+"        Location: 0x00000000004374e1, Base: 0x0000000000630ce2, Semaphore: "
+"0x00000000008d6bf8\n"
+"        Arguments: -8@%rax\n"
+"    stapsdt              0x00000045          NT_STAPSDT (SystemTap probe "
+"descriptors)\n"
+"        Provider: python\n"
+"        Name: function__entry\n"
+"        Location: 0x000000000053db6c, Base: 0x0000000000630ce2, Semaphore: "
+"0x00000000008d6be8\n"
+"        Arguments: 8@%rbp 8@%r12 -4@%eax\n"
+"    stapsdt              0x00000046          NT_STAPSDT (SystemTap probe "
+"descriptors)\n"
+"        Provider: python\n"
+"        Name: function__return\n"
+"        Location: 0x000000000053dba8, Base: 0x0000000000630ce2, Semaphore: "
+"0x00000000008d6bea\n"
+"        Arguments: 8@%rbp 8@%r12 -4@%eax"
+msgstr ""
 
 #: howto/instrumentation.rst:125
 #, fuzzy
@@ -168,13 +262,76 @@ msgstr ""
 "En d'autres termes, les appels de fonctions lors de la phase d'import ne "
 "seront pas répertoriées :"
 
+#: howto/instrumentation.rst:138
+msgid ""
+"self int indent;\n"
+"\n"
+"python$target:::function-entry\n"
+"/copyinstr(arg1) == \"start\"/\n"
+"{\n"
+"        self->trace = 1;\n"
+"}\n"
+"\n"
+"python$target:::function-entry\n"
+"/self->trace/\n"
+"{\n"
+"        printf(\"%d\\t%*s:\", timestamp, 15, probename);\n"
+"        printf(\"%*s\", self->indent, \"\");\n"
+"        printf(\"%s:%s:%d\\n\", basename(copyinstr(arg0)), copyinstr(arg1), "
+"arg2);\n"
+"        self->indent++;\n"
+"}\n"
+"\n"
+"python$target:::function-return\n"
+"/self->trace/\n"
+"{\n"
+"        self->indent--;\n"
+"        printf(\"%d\\t%*s:\", timestamp, 15, probename);\n"
+"        printf(\"%*s\", self->indent, \"\");\n"
+"        printf(\"%s:%s:%d\\n\", basename(copyinstr(arg0)), copyinstr(arg1), "
+"arg2);\n"
+"}\n"
+"\n"
+"python$target:::function-return\n"
+"/copyinstr(arg1) == \"start\"/\n"
+"{\n"
+"        self->trace = 0;\n"
+"}"
+msgstr ""
+
 #: howto/instrumentation.rst:230
 msgid "It can be invoked like this::"
 msgstr "Il peut être utilisé de cette manière ::"
 
+#: howto/instrumentation.rst:174
+msgid "$ sudo dtrace -q -s call_stack.d -c \"python3.6 script.py\""
+msgstr ""
+
 #: howto/instrumentation.rst:236
 msgid "The output looks like this:"
 msgstr "La sortie ressemble à ceci :"
+
+#: howto/instrumentation.rst:178
+msgid ""
+"156641360502280  function-entry:call_stack.py:start:23\n"
+"156641360518804  function-entry: call_stack.py:function_1:1\n"
+"156641360532797  function-entry:  call_stack.py:function_3:9\n"
+"156641360546807 function-return:  call_stack.py:function_3:10\n"
+"156641360563367 function-return: call_stack.py:function_1:2\n"
+"156641360578365  function-entry: call_stack.py:function_2:5\n"
+"156641360591757  function-entry:  call_stack.py:function_1:1\n"
+"156641360605556  function-entry:   call_stack.py:function_3:9\n"
+"156641360617482 function-return:   call_stack.py:function_3:10\n"
+"156641360629814 function-return:  call_stack.py:function_1:2\n"
+"156641360642285 function-return: call_stack.py:function_2:6\n"
+"156641360656770  function-entry: call_stack.py:function_3:9\n"
+"156641360669707 function-return: call_stack.py:function_3:10\n"
+"156641360687853  function-entry: call_stack.py:function_4:13\n"
+"156641360700719 function-return: call_stack.py:function_4:14\n"
+"156641360719640  function-entry: call_stack.py:function_5:18\n"
+"156641360732567 function-return: call_stack.py:function_5:21\n"
+"156641360747370 function-return:call_stack.py:start:28"
+msgstr ""
 
 #: howto/instrumentation.rst:201
 msgid "Static SystemTap markers"
@@ -198,6 +355,44 @@ msgstr ""
 "Par exemple, ce script *SystemTap* peut être utilisé pour afficher la "
 "hiérarchie d'appel/retour d'un script Python :"
 
+#: howto/instrumentation.rst:210
+msgid ""
+"probe process(\"python\").mark(\"function__entry\") {\n"
+"     filename = user_string($arg1);\n"
+"     funcname = user_string($arg2);\n"
+"     lineno = $arg3;\n"
+"\n"
+"     printf(\"%s => %s in %s:%d\\\\n\",\n"
+"            thread_indent(1), funcname, filename, lineno);\n"
+"}\n"
+"\n"
+"probe process(\"python\").mark(\"function__return\") {\n"
+"    filename = user_string($arg1);\n"
+"    funcname = user_string($arg2);\n"
+"    lineno = $arg3;\n"
+"\n"
+"    printf(\"%s <= %s in %s:%d\\\\n\",\n"
+"           thread_indent(-1), funcname, filename, lineno);\n"
+"}"
+msgstr ""
+
+#: howto/instrumentation.rst:232
+msgid ""
+"$ stap \\\n"
+"  show-call-hierarchy.stp \\\n"
+"  -c \"./python test.py\""
+msgstr ""
+
+#: howto/instrumentation.rst:238
+msgid ""
+"11408 python(8274):        => __contains__ in Lib/_abcoll.py:362\n"
+"11414 python(8274):         => __getitem__ in Lib/os.py:425\n"
+"11418 python(8274):          => encode in Lib/os.py:490\n"
+"11424 python(8274):          <= encode in Lib/os.py:493\n"
+"11428 python(8274):         <= __getitem__ in Lib/os.py:426\n"
+"11433 python(8274):        <= __contains__ in Lib/_abcoll.py:366"
+msgstr ""
+
 #: howto/instrumentation.rst:247
 msgid "where the columns are:"
 msgstr "où les colonnes sont :"
@@ -206,21 +401,21 @@ msgstr "où les colonnes sont :"
 msgid "time in microseconds since start of script"
 msgstr "temps en microsecondes depuis le début du script"
 
-#: howto/instrumentation.rst:251
+#: howto/instrumentation.rst:250
 msgid "name of executable"
 msgstr "nom de l'exécutable"
 
-#: howto/instrumentation.rst:253
+#: howto/instrumentation.rst:251
 msgid "PID of process"
 msgstr "PID du processus"
 
-#: howto/instrumentation.rst:255
+#: howto/instrumentation.rst:253
 msgid ""
 "and the remainder indicates the call/return hierarchy as the script executes."
 msgstr ""
 "et le reste indique la hiérarchie d'appel/retour lorsque le script s'exécute."
 
-#: howto/instrumentation.rst:257
+#: howto/instrumentation.rst:255
 msgid ""
 "For a :option:`--enable-shared` build of CPython, the markers are contained "
 "within the libpython shared library, and the probe's dotted path needs to "
@@ -231,21 +426,31 @@ msgstr ""
 "module de la sonde doit le refléter. Par exemple, la ligne de l'exemple ci-"
 "dessus :"
 
-#: howto/instrumentation.rst:265
+#: howto/instrumentation.rst:259
+msgid "probe process(\"python\").mark(\"function__entry\") {"
+msgstr ""
+
+#: howto/instrumentation.rst:263
 msgid "should instead read:"
 msgstr "doit plutôt se lire comme :"
 
-#: howto/instrumentation.rst:271
+#: howto/instrumentation.rst:265
+msgid ""
+"probe process(\"python\").library(\"libpython3.6dm.so.1.0\")."
+"mark(\"function__entry\") {"
+msgstr ""
+
+#: howto/instrumentation.rst:269
 msgid "(assuming a :ref:`debug build <debug-build>` of CPython 3.6)"
 msgstr ""
 "(en supposant une version de CPython 3.6 compilée avec le :ref:`débogage "
 "<debug-build>` activé)"
 
-#: howto/instrumentation.rst:275
+#: howto/instrumentation.rst:273
 msgid "Available static markers"
 msgstr "Marqueurs statiques disponibles"
 
-#: howto/instrumentation.rst:279
+#: howto/instrumentation.rst:277
 msgid ""
 "This marker indicates that execution of a Python function has begun. It is "
 "only triggered for pure-Python (bytecode) functions."
@@ -253,7 +458,7 @@ msgstr ""
 "Ce marqueur indique que l'exécution d'une fonction Python a commencé. Il "
 "n'est déclenché que pour les fonctions en Python pur (code intermédiaire)."
 
-#: howto/instrumentation.rst:282
+#: howto/instrumentation.rst:280
 msgid ""
 "The filename, function name, and line number are provided back to the "
 "tracing script as positional arguments, which must be accessed using "
@@ -263,7 +468,7 @@ msgstr ""
 "au script de traçage sous forme d'arguments positionnels, auxquels il faut "
 "accéder en utilisant ``$arg1``, ``$arg2``, ``$arg3`` :"
 
-#: howto/instrumentation.rst:286
+#: howto/instrumentation.rst:284
 msgid ""
 "``$arg1`` : ``(const char *)`` filename, accessible using "
 "``user_string($arg1)``"
@@ -271,7 +476,7 @@ msgstr ""
 "``$arg1`` : ``(const char *)`` nom de fichier, accessible via "
 "``user_string($arg1)``"
 
-#: howto/instrumentation.rst:288
+#: howto/instrumentation.rst:286
 msgid ""
 "``$arg2`` : ``(const char *)`` function name, accessible using "
 "``user_string($arg2)``"
@@ -279,26 +484,28 @@ msgstr ""
 "``$arg2`` : ``(const char *)`` nom de la fonction, accessible via "
 "``user_string($arg2)``"
 
-#: howto/instrumentation.rst:291
+#: howto/instrumentation.rst:289
 msgid "``$arg3`` : ``int`` line number"
 msgstr "``$arg3`` : numéro de ligne ``int``"
 
-#: howto/instrumentation.rst:295
+#: howto/instrumentation.rst:293
+#, fuzzy
 msgid ""
-"This marker is the converse of :c:func:`function__entry`, and indicates that "
-"execution of a Python function has ended (either via ``return``, or via an "
-"exception).  It is only triggered for pure-Python (bytecode) functions."
+"This marker is the converse of :c:func:`!function__entry`, and indicates "
+"that execution of a Python function has ended (either via ``return``, or via "
+"an exception).  It is only triggered for pure-Python (bytecode) functions."
 msgstr ""
 "Ce marqueur est l'inverse de :c:func:`function__entry`, et indique que "
 "l'exécution d'une fonction Python est terminée (soit via ``return``, soit "
 "via une exception). Il n'est déclenché que pour les fonctions en Python pur "
 "(code intermédiaire)."
 
-#: howto/instrumentation.rst:299
-msgid "The arguments are the same as for :c:func:`function__entry`"
+#: howto/instrumentation.rst:297
+#, fuzzy
+msgid "The arguments are the same as for :c:func:`!function__entry`"
 msgstr "Les arguments sont les mêmes que pour :c:func:`function__entry`"
 
-#: howto/instrumentation.rst:303
+#: howto/instrumentation.rst:301
 msgid ""
 "This marker indicates a Python line is about to be executed.  It is the "
 "equivalent of line-by-line tracing with a Python profiler.  It is not "
@@ -308,20 +515,22 @@ msgstr ""
 "C'est l'équivalent du traçage ligne par ligne avec un profileur Python. Il "
 "n'est pas déclenché dans les fonctions C."
 
-#: howto/instrumentation.rst:307
-msgid "The arguments are the same as for :c:func:`function__entry`."
+#: howto/instrumentation.rst:305
+#, fuzzy
+msgid "The arguments are the same as for :c:func:`!function__entry`."
 msgstr "Les arguments sont les mêmes que pour :c:func:`function__entry`."
 
-#: howto/instrumentation.rst:311
+#: howto/instrumentation.rst:309
+#, fuzzy
 msgid ""
 "Fires when the Python interpreter starts a garbage collection cycle. "
-"``arg0`` is the generation to scan, like :func:`gc.collect()`."
+"``arg0`` is the generation to scan, like :func:`gc.collect`."
 msgstr ""
 "Fonction appelée lorsque l'interpréteur Python lance un cycle de collecte du "
 "ramasse-miettes. ``arg0`` est la génération à scanner, comme :func:`gc."
 "collect()`."
 
-#: howto/instrumentation.rst:316
+#: howto/instrumentation.rst:314
 msgid ""
 "Fires when the Python interpreter finishes a garbage collection cycle. "
 "``arg0`` is the number of collected objects."
@@ -329,7 +538,7 @@ msgstr ""
 "Fonction appelée lorsque l'interpréteur Python termine un cycle de collecte "
 "du ramasse-miettes. ``Arg0`` est le nombre d'objets collectés."
 
-#: howto/instrumentation.rst:321
+#: howto/instrumentation.rst:319
 msgid ""
 "Fires before :mod:`importlib` attempts to find and load the module. ``arg0`` "
 "is the module name."
@@ -337,7 +546,7 @@ msgstr ""
 "Fonction appelée avant que :mod:`importlib` essaye de trouver et de charger "
 "le module. ``arg0`` est le nom du module."
 
-#: howto/instrumentation.rst:328
+#: howto/instrumentation.rst:326
 msgid ""
 "Fires after :mod:`importlib`'s find_and_load function is called. ``arg0`` is "
 "the module name, ``arg1`` indicates if module was successfully loaded."
@@ -346,7 +555,7 @@ msgstr ""
 "`importlib` soit appelée. ``arg0`` est le nom du module, ``arg1`` indique si "
 "le module a été chargé avec succès."
 
-#: howto/instrumentation.rst:337
+#: howto/instrumentation.rst:335
 msgid ""
 "Fires when :func:`sys.audit` or :c:func:`PySys_Audit` is called. ``arg0`` is "
 "the event name as C string, ``arg1`` is a :c:type:`PyObject` pointer to a "
@@ -357,11 +566,11 @@ msgstr ""
 "chaîne de caractère C. ``arg1`` est un pointeur sur un *n*-uplet d'objet de "
 "type :c:type:`PyObject`."
 
-#: howto/instrumentation.rst:345
+#: howto/instrumentation.rst:343
 msgid "SystemTap Tapsets"
 msgstr "*Tapsets* de *SystemTap*"
 
-#: howto/instrumentation.rst:347
+#: howto/instrumentation.rst:345
 msgid ""
 "The higher-level way to use the SystemTap integration is to use a "
 "\"tapset\": SystemTap's equivalent of a library, which hides some of the "
@@ -371,13 +580,36 @@ msgstr ""
 "un *« tapset »*. L'équivalent pour *SystemTap* d'une bibliothèque, qui "
 "permet de masquer les détails de niveau inférieur des marqueurs statiques."
 
-#: howto/instrumentation.rst:351
+#: howto/instrumentation.rst:349
 msgid "Here is a tapset file, based on a non-shared build of CPython:"
 msgstr ""
 "Voici un fichier *tapset*, basé sur une version non partagée compilée de "
 "CPython :"
 
-#: howto/instrumentation.rst:374
+#: howto/instrumentation.rst:351
+msgid ""
+"/*\n"
+"   Provide a higher-level wrapping around the function__entry and\n"
+"   function__return markers:\n"
+" \\*/\n"
+"probe python.function.entry = process(\"python\").mark(\"function__entry\")\n"
+"{\n"
+"    filename = user_string($arg1);\n"
+"    funcname = user_string($arg2);\n"
+"    lineno = $arg3;\n"
+"    frameptr = $arg4\n"
+"}\n"
+"probe python.function.return = process(\"python\")."
+"mark(\"function__return\")\n"
+"{\n"
+"    filename = user_string($arg1);\n"
+"    funcname = user_string($arg2);\n"
+"    lineno = $arg3;\n"
+"    frameptr = $arg4\n"
+"}"
+msgstr ""
+
+#: howto/instrumentation.rst:372
 msgid ""
 "If this file is installed in SystemTap's tapset directory (e.g. ``/usr/share/"
 "systemtap/tapset``), then these additional probepoints become available:"
@@ -386,7 +618,7 @@ msgstr ""
 "exemple ``/usr/share/systemtap/tapset``), alors ces sondes supplémentaires "
 "deviennent disponibles :"
 
-#: howto/instrumentation.rst:380
+#: howto/instrumentation.rst:378
 msgid ""
 "This probe point indicates that execution of a Python function has begun. It "
 "is only triggered for pure-Python (bytecode) functions."
@@ -394,7 +626,7 @@ msgstr ""
 "Cette sonde indique que l'exécution d'une fonction Python a commencé. Elle "
 "n'est déclenchée que pour les fonctions en Python pur (code intermédiaire)."
 
-#: howto/instrumentation.rst:385
+#: howto/instrumentation.rst:383
 msgid ""
 "This probe point is the converse of ``python.function.return``, and "
 "indicates that execution of a Python function has ended (either via "
@@ -406,11 +638,11 @@ msgstr ""
 "via une exception). Elle est uniquement déclenchée pour les fonctions en "
 "Python pur (code intermédiaire ou *bytecode*)."
 
-#: howto/instrumentation.rst:392
+#: howto/instrumentation.rst:390
 msgid "Examples"
 msgstr "Exemples"
 
-#: howto/instrumentation.rst:393
+#: howto/instrumentation.rst:391
 msgid ""
 "This SystemTap script uses the tapset above to more cleanly implement the "
 "example given above of tracing the Python function-call hierarchy, without "
@@ -421,7 +653,22 @@ msgstr ""
 "fonctions Python, sans avoir besoin de nommer directement les marqueurs "
 "statiques :"
 
-#: howto/instrumentation.rst:412
+#: howto/instrumentation.rst:395
+msgid ""
+"probe python.function.entry\n"
+"{\n"
+"  printf(\"%s => %s in %s:%d\\n\",\n"
+"         thread_indent(1), funcname, filename, lineno);\n"
+"}\n"
+"\n"
+"probe python.function.return\n"
+"{\n"
+"  printf(\"%s <= %s in %s:%d\\n\",\n"
+"         thread_indent(-1), funcname, filename, lineno);\n"
+"}"
+msgstr ""
+
+#: howto/instrumentation.rst:410
 #, fuzzy
 msgid ""
 "The following script uses the tapset above to provide a top-like view of all "
@@ -432,3 +679,25 @@ msgstr ""
 "l'ensemble du code CPython en cours d'exécution, montrant les 20 cadres de "
 "la pile d'appel (*stack frames*) les plus fréquemment utilisées du code "
 "intermédiaire, chaque seconde, sur l'ensemble du système :"
+
+#: howto/instrumentation.rst:414
+msgid ""
+"global fn_calls;\n"
+"\n"
+"probe python.function.entry\n"
+"{\n"
+"    fn_calls[pid(), filename, funcname, lineno] += 1;\n"
+"}\n"
+"\n"
+"probe timer.ms(1000) {\n"
+"    printf(\"\\033[2J\\033[1;1H\") /* clear screen \\*/\n"
+"    printf(\"%6s %80s %6s %30s %6s\\n\",\n"
+"           \"PID\", \"FILENAME\", \"LINE\", \"FUNCTION\", \"CALLS\")\n"
+"    foreach ([pid, filename, funcname, lineno] in fn_calls- limit 20) {\n"
+"        printf(\"%6d %80s %6d %30s %6d\\n\",\n"
+"            pid, filename, lineno, funcname,\n"
+"            fn_calls[pid, filename, funcname, lineno]);\n"
+"    }\n"
+"    delete fn_calls;\n"
+"}"
+msgstr ""

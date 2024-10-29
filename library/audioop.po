@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-11-15 19:06-0500\n"
 "Last-Translator: Edith Viau <info@eviau.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid ":mod:`audioop` --- Manipulate raw audio data"
 msgstr ":mod:`audioop` — Manipulation de données audio brutes"
 
-#: library/audioop.rst:11
+#: library/audioop.rst:8
 msgid ""
 "The :mod:`audioop` module is deprecated (see :pep:`PEP 594 <594#audioop>` "
 "for details)."
@@ -211,6 +211,12 @@ msgid ""
 "samples for these formats, you need to also add 128 to the result::"
 msgstr ""
 
+#: library/audioop.rst:163
+msgid ""
+"new_frames = audioop.lin2lin(frames, old_width, 1)\n"
+"new_frames = audioop.bias(new_frames, 1, 128)"
+msgstr ""
+
 #: library/audioop.rst:166
 msgid ""
 "The same, in reverse, has to be applied when converting from 8 to 16, 24 or "
@@ -330,6 +336,18 @@ msgid ""
 "that::"
 msgstr ""
 
+#: library/audioop.rst:249
+msgid ""
+"def mul_stereo(sample, width, lfactor, rfactor):\n"
+"    lsample = audioop.tomono(sample, width, 1, 0)\n"
+"    rsample = audioop.tomono(sample, width, 0, 1)\n"
+"    lsample = audioop.mul(lsample, width, lfactor)\n"
+"    rsample = audioop.mul(rsample, width, rfactor)\n"
+"    lsample = audioop.tostereo(lsample, width, 1, 0)\n"
+"    rsample = audioop.tostereo(rsample, width, 0, 1)\n"
+"    return audioop.add(lsample, rsample, width)"
+msgstr ""
+
 #: library/audioop.rst:258
 msgid ""
 "If you use the ADPCM coder to build network packets and you want your "
@@ -355,6 +373,22 @@ msgid ""
 "primarily meant to do echo cancellation.  A reasonably fast way to do this "
 "is to pick the most energetic piece of the output sample, locate that in the "
 "input sample and subtract the whole output sample from the input sample::"
+msgstr ""
+
+#: library/audioop.rst:275
+msgid ""
+"def echocancel(outputdata, inputdata):\n"
+"    pos = audioop.findmax(outputdata, 800)    # one tenth second\n"
+"    out_test = outputdata[pos*2:]\n"
+"    in_test = inputdata[pos*2:]\n"
+"    ipos, factor = audioop.findfit(in_test, out_test)\n"
+"    # Optional (for better cancellation):\n"
+"    # factor = audioop.findfactor(in_test[ipos*2:ipos*2+len(out_test)],\n"
+"    #              out_test)\n"
+"    prefill = '\\0'*(pos+ipos)*2\n"
+"    postfill = '\\0'*(len(inputdata)-len(prefill)-len(outputdata))\n"
+"    outputdata = prefill + audioop.mul(outputdata, 2, -factor) + postfill\n"
+"    return audioop.add(inputdata, outputdata, 2)"
 msgstr ""
 
 #: library/audioop.rst:24

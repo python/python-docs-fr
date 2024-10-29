@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-07-04 23:07+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -39,6 +39,28 @@ msgid "Here is an example of a TCP echo client written using asyncio streams::"
 msgstr ""
 "Voici un exemple de client « écho TCP » écrit en utilisant les flux "
 "*asyncio* ::"
+
+#: library/asyncio-stream.rst:404
+msgid ""
+"import asyncio\n"
+"\n"
+"async def tcp_echo_client(message):\n"
+"    reader, writer = await asyncio.open_connection(\n"
+"        '127.0.0.1', 8888)\n"
+"\n"
+"    print(f'Send: {message!r}')\n"
+"    writer.write(message.encode())\n"
+"    await writer.drain()\n"
+"\n"
+"    data = await reader.read(100)\n"
+"    print(f'Received: {data.decode()!r}')\n"
+"\n"
+"    print('Close the connection')\n"
+"    writer.close()\n"
+"    await writer.wait_closed()\n"
+"\n"
+"asyncio.run(tcp_echo_client('Hello World!'))"
+msgstr ""
 
 #: library/asyncio-stream.rst:42
 msgid "See also the `Examples`_ section below."
@@ -106,7 +128,8 @@ msgstr "ajout du paramètre *ssl_handshake_timeout*."
 
 # suit un :
 #: library/asyncio-stream.rst:80
-msgid "Added *happy_eyeballs_delay* and *interleave* parameters."
+#, fuzzy
+msgid "Added the *happy_eyeballs_delay* and *interleave* parameters."
 msgstr "ajout des paramètres *happy_eyeballs_delay* et *interleave*."
 
 # suit un :
@@ -116,6 +139,7 @@ msgstr "suppression du paramètre *loop*."
 
 # suit un :
 #: library/asyncio-stream.rst:128 library/asyncio-stream.rst:190
+#: library/asyncio-stream.rst:372
 msgid "Added the *ssl_shutdown_timeout* parameter."
 msgstr "ajout du paramètre *ssl_shutdown_timeout*."
 
@@ -186,8 +210,8 @@ msgid "See also the documentation of :meth:`loop.create_unix_connection`."
 msgstr "Voir aussi la documentation de :meth:`loop.create_unix_connection`."
 
 #: library/asyncio-stream.rst:181
-msgid ":ref:`Availability <availability>`: Unix."
-msgstr ":ref:`Disponibilité <availability>` : Unix."
+msgid "Availability"
+msgstr ""
 
 # suit un :
 #: library/asyncio-stream.rst:153
@@ -244,10 +268,14 @@ msgstr ""
 "utilisez :func:`open_connection` et :func:`start_server` à la place."
 
 #: library/asyncio-stream.rst:209
+msgid "Acknowledge the EOF."
+msgstr ""
+
+#: library/asyncio-stream.rst:213
 msgid "Read up to *n* bytes from the stream."
 msgstr "Lit jusqu'à *n* octets du flux."
 
-#: library/asyncio-stream.rst:211
+#: library/asyncio-stream.rst:215
 msgid ""
 "If *n* is not provided or set to ``-1``, read until EOF, then return all "
 "read :class:`bytes`. If EOF was received and the internal buffer is empty, "
@@ -257,11 +285,11 @@ msgstr ""
 "tous les :class:`bytes` lus. Si *EOF* a été reçu et que le tampon interne "
 "est vide, renvoie un objet ``bytes`` vide."
 
-#: library/asyncio-stream.rst:216
+#: library/asyncio-stream.rst:220
 msgid "If *n* is ``0``, return an empty ``bytes`` object immediately."
 msgstr "Si *n* vaut ``0``, renvoie immédiatement un objet ``bytes`` vide."
 
-#: library/asyncio-stream.rst:218
+#: library/asyncio-stream.rst:222
 msgid ""
 "If *n* is positive, return at most *n* available ``bytes`` as soon as at "
 "least 1 byte is available in the internal buffer. If EOF is received before "
@@ -271,14 +299,14 @@ msgstr ""
 "moins 1 octet est disponible dans le tampon interne. Si *EOF* est reçu avant "
 "qu'aucun octet ne soit lu, renvoie un objet ``bytes`` vide."
 
-#: library/asyncio-stream.rst:225
+#: library/asyncio-stream.rst:229
 msgid ""
 "Read one line, where \"line\" is a sequence of bytes ending with ``\\n``."
 msgstr ""
 "Lit une ligne, où une « ligne » est une séquence d'octets se terminant par "
 "``\\n``."
 
-#: library/asyncio-stream.rst:228
+#: library/asyncio-stream.rst:232
 msgid ""
 "If EOF is received and ``\\n`` was not found, the method returns partially "
 "read data."
@@ -286,7 +314,7 @@ msgstr ""
 "Si *EOF* est reçu et ``\\n`` n'a pas été trouvé, la méthode renvoie des "
 "données partiellement lues."
 
-#: library/asyncio-stream.rst:231
+#: library/asyncio-stream.rst:235
 msgid ""
 "If EOF is received and the internal buffer is empty, return an empty "
 "``bytes`` object."
@@ -294,11 +322,11 @@ msgstr ""
 "Si *EOF* est reçu et que le tampon interne est vide, renvoie un objet "
 "``bytes`` vide."
 
-#: library/asyncio-stream.rst:236
+#: library/asyncio-stream.rst:240
 msgid "Read exactly *n* bytes."
 msgstr "Lit exactement *n* octets."
 
-#: library/asyncio-stream.rst:238
+#: library/asyncio-stream.rst:242
 msgid ""
 "Raise an :exc:`IncompleteReadError` if EOF is reached before *n* can be "
 "read.  Use the :attr:`IncompleteReadError.partial` attribute to get the "
@@ -308,11 +336,11 @@ msgstr ""
 "octets ne puissent être lus. Utilisez l'attribut :attr:`IncompleteReadError."
 "partial` pour obtenir les données partiellement lues."
 
-#: library/asyncio-stream.rst:244
+#: library/asyncio-stream.rst:248
 msgid "Read data from the stream until *separator* is found."
 msgstr "Lit les données du flux jusqu'à ce que le *separator* soit trouvé."
 
-#: library/asyncio-stream.rst:246
+#: library/asyncio-stream.rst:250
 msgid ""
 "On success, the data and separator will be removed from the internal buffer "
 "(consumed). Returned data will include the separator at the end."
@@ -320,7 +348,7 @@ msgstr ""
 "En cas de succès, les données et le séparateur sont supprimés du tampon "
 "interne (consommés). Les données renvoyées incluent le séparateur à la fin."
 
-#: library/asyncio-stream.rst:250
+#: library/asyncio-stream.rst:254
 msgid ""
 "If the amount of data read exceeds the configured stream limit, a :exc:"
 "`LimitOverrunError` exception is raised, and the data is left in the "
@@ -330,7 +358,7 @@ msgstr ""
 "exception :exc:`LimitOverrunError` est levée et les données sont laissées "
 "dans le tampon interne et peuvent être lues à nouveau."
 
-#: library/asyncio-stream.rst:254
+#: library/asyncio-stream.rst:258
 msgid ""
 "If EOF is reached before the complete separator is found, an :exc:"
 "`IncompleteReadError` exception is raised, and the internal buffer is "
@@ -342,23 +370,23 @@ msgstr ""
 "réinitialisé. L'attribut :attr:`IncompleteReadError.partial` peut contenir "
 "une partie du séparateur."
 
-#: library/asyncio-stream.rst:263
+#: library/asyncio-stream.rst:267
 msgid "Return ``True`` if the buffer is empty and :meth:`feed_eof` was called."
 msgstr ""
 "Renvoie ``True`` si le tampon est vide et que :meth:`feed_eof` a été appelée."
 
-#: library/asyncio-stream.rst:268
+#: library/asyncio-stream.rst:272
 msgid "StreamWriter"
 msgstr "Flux écrivains (*StreamWriter*)"
 
-#: library/asyncio-stream.rst:272
+#: library/asyncio-stream.rst:276
 msgid ""
 "Represents a writer object that provides APIs to write data to the IO stream."
 msgstr ""
 "Représente un objet écrivain qui fournit des API pour écrire des données "
 "dans le flux d'entrée-sortie."
 
-#: library/asyncio-stream.rst:275
+#: library/asyncio-stream.rst:279
 msgid ""
 "It is not recommended to instantiate *StreamWriter* objects directly; use :"
 "func:`open_connection` and :func:`start_server` instead."
@@ -366,7 +394,7 @@ msgstr ""
 "Il n'est pas recommandé d'instancier directement les objets *StreamWriter* ; "
 "utilisez :func:`open_connection` et :func:`start_server` à la place."
 
-#: library/asyncio-stream.rst:281
+#: library/asyncio-stream.rst:285
 msgid ""
 "The method attempts to write the *data* to the underlying socket "
 "immediately. If that fails, the data is queued in an internal write buffer "
@@ -376,11 +404,17 @@ msgstr ""
 "jacent. Si cela échoue, les données sont mises en file d'attente dans un "
 "tampon d'écriture interne jusqu'à ce qu'elles puissent être envoyées."
 
-#: library/asyncio-stream.rst:297
+#: library/asyncio-stream.rst:301
 msgid "The method should be used along with the ``drain()`` method::"
 msgstr "La méthode doit être utilisée avec la méthode ``drain()`` ::"
 
-#: library/asyncio-stream.rst:292
+#: library/asyncio-stream.rst:291
+msgid ""
+"stream.write(data)\n"
+"await stream.drain()"
+msgstr ""
+
+#: library/asyncio-stream.rst:296
 msgid ""
 "The method writes a list (or any iterable) of bytes to the underlying socket "
 "immediately. If that fails, the data is queued in an internal write buffer "
@@ -391,11 +425,17 @@ msgstr ""
 "d'attente dans un tampon d'écriture interne jusqu'à ce qu'elles puissent "
 "être envoyées."
 
-#: library/asyncio-stream.rst:304
+#: library/asyncio-stream.rst:303
+msgid ""
+"stream.writelines(lines)\n"
+"await stream.drain()"
+msgstr ""
+
+#: library/asyncio-stream.rst:308
 msgid "The method closes the stream and the underlying socket."
 msgstr "La méthode ferme le flux et le connecteur sous-jacent."
 
-#: library/asyncio-stream.rst:306
+#: library/asyncio-stream.rst:310
 msgid ""
 "The method should be used, though not mandatory, along with the "
 "``wait_closed()`` method::"
@@ -403,7 +443,13 @@ msgstr ""
 "La méthode doit être utilisée, bien que ce ne soit pas obligatoire, avec la "
 "méthode ``wait_closed()`` ::"
 
-#: library/asyncio-stream.rst:314
+#: library/asyncio-stream.rst:313
+msgid ""
+"stream.close()\n"
+"await stream.wait_closed()"
+msgstr ""
+
+#: library/asyncio-stream.rst:318
 msgid ""
 "Return ``True`` if the underlying transport supports the :meth:`write_eof` "
 "method, ``False`` otherwise."
@@ -411,18 +457,18 @@ msgstr ""
 "Renvoie ``True`` si le transport sous-jacent gère la méthode :meth:"
 "`write_eof`, ``False`` sinon."
 
-#: library/asyncio-stream.rst:319
+#: library/asyncio-stream.rst:323
 msgid ""
 "Close the write end of the stream after the buffered write data is flushed."
 msgstr ""
 "Ferme le flux en écriture après le vidage des données d'écriture en mémoire "
 "tampon."
 
-#: library/asyncio-stream.rst:324
+#: library/asyncio-stream.rst:328
 msgid "Return the underlying asyncio transport."
 msgstr "Renvoie le transport asynchrone sous-jacent."
 
-#: library/asyncio-stream.rst:328
+#: library/asyncio-stream.rst:332
 msgid ""
 "Access optional transport information; see :meth:`BaseTransport."
 "get_extra_info` for details."
@@ -430,13 +476,19 @@ msgstr ""
 "Donne accès aux informations de transport facultatives ; voir :meth:"
 "`BaseTransport.get_extra_info` pour plus de détails."
 
-#: library/asyncio-stream.rst:333
+#: library/asyncio-stream.rst:337
 msgid "Wait until it is appropriate to resume writing to the stream. Example::"
 msgstr ""
 "Attend qu'il soit approprié de reprendre l'écriture dans le flux. Par "
 "exemple ::"
 
-#: library/asyncio-stream.rst:339
+#: library/asyncio-stream.rst:340
+msgid ""
+"writer.write(data)\n"
+"await writer.drain()"
+msgstr ""
+
+#: library/asyncio-stream.rst:343
 msgid ""
 "This is a flow control method that interacts with the underlying IO write "
 "buffer.  When the size of the buffer reaches the high watermark, *drain()* "
@@ -450,19 +502,19 @@ msgstr ""
 "drainée jusqu'à la limite basse et que l'écriture puisse reprendre. "
 "Lorsqu'il n'y a rien à attendre, :meth:`drain` termine immédiatement."
 
-#: library/asyncio-stream.rst:349
+#: library/asyncio-stream.rst:353
 msgid "Upgrade an existing stream-based connection to TLS."
 msgstr "Bascule la connexion basée sur le flux existant vers TLS."
 
-#: library/asyncio-stream.rst:351
+#: library/asyncio-stream.rst:355
 msgid "Parameters:"
 msgstr "Paramètres :"
 
-#: library/asyncio-stream.rst:353
+#: library/asyncio-stream.rst:357
 msgid "*sslcontext*: a configured instance of :class:`~ssl.SSLContext`."
 msgstr "*sslcontext* : une instance configurée de :class:`~ssl.SSLContext`."
 
-#: library/asyncio-stream.rst:355
+#: library/asyncio-stream.rst:359
 msgid ""
 "*server_hostname*: sets or overrides the host name that the target server's "
 "certificate will be matched against."
@@ -470,7 +522,7 @@ msgstr ""
 "*server_hostname* : définit ou remplace le nom d'hôte auquel le certificat "
 "du serveur cible sera comparé."
 
-#: library/asyncio-stream.rst:358
+#: library/asyncio-stream.rst:362
 msgid ""
 "*ssl_handshake_timeout* is the time in seconds to wait for the TLS handshake "
 "to complete before aborting the connection.  ``60.0`` seconds if ``None`` "
@@ -481,15 +533,26 @@ msgstr ""
 "secondes si ``None`` (par défaut)."
 
 #: library/asyncio-stream.rst:366
+#, fuzzy
+msgid ""
+"*ssl_shutdown_timeout* is the time in seconds to wait for the SSL shutdown "
+"to complete before aborting the connection. ``30.0`` seconds if ``None`` "
+"(default)."
+msgstr ""
+"*ssl_handshake_timeout* est le temps en secondes à attendre pour que la "
+"poignée de main TLS se termine avant d'abandonner la connexion. ``60.0`` "
+"secondes si ``None`` (par défaut)."
+
+#: library/asyncio-stream.rst:378
 msgid ""
 "Return ``True`` if the stream is closed or in the process of being closed."
 msgstr "Renvoie ``True`` si le flux est fermé ou en cours de fermeture."
 
-#: library/asyncio-stream.rst:373
+#: library/asyncio-stream.rst:385
 msgid "Wait until the stream is closed."
 msgstr "Attend que le flux soit fermé."
 
-#: library/asyncio-stream.rst:375
+#: library/asyncio-stream.rst:387
 msgid ""
 "Should be called after :meth:`close` to wait until the underlying connection "
 "is closed, ensuring that all data has been flushed before e.g. exiting the "
@@ -499,20 +562,20 @@ msgstr ""
 "jacente soit fermée, en s'assurant que toutes les données ont été vidées "
 "avant, par exemple, de quitter le programme."
 
-#: library/asyncio-stream.rst:383
+#: library/asyncio-stream.rst:395
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/asyncio-stream.rst:388
+#: library/asyncio-stream.rst:400
 msgid "TCP echo client using streams"
 msgstr "Client d'écho TCP utilisant des flux"
 
-#: library/asyncio-stream.rst:390
+#: library/asyncio-stream.rst:402
 msgid "TCP echo client using the :func:`asyncio.open_connection` function::"
 msgstr ""
 "Client d'écho TCP utilisant la fonction :func:`asyncio.open_connection` ::"
 
-#: library/asyncio-stream.rst:414
+#: library/asyncio-stream.rst:426
 msgid ""
 "The :ref:`TCP echo client protocol "
 "<asyncio_example_tcp_echo_client_protocol>` example uses the low-level :meth:"
@@ -521,16 +584,48 @@ msgstr ""
 "L'exemple :ref:`asyncio_example_tcp_echo_client_protocol` utilise la méthode "
 "de bas niveau :meth:`loop.create_connection`."
 
-#: library/asyncio-stream.rst:421
+#: library/asyncio-stream.rst:433
 msgid "TCP echo server using streams"
 msgstr "Serveur d'écho TCP utilisant des flux"
 
-#: library/asyncio-stream.rst:423
+#: library/asyncio-stream.rst:435
 msgid "TCP echo server using the :func:`asyncio.start_server` function::"
 msgstr ""
 "Serveur d'écho TCP utilisant la fonction :func:`asyncio.start_server` ::"
 
-#: library/asyncio-stream.rst:457
+#: library/asyncio-stream.rst:437
+msgid ""
+"import asyncio\n"
+"\n"
+"async def handle_echo(reader, writer):\n"
+"    data = await reader.read(100)\n"
+"    message = data.decode()\n"
+"    addr = writer.get_extra_info('peername')\n"
+"\n"
+"    print(f\"Received {message!r} from {addr!r}\")\n"
+"\n"
+"    print(f\"Send: {message!r}\")\n"
+"    writer.write(data)\n"
+"    await writer.drain()\n"
+"\n"
+"    print(\"Close the connection\")\n"
+"    writer.close()\n"
+"    await writer.wait_closed()\n"
+"\n"
+"async def main():\n"
+"    server = await asyncio.start_server(\n"
+"        handle_echo, '127.0.0.1', 8888)\n"
+"\n"
+"    addrs = ', '.join(str(sock.getsockname()) for sock in server.sockets)\n"
+"    print(f'Serving on {addrs}')\n"
+"\n"
+"    async with server:\n"
+"        await server.serve_forever()\n"
+"\n"
+"asyncio.run(main())"
+msgstr ""
+
+#: library/asyncio-stream.rst:469
 msgid ""
 "The :ref:`TCP echo server protocol "
 "<asyncio_example_tcp_echo_server_protocol>` example uses the :meth:`loop."
@@ -539,30 +634,77 @@ msgstr ""
 "L'exemple de :ref:`asyncio_example_tcp_echo_server_protocol` utilise la "
 "méthode :meth:`loop.create_server`."
 
-#: library/asyncio-stream.rst:462
+#: library/asyncio-stream.rst:474
 msgid "Get HTTP headers"
 msgstr "Récupération des en-têtes HTTP"
 
-#: library/asyncio-stream.rst:464
+#: library/asyncio-stream.rst:476
 msgid ""
 "Simple example querying HTTP headers of the URL passed on the command line::"
 msgstr ""
 "Exemple simple d'interrogation des en-têtes HTTP de l'URL transmise sur la "
 "ligne de commande ::"
 
-#: library/asyncio-stream.rst:503
+#: library/asyncio-stream.rst:478
+msgid ""
+"import asyncio\n"
+"import urllib.parse\n"
+"import sys\n"
+"\n"
+"async def print_http_headers(url):\n"
+"    url = urllib.parse.urlsplit(url)\n"
+"    if url.scheme == 'https':\n"
+"        reader, writer = await asyncio.open_connection(\n"
+"            url.hostname, 443, ssl=True)\n"
+"    else:\n"
+"        reader, writer = await asyncio.open_connection(\n"
+"            url.hostname, 80)\n"
+"\n"
+"    query = (\n"
+"        f\"HEAD {url.path or '/'} HTTP/1.0\\r\\n\"\n"
+"        f\"Host: {url.hostname}\\r\\n\"\n"
+"        f\"\\r\\n\"\n"
+"    )\n"
+"\n"
+"    writer.write(query.encode('latin-1'))\n"
+"    while True:\n"
+"        line = await reader.readline()\n"
+"        if not line:\n"
+"            break\n"
+"\n"
+"        line = line.decode('latin1').rstrip()\n"
+"        if line:\n"
+"            print(f'HTTP header> {line}')\n"
+"\n"
+"    # Ignore the body, close the socket\n"
+"    writer.close()\n"
+"    await writer.wait_closed()\n"
+"\n"
+"url = sys.argv[1]\n"
+"asyncio.run(print_http_headers(url))"
+msgstr ""
+
+#: library/asyncio-stream.rst:515
 msgid "Usage::"
 msgstr "Utilisation ::"
 
-#: library/asyncio-stream.rst:507
+#: library/asyncio-stream.rst:517
+msgid "python example.py http://example.com/path/page.html"
+msgstr ""
+
+#: library/asyncio-stream.rst:519
 msgid "or with HTTPS::"
 msgstr "ou avec HTTPS ::"
 
-#: library/asyncio-stream.rst:515
+#: library/asyncio-stream.rst:521
+msgid "python example.py https://example.com/path/page.html"
+msgstr ""
+
+#: library/asyncio-stream.rst:527
 msgid "Register an open socket to wait for data using streams"
 msgstr "Ouverture d'un connecteur pour attendre les données à l'aide de flux"
 
-#: library/asyncio-stream.rst:517
+#: library/asyncio-stream.rst:529
 msgid ""
 "Coroutine waiting until a socket receives data using the :func:"
 "`open_connection` function::"
@@ -570,7 +712,40 @@ msgstr ""
 "Coroutine attendant qu'un connecteur reçoive des données en utilisant la "
 "fonction :func:`open_connection` ::"
 
-#: library/asyncio-stream.rst:552
+#: library/asyncio-stream.rst:532
+msgid ""
+"import asyncio\n"
+"import socket\n"
+"\n"
+"async def wait_for_data():\n"
+"    # Get a reference to the current event loop because\n"
+"    # we want to access low-level APIs.\n"
+"    loop = asyncio.get_running_loop()\n"
+"\n"
+"    # Create a pair of connected sockets.\n"
+"    rsock, wsock = socket.socketpair()\n"
+"\n"
+"    # Register the open socket to wait for data.\n"
+"    reader, writer = await asyncio.open_connection(sock=rsock)\n"
+"\n"
+"    # Simulate the reception of data from the network\n"
+"    loop.call_soon(wsock.send, 'abc'.encode())\n"
+"\n"
+"    # Wait for data\n"
+"    data = await reader.read(100)\n"
+"\n"
+"    # Got data, we are done: close the socket\n"
+"    print(\"Received:\", data.decode())\n"
+"    writer.close()\n"
+"    await writer.wait_closed()\n"
+"\n"
+"    # Close the second socket\n"
+"    wsock.close()\n"
+"\n"
+"asyncio.run(wait_for_data())"
+msgstr ""
+
+#: library/asyncio-stream.rst:564
 msgid ""
 "The :ref:`register an open socket to wait for data using a protocol "
 "<asyncio_example_create_connection>` example uses a low-level protocol and "
@@ -579,7 +754,7 @@ msgstr ""
 "L'exemple :ref:`asyncio_example_create_connection` utilise un protocole de "
 "bas niveau et la méthode :meth:`loop.create_connection`."
 
-#: library/asyncio-stream.rst:556
+#: library/asyncio-stream.rst:568
 msgid ""
 "The :ref:`watch a file descriptor for read events "
 "<asyncio_example_watch_fd>` example uses the low-level :meth:`loop."
@@ -588,12 +763,5 @@ msgstr ""
 "L'exemple :ref:`asyncio_example_watch_fd` utilise la méthode de bas niveau :"
 "meth:`loop.add_reader` pour surveiller un descripteur de fichier."
 
-#, fuzzy
-#~ msgid ""
-#~ "*ssl_shutdown_timeout* is the time in seconds to wait for the SSL "
-#~ "shutdown to complete before aborting the connection. ``30.0`` seconds if "
-#~ "``None`` (default)."
-#~ msgstr ""
-#~ "*ssl_handshake_timeout* est le temps en secondes à attendre pour que la "
-#~ "poignée de main TLS se termine avant d'abandonner la connexion. ``60.0`` "
-#~ "secondes si ``None`` (par défaut)."
+#~ msgid ":ref:`Availability <availability>`: Unix."
+#~ msgstr ":ref:`Disponibilité <availability>` : Unix."

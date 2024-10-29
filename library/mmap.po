@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 14:55+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/mmap.rst:2
-msgid ":mod:`mmap` --- Memory-mapped file support"
+msgid ":mod:`!mmap` --- Memory-mapped file support"
 msgstr ""
 
 #: includes/wasm-notavail.rst:3
-msgid ":ref:`Availability <availability>`: not Emscripten, not WASI."
+msgid "Availability"
 msgstr ""
 
 #: includes/wasm-notavail.rst:5
@@ -46,10 +46,10 @@ msgid ""
 "A memory-mapped file is created by the :class:`~mmap.mmap` constructor, "
 "which is different on Unix and on Windows.  In either case you must provide "
 "a file descriptor for a file opened for update. If you wish to map an "
-"existing Python file object, use its :meth:`fileno` method to obtain the "
-"correct value for the *fileno* parameter.  Otherwise, you can open the file "
-"using the :func:`os.open` function, which returns a file descriptor directly "
-"(the file still needs to be closed when done)."
+"existing Python file object, use its :meth:`~io.IOBase.fileno` method to "
+"obtain the correct value for the *fileno* parameter.  Otherwise, you can "
+"open the file using the :func:`os.open` function, which returns a file "
+"descriptor directly (the file still needs to be closed when done)."
 msgstr ""
 
 #: library/mmap.rst:28
@@ -103,8 +103,8 @@ msgid ""
 "same file.  If you specify the name of an existing tag, that tag is opened, "
 "otherwise a new tag of this name is created.  If this parameter is omitted "
 "or ``None``, the mapping is created without a name.  Avoiding the use of the "
-"tag parameter will assist in keeping your code portable between Unix and "
-"Windows."
+"*tagname* parameter will assist in keeping your code portable between Unix "
+"and Windows."
 msgstr ""
 
 #: library/mmap.rst:68
@@ -115,7 +115,7 @@ msgid ""
 "`ALLOCATIONGRANULARITY`."
 msgstr ""
 
-#: library/mmap.rst:172
+#: library/mmap.rst:163
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``mmap.__new__`` with arguments "
 "``fileno``, ``length``, ``access``, ``offset``."
@@ -175,10 +175,43 @@ msgstr ""
 msgid "This example shows a simple way of using :class:`~mmap.mmap`::"
 msgstr ""
 
+#: library/mmap.rst:111
+msgid ""
+"import mmap\n"
+"\n"
+"# write a simple example file\n"
+"with open(\"hello.txt\", \"wb\") as f:\n"
+"    f.write(b\"Hello Python!\\n\")\n"
+"\n"
+"with open(\"hello.txt\", \"r+b\") as f:\n"
+"    # memory-map the file, size 0 means whole file\n"
+"    mm = mmap.mmap(f.fileno(), 0)\n"
+"    # read content via standard file methods\n"
+"    print(mm.readline())  # prints b\"Hello Python!\\n\"\n"
+"    # read content via slice notation\n"
+"    print(mm[:5])  # prints b\"Hello\"\n"
+"    # update content using slice notation;\n"
+"    # note that new content must have same size\n"
+"    mm[6:] = b\" world!\\n\"\n"
+"    # ... and read again using standard file methods\n"
+"    mm.seek(0)\n"
+"    print(mm.readline())  # prints b\"Hello  world!\\n\"\n"
+"    # close the map\n"
+"    mm.close()"
+msgstr ""
+
 #: library/mmap.rst:134
 msgid ""
 ":class:`~mmap.mmap` can also be used as a context manager in a :keyword:"
 "`with` statement::"
+msgstr ""
+
+#: library/mmap.rst:137
+msgid ""
+"import mmap\n"
+"\n"
+"with mmap.mmap(-1, 13) as mm:\n"
+"    mm.write(b\"Hello world!\")"
 msgstr ""
 
 #: library/mmap.rst:142
@@ -189,6 +222,23 @@ msgstr ""
 msgid ""
 "The next example demonstrates how to create an anonymous map and exchange "
 "data between the parent and child processes::"
+msgstr ""
+
+#: library/mmap.rst:149
+msgid ""
+"import mmap\n"
+"import os\n"
+"\n"
+"mm = mmap.mmap(-1, 13)\n"
+"mm.write(b\"Hello world!\")\n"
+"\n"
+"pid = os.fork()\n"
+"\n"
+"if pid == 0:  # In a child process\n"
+"    mm.seek(0)\n"
+"    print(mm.readline())\n"
+"\n"
+"    mm.close()"
 msgstr ""
 
 #: library/mmap.rst:165
@@ -372,16 +422,23 @@ msgstr ""
 msgid "MAP_* Constants"
 msgstr ""
 
-#: library/mmap.rst:374
-msgid ""
-"These are the various flags that can be passed to :meth:`mmap.mmap`. Note "
-"that some options might not be present on some systems."
-msgstr ""
-
 #: library/mmap.rst:376
-msgid "Added MAP_POPULATE constant."
+msgid ""
+"These are the various flags that can be passed to :meth:`mmap.mmap`.  :data:"
+"`MAP_ALIGNED_SUPER` is only available at FreeBSD and :data:`MAP_CONCEAL` is "
+"only available at OpenBSD.  Note that some options might not be present on "
+"some systems."
 msgstr ""
 
-#: library/mmap.rst:379
-msgid "Added MAP_STACK constant."
+#: library/mmap.rst:380
+msgid "Added :data:`MAP_POPULATE` constant."
+msgstr ""
+
+#: library/mmap.rst:383
+msgid "Added :data:`MAP_STACK` constant."
+msgstr ""
+
+#: library/mmap.rst:386
+msgid ""
+"Added :data:`MAP_ALIGNED_SUPER` constant. Added :data:`MAP_CONCEAL` constant."
 msgstr ""

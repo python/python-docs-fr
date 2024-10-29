@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2019-11-01 11:43+0100\n"
 "Last-Translator: Melançon Victor <victor.melancon0@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -277,7 +277,7 @@ msgid ""
 "style, and format.  PEPs are kept in the Python CVS tree on SourceForge, "
 "though they're not part of the Python 2.0 distribution, and are also "
 "available in HTML form from https://peps.python.org/.  As of September 2000, "
-"there are 25 PEPS, ranging from :pep:`201`, \"Lockstep Iteration\", to PEP "
+"there are 25 PEPs, ranging from :pep:`201`, \"Lockstep Iteration\", to PEP "
 "225, \"Elementwise/Objectwise Operators\"."
 msgstr ""
 "Lisez le reste de :pep:`1` pour plus de détails sur le processus éditorial, "
@@ -322,13 +322,14 @@ msgstr ""
 "points les plus significatifs sur les interfaces Unicode."
 
 #: whatsnew/2.0.rst:155
+#, fuzzy
 msgid ""
 "In Python source code, Unicode strings are written as ``u\"string\"``.  "
-"Arbitrary Unicode characters can be written using a new escape sequence, "
-"``\\uHHHH``, where *HHHH* is a 4-digit hexadecimal number from 0000 to "
-"FFFF.  The existing ``\\xHHHH`` escape sequence can also be used, and octal "
-"escapes can be used for characters up to U+01FF, which is represented by "
-"``\\777``."
+"Arbitrary Unicode characters can be written using a new escape sequence, :"
+"samp:`\\\\u{HHHH}`, where *HHHH* is a 4-digit hexadecimal number from 0000 "
+"to FFFF.  The existing :samp:`\\\\x{HH}` escape sequence can also be used, "
+"and octal escapes can be used for characters up to U+01FF, which is "
+"represented by ``\\777``."
 msgstr ""
 "Dans le code source Python, les chaînes Unicode sont écrites sous la forme "
 "``u\"string\"``. Les caractères Unicode arbitraires peuvent être écrits en "
@@ -487,11 +488,12 @@ msgstr ""
 "consommés."
 
 #: whatsnew/2.0.rst:219
+#, fuzzy
 msgid ""
 "*stream_reader* is a class that supports decoding input from a stream. "
-"*stream_reader(file_obj)* returns an object that supports the :meth:`read`, :"
-"meth:`readline`, and :meth:`readlines` methods.  These methods will all "
-"translate from the given encoding and return Unicode strings."
+"*stream_reader(file_obj)* returns an object that supports the :meth:`!"
+"read`, :meth:`!readline`, and :meth:`!readlines` methods.  These methods "
+"will all translate from the given encoding and return Unicode strings."
 msgstr ""
 "*stream_reader* est une classe qui prend en charge le décodage de l’entrée "
 "d’un flux. *stream_reader(file_obj)* renvoie un objet qui prend en charge "
@@ -500,10 +502,11 @@ msgstr ""
 "une chaînes de caractère Unicode."
 
 #: whatsnew/2.0.rst:224
+#, fuzzy
 msgid ""
 "*stream_writer*, similarly, is a class that supports encoding output to a "
 "stream.  *stream_writer(file_obj)* returns an object that supports the :meth:"
-"`write` and :meth:`writelines` methods.  These methods expect Unicode "
+"`!write` and :meth:`!writelines` methods.  These methods expect Unicode "
 "strings, translating them to the given encoding on output."
 msgstr ""
 "De même, *stream_writer* est une classe qui prend en charge le codage de "
@@ -520,9 +523,30 @@ msgstr ""
 "Par exemple, le code suivant écrit une chaîne Unicode dans un fichier, en "
 "l’encodant en UTF-8 ::"
 
+#: whatsnew/2.0.rst:232
+msgid ""
+"import codecs\n"
+"\n"
+"unistr = u'\\u0660\\u2000ab ...'\n"
+"\n"
+"(UTF8_encode, UTF8_decode,\n"
+" UTF8_streamreader, UTF8_streamwriter) = codecs.lookup('UTF-8')\n"
+"\n"
+"output = UTF8_streamwriter( open( '/tmp/output', 'wb') )\n"
+"output.write( unistr )\n"
+"output.close()"
+msgstr ""
+
 #: whatsnew/2.0.rst:243
 msgid "The following code would then read UTF-8 input from the file::"
 msgstr "Le code suivant lirait ensuite le texte UTF-8 du fichier ::"
+
+#: whatsnew/2.0.rst:245
+msgid ""
+"input = UTF8_streamreader( open( '/tmp/output', 'rb') )\n"
+"print repr(input.read())\n"
+"input.close()"
+msgstr ""
 
 #: whatsnew/2.0.rst:249
 msgid ""
@@ -591,6 +615,15 @@ msgstr ""
 "précédent, en trouvant toutes les chaînes de la liste contenant une sous-"
 "chaîne donnée.  Vous pouvez écrire ce qui suit pour le faire ::"
 
+#: whatsnew/2.0.rst:280
+msgid ""
+"# Given the list L, make a list of all strings\n"
+"# containing the substring S.\n"
+"sublist = filter( lambda s, substring=S:\n"
+"                     string.find(s, substring) != -1,\n"
+"                  L)"
+msgstr ""
+
 #: whatsnew/2.0.rst:286
 msgid ""
 "Because of Python's scoping rules, a default argument is used so that the "
@@ -602,9 +635,21 @@ msgstr ""
 "sait quelle sous-chaîne est recherchée.  Les listes en compréhension rendent "
 "ceci plus propre ::"
 
+#: whatsnew/2.0.rst:290
+msgid "sublist = [ s for s in L if string.find(s, S) != -1 ]"
+msgstr ""
+
 #: whatsnew/2.0.rst:292
 msgid "List comprehensions have the form::"
 msgstr "Les compréhensions de liste sont de la forme suivante ::"
+
+#: whatsnew/2.0.rst:294
+msgid ""
+"[ expression for expr in sequence1\n"
+"             for expr2 in sequence2 ...\n"
+"             for exprN in sequenceN\n"
+"             if condition ]"
+msgstr ""
 
 #: whatsnew/2.0.rst:299
 msgid ""
@@ -632,6 +677,18 @@ msgstr ""
 "Pour que la sémantique soit très claire, une compréhension de liste est "
 "équivalente au code Python suivant ::"
 
+#: whatsnew/2.0.rst:310
+msgid ""
+"for expr1 in sequence1:\n"
+"    for expr2 in sequence2:\n"
+"    ...\n"
+"        for exprN in sequenceN:\n"
+"             if (condition):\n"
+"                  # Append the value of\n"
+"                  # the expression to the\n"
+"                  # resulting list."
+msgstr ""
+
 #: whatsnew/2.0.rst:319
 msgid ""
 "This means that when there are multiple :keyword:`!for`...\\ :keyword:`!in` "
@@ -644,6 +701,15 @@ msgstr ""
 "les séquences.  Si vous avez deux listes de longueur 3, la liste de sortie "
 "est de longueur 9 ::"
 
+#: whatsnew/2.0.rst:324
+msgid ""
+"seq1 = 'abc'\n"
+"seq2 = (1,2,3)\n"
+">>> [ (x,y) for x in seq1 for y in seq2]\n"
+"[('a', 1), ('a', 2), ('a', 3), ('b', 1), ('b', 2), ('b', 3), ('c', 1),\n"
+"('c', 2), ('c', 3)]"
+msgstr ""
+
 #: whatsnew/2.0.rst:330
 msgid ""
 "To avoid introducing an ambiguity into Python's grammar, if *expression* is "
@@ -654,6 +720,14 @@ msgstr ""
 "*expression* doit être encadrée par des parenthèses si elle produit un n-"
 "uplet. La première compréhension de liste ci-dessous n'est pas valide "
 "syntaxiquement, tandis que la seconde l'est ::"
+
+#: whatsnew/2.0.rst:334
+msgid ""
+"# Syntax error\n"
+"[ x,y for x in seq1 for y in seq2]\n"
+"# Correct\n"
+"[ (x,y) for x in seq1 for y in seq2]"
+msgstr ""
 
 #: whatsnew/2.0.rst:339
 msgid ""
@@ -689,12 +763,13 @@ msgstr ""
 "variable ``a`` par 2, équivalente à l’opération ``a = a + 2`` ."
 
 #: whatsnew/2.0.rst:356
+#, fuzzy
 msgid ""
 "The full list of supported assignment operators is ``+=``, ``-=``, ``*=``, "
 "``/=``, ``%=``, ``**=``, ``&=``, ``|=``, ``^=``, ``>>=``, and ``<<=``.  "
 "Python classes can override the augmented assignment operators by defining "
-"methods named :meth:`__iadd__`, :meth:`__isub__`, etc.  For example, the "
-"following :class:`Number` class stores a number and supports using += to "
+"methods named :meth:`!__iadd__`, :meth:`!__isub__`, etc.  For example, the "
+"following :class:`!Number` class stores a number and supports using += to "
 "create a new instance with an incremented value."
 msgstr ""
 "La liste complète des opérateurs d’affectations pris en charge est  ``+=``, "
@@ -705,9 +780,23 @@ msgstr ""
 "prend en charge l’utilisation de += en créant une nouvelle instance avec une "
 "valeur incrémentée."
 
-#: whatsnew/2.0.rst:377
+#: whatsnew/2.0.rst:367
 msgid ""
-"The :meth:`__iadd__` special method is called with the value of the "
+"class Number:\n"
+"    def __init__(self, value):\n"
+"        self.value = value\n"
+"    def __iadd__(self, increment):\n"
+"        return Number( self.value + increment)\n"
+"\n"
+"n = Number(5)\n"
+"n += 3\n"
+"print n.value"
+msgstr ""
+
+#: whatsnew/2.0.rst:377
+#, fuzzy
+msgid ""
+"The :meth:`!__iadd__` special method is called with the value of the "
 "increment, and should return a new instance with an appropriately modified "
 "value; this return value is bound as the new value of the variable on the "
 "left-hand side."
@@ -732,12 +821,12 @@ msgstr "Méthodes de chaînes de caractères"
 #: whatsnew/2.0.rst:392
 msgid ""
 "Until now string-manipulation functionality was in the :mod:`string` module, "
-"which was usually a front-end for the :mod:`strop` module written in C.  The "
-"addition of Unicode posed a difficulty for the :mod:`strop` module, because "
-"the functions would all need to be rewritten in order to accept either 8-bit "
-"or Unicode strings.  For functions such as :func:`string.replace`, which "
-"takes 3 string arguments, that means eight possible permutations, and "
-"correspondingly complicated code."
+"which was usually a front-end for the :mod:`!strop` module written in C.  "
+"The addition of Unicode posed a difficulty for the :mod:`!strop` module, "
+"because the functions would all need to be rewritten in order to accept "
+"either 8-bit or Unicode strings.  For functions such as :func:`!string."
+"replace`, which takes 3 string arguments, that means eight possible "
+"permutations, and correspondingly complicated code."
 msgstr ""
 
 #: whatsnew/2.0.rst:400
@@ -745,6 +834,16 @@ msgid ""
 "Instead, Python 2.0 pushes the problem onto the string type, making string "
 "manipulation functionality available through methods on both 8-bit strings "
 "and Unicode strings.   ::"
+msgstr ""
+
+#: whatsnew/2.0.rst:404
+msgid ""
+">>> 'andrew'.capitalize()\n"
+"'Andrew'\n"
+">>> 'hostname'.replace('os', 'linux')\n"
+"'hlinuxtname'\n"
+">>> 'moshe'.find('sh')\n"
+"2"
 msgstr ""
 
 #: whatsnew/2.0.rst:411
@@ -764,18 +863,18 @@ msgstr ""
 #: whatsnew/2.0.rst:418
 msgid ""
 "Two methods which have no parallel in pre-2.0 versions, although they did "
-"exist in JPython for quite some time, are :meth:`startswith` and :meth:"
-"`endswith`. ``s.startswith(t)`` is equivalent to ``s[:len(t)] == t``, while "
+"exist in JPython for quite some time, are :meth:`!startswith` and :meth:`!"
+"endswith`. ``s.startswith(t)`` is equivalent to ``s[:len(t)] == t``, while "
 "``s.endswith(t)`` is equivalent to ``s[-len(t):] == t``."
 msgstr ""
 
 #: whatsnew/2.0.rst:423
 msgid ""
-"One other method which deserves special mention is :meth:`join`.  The :meth:"
-"`join` method of a string receives one parameter, a sequence of strings, and "
-"is equivalent to the :func:`string.join` function from the old :mod:`string` "
-"module, with the arguments reversed. In other words, ``s.join(seq)`` is "
-"equivalent to the old ``string.join(seq, s)``."
+"One other method which deserves special mention is :meth:`!join`.  The :meth:"
+"`!join` method of a string receives one parameter, a sequence of strings, "
+"and is equivalent to the :func:`!string.join` function from the old :mod:"
+"`string` module, with the arguments reversed. In other words, ``s."
+"join(seq)`` is equivalent to the old ``string.join(seq, s)``."
 msgstr ""
 
 #: whatsnew/2.0.rst:433
@@ -806,6 +905,12 @@ msgstr ""
 msgid ""
 "Consider the simplest possible cycle,  a class instance which has a "
 "reference to itself::"
+msgstr ""
+
+#: whatsnew/2.0.rst:452
+msgid ""
+"instance = SomeClass()\n"
+"instance.myself = instance"
 msgstr ""
 
 #: whatsnew/2.0.rst:455
@@ -880,12 +985,20 @@ msgstr "Changements mineurs du langage"
 msgid ""
 "A new syntax makes it more convenient to call a given function with a tuple "
 "of arguments and/or a dictionary of keyword arguments. In Python 1.5 and "
-"earlier, you'd use the :func:`apply` built-in function: ``apply(f, args, "
-"kw)`` calls the function :func:`f` with the argument tuple *args* and the "
-"keyword arguments in the dictionary *kw*.  :func:`apply`  is the same in "
+"earlier, you'd use the :func:`!apply` built-in function: ``apply(f, args, "
+"kw)`` calls the function :func:`!f` with the argument tuple *args* and the "
+"keyword arguments in the dictionary *kw*.  :func:`!apply`  is the same in "
 "2.0, but thanks to a patch from Greg Ewing, ``f(*args, **kw)`` is a shorter "
 "and clearer way to achieve the same effect.  This syntax is symmetrical with "
 "the syntax for defining functions::"
+msgstr ""
+
+#: whatsnew/2.0.rst:513
+msgid ""
+"def f(*args, **kw):\n"
+"    # args is a tuple of positional args,\n"
+"    # kw is a dictionary of keyword args\n"
+"    ..."
 msgstr ""
 
 #: whatsnew/2.0.rst:518
@@ -893,10 +1006,14 @@ msgid ""
 "The ``print`` statement can now have its output directed to a file-like "
 "object by following the ``print`` with  ``>> file``, similar to the "
 "redirection operator in Unix shells. Previously you'd either have to use "
-"the :meth:`write` method of the file-like object, which lacks the "
+"the :meth:`!write` method of the file-like object, which lacks the "
 "convenience and simplicity of ``print``, or you could assign a new value to "
 "``sys.stdout`` and then restore the old value.  For sending output to "
 "standard error, it's much easier to write this::"
+msgstr ""
+
+#: whatsnew/2.0.rst:526
+msgid "print >> sys.stderr, \"Warning: action field not supplied\""
 msgstr ""
 
 #: whatsnew/2.0.rst:528
@@ -922,7 +1039,7 @@ msgid ""
 "seq`` returns true if *obj* is present in the sequence *seq*; Python "
 "computes this by simply trying every index of the sequence until either "
 "*obj* is found or an :exc:`IndexError` is encountered.  Moshe Zadka "
-"contributed a patch which adds a :meth:`__contains__` magic method for "
+"contributed a patch which adds a :meth:`!__contains__` magic method for "
 "providing a custom implementation for :keyword:`!in`. Additionally, new "
 "built-in objects written in C can define what :keyword:`!in` means for them "
 "via a new slot in the sequence protocol."
@@ -938,6 +1055,14 @@ msgid ""
 "useful result instead.  For example, after this code::"
 msgstr ""
 
+#: whatsnew/2.0.rst:554
+msgid ""
+"a = []\n"
+"b = []\n"
+"a.append(a)\n"
+"b.append(b)"
+msgstr ""
+
 #: whatsnew/2.0.rst:559
 msgid ""
 "The comparison ``a==b`` returns true, because the two recursive data "
@@ -946,7 +1071,7 @@ msgid ""
 "to this implementation, and some useful relevant links.    Note that "
 "comparisons can now also raise exceptions. In earlier versions of Python, a "
 "comparison operation such as ``cmp(a,b)`` would always produce an answer, "
-"even if a user-defined :meth:`__cmp__` method encountered an error, since "
+"even if a user-defined :meth:`!__cmp__` method encountered an error, since "
 "the resulting exception would simply be silently swallowed."
 msgstr ""
 
@@ -980,6 +1105,14 @@ msgid ""
 "raised should still work. ::"
 msgstr ""
 
+#: whatsnew/2.0.rst:590
+msgid ""
+"def f():\n"
+"    print \"i=\",i\n"
+"    i = i + 1\n"
+"f()"
+msgstr ""
+
 #: whatsnew/2.0.rst:595
 msgid ""
 "Two new exceptions, :exc:`TabError` and :exc:`IndentationError`, have been "
@@ -1003,7 +1136,7 @@ msgstr ""
 
 #: whatsnew/2.0.rst:610
 msgid ""
-"The :func:`int` and :func:`long` functions now accept an optional \"base\" "
+"The :func:`int` and :func:`!long` functions now accept an optional \"base\" "
 "parameter when the first argument is a string. ``int('123', 10)`` returns "
 "123, while ``int('123', 16)`` returns 291.  ``int(123, 16)`` raises a :exc:"
 "`TypeError` exception with the message \"can't convert non-string with "
@@ -1022,10 +1155,18 @@ msgstr ""
 #: whatsnew/2.0.rst:622
 msgid ""
 "Dictionaries have an odd new method, ``setdefault(key, default)``, which "
-"behaves similarly to the existing :meth:`get` method.  However, if the key "
-"is missing, :meth:`setdefault` both returns the value of *default* as :meth:"
-"`get` would do, and also inserts it into the dictionary as the value for "
+"behaves similarly to the existing :meth:`!get` method.  However, if the key "
+"is missing, :meth:`!setdefault` both returns the value of *default* as :meth:"
+"`!get` would do, and also inserts it into the dictionary as the value for "
 "*key*.  Thus, the following lines of code::"
+msgstr ""
+
+#: whatsnew/2.0.rst:628
+msgid ""
+"if dict.has_key( key ): return dict[key]\n"
+"else:\n"
+"    dict[key] = []\n"
+"    return dict[key]"
 msgstr ""
 
 #: whatsnew/2.0.rst:633
@@ -1063,7 +1204,7 @@ msgid ""
 "The change which will probably break the most code is tightening up the "
 "arguments accepted by some methods.  Some methods would take multiple "
 "arguments and treat them as a tuple, particularly various list methods such "
-"as :meth:`append` and :meth:`insert`. In earlier versions of Python, if "
+"as :meth:`!append` and :meth:`!insert`. In earlier versions of Python, if "
 "``L`` is a list, ``L.append( 1,2 )`` appends the tuple ``(1,2)`` to the "
 "list.  In Python 2.0 this causes a :exc:`TypeError` exception to be raised, "
 "with the message: 'append requires exactly 1 argument; 2 given'.  The fix is "
@@ -1075,7 +1216,7 @@ msgstr ""
 msgid ""
 "The earlier versions of these methods were more forgiving because they used "
 "an old function in Python's C interface to parse their arguments; 2.0 "
-"modernizes them to use :func:`PyArg_ParseTuple`, the current argument "
+"modernizes them to use :c:func:`PyArg_ParseTuple`, the current argument "
 "parsing function, which provides more helpful error messages and treats "
 "multi-argument calls as errors.  If you absolutely must use 2.0 but can't "
 "fix your code, you can edit :file:`Objects/listobject.c` and define the "
@@ -1086,16 +1227,17 @@ msgstr ""
 #: whatsnew/2.0.rst:673
 msgid ""
 "Some of the functions in the :mod:`socket` module are still forgiving in "
-"this way.  For example, :func:`socket.connect( ('hostname', 25) )` is the "
-"correct form, passing a tuple representing an IP address, but :func:`socket."
-"connect( 'hostname', 25 )` also works. :func:`socket.connect_ex` and :func:"
-"`socket.bind` are similarly easy-going.  2.0alpha1 tightened these functions "
-"up, but because the documentation actually used the erroneous multiple "
-"argument form, many people wrote code which would break with the stricter "
-"checking.  GvR backed out the changes in the face of public reaction, so for "
-"the :mod:`socket` module, the documentation was fixed and the multiple "
-"argument form is simply marked as deprecated; it *will* be tightened up "
-"again in a future Python version."
+"this way.  For example, ``socket.connect( ('hostname', 25) )`` is the "
+"correct form, passing a tuple representing an IP address, but ``socket."
+"connect('hostname', 25)`` also works. :meth:`socket.connect_ex <socket."
+"socket.connect_ex>` and :meth:`socket.bind <socket.socket.bind>` are "
+"similarly easy-going.  2.0alpha1 tightened these functions up, but because "
+"the documentation actually used the erroneous multiple argument form, many "
+"people wrote code which would break with the stricter checking.  GvR backed "
+"out the changes in the face of public reaction, so for the :mod:`socket` "
+"module, the documentation was fixed and the multiple argument form is simply "
+"marked as deprecated; it *will* be tightened up again in a future Python "
+"version."
 msgstr ""
 
 #: whatsnew/2.0.rst:684
@@ -1119,7 +1261,7 @@ msgstr ""
 msgid ""
 "Some work has been done to make integers and long integers a bit more "
 "interchangeable.  In 1.5.2, large-file support was added for Solaris, to "
-"allow reading files larger than 2 GiB; this made the :meth:`tell` method of "
+"allow reading files larger than 2 GiB; this made the :meth:`!tell` method of "
 "file objects return a long integer instead of a regular integer.  Some code "
 "would subtract two file offsets and attempt to use the result to multiply a "
 "sequence or slice a string, but this raised a :exc:`TypeError`.  In 2.0, "
@@ -1127,8 +1269,8 @@ msgid ""
 "as you'd intuitively expect it to; ``3L * 'abc'`` produces 'abcabcabc', and "
 "``(0,1,2,3)[2L:4L]`` produces (2,3). Long integers can also be used in "
 "various contexts where previously only integers were accepted, such as in "
-"the :meth:`seek` method of file objects, and in the formats supported by the "
-"``%`` operator (``%d``, ``%i``, ``%x``, etc.).  For example, ``\"%d\" % "
+"the :meth:`!seek` method of file objects, and in the formats supported by "
+"the ``%`` operator (``%d``, ``%i``, ``%x``, etc.).  For example, ``\"%d\" % "
 "2L**64`` will produce the string ``18446744073709551616``."
 msgstr ""
 
@@ -1146,8 +1288,8 @@ msgstr ""
 #: whatsnew/2.0.rst:716
 msgid ""
 "Taking the :func:`repr` of a float now uses a different formatting precision "
-"than :func:`str`.  :func:`repr` uses ``%.17g`` format string for C's :func:"
-"`sprintf`, while :func:`str` uses ``%.12g`` as before.  The effect is that :"
+"than :func:`str`.  :func:`repr` uses ``%.17g`` format string for C's :func:`!"
+"sprintf`, while :func:`str` uses ``%.12g`` as before.  The effect is that :"
 "func:`repr` may occasionally show more decimal places than  :func:`str`, for "
 "certain numbers.  For example, the number 8.1 can't be represented exactly "
 "in binary, so ``repr(8.1)`` is ``'8.0999999999999996'``, while str(8.1) is "
@@ -1158,9 +1300,9 @@ msgstr ""
 msgid ""
 "The ``-X`` command-line option, which turned all standard exceptions into "
 "strings instead of classes, has been removed; the standard exceptions will "
-"now always be classes.  The :mod:`exceptions` module containing the standard "
-"exceptions was translated from Python to a built-in C module, written by "
-"Barry Warsaw and Fredrik Lundh."
+"now always be classes.  The :mod:`!exceptions` module containing the "
+"standard exceptions was translated from Python to a built-in C module, "
+"written by Barry Warsaw and Fredrik Lundh."
 msgstr ""
 
 #: whatsnew/2.0.rst:740
@@ -1208,7 +1350,7 @@ msgstr ""
 msgid ""
 "Vladimir Marangozov's long-awaited malloc restructuring was completed, to "
 "make it easy to have the Python interpreter use a custom allocator instead "
-"of C's standard :func:`malloc`.  For documentation, read the comments in :"
+"of C's standard :c:func:`malloc`.  For documentation, read the comments in :"
 "file:`Include/pymem.h` and :file:`Include/objimpl.h`.  For the lengthy "
 "discussions during which the interface was hammered out, see the web "
 "archives of the 'patches' and 'python-dev' lists at python.org."
@@ -1251,8 +1393,8 @@ msgstr ""
 #: whatsnew/2.0.rst:796
 msgid ""
 "Three new convenience functions intended for adding constants to a module's "
-"dictionary at module initialization time were added: :func:"
-"`PyModule_AddObject`, :func:`PyModule_AddIntConstant`, and :func:"
+"dictionary at module initialization time were added: :c:func:"
+"`PyModule_AddObject`, :c:func:`PyModule_AddIntConstant`, and :c:func:"
 "`PyModule_AddStringConstant`.  Each of these functions takes a module "
 "object, a null-terminated C string containing the name to be added, and a "
 "third argument for the value to be assigned to the name.  This third "
@@ -1261,8 +1403,9 @@ msgstr ""
 
 #: whatsnew/2.0.rst:804
 msgid ""
-"A wrapper API was added for Unix-style signal handlers. :func:`PyOS_getsig` "
-"gets a signal handler and :func:`PyOS_setsig` will set a new handler."
+"A wrapper API was added for Unix-style signal handlers. :c:func:"
+"`PyOS_getsig` gets a signal handler and :c:func:`PyOS_setsig` will set a new "
+"handler."
 msgstr ""
 
 #: whatsnew/2.0.rst:811
@@ -1284,10 +1427,10 @@ msgstr ""
 #: whatsnew/2.0.rst:821
 msgid ""
 "The SIG for distribution utilities, shepherded by Greg Ward, has created the "
-"Distutils, a system to make package installation much easier.  They form "
-"the :mod:`distutils` package, a new part of Python's standard library. In "
-"the best case, installing a Python module from source will require the same "
-"steps: first you simply mean unpack the tarball or zip archive, and the run "
+"Distutils, a system to make package installation much easier.  They form the "
+"``distutils`` package, a new part of Python's standard library. In the best "
+"case, installing a Python module from source will require the same steps: "
+"first you simply mean unpack the tarball or zip archive, and the run "
 "\"``python setup.py install``\".  The platform will be automatically "
 "detected, the compiler will be recognized, C extension modules will be "
 "compiled, and the distribution installed into the proper directory.  "
@@ -1304,16 +1447,46 @@ msgid ""
 "file:`setup.py` can be just a few lines long::"
 msgstr ""
 
+#: whatsnew/2.0.rst:837
+msgid ""
+"from distutils.core import setup\n"
+"setup (name = \"foo\", version = \"1.0\",\n"
+"       py_modules = [\"module1\", \"module2\"])"
+msgstr ""
+
 #: whatsnew/2.0.rst:841
 msgid ""
 "The :file:`setup.py` file isn't much more complicated if the software "
 "consists of a few packages::"
 msgstr ""
 
+#: whatsnew/2.0.rst:844
+msgid ""
+"from distutils.core import setup\n"
+"setup (name = \"foo\", version = \"1.0\",\n"
+"       packages = [\"package\", \"package.subpackage\"])"
+msgstr ""
+
 #: whatsnew/2.0.rst:848
 msgid ""
 "A C extension can be the most complicated case; here's an example taken from "
 "the PyXML package::"
+msgstr ""
+
+#: whatsnew/2.0.rst:851
+msgid ""
+"from distutils.core import setup, Extension\n"
+"\n"
+"expat_extension = Extension('xml.parsers.pyexpat',\n"
+"     define_macros = [('XML_NS', None)],\n"
+"     include_dirs = [ 'extensions/expat/xmltok',\n"
+"                      'extensions/expat/xmlparse' ],\n"
+"     sources = [ 'extensions/pyexpat.c',\n"
+"                 'extensions/expat/xmltok/xmltok.c',\n"
+"                 'extensions/expat/xmltok/xmlrole.c', ]\n"
+"       )\n"
+"setup (name = \"PyXML\", version = \"0.5.4\",\n"
+"       ext_modules =[ expat_extension ] )"
 msgstr ""
 
 #: whatsnew/2.0.rst:864
@@ -1340,11 +1513,11 @@ msgstr "Modules XML"
 
 #: whatsnew/2.0.rst:882
 msgid ""
-"Python 1.5.2 included a simple XML parser in the form of the :mod:`xmllib` "
+"Python 1.5.2 included a simple XML parser in the form of the :mod:`!xmllib` "
 "module, contributed by Sjoerd Mullender.  Since 1.5.2's release, two "
 "different interfaces for processing XML have become common: SAX2 (version 2 "
 "of the Simple API for XML) provides an event-driven interface with some "
-"similarities to :mod:`xmllib`, and the DOM (Document Object Model) provides "
+"similarities to :mod:`!xmllib`, and the DOM (Document Object Model) provides "
 "a tree-based interface, transforming an XML document into a tree of nodes "
 "that can be traversed and modified.  Python 2.0 includes a SAX2 interface "
 "and a stripped-down DOM interface as part of the :mod:`xml` package. Here we "
@@ -1362,10 +1535,11 @@ msgid ""
 "SAX defines an event-driven interface for parsing XML.  To use SAX, you must "
 "write a SAX handler class.  Handler classes inherit from various classes "
 "provided by SAX, and override various methods that will then be called by "
-"the XML parser.  For example, the :meth:`startElement` and :meth:"
-"`endElement` methods are called for every starting and end tag encountered "
-"by the parser, the :meth:`characters` method is called for every chunk of "
-"character data, and so forth."
+"the XML parser.  For example, the :meth:`~xml.sax.handler.ContentHandler."
+"startElement` and :meth:`~xml.sax.handler.ContentHandler.endElement` methods "
+"are called for every starting and end tag encountered by the parser, the :"
+"meth:`~xml.sax.handler.ContentHandler.characters` method is called for every "
+"chunk of character data, and so forth."
 msgstr ""
 
 #: whatsnew/2.0.rst:906
@@ -1384,6 +1558,28 @@ msgid ""
 "`hamlet.xml` using it::"
 msgstr ""
 
+#: whatsnew/2.0.rst:916
+msgid ""
+"from xml import sax\n"
+"\n"
+"class SimpleHandler(sax.ContentHandler):\n"
+"    def startElement(self, name, attrs):\n"
+"        print 'Start of element:', name, attrs.keys()\n"
+"\n"
+"    def endElement(self, name):\n"
+"        print 'End of element:', name\n"
+"\n"
+"# Create a parser object\n"
+"parser = sax.make_parser()\n"
+"\n"
+"# Tell it what handler to use\n"
+"handler = SimpleHandler()\n"
+"parser.setContentHandler( handler )\n"
+"\n"
+"# Parse a file!\n"
+"parser.parse( 'hamlet.xml' )"
+msgstr ""
+
 #: whatsnew/2.0.rst:935
 msgid ""
 "For more information, consult the Python documentation, or the XML HOWTO at "
@@ -1397,13 +1593,13 @@ msgstr "Support du DOM"
 #: whatsnew/2.0.rst:942
 msgid ""
 "The Document Object Model is a tree-based representation for an XML "
-"document.  A top-level :class:`Document` instance is the root of the tree, "
-"and has a single child which is the top-level :class:`Element` instance. "
-"This :class:`Element` has children nodes representing character data and any "
-"sub-elements, which may have further children of their own, and so forth.  "
-"Using the DOM you can traverse the resulting tree any way you like, access "
-"element and attribute values, insert and delete nodes, and convert the tree "
-"back into XML."
+"document.  A top-level :class:`!Document` instance is the root of the tree, "
+"and has a single child which is the top-level :class:`!Element` instance. "
+"This :class:`!Element` has children nodes representing character data and "
+"any sub-elements, which may have further children of their own, and so "
+"forth.  Using the DOM you can traverse the resulting tree any way you like, "
+"access element and attribute values, insert and delete nodes, and convert "
+"the tree back into XML."
 msgstr ""
 
 #: whatsnew/2.0.rst:950
@@ -1420,24 +1616,43 @@ msgstr ""
 msgid ""
 "The DOM implementation included with Python lives in the :mod:`xml.dom."
 "minidom` module.  It's a lightweight implementation of the Level 1 DOM with "
-"support for XML namespaces.  The  :func:`parse` and :func:`parseString` "
+"support for XML namespaces.  The  :func:`!parse` and :func:`!parseString` "
 "convenience functions are provided for generating a DOM tree::"
+msgstr ""
+
+#: whatsnew/2.0.rst:961
+msgid ""
+"from xml.dom import minidom\n"
+"doc = minidom.parse('hamlet.xml')"
 msgstr ""
 
 #: whatsnew/2.0.rst:964
 msgid ""
-"``doc`` is a :class:`Document` instance.  :class:`Document`, like all the "
-"other DOM classes such as :class:`Element` and :class:`Text`, is a subclass "
-"of the :class:`Node` base class.  All the nodes in a DOM tree therefore "
-"support certain common methods, such as :meth:`toxml` which returns a string "
-"containing the XML representation of the node and its children.  Each class "
-"also has special methods of its own; for example, :class:`Element` and :"
-"class:`Document` instances have a method to find all child elements with a "
-"given tag name. Continuing from the previous 2-line example::"
+"``doc`` is a :class:`!Document` instance.  :class:`!Document`, like all the "
+"other DOM classes such as :class:`!Element` and :class:`Text`, is a subclass "
+"of the :class:`!Node` base class.  All the nodes in a DOM tree therefore "
+"support certain common methods, such as :meth:`!toxml` which returns a "
+"string containing the XML representation of the node and its children.  Each "
+"class also has special methods of its own; for example, :class:`!Element` "
+"and :class:`!Document` instances have a method to find all child elements "
+"with a given tag name. Continuing from the previous 2-line example::"
+msgstr ""
+
+#: whatsnew/2.0.rst:973
+msgid ""
+"perslist = doc.getElementsByTagName( 'PERSONA' )\n"
+"print perslist[0].toxml()\n"
+"print perslist[1].toxml()"
 msgstr ""
 
 #: whatsnew/2.0.rst:977
 msgid "For the *Hamlet* XML file, the above few lines output::"
+msgstr ""
+
+#: whatsnew/2.0.rst:979
+msgid ""
+"<PERSONA>CLAUDIUS, king of Denmark. </PERSONA>\n"
+"<PERSONA>HAMLET, son to the late, and nephew to the present king.</PERSONA>"
 msgstr ""
 
 #: whatsnew/2.0.rst:982
@@ -1447,10 +1662,25 @@ msgid ""
 "nodes::"
 msgstr ""
 
+#: whatsnew/2.0.rst:985
+msgid ""
+"root = doc.documentElement\n"
+"\n"
+"# Remove the first child\n"
+"root.removeChild( root.childNodes[0] )\n"
+"\n"
+"# Move the new first child to the end\n"
+"root.appendChild( root.childNodes[0] )\n"
+"\n"
+"# Insert the new first child (originally,\n"
+"# the third child) before the 20th child.\n"
+"root.insertBefore( root.childNodes[0], root.childNodes[20] )"
+msgstr ""
+
 #: whatsnew/2.0.rst:997
 msgid ""
 "Again, I will refer you to the Python documentation for a complete listing "
-"of the different :class:`Node` classes and their various methods."
+"of the different :class:`!Node` classes and their various methods."
 msgstr ""
 
 #: whatsnew/2.0.rst:1002
@@ -1488,7 +1718,7 @@ msgid "The xmlproc validating parser, written by Lars Marius Garshol."
 msgstr ""
 
 #: whatsnew/2.0.rst:1023
-msgid "The :mod:`sgmlop` parser accelerator module, written by Fredrik Lundh."
+msgid "The :mod:`!sgmlop` parser accelerator module, written by Fredrik Lundh."
 msgstr ""
 
 #: whatsnew/2.0.rst:1029
@@ -1499,10 +1729,10 @@ msgstr ""
 msgid ""
 "Lots of improvements and bugfixes were made to Python's extensive standard "
 "library; some of the affected modules include :mod:`readline`, :mod:"
-"`ConfigParser`, :mod:`cgi`, :mod:`calendar`, :mod:`posix`, :mod:`readline`, :"
-"mod:`xmllib`, :mod:`aifc`, :mod:`chunk, wave`, :mod:`random`, :mod:`shelve`, "
-"and :mod:`nntplib`.  Consult the CVS logs for the exact patch-by-patch "
-"details."
+"`ConfigParser <configparser>`, :mod:`cgi`, :mod:`calendar`, :mod:`posix`, :"
+"mod:`readline`, :mod:`!xmllib`, :mod:`aifc`, :mod:`chunk` :mod:`wave`, :mod:"
+"`random`, :mod:`shelve`, and :mod:`nntplib`.  Consult the CVS logs for the "
+"exact patch-by-patch details."
 msgstr ""
 
 #: whatsnew/2.0.rst:1037
@@ -1512,29 +1742,34 @@ msgid ""
 "data being sent over a socket.  When compiling Python, you can edit :file:"
 "`Modules/Setup` to include SSL support, which adds an additional function to "
 "the :mod:`socket` module: ``socket.ssl(socket, keyfile, certfile)``, which "
-"takes a socket object and returns an SSL socket.  The :mod:`httplib` and :"
-"mod:`urllib` modules were also changed to support ``https://`` URLs, though "
-"no one has implemented FTP or SMTP over SSL."
+"takes a socket object and returns an SSL socket.  The :mod:`httplib <http>` "
+"and :mod:`urllib` modules were also changed to support ``https://`` URLs, "
+"though no one has implemented FTP or SMTP over SSL."
 msgstr ""
 
 #: whatsnew/2.0.rst:1046
 msgid ""
-"The :mod:`httplib` module has been rewritten by Greg Stein to support "
-"HTTP/1.1. Backward compatibility with the 1.5 version of :mod:`httplib` is "
-"provided, though using HTTP/1.1 features such as pipelining will require "
-"rewriting code to use a different set of interfaces."
+"The :mod:`httplib <http>` module has been rewritten by Greg Stein to support "
+"HTTP/1.1."
 msgstr ""
 
-#: whatsnew/2.0.rst:1051
+#: whatsnew/2.0.rst:1048
 msgid ""
-"The :mod:`Tkinter` module now supports Tcl/Tk version 8.1, 8.2, or 8.3, and "
+"Backward compatibility with the 1.5 version of :mod:`!httplib` is provided, "
+"though using HTTP/1.1 features such as pipelining will require rewriting "
+"code to use a different set of interfaces."
+msgstr ""
+
+#: whatsnew/2.0.rst:1052
+msgid ""
+"The :mod:`!Tkinter` module now supports Tcl/Tk version 8.1, 8.2, or 8.3, and "
 "support for the older 7.x versions has been dropped.  The Tkinter module now "
 "supports displaying Unicode strings in Tk widgets. Also, Fredrik Lundh "
 "contributed an optimization which makes operations like ``create_line`` and "
 "``create_polygon`` much faster, especially when using lots of coordinates."
 msgstr ""
 
-#: whatsnew/2.0.rst:1057
+#: whatsnew/2.0.rst:1058
 msgid ""
 "The :mod:`curses` module has been greatly extended, starting from Oliver "
 "Andrich's enhanced version, to provide many additional functions from "
@@ -1544,7 +1779,7 @@ msgid ""
 "currently maintained OSes that fall into this category."
 msgstr ""
 
-#: whatsnew/2.0.rst:1064
+#: whatsnew/2.0.rst:1065
 msgid ""
 "As mentioned in the earlier discussion of 2.0's Unicode support, the "
 "underlying implementation of the regular expressions provided by the :mod:"
@@ -1553,18 +1788,18 @@ msgid ""
 "against both 8-bit strings and Unicode strings."
 msgstr ""
 
-#: whatsnew/2.0.rst:1074
+#: whatsnew/2.0.rst:1075
 msgid "New modules"
 msgstr "Nouveaux modules"
 
-#: whatsnew/2.0.rst:1076
+#: whatsnew/2.0.rst:1077
 msgid ""
 "A number of new modules were added.  We'll simply list them with brief "
 "descriptions; consult the 2.0 documentation for the details of a particular "
 "module."
 msgstr ""
 
-#: whatsnew/2.0.rst:1080
+#: whatsnew/2.0.rst:1081
 msgid ""
 ":mod:`atexit`:  For registering functions to be called before the Python "
 "interpreter exits. Code that currently sets ``sys.exitfunc`` directly should "
@@ -1573,20 +1808,20 @@ msgid ""
 "(Contributed by Skip Montanaro.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1086
+#: whatsnew/2.0.rst:1087
 msgid ""
-":mod:`codecs`, :mod:`encodings`, :mod:`unicodedata`:  Added as part of the "
+":mod:`codecs`, :mod:`!encodings`, :mod:`unicodedata`:  Added as part of the "
 "new Unicode support."
 msgstr ""
 
-#: whatsnew/2.0.rst:1089
+#: whatsnew/2.0.rst:1090
 msgid ""
-":mod:`filecmp`: Supersedes the old :mod:`cmp`, :mod:`cmpcache` and :mod:"
-"`dircmp` modules, which have now become deprecated. (Contributed by Gordon "
+":mod:`filecmp`: Supersedes the old :mod:`!cmp`, :mod:`!cmpcache` and :mod:`!"
+"dircmp` modules, which have now become deprecated. (Contributed by Gordon "
 "MacMillan and Moshe Zadka.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1093
+#: whatsnew/2.0.rst:1094
 msgid ""
 ":mod:`gettext`: This module provides internationalization (I18N) and "
 "localization (L10N) support for Python programs by providing an interface to "
@@ -1595,14 +1830,14 @@ msgid ""
 "Henstridge.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1098
+#: whatsnew/2.0.rst:1099
 msgid ""
-":mod:`linuxaudiodev`: Support for the :file:`/dev/audio` device on Linux, a "
-"twin to the existing :mod:`sunaudiodev` module. (Contributed by Peter Bosch, "
-"with fixes by Jeremy Hylton.)"
+":mod:`!linuxaudiodev`: Support for the :file:`/dev/audio` device on Linux, a "
+"twin to the existing :mod:`!sunaudiodev` module. (Contributed by Peter "
+"Bosch, with fixes by Jeremy Hylton.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1102
+#: whatsnew/2.0.rst:1103
 msgid ""
 ":mod:`mmap`: An interface to memory-mapped files on both Windows and Unix.  "
 "A file's contents can be mapped directly into memory, at which point it "
@@ -1612,34 +1847,34 @@ msgid ""
 "M. Kuchling.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1108
+#: whatsnew/2.0.rst:1109
 msgid ""
-":mod:`pyexpat`: An interface to the Expat XML parser. (Contributed by Paul "
+":mod:`!pyexpat`: An interface to the Expat XML parser. (Contributed by Paul "
 "Prescod.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1111
+#: whatsnew/2.0.rst:1112
 msgid ""
-":mod:`robotparser`: Parse a :file:`robots.txt` file, which is used for "
-"writing web spiders that politely avoid certain areas of a web site.  The "
-"parser accepts the contents of a :file:`robots.txt` file, builds a set of "
-"rules from it, and can then answer questions about the fetchability of a "
-"given URL.  (Contributed by Skip Montanaro.)"
+":mod:`robotparser <urllib.robotparser>`: Parse a :file:`robots.txt` file, "
+"which is used for writing web spiders that politely avoid certain areas of a "
+"web site.  The parser accepts the contents of a :file:`robots.txt` file, "
+"builds a set of rules from it, and can then answer questions about the "
+"fetchability of a given URL.  (Contributed by Skip Montanaro.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1117
+#: whatsnew/2.0.rst:1118
 msgid ""
 ":mod:`tabnanny`: A module/script to  check Python source code for ambiguous "
 "indentation. (Contributed by Tim Peters.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1120
+#: whatsnew/2.0.rst:1121
 msgid ""
-":mod:`UserString`: A base class useful for deriving objects that behave like "
-"strings."
+":mod:`!UserString`: A base class useful for deriving objects that behave "
+"like strings."
 msgstr ""
 
-#: whatsnew/2.0.rst:1123
+#: whatsnew/2.0.rst:1124
 msgid ""
 ":mod:`webbrowser`: A module that provides a platform independent way to "
 "launch a web browser on a specific URL. For each platform, various browsers "
@@ -1651,15 +1886,16 @@ msgid ""
 "Fred.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1132
+#: whatsnew/2.0.rst:1133
 msgid ""
-":mod:`_winreg`: An interface to the Windows registry.  :mod:`_winreg` is an "
-"adaptation of functions that have been part of PythonWin since 1995, but has "
-"now been added to the core  distribution, and enhanced to support Unicode. :"
-"mod:`_winreg` was written by Bill Tutt and Mark Hammond."
+":mod:`_winreg <winreg>`: An interface to the Windows registry.  :mod:`!"
+"_winreg` is an adaptation of functions that have been part of PythonWin "
+"since 1995, but has now been added to the core  distribution, and enhanced "
+"to support Unicode. :mod:`!_winreg` was written by Bill Tutt and Mark "
+"Hammond."
 msgstr ""
 
-#: whatsnew/2.0.rst:1137
+#: whatsnew/2.0.rst:1138
 msgid ""
 ":mod:`zipfile`: A module for reading and writing ZIP-format archives.  These "
 "are archives produced by :program:`PKZIP` on DOS/Windows or :program:`zip` "
@@ -1667,100 +1903,101 @@ msgid ""
 "supported by the :mod:`gzip` module) (Contributed by James C. Ahlstrom.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1142
+#: whatsnew/2.0.rst:1143
 msgid ""
-":mod:`imputil`: A module that provides a simpler way for writing customized "
-"import hooks, in comparison to the existing :mod:`ihooks` module.  "
+":mod:`!imputil`: A module that provides a simpler way for writing customized "
+"import hooks, in comparison to the existing :mod:`!ihooks` module.  "
 "(Implemented by Greg Stein, with much discussion on python-dev along the "
 "way.)"
 msgstr ""
 
-#: whatsnew/2.0.rst:1150
+#: whatsnew/2.0.rst:1151
 msgid "IDLE Improvements"
 msgstr ""
 
-#: whatsnew/2.0.rst:1152
+#: whatsnew/2.0.rst:1153
 msgid ""
 "IDLE is the official Python cross-platform IDE, written using Tkinter. "
 "Python 2.0 includes IDLE 0.6, which adds a number of new features and "
 "improvements.  A partial list:"
 msgstr ""
 
-#: whatsnew/2.0.rst:1156
+#: whatsnew/2.0.rst:1157
 msgid ""
 "UI improvements and optimizations, especially in the area of syntax "
 "highlighting and auto-indentation."
 msgstr ""
 
-#: whatsnew/2.0.rst:1159
+#: whatsnew/2.0.rst:1160
 msgid ""
 "The class browser now shows more information, such as the top level "
 "functions in a module."
 msgstr ""
 
-#: whatsnew/2.0.rst:1162
+#: whatsnew/2.0.rst:1163
 msgid ""
 "Tab width is now a user settable option. When opening an existing Python "
 "file, IDLE automatically detects the indentation conventions, and adapts."
 msgstr ""
 
-#: whatsnew/2.0.rst:1165
+#: whatsnew/2.0.rst:1166
 msgid ""
 "There is now support for calling browsers on various platforms, used to open "
 "the Python documentation in a browser."
 msgstr ""
 
-#: whatsnew/2.0.rst:1168
+#: whatsnew/2.0.rst:1169
 msgid ""
 "IDLE now has a command line, which is largely similar to  the vanilla Python "
 "interpreter."
 msgstr ""
 
-#: whatsnew/2.0.rst:1171
+#: whatsnew/2.0.rst:1172
 msgid "Call tips were added in many places."
 msgstr ""
 
-#: whatsnew/2.0.rst:1173
+#: whatsnew/2.0.rst:1174
 msgid "IDLE can now be installed as a package."
 msgstr ""
 
-#: whatsnew/2.0.rst:1175
+#: whatsnew/2.0.rst:1176
 msgid "In the editor window, there is now a line/column bar at the bottom."
 msgstr ""
 
-#: whatsnew/2.0.rst:1177
+#: whatsnew/2.0.rst:1178
 msgid ""
 "Three new keystroke commands: Check module (:kbd:`Alt-F5`), Import module (:"
 "kbd:`F5`) and Run script (:kbd:`Ctrl-F5`)."
 msgstr ""
 
-#: whatsnew/2.0.rst:1184
+#: whatsnew/2.0.rst:1185
 msgid "Deleted and Deprecated Modules"
 msgstr ""
 
-#: whatsnew/2.0.rst:1186
+#: whatsnew/2.0.rst:1187
 msgid ""
 "A few modules have been dropped because they're obsolete, or because there "
-"are now better ways to do the same thing.  The :mod:`stdwin` module is gone; "
-"it was for a platform-independent windowing toolkit that's no longer "
+"are now better ways to do the same thing.  The :mod:`!stdwin` module is "
+"gone; it was for a platform-independent windowing toolkit that's no longer "
 "developed."
 msgstr ""
 
-#: whatsnew/2.0.rst:1190
+#: whatsnew/2.0.rst:1191
 msgid ""
 "A number of modules have been moved to the :file:`lib-old` subdirectory: :"
-"mod:`cmp`, :mod:`cmpcache`, :mod:`dircmp`, :mod:`dump`,  :mod:`find`, :mod:"
-"`grep`, :mod:`packmail`,  :mod:`poly`, :mod:`util`, :mod:`whatsound`, :mod:"
-"`zmod`.  If you have code which relies on a module  that's been moved to :"
-"file:`lib-old`, you can simply add that directory to ``sys.path``   to get "
-"them back, but you're encouraged to update any code that uses these modules."
+"mod:`!cmp`, :mod:`!cmpcache`, :mod:`!dircmp`, :mod:`!dump`,  :mod:`!find`, :"
+"mod:`!grep`, :mod:`!packmail`,  :mod:`!poly`, :mod:`!util`, :mod:`!"
+"whatsound`, :mod:`!zmod`.  If you have code which relies on a module  that's "
+"been moved to :file:`lib-old`, you can simply add that directory to ``sys."
+"path``   to get them back, but you're encouraged to update any code that "
+"uses these modules."
 msgstr ""
 
-#: whatsnew/2.0.rst:1199
+#: whatsnew/2.0.rst:1200
 msgid "Acknowledgements"
 msgstr "Remerciements"
 
-#: whatsnew/2.0.rst:1201
+#: whatsnew/2.0.rst:1202
 msgid ""
 "The authors would like to thank the following people for offering "
 "suggestions on various drafts of this article: David Bolen, Mark Hammond, "

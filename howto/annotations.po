@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-02-17 10:44+0100\n"
 "Last-Translator: CédricM <c.morgantini@free.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -27,7 +27,7 @@ msgstr "auteur"
 msgid "Larry Hastings"
 msgstr "Larry Hastings"
 
-#: howto/annotations.rst:None
+#: howto/annotations.rst:-1
 msgid "Abstract"
 msgstr "Résumé"
 
@@ -182,19 +182,32 @@ msgstr ""
 "accéder à l'attribut ``__annotations__`` d'une classe peut par inadvertance "
 "renvoyer le dictionnaire d'annotations d'une *classe de base.* Par exemple ::"
 
+#: howto/annotations.rst:89
+msgid ""
+"class Base:\n"
+"    a: int = 3\n"
+"    b: str = 'abc'\n"
+"\n"
+"class Derived(Base):\n"
+"    pass\n"
+"\n"
+"print(Derived.__annotations__)"
+msgstr ""
+
 #: howto/annotations.rst:98
 msgid "This will print the annotations dict from ``Base``, not ``Derived``."
 msgstr ""
 "Ceci affiche le dictionnaire d'annotations de ``Base``, pas de ``Derived``."
 
 #: howto/annotations.rst:101
+#, fuzzy
 msgid ""
 "Your code will have to have a separate code path if the object you're "
 "examining is a class (``isinstance(o, type)``). In that case, best practice "
 "relies on an implementation detail of Python 3.9 and before: if a class has "
-"annotations defined, they are stored in the class's ``__dict__`` "
+"annotations defined, they are stored in the class's :attr:`~type.__dict__` "
 "dictionary.  Since the class may or may not have annotations defined, best "
-"practice is to call the ``get`` method on the class dict."
+"practice is to call the :meth:`~dict.get` method on the class dict."
 msgstr ""
 "Votre code doit gérer les différentes options si l'objet que vous examinez "
 "est une classe (``isinstance(o, type)``). Dans ce cas, la bonne pratique "
@@ -214,6 +227,14 @@ msgstr ""
 "l'attribut ``__annotations__`` d'un objet quelconque en Python 3.9 et "
 "antérieur ::"
 
+#: howto/annotations.rst:113
+msgid ""
+"if isinstance(o, type):\n"
+"    ann = o.__dict__.get('__annotations__', None)\n"
+"else:\n"
+"    ann = getattr(o, '__annotations__', None)"
+msgstr ""
+
 #: howto/annotations.rst:118
 msgid ""
 "After running this code, ``ann`` should be either a dictionary or ``None``.  "
@@ -225,10 +246,11 @@ msgstr ""
 "utilisant :func:`isinstance` avant de poursuivre l'analyse."
 
 #: howto/annotations.rst:123
+#, fuzzy
 msgid ""
-"Note that some exotic or malformed type objects may not have a ``__dict__`` "
-"attribute, so for extra safety you may also wish to use :func:`getattr` to "
-"access ``__dict__``."
+"Note that some exotic or malformed type objects may not have a :attr:`~type."
+"__dict__` attribute, so for extra safety you may also wish to use :func:"
+"`getattr` to access :attr:`!__dict__`."
 msgstr ""
 "Notez que certains objets de type exotique ou malformé peuvent ne pas avoir "
 "d'attribut ``__dict__`` donc, pour plus de sécurité, vous pouvez également "
@@ -304,14 +326,15 @@ msgstr ""
 "selon le cas, jusqu'à ce que vous ayez trouvé la fonction racine."
 
 #: howto/annotations.rst:155
+#, fuzzy
 msgid ""
-"If ``o`` is a callable (but not a class), use ``o.__globals__`` as the "
-"globals when calling :func:`eval`."
+"If ``o`` is a callable (but not a class), use :attr:`o.__globals__ <function."
+"__globals__>` as the globals when calling :func:`eval`."
 msgstr ""
 "Si ``o`` est un objet appelable (mais pas une classe), utilisez ``o."
 "__globals__`` pour désigner les globales lors de l'appel de :func:`eval`."
 
-#: howto/annotations.rst:158
+#: howto/annotations.rst:159
 msgid ""
 "However, not all string values used as annotations can be successfully "
 "turned into Python values by :func:`eval`. String values could theoretically "
@@ -326,7 +349,7 @@ msgstr ""
 "indications de type qui nécessitent d'annoter avec des valeurs de chaîne qui "
 "*ne peuvent pas* être évaluées.  Par exemple :"
 
-#: howto/annotations.rst:165
+#: howto/annotations.rst:166
 msgid ""
 ":pep:`604` union types using ``|``, before support for this was added to "
 "Python 3.10."
@@ -334,7 +357,7 @@ msgstr ""
 "Les types d'union de style :pep:`604` avec ``|``, avant que cette prise en "
 "charge ne soit ajoutée à Python 3.10."
 
-#: howto/annotations.rst:167
+#: howto/annotations.rst:168
 msgid ""
 "Definitions that aren't needed at runtime, only imported when :const:`typing."
 "TYPE_CHECKING` is true."
@@ -342,7 +365,7 @@ msgstr ""
 "Les définitions qui ne sont pas nécessaires à l'exécution, importées "
 "uniquement lorsque :const:`typing.TYPE_CHECKING` est vrai."
 
-#: howto/annotations.rst:170
+#: howto/annotations.rst:171
 msgid ""
 "If :func:`eval` attempts to evaluate such values, it will fail and raise an "
 "exception.  So, when designing a library API that works with annotations, "
@@ -354,12 +377,12 @@ msgstr ""
 "fonctionnant avec des annotations, il est recommandé de ne tenter d'évaluer "
 "des valeurs de type chaîne que si l'appelant le demande explicitement."
 
-#: howto/annotations.rst:178
+#: howto/annotations.rst:179
 msgid "Best Practices For ``__annotations__`` In Any Python Version"
 msgstr ""
 "Bonnes pratiques pour ``__annotations__`` dans toutes les versions de Python"
 
-#: howto/annotations.rst:180
+#: howto/annotations.rst:181
 msgid ""
 "You should avoid assigning to the ``__annotations__`` member of objects "
 "directly.  Let Python manage setting ``__annotations__``."
@@ -367,7 +390,7 @@ msgstr ""
 "Évitez d'assigner directement des objets à l'élément ``__annotations__``.  "
 "Laissez Python gérer le paramétrage de ``__annotations__``."
 
-#: howto/annotations.rst:183
+#: howto/annotations.rst:184
 msgid ""
 "If you do assign directly to the ``__annotations__`` member of an object, "
 "you should always set it to a ``dict`` object."
@@ -375,7 +398,7 @@ msgstr ""
 "Si vous assignez directement à l'élément ``__annotations__`` d'un objet, "
 "vous devez toujours le définir comme un ``dict``."
 
-#: howto/annotations.rst:186
+#: howto/annotations.rst:187
 msgid ""
 "If you directly access the ``__annotations__`` member of an object, you "
 "should ensure that it's a dictionary before attempting to examine its "
@@ -385,20 +408,20 @@ msgstr ""
 "devez vous assurer qu'il s'agit d'un dictionnaire avant de tenter d'examiner "
 "son contenu."
 
-#: howto/annotations.rst:190
+#: howto/annotations.rst:191
 msgid "You should avoid modifying ``__annotations__`` dicts."
 msgstr "Évitez de modifier les dictionnaires ``__annotations__``."
 
-#: howto/annotations.rst:192
+#: howto/annotations.rst:193
 msgid ""
 "You should avoid deleting the ``__annotations__`` attribute of an object."
 msgstr "Évitez de supprimer l'attribut ``__annotations__`` d'un objet."
 
-#: howto/annotations.rst:197
+#: howto/annotations.rst:198
 msgid "``__annotations__`` Quirks"
 msgstr "Les curiosités concernant ``__annotations__``"
 
-#: howto/annotations.rst:199
+#: howto/annotations.rst:200
 msgid ""
 "In all versions of Python 3, function objects lazy-create an annotations "
 "dict if no annotations are defined on that object.  You can delete the "
@@ -420,7 +443,7 @@ msgstr ""
 "``AttributeError`` ; si vous utilisez ``del fn.__annotations__`` deux fois "
 "de suite, vous êtes sûr de toujours obtenir ``AttributeError``."
 
-#: howto/annotations.rst:209
+#: howto/annotations.rst:210
 msgid ""
 "Everything in the above paragraph also applies to class and module objects "
 "in Python 3.10 and newer."
@@ -428,7 +451,7 @@ msgstr ""
 "Tout ce qui est dit dans le paragraphe précédent s'applique également aux "
 "objets de type classe et module en Python 3.10 et suivants."
 
-#: howto/annotations.rst:212
+#: howto/annotations.rst:213
 msgid ""
 "In all versions of Python 3, you can set ``__annotations__`` on a function "
 "object to ``None``.  However, subsequently accessing the annotations on that "
@@ -447,7 +470,7 @@ msgstr ""
 "objets permettent de définir ``__annotations__`` à n'importe quelle valeur "
 "Python, et conserveront la valeur définie."
 
-#: howto/annotations.rst:220
+#: howto/annotations.rst:221
 msgid ""
 "If Python stringizes your annotations for you (using ``from __future__ "
 "import annotations``), and you specify a string as an annotation, the string "
@@ -459,7 +482,15 @@ msgstr ""
 "caractères comme annotation, la chaîne sera elle-même entre guillemets.  En "
 "fait, l'annotation est mise entre guillemets *deux fois*. Par exemple ::"
 
-#: howto/annotations.rst:231
+#: howto/annotations.rst:227
+msgid ""
+"from __future__ import annotations\n"
+"def foo(a: \"str\"): pass\n"
+"\n"
+"print(foo.__annotations__)"
+msgstr ""
+
+#: howto/annotations.rst:232
 msgid ""
 "This prints ``{'a': \"'str'\"}``.  This shouldn't really be considered a "
 "\"quirk\"; it's mentioned here simply because it might be surprising."

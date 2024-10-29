@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 13:19+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2019-11-01 17:35+0100\n"
 "Last-Translator: Lcaracol <lcaracol@riseup.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 
 #: library/queue.rst:2
-msgid ":mod:`queue` --- A synchronized queue class"
+#, fuzzy
+msgid ":mod:`!queue` --- A synchronized queue class"
 msgstr ":mod:`queue` — File synchronisée"
 
 #: library/queue.rst:7
@@ -142,6 +143,17 @@ msgstr ""
 "Si les éléments de *data* ne sont pas comparables, les données peuvent être "
 "enveloppées dans une classe qui ignore l'élément de données et ne compare "
 "que l'ordre de priorité ::"
+
+#: library/queue.rst:66
+msgid ""
+"from dataclasses import dataclass, field\n"
+"from typing import Any\n"
+"\n"
+"@dataclass(order=True)\n"
+"class PrioritizedItem:\n"
+"    priority: int\n"
+"    item: Any=field(compare=False)"
+msgstr ""
 
 #: library/queue.rst:76
 msgid ""
@@ -343,6 +355,32 @@ msgstr ""
 "Exemple montrant comment attendre que les tâches mises dans la file soient "
 "terminées ::"
 
+#: library/queue.rst:193
+msgid ""
+"import threading\n"
+"import queue\n"
+"\n"
+"q = queue.Queue()\n"
+"\n"
+"def worker():\n"
+"    while True:\n"
+"        item = q.get()\n"
+"        print(f'Working on {item}')\n"
+"        print(f'Finished {item}')\n"
+"        q.task_done()\n"
+"\n"
+"# Turn-on the worker thread.\n"
+"threading.Thread(target=worker, daemon=True).start()\n"
+"\n"
+"# Send thirty task requests to the worker.\n"
+"for item in range(30):\n"
+"    q.put(item)\n"
+"\n"
+"# Block until all tasks are done.\n"
+"q.join()\n"
+"print('All work completed')"
+msgstr ""
+
 #: library/queue.rst:218
 msgid "SimpleQueue Objects"
 msgstr "Objets ``SimpleQueue``"
@@ -403,7 +441,7 @@ msgstr ""
 "Équivalent de ``put(item)``, fourni pour la compatibilité avec :meth:`Queue."
 "put_nowait`."
 
-#: library/queue.rst:275
+#: library/queue.rst:273
 msgid "Class :class:`multiprocessing.Queue`"
 msgstr "Classe :class:`multiprocessing.Queue`"
 

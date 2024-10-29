@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -113,6 +113,14 @@ msgid ""
 "directly support weak references but can add support through subclassing::"
 msgstr ""
 
+#: library/weakref.rst:80
+msgid ""
+"class Dict(dict):\n"
+"    pass\n"
+"\n"
+"obj = Dict(red=1, green=2, blue=3)   # this object is weak referenceable"
+msgstr ""
+
 #: library/weakref.rst:87
 msgid ""
 "Other built-in types such as :class:`tuple` and :class:`int` do not support "
@@ -156,7 +164,7 @@ msgstr ""
 msgid ""
 "Exceptions raised by the callback will be noted on the standard error "
 "output, but cannot be propagated; they are handled in exactly the same way "
-"as exceptions raised from an object's :meth:`__del__` method."
+"as exceptions raised from an object's :meth:`~object.__del__` method."
 msgstr ""
 
 #: library/weakref.rst:116
@@ -244,15 +252,37 @@ msgid ""
 "original key is deleted, it also deletes the entry in the dictionary::"
 msgstr ""
 
+#: library/weakref.rst:180
+msgid ""
+">>> class T(str): pass\n"
+"...\n"
+">>> k1, k2 = T(), T()\n"
+">>> d = weakref.WeakKeyDictionary()\n"
+">>> d[k1] = 1   # d = {k1: 1}\n"
+">>> d[k2] = 2   # d = {k1: 2}\n"
+">>> del k1      # d = {}"
+msgstr ""
+
 #: library/weakref.rst:188
 msgid "A workaround would be to remove the key prior to reassignment::"
 msgstr ""
 
-#: library/weakref.rst:199
-msgid "Added support for ``|`` and ``|=`` operators, specified in :pep:`584`."
+#: library/weakref.rst:190
+msgid ""
+">>> class T(str): pass\n"
+"...\n"
+">>> k1, k2 = T(), T()\n"
+">>> d = weakref.WeakKeyDictionary()\n"
+">>> d[k1] = 1   # d = {k1: 1}\n"
+">>> del d[k1]\n"
+">>> d[k2] = 2   # d = {k2: 2}\n"
+">>> del k1      # d = {k2: 2}"
 msgstr ""
-"Ajout de la gestion des opérateurs ``|`` et ``|=`` tels que définis dans :"
-"pep:`584`."
+
+#: library/weakref.rst:220
+msgid ""
+"Added support for ``|`` and ``|=`` operators, as specified in :pep:`584`."
+msgstr ""
 
 #: library/weakref.rst:202
 msgid ""
@@ -274,29 +304,23 @@ msgid ""
 "be discarded when no strong reference to the value exists any more."
 msgstr ""
 
-#: library/weakref.rst:220
-msgid ""
-"Added support for ``|`` and ``|=`` operators, as specified in :pep:`584`."
-msgstr ""
-
 #: library/weakref.rst:223
 msgid ""
 ":class:`WeakValueDictionary` objects have an additional method that has the "
-"same issues as the :meth:`keyrefs` method of :class:`WeakKeyDictionary` "
-"objects."
+"same issues as the :meth:`WeakKeyDictionary.keyrefs` method."
 msgstr ""
 
-#: library/weakref.rst:230
+#: library/weakref.rst:229
 msgid "Return an iterable of the weak references to the values."
 msgstr ""
 
-#: library/weakref.rst:235
+#: library/weakref.rst:234
 msgid ""
 "Set class that keeps weak references to its elements.  An element will be "
 "discarded when no strong reference to it exists any more."
 msgstr ""
 
-#: library/weakref.rst:241
+#: library/weakref.rst:240
 msgid ""
 "A custom :class:`ref` subclass which simulates a weak reference to a bound "
 "method (i.e., a method defined on a class and looked up on an instance). "
@@ -305,13 +329,34 @@ msgid ""
 "method until either the object or the original function dies::"
 msgstr ""
 
-#: library/weakref.rst:265
+#: library/weakref.rst:246
+msgid ""
+">>> class C:\n"
+"...     def method(self):\n"
+"...         print(\"method called!\")\n"
+"...\n"
+">>> c = C()\n"
+">>> r = weakref.ref(c.method)\n"
+">>> r()\n"
+">>> r = weakref.WeakMethod(c.method)\n"
+">>> r()\n"
+"<bound method C.method of <__main__.C object at 0x7fc859830220>>\n"
+">>> r()()\n"
+"method called!\n"
+">>> del c\n"
+">>> gc.collect()\n"
+"0\n"
+">>> r()\n"
+">>>"
+msgstr ""
+
+#: library/weakref.rst:264
 msgid ""
 "*callback* is the same as the parameter of the same name to the :func:`ref` "
 "function."
 msgstr ""
 
-#: library/weakref.rst:271
+#: library/weakref.rst:270
 msgid ""
 "Return a callable finalizer object which will be called when *obj* is "
 "garbage collected. Unlike an ordinary weak reference, a finalizer will "
@@ -319,7 +364,7 @@ msgid ""
 "lifecycle management."
 msgstr ""
 
-#: library/weakref.rst:276
+#: library/weakref.rst:275
 msgid ""
 "A finalizer is considered *alive* until it is called (either explicitly or "
 "at garbage collection), and after that it is *dead*.  Calling a live "
@@ -327,58 +372,58 @@ msgid ""
 "calling a dead finalizer returns :const:`None`."
 msgstr ""
 
-#: library/weakref.rst:281
+#: library/weakref.rst:280
 msgid ""
 "Exceptions raised by finalizer callbacks during garbage collection will be "
 "shown on the standard error output, but cannot be propagated.  They are "
-"handled in the same way as exceptions raised from an object's :meth:"
-"`__del__` method or a weak reference's callback."
+"handled in the same way as exceptions raised from an object's :meth:`~object."
+"__del__` method or a weak reference's callback."
 msgstr ""
 
-#: library/weakref.rst:287
+#: library/weakref.rst:286
 msgid ""
 "When the program exits, each remaining live finalizer is called unless its :"
 "attr:`atexit` attribute has been set to false.  They are called in reverse "
 "order of creation."
 msgstr ""
 
-#: library/weakref.rst:291
+#: library/weakref.rst:290
 msgid ""
 "A finalizer will never invoke its callback during the later part of the :"
 "term:`interpreter shutdown` when module globals are liable to have been "
 "replaced by :const:`None`."
 msgstr ""
 
-#: library/weakref.rst:297
+#: library/weakref.rst:296
 msgid ""
 "If *self* is alive then mark it as dead and return the result of calling "
 "``func(*args, **kwargs)``.  If *self* is dead then return :const:`None`."
 msgstr ""
 
-#: library/weakref.rst:303
+#: library/weakref.rst:302
 msgid ""
 "If *self* is alive then mark it as dead and return the tuple ``(obj, func, "
 "args, kwargs)``.  If *self* is dead then return :const:`None`."
 msgstr ""
 
-#: library/weakref.rst:309
+#: library/weakref.rst:308
 msgid ""
 "If *self* is alive then return the tuple ``(obj, func, args, kwargs)``.  If "
 "*self* is dead then return :const:`None`."
 msgstr ""
 
-#: library/weakref.rst:314
+#: library/weakref.rst:313
 msgid "Property which is true if the finalizer is alive, false otherwise."
 msgstr ""
 
-#: library/weakref.rst:318
+#: library/weakref.rst:317
 msgid ""
 "A writable boolean property which by default is true.  When the program "
 "exits, it calls all remaining live finalizers for which :attr:`.atexit` is "
 "true.  They are called in reverse order of creation."
 msgstr ""
 
-#: library/weakref.rst:325
+#: library/weakref.rst:324
 msgid ""
 "It is important to ensure that *func*, *args* and *kwargs* do not own any "
 "references to *obj*, either directly or indirectly, since otherwise *obj* "
@@ -386,60 +431,72 @@ msgid ""
 "bound method of *obj*."
 msgstr ""
 
-#: library/weakref.rst:335
+#: library/weakref.rst:334
 msgid "The type object for weak references objects."
 msgstr ""
 
-#: library/weakref.rst:340
+#: library/weakref.rst:339
 msgid "The type object for proxies of objects which are not callable."
 msgstr ""
 
-#: library/weakref.rst:345
+#: library/weakref.rst:344
 msgid "The type object for proxies of callable objects."
 msgstr ""
 
-#: library/weakref.rst:350
+#: library/weakref.rst:349
 msgid ""
 "Sequence containing all the type objects for proxies.  This can make it "
 "simpler to test if an object is a proxy without being dependent on naming "
 "both proxy types."
 msgstr ""
 
-#: library/weakref.rst:358
+#: library/weakref.rst:356
 msgid ":pep:`205` - Weak References"
 msgstr ""
 
-#: library/weakref.rst:358
+#: library/weakref.rst:357
 msgid ""
 "The proposal and rationale for this feature, including links to earlier "
 "implementations and information about similar features in other languages."
 msgstr ""
 
-#: library/weakref.rst:365
+#: library/weakref.rst:364
 msgid "Weak Reference Objects"
 msgstr "Objets à références faibles"
 
-#: library/weakref.rst:367
+#: library/weakref.rst:366
 msgid ""
 "Weak reference objects have no methods and no attributes besides :attr:`ref."
 "__callback__`. A weak reference object allows the referent to be obtained, "
 "if it still exists, by calling it:"
 msgstr ""
 
-#: library/weakref.rst:381
+#: library/weakref.rst:380
 msgid ""
 "If the referent no longer exists, calling the reference object returns :"
 "const:`None`:"
 msgstr ""
 
-#: library/weakref.rst:388
+#: library/weakref.rst:387
 msgid ""
 "Testing that a weak reference object is still live should be done using the "
 "expression ``ref() is not None``.  Normally, application code that needs to "
 "use a reference object should follow this pattern::"
 msgstr ""
 
-#: library/weakref.rst:401
+#: library/weakref.rst:391
+msgid ""
+"# r is a weak reference object\n"
+"o = r()\n"
+"if o is None:\n"
+"    # referent has been garbage collected\n"
+"    print(\"Object has been deallocated; can't frobnicate.\")\n"
+"else:\n"
+"    print(\"Object is still live!\")\n"
+"    o.do_something_useful()"
+msgstr ""
+
+#: library/weakref.rst:400
 msgid ""
 "Using a separate test for \"liveness\" creates race conditions in threaded "
 "applications; another thread can cause a weak reference to become "
@@ -447,7 +504,7 @@ msgid ""
 "safe in threaded applications as well as single-threaded applications."
 msgstr ""
 
-#: library/weakref.rst:406
+#: library/weakref.rst:405
 msgid ""
 "Specialized versions of :class:`ref` objects can be created through "
 "subclassing. This is used in the implementation of the :class:"
@@ -457,18 +514,40 @@ msgid ""
 "to retrieve the referent."
 msgstr ""
 
-#: library/weakref.rst:412
+#: library/weakref.rst:411
 msgid ""
 "This example shows how a subclass of :class:`ref` can be used to store "
 "additional information about an object and affect the value that's returned "
 "when the referent is accessed::"
 msgstr ""
 
-#: library/weakref.rst:439
+#: library/weakref.rst:415
+msgid ""
+"import weakref\n"
+"\n"
+"class ExtendedRef(weakref.ref):\n"
+"    def __init__(self, ob, callback=None, /, **annotations):\n"
+"        super().__init__(ob, callback)\n"
+"        self.__counter = 0\n"
+"        for k, v in annotations.items():\n"
+"            setattr(self, k, v)\n"
+"\n"
+"    def __call__(self):\n"
+"        \"\"\"Return a pair containing the referent and the number of\n"
+"        times the reference has been called.\n"
+"        \"\"\"\n"
+"        ob = super().__call__()\n"
+"        if ob is not None:\n"
+"            self.__counter += 1\n"
+"            ob = (ob, self.__counter)\n"
+"        return ob"
+msgstr ""
+
+#: library/weakref.rst:438
 msgid "Example"
 msgstr "Exemple"
 
-#: library/weakref.rst:441
+#: library/weakref.rst:440
 msgid ""
 "This simple example shows how an application can use object IDs to retrieve "
 "objects that it has seen before.  The IDs of the objects can then be used in "
@@ -476,106 +555,178 @@ msgid ""
 "objects can still be retrieved by ID if they do."
 msgstr ""
 
-#: library/weakref.rst:466
+#: library/weakref.rst:449
+msgid ""
+"import weakref\n"
+"\n"
+"_id2obj_dict = weakref.WeakValueDictionary()\n"
+"\n"
+"def remember(obj):\n"
+"    oid = id(obj)\n"
+"    _id2obj_dict[oid] = obj\n"
+"    return oid\n"
+"\n"
+"def id2obj(oid):\n"
+"    return _id2obj_dict[oid]"
+msgstr ""
+
+#: library/weakref.rst:465
 msgid "Finalizer Objects"
 msgstr ""
 
-#: library/weakref.rst:468
+#: library/weakref.rst:467
 msgid ""
 "The main benefit of using :class:`finalize` is that it makes it simple to "
 "register a callback without needing to preserve the returned finalizer "
 "object.  For instance"
 msgstr ""
 
-#: library/weakref.rst:482
+#: library/weakref.rst:481
 msgid ""
 "The finalizer can be called directly as well.  However the finalizer will "
 "invoke the callback at most once."
 msgstr ""
 
-#: library/weakref.rst:498
+#: library/weakref.rst:497
 msgid ""
 "You can unregister a finalizer using its :meth:`~finalize.detach` method.  "
 "This kills the finalizer and returns the arguments passed to the constructor "
 "when it was created."
 msgstr ""
 
-#: library/weakref.rst:512
+#: library/weakref.rst:511
 msgid ""
 "Unless you set the :attr:`~finalize.atexit` attribute to :const:`False`, a "
 "finalizer will be called when the program exits if it is still alive.  For "
 "instance"
 msgstr ""
 
-#: library/weakref.rst:527
-msgid "Comparing finalizers with :meth:`__del__` methods"
+#: library/weakref.rst:515
+msgid ""
+">>> obj = Object()\n"
+">>> weakref.finalize(obj, print, \"obj dead or exiting\")\n"
+"<finalize object at ...; for 'Object' at ...>\n"
+">>> exit()\n"
+"obj dead or exiting"
 msgstr ""
 
-#: library/weakref.rst:529
+#: library/weakref.rst:526
+msgid "Comparing finalizers with :meth:`~object.__del__` methods"
+msgstr ""
+
+#: library/weakref.rst:528
 msgid ""
 "Suppose we want to create a class whose instances represent temporary "
 "directories.  The directories should be deleted with their contents when the "
 "first of the following events occurs:"
 msgstr ""
 
-#: library/weakref.rst:533
+#: library/weakref.rst:532
 msgid "the object is garbage collected,"
 msgstr ""
 
-#: library/weakref.rst:534
-msgid "the object's :meth:`remove` method is called, or"
+#: library/weakref.rst:533
+msgid "the object's :meth:`!remove` method is called, or"
 msgstr ""
 
-#: library/weakref.rst:535
+#: library/weakref.rst:534
 msgid "the program exits."
 msgstr ""
 
-#: library/weakref.rst:537
+#: library/weakref.rst:536
 msgid ""
-"We might try to implement the class using a :meth:`__del__` method as "
-"follows::"
+"We might try to implement the class using a :meth:`~object.__del__` method "
+"as follows::"
 msgstr ""
 
-#: library/weakref.rst:556
+#: library/weakref.rst:539
 msgid ""
-"Starting with Python 3.4, :meth:`__del__` methods no longer prevent "
+"class TempDir:\n"
+"    def __init__(self):\n"
+"        self.name = tempfile.mkdtemp()\n"
+"\n"
+"    def remove(self):\n"
+"        if self.name is not None:\n"
+"            shutil.rmtree(self.name)\n"
+"            self.name = None\n"
+"\n"
+"    @property\n"
+"    def removed(self):\n"
+"        return self.name is None\n"
+"\n"
+"    def __del__(self):\n"
+"        self.remove()"
+msgstr ""
+
+#: library/weakref.rst:555
+msgid ""
+"Starting with Python 3.4, :meth:`~object.__del__` methods no longer prevent "
 "reference cycles from being garbage collected, and module globals are no "
 "longer forced to :const:`None` during :term:`interpreter shutdown`. So this "
 "code should work without any issues on CPython."
 msgstr ""
 
-#: library/weakref.rst:561
+#: library/weakref.rst:560
 msgid ""
-"However, handling of :meth:`__del__` methods is notoriously implementation "
-"specific, since it depends on internal details of the interpreter's garbage "
-"collector implementation."
+"However, handling of :meth:`~object.__del__` methods is notoriously "
+"implementation specific, since it depends on internal details of the "
+"interpreter's garbage collector implementation."
 msgstr ""
 
-#: library/weakref.rst:565
+#: library/weakref.rst:564
 msgid ""
 "A more robust alternative can be to define a finalizer which only references "
 "the specific functions and objects that it needs, rather than having access "
 "to the full state of the object::"
 msgstr ""
 
-#: library/weakref.rst:581
+#: library/weakref.rst:568
+msgid ""
+"class TempDir:\n"
+"    def __init__(self):\n"
+"        self.name = tempfile.mkdtemp()\n"
+"        self._finalizer = weakref.finalize(self, shutil.rmtree, self.name)\n"
+"\n"
+"    def remove(self):\n"
+"        self._finalizer()\n"
+"\n"
+"    @property\n"
+"    def removed(self):\n"
+"        return not self._finalizer.alive"
+msgstr ""
+
+#: library/weakref.rst:580
 msgid ""
 "Defined like this, our finalizer only receives a reference to the details it "
 "needs to clean up the directory appropriately. If the object never gets "
 "garbage collected the finalizer will still be called at exit."
 msgstr ""
 
-#: library/weakref.rst:585
+#: library/weakref.rst:584
 msgid ""
 "The other advantage of weakref based finalizers is that they can be used to "
 "register finalizers for classes where the definition is controlled by a "
 "third party, such as running code when a module is unloaded::"
 msgstr ""
 
-#: library/weakref.rst:597
+#: library/weakref.rst:588
+msgid ""
+"import weakref, sys\n"
+"def unloading_module():\n"
+"    # implicit reference to the module globals from the function body\n"
+"weakref.finalize(sys.modules[__name__], unloading_module)"
+msgstr ""
+
+#: library/weakref.rst:596
 msgid ""
 "If you create a finalizer object in a daemonic thread just as the program "
 "exits then there is the possibility that the finalizer does not get called "
 "at exit.  However, in a daemonic thread :func:`atexit.register`, ``try: ... "
 "finally: ...`` and ``with: ...`` do not guarantee that cleanup occurs either."
 msgstr ""
+
+#~ msgid ""
+#~ "Added support for ``|`` and ``|=`` operators, specified in :pep:`584`."
+#~ msgstr ""
+#~ "Ajout de la gestion des opérateurs ``|`` et ``|=`` tels que définis dans :"
+#~ "pep:`584`."

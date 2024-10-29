@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2018-07-03 11:36+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -81,15 +81,14 @@ msgid ""
 "to *val*."
 msgstr ""
 
-#: c-api/dict.rst:75
+#: c-api/dict.rst:73
 msgid ""
-"Insert *val* into the dictionary *p* using *key* as a key. *key* should be "
-"a :c:expr:`const char*`.  The key object is created using "
-"``PyUnicode_FromString(key)``.  Return ``0`` on success or ``-1`` on "
-"failure.  This function *does not* steal a reference to *val*."
+"This is the same as :c:func:`PyDict_SetItem`, but *key* is specified as a :c:"
+"expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
+"`PyObject*`."
 msgstr ""
 
-#: c-api/dict.rst:83
+#: c-api/dict.rst:80
 msgid ""
 "Remove the entry in dictionary *p* with key *key*. *key* must be :term:"
 "`hashable`; if it isn't, :exc:`TypeError` is raised. If *key* is not in the "
@@ -97,46 +96,47 @@ msgid ""
 "failure."
 msgstr ""
 
-#: c-api/dict.rst:91
+#: c-api/dict.rst:88
 msgid ""
-"Remove the entry in dictionary *p* which has a key specified by the string "
-"*key*. If *key* is not in the dictionary, :exc:`KeyError` is raised. Return "
-"``0`` on success or ``-1`` on failure."
+"This is the same as :c:func:`PyDict_DelItem`, but *key* is specified as a :c:"
+"expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
+"`PyObject*`."
 msgstr ""
 
-#: c-api/dict.rst:98
+#: c-api/dict.rst:95
 msgid ""
 "Return the object from dictionary *p* which has a key *key*.  Return "
 "``NULL`` if the key *key* is not present, but *without* setting an exception."
 msgstr ""
 
-#: c-api/dict.rst:103
+#: c-api/dict.rst:100
 msgid ""
 "Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
 "`~object.__eq__` methods are silently ignored. Prefer the :c:func:"
 "`PyDict_GetItemWithError` function instead."
 msgstr ""
 
-#: c-api/dict.rst:107
+#: c-api/dict.rst:104
 msgid ""
 "Calling this API without :term:`GIL` held had been allowed for historical "
 "reason. It is no longer allowed."
 msgstr ""
 
-#: c-api/dict.rst:114
+#: c-api/dict.rst:111
 msgid ""
 "Variant of :c:func:`PyDict_GetItem` that does not suppress exceptions. "
 "Return ``NULL`` **with** an exception set if an exception occurred.  Return "
 "``NULL`` **without** an exception set if the key wasn't present."
 msgstr ""
 
-#: c-api/dict.rst:122
+#: c-api/dict.rst:119
 msgid ""
 "This is the same as :c:func:`PyDict_GetItem`, but *key* is specified as a :c:"
-"expr:`const char*`, rather than a :c:expr:`PyObject*`."
+"expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
+"`PyObject*`."
 msgstr ""
 
-#: c-api/dict.rst:127
+#: c-api/dict.rst:125
 msgid ""
 "Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
 "`~object.__eq__` methods or while creating the temporary :class:`str` object "
@@ -144,7 +144,7 @@ msgid ""
 "function with your own :c:func:`PyUnicode_FromString` *key* instead."
 msgstr ""
 
-#: c-api/dict.rst:136
+#: c-api/dict.rst:134
 msgid ""
 "This is the same as the Python-level :meth:`dict.setdefault`.  If present, "
 "it returns the value corresponding to *key* from the dictionary *p*.  If the "
@@ -154,29 +154,29 @@ msgid ""
 "the insertion."
 msgstr ""
 
-#: c-api/dict.rst:146
+#: c-api/dict.rst:144
 msgid ""
 "Return a :c:type:`PyListObject` containing all the items from the dictionary."
 msgstr ""
 
-#: c-api/dict.rst:151
+#: c-api/dict.rst:149
 msgid ""
 "Return a :c:type:`PyListObject` containing all the keys from the dictionary."
 msgstr ""
 
-#: c-api/dict.rst:156
+#: c-api/dict.rst:154
 msgid ""
 "Return a :c:type:`PyListObject` containing all the values from the "
 "dictionary *p*."
 msgstr ""
 
-#: c-api/dict.rst:164
+#: c-api/dict.rst:162
 msgid ""
 "Return the number of items in the dictionary.  This is equivalent to "
 "``len(p)`` on a dictionary."
 msgstr ""
 
-#: c-api/dict.rst:170
+#: c-api/dict.rst:168
 msgid ""
 "Iterate over all key-value pairs in the dictionary *p*.  The :c:type:"
 "`Py_ssize_t` referred to by *ppos* must be initialized to ``0`` prior to the "
@@ -190,18 +190,50 @@ msgid ""
 "structure is sparse, the offsets are not consecutive."
 msgstr ""
 
-#: c-api/dict.rst:181
+#: c-api/dict.rst:179
 msgid "For example::"
 msgstr "Par exemple ::"
 
-#: c-api/dict.rst:191
+#: c-api/dict.rst:181
+msgid ""
+"PyObject *key, *value;\n"
+"Py_ssize_t pos = 0;\n"
+"\n"
+"while (PyDict_Next(self->dict, &pos, &key, &value)) {\n"
+"    /* do something interesting with the values... */\n"
+"    ...\n"
+"}"
+msgstr ""
+
+#: c-api/dict.rst:189
 msgid ""
 "The dictionary *p* should not be mutated during iteration.  It is safe to "
 "modify the values of the keys as you iterate over the dictionary, but only "
 "so long as the set of keys does not change.  For example::"
 msgstr ""
 
-#: c-api/dict.rst:216
+#: c-api/dict.rst:193
+msgid ""
+"PyObject *key, *value;\n"
+"Py_ssize_t pos = 0;\n"
+"\n"
+"while (PyDict_Next(self->dict, &pos, &key, &value)) {\n"
+"    long i = PyLong_AsLong(value);\n"
+"    if (i == -1 && PyErr_Occurred()) {\n"
+"        return -1;\n"
+"    }\n"
+"    PyObject *o = PyLong_FromLong(i + 1);\n"
+"    if (o == NULL)\n"
+"        return -1;\n"
+"    if (PyDict_SetItem(self->dict, key, o) < 0) {\n"
+"        Py_DECREF(o);\n"
+"        return -1;\n"
+"    }\n"
+"    Py_DECREF(o);\n"
+"}"
+msgstr ""
+
+#: c-api/dict.rst:214
 msgid ""
 "Iterate over mapping object *b* adding key-value pairs to dictionary *a*. "
 "*b* may be a dictionary, or any object supporting :c:func:`PyMapping_Keys` "
@@ -211,7 +243,7 @@ msgid ""
 "or ``-1`` if an exception was raised."
 msgstr ""
 
-#: c-api/dict.rst:226
+#: c-api/dict.rst:224
 msgid ""
 "This is the same as ``PyDict_Merge(a, b, 1)`` in C, and is similar to ``a."
 "update(b)`` in Python except that :c:func:`PyDict_Update` doesn't fall back "
@@ -220,13 +252,118 @@ msgid ""
 "exception was raised."
 msgstr ""
 
-#: c-api/dict.rst:235
+#: c-api/dict.rst:233
 msgid ""
 "Update or merge into dictionary *a*, from the key-value pairs in *seq2*. "
 "*seq2* must be an iterable object producing iterable objects of length 2, "
 "viewed as key-value pairs.  In case of duplicate keys, the last wins if "
 "*override* is true, else the first wins. Return ``0`` on success or ``-1`` "
 "if an exception was raised. Equivalent Python (except for the return value)::"
+msgstr ""
+
+#: c-api/dict.rst:240
+msgid ""
+"def PyDict_MergeFromSeq2(a, seq2, override):\n"
+"    for key, value in seq2:\n"
+"        if override or key not in a:\n"
+"            a[key] = value"
+msgstr ""
+
+#: c-api/dict.rst:247
+msgid ""
+"Register *callback* as a dictionary watcher. Return a non-negative integer "
+"id which must be passed to future calls to :c:func:`PyDict_Watch`. In case "
+"of error (e.g. no more watcher IDs available), return ``-1`` and set an "
+"exception."
+msgstr ""
+
+#: c-api/dict.rst:256
+msgid ""
+"Clear watcher identified by *watcher_id* previously returned from :c:func:"
+"`PyDict_AddWatcher`. Return ``0`` on success, ``-1`` on error (e.g. if the "
+"given *watcher_id* was never registered.)"
+msgstr ""
+
+#: c-api/dict.rst:264
+msgid ""
+"Mark dictionary *dict* as watched. The callback granted *watcher_id* by :c:"
+"func:`PyDict_AddWatcher` will be called when *dict* is modified or "
+"deallocated. Return ``0`` on success or ``-1`` on error."
+msgstr ""
+
+#: c-api/dict.rst:272
+msgid ""
+"Mark dictionary *dict* as no longer watched. The callback granted "
+"*watcher_id* by :c:func:`PyDict_AddWatcher` will no longer be called when "
+"*dict* is modified or deallocated. The dict must previously have been "
+"watched by this watcher. Return ``0`` on success or ``-1`` on error."
+msgstr ""
+
+#: c-api/dict.rst:281
+msgid ""
+"Enumeration of possible dictionary watcher events: ``PyDict_EVENT_ADDED``, "
+"``PyDict_EVENT_MODIFIED``, ``PyDict_EVENT_DELETED``, "
+"``PyDict_EVENT_CLONED``, ``PyDict_EVENT_CLEARED``, or "
+"``PyDict_EVENT_DEALLOCATED``."
+msgstr ""
+
+#: c-api/dict.rst:289
+msgid "Type of a dict watcher callback function."
+msgstr ""
+
+#: c-api/dict.rst:291
+msgid ""
+"If *event* is ``PyDict_EVENT_CLEARED`` or ``PyDict_EVENT_DEALLOCATED``, both "
+"*key* and *new_value* will be ``NULL``. If *event* is ``PyDict_EVENT_ADDED`` "
+"or ``PyDict_EVENT_MODIFIED``, *new_value* will be the new value for *key*. "
+"If *event* is ``PyDict_EVENT_DELETED``, *key* is being deleted from the "
+"dictionary and *new_value* will be ``NULL``."
+msgstr ""
+
+#: c-api/dict.rst:297
+msgid ""
+"``PyDict_EVENT_CLONED`` occurs when *dict* was previously empty and another "
+"dict is merged into it. To maintain efficiency of this operation, per-key "
+"``PyDict_EVENT_ADDED`` events are not issued in this case; instead a single "
+"``PyDict_EVENT_CLONED`` is issued, and *key* will be the source dictionary."
+msgstr ""
+
+#: c-api/dict.rst:303
+msgid ""
+"The callback may inspect but must not modify *dict*; doing so could have "
+"unpredictable effects, including infinite recursion. Do not trigger Python "
+"code execution in the callback, as it could modify the dict as a side effect."
+msgstr ""
+
+#: c-api/dict.rst:307
+msgid ""
+"If *event* is ``PyDict_EVENT_DEALLOCATED``, taking a new reference in the "
+"callback to the about-to-be-destroyed dictionary will resurrect it and "
+"prevent it from being freed at this time. When the resurrected object is "
+"destroyed later, any watcher callbacks active at that time will be called "
+"again."
+msgstr ""
+
+#: c-api/dict.rst:313
+msgid ""
+"Callbacks occur before the notified modification to *dict* takes place, so "
+"the prior state of *dict* can be inspected."
+msgstr ""
+
+#: c-api/dict.rst:316
+msgid ""
+"If the callback sets an exception, it must return ``-1``; this exception "
+"will be printed as an unraisable exception using :c:func:"
+"`PyErr_WriteUnraisable`. Otherwise it should return ``0``."
+msgstr ""
+
+#: c-api/dict.rst:320
+msgid ""
+"There may already be a pending exception set on entry to the callback. In "
+"this case, the callback should return ``0`` with the same exception still "
+"set. This means the callback may not call any other API that can set an "
+"exception unless it saves and clears the exception state first, and restores "
+"it before returning."
 msgstr ""
 
 #: c-api/dict.rst:8
@@ -238,14 +375,10 @@ msgstr ""
 msgid "dictionary"
 msgstr "Objets dictionnaires"
 
-#: c-api/dict.rst:73
-msgid "PyUnicode_FromString()"
-msgstr ""
-
-#: c-api/dict.rst:162
+#: c-api/dict.rst:160
 msgid "built-in function"
 msgstr ""
 
-#: c-api/dict.rst:162
+#: c-api/dict.rst:160
 msgid "len"
 msgstr ""

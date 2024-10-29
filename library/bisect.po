@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-10-17 12:13+0200\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 
 #: library/bisect.rst:2
-msgid ":mod:`bisect` --- Array bisection algorithm"
+#, fuzzy
+msgid ":mod:`!bisect` --- Array bisection algorithm"
 msgstr ":mod:`bisect` — Algorithme de bissection de listes"
 
 #: library/bisect.rst:10
@@ -28,11 +29,8 @@ msgstr "**Code source :** :source:`Lib/bisect.py`"
 msgid ""
 "This module provides support for maintaining a list in sorted order without "
 "having to sort the list after each insertion.  For long lists of items with "
-"expensive comparison operations, this can be an improvement over the more "
-"common approach.  The module is called :mod:`bisect` because it uses a basic "
-"bisection algorithm to do its work.  The source code may be most useful as a "
-"working example of the algorithm (the boundary conditions are already "
-"right!)."
+"expensive comparison operations, this can be an improvement over linear "
+"searches or frequent resorting."
 msgstr ""
 "Ce module fournit des outils pour maintenir une liste triée sans avoir à la "
 "trier à chaque insertion. Il pourrait être plus rapide que l'approche "
@@ -42,11 +40,22 @@ msgstr ""
 "algorithme, le mieux est d'aller lire le code source de ce module (les "
 "conditions sur les limites y étant justes !)."
 
-#: library/bisect.rst:23
+#: library/bisect.rst:19
+msgid ""
+"The module is called :mod:`bisect` because it uses a basic bisection "
+"algorithm to do its work.  Unlike other bisection tools that search for a "
+"specific value, the functions in this module are designed to locate an "
+"insertion point. Accordingly, the functions never call an :meth:`~object."
+"__eq__` method to determine whether a value has been found.  Instead, the "
+"functions only call the :meth:`~object.__lt__` method and will return an "
+"insertion point between values in an array."
+msgstr ""
+
+#: library/bisect.rst:29
 msgid "The following functions are provided:"
 msgstr "Les fonctions suivantes sont fournies :"
 
-#: library/bisect.rst:28
+#: library/bisect.rst:34
 msgid ""
 "Locate the insertion point for *x* in *a* to maintain sorted order. The "
 "parameters *lo* and *hi* may be used to specify a subset of the list which "
@@ -62,17 +71,19 @@ msgstr ""
 "l'entrée existante. Si *a* est déjà triée, la valeur renvoyée peut "
 "directement être utilisée comme premier paramètre de ``list.insert()``."
 
-#: library/bisect.rst:35
+#: library/bisect.rst:41
+#, fuzzy
 msgid ""
-"The returned insertion point *i* partitions the array *a* into two halves so "
-"that ``all(val < x for val in a[lo : i])`` for the left side and ``all(val "
-">= x for val in a[i : hi])`` for the right side."
+"The returned insertion point *ip* partitions the array *a* into two slices "
+"such that ``all(elem < x for elem in a[lo : ip])`` is true for the left "
+"slice and ``all(elem >= x for elem in a[ip : hi])`` is true for the right "
+"slice."
 msgstr ""
 "Le point d'insertion renvoyé, *i*, coupe la liste *a* en deux moitiés telles "
 "que, pour la moitié de gauche : ``all(val < x for val in a[lo : i])``, et "
 "pour la partie de droite : ``all(val >= x for val in a[i : hi])``."
 
-#: library/bisect.rst:60
+#: library/bisect.rst:46
 #, fuzzy
 msgid ""
 "*key* specifies a :term:`key function` of one argument that is used to "
@@ -84,17 +95,17 @@ msgstr ""
 "valeurs renvoyées par la fonction clé. Par défaut, les éléments sont "
 "comparés directement."
 
-#: library/bisect.rst:64
+#: library/bisect.rst:50
 msgid ""
-"If *key* is ``None``, the elements are compared directly with no intervening "
-"function call."
+"If *key* is ``None``, the elements are compared directly and no key function "
+"is called."
 msgstr ""
 
 #: library/bisect.rst:67 library/bisect.rst:105
 msgid "Added the *key* parameter."
 msgstr "ajout du paramètre *key*."
 
-#: library/bisect.rst:53
+#: library/bisect.rst:60
 #, fuzzy
 msgid ""
 "Similar to :py:func:`~bisect.bisect_left`, but returns an insertion point "
@@ -103,11 +114,13 @@ msgstr ""
 "Semblable à :func:`bisect_left`, mais renvoie un point d'insertion après (à "
 "droite) d'une potentielle entrée existante valant *x* dans *a*."
 
-#: library/bisect.rst:56
+#: library/bisect.rst:63
+#, fuzzy
 msgid ""
-"The returned insertion point *i* partitions the array *a* into two halves so "
-"that ``all(val <= x for val in a[lo : i])`` for the left side and ``all(val "
-"> x for val in a[i : hi])`` for the right side."
+"The returned insertion point *ip* partitions the array *a* into two slices "
+"such that ``all(elem <= x for elem in a[lo : ip])`` is true for the left "
+"slice and ``all(elem > x for elem in a[ip : hi])`` is true for the right "
+"slice."
 msgstr ""
 "Le point d'insertion renvoyé, *i*, coupe la liste *a* en deux moitiés telles "
 "que, pour la moitié de gauche : ``all(val <= x for val in a[lo : i])`` et "
@@ -121,7 +134,7 @@ msgstr "Insère *x* dans *a* en préservant l'ordre."
 #, fuzzy
 msgid ""
 "This function first runs :py:func:`~bisect.bisect_left` to locate an "
-"insertion point. Next, it runs the :meth:`insert` method on *a* to insert "
+"insertion point. Next, it runs the :meth:`!insert` method on *a* to insert "
 "*x* at the appropriate position to maintain sort order."
 msgstr ""
 "Cette fonction commence par appliquer :func:`bisect_left` pour déterminer la "
@@ -135,9 +148,10 @@ msgid ""
 msgstr ""
 
 #: library/bisect.rst:102
+#, fuzzy
 msgid ""
-"Keep in mind that the ``O(log n)`` search is dominated by the slow O(n) "
-"insertion step."
+"Keep in mind that the *O*\\ (log *n*) search is dominated by the slow *O*\\ "
+"(*n*) insertion step."
 msgstr ""
 "Gardez à l'esprit que la complexité logarithmique :math:`O(\\ln(n))` de la "
 "recherche est dominée par la lenteur de l'insertion, de complexité linéaire :"
@@ -156,7 +170,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "This function first runs :py:func:`~bisect.bisect_right` to locate an "
-"insertion point. Next, it runs the :meth:`insert` method on *a* to insert "
+"insertion point. Next, it runs the :meth:`!insert` method on *a* to insert "
 "*x* at the appropriate position to maintain sort order."
 msgstr ""
 "Le principe est le même que :func:`insort_left`, mais avec :func:"
@@ -183,9 +197,10 @@ msgstr ""
 "une seule valeur, mieux vaut un dictionnaire."
 
 #: library/bisect.rst:118
+#, fuzzy
 msgid ""
-"The *insort()* functions are ``O(n)`` because the logarithmic search step is "
-"dominated by the linear time insertion step."
+"The *insort()* functions are *O*\\ (*n*) because the logarithmic search step "
+"is dominated by the linear time insertion step."
 msgstr ""
 "Les fonctions d'insertion dans une liste classée ont une complexité linéaire "
 "car c'est le coût d'une insertion, même si la recherche est logarithmique."
@@ -252,6 +267,44 @@ msgstr ""
 "rechercher des éléments. Les cinq fonctions suivantes montrent comment les "
 "transformer en recherche plus classique pour les listes triées ::"
 
+#: library/bisect.rst:150
+msgid ""
+"def index(a, x):\n"
+"    'Locate the leftmost value exactly equal to x'\n"
+"    i = bisect_left(a, x)\n"
+"    if i != len(a) and a[i] == x:\n"
+"        return i\n"
+"    raise ValueError\n"
+"\n"
+"def find_lt(a, x):\n"
+"    'Find rightmost value less than x'\n"
+"    i = bisect_left(a, x)\n"
+"    if i:\n"
+"        return a[i-1]\n"
+"    raise ValueError\n"
+"\n"
+"def find_le(a, x):\n"
+"    'Find rightmost value less than or equal to x'\n"
+"    i = bisect_right(a, x)\n"
+"    if i:\n"
+"        return a[i-1]\n"
+"    raise ValueError\n"
+"\n"
+"def find_gt(a, x):\n"
+"    'Find leftmost value greater than x'\n"
+"    i = bisect_right(a, x)\n"
+"    if i != len(a):\n"
+"        return a[i]\n"
+"    raise ValueError\n"
+"\n"
+"def find_ge(a, x):\n"
+"    'Find leftmost item greater than or equal to x'\n"
+"    i = bisect_left(a, x)\n"
+"    if i != len(a):\n"
+"        return a[i]\n"
+"    raise ValueError"
+msgstr ""
+
 #: library/bisect.rst:187
 msgid "Examples"
 msgstr "Exemples"
@@ -270,11 +323,54 @@ msgstr ""
 "en se basant sur une échelle prédéfinie : plus de 90 vaut 'A', de 80 à 89 "
 "vaut 'B', etc ::"
 
+#: library/bisect.rst:196
+msgid ""
+">>> def grade(score, breakpoints=[60, 70, 80, 90], grades='FDCBA'):\n"
+"...     i = bisect(breakpoints, score)\n"
+"...     return grades[i]\n"
+"...\n"
+">>> [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]\n"
+"['F', 'A', 'C', 'C', 'B', 'A', 'A']"
+msgstr ""
+
 #: library/bisect.rst:203
 msgid ""
 "The :py:func:`~bisect.bisect` and :py:func:`~bisect.insort` functions also "
 "work with lists of tuples.  The *key* argument can serve to extract the "
 "field used for ordering records in a table::"
+msgstr ""
+
+#: library/bisect.rst:207
+msgid ""
+">>> from collections import namedtuple\n"
+">>> from operator import attrgetter\n"
+">>> from bisect import bisect, insort\n"
+">>> from pprint import pprint\n"
+"\n"
+">>> Movie = namedtuple('Movie', ('name', 'released', 'director'))\n"
+"\n"
+">>> movies = [\n"
+"...     Movie('Jaws', 1975, 'Spielberg'),\n"
+"...     Movie('Titanic', 1997, 'Cameron'),\n"
+"...     Movie('The Birds', 1963, 'Hitchcock'),\n"
+"...     Movie('Aliens', 1986, 'Cameron')\n"
+"... ]\n"
+"\n"
+">>> # Find the first movie released after 1960\n"
+">>> by_year = attrgetter('released')\n"
+">>> movies.sort(key=by_year)\n"
+">>> movies[bisect(movies, 1960, key=by_year)]\n"
+"Movie(name='The Birds', released=1963, director='Hitchcock')\n"
+"\n"
+">>> # Insert a movie while maintaining sort order\n"
+">>> romance = Movie('Love Story', 1970, 'Hiller')\n"
+">>> insort(movies, romance, key=by_year)\n"
+">>> pprint(movies)\n"
+"[Movie(name='The Birds', released=1963, director='Hitchcock'),\n"
+" Movie(name='Love Story', released=1970, director='Hiller'),\n"
+" Movie(name='Jaws', released=1975, director='Spielberg'),\n"
+" Movie(name='Aliens', released=1986, director='Cameron'),\n"
+" Movie(name='Titanic', released=1997, director='Cameron')]"
 msgstr ""
 
 #: library/bisect.rst:237
@@ -285,6 +381,21 @@ msgid ""
 msgstr ""
 "Une technique consiste à utiliser une liste de clefs pré-calculée pour "
 "chercher l'indice de l'enregistrement en question ::"
+
+#: library/bisect.rst:240
+msgid ""
+">>> data = [('red', 5), ('blue', 1), ('yellow', 8), ('black', 0)]\n"
+">>> data.sort(key=lambda r: r[1])       # Or use operator.itemgetter(1).\n"
+">>> keys = [r[1] for r in data]         # Precompute a list of keys.\n"
+">>> data[bisect_left(keys, 0)]\n"
+"('black', 0)\n"
+">>> data[bisect_left(keys, 1)]\n"
+"('blue', 1)\n"
+">>> data[bisect_left(keys, 5)]\n"
+"('red', 5)\n"
+">>> data[bisect_left(keys, 8)]\n"
+"('yellow', 8)"
+msgstr ""
 
 #~ msgid ""
 #~ "Insert *x* in *a* in sorted order.  This is equivalent to ``a."

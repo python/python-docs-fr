@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2019-08-06 09:57+0200\n"
 "Last-Translator: Zepmanbc <zepman@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 2.2.3\n"
 
 #: library/zipapp.rst:2
-msgid ":mod:`zipapp` --- Manage executable Python zip archives"
+#, fuzzy
+msgid ":mod:`!zipapp` --- Manage executable Python zip archives"
 msgstr ":mod:`zipapp` — Gestion des archives zip exécutables Python"
 
 #: library/zipapp.rst:9
@@ -53,6 +54,13 @@ msgstr ""
 "l'exécution, l'archive exécutera la fonction ``main`` du module ``myapp`` "
 "dans l'archive."
 
+#: library/zipapp.rst:30
+msgid ""
+"$ python -m zipapp myapp -m \"myapp:main\"\n"
+"$ python myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
+
 #: library/zipapp.rst:40
 msgid "Command-Line Interface"
 msgstr "Interface en ligne de commande"
@@ -63,6 +71,10 @@ msgid ""
 msgstr ""
 "Lorsqu'il est appelé en tant que programme à partir de la ligne de commande, "
 "la syntaxe suivante est utilisée :"
+
+#: library/zipapp.rst:44
+msgid "$ python -m zipapp source [options]"
+msgstr ""
 
 #: library/zipapp.rst:48
 msgid ""
@@ -322,7 +334,8 @@ msgstr ""
 "les méthodes nécessaires à cette classe."
 
 #: library/zipapp.rst:174
-msgid "Added the *filter* and *compressed* arguments."
+#, fuzzy
+msgid "Added the *filter* and *compressed* parameters."
 msgstr "Ajout des arguments *filter* et *compressed*."
 
 #: library/zipapp.rst:179
@@ -345,11 +358,24 @@ msgstr "Exemples"
 msgid "Pack up a directory into an archive, and run it."
 msgstr "Regroupe le contenu d'un répertoire dans une archive, puis l'exécute."
 
+#: library/zipapp.rst:192
+msgid ""
+"$ python -m zipapp myapp\n"
+"$ python myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
+
 #: library/zipapp.rst:198
 msgid "The same can be done using the :func:`create_archive` function::"
 msgstr ""
 "La même chose peut être faite en utilisant la fonction :func:"
 "`create_archive` ::"
+
+#: library/zipapp.rst:200
+msgid ""
+">>> import zipapp\n"
+">>> zipapp.create_archive('myapp', 'myapp.pyz')"
+msgstr ""
 
 #: library/zipapp.rst:203
 msgid ""
@@ -359,6 +385,13 @@ msgstr ""
 "Pour rendre l'application directement exécutable sur un système POSIX, "
 "spécifiez un interpréteur à utiliser."
 
+#: library/zipapp.rst:206
+msgid ""
+"$ python -m zipapp myapp -p \"/usr/bin/env python\"\n"
+"$ ./myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
+
 #: library/zipapp.rst:212
 msgid ""
 "To replace the shebang line on an existing archive, create a modified "
@@ -366,6 +399,13 @@ msgid ""
 msgstr ""
 "Pour remplacer la ligne *shebang* sur une archive existante, créez une "
 "archive modifiée en utilisant la fonction :func:`create_archive` ::"
+
+#: library/zipapp.rst:215
+msgid ""
+">>> import zipapp\n"
+">>> zipapp.create_archive('old_archive.pyz', 'new_archive.pyz', '/usr/bin/"
+"python3')"
+msgstr ""
 
 #: library/zipapp.rst:218
 #, fuzzy
@@ -384,6 +424,16 @@ msgstr ""
 "ne protège pas contre de telles erreurs, assurez-vous de prendre les mesures "
 "nécessaires en production.  De plus, cette méthode ne fonctionnera que si "
 "l'archive tient en mémoire ::"
+
+#: library/zipapp.rst:225
+msgid ""
+">>> import zipapp\n"
+">>> import io\n"
+">>> temp = io.BytesIO()\n"
+">>> zipapp.create_archive('myapp.pyz', temp, '/usr/bin/python2')\n"
+">>> with open('myapp.pyz', 'wb') as f:\n"
+">>>     f.write(temp.getvalue())"
+msgstr ""
 
 #: library/zipapp.rst:236
 msgid "Specifying the Interpreter"
@@ -484,6 +534,10 @@ msgstr ""
 "Installez toutes les dépendances de votre application dans le répertoire "
 "``myapp`` en utilisant *pip* :"
 
+#: library/zipapp.rst:276
+msgid "$ python -m pip install -r requirements.txt --target myapp"
+msgstr ""
+
 #: library/zipapp.rst:280
 msgid ""
 "(this assumes you have your project requirements in a ``requirements.txt`` "
@@ -495,22 +549,14 @@ msgstr ""
 "manuellement sur la ligne de commande *pip*)."
 
 #: library/zipapp.rst:284
-msgid ""
-"Optionally, delete the ``.dist-info`` directories created by pip in the "
-"``myapp`` directory. These hold metadata for pip to manage the packages, and "
-"as you won't be making any further use of pip they aren't required - "
-"although it won't do any harm if you leave them."
-msgstr ""
-"Si nécessaire, supprimez les répertoires ``.dist-info`` créés par *pip* dans "
-"le répertoire ``myapp``. Ceux-ci contiennent des métadonnées pour *pip* afin "
-"de  gérer les paquets et, comme vous n'utiliserez plus *pip*, ils ne sont "
-"pas nécessaires (c'est sans conséquence si vous les laissez)."
-
-#: library/zipapp.rst:289
 msgid "Package the application using:"
 msgstr "Regroupez le tout à l'aide de :"
 
-#: library/zipapp.rst:295
+#: library/zipapp.rst:286
+msgid "$ python -m zipapp -p \"interpreter\" myapp"
+msgstr ""
+
+#: library/zipapp.rst:290
 msgid ""
 "This will produce a standalone executable, which can be run on any machine "
 "with the appropriate interpreter available. See :ref:`zipapp-specifying-the-"
@@ -521,7 +567,7 @@ msgstr ""
 "specifying-the-interpreter` pour plus de détails. Il peut être envoyé aux "
 "utilisateurs sous la forme d'un seul fichier."
 
-#: library/zipapp.rst:299
+#: library/zipapp.rst:294
 msgid ""
 "On Unix, the ``myapp.pyz`` file is executable as it stands.  You can rename "
 "the file to remove the ``.pyz`` extension if you prefer a \"plain\" command "
@@ -535,103 +581,11 @@ msgstr ""
 "exécutable en vertu du fait que l'interpréteur Python est associé aux "
 "extensions de fichier ``.pyz`` et ``.pyzw`` une fois installé."
 
-#: library/zipapp.rst:307
-msgid "Making a Windows executable"
-msgstr "Création d'un exécutable Windows"
-
-#: library/zipapp.rst:309
-msgid ""
-"On Windows, registration of the ``.pyz`` extension is optional, and "
-"furthermore, there are certain places that don't recognise registered "
-"extensions \"transparently\" (the simplest example is that ``subprocess."
-"run(['myapp'])`` won't find your application - you need to explicitly "
-"specify the extension)."
-msgstr ""
-"Sous Windows, l'association de Python à l'extension ``.pyz`` est facultative "
-"et, de plus, il y a certains mécanismes qui ne reconnaissent pas les "
-"extensions enregistrées de manière « transparente » (l'exemple le plus "
-"simple est que ``subprocess.run(['myapp'])`` ne trouvera pas votre "
-"application — vous devez explicitement spécifier l'extension)."
-
-#: library/zipapp.rst:315
-msgid ""
-"On Windows, therefore, it is often preferable to create an executable from "
-"the zipapp.  This is relatively easy, although it does require a C "
-"compiler.  The basic approach relies on the fact that zipfiles can have "
-"arbitrary data prepended, and Windows exe files can have arbitrary data "
-"appended.  So by creating a suitable launcher and tacking the ``.pyz`` file "
-"onto the end of it, you end up with a single-file executable that runs your "
-"application."
-msgstr ""
-"Sous Windows, il est donc souvent préférable de créer un exécutable à partir "
-"du *zipapp*.  C'est relativement facile bien que cela nécessite un "
-"compilateur C.  L'astuce repose sur le fait que les fichiers zip peuvent "
-"avoir des données arbitraires au début et les fichiers *exe* de Windows "
-"peuvent avoir des données arbitraires à la fin.  Ainsi, en créant un lanceur "
-"approprié et en rajoutant le fichier ``.pyz`` à sa fin, vous obtenez un "
-"fichier unique qui exécute votre application."
-
-#: library/zipapp.rst:322
-msgid "A suitable launcher can be as simple as the following::"
-msgstr "Un lanceur approprié peut être aussi simple que ce qui suit ::"
-
-#: library/zipapp.rst:347
-msgid ""
-"If you define the ``WINDOWS`` preprocessor symbol, this will generate a GUI "
-"executable, and without it, a console executable."
-msgstr ""
-"Si vous définissez le symbole du préprocesseur ``WINDOWS`` cela va générer "
-"un exécutable IUG, et sans lui, un exécutable console."
-
-#: library/zipapp.rst:350
-msgid ""
-"To compile the executable, you can either just use the standard MSVC command "
-"line tools, or you can take advantage of the fact that distutils knows how "
-"to compile Python source::"
-msgstr ""
-"Pour compiler l'exécutable, vous pouvez soit simplement utiliser les outils "
-"standards en ligne de commande *MSVC*, soit profiter du fait que *distutils* "
-"sait comment compiler les sources Python ::"
-
-#: library/zipapp.rst:377
-msgid ""
-"The resulting launcher uses the \"Limited ABI\", so it will run unchanged "
-"with any version of Python 3.x.  All it needs is for Python (``python3."
-"dll``) to be on the user's ``PATH``."
-msgstr ""
-"Le lanceur résultant utilise le « Limited ABI » donc il fonctionnera sans "
-"changement avec n'importe quelle version de Python 3.x. Tout ce dont il a "
-"besoin est que Python (``python3.dll``) soit sur le ``PATH`` de "
-"l'utilisateur."
-
-#: library/zipapp.rst:381
-msgid ""
-"For a fully standalone distribution, you can distribute the launcher with "
-"your application appended, bundled with the Python \"embedded\" "
-"distribution.  This will run on any PC with the appropriate architecture (32 "
-"bit or 64 bit)."
-msgstr ""
-"Pour une distribution entièrement autonome vous pouvez distribuer le lanceur "
-"avec votre application en fin de fichier, empaqueté avec la distribution "
-"*embedded* Python.  Ceci fonctionnera sur n'importe quel ordinateur avec "
-"l'architecture appropriée (32 bits ou 64 bits)."
-
-#: library/zipapp.rst:387
+#: library/zipapp.rst:302
 msgid "Caveats"
 msgstr "Mises en garde"
 
-#: library/zipapp.rst:389
-msgid ""
-"There are some limitations to the process of bundling your application into "
-"a single file.  In most, if not all, cases they can be addressed without "
-"needing major changes to your application."
-msgstr ""
-"Il y a certaines limites à l'empaquetage de votre application dans un seul "
-"fichier.  Dans la plupart des cas, si ce n'est tous, elles peuvent être "
-"traitées sans qu'il soit nécessaire d'apporter de modifications majeures à "
-"votre application."
-
-#: library/zipapp.rst:393
+#: library/zipapp.rst:304
 msgid ""
 "If your application depends on a package that includes a C extension, that "
 "package cannot be run from a zip file (this is an OS limitation, as "
@@ -657,41 +611,11 @@ msgstr ""
 "version à ajouter à ``sys.path`` au moment de l'exécution, basée sur la "
 "machine de l'utilisateur)."
 
-#: library/zipapp.rst:403
-msgid ""
-"If you are shipping a Windows executable as described above, you either need "
-"to ensure that your users have ``python3.dll`` on their PATH (which is not "
-"the default behaviour of the installer) or you should bundle your "
-"application with the embedded distribution."
-msgstr ""
-"Si vous livrez un exécutable Windows comme décrit ci-dessus, vous devez vous "
-"assurer que vos utilisateurs ont ``python3.dll`` sur leur PATH (ce qui n'est "
-"pas le comportement par défaut de l'installateur) ou vous devez inclure la "
-"distribution intégrée dans votre application."
-
-#: library/zipapp.rst:408
-msgid ""
-"The suggested launcher above uses the Python embedding API.  This means that "
-"in your application, ``sys.executable`` will be your application, and *not* "
-"a conventional Python interpreter.  Your code and its dependencies need to "
-"be prepared for this possibility.  For example, if your application uses "
-"the :mod:`multiprocessing` module, it will need to call :func:"
-"`multiprocessing.set_executable` to let the module know where to find the "
-"standard Python interpreter."
-msgstr ""
-"Le lanceur suggéré ci-dessus utilise l'API d'intégration Python.  Cela "
-"signifie que dans votre application ``sys.executable`` sera votre "
-"application et *pas* un interpréteur Python classique.  Votre code et ses "
-"dépendances doivent être préparés à cette possibilité.  Par exemple, si "
-"votre application utilise le module :mod:`multiprocessing`, elle devra "
-"appeler :func:`multiprocessing.set_executable` pour que le module sache où "
-"trouver l'interpréteur Python standard."
-
-#: library/zipapp.rst:418
+#: library/zipapp.rst:316
 msgid "The Python Zip Application Archive Format"
 msgstr "Le format d'archive d'application Zip Python"
 
-#: library/zipapp.rst:420
+#: library/zipapp.rst:318
 msgid ""
 "Python has been able to execute zip files which contain a ``__main__.py`` "
 "file since version 2.6.  In order to be executed by Python, an application "
@@ -709,7 +633,7 @@ msgstr ""
 "script (dans ce cas le fichier zip) sera placé sur :data:`sys.path` et ainsi "
 "d'autres modules pourront être importés depuis le fichier zip."
 
-#: library/zipapp.rst:427
+#: library/zipapp.rst:325
 msgid ""
 "The zip file format allows arbitrary data to be prepended to a zip file.  "
 "The zip application format uses this ability to prepend a standard POSIX "
@@ -720,17 +644,18 @@ msgstr ""
 "préfixer une ligne *shebang* POSIX standard dans le fichier (``#!/path/to/"
 "interpreter``)."
 
-#: library/zipapp.rst:431
+#: library/zipapp.rst:329
 msgid "Formally, the Python zip application format is therefore:"
 msgstr "Formellement, le format d'application zip de Python est donc :"
 
-#: library/zipapp.rst:433
+#: library/zipapp.rst:331
+#, fuzzy
 msgid ""
 "An optional shebang line, containing the characters ``b'#!'`` followed by an "
 "interpreter name, and then a newline (``b'\\n'``) character.  The "
 "interpreter name can be anything acceptable to the OS \"shebang\" "
 "processing, or the Python launcher on Windows.  The interpreter should be "
-"encoded in UTF-8 on Windows, and in :func:`sys.getfilesystemencoding()` on "
+"encoded in UTF-8 on Windows, and in :func:`sys.getfilesystemencoding` on "
 "POSIX."
 msgstr ""
 "Une ligne *shebang* facultative, contenant les caractères ``b'#!`` suivis "
@@ -740,7 +665,7 @@ msgstr ""
 "être encodé en UTF-8 sous Windows, et en :func:`sys.getfilesystemencoding()` "
 "sur POSIX."
 
-#: library/zipapp.rst:438
+#: library/zipapp.rst:336
 msgid ""
 "Standard zipfile data, as generated by the :mod:`zipfile` module.  The "
 "zipfile content *must* include a file called ``__main__.py`` (which must be "
@@ -753,7 +678,7 @@ msgstr ""
 "dire qu'il ne peut se trouver dans un sous-répertoire).  Les données du "
 "fichier zip peuvent être compressées ou non."
 
-#: library/zipapp.rst:443
+#: library/zipapp.rst:341
 msgid ""
 "If an application archive has a shebang line, it may have the executable bit "
 "set on POSIX systems, to allow it to be executed directly."
@@ -762,7 +687,7 @@ msgstr ""
 "exécutable activé sur les systèmes POSIX, pour lui permettre d'être exécutée "
 "directement."
 
-#: library/zipapp.rst:446
+#: library/zipapp.rst:344
 msgid ""
 "There is no requirement that the tools in this module are used to create "
 "application archives - the module is a convenience, but archives in the "
@@ -776,3 +701,125 @@ msgstr ""
 #: library/zipapp.rst:11
 msgid "Executable Zip Files"
 msgstr ""
+
+#~ msgid ""
+#~ "Optionally, delete the ``.dist-info`` directories created by pip in the "
+#~ "``myapp`` directory. These hold metadata for pip to manage the packages, "
+#~ "and as you won't be making any further use of pip they aren't required - "
+#~ "although it won't do any harm if you leave them."
+#~ msgstr ""
+#~ "Si nécessaire, supprimez les répertoires ``.dist-info`` créés par *pip* "
+#~ "dans le répertoire ``myapp``. Ceux-ci contiennent des métadonnées pour "
+#~ "*pip* afin de  gérer les paquets et, comme vous n'utiliserez plus *pip*, "
+#~ "ils ne sont pas nécessaires (c'est sans conséquence si vous les laissez)."
+
+#~ msgid "Making a Windows executable"
+#~ msgstr "Création d'un exécutable Windows"
+
+#~ msgid ""
+#~ "On Windows, registration of the ``.pyz`` extension is optional, and "
+#~ "furthermore, there are certain places that don't recognise registered "
+#~ "extensions \"transparently\" (the simplest example is that ``subprocess."
+#~ "run(['myapp'])`` won't find your application - you need to explicitly "
+#~ "specify the extension)."
+#~ msgstr ""
+#~ "Sous Windows, l'association de Python à l'extension ``.pyz`` est "
+#~ "facultative et, de plus, il y a certains mécanismes qui ne reconnaissent "
+#~ "pas les extensions enregistrées de manière « transparente » (l'exemple le "
+#~ "plus simple est que ``subprocess.run(['myapp'])`` ne trouvera pas votre "
+#~ "application — vous devez explicitement spécifier l'extension)."
+
+#~ msgid ""
+#~ "On Windows, therefore, it is often preferable to create an executable "
+#~ "from the zipapp.  This is relatively easy, although it does require a C "
+#~ "compiler.  The basic approach relies on the fact that zipfiles can have "
+#~ "arbitrary data prepended, and Windows exe files can have arbitrary data "
+#~ "appended.  So by creating a suitable launcher and tacking the ``.pyz`` "
+#~ "file onto the end of it, you end up with a single-file executable that "
+#~ "runs your application."
+#~ msgstr ""
+#~ "Sous Windows, il est donc souvent préférable de créer un exécutable à "
+#~ "partir du *zipapp*.  C'est relativement facile bien que cela nécessite un "
+#~ "compilateur C.  L'astuce repose sur le fait que les fichiers zip peuvent "
+#~ "avoir des données arbitraires au début et les fichiers *exe* de Windows "
+#~ "peuvent avoir des données arbitraires à la fin.  Ainsi, en créant un "
+#~ "lanceur approprié et en rajoutant le fichier ``.pyz`` à sa fin, vous "
+#~ "obtenez un fichier unique qui exécute votre application."
+
+#~ msgid "A suitable launcher can be as simple as the following::"
+#~ msgstr "Un lanceur approprié peut être aussi simple que ce qui suit ::"
+
+#~ msgid ""
+#~ "If you define the ``WINDOWS`` preprocessor symbol, this will generate a "
+#~ "GUI executable, and without it, a console executable."
+#~ msgstr ""
+#~ "Si vous définissez le symbole du préprocesseur ``WINDOWS`` cela va "
+#~ "générer un exécutable IUG, et sans lui, un exécutable console."
+
+#~ msgid ""
+#~ "To compile the executable, you can either just use the standard MSVC "
+#~ "command line tools, or you can take advantage of the fact that distutils "
+#~ "knows how to compile Python source::"
+#~ msgstr ""
+#~ "Pour compiler l'exécutable, vous pouvez soit simplement utiliser les "
+#~ "outils standards en ligne de commande *MSVC*, soit profiter du fait que "
+#~ "*distutils* sait comment compiler les sources Python ::"
+
+#~ msgid ""
+#~ "The resulting launcher uses the \"Limited ABI\", so it will run unchanged "
+#~ "with any version of Python 3.x.  All it needs is for Python (``python3."
+#~ "dll``) to be on the user's ``PATH``."
+#~ msgstr ""
+#~ "Le lanceur résultant utilise le « Limited ABI » donc il fonctionnera sans "
+#~ "changement avec n'importe quelle version de Python 3.x. Tout ce dont il a "
+#~ "besoin est que Python (``python3.dll``) soit sur le ``PATH`` de "
+#~ "l'utilisateur."
+
+#~ msgid ""
+#~ "For a fully standalone distribution, you can distribute the launcher with "
+#~ "your application appended, bundled with the Python \"embedded\" "
+#~ "distribution.  This will run on any PC with the appropriate architecture "
+#~ "(32 bit or 64 bit)."
+#~ msgstr ""
+#~ "Pour une distribution entièrement autonome vous pouvez distribuer le "
+#~ "lanceur avec votre application en fin de fichier, empaqueté avec la "
+#~ "distribution *embedded* Python.  Ceci fonctionnera sur n'importe quel "
+#~ "ordinateur avec l'architecture appropriée (32 bits ou 64 bits)."
+
+#~ msgid ""
+#~ "There are some limitations to the process of bundling your application "
+#~ "into a single file.  In most, if not all, cases they can be addressed "
+#~ "without needing major changes to your application."
+#~ msgstr ""
+#~ "Il y a certaines limites à l'empaquetage de votre application dans un "
+#~ "seul fichier.  Dans la plupart des cas, si ce n'est tous, elles peuvent "
+#~ "être traitées sans qu'il soit nécessaire d'apporter de modifications "
+#~ "majeures à votre application."
+
+#~ msgid ""
+#~ "If you are shipping a Windows executable as described above, you either "
+#~ "need to ensure that your users have ``python3.dll`` on their PATH (which "
+#~ "is not the default behaviour of the installer) or you should bundle your "
+#~ "application with the embedded distribution."
+#~ msgstr ""
+#~ "Si vous livrez un exécutable Windows comme décrit ci-dessus, vous devez "
+#~ "vous assurer que vos utilisateurs ont ``python3.dll`` sur leur PATH (ce "
+#~ "qui n'est pas le comportement par défaut de l'installateur) ou vous devez "
+#~ "inclure la distribution intégrée dans votre application."
+
+#~ msgid ""
+#~ "The suggested launcher above uses the Python embedding API.  This means "
+#~ "that in your application, ``sys.executable`` will be your application, "
+#~ "and *not* a conventional Python interpreter.  Your code and its "
+#~ "dependencies need to be prepared for this possibility.  For example, if "
+#~ "your application uses the :mod:`multiprocessing` module, it will need to "
+#~ "call :func:`multiprocessing.set_executable` to let the module know where "
+#~ "to find the standard Python interpreter."
+#~ msgstr ""
+#~ "Le lanceur suggéré ci-dessus utilise l'API d'intégration Python.  Cela "
+#~ "signifie que dans votre application ``sys.executable`` sera votre "
+#~ "application et *pas* un interpréteur Python classique.  Votre code et ses "
+#~ "dépendances doivent être préparés à cette possibilité.  Par exemple, si "
+#~ "votre application utilise le module :mod:`multiprocessing`, elle devra "
+#~ "appeler :func:`multiprocessing.set_executable` pour que le module sache "
+#~ "où trouver l'interpréteur Python standard."

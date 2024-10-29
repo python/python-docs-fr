@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/reprlib.rst:2
-msgid ":mod:`reprlib` --- Alternate :func:`repr` implementation"
+msgid ":mod:`!reprlib` --- Alternate :func:`repr` implementation"
 msgstr ""
 
 #: library/reprlib.rst:9
@@ -24,7 +24,7 @@ msgstr "**Code source :** :source:`Lib/reprlib.py`"
 
 #: library/reprlib.rst:13
 msgid ""
-"The :mod:`reprlib` module provides a means for producing object "
+"The :mod:`!reprlib` module provides a means for producing object "
 "representations with limits on the size of the resulting strings. This is "
 "used in the Python debugger and may be useful in other contexts as well."
 msgstr ""
@@ -33,7 +33,7 @@ msgstr ""
 msgid "This module provides a class, an instance, and a function:"
 msgstr ""
 
-#: library/reprlib.rst:22
+#: library/reprlib.rst:24
 msgid ""
 "Class which provides formatting services useful in implementing functions "
 "similar to the built-in :func:`repr`; size limits for  different object "
@@ -41,70 +41,116 @@ msgid ""
 "excessively long."
 msgstr ""
 
-#: library/reprlib.rst:29
+#: library/reprlib.rst:28
+msgid ""
+"The keyword arguments of the constructor can be used as a shortcut to set "
+"the attributes of the :class:`Repr` instance. Which means that the following "
+"initialization::"
+msgstr ""
+
+#: library/reprlib.rst:32
+msgid "aRepr = reprlib.Repr(maxlevel=3)"
+msgstr ""
+
+#: library/reprlib.rst:34
+msgid "Is equivalent to::"
+msgstr ""
+
+#: library/reprlib.rst:36
+msgid ""
+"aRepr = reprlib.Repr()\n"
+"aRepr.maxlevel = 3"
+msgstr ""
+
+#: library/reprlib.rst:39
+msgid ""
+"See section `Repr Objects`_ for more information about :class:`Repr` "
+"attributes."
+msgstr ""
+
+#: library/reprlib.rst:42
+msgid "Allow attributes to be set via keyword arguments."
+msgstr ""
+
+#: library/reprlib.rst:48
 msgid ""
 "This is an instance of :class:`Repr` which is used to provide the :func:`."
 "repr` function described below.  Changing the attributes of this object will "
 "affect the size limits used by :func:`.repr` and the Python debugger."
 msgstr ""
 
-#: library/reprlib.rst:37
+#: library/reprlib.rst:56
 msgid ""
 "This is the :meth:`~Repr.repr` method of ``aRepr``.  It returns a string "
 "similar to that returned by the built-in function of the same name, but with "
 "limits on most sizes."
 msgstr ""
 
-#: library/reprlib.rst:41
+#: library/reprlib.rst:60
 msgid ""
 "In addition to size-limiting tools, the module also provides a decorator for "
-"detecting recursive calls to :meth:`__repr__` and substituting a placeholder "
-"string instead."
+"detecting recursive calls to :meth:`~object.__repr__` and substituting a "
+"placeholder string instead."
 msgstr ""
 
-#: library/reprlib.rst:50
+#: library/reprlib.rst:69
 msgid ""
-"Decorator for :meth:`__repr__` methods to detect recursive calls within the "
-"same thread.  If a recursive call is made, the *fillvalue* is returned, "
-"otherwise, the usual :meth:`__repr__` call is made.  For example:"
+"Decorator for :meth:`~object.__repr__` methods to detect recursive calls "
+"within the same thread.  If a recursive call is made, the *fillvalue* is "
+"returned, otherwise, the usual :meth:`!__repr__` call is made.  For example:"
 msgstr ""
 
-#: library/reprlib.rst:72
+#: library/reprlib.rst:73
+msgid ""
+">>> from reprlib import recursive_repr\n"
+">>> class MyList(list):\n"
+"...     @recursive_repr()\n"
+"...     def __repr__(self):\n"
+"...         return '<' + '|'.join(map(repr, self)) + '>'\n"
+"...\n"
+">>> m = MyList('abc')\n"
+">>> m.append(m)\n"
+">>> m.append('x')\n"
+">>> print(m)\n"
+"<'a'|'b'|'c'|...|'x'>"
+msgstr ""
+
+#: library/reprlib.rst:93
 msgid "Repr Objects"
 msgstr ""
 
-#: library/reprlib.rst:74
+#: library/reprlib.rst:95
 msgid ""
 ":class:`Repr` instances provide several attributes which can be used to "
 "provide size limits for the representations of different object types,  and "
 "methods which format specific object types."
 msgstr ""
 
-#: library/reprlib.rst:81
+#: library/reprlib.rst:102
 msgid ""
 "This string is displayed for recursive references. It defaults to ``...``."
 msgstr ""
 
-#: library/reprlib.rst:89
+#: library/reprlib.rst:110
 msgid ""
 "Depth limit on the creation of recursive representations.  The default is "
 "``6``."
 msgstr ""
 
-#: library/reprlib.rst:100
+#: library/reprlib.rst:121
 msgid ""
 "Limits on the number of entries represented for the named object type.  The "
 "default is ``4`` for :attr:`maxdict`, ``5`` for :attr:`maxarray`, and  ``6`` "
 "for the others."
 msgstr ""
 
-#: library/reprlib.rst:107
+#: library/reprlib.rst:128
 msgid ""
 "Maximum number of characters in the representation for an integer.  Digits "
 "are dropped from the middle.  The default is ``40``."
 msgstr ""
 
-#: library/reprlib.rst:113
+#: library/reprlib.rst:134
 msgid ""
 "Limit on the number of characters in the representation of the string.  Note "
 "that the \"normal\" representation of the string is used as the character "
@@ -112,20 +158,87 @@ msgid ""
 "mangled when the representation is shortened.  The default is ``30``."
 msgstr ""
 
-#: library/reprlib.rst:121
+#: library/reprlib.rst:142
 msgid ""
 "This limit is used to control the size of object types for which no specific "
 "formatting method is available on the :class:`Repr` object. It is applied in "
 "a similar manner as :attr:`maxstring`.  The default is ``20``."
 msgstr ""
 
-#: library/reprlib.rst:128
+#: library/reprlib.rst:149
+msgid ""
+"If this attribute is set to ``None`` (the default), the output is formatted "
+"with no line breaks or indentation, like the standard :func:`repr`. For "
+"example:"
+msgstr ""
+
+#: library/reprlib.rst:153
+msgid ""
+">>> example = [\n"
+"...     1, 'spam', {'a': 2, 'b': 'spam eggs', 'c': {3: 4.5, 6: []}}, 'ham']\n"
+">>> import reprlib\n"
+">>> aRepr = reprlib.Repr()\n"
+">>> print(aRepr.repr(example))\n"
+"[1, 'spam', {'a': 2, 'b': 'spam eggs', 'c': {3: 4.5, 6: []}}, 'ham']"
+msgstr ""
+
+#: library/reprlib.rst:162
+msgid ""
+"If :attr:`~Repr.indent` is set to a string, each recursion level is placed "
+"on its own line, indented by that string:"
+msgstr ""
+
+#: library/reprlib.rst:165
+msgid ""
+">>> aRepr.indent = '-->'\n"
+">>> print(aRepr.repr(example))\n"
+"[\n"
+"-->1,\n"
+"-->'spam',\n"
+"-->{\n"
+"-->-->'a': 2,\n"
+"-->-->'b': 'spam eggs',\n"
+"-->-->'c': {\n"
+"-->-->-->3: 4.5,\n"
+"-->-->-->6: [],\n"
+"-->-->},\n"
+"-->},\n"
+"-->'ham',\n"
+"]"
+msgstr ""
+
+#: library/reprlib.rst:183
+msgid ""
+"Setting :attr:`~Repr.indent` to a positive integer value behaves as if it "
+"was set to a string with that number of spaces:"
+msgstr ""
+
+#: library/reprlib.rst:186
+msgid ""
+">>> aRepr.indent = 4\n"
+">>> print(aRepr.repr(example))\n"
+"[\n"
+"    1,\n"
+"    'spam',\n"
+"    {\n"
+"        'a': 2,\n"
+"        'b': 'spam eggs',\n"
+"        'c': {\n"
+"            3: 4.5,\n"
+"            6: [],\n"
+"        },\n"
+"    },\n"
+"    'ham',\n"
+"]"
+msgstr ""
+
+#: library/reprlib.rst:209
 msgid ""
 "The equivalent to the built-in :func:`repr` that uses the formatting imposed "
 "by the instance."
 msgstr ""
 
-#: library/reprlib.rst:134
+#: library/reprlib.rst:215
 msgid ""
 "Recursive implementation used by :meth:`.repr`.  This uses the type of *obj* "
 "to determine which formatting method to call, passing it *obj* and *level*.  "
@@ -134,7 +247,7 @@ msgid ""
 "call."
 msgstr ""
 
-#: library/reprlib.rst:143
+#: library/reprlib.rst:224
 msgid ""
 "Formatting methods for specific types are implemented as methods with a name "
 "based on the type name.  In the method name, **TYPE** is replaced by ``'_'."
@@ -143,22 +256,42 @@ msgid ""
 "should call ``self.repr1(subobj, level - 1)``."
 msgstr ""
 
-#: library/reprlib.rst:153
+#: library/reprlib.rst:234
 msgid "Subclassing Repr Objects"
 msgstr ""
 
-#: library/reprlib.rst:155
+#: library/reprlib.rst:236
 msgid ""
 "The use of dynamic dispatching by :meth:`Repr.repr1` allows subclasses of :"
 "class:`Repr` to add support for additional built-in object types or to "
 "modify the handling of types already supported. This example shows how "
-"special support for file objects could be added::"
+"special support for file objects could be added:"
 msgstr ""
 
-#: library/reprlib.rst:46
+#: library/reprlib.rst:241
+msgid ""
+"import reprlib\n"
+"import sys\n"
+"\n"
+"class MyRepr(reprlib.Repr):\n"
+"\n"
+"    def repr_TextIOWrapper(self, obj, level):\n"
+"        if obj.name in {'<stdin>', '<stdout>', '<stderr>'}:\n"
+"            return obj.name\n"
+"        return repr(obj)\n"
+"\n"
+"aRepr = MyRepr()\n"
+"print(aRepr.repr(sys.stdin))         # prints '<stdin>'"
+msgstr ""
+
+#: library/reprlib.rst:256
+msgid "<stdin>"
+msgstr ""
+
+#: library/reprlib.rst:65
 msgid "..."
 msgstr ""
 
-#: library/reprlib.rst:46
+#: library/reprlib.rst:65
 msgid "placeholder"
 msgstr ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2017-08-10 00:52+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -239,6 +239,12 @@ msgid ""
 "Coroutine functions are declared using the new :keyword:`async def` syntax::"
 msgstr ""
 
+#: whatsnew/3.5.rst:178
+msgid ""
+">>> async def coro():\n"
+"...     return 'spam'"
+msgstr ""
+
 #: whatsnew/3.5.rst:181
 msgid ""
 "Inside a coroutine function, the new :keyword:`await` expression can be used "
@@ -257,15 +263,71 @@ msgstr ""
 msgid "An example of a rudimentary HTTP client written using the new syntax::"
 msgstr ""
 
+#: whatsnew/3.5.rst:191
+msgid ""
+"import asyncio\n"
+"\n"
+"async def http_get(domain):\n"
+"    reader, writer = await asyncio.open_connection(domain, 80)\n"
+"\n"
+"    writer.write(b'\\r\\n'.join([\n"
+"        b'GET / HTTP/1.1',\n"
+"        b'Host: %b' % domain.encode('latin-1'),\n"
+"        b'Connection: close',\n"
+"        b'', b''\n"
+"    ]))\n"
+"\n"
+"    async for line in reader:\n"
+"        print('>>>', line)\n"
+"\n"
+"    writer.close()\n"
+"\n"
+"loop = asyncio.get_event_loop()\n"
+"try:\n"
+"    loop.run_until_complete(http_get('example.com'))\n"
+"finally:\n"
+"    loop.close()"
+msgstr ""
+
 #: whatsnew/3.5.rst:215
 msgid ""
 "Similarly to asynchronous iteration, there is a new syntax for asynchronous "
 "context managers.  The following script::"
 msgstr ""
 
+#: whatsnew/3.5.rst:218
+msgid ""
+"import asyncio\n"
+"\n"
+"async def coro(name, lock):\n"
+"    print('coro {}: waiting for lock'.format(name))\n"
+"    async with lock:\n"
+"        print('coro {}: holding the lock'.format(name))\n"
+"        await asyncio.sleep(1)\n"
+"        print('coro {}: releasing the lock'.format(name))\n"
+"\n"
+"loop = asyncio.get_event_loop()\n"
+"lock = asyncio.Lock()\n"
+"coros = asyncio.gather(coro(1, lock), coro(2, lock))\n"
+"try:\n"
+"    loop.run_until_complete(coros)\n"
+"finally:\n"
+"    loop.close()"
+msgstr ""
+
 #: whatsnew/3.5.rst:235
 msgid "will output::"
 msgstr "affichera ::"
+
+#: whatsnew/3.5.rst:237
+msgid ""
+"coro 2: waiting for lock\n"
+"coro 2: holding the lock\n"
+"coro 1: waiting for lock\n"
+"coro 2: releasing the lock\n"
+"coro 1: holding the lock\n"
+"coro 1: releasing the lock"
+msgstr ""
 
 #: whatsnew/3.5.rst:244
 msgid ""
@@ -323,12 +385,40 @@ msgid ""
 "cleaner code::"
 msgstr ""
 
+#: whatsnew/3.5.rst:285
+msgid "S = (H @ beta - r).T @ inv(H @ V @ H.T) @ (H @ beta - r)"
+msgstr ""
+
 #: whatsnew/3.5.rst:287
 msgid "instead of::"
 msgstr ""
 
+#: whatsnew/3.5.rst:289
+msgid ""
+"S = dot((dot(H, beta) - r).T,\n"
+"        dot(inv(dot(dot(H, V), H.T)), dot(H, beta) - r))"
+msgstr ""
+
 #: whatsnew/3.5.rst:292
 msgid "NumPy 1.10 has support for the new operator::"
+msgstr ""
+
+#: whatsnew/3.5.rst:294
+msgid ""
+">>> import numpy\n"
+"\n"
+">>> x = numpy.ones(3)\n"
+">>> x\n"
+"array([ 1., 1., 1.])\n"
+"\n"
+">>> m = numpy.eye(3)\n"
+">>> m\n"
+"array([[ 1., 0., 0.],\n"
+"       [ 0., 1., 0.],\n"
+"       [ 0., 0., 1.]])\n"
+"\n"
+">>> x @ m\n"
+"array([ 1., 1., 1.])"
 msgstr ""
 
 #: whatsnew/3.5.rst:312
@@ -350,13 +440,41 @@ msgid ""
 "arbitrary number of unpackings in :ref:`function calls <calls>`::"
 msgstr ""
 
+#: whatsnew/3.5.rst:325
+msgid ""
+">>> print(*[1], *[2], 3, *[4, 5])\n"
+"1 2 3 4 5\n"
+"\n"
+">>> def fn(a, b, c, d):\n"
+"...     print(a, b, c, d)\n"
+"...\n"
+"\n"
+">>> fn(**{'a': 1, 'c': 3}, **{'b': 2, 'd': 4})\n"
+"1 2 3 4"
+msgstr ""
+
 #: whatsnew/3.5.rst:335
 msgid ""
 "Similarly, tuple, list, set, and dictionary displays allow multiple "
 "unpackings (see :ref:`exprlists` and :ref:`dict`)::"
 msgstr ""
 
-#: whatsnew/3.5.rst:353
+#: whatsnew/3.5.rst:338
+msgid ""
+">>> *range(4), 4\n"
+"(0, 1, 2, 3, 4)\n"
+"\n"
+">>> [*range(4), 4]\n"
+"[0, 1, 2, 3, 4]\n"
+"\n"
+">>> {*range(4), 4, *(5, 6, 7)}\n"
+"{0, 1, 2, 3, 4, 5, 6, 7}\n"
+"\n"
+">>> {'x': 1, **{'y': 2}}\n"
+"{'x': 1, 'y': 2}"
+msgstr ""
+
+#: whatsnew/3.5.rst:352
 msgid ":pep:`448` -- Additional Unpacking Generalizations"
 msgstr ""
 
@@ -390,10 +508,31 @@ msgstr ""
 msgid "Examples::"
 msgstr "Exemples ::"
 
+#: whatsnew/3.5.rst:375
+msgid ""
+">>> b'Hello %b!' % b'World'\n"
+"b'Hello World!'\n"
+"\n"
+">>> b'x=%i y=%f' % (1, 2.5)\n"
+"b'x=1 y=2.500000'"
+msgstr ""
+
 #: whatsnew/3.5.rst:381
 msgid ""
 "Unicode is not allowed for ``%b``, but it is accepted by ``%a`` (equivalent "
 "of ``repr(obj).encode('ascii', 'backslashreplace')``)::"
+msgstr ""
+
+#: whatsnew/3.5.rst:384
+msgid ""
+">>> b'Hello %b!' % 'World'\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"TypeError: %b requires bytes, or an object that implements __bytes__, not "
+"'str'\n"
+"\n"
+">>> b'price: %a' % '10€'\n"
+"b\"price: '10\\\\u20ac'\""
 msgstr ""
 
 #: whatsnew/3.5.rst:392
@@ -402,7 +541,7 @@ msgid ""
 "only be used in codebases that need compatibility with Python 2."
 msgstr ""
 
-#: whatsnew/3.5.rst:398
+#: whatsnew/3.5.rst:397
 #, fuzzy
 msgid ":pep:`461` -- Adding % formatting to bytes and bytearray"
 msgstr ":pep:`461` -- Ajout du formatage via % aux *bytes* et *bytesarray*"
@@ -444,10 +583,16 @@ msgid ""
 "declared in the annotations::"
 msgstr ""
 
+#: whatsnew/3.5.rst:422
+msgid ""
+"def greeting(name: str) -> str:\n"
+"    return 'Hello ' + name"
+msgstr ""
+
 #: whatsnew/3.5.rst:425
 msgid ""
 "While these annotations are available at runtime through the usual :attr:"
-"`__annotations__` attribute, *no automatic type checking happens at "
+"`~object.__annotations__` attribute, *no automatic type checking happens at "
 "runtime*.  Instead, it is assumed that a separate off-line type checker (e."
 "g. `mypy <https://mypy-lang.org>`_) will be used for on-demand source code "
 "analysis."
@@ -464,7 +609,7 @@ msgstr ""
 msgid ":mod:`typing` module documentation"
 msgstr "Documentation du module :mod:`typing`"
 
-#: whatsnew/3.5.rst:439
+#: whatsnew/3.5.rst:438
 #, fuzzy
 msgid ":pep:`484` -- Type Hints"
 msgstr ":pep:`484` — Indications de types"
@@ -518,6 +663,13 @@ msgstr ""
 "*path* et ne débutant pas par ``'.'``. L'appel ``entry.is_file()`` ne va "
 "généralement pas faire d'appel système supplémentaire ::"
 
+#: whatsnew/3.5.rst:466
+msgid ""
+"for entry in os.scandir(path):\n"
+"    if not entry.name.startswith('.') and entry.is_file():\n"
+"        print(entry.name)"
+msgstr ""
+
 #: whatsnew/3.5.rst:472
 msgid ""
 ":pep:`471` -- os.scandir() function -- a better and faster directory iterator"
@@ -557,9 +709,23 @@ msgid ""
 "Compare::"
 msgstr ""
 
+#: whatsnew/3.5.rst:494
+msgid "print(\"Hello World\")"
+msgstr ""
+
 #: whatsnew/3.5.rst:496
 msgid "and::"
 msgstr "et ::"
+
+#: whatsnew/3.5.rst:498
+msgid ""
+"while True:\n"
+"    try:\n"
+"        print(\"Hello World\")\n"
+"        break\n"
+"    except InterruptedError:\n"
+"        continue"
+msgstr ""
 
 #: whatsnew/3.5.rst:505
 msgid ""
@@ -627,7 +793,7 @@ msgstr ""
 msgid ":func:`time.sleep`."
 msgstr ":func:`time.sleep`."
 
-#: whatsnew/3.5.rst:552
+#: whatsnew/3.5.rst:551
 msgid ":pep:`475` -- Retry system calls failing with EINTR"
 msgstr ""
 
@@ -667,6 +833,26 @@ msgid ""
 "term:`__future__` import is necessary::"
 msgstr ""
 
+#: whatsnew/3.5.rst:578
+msgid ""
+">>> from __future__ import generator_stop\n"
+"\n"
+">>> def gen():\n"
+"...     next(iter([]))\n"
+"...     yield\n"
+"...\n"
+">>> next(gen())\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 2, in gen\n"
+"StopIteration\n"
+"\n"
+"The above exception was the direct cause of the following exception:\n"
+"\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"RuntimeError: generator raised StopIteration"
+msgstr ""
+
 #: whatsnew/3.5.rst:595
 msgid ""
 "Without a ``__future__`` import, a :exc:`PendingDeprecationWarning` will be "
@@ -674,7 +860,7 @@ msgid ""
 "generator."
 msgstr ""
 
-#: whatsnew/3.5.rst:601
+#: whatsnew/3.5.rst:600
 msgid ":pep:`479` -- Change StopIteration handling inside generators"
 msgstr ""
 
@@ -698,13 +884,35 @@ msgid ""
 "the larger absolute value::"
 msgstr ""
 
+#: whatsnew/3.5.rst:617
+msgid ""
+">>> import math\n"
+">>> a = 5.0\n"
+">>> b = 4.99998\n"
+">>> math.isclose(a, b, rel_tol=1e-5)\n"
+"True\n"
+">>> math.isclose(a, b, rel_tol=1e-6)\n"
+"False"
+msgstr ""
+
 #: whatsnew/3.5.rst:625
 msgid ""
 "It is also possible to compare two values using absolute tolerance, which "
 "must be a non-negative value::"
 msgstr ""
 
-#: whatsnew/3.5.rst:639
+#: whatsnew/3.5.rst:628
+msgid ""
+">>> import math\n"
+">>> a = 5.0\n"
+">>> b = 4.99998\n"
+">>> math.isclose(a, b, abs_tol=0.00003)\n"
+"True\n"
+">>> math.isclose(a, b, abs_tol=0.00001)\n"
+"False"
+msgstr ""
+
+#: whatsnew/3.5.rst:638
 msgid ":pep:`485` -- A function for testing approximate equality"
 msgstr ":pep:`485` -- Une fonction pour tester des égalités approximées"
 
@@ -776,7 +984,7 @@ msgid ""
 "rather than being restricted to ASCII."
 msgstr ""
 
-#: whatsnew/3.5.rst:696
+#: whatsnew/3.5.rst:695
 msgid ":pep:`489` -- Multi-phase extension module initialization"
 msgstr ""
 
@@ -859,6 +1067,12 @@ msgid ""
 "With the new module, bundling your application is as simple as putting all "
 "the files, including a ``__main__.py`` file, into a directory ``myapp`` and "
 "running:"
+msgstr ""
+
+#: whatsnew/3.5.rst:747
+msgid ""
+"$ python -m zipapp myapp\n"
+"$ python myapp.pyz"
 msgstr ""
 
 #: whatsnew/3.5.rst:752
@@ -1114,6 +1328,14 @@ msgid ""
 "Docstrings produced by :func:`~collections.namedtuple` can now be updated::"
 msgstr ""
 
+#: whatsnew/3.5.rst:923
+msgid ""
+"Point = namedtuple('Point', ['x', 'y'])\n"
+"Point.__doc__ += ': Cartesian coordinate'\n"
+"Point.x.__doc__ = 'abscissa'\n"
+"Point.y.__doc__ = 'ordinate'"
+msgstr ""
+
 #: whatsnew/3.5.rst:928
 msgid "(Contributed by Berker Peksag in :issue:`24064`.)"
 msgstr ""
@@ -1156,7 +1378,7 @@ msgstr ""
 #: whatsnew/3.5.rst:953
 msgid ""
 "For earlier Python versions, a backport of the new ABCs is available in an "
-"external `PyPI package <https://pypi.org/project/backports_abc>`_."
+"external :pypi:`PyPI package <backports_abc>`."
 msgstr ""
 
 #: whatsnew/3.5.rst:958
@@ -1223,6 +1445,25 @@ msgstr ""
 msgid "Example::"
 msgstr "Exemple ::"
 
+#: whatsnew/3.5.rst:1000
+msgid ""
+">>> import configparser\n"
+">>> conv = {}\n"
+">>> conv['list'] = lambda v: [e.strip() for e in v.split() if e.strip()]\n"
+">>> cfg = configparser.ConfigParser(converters=conv)\n"
+">>> cfg.read_string(\"\"\"\n"
+"... [s]\n"
+"... list = a b c d e f g\n"
+"... \"\"\")\n"
+">>> cfg.get('s', 'list')\n"
+"'a b c d e f g'\n"
+">>> cfg.getlist('s', 'list')\n"
+"['a', 'b', 'c', 'd', 'e', 'f', 'g']\n"
+">>> section = cfg['s']\n"
+">>> section.getlist('list')\n"
+"['a', 'b', 'c', 'd', 'e', 'f', 'g']"
+msgstr ""
+
 #: whatsnew/3.5.rst:1016
 msgid "(Contributed by Łukasz Langa in :issue:`18159`.)"
 msgstr ""
@@ -1237,6 +1478,17 @@ msgid ""
 "to :func:`~contextlib.redirect_stdout`) makes it easier for utility scripts "
 "to handle inflexible APIs that write their output to :data:`sys.stderr` and "
 "don't provide any options to redirect it::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1027
+msgid ""
+">>> import contextlib, io, logging\n"
+">>> f = io.StringIO()\n"
+">>> with contextlib.redirect_stderr(f):\n"
+"...     logging.warning('warning')\n"
+"...\n"
+">>> f.getvalue()\n"
+"'WARNING:root:warning\\n'"
 msgstr ""
 
 #: whatsnew/3.5.rst:1035
@@ -1308,9 +1560,9 @@ msgstr ""
 
 #: whatsnew/3.5.rst:1082
 msgid ""
-"The :mod:`distutils` module now supports ``xz`` compression, and can be "
-"enabled by passing ``xztar`` as an argument to ``bdist --format``. "
-"(Contributed by Serhiy Storchaka in :issue:`16314`.)"
+"The ``distutils`` module now supports ``xz`` compression, and can be enabled "
+"by passing ``xztar`` as an argument to ``bdist --format``. (Contributed by "
+"Serhiy Storchaka in :issue:`16314`.)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1088
@@ -1370,6 +1622,15 @@ msgstr "enum"
 msgid ""
 "The :class:`~enum.Enum` callable has a new parameter *start* to specify the "
 "initial number of enum values if only *names* are provided::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1128
+msgid ""
+">>> Animal = enum.Enum('Animal', 'cat dog', start=10)\n"
+">>> Animal.cat\n"
+"<Animal.cat: 10>\n"
+">>> Animal.dog\n"
+"<Animal.dog: 11>"
 msgstr ""
 
 #: whatsnew/3.5.rst:1134
@@ -1433,6 +1694,17 @@ msgid ""
 "comparison::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1181
+msgid ""
+">>> import heapq\n"
+">>> a = ['9', '777', '55555']\n"
+">>> b = ['88', '6666']\n"
+">>> list(heapq.merge(a, b, key=len))\n"
+"['9', '88', '777', '6666', '55555']\n"
+">>> list(heapq.merge(reversed(a), reversed(b), key=len, reverse=True))\n"
+"['55555', '6666', '777', '88', '9']"
+msgstr ""
+
 #: whatsnew/3.5.rst:1189
 msgid "(Contributed by Raymond Hettinger in :issue:`13742`.)"
 msgstr ""
@@ -1460,6 +1732,18 @@ msgid ""
 "exc:`ConnectionError` (of which ``RemoteDisconnected`` is a subclass) is "
 "raised, the client socket is now closed automatically, and will reconnect on "
 "the next request::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1210
+msgid ""
+"import http.client\n"
+"conn = http.client.HTTPConnection('www.python.org')\n"
+"for retries in range(3):\n"
+"    try:\n"
+"        conn.request('GET', '/')\n"
+"        resp = conn.getresponse()\n"
+"    except http.client.RemoteDisconnected:\n"
+"        pass"
 msgstr ""
 
 #: whatsnew/3.5.rst:1219
@@ -1567,6 +1851,15 @@ msgid ""
 "arguments::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1293
+msgid ""
+">>> def foo(a, b='ham', *args): pass\n"
+">>> ba = inspect.signature(foo).bind('spam')\n"
+">>> ba.apply_defaults()\n"
+">>> ba.arguments\n"
+"OrderedDict([('a', 'spam'), ('b', 'ham'), ('args', ())])"
+msgstr ""
+
 #: whatsnew/3.5.rst:1299
 msgid "(Contributed by Yury Selivanov in :issue:`24190`.)"
 msgstr ""
@@ -1627,6 +1920,15 @@ msgid ""
 "construct network objects from existing addresses::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1342
+msgid ""
+">>> import ipaddress\n"
+">>> ipaddress.IPv4Network(('127.0.0.0', 8))\n"
+"IPv4Network('127.0.0.0/8')\n"
+">>> ipaddress.IPv4Network(('127.0.0.0', '255.0.0.0'))\n"
+"IPv4Network('127.0.0.0/8')"
+msgstr ""
+
 #: whatsnew/3.5.rst:1348
 msgid "(Contributed by Peter Moody and Antoine Pitrou in :issue:`16531`.)"
 msgstr ""
@@ -1636,6 +1938,17 @@ msgid ""
 "A new :attr:`~ipaddress.IPv4Network.reverse_pointer` attribute for the :"
 "class:`~ipaddress.IPv4Network` and :class:`~ipaddress.IPv6Network` classes "
 "returns the name of the reverse DNS PTR record::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1354
+msgid ""
+">>> import ipaddress\n"
+">>> addr = ipaddress.IPv4Address('127.0.0.1')\n"
+">>> addr.reverse_pointer\n"
+"'1.0.0.127.in-addr.arpa'\n"
+">>> addr6 = ipaddress.IPv6Address('::1')\n"
+">>> addr6.reverse_pointer\n"
+"'1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa'"
 msgstr ""
 
 #: whatsnew/3.5.rst:1362
@@ -1685,6 +1998,19 @@ msgid ""
 "account::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1394
+msgid ""
+">>> import locale\n"
+">>> locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')\n"
+"'de_DE.UTF-8'\n"
+">>> locale.delocalize('1.234,56')\n"
+"'1234.56'\n"
+">>> locale.setlocale(locale.LC_NUMERIC, 'en_US.UTF-8')\n"
+"'en_US.UTF-8'\n"
+">>> locale.delocalize('1,234.56')\n"
+"'1234.56'"
+msgstr ""
+
 #: whatsnew/3.5.rst:1404
 msgid "(Contributed by Cédric Krier in :issue:`13918`.)"
 msgstr ""
@@ -1699,6 +2025,16 @@ msgid ""
 "meth:`~logging.Logger.exception`, :meth:`~logging.Logger.critical`, :meth:"
 "`~logging.Logger.debug`, etc.), now accept exception instances as an "
 "*exc_info* argument, in addition to boolean values and exception tuples::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1416
+msgid ""
+">>> import logging\n"
+">>> try:\n"
+"...     1/0\n"
+"... except ZeroDivisionError as ex:\n"
+"...     logging.error('exception', exc_info=ex)\n"
+"ERROR:root:exception"
 msgstr ""
 
 #: whatsnew/3.5.rst:1423
@@ -1836,6 +2172,15 @@ msgid ""
 "commonprefix` function, it always returns a valid path::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1512
+msgid ""
+">>> os.path.commonprefix(['/usr/lib', '/usr/local/lib'])\n"
+"'/usr/l'\n"
+"\n"
+">>> os.path.commonpath(['/usr/lib', '/usr/local/lib'])\n"
+"'/usr'"
+msgstr ""
+
 #: whatsnew/3.5.rst:1518
 msgid "(Contributed by Rafik Draoui and Serhiy Storchaka in :issue:`10395`.)"
 msgstr ""
@@ -1849,6 +2194,15 @@ msgid ""
 "The new :meth:`Path.samefile() <pathlib.Path.samefile>` method can be used "
 "to check whether the path points to the same file as another path, which can "
 "be either another :class:`~pathlib.Path` object, or a string::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1528
+msgid ""
+">>> import pathlib\n"
+">>> p1 = pathlib.Path('/etc/hosts')\n"
+">>> p2 = pathlib.Path('/etc/../etc/hosts')\n"
+">>> p1.samefile(p2)\n"
+"True"
 msgstr ""
 
 #: whatsnew/3.5.rst:1534
@@ -1891,6 +2245,14 @@ msgid ""
 "spam42``::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1558
+msgid ""
+">>> import pathlib\n"
+">>> p = pathlib.Path('~/spam42')\n"
+">>> p.expanduser().write_text('ham')\n"
+"3"
+msgstr ""
+
 #: whatsnew/3.5.rst:1563
 msgid "(Contributed by Christopher Welborn in :issue:`20218`.)"
 msgstr ""
@@ -1928,6 +2290,16 @@ msgid ""
 "allowed in lookbehind assertions::"
 msgstr ""
 
+#: whatsnew/3.5.rst:1589
+msgid ""
+">>> import re\n"
+">>> pat = re.compile(r'(a|b).(?<=\\1)c')\n"
+">>> pat.match('aac')\n"
+"<_sre.SRE_Match object; span=(0, 3), match='aac'>\n"
+">>> pat.match('bbc')\n"
+"<_sre.SRE_Match object; span=(0, 3), match='bbc'>"
+msgstr ""
+
 #: whatsnew/3.5.rst:1596
 msgid "(Contributed by Serhiy Storchaka in :issue:`9179`.)"
 msgstr "(Contribution par Serhiy Storchaka; :issue:`9179`.)"
@@ -1951,6 +2323,17 @@ msgid ""
 "msg`, :attr:`~re.error.pattern`, :attr:`~re.error.pos`, :attr:`~re.error."
 "lineno`, and :attr:`~re.error.colno`, that provide better context "
 "information about the error::"
+msgstr ""
+
+#: whatsnew/3.5.rst:1611
+msgid ""
+">>> re.compile(\"\"\"\n"
+"...     (?x)\n"
+"...     .++\n"
+"... \"\"\")\n"
+"Traceback (most recent call last):\n"
+"   ...\n"
+"sre_constants.error: multiple repeat at position 16 (line 3, column 7)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1619
@@ -2020,43 +2403,40 @@ msgstr "smtpd"
 
 #: whatsnew/3.5.rst:1666
 msgid ""
-"Both the :class:`~smtpd.SMTPServer` and :class:`~smtpd.SMTPChannel` classes "
-"now accept a *decode_data* keyword argument to determine if the ``DATA`` "
-"portion of the SMTP transaction is decoded using the ``\"utf-8\"`` codec or "
-"is instead provided to the :meth:`SMTPServer.process_message() <smtpd."
-"SMTPServer.process_message>` method as a byte string.  The default is "
-"``True`` for backward compatibility reasons, but will change to ``False`` in "
-"Python 3.6.  If *decode_data* is set to ``False``, the ``process_message`` "
-"method must be prepared to accept keyword arguments. (Contributed by Maciej "
-"Szulik in :issue:`19662`.)"
+"Both the :class:`!SMTPServer` and :class:`!SMTPChannel` classes now accept a "
+"*decode_data* keyword argument to determine if the ``DATA`` portion of the "
+"SMTP transaction is decoded using the ``\"utf-8\"`` codec or is instead "
+"provided to the :meth:`!SMTPServer.process_message` method as a byte "
+"string.  The default is ``True`` for backward compatibility reasons, but "
+"will change to ``False`` in Python 3.6.  If *decode_data* is set to "
+"``False``, the ``process_message`` method must be prepared to accept keyword "
+"arguments. (Contributed by Maciej Szulik in :issue:`19662`.)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1677
 msgid ""
-"The :class:`~smtpd.SMTPServer` class now advertises the ``8BITMIME`` "
-"extension (:rfc:`6152`) if *decode_data* has been set ``True``.  If the "
-"client specifies ``BODY=8BITMIME`` on the ``MAIL`` command, it is passed to :"
-"meth:`SMTPServer.process_message() <smtpd.SMTPServer.process_message>` via "
-"the *mail_options* keyword. (Contributed by Milan Oberkirch and R.  David "
-"Murray in :issue:`21795`.)"
+"The :class:`!SMTPServer` class now advertises the ``8BITMIME`` extension (:"
+"rfc:`6152`) if *decode_data* has been set ``True``.  If the client specifies "
+"``BODY=8BITMIME`` on the ``MAIL`` command, it is passed to :meth:`!"
+"SMTPServer.process_message` via the *mail_options* keyword. (Contributed by "
+"Milan Oberkirch and R.  David Murray in :issue:`21795`.)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1684
 msgid ""
-"The :class:`~smtpd.SMTPServer` class now also supports the ``SMTPUTF8`` "
-"extension (:rfc:`6531`: Internationalized Email).  If the client specified "
-"``SMTPUTF8 BODY=8BITMIME`` on the ``MAIL`` command, they are passed to :meth:"
-"`SMTPServer.process_message() <smtpd.SMTPServer.process_message>` via the "
-"*mail_options* keyword.  It is the responsibility of the ``process_message`` "
-"method to correctly handle the ``SMTPUTF8`` data. (Contributed by Milan "
-"Oberkirch in :issue:`21725`.)"
+"The :class:`!SMTPServer` class now also supports the ``SMTPUTF8`` extension "
+"(:rfc:`6531`: Internationalized Email).  If the client specified ``SMTPUTF8 "
+"BODY=8BITMIME`` on the ``MAIL`` command, they are passed to :meth:`!"
+"SMTPServer.process_message` via the *mail_options* keyword.  It is the "
+"responsibility of the ``process_message`` method to correctly handle the "
+"``SMTPUTF8`` data. (Contributed by Milan Oberkirch in :issue:`21725`.)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1692
 msgid ""
 "It is now possible to provide, directly or via name resolution, IPv6 "
-"addresses in the :class:`~smtpd.SMTPServer` constructor, and have it "
-"successfully connect.  (Contributed by Milan Oberkirch in :issue:`14758`.)"
+"addresses in the :class:`!SMTPServer` constructor, and have it successfully "
+"connect.  (Contributed by Milan Oberkirch in :issue:`14758`.)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1698
@@ -2281,6 +2661,22 @@ msgid ""
 "(Contributed by Thomas Kluyver in :issue:`23342`.)"
 msgstr ""
 
+#: whatsnew/3.5.rst:1850
+msgid ""
+">>> subprocess.run([\"ls\", \"-l\"])  # doesn't capture output\n"
+"CompletedProcess(args=['ls', '-l'], returncode=0)\n"
+"\n"
+">>> subprocess.run(\"exit 1\", shell=True, check=True)\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"subprocess.CalledProcessError: Command 'exit 1' returned non-zero exit "
+"status 1\n"
+"\n"
+">>> subprocess.run([\"ls\", \"-l\", \"/dev/null\"], stdout=subprocess.PIPE)\n"
+"CompletedProcess(args=['ls', '-l', '/dev/null'], returncode=0,\n"
+"stdout=b'crw-rw-rw- 1 root root 1, 3 Jan 23 16:23 /dev/null\\n')"
+msgstr ""
+
 #: whatsnew/3.5.rst:1864
 msgid "sys"
 msgstr "sys"
@@ -2388,8 +2784,8 @@ msgstr "tkinter"
 
 #: whatsnew/3.5.rst:1938
 msgid ""
-"The :mod:`tkinter._fix` module used for setting up the Tcl/Tk environment on "
-"Windows has been replaced by a private function in the :mod:`_tkinter` "
+"The :mod:`!tkinter._fix` module used for setting up the Tcl/Tk environment "
+"on Windows has been replaced by a private function in the :mod:`!_tkinter` "
 "module which makes no permanent changes to environment variables. "
 "(Contributed by Zachary Ware in :issue:`20035`.)"
 msgstr ""
@@ -2401,29 +2797,29 @@ msgstr "traceback"
 #: whatsnew/3.5.rst:1949
 msgid ""
 "New :func:`~traceback.walk_stack` and :func:`~traceback.walk_tb` functions "
-"to conveniently traverse frame and traceback objects. (Contributed by Robert "
-"Collins in :issue:`17911`.)"
+"to conveniently traverse frame and :ref:`traceback objects <traceback-"
+"objects>`. (Contributed by Robert Collins in :issue:`17911`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1953
+#: whatsnew/3.5.rst:1954
 msgid ""
 "New lightweight classes: :class:`~traceback.TracebackException`, :class:"
 "`~traceback.StackSummary`, and :class:`~traceback.FrameSummary`. "
 "(Contributed by Robert Collins in :issue:`17911`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1957
+#: whatsnew/3.5.rst:1958
 msgid ""
 "Both the :func:`~traceback.print_tb` and :func:`~traceback.print_stack` "
 "functions now support negative values for the *limit* argument. (Contributed "
 "by Dmitry Kazakov in :issue:`22619`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1963
+#: whatsnew/3.5.rst:1964
 msgid "types"
 msgstr ""
 
-#: whatsnew/3.5.rst:1965
+#: whatsnew/3.5.rst:1966
 msgid ""
 "A new :func:`~types.coroutine` function to transform :term:`generator "
 "<generator iterator>` and :class:`generator-like <collections.abc."
@@ -2431,28 +2827,28 @@ msgid ""
 "Yury Selivanov in :issue:`24017`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1971
+#: whatsnew/3.5.rst:1972
 msgid ""
 "A new type called :class:`~types.CoroutineType`, which is used for :term:"
 "`coroutine` objects created by :keyword:`async def` functions. (Contributed "
 "by Yury Selivanov in :issue:`24400`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1977
+#: whatsnew/3.5.rst:1978
 msgid "unicodedata"
 msgstr "unicodedata"
 
-#: whatsnew/3.5.rst:1979
+#: whatsnew/3.5.rst:1980
 msgid ""
 "The :mod:`unicodedata` module now uses data from `Unicode 8.0.0 <https://"
 "unicode.org/versions/Unicode8.0.0/>`_."
 msgstr ""
 
-#: whatsnew/3.5.rst:1984
+#: whatsnew/3.5.rst:1985
 msgid "unittest"
 msgstr "unittest"
 
-#: whatsnew/3.5.rst:1986
+#: whatsnew/3.5.rst:1987
 msgid ""
 "The :meth:`TestLoader.loadTestsFromModule() <unittest.TestLoader."
 "loadTestsFromModule>` method now accepts a keyword-only argument *pattern* "
@@ -2463,42 +2859,42 @@ msgid ""
 "`16662`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1993
+#: whatsnew/3.5.rst:1994
 msgid ""
 "Unittest discovery errors now are exposed in the :data:`TestLoader.errors "
 "<unittest.TestLoader.errors>` attribute of the :class:`~unittest.TestLoader` "
 "instance. (Contributed by Robert Collins in :issue:`19746`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:1998
+#: whatsnew/3.5.rst:1999
 msgid ""
 "A new command line option ``--locals`` to show local variables in "
 "tracebacks.  (Contributed by Robert Collins in :issue:`22936`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2003
+#: whatsnew/3.5.rst:2004
 msgid "unittest.mock"
 msgstr "unittest.mock"
 
-#: whatsnew/3.5.rst:2005
+#: whatsnew/3.5.rst:2006
 msgid "The :class:`~unittest.mock.Mock` class has the following improvements:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2007
+#: whatsnew/3.5.rst:2008
 msgid ""
 "The class constructor has a new *unsafe* parameter, which causes mock "
 "objects to raise :exc:`AttributeError` on attribute names starting with "
 "``\"assert\"``. (Contributed by Kushal Das in :issue:`21238`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2012
+#: whatsnew/3.5.rst:2013
 msgid ""
 "A new :meth:`Mock.assert_not_called() <unittest.mock.Mock."
 "assert_not_called>` method to check if the mock object was called. "
 "(Contributed by Kushal Das in :issue:`21262`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2016
+#: whatsnew/3.5.rst:2017
 msgid ""
 "The :class:`~unittest.mock.MagicMock` class now supports :meth:"
 "`__truediv__`, :meth:`__divmod__` and :meth:`__matmul__` operators. "
@@ -2506,18 +2902,18 @@ msgid ""
 "issue:`23581` and :issue:`23568`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2021
+#: whatsnew/3.5.rst:2022
 msgid ""
 "It is no longer necessary to explicitly pass ``create=True`` to the :func:"
 "`~unittest.mock.patch` function when patching builtin names. (Contributed by "
 "Kushal Das in :issue:`17660`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2027
+#: whatsnew/3.5.rst:2028
 msgid "urllib"
 msgstr "urllib"
 
-#: whatsnew/3.5.rst:2029
+#: whatsnew/3.5.rst:2030
 msgid ""
 "A new :class:`request.HTTPPasswordMgrWithPriorAuth <urllib.request."
 "HTTPPasswordMgrWithPriorAuth>` class allows HTTP Basic Authentication "
@@ -2528,21 +2924,21 @@ msgid ""
 "Cepl in :issue:`19494` and Akshit Khurana in :issue:`7159`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2038
+#: whatsnew/3.5.rst:2039
 msgid ""
 "A new *quote_via* argument for the :func:`parse.urlencode() <urllib.parse."
 "urlencode>` function provides a way to control the encoding of query parts "
 "if needed. (Contributed by Samwyse and Arnon Yaari in :issue:`13866`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2043
+#: whatsnew/3.5.rst:2044
 msgid ""
 "The :func:`request.urlopen() <urllib.request.urlopen>` function accepts an :"
 "class:`ssl.SSLContext` object as a *context* argument, which will be used "
 "for the HTTPS connection.  (Contributed by Alex Gaynor in :issue:`22366`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2047
+#: whatsnew/3.5.rst:2048
 msgid ""
 "The :func:`parse.urljoin() <urllib.parse.urljoin>` was updated to use the :"
 "rfc:`3986` semantics for the resolution of relative URLs, rather than :rfc:"
@@ -2550,74 +2946,74 @@ msgid ""
 "in :issue:`22118`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2054
+#: whatsnew/3.5.rst:2055
 msgid "wsgiref"
 msgstr "wsgiref"
 
-#: whatsnew/3.5.rst:2056
+#: whatsnew/3.5.rst:2057
 msgid ""
 "The *headers* argument of the :class:`headers.Headers <wsgiref.headers."
 "Headers>` class constructor is now optional. (Contributed by Pablo Torres "
 "Navarrete and SilentGhost in :issue:`5800`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2062
+#: whatsnew/3.5.rst:2063
 msgid "xmlrpc"
 msgstr "xmlrpc"
 
-#: whatsnew/3.5.rst:2064
+#: whatsnew/3.5.rst:2065
 msgid ""
 "The :class:`client.ServerProxy <xmlrpc.client.ServerProxy>` class now "
 "supports the :term:`context manager` protocol. (Contributed by Claudiu Popa "
 "in :issue:`20627`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2068
+#: whatsnew/3.5.rst:2069
 msgid ""
 "The :class:`client.ServerProxy <xmlrpc.client.ServerProxy>` constructor now "
 "accepts an optional :class:`ssl.SSLContext` instance. (Contributed by Alex "
 "Gaynor in :issue:`22960`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2074
+#: whatsnew/3.5.rst:2075
 msgid "xml.sax"
 msgstr "xml.sax"
 
-#: whatsnew/3.5.rst:2076
+#: whatsnew/3.5.rst:2077
 msgid ""
 "SAX parsers now support a character stream of the :class:`xmlreader."
 "InputSource <xml.sax.xmlreader.InputSource>` object. (Contributed by Serhiy "
 "Storchaka in :issue:`2175`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2080
+#: whatsnew/3.5.rst:2081
 msgid ""
 ":func:`~xml.sax.parseString` now accepts a :class:`str` instance. "
 "(Contributed by Serhiy Storchaka in :issue:`10590`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2085
+#: whatsnew/3.5.rst:2086
 msgid "zipfile"
 msgstr "zipfile"
 
-#: whatsnew/3.5.rst:2087
+#: whatsnew/3.5.rst:2088
 msgid ""
 "ZIP output can now be written to unseekable streams. (Contributed by Serhiy "
 "Storchaka in :issue:`23252`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2090
+#: whatsnew/3.5.rst:2091
 msgid ""
 "The *mode* argument of :meth:`ZipFile.open() <zipfile.ZipFile.open>` method "
 "now accepts ``\"x\"`` to request exclusive creation. (Contributed by Serhiy "
 "Storchaka in :issue:`21717`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2096
+#: whatsnew/3.5.rst:2097
 msgid "Other module-level changes"
 msgstr ""
 
-#: whatsnew/3.5.rst:2098
+#: whatsnew/3.5.rst:2099
 msgid ""
 "Many functions in the :mod:`mmap`, :mod:`ossaudiodev`, :mod:`socket`, :mod:"
 "`ssl`, and :mod:`codecs` modules now accept writable :term:`bytes-like "
@@ -2625,12 +3021,12 @@ msgid ""
 "`23001`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2105
+#: whatsnew/3.5.rst:2106
 #, fuzzy
 msgid "Optimizations"
 msgstr "Optimisation"
 
-#: whatsnew/3.5.rst:2107
+#: whatsnew/3.5.rst:2108
 msgid ""
 "The :func:`os.walk` function has been sped up by 3 to 5 times on POSIX "
 "systems, and by 7 to 20 times on Windows.  This was done using the new :func:"
@@ -2639,7 +3035,7 @@ msgid ""
 "(Contributed by Ben Hoyt with help from Victor Stinner in :issue:`23605`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2113
+#: whatsnew/3.5.rst:2114
 msgid ""
 "Construction of ``bytes(int)`` (filled by zero bytes) is faster and uses "
 "less memory for large objects. ``calloc()`` is used instead of ``malloc()`` "
@@ -2647,7 +3043,7 @@ msgid ""
 "issue:`21233`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2118
+#: whatsnew/3.5.rst:2119
 msgid ""
 "Some operations on :mod:`ipaddress` :class:`~ipaddress.IPv4Network` and :"
 "class:`~ipaddress.IPv6Network` have been massively sped up, such as :meth:"
@@ -2658,20 +3054,20 @@ msgid ""
 "`21487`, :issue:`20826`, :issue:`23266`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2126
+#: whatsnew/3.5.rst:2127
 msgid ""
 "Pickling of :mod:`ipaddress` objects was optimized to produce significantly "
 "smaller output.  (Contributed by Serhiy Storchaka in :issue:`23133`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2129
+#: whatsnew/3.5.rst:2130
 msgid ""
 "Many operations on :class:`io.BytesIO` are now 50% to 100% faster. "
 "(Contributed by Serhiy Storchaka in :issue:`15381` and David Wilson in :"
 "issue:`22003`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2133
+#: whatsnew/3.5.rst:2134
 msgid ""
 "The :func:`marshal.dumps` function is now faster: 65--85% with versions 3 "
 "and 4, 20--25% with versions 0 to 2 on typical data, and up to 5 times in "
@@ -2679,26 +3075,26 @@ msgid ""
 "`23344`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2138
+#: whatsnew/3.5.rst:2139
 msgid ""
 "The UTF-32 encoder is now 3 to 7 times faster. (Contributed by Serhiy "
 "Storchaka in :issue:`15027`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2141
+#: whatsnew/3.5.rst:2142
 msgid ""
 "Regular expressions are now parsed up to 10% faster. (Contributed by Serhiy "
 "Storchaka in :issue:`19380`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2144
+#: whatsnew/3.5.rst:2145
 msgid ""
 "The :func:`json.dumps` function was optimized to run with "
 "``ensure_ascii=False`` as fast as with ``ensure_ascii=True``. (Contributed "
 "by Naoki Inada in :issue:`23206`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2148
+#: whatsnew/3.5.rst:2149
 msgid ""
 "The :c:func:`PyObject_IsInstance` and :c:func:`PyObject_IsSubclass` "
 "functions have been sped up in the common case that the second argument has :"
@@ -2706,32 +3102,32 @@ msgid ""
 "`22540`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2153
+#: whatsnew/3.5.rst:2154
 msgid ""
 "Method caching was slightly improved, yielding up to 5% performance "
 "improvement in some benchmarks. (Contributed by Antoine Pitrou in :issue:"
 "`22847`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2157
+#: whatsnew/3.5.rst:2158
 msgid ""
 "Objects from the :mod:`random` module now use 50% less memory on 64-bit "
 "builds.  (Contributed by Serhiy Storchaka in :issue:`23488`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2160
+#: whatsnew/3.5.rst:2161
 msgid ""
 "The :func:`property` getter calls are up to 25% faster. (Contributed by Joe "
 "Jevnik in :issue:`23910`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2163
+#: whatsnew/3.5.rst:2164
 msgid ""
 "Instantiation of :class:`fractions.Fraction` is now up to 30% faster. "
 "(Contributed by Stefan Behnel in :issue:`22464`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2166
+#: whatsnew/3.5.rst:2167
 msgid ""
 "String methods :meth:`~str.find`, :meth:`~str.rfind`, :meth:`~str.split`, :"
 "meth:`~str.partition` and the :keyword:`in` string operator are now "
@@ -2739,67 +3135,67 @@ msgid ""
 "Serhiy Storchaka in :issue:`23573`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2173
+#: whatsnew/3.5.rst:2174
 msgid "Build and C API Changes"
 msgstr ""
 
-#: whatsnew/3.5.rst:2175
+#: whatsnew/3.5.rst:2176
 msgid "New ``calloc`` functions were added:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2177
+#: whatsnew/3.5.rst:2178
 msgid ":c:func:`PyMem_RawCalloc`,"
 msgstr ":c:func:`PyMem_RawCalloc`,"
 
-#: whatsnew/3.5.rst:2178
+#: whatsnew/3.5.rst:2179
 msgid ":c:func:`PyMem_Calloc`,"
 msgstr ":c:func:`PyMem_Calloc`,"
 
-#: whatsnew/3.5.rst:2179
+#: whatsnew/3.5.rst:2180
 msgid ":c:func:`PyObject_Calloc`."
 msgstr ""
 
-#: whatsnew/3.5.rst:2181
+#: whatsnew/3.5.rst:2182
 msgid "(Contributed by Victor Stinner in :issue:`21233`.)"
 msgstr "(Contribution par Victor Stinner; :issue:`21233`.)"
 
-#: whatsnew/3.5.rst:2183
+#: whatsnew/3.5.rst:2184
 msgid "New encoding/decoding helper functions:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2185
+#: whatsnew/3.5.rst:2186
 msgid ":c:func:`Py_DecodeLocale` (replaced ``_Py_char2wchar()``),"
 msgstr ""
 
-#: whatsnew/3.5.rst:2186
+#: whatsnew/3.5.rst:2187
 msgid ":c:func:`Py_EncodeLocale` (replaced ``_Py_wchar2char()``)."
 msgstr ""
 
-#: whatsnew/3.5.rst:2188
+#: whatsnew/3.5.rst:2189
 msgid "(Contributed by Victor Stinner in :issue:`18395`.)"
 msgstr "(Contribution par Victor Stinner; :issue:`18395`.)"
 
-#: whatsnew/3.5.rst:2190
+#: whatsnew/3.5.rst:2191
 msgid ""
 "A new :c:func:`PyCodec_NameReplaceErrors` function to replace the unicode "
 "encode error with ``\\N{...}`` escapes. (Contributed by Serhiy Storchaka in :"
 "issue:`19676`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2194
+#: whatsnew/3.5.rst:2195
 msgid ""
 "A new :c:func:`PyErr_FormatV` function similar to :c:func:`PyErr_Format`, "
 "but accepts a :c:type:`va_list` argument. (Contributed by Antoine Pitrou in :"
 "issue:`18711`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2198
+#: whatsnew/3.5.rst:2199
 msgid ""
 "A new :c:data:`PyExc_RecursionError` exception. (Contributed by Georg Brandl "
 "in :issue:`19235`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2201
+#: whatsnew/3.5.rst:2202
 msgid ""
 "New :c:func:`PyModule_FromDefAndSpec`, :c:func:`PyModule_FromDefAndSpec2`, "
 "and :c:func:`PyModule_ExecDef` functions introduced by :pep:`489` -- multi-"
@@ -2807,7 +3203,7 @@ msgid ""
 "issue:`24268`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2206
+#: whatsnew/3.5.rst:2207
 msgid ""
 "New :c:func:`PyNumber_MatrixMultiply` and :c:func:"
 "`PyNumber_InPlaceMatrixMultiply` functions to perform matrix multiplication. "
@@ -2815,19 +3211,19 @@ msgid ""
 "for details.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2212
+#: whatsnew/3.5.rst:2213
 msgid ""
 "The :c:member:`PyTypeObject.tp_finalize` slot is now part of the stable ABI."
 msgstr ""
 
-#: whatsnew/3.5.rst:2214
+#: whatsnew/3.5.rst:2215
 msgid ""
 "Windows builds now require Microsoft Visual C++ 14.0, which is available as "
 "part of `Visual Studio 2015 <https://visualstudio.microsoft.com/en/vs/older-"
 "downloads/#visual-studio-2015-and-other-products>`_."
 msgstr ""
 
-#: whatsnew/3.5.rst:2217
+#: whatsnew/3.5.rst:2218
 msgid ""
 "Extension modules now include a platform information tag in their filename "
 "on some platforms (the tag is optional, and CPython will import extensions "
@@ -2835,88 +3231,88 @@ msgid ""
 "won't be loaded):"
 msgstr ""
 
-#: whatsnew/3.5.rst:2222
+#: whatsnew/3.5.rst:2223
 msgid ""
 "On Linux, extension module filenames end with ``.cpython-<major><minor>m-"
 "<architecture>-<os>.pyd``:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2242
+#: whatsnew/3.5.rst:2243
 msgid ""
 "``<major>`` is the major number of the Python version; for Python 3.5 this "
 "is ``3``."
 msgstr ""
 
-#: whatsnew/3.5.rst:2245
+#: whatsnew/3.5.rst:2246
 msgid ""
 "``<minor>`` is the minor number of the Python version; for Python 3.5 this "
 "is ``5``."
 msgstr ""
 
-#: whatsnew/3.5.rst:2231
+#: whatsnew/3.5.rst:2232
 msgid ""
 "``<architecture>`` is the hardware architecture the extension module was "
 "built to run on. It's most commonly either ``i386`` for 32-bit Intel "
 "platforms or ``x86_64`` for 64-bit Intel (and AMD) platforms."
 msgstr ""
 
-#: whatsnew/3.5.rst:2235
+#: whatsnew/3.5.rst:2236
 msgid ""
 "``<os>`` is always ``linux-gnu``, except for extensions built to talk to the "
 "32-bit ABI on 64-bit platforms, in which case it is ``linux-gnu32`` (and "
 "``<architecture>`` will be ``x86_64``)."
 msgstr ""
 
-#: whatsnew/3.5.rst:2239
+#: whatsnew/3.5.rst:2240
 msgid ""
 "On Windows, extension module filenames end with ``<debug>.cp<major><minor>-"
 "<platform>.pyd``:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2248
+#: whatsnew/3.5.rst:2249
 msgid ""
 "``<platform>`` is the platform the extension module was built for, either "
 "``win32`` for Win32, ``win_amd64`` for Win64, ``win_ia64`` for Windows "
 "Itanium 64, and ``win_arm`` for Windows on ARM."
 msgstr ""
 
-#: whatsnew/3.5.rst:2252
+#: whatsnew/3.5.rst:2253
 msgid ""
 "If built in debug mode, ``<debug>`` will be ``_d``, otherwise it will be "
 "blank."
 msgstr ""
 
-#: whatsnew/3.5.rst:2255
+#: whatsnew/3.5.rst:2256
 msgid ""
 "On OS X platforms, extension module filenames now end with ``-darwin.so``."
 msgstr ""
 
-#: whatsnew/3.5.rst:2257
+#: whatsnew/3.5.rst:2258
 msgid ""
 "On all other platforms, extension module filenames are the same as they were "
 "with Python 3.4."
 msgstr ""
 
-#: whatsnew/3.5.rst:2262
+#: whatsnew/3.5.rst:2263
 msgid "Deprecated"
 msgstr ""
 
-#: whatsnew/3.5.rst:2265
+#: whatsnew/3.5.rst:2266
 msgid "New Keywords"
 msgstr "Nouveaux mot-clefs"
 
-#: whatsnew/3.5.rst:2267
+#: whatsnew/3.5.rst:2268
 msgid ""
 "``async`` and ``await`` are not recommended to be used as variable, class, "
 "function or module names.  Introduced by :pep:`492` in Python 3.5, they will "
 "become proper keywords in Python 3.7."
 msgstr ""
 
-#: whatsnew/3.5.rst:2273
+#: whatsnew/3.5.rst:2274
 msgid "Deprecated Python Behavior"
 msgstr ""
 
-#: whatsnew/3.5.rst:2275
+#: whatsnew/3.5.rst:2276
 msgid ""
 "Raising the :exc:`StopIteration` exception inside a generator will now "
 "generate a silent :exc:`PendingDeprecationWarning`, which will become a non-"
@@ -2925,42 +3321,42 @@ msgid ""
 "handling inside generators <whatsnew-pep-479>` for details."
 msgstr ""
 
-#: whatsnew/3.5.rst:2283
+#: whatsnew/3.5.rst:2284
 msgid "Unsupported Operating Systems"
 msgstr ""
 
-#: whatsnew/3.5.rst:2285
+#: whatsnew/3.5.rst:2286
 msgid ""
 "Windows XP is no longer supported by Microsoft, thus, per :PEP:`11`, CPython "
 "3.5 is no longer officially supported on this OS."
 msgstr ""
 
-#: whatsnew/3.5.rst:2290
+#: whatsnew/3.5.rst:2291
 msgid "Deprecated Python modules, functions and methods"
 msgstr ""
 
-#: whatsnew/3.5.rst:2292
+#: whatsnew/3.5.rst:2293
 msgid ""
 "The :mod:`formatter` module has now graduated to full deprecation and is "
 "still slated for removal in Python 3.6."
 msgstr ""
 
-#: whatsnew/3.5.rst:2295
+#: whatsnew/3.5.rst:2296
 msgid ""
 "The :func:`asyncio.async` function is deprecated in favor of :func:`~asyncio."
 "ensure_future`."
 msgstr ""
 
-#: whatsnew/3.5.rst:2298
+#: whatsnew/3.5.rst:2299
 msgid ""
-"The :mod:`smtpd` module has in the past always decoded the DATA portion of "
+"The :mod:`!smtpd` module has in the past always decoded the DATA portion of "
 "email messages using the ``utf-8`` codec.  This can now be controlled by the "
-"new *decode_data* keyword to :class:`~smtpd.SMTPServer`.  The default value "
-"is ``True``, but this default is deprecated.  Specify the *decode_data* "
-"keyword with an appropriate value to avoid the deprecation warning."
+"new *decode_data* keyword to :class:`!SMTPServer`.  The default value is "
+"``True``, but this default is deprecated.  Specify the *decode_data* keyword "
+"with an appropriate value to avoid the deprecation warning."
 msgstr ""
 
-#: whatsnew/3.5.rst:2304
+#: whatsnew/3.5.rst:2305
 msgid ""
 "Directly assigning values to the :attr:`~http.cookies.Morsel.key`, :attr:"
 "`~http.cookies.Morsel.value` and :attr:`~http.cookies.Morsel.coded_value` "
@@ -2970,14 +3366,14 @@ msgid ""
 "and is now ignored."
 msgstr ""
 
-#: whatsnew/3.5.rst:2311
+#: whatsnew/3.5.rst:2312
 msgid ""
 "Passing a format string as keyword argument *format_string* to the :meth:"
 "`~string.Formatter.format` method of the :class:`string.Formatter` class has "
 "been deprecated. (Contributed by Serhiy Storchaka in :issue:`23671`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2316
+#: whatsnew/3.5.rst:2317
 msgid ""
 "The :func:`platform.dist` and :func:`platform.linux_distribution` functions "
 "are now deprecated.  Linux distributions use too many different ways of "
@@ -2985,7 +3381,7 @@ msgid ""
 "(Contributed by Vajrasky Kok and Berker Peksag in :issue:`1322`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2321
+#: whatsnew/3.5.rst:2322
 msgid ""
 "The previously undocumented ``from_function`` and ``from_builtin`` methods "
 "of :class:`inspect.Signature` are deprecated.  Use the new :meth:`Signature."
@@ -2993,13 +3389,13 @@ msgid ""
 "(Contributed by Yury Selivanov in :issue:`24248`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2326
+#: whatsnew/3.5.rst:2327
 msgid ""
 "The :func:`inspect.getargspec` function is deprecated and scheduled to be "
 "removed in Python 3.6.  (See :issue:`20438` for details.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2329
+#: whatsnew/3.5.rst:2330
 msgid ""
 "The :mod:`inspect` :func:`~inspect.getfullargspec`, :func:`~inspect."
 "getcallargs`, and :func:`~inspect.formatargspec` functions are deprecated in "
@@ -3007,19 +3403,19 @@ msgid ""
 "in :issue:`20438`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2334
+#: whatsnew/3.5.rst:2335
 msgid ""
 ":func:`~inspect.getargvalues` and :func:`~inspect.formatargvalues` functions "
 "were inadvertently marked as deprecated with the release of Python 3.5.0."
 msgstr ""
 
-#: whatsnew/3.5.rst:2337
+#: whatsnew/3.5.rst:2338
 msgid ""
 "Use of :const:`re.LOCALE` flag with str patterns or :const:`re.ASCII` is now "
 "deprecated.  (Contributed by Serhiy Storchaka in :issue:`22407`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2340
+#: whatsnew/3.5.rst:2341
 msgid ""
 "Use of unrecognized special sequences consisting of ``'\\'`` and an ASCII "
 "letter in regular expression patterns and replacement patterns now raises a "
@@ -3027,7 +3423,7 @@ msgid ""
 "Serhiy Storchaka in :issue:`23622`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2345
+#: whatsnew/3.5.rst:2346
 msgid ""
 "The undocumented and unofficial *use_load_tests* default argument of the :"
 "meth:`unittest.TestLoader.loadTestsFromModule` method now is deprecated and "
@@ -3035,82 +3431,88 @@ msgid ""
 "`16662`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2352
+#: whatsnew/3.5.rst:2353
 msgid "Removed"
 msgstr ""
 
-#: whatsnew/3.5.rst:2355
+#: whatsnew/3.5.rst:2356
 msgid "API and Feature Removals"
 msgstr ""
 
-#: whatsnew/3.5.rst:2357
+#: whatsnew/3.5.rst:2358
 msgid ""
 "The following obsolete and previously deprecated APIs and features have been "
 "removed:"
 msgstr ""
 
-#: whatsnew/3.5.rst:2360
+#: whatsnew/3.5.rst:2361
 msgid ""
 "The ``__version__`` attribute has been dropped from the email package.  The "
 "email code hasn't been shipped separately from the stdlib for a long time, "
 "and the ``__version__`` string was not updated in the last few releases."
 msgstr ""
 
-#: whatsnew/3.5.rst:2364
+#: whatsnew/3.5.rst:2365
 msgid ""
 "The internal ``Netrc`` class in the :mod:`ftplib` module was deprecated in "
 "3.4, and has now been removed. (Contributed by Matt Chaput in :issue:`6623`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2368
+#: whatsnew/3.5.rst:2369
 msgid "The concept of ``.pyo`` files has been removed."
 msgstr ""
 
-#: whatsnew/3.5.rst:2370
+#: whatsnew/3.5.rst:2371
 msgid ""
 "The JoinableQueue class in the provisional :mod:`asyncio` module was "
 "deprecated in 3.4.4 and is now removed. (Contributed by A. Jesse Jiryu Davis "
 "in :issue:`23464`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2376
+#: whatsnew/3.5.rst:2377
 msgid "Porting to Python 3.5"
 msgstr "Portage vers Python 3.5"
 
-#: whatsnew/3.5.rst:2378
+#: whatsnew/3.5.rst:2379
 msgid ""
 "This section lists previously described changes and other bugfixes that may "
 "require changes to your code."
 msgstr ""
 
-#: whatsnew/3.5.rst:2383
+#: whatsnew/3.5.rst:2384
 msgid "Changes in Python behavior"
 msgstr ""
 
-#: whatsnew/3.5.rst:2385
+#: whatsnew/3.5.rst:2386
 msgid ""
 "Due to an oversight, earlier Python versions erroneously accepted the "
 "following syntax::"
 msgstr ""
 
-#: whatsnew/3.5.rst:2391
+#: whatsnew/3.5.rst:2389
+msgid ""
+"f(1 for x in [1], *args)\n"
+"f(1 for x in [1], **kwargs)"
+msgstr ""
+
+#: whatsnew/3.5.rst:2392
 msgid ""
 "Python 3.5 now correctly raises a :exc:`SyntaxError`, as generator "
 "expressions must be put in parentheses if not a sole argument to a function."
 msgstr ""
 
-#: whatsnew/3.5.rst:2396
+#: whatsnew/3.5.rst:2397
 msgid "Changes in the Python API"
 msgstr ""
 
-#: whatsnew/3.5.rst:2398
+#: whatsnew/3.5.rst:2399
 msgid ""
 ":pep:`475`: System calls are now retried when interrupted by a signal "
 "instead of raising :exc:`InterruptedError` if the Python signal handler does "
 "not raise an exception."
 msgstr ""
 
-#: whatsnew/3.5.rst:2402
+#: whatsnew/3.5.rst:2403
 msgid ""
 "Before Python 3.5, a :class:`datetime.time` object was considered to be "
 "false if it represented midnight in UTC.  This behavior was considered "
@@ -3118,15 +3520,15 @@ msgid ""
 "`13936` for full details."
 msgstr ""
 
-#: whatsnew/3.5.rst:2407
+#: whatsnew/3.5.rst:2408
 msgid ""
-"The :meth:`ssl.SSLSocket.send()` method now raises either :exc:`ssl."
+"The :meth:`ssl.SSLSocket.send` method now raises either :exc:`ssl."
 "SSLWantReadError` or :exc:`ssl.SSLWantWriteError` on a non-blocking socket "
 "if the operation would block.  Previously, it would return ``0``.  "
 "(Contributed by Nikolaus Rath in :issue:`20951`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2412
+#: whatsnew/3.5.rst:2413
 msgid ""
 "The ``__name__`` attribute of generators is now set from the function name, "
 "instead of being set from the code name. Use ``gen.gi_code.co_name`` to "
@@ -3135,17 +3537,17 @@ msgid ""
 "generator (``repr(gen)``). (Contributed by Victor Stinner in :issue:`21205`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2419
+#: whatsnew/3.5.rst:2420
 msgid ""
 "The deprecated \"strict\" mode and argument of :class:`~html.parser."
-"HTMLParser`, :meth:`HTMLParser.error`, and the :exc:`HTMLParserError` "
+"HTMLParser`, :meth:`!HTMLParser.error`, and the :exc:`!HTMLParserError` "
 "exception have been removed.  (Contributed by Ezio Melotti in :issue:"
 "`15114`.) The *convert_charrefs* argument of :class:`~html.parser."
 "HTMLParser` is now ``True`` by default.  (Contributed by Berker Peksag in :"
 "issue:`21047`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2425
+#: whatsnew/3.5.rst:2426
 msgid ""
 "Although it is not formally part of the API, it is worth noting for porting "
 "purposes (ie: fixing tests) that error messages that were previously of the "
@@ -3154,7 +3556,7 @@ msgid ""
 "Ezio Melotti in :issue:`16518`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2431
+#: whatsnew/3.5.rst:2432
 msgid ""
 "If the current directory is set to a directory that no longer exists then :"
 "exc:`FileNotFoundError` will no longer be raised and instead :meth:"
@@ -3163,7 +3565,7 @@ msgid ""
 "the typical case (:issue:`22834`)."
 msgstr ""
 
-#: whatsnew/3.5.rst:2437
+#: whatsnew/3.5.rst:2438
 msgid ""
 "HTTP status code and messages from :mod:`http.client` and :mod:`http.server` "
 "were refactored into a common :class:`~http.HTTPStatus` enum.  The values "
@@ -3171,7 +3573,7 @@ msgid ""
 "compatibility.  (Contributed by Demian Brecht in :issue:`21793`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2442
+#: whatsnew/3.5.rst:2443
 msgid ""
 "When an import loader defines :meth:`importlib.machinery.Loader.exec_module` "
 "it is now expected to also define :meth:`~importlib.machinery.Loader."
@@ -3182,7 +3584,7 @@ msgid ""
 "issue:`23014`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2450
+#: whatsnew/3.5.rst:2451
 msgid ""
 "The :func:`re.split` function always ignored empty pattern matches, so the "
 "``\"x*\"`` pattern worked the same as ``\"x+\"``, and the ``\"\\b\"`` "
@@ -3193,7 +3595,7 @@ msgid ""
 "error. (Contributed by Serhiy Storchaka in :issue:`22818`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2458
+#: whatsnew/3.5.rst:2459
 msgid ""
 "The :class:`http.cookies.Morsel` dict-like interface has been made self "
 "consistent:  morsel comparison now takes the :attr:`~http.cookies.Morsel."
@@ -3206,7 +3608,7 @@ msgid ""
 "by Demian Brecht in :issue:`2211`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2468
+#: whatsnew/3.5.rst:2469
 msgid ""
 ":pep:`488` has removed ``.pyo`` files from Python and introduced the "
 "optional ``opt-`` tag in ``.pyc`` file names. The :func:`importlib.util."
@@ -3220,26 +3622,26 @@ msgid ""
 "this PEP."
 msgstr ""
 
-#: whatsnew/3.5.rst:2479
+#: whatsnew/3.5.rst:2480
 msgid ""
 "The :mod:`socket` module now exports the :const:`~socket.CAN_RAW_FD_FRAMES` "
 "constant on linux 3.6 and greater."
 msgstr ""
 
-#: whatsnew/3.5.rst:2482
+#: whatsnew/3.5.rst:2483
 msgid ""
 "The :func:`ssl.cert_time_to_seconds` function now interprets the input time "
 "as UTC and not as local time, per :rfc:`5280`.  Additionally, the return "
 "value is always an :class:`int`. (Contributed by Akira Li in :issue:`19940`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2486
+#: whatsnew/3.5.rst:2487
 msgid ""
 "The ``pygettext.py`` Tool now uses the standard +NNNN format for timezones "
 "in the POT-Creation-Date header."
 msgstr ""
 
-#: whatsnew/3.5.rst:2489
+#: whatsnew/3.5.rst:2490
 msgid ""
 "The :mod:`smtplib` module now uses :data:`sys.stderr` instead of the "
 "previous module-level :data:`stderr` variable for debug output.  If your "
@@ -3247,14 +3649,14 @@ msgid ""
 "debug output, you will need to update it to capture sys.stderr instead."
 msgstr ""
 
-#: whatsnew/3.5.rst:2494
+#: whatsnew/3.5.rst:2495
 msgid ""
 "The :meth:`str.startswith` and :meth:`str.endswith` methods no longer return "
 "``True`` when finding the empty string and the indexes are completely out of "
 "range.  (Contributed by Serhiy Storchaka in :issue:`24284`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2498
+#: whatsnew/3.5.rst:2499
 msgid ""
 "The :func:`inspect.getdoc` function now returns documentation strings "
 "inherited from base classes.  Documentation strings no longer need to be "
@@ -3265,7 +3667,7 @@ msgid ""
 "issue:`15582`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2506
+#: whatsnew/3.5.rst:2507
 msgid ""
 "Nested :func:`functools.partial` calls are now flattened.  If you were "
 "relying on the previous behavior, you can now either add an attribute to a :"
@@ -3273,56 +3675,57 @@ msgid ""
 "`functools.partial`. (Contributed by Alexander Belopolsky in :issue:`7830`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2513
+#: whatsnew/3.5.rst:2514
 msgid "Changes in the C API"
 msgstr ""
 
-#: whatsnew/3.5.rst:2515
+#: whatsnew/3.5.rst:2516
 msgid ""
-"The undocumented :c:member:`~PyMemoryViewObject.format` member of the (non-"
-"public) :c:type:`PyMemoryViewObject` structure has been removed. All "
-"extensions relying on the relevant parts in ``memoryobject.h`` must be "
-"rebuilt."
+"The undocumented :c:member:`!format` member of the (non-public) :c:type:"
+"`PyMemoryViewObject` structure has been removed. All extensions relying on "
+"the relevant parts in ``memoryobject.h`` must be rebuilt."
 msgstr ""
 
-#: whatsnew/3.5.rst:2520
+#: whatsnew/3.5.rst:2521
 msgid ""
 "The :c:type:`PyMemAllocator` structure was renamed to :c:type:"
 "`PyMemAllocatorEx` and a new ``calloc`` field was added."
 msgstr ""
 
-#: whatsnew/3.5.rst:2523
+#: whatsnew/3.5.rst:2524
 msgid ""
-"Removed non-documented macro :c:macro:`PyObject_REPR` which leaked "
+"Removed non-documented macro :c:macro:`!PyObject_REPR()` which leaked "
 "references. Use format character ``%R`` in :c:func:`PyUnicode_FromFormat`-"
 "like functions to format the :func:`repr` of the object. (Contributed by "
 "Serhiy Storchaka in :issue:`22453`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2528
+#: whatsnew/3.5.rst:2529
 msgid ""
-"Because the lack of the :attr:`__module__` attribute breaks pickling and "
-"introspection, a deprecation warning is now raised for builtin types without "
-"the :attr:`__module__` attribute.  This would be an AttributeError in the "
-"future. (Contributed by Serhiy Storchaka in :issue:`20204`.)"
+"Because the lack of the :attr:`~type.__module__` attribute breaks pickling "
+"and introspection, a deprecation warning is now raised for builtin types "
+"without the :attr:`~type.__module__` attribute.  This will be an :exc:"
+"`AttributeError` in the future. (Contributed by Serhiy Storchaka in :issue:"
+"`20204`.)"
 msgstr ""
 
-#: whatsnew/3.5.rst:2534
+#: whatsnew/3.5.rst:2535
 msgid ""
 "As part of the :pep:`492` implementation, the ``tp_reserved`` slot of :c:"
-"type:`PyTypeObject` was replaced with a :c:member:`tp_as_async` slot.  Refer "
-"to :ref:`coro-objects` for new types, structures and functions."
+"type:`PyTypeObject` was replaced with a :c:member:`~PyTypeObject."
+"tp_as_async` slot.  Refer to :ref:`coro-objects` for new types, structures "
+"and functions."
 msgstr ""
 
-#: whatsnew/3.5.rst:2541
+#: whatsnew/3.5.rst:2542
 msgid "Notable changes in Python 3.5.4"
 msgstr ""
 
-#: whatsnew/3.5.rst:2544
+#: whatsnew/3.5.rst:2545
 msgid "New ``make regen-all`` build target"
 msgstr ""
 
-#: whatsnew/3.5.rst:2546
+#: whatsnew/3.5.rst:2547
 msgid ""
 "To simplify cross-compilation, and to ensure that CPython can reliably be "
 "compiled without requiring an existing version of Python to already be "
@@ -3330,35 +3733,35 @@ msgid ""
 "recompile generated files based on file modification times."
 msgstr ""
 
-#: whatsnew/3.5.rst:2551
+#: whatsnew/3.5.rst:2552
 msgid ""
 "Instead, a new ``make regen-all`` command has been added to force "
 "regeneration of these files when desired (e.g. after an initial version of "
 "Python has already been built based on the pregenerated versions)."
 msgstr ""
 
-#: whatsnew/3.5.rst:2555
+#: whatsnew/3.5.rst:2556
 msgid ""
 "More selective regeneration targets are also defined - see :source:`Makefile."
 "pre.in` for details."
 msgstr ""
 
-#: whatsnew/3.5.rst:2571
+#: whatsnew/3.5.rst:2572
 #, fuzzy
 msgid "(Contributed by Victor Stinner in :issue:`23404`.)"
 msgstr "(Contribution par Victor Stinner; :issue:`12049`.)"
 
-#: whatsnew/3.5.rst:2564
+#: whatsnew/3.5.rst:2565
 msgid "Removal of ``make touch`` build target"
 msgstr ""
 
-#: whatsnew/3.5.rst:2566
+#: whatsnew/3.5.rst:2567
 msgid ""
 "The ``make touch`` build target previously used to request implicit "
 "regeneration of generated files by updating their modification times has "
 "been removed."
 msgstr ""
 
-#: whatsnew/3.5.rst:2569
+#: whatsnew/3.5.rst:2570
 msgid "It has been replaced by the new ``make regen-all`` target."
 msgstr ""

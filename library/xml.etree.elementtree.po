@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 14:55+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2024-03-15 22:32+0100\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: library/xml.etree.elementtree.rst:2
-msgid ":mod:`xml.etree.ElementTree` --- The ElementTree XML API"
+#, fuzzy
+msgid ":mod:`!xml.etree.ElementTree` --- The ElementTree XML API"
 msgstr ":mod:`xml.etree.ElementTree` — L'API *ElementTree* XML"
 
 #: library/xml.etree.elementtree.rst:9
@@ -39,7 +40,8 @@ msgstr ""
 
 # suit un :
 #: library/xml.etree.elementtree.rst:19
-msgid "The :mod:`xml.etree.cElementTree` module is deprecated."
+#, fuzzy
+msgid "The :mod:`!xml.etree.cElementTree` module is deprecated."
 msgstr "le module :mod:`xml.etree.cElementTree` est obsolète."
 
 # suit un :
@@ -95,19 +97,58 @@ msgid "Parsing XML"
 msgstr "Analyse XML"
 
 #: library/xml.etree.elementtree.rst:52
+#, fuzzy
 msgid ""
-"We'll be using the following XML document as the sample data for this "
-"section:"
+"We'll be using the fictive :file:`country_data.xml` XML document as the "
+"sample data for this section:"
 msgstr ""
 "Nous utilisons le document XML suivant comme exemple pour cette section :"
+
+#: library/xml.etree.elementtree.rst:54
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data>\n"
+"    <country name=\"Liechtenstein\">\n"
+"        <rank>1</rank>\n"
+"        <year>2008</year>\n"
+"        <gdppc>141100</gdppc>\n"
+"        <neighbor name=\"Austria\" direction=\"E\"/>\n"
+"        <neighbor name=\"Switzerland\" direction=\"W\"/>\n"
+"    </country>\n"
+"    <country name=\"Singapore\">\n"
+"        <rank>4</rank>\n"
+"        <year>2011</year>\n"
+"        <gdppc>59900</gdppc>\n"
+"        <neighbor name=\"Malaysia\" direction=\"N\"/>\n"
+"    </country>\n"
+"    <country name=\"Panama\">\n"
+"        <rank>68</rank>\n"
+"        <year>2011</year>\n"
+"        <gdppc>13600</gdppc>\n"
+"        <neighbor name=\"Costa Rica\" direction=\"W\"/>\n"
+"        <neighbor name=\"Colombia\" direction=\"E\"/>\n"
+"    </country>\n"
+"</data>"
+msgstr ""
 
 #: library/xml.etree.elementtree.rst:80
 msgid "We can import this data by reading from a file::"
 msgstr "Nous pouvons importer ces données en lisant un fichier ::"
 
+#: library/xml.etree.elementtree.rst:82
+msgid ""
+"import xml.etree.ElementTree as ET\n"
+"tree = ET.parse('country_data.xml')\n"
+"root = tree.getroot()"
+msgstr ""
+
 #: library/xml.etree.elementtree.rst:86
 msgid "Or directly from a string::"
 msgstr "Ou depuis une chaîne de caractères ::"
+
+#: library/xml.etree.elementtree.rst:88
+msgid "root = ET.fromstring(country_data_as_string)"
+msgstr ""
 
 #: library/xml.etree.elementtree.rst:90
 msgid ""
@@ -128,16 +169,40 @@ msgstr ""
 "En tant qu':class:`Element`, ``root`` a une balise (*tag*) et un "
 "dictionnaire d'attributs ::"
 
+#: library/xml.etree.elementtree.rst:96
+msgid ""
+">>> root.tag\n"
+"'data'\n"
+">>> root.attrib\n"
+"{}"
+msgstr ""
+
 #: library/xml.etree.elementtree.rst:101
 msgid "It also has children nodes over which we can iterate::"
 msgstr ""
 "Il contient aussi des nœuds enfants sur lesquels nous pouvons itérer ::"
+
+#: library/xml.etree.elementtree.rst:103
+msgid ""
+">>> for child in root:\n"
+"...     print(child.tag, child.attrib)\n"
+"...\n"
+"country {'name': 'Liechtenstein'}\n"
+"country {'name': 'Singapore'}\n"
+"country {'name': 'Panama'}"
+msgstr ""
 
 #: library/xml.etree.elementtree.rst:110
 msgid "Children are nested, and we can access specific child nodes by index::"
 msgstr ""
 "Les enfants sont imbriqués et nous pouvons accéder aux nœuds enfants "
 "spécifiques *via* un indice ::"
+
+#: library/xml.etree.elementtree.rst:112
+msgid ""
+">>> root[0][1].text\n"
+"'2008'"
+msgstr ""
 
 # suit un :
 #: library/xml.etree.elementtree.rst:118
@@ -197,7 +262,22 @@ msgstr ""
 "`XMLPullParser.feed`. Pour obtenir les éléments XML analysés, appelez :meth:"
 "`XMLPullParser.read_events`. Voici un exemple ::"
 
-#: library/xml.etree.elementtree.rst:158
+#: library/xml.etree.elementtree.rst:147
+msgid ""
+">>> parser = ET.XMLPullParser(['start', 'end'])\n"
+">>> parser.feed('<mytag>sometext')\n"
+">>> list(parser.read_events())\n"
+"[('start', <Element 'mytag' at 0x7fa66db2be58>)]\n"
+">>> parser.feed(' more text</mytag>')\n"
+">>> for event, elem in parser.read_events():\n"
+"...     print(event)\n"
+"...     print(elem.tag, 'text=', elem.text)\n"
+"...\n"
+"end\n"
+"mytag text= sometext more text"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:159
 msgid ""
 "The obvious use case is applications that operate in a non-blocking fashion "
 "where the XML data is being received from a socket or read incrementally "
@@ -209,7 +289,7 @@ msgstr ""
 "périphérique de stockage. Dans de tels cas, le blocage des lectures est "
 "inacceptable."
 
-#: library/xml.etree.elementtree.rst:162
+#: library/xml.etree.elementtree.rst:163
 msgid ""
 "Because it's so flexible, :class:`XMLPullParser` can be inconvenient to use "
 "for simpler use-cases.  If you don't mind your application blocking on "
@@ -227,10 +307,17 @@ msgstr ""
 "le conserver entièrement en mémoire."
 
 #: library/xml.etree.elementtree.rst:169
+msgid ""
+"Where *immediate* feedback through events is wanted, calling method :meth:"
+"`XMLPullParser.flush` can help reduce delay; please make sure to study the "
+"related security notes."
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:175
 msgid "Finding interesting elements"
 msgstr "Atteinte d'éléments d'intérêt"
 
-#: library/xml.etree.elementtree.rst:171
+#: library/xml.etree.elementtree.rst:177
 msgid ""
 ":class:`Element` has some useful methods that help iterate recursively over "
 "all the sub-tree below it (its children, their children, and so on).  For "
@@ -240,7 +327,19 @@ msgstr ""
 "récursivement tous les sous-arbres (ses enfants, leurs enfants et ainsi de "
 "suite). Par exemple, :meth:`Element.iter` ::"
 
-#: library/xml.etree.elementtree.rst:184
+#: library/xml.etree.elementtree.rst:181
+msgid ""
+">>> for neighbor in root.iter('neighbor'):\n"
+"...     print(neighbor.attrib)\n"
+"...\n"
+"{'name': 'Austria', 'direction': 'E'}\n"
+"{'name': 'Switzerland', 'direction': 'W'}\n"
+"{'name': 'Malaysia', 'direction': 'N'}\n"
+"{'name': 'Costa Rica', 'direction': 'W'}\n"
+"{'name': 'Colombia', 'direction': 'E'}"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:190
 msgid ""
 ":meth:`Element.findall` finds only elements with a tag which are direct "
 "children of the current element.  :meth:`Element.find` finds the *first* "
@@ -253,7 +352,19 @@ msgstr ""
 "text` accède au contenu textuel de l'élément.  :meth:`Element.get` accède "
 "aux attributs de l'élément ::"
 
-#: library/xml.etree.elementtree.rst:198
+#: library/xml.etree.elementtree.rst:195
+msgid ""
+">>> for country in root.findall('country'):\n"
+"...     rank = country.find('rank').text\n"
+"...     name = country.get('name')\n"
+"...     print(name, rank)\n"
+"...\n"
+"Liechtenstein 1\n"
+"Singapore 4\n"
+"Panama 68"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:204
 msgid ""
 "More sophisticated specification of which elements to look for is possible "
 "by using :ref:`XPath <elementtree-xpath>`."
@@ -261,11 +372,11 @@ msgstr ""
 "Une caractérisation plus sophistiquée des éléments à rechercher est possible "
 "en utilisant :ref:`XPath <elementtree-xpath>`."
 
-#: library/xml.etree.elementtree.rst:202
+#: library/xml.etree.elementtree.rst:208
 msgid "Modifying an XML File"
 msgstr "Modification d'un fichier XML"
 
-#: library/xml.etree.elementtree.rst:204
+#: library/xml.etree.elementtree.rst:210
 msgid ""
 ":class:`ElementTree` provides a simple way to build XML documents and write "
 "them to files. The :meth:`ElementTree.write` method serves this purpose."
@@ -274,7 +385,7 @@ msgstr ""
 "de les écrire dans des fichiers. La méthode :meth:`ElementTree.write` sert à "
 "cet effet."
 
-#: library/xml.etree.elementtree.rst:207
+#: library/xml.etree.elementtree.rst:213
 msgid ""
 "Once created, an :class:`Element` object may be manipulated by directly "
 "changing its fields (such as :attr:`Element.text`), adding and modifying "
@@ -286,7 +397,7 @@ msgstr ""
 "modifiant des attributs (méthode :meth:`Element.set`), ou en ajoutant de "
 "nouveaux enfants (par exemple avec :meth:`Element.append`)."
 
-#: library/xml.etree.elementtree.rst:212
+#: library/xml.etree.elementtree.rst:218
 msgid ""
 "Let's say we want to add one to each country's rank, and add an ``updated`` "
 "attribute to the rank element::"
@@ -294,11 +405,48 @@ msgstr ""
 "Disons que nous voulons en ajouter un au classement de chaque pays, et "
 "ajouter un attribut *updated* (« mis à jour ») à l'élément de classement ::"
 
-#: library/xml.etree.elementtree.rst:222 library/xml.etree.elementtree.rst:266
+#: library/xml.etree.elementtree.rst:221
+msgid ""
+">>> for rank in root.iter('rank'):\n"
+"...     new_rank = int(rank.text) + 1\n"
+"...     rank.text = str(new_rank)\n"
+"...     rank.set('updated', 'yes')\n"
+"...\n"
+">>> tree.write('output.xml')"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:228 library/xml.etree.elementtree.rst:272
 msgid "Our XML now looks like this:"
 msgstr "Maintenant, notre XML ressemble à ceci :"
 
-#: library/xml.etree.elementtree.rst:250
+#: library/xml.etree.elementtree.rst:230
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data>\n"
+"    <country name=\"Liechtenstein\">\n"
+"        <rank updated=\"yes\">2</rank>\n"
+"        <year>2008</year>\n"
+"        <gdppc>141100</gdppc>\n"
+"        <neighbor name=\"Austria\" direction=\"E\"/>\n"
+"        <neighbor name=\"Switzerland\" direction=\"W\"/>\n"
+"    </country>\n"
+"    <country name=\"Singapore\">\n"
+"        <rank updated=\"yes\">5</rank>\n"
+"        <year>2011</year>\n"
+"        <gdppc>59900</gdppc>\n"
+"        <neighbor name=\"Malaysia\" direction=\"N\"/>\n"
+"    </country>\n"
+"    <country name=\"Panama\">\n"
+"        <rank updated=\"yes\">69</rank>\n"
+"        <year>2011</year>\n"
+"        <gdppc>13600</gdppc>\n"
+"        <neighbor name=\"Costa Rica\" direction=\"W\"/>\n"
+"        <neighbor name=\"Colombia\" direction=\"E\"/>\n"
+"    </country>\n"
+"</data>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:256
 msgid ""
 "We can remove elements using :meth:`Element.remove`.  Let's say we want to "
 "remove all countries with a rank higher than 50::"
@@ -307,7 +455,18 @@ msgstr ""
 "Supposons que nous souhaitions supprimer tous les pays dont le classement "
 "est supérieur à 50 ::"
 
-#: library/xml.etree.elementtree.rst:261
+#: library/xml.etree.elementtree.rst:259
+msgid ""
+">>> for country in root.findall('country'):\n"
+"...     # using root.findall() to avoid removal during traversal\n"
+"...     rank = int(country.find('rank').text)\n"
+"...     if rank > 50:\n"
+"...         root.remove(country)\n"
+"...\n"
+">>> tree.write('output.xml')"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:267
 msgid ""
 "Note that concurrent modification while iterating can lead to problems, just "
 "like when iterating and modifying Python lists or dicts. Therefore, the "
@@ -320,11 +479,31 @@ msgstr ""
 "collecte d'abord tous les éléments correspondants avec ``root.findall()``, "
 "et après seulement parcourt la liste des correspondances."
 
-#: library/xml.etree.elementtree.rst:288
+#: library/xml.etree.elementtree.rst:274
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data>\n"
+"    <country name=\"Liechtenstein\">\n"
+"        <rank updated=\"yes\">2</rank>\n"
+"        <year>2008</year>\n"
+"        <gdppc>141100</gdppc>\n"
+"        <neighbor name=\"Austria\" direction=\"E\"/>\n"
+"        <neighbor name=\"Switzerland\" direction=\"W\"/>\n"
+"    </country>\n"
+"    <country name=\"Singapore\">\n"
+"        <rank updated=\"yes\">5</rank>\n"
+"        <year>2011</year>\n"
+"        <gdppc>59900</gdppc>\n"
+"        <neighbor name=\"Malaysia\" direction=\"N\"/>\n"
+"    </country>\n"
+"</data>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:294
 msgid "Building XML documents"
 msgstr "Création de documents XML"
 
-#: library/xml.etree.elementtree.rst:290
+#: library/xml.etree.elementtree.rst:296
 msgid ""
 "The :func:`SubElement` function also provides a convenient way to create new "
 "sub-elements for a given element::"
@@ -332,11 +511,21 @@ msgstr ""
 "La fonction :func:`SubElement` fournit également un moyen pratique de créer "
 "de nouveaux sous-éléments pour un élément donné ::"
 
-#: library/xml.etree.elementtree.rst:301
+#: library/xml.etree.elementtree.rst:299
+msgid ""
+">>> a = ET.Element('a')\n"
+">>> b = ET.SubElement(a, 'b')\n"
+">>> c = ET.SubElement(a, 'c')\n"
+">>> d = ET.SubElement(c, 'd')\n"
+">>> ET.dump(a)\n"
+"<a><b /><c><d /></c></a>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:307
 msgid "Parsing XML with Namespaces"
 msgstr "Analyse d'un XML avec des espaces de noms"
 
-#: library/xml.etree.elementtree.rst:303
+#: library/xml.etree.elementtree.rst:309
 msgid ""
 "If the XML input has `namespaces <https://en.wikipedia.org/wiki/"
 "XML_namespace>`__, tags and attributes with prefixes in the form ``prefix:"
@@ -352,7 +541,7 @@ msgstr ""
 "de noms par défaut <https://www.w3.org/TR/xml-names/#defaulting>`__, cet URI "
 "complet est ajouté au début de toutes les balises non préfixées."
 
-#: library/xml.etree.elementtree.rst:311
+#: library/xml.etree.elementtree.rst:317
 msgid ""
 "Here is an XML example that incorporates two namespaces, one with the prefix "
 "\"fictional\" and the other serving as the default namespace:"
@@ -360,7 +549,26 @@ msgstr ""
 "Voici un exemple XML qui intègre deux espaces de noms, l'un avec le préfixe "
 "*fictional* et l'autre servant d'espace de noms par défaut :"
 
-#: library/xml.etree.elementtree.rst:332
+#: library/xml.etree.elementtree.rst:320
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<actors xmlns:fictional=\"http://characters.example.com\"\n"
+"        xmlns=\"http://people.example.com\">\n"
+"    <actor>\n"
+"        <name>John Cleese</name>\n"
+"        <fictional:character>Lancelot</fictional:character>\n"
+"        <fictional:character>Archie Leach</fictional:character>\n"
+"    </actor>\n"
+"    <actor>\n"
+"        <name>Eric Idle</name>\n"
+"        <fictional:character>Sir Robin</fictional:character>\n"
+"        <fictional:character>Gunther</fictional:character>\n"
+"        <fictional:character>Commander Clement</fictional:character>\n"
+"    </actor>\n"
+"</actors>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:338
 msgid ""
 "One way to search and explore this XML example is to manually add the URI to "
 "every tag or attribute in the xpath of a :meth:`~Element.find` or :meth:"
@@ -370,7 +578,17 @@ msgstr ""
 "manuellement l'URI à chaque balise ou attribut dans le *xpath* d'une "
 "recherche :meth:`~Element.find` ou :meth:`~Element.findall` ::"
 
-#: library/xml.etree.elementtree.rst:343
+#: library/xml.etree.elementtree.rst:342
+msgid ""
+"root = fromstring(xml_text)\n"
+"for actor in root.findall('{http://people.example.com}actor'):\n"
+"    name = actor.find('{http://people.example.com}name')\n"
+"    print(name.text)\n"
+"    for char in actor.findall('{http://characters.example.com}character'):\n"
+"        print(' |-->', char.text)"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:349
 msgid ""
 "A better way to search the namespaced XML example is to create a dictionary "
 "with your own prefixes and use those in the search functions::"
@@ -379,15 +597,38 @@ msgstr ""
 "consiste à créer un dictionnaire avec vos propres préfixes et à les utiliser "
 "dans les fonctions de recherche ::"
 
-#: library/xml.etree.elementtree.rst:355
+#: library/xml.etree.elementtree.rst:352
+msgid ""
+"ns = {'real_person': 'http://people.example.com',\n"
+"      'role': 'http://characters.example.com'}\n"
+"\n"
+"for actor in root.findall('real_person:actor', ns):\n"
+"    name = actor.find('real_person:name', ns)\n"
+"    print(name.text)\n"
+"    for char in actor.findall('role:character', ns):\n"
+"        print(' |-->', char.text)"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:361
 msgid "These two approaches both output::"
 msgstr "Ces deux approches donnent le même résultat ::"
 
-#: library/xml.etree.elementtree.rst:369
+#: library/xml.etree.elementtree.rst:363
+msgid ""
+"John Cleese\n"
+" |--> Lancelot\n"
+" |--> Archie Leach\n"
+"Eric Idle\n"
+" |--> Sir Robin\n"
+" |--> Gunther\n"
+" |--> Commander Clement"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:375
 msgid "XPath support"
 msgstr "Prise en charge de *XPath*"
 
-#: library/xml.etree.elementtree.rst:371
+#: library/xml.etree.elementtree.rst:377
 msgid ""
 "This module provides limited support for `XPath expressions <https://www.w3."
 "org/TR/xpath>`_ for locating elements in a tree.  The goal is to support a "
@@ -399,11 +640,11 @@ msgstr ""
 "arborescence. L'objectif est de prendre en charge un petit sous-ensemble de "
 "la syntaxe abrégée ; un moteur *XPath* complet sort du cadre du module."
 
-#: library/xml.etree.elementtree.rst:377 library/xml.etree.elementtree.rst:769
+#: library/xml.etree.elementtree.rst:383 library/xml.etree.elementtree.rst:777
 msgid "Example"
 msgstr "Exemple"
 
-#: library/xml.etree.elementtree.rst:379
+#: library/xml.etree.elementtree.rst:385
 msgid ""
 "Here's an example that demonstrates some of the XPath capabilities of the "
 "module.  We'll be using the ``countrydata`` XML document from the :ref:"
@@ -413,7 +654,30 @@ msgstr ""
 "module. Nous utilisons le document XML ``countrydata`` de la section :ref:"
 "`Parsing XML <elementtree-parsing-xml>` ::"
 
-#: library/xml.etree.elementtree.rst:403
+#: library/xml.etree.elementtree.rst:389
+msgid ""
+"import xml.etree.ElementTree as ET\n"
+"\n"
+"root = ET.fromstring(countrydata)\n"
+"\n"
+"# Top-level elements\n"
+"root.findall(\".\")\n"
+"\n"
+"# All 'neighbor' grand-children of 'country' children of the top-level\n"
+"# elements\n"
+"root.findall(\"./country/neighbor\")\n"
+"\n"
+"# Nodes with name='Singapore' that have a 'year' child\n"
+"root.findall(\".//year/..[@name='Singapore']\")\n"
+"\n"
+"# 'year' nodes that are children of nodes with name='Singapore'\n"
+"root.findall(\".//*[@name='Singapore']/year\")\n"
+"\n"
+"# All 'neighbor' nodes that are the second child of their parent\n"
+"root.findall(\".//neighbor[2]\")"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:409
 msgid ""
 "For XML with namespaces, use the usual qualified ``{namespace}tag`` "
 "notation::"
@@ -421,23 +685,29 @@ msgstr ""
 "Pour du XML avec des espaces de noms, utilisez la notation qualifiée "
 "habituelle ``{namespace}tag`` ::"
 
-#: library/xml.etree.elementtree.rst:410
+#: library/xml.etree.elementtree.rst:411
+msgid ""
+"# All dublin-core \"title\" tags in the document\n"
+"root.findall(\".//{http://purl.org/dc/elements/1.1/}title\")"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:416
 msgid "Supported XPath syntax"
 msgstr "Prise en charge de la syntaxe *XPath*"
 
-#: library/xml.etree.elementtree.rst:415
+#: library/xml.etree.elementtree.rst:421
 msgid "Syntax"
 msgstr "Syntaxe"
 
-#: library/xml.etree.elementtree.rst:415
+#: library/xml.etree.elementtree.rst:421
 msgid "Meaning"
 msgstr "Signification"
 
-#: library/xml.etree.elementtree.rst:417
+#: library/xml.etree.elementtree.rst:423
 msgid "``tag``"
 msgstr "``tag``"
 
-#: library/xml.etree.elementtree.rst:417
+#: library/xml.etree.elementtree.rst:423
 msgid ""
 "Selects all child elements with the given tag. For example, ``spam`` selects "
 "all child elements named ``spam``, and ``spam/egg`` selects all "
@@ -455,15 +725,15 @@ msgstr ""
 "seulement les balises qui ne sont pas dans un espace de noms."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:426
+#: library/xml.etree.elementtree.rst:432
 msgid "Support for star-wildcards was added."
 msgstr "la prise en charge des caractères génériques étoiles a été ajoutée."
 
-#: library/xml.etree.elementtree.rst:429
+#: library/xml.etree.elementtree.rst:435
 msgid "``*``"
 msgstr "``*``"
 
-#: library/xml.etree.elementtree.rst:429
+#: library/xml.etree.elementtree.rst:435
 msgid ""
 "Selects all child elements, including comments and processing instructions.  "
 "For example, ``*/egg`` selects all grandchildren named ``egg``."
@@ -472,11 +742,11 @@ msgstr ""
 "instructions de traitement. Par exemple, ``*/egg`` sélectionne tous les "
 "petits-enfants nommés ``egg``."
 
-#: library/xml.etree.elementtree.rst:433
+#: library/xml.etree.elementtree.rst:439
 msgid "``.``"
 msgstr "``.``"
 
-#: library/xml.etree.elementtree.rst:433
+#: library/xml.etree.elementtree.rst:439
 msgid ""
 "Selects the current node.  This is mostly useful at the beginning of the "
 "path, to indicate that it's a relative path."
@@ -484,11 +754,11 @@ msgstr ""
 "Sélectionne le nœud actuel. C'est surtout utile au début du chemin, pour "
 "indiquer qu'il s'agit d'un chemin relatif."
 
-#: library/xml.etree.elementtree.rst:437
+#: library/xml.etree.elementtree.rst:443
 msgid "``//``"
 msgstr "``//``"
 
-#: library/xml.etree.elementtree.rst:437
+#: library/xml.etree.elementtree.rst:443
 msgid ""
 "Selects all subelements, on all levels beneath the current  element.  For "
 "example, ``.//egg`` selects all ``egg`` elements in the entire tree."
@@ -497,11 +767,11 @@ msgstr ""
 "actuel. Par exemple, ``.//egg`` sélectionne tous les éléments ``egg`` dans "
 "l'arborescence entière."
 
-#: library/xml.etree.elementtree.rst:441
+#: library/xml.etree.elementtree.rst:447
 msgid "``..``"
 msgstr "``..``"
 
-#: library/xml.etree.elementtree.rst:441
+#: library/xml.etree.elementtree.rst:447
 msgid ""
 "Selects the parent element.  Returns ``None`` if the path attempts to reach "
 "the ancestors of the start element (the element ``find`` was called on)."
@@ -510,19 +780,19 @@ msgstr ""
 "d'atteindre les ancêtres de l'élément de départ (l'élément sur lequel "
 "``find`` a été appelé)."
 
-#: library/xml.etree.elementtree.rst:445
+#: library/xml.etree.elementtree.rst:451
 msgid "``[@attrib]``"
 msgstr "``[@attrib]``"
 
-#: library/xml.etree.elementtree.rst:445
+#: library/xml.etree.elementtree.rst:451
 msgid "Selects all elements that have the given attribute."
 msgstr "Sélectionne tous les éléments qui ont l'attribut donné."
 
-#: library/xml.etree.elementtree.rst:447
+#: library/xml.etree.elementtree.rst:453
 msgid "``[@attrib='value']``"
 msgstr "``[@attrib='value']``"
 
-#: library/xml.etree.elementtree.rst:447
+#: library/xml.etree.elementtree.rst:453
 msgid ""
 "Selects all elements for which the given attribute has the given value.  The "
 "value cannot contain quotes."
@@ -530,11 +800,11 @@ msgstr ""
 "Sélectionne tous les éléments pour lesquels l'attribut donné a la valeur "
 "donnée. La valeur ne peut pas contenir de guillemet simple (``'``)."
 
-#: library/xml.etree.elementtree.rst:451
+#: library/xml.etree.elementtree.rst:457
 msgid "``[@attrib!='value']``"
 msgstr "``[@attrib!='value']``"
 
-#: library/xml.etree.elementtree.rst:451
+#: library/xml.etree.elementtree.rst:457
 msgid ""
 "Selects all elements for which the given attribute does not have the given "
 "value. The value cannot contain quotes."
@@ -542,11 +812,11 @@ msgstr ""
 "Sélectionne tous les éléments pour lesquels l'attribut donné n'a pas la "
 "valeur donnée. La valeur ne peut pas contenir de guillemet simple (``'``)."
 
-#: library/xml.etree.elementtree.rst:457
+#: library/xml.etree.elementtree.rst:463
 msgid "``[tag]``"
 msgstr "``[tag]``"
 
-#: library/xml.etree.elementtree.rst:457
+#: library/xml.etree.elementtree.rst:463
 msgid ""
 "Selects all elements that have a child named ``tag``.  Only immediate "
 "children are supported."
@@ -554,11 +824,11 @@ msgstr ""
 "Sélectionne tous les éléments qui ont un enfant nommé ``tag``. Seuls les "
 "enfants immédiats sont pris en charge."
 
-#: library/xml.etree.elementtree.rst:460
+#: library/xml.etree.elementtree.rst:466
 msgid "``[.='text']``"
 msgstr "``[.='text']``"
 
-#: library/xml.etree.elementtree.rst:460
+#: library/xml.etree.elementtree.rst:466
 msgid ""
 "Selects all elements whose complete text content, including descendants, "
 "equals the given ``text``."
@@ -566,11 +836,11 @@ msgstr ""
 "Sélectionne tous les éléments dont le contenu textuel complet, y compris les "
 "descendants, est égal au ``text`` donné."
 
-#: library/xml.etree.elementtree.rst:465
+#: library/xml.etree.elementtree.rst:471
 msgid "``[.!='text']``"
 msgstr "``[.!='text']``"
 
-#: library/xml.etree.elementtree.rst:465
+#: library/xml.etree.elementtree.rst:471
 msgid ""
 "Selects all elements whose complete text content, including descendants, "
 "does not equal the given ``text``."
@@ -578,11 +848,11 @@ msgstr ""
 "Sélectionne tous les éléments dont le contenu textuel complet, y compris les "
 "descendants, n'est pas égal au ``text`` donné."
 
-#: library/xml.etree.elementtree.rst:471
+#: library/xml.etree.elementtree.rst:477
 msgid "``[tag='text']``"
 msgstr "``[tag='text']``"
 
-#: library/xml.etree.elementtree.rst:471
+#: library/xml.etree.elementtree.rst:477
 msgid ""
 "Selects all elements that have a child named ``tag`` whose complete text "
 "content, including descendants, equals the given ``text``."
@@ -591,11 +861,11 @@ msgstr ""
 "contenu textuel complet, y compris les descendants, est égal au ``text`` "
 "donné."
 
-#: library/xml.etree.elementtree.rst:475
+#: library/xml.etree.elementtree.rst:481
 msgid "``[tag!='text']``"
 msgstr "``[tag!='text']``"
 
-#: library/xml.etree.elementtree.rst:475
+#: library/xml.etree.elementtree.rst:481
 msgid ""
 "Selects all elements that have a child named ``tag`` whose complete text "
 "content, including descendants, does not equal the given ``text``."
@@ -604,11 +874,11 @@ msgstr ""
 "contenu textuel complet, y compris les descendants, n'est pas égal au "
 "``text`` donné."
 
-#: library/xml.etree.elementtree.rst:481
+#: library/xml.etree.elementtree.rst:487
 msgid "``[position]``"
 msgstr "``[position]``"
 
-#: library/xml.etree.elementtree.rst:481
+#: library/xml.etree.elementtree.rst:487
 msgid ""
 "Selects all elements that are located at the given position.  The position "
 "can be either an integer (1 is the first position), the expression "
@@ -620,7 +890,7 @@ msgstr ""
 "(pour la dernière position), ou une position relative à la dernière position "
 "(par exemple ``last()-1``)."
 
-#: library/xml.etree.elementtree.rst:488
+#: library/xml.etree.elementtree.rst:494
 msgid ""
 "Predicates (expressions within square brackets) must be preceded by a tag "
 "name, an asterisk, or another predicate.  ``position`` predicates must be "
@@ -630,23 +900,24 @@ msgstr ""
 "balise, d'un astérisque ou d'un autre prédicat. Les prédicats ``position`` "
 "doivent être précédés d'un nom de balise."
 
-#: library/xml.etree.elementtree.rst:493 library/xml.etree.elementtree.rst:821
+#: library/xml.etree.elementtree.rst:499 library/xml.etree.elementtree.rst:829
 msgid "Reference"
 msgstr "Référence"
 
-#: library/xml.etree.elementtree.rst:498 library/xml.etree.elementtree.rst:826
+#: library/xml.etree.elementtree.rst:504 library/xml.etree.elementtree.rst:834
 msgid "Functions"
 msgstr "Fonctions"
 
-#: library/xml.etree.elementtree.rst:502
+#: library/xml.etree.elementtree.rst:508
 msgid "`C14N 2.0 <https://www.w3.org/TR/xml-c14n2/>`_ transformation function."
 msgstr ""
 "Fonction de transformation `C14N 2.0 <https://www.w3.org/TR/xml-c14n2/>`_."
 
-#: library/xml.etree.elementtree.rst:504
+#: library/xml.etree.elementtree.rst:510
+#, fuzzy
 msgid ""
 "Canonicalization is a way to normalise XML output in a way that allows byte-"
-"by-byte comparisons and digital signatures.  It reduced the freedom that XML "
+"by-byte comparisons and digital signatures.  It reduces the freedom that XML "
 "serializers have and instead generates a more constrained XML "
 "representation.  The main restrictions regard the placement of namespace "
 "declarations, the ordering of attributes, and ignorable whitespace."
@@ -658,7 +929,7 @@ msgstr ""
 "restrictions concernent le placement des déclarations d'espaces de noms, "
 "l'ordre des attributs et les espaces à ignorer."
 
-#: library/xml.etree.elementtree.rst:510
+#: library/xml.etree.elementtree.rst:516
 msgid ""
 "This function takes an XML data string (*xml_data*) or a file path or file-"
 "like object (*from_file*) as input, converts it to the canonical form, and "
@@ -673,32 +944,44 @@ msgstr ""
 "fichier de sortie reçoit du texte, pas des octets. Il doit donc être ouvert "
 "en mode texte avec l'encodage ``utf-8``."
 
-#: library/xml.etree.elementtree.rst:517
+#: library/xml.etree.elementtree.rst:523
 msgid "Typical uses::"
 msgstr "Utilisation typique ::"
 
-#: library/xml.etree.elementtree.rst:528
+#: library/xml.etree.elementtree.rst:525
+msgid ""
+"xml_data = \"<root>...</root>\"\n"
+"print(canonicalize(xml_data))\n"
+"\n"
+"with open(\"c14n_output.xml\", mode='w', encoding='utf-8') as out_file:\n"
+"    canonicalize(xml_data, out=out_file)\n"
+"\n"
+"with open(\"c14n_output.xml\", mode='w', encoding='utf-8') as out_file:\n"
+"    canonicalize(from_file=\"inputfile.xml\", out=out_file)"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:534
 msgid "The configuration *options* are as follows:"
 msgstr "Les *options* de configuration sont les suivantes :"
 
-#: library/xml.etree.elementtree.rst:530
+#: library/xml.etree.elementtree.rst:536
 msgid "*with_comments*: set to true to include comments (default: false)"
 msgstr ""
 "*with_comments* : définissez cet attribut à vrai pour inclure les "
 "commentaires (par défaut : faux)"
 
-#: library/xml.etree.elementtree.rst:531
+#: library/xml.etree.elementtree.rst:537
 msgid ""
 "*strip_text*: set to true to strip whitespace before and after text content"
 msgstr ""
 "*strip_text* : définissez à vrai pour supprimer les espaces avant et après "
 "le contenu du texte"
 
-#: library/xml.etree.elementtree.rst:532 library/xml.etree.elementtree.rst:534
+#: library/xml.etree.elementtree.rst:538 library/xml.etree.elementtree.rst:540
 msgid "(default: false)"
 msgstr "(par défaut : faux)"
 
-#: library/xml.etree.elementtree.rst:533
+#: library/xml.etree.elementtree.rst:539
 msgid ""
 "*rewrite_prefixes*: set to true to replace namespace prefixes by "
 "\"n{number}\""
@@ -706,36 +989,36 @@ msgstr ""
 "*rewrite_prefixes* : définissez à vrai pour remplacer les préfixes d'espace "
 "de noms par « n{nombre} »"
 
-#: library/xml.etree.elementtree.rst:535
+#: library/xml.etree.elementtree.rst:541
 msgid "*qname_aware_tags*: a set of qname aware tag names in which prefixes"
 msgstr ""
 "*qname_aware_tags* : ensemble de noms de balises prenant en charge les noms "
 "qualifiés dans lesquels les préfixes"
 
-#: library/xml.etree.elementtree.rst:536 library/xml.etree.elementtree.rst:538
+#: library/xml.etree.elementtree.rst:542 library/xml.etree.elementtree.rst:544
 msgid "should be replaced in text content (default: empty)"
 msgstr "doivent être remplacés dans le contenu du texte (par défaut : vide)"
 
-#: library/xml.etree.elementtree.rst:537
+#: library/xml.etree.elementtree.rst:543
 msgid ""
 "*qname_aware_attrs*: a set of qname aware attribute names in which prefixes"
 msgstr ""
 "*qname_aware_attrs* : ensemble de noms d'attributs prenant en charge les "
 "noms qualifiés dans lesquels les préfixes"
 
-#: library/xml.etree.elementtree.rst:539
+#: library/xml.etree.elementtree.rst:545
 msgid "*exclude_attrs*: a set of attribute names that should not be serialised"
 msgstr ""
 "*exclude_attrs* : ensemble de noms d'attributs qui ne doivent pas être "
 "sérialisés"
 
-#: library/xml.etree.elementtree.rst:540
+#: library/xml.etree.elementtree.rst:546
 msgid "*exclude_tags*: a set of tag names that should not be serialised"
 msgstr ""
 "*exclude_tags* : ensemble de noms de balises qui ne doivent pas être "
 "sérialisés"
 
-#: library/xml.etree.elementtree.rst:542
+#: library/xml.etree.elementtree.rst:548
 msgid ""
 "In the option list above, \"a set\" refers to any collection or iterable of "
 "strings, no ordering is expected."
@@ -743,7 +1026,7 @@ msgstr ""
 "Dans la liste d'options ci-dessus, un « ensemble » fait référence à toute "
 "collection ou itérable de chaînes, aucun ordre n'est attendu."
 
-#: library/xml.etree.elementtree.rst:550
+#: library/xml.etree.elementtree.rst:556
 msgid ""
 "Comment element factory.  This factory function creates a special element "
 "that will be serialized as an XML comment by the standard serializer.  The "
@@ -757,7 +1040,7 @@ msgstr ""
 "chaîne Unicode. *text* est une chaîne contenant la chaîne de commentaire. "
 "Renvoie une instance d'élément représentant un commentaire."
 
-#: library/xml.etree.elementtree.rst:556
+#: library/xml.etree.elementtree.rst:562
 msgid ""
 "Note that :class:`XMLParser` skips over comments in the input instead of "
 "creating comment objects for them. An :class:`ElementTree` will only contain "
@@ -769,7 +1052,7 @@ msgstr ""
 "contiendra que des nœuds de commentaires qui ont été insérés dans "
 "l'arborescence à l'aide de l'une des méthodes d':class:`Element`."
 
-#: library/xml.etree.elementtree.rst:563
+#: library/xml.etree.elementtree.rst:569
 msgid ""
 "Writes an element tree or element structure to sys.stdout.  This function "
 "should be used for debugging only."
@@ -777,7 +1060,7 @@ msgstr ""
 "Écrit une arborescence d'éléments ou une structure d'éléments dans *sys."
 "stdout*. Cette fonction doit être utilisée uniquement pour le débogage."
 
-#: library/xml.etree.elementtree.rst:566
+#: library/xml.etree.elementtree.rst:572
 msgid ""
 "The exact output format is implementation dependent.  In this version, it's "
 "written as an ordinary XML file."
@@ -785,12 +1068,12 @@ msgstr ""
 "Le format de sortie exact dépend de l’implémentation. Dans cette version, il "
 "est écrit sous la forme d'un fichier XML ordinaire."
 
-#: library/xml.etree.elementtree.rst:569
+#: library/xml.etree.elementtree.rst:575
 msgid "*elem* is an element tree or an individual element."
 msgstr "*elem* est un élément de l'arborescence ou un élément individuel."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:571
+#: library/xml.etree.elementtree.rst:577
 msgid ""
 "The :func:`dump` function now preserves the attribute order specified by the "
 "user."
@@ -798,7 +1081,7 @@ msgstr ""
 "la fonction :func:`dump` préserve désormais l'ordre des attributs spécifié "
 "par l'utilisateur."
 
-#: library/xml.etree.elementtree.rst:578
+#: library/xml.etree.elementtree.rst:584
 msgid ""
 "Parses an XML section from a string constant.  Same as :func:`XML`.  *text* "
 "is a string containing XML data.  *parser* is an optional parser instance. "
@@ -811,7 +1094,7 @@ msgstr ""
 "standard :class:`XMLParser` est utilisé. Renvoie une instance d':class:"
 "`Element`."
 
-#: library/xml.etree.elementtree.rst:586
+#: library/xml.etree.elementtree.rst:592
 msgid ""
 "Parses an XML document from a sequence of string fragments.  *sequence* is a "
 "list or other sequence containing XML data fragments.  *parser* is an "
@@ -824,7 +1107,7 @@ msgstr ""
 "pas fourni, l'analyseur standard :class:`XMLParser` est utilisé. Renvoie une "
 "instance d':class:`Element`."
 
-#: library/xml.etree.elementtree.rst:596
+#: library/xml.etree.elementtree.rst:602
 msgid ""
 "Appends whitespace to the subtree to indent the tree visually. This can be "
 "used to generate pretty-printed XML output. *tree* can be an Element or "
@@ -841,7 +1124,7 @@ msgstr ""
 "l'intérieur d'un arbre déjà indenté, transmettez le niveau d'indentation "
 "initial dans *level*."
 
-#: library/xml.etree.elementtree.rst:608
+#: library/xml.etree.elementtree.rst:614
 msgid ""
 "Check if an object appears to be a valid element object.  *element* is an "
 "element instance.  Return ``True`` if this is an element object."
@@ -849,19 +1132,22 @@ msgstr ""
 "Vérifie si un objet semble être un objet élément valide. *element* est une "
 "instance d'élément. Renvoie ``True`` s'il s'agit d'un objet élément."
 
-#: library/xml.etree.elementtree.rst:614
+#: library/xml.etree.elementtree.rst:620
+#, fuzzy
 msgid ""
 "Parses an XML section into an element tree incrementally, and reports what's "
 "going on to the user.  *source* is a filename or :term:`file object` "
 "containing XML data.  *events* is a sequence of events to report back.  The "
-"supported events are the strings ``\"start\"``, ``\"end\"``, ``\"comment"
-"\"``, ``\"pi\"``, ``\"start-ns\"`` and ``\"end-ns\"`` (the \"ns\" events are "
-"used to get detailed namespace information).  If *events* is omitted, only ``"
-"\"end\"`` events are reported. *parser* is an optional parser instance.  If "
-"not given, the standard :class:`XMLParser` parser is used.  *parser* must be "
-"a subclass of :class:`XMLParser` and can only use the default :class:"
-"`TreeBuilder` as a target.  Returns an :term:`iterator` providing ``(event, "
-"elem)`` pairs."
+"supported events are the strings ``\"start\"``, ``\"end\"``, "
+"``\"comment\"``, ``\"pi\"``, ``\"start-ns\"`` and ``\"end-ns\"`` (the \"ns\" "
+"events are used to get detailed namespace information).  If *events* is "
+"omitted, only ``\"end\"`` events are reported. *parser* is an optional "
+"parser instance.  If not given, the standard :class:`XMLParser` parser is "
+"used.  *parser* must be a subclass of :class:`XMLParser` and can only use "
+"the default :class:`TreeBuilder` as a target. Returns an :term:`iterator` "
+"providing ``(event, elem)`` pairs; it has a ``root`` attribute that "
+"references the root element of the resulting XML tree once *source* is fully "
+"read."
 msgstr ""
 "Analyse progressivement une section XML pour produire une arborescence "
 "d'éléments et rapporte ce qui se passe à l'utilisateur. *source* est un nom "
@@ -877,7 +1163,7 @@ msgstr ""
 "class:`TreeBuilder` par défaut comme cible. Renvoie un :term:`itérateur "
 "<iterator>` fournissant des paires ``(event, elem)``."
 
-#: library/xml.etree.elementtree.rst:626
+#: library/xml.etree.elementtree.rst:634
 msgid ""
 "Note that while :func:`iterparse` builds the tree incrementally, it issues "
 "blocking reads on *source* (or the file it names).  As such, it's unsuitable "
@@ -890,7 +1176,7 @@ msgstr ""
 "les lectures ne peut pas être effectué. Pour une analyse entièrement non "
 "bloquante, voir :class:`XMLPullParser`."
 
-#: library/xml.etree.elementtree.rst:633
+#: library/xml.etree.elementtree.rst:641
 msgid ""
 ":func:`iterparse` only guarantees that it has seen the \">\" character of a "
 "starting tag when it emits a \"start\" event, so the attributes are defined, "
@@ -904,23 +1190,23 @@ msgstr ""
 "pas défini à ce stade. La même chose s'applique aux nœuds enfants de "
 "l'élément ; ils peuvent être présents ou non."
 
-#: library/xml.etree.elementtree.rst:639 library/xml.etree.elementtree.rst:1469
+#: library/xml.etree.elementtree.rst:647 library/xml.etree.elementtree.rst:1517
 msgid "If you need a fully populated element, look for \"end\" events instead."
 msgstr ""
 "Si vous avez besoin d'un élément entièrement rempli, recherchez plutôt les "
 "événements ``\"end\"``."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:641
+#: library/xml.etree.elementtree.rst:649
 msgid "The *parser* argument."
 msgstr "l'argument *parser*."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:644 library/xml.etree.elementtree.rst:1473
+#: library/xml.etree.elementtree.rst:652 library/xml.etree.elementtree.rst:1521
 msgid "The ``comment`` and ``pi`` events were added."
 msgstr "les évènements ``comment`` et ``pi`` ont été ajoutés."
 
-#: library/xml.etree.elementtree.rst:650
+#: library/xml.etree.elementtree.rst:658
 msgid ""
 "Parses an XML section into an element tree.  *source* is a filename or file "
 "object containing XML data.  *parser* is an optional parser instance.  If "
@@ -933,7 +1219,7 @@ msgstr ""
 "l'analyseur standard :class:`XMLParser` est utilisé. Renvoie une instance d':"
 "class:`ElementTree`."
 
-#: library/xml.etree.elementtree.rst:658
+#: library/xml.etree.elementtree.rst:666
 msgid ""
 "PI element factory.  This factory function creates a special element that "
 "will be serialized as an XML processing instruction.  *target* is a string "
@@ -947,12 +1233,13 @@ msgstr ""
 "fourni. Renvoie une instance d'élément, représentant l'instruction de "
 "traitement."
 
-#: library/xml.etree.elementtree.rst:663
+#: library/xml.etree.elementtree.rst:671
+#, fuzzy
 msgid ""
 "Note that :class:`XMLParser` skips over processing instructions in the input "
-"instead of creating comment objects for them. An :class:`ElementTree` will "
-"only contain processing instruction nodes if they have been inserted into to "
-"the tree using one of the :class:`Element` methods."
+"instead of creating PI objects for them. An :class:`ElementTree` will only "
+"contain processing instruction nodes if they have been inserted into to the "
+"tree using one of the :class:`Element` methods."
 msgstr ""
 "Notez que :class:`XMLParser` ignore les instructions de traitement dans "
 "l'entrée au lieu de créer des objets de commentaire pour elles. Un :class:"
@@ -960,7 +1247,7 @@ msgstr ""
 "ont été insérés dans l'arborescence à l'aide de l'une des méthodes d':class:"
 "`Element`."
 
-#: library/xml.etree.elementtree.rst:671
+#: library/xml.etree.elementtree.rst:679
 msgid ""
 "Registers a namespace prefix.  The registry is global, and any existing "
 "mapping for either the given prefix or the namespace URI will be removed. "
@@ -974,7 +1261,7 @@ msgstr ""
 "un URI d'espace de noms. Les balises et les attributs de cet espace de noms "
 "seront sérialisés avec le préfixe donné, si possible."
 
-#: library/xml.etree.elementtree.rst:682
+#: library/xml.etree.elementtree.rst:690
 msgid ""
 "Subelement factory.  This function creates an element instance, and appends "
 "it to an existing element."
@@ -982,7 +1269,7 @@ msgstr ""
 "Fabrique de sous-élément. Cette fonction crée une instance d'élément et "
 "l'ajoute à un élément existant."
 
-#: library/xml.etree.elementtree.rst:685
+#: library/xml.etree.elementtree.rst:693
 msgid ""
 "The element name, attribute names, and attribute values can be either "
 "bytestrings or Unicode strings.  *parent* is the parent element.  *tag* is "
@@ -997,16 +1284,16 @@ msgstr ""
 "attributs supplémentaires, donnés sous forme d'arguments nommés. Renvoie une "
 "instance d'élément."
 
-#: library/xml.etree.elementtree.rst:696
+#: library/xml.etree.elementtree.rst:704
 msgid ""
 "Generates a string representation of an XML element, including all "
 "subelements.  *element* is an :class:`Element` instance.  *encoding* [1]_ is "
 "the output encoding (default is US-ASCII).  Use ``encoding=\"unicode\"`` to "
 "generate a Unicode string (otherwise, a bytestring is generated).  *method* "
-"is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` (default is ``\"xml"
-"\"``). *xml_declaration*, *default_namespace* and *short_empty_elements* has "
-"the same meaning as in :meth:`ElementTree.write`. Returns an (optionally) "
-"encoded string containing the XML data."
+"is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` (default is "
+"``\"xml\"``). *xml_declaration*, *default_namespace* and "
+"*short_empty_elements* has the same meaning as in :meth:`ElementTree.write`. "
+"Returns an (optionally) encoded string containing the XML data."
 msgstr ""
 "Génère une représentation sous forme de chaîne d'un élément XML, y compris "
 "tous les sous-éléments. *element* est une instance de :class:`Element`. "
@@ -1019,18 +1306,20 @@ msgstr ""
 "(éventuellement) contenant les données XML."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:705 library/xml.etree.elementtree.rst:732
-#: library/xml.etree.elementtree.rst:1181
-msgid "The *short_empty_elements* parameter."
+#: library/xml.etree.elementtree.rst:713 library/xml.etree.elementtree.rst:740
+#: library/xml.etree.elementtree.rst:1194
+#, fuzzy
+msgid "Added the *short_empty_elements* parameter."
 msgstr "le paramètre *short_empty_elements*."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:708 library/xml.etree.elementtree.rst:735
-msgid "The *xml_declaration* and *default_namespace* parameters."
+#: library/xml.etree.elementtree.rst:716 library/xml.etree.elementtree.rst:743
+#, fuzzy
+msgid "Added the *xml_declaration* and *default_namespace* parameters."
 msgstr "les paramètres *xml_declaration* et *default_namespace*."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:711
+#: library/xml.etree.elementtree.rst:719
 msgid ""
 "The :func:`tostring` function now preserves the attribute order specified by "
 "the user."
@@ -1038,18 +1327,18 @@ msgstr ""
 "la fonction :func:`tostring` préserve désormais l'ordre des attributs "
 "spécifié par l'utilisateur."
 
-#: library/xml.etree.elementtree.rst:720
+#: library/xml.etree.elementtree.rst:728
 msgid ""
 "Generates a string representation of an XML element, including all "
 "subelements.  *element* is an :class:`Element` instance.  *encoding* [1]_ is "
 "the output encoding (default is US-ASCII).  Use ``encoding=\"unicode\"`` to "
 "generate a Unicode string (otherwise, a bytestring is generated).  *method* "
-"is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` (default is ``\"xml"
-"\"``). *xml_declaration*, *default_namespace* and *short_empty_elements* has "
-"the same meaning as in :meth:`ElementTree.write`. Returns a list of "
-"(optionally) encoded strings containing the XML data. It does not guarantee "
-"any specific sequence, except that ``b\"\".join(tostringlist(element)) == "
-"tostring(element)``."
+"is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` (default is "
+"``\"xml\"``). *xml_declaration*, *default_namespace* and "
+"*short_empty_elements* has the same meaning as in :meth:`ElementTree.write`. "
+"Returns a list of (optionally) encoded strings containing the XML data. It "
+"does not guarantee any specific sequence, except that ``b\"\"."
+"join(tostringlist(element)) == tostring(element)``."
 msgstr ""
 "Génère une représentation sous forme de chaîne d'un élément XML, y compris "
 "tous les sous-éléments. *element* est une instance de :class:`Element`. "
@@ -1064,7 +1353,7 @@ msgstr ""
 "tostring(element)``."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:738
+#: library/xml.etree.elementtree.rst:746
 msgid ""
 "The :func:`tostringlist` function now preserves the attribute order "
 "specified by the user."
@@ -1072,7 +1361,7 @@ msgstr ""
 "la fonction :func:`tostringlist` préserve désormais l'ordre des attributs "
 "spécifié par l'utilisateur."
 
-#: library/xml.etree.elementtree.rst:745
+#: library/xml.etree.elementtree.rst:753
 msgid ""
 "Parses an XML section from a string constant.  This function can be used to "
 "embed \"XML literals\" in Python code.  *text* is a string containing XML "
@@ -1085,7 +1374,7 @@ msgstr ""
 "une instance d'analyseur. S'il n'est pas fourni, l'analyseur standard :class:"
 "`XMLParser` est utilisé. Renvoie une instance d':class:`Element`."
 
-#: library/xml.etree.elementtree.rst:753
+#: library/xml.etree.elementtree.rst:761
 msgid ""
 "Parses an XML section from a string constant, and also returns a dictionary "
 "which maps from element id:s to elements.  *text* is a string containing XML "
@@ -1100,11 +1389,11 @@ msgstr ""
 "standard :class:`XMLParser` est utilisé. Renvoie un *n*-uplet contenant une "
 "instance d':class:`Element` et un dictionnaire."
 
-#: library/xml.etree.elementtree.rst:763
+#: library/xml.etree.elementtree.rst:771
 msgid "XInclude support"
 msgstr "Prise en charge de *XInclude*"
 
-#: library/xml.etree.elementtree.rst:765
+#: library/xml.etree.elementtree.rst:773
 msgid ""
 "This module provides limited support for `XInclude directives <https://www."
 "w3.org/TR/xinclude/>`_, via the :mod:`xml.etree.ElementInclude` helper "
@@ -1117,7 +1406,7 @@ msgstr ""
 "arbres et des chaînes de texte dans des arborescences d'éléments, en "
 "fonction des informations contenues dans l'arborescence."
 
-#: library/xml.etree.elementtree.rst:771
+#: library/xml.etree.elementtree.rst:779
 msgid ""
 "Here's an example that demonstrates use of the XInclude module. To include "
 "an XML document in the current document, use the ``{http://www.w3.org/2001/"
@@ -1126,10 +1415,19 @@ msgid ""
 msgstr ""
 "Voici un exemple qui montre l'utilisation du module *XInclude*. Pour inclure "
 "un document XML dans le document actuel, utilisez l'élément ``{http://www.w3."
-"org/2001/XInclude}include``, définissez l'attribut **parse** sur ``\"xml"
-"\"``  et utilisez l'attribut **href** pour spécifier le document à inclure."
+"org/2001/XInclude}include``, définissez l'attribut **parse** sur "
+"``\"xml\"``  et utilisez l'attribut **href** pour spécifier le document à "
+"inclure."
 
-#: library/xml.etree.elementtree.rst:780
+#: library/xml.etree.elementtree.rst:781
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<document xmlns:xi=\"http://www.w3.org/2001/XInclude\">\n"
+"  <xi:include href=\"source.xml\" parse=\"xml\" />\n"
+"</document>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:788
 msgid ""
 "By default, the **href** attribute is treated as a file name. You can use "
 "custom loaders to override this behaviour. Also note that the standard "
@@ -1140,7 +1438,7 @@ msgstr ""
 "Notez également que l'assistant standard ne prend pas en charge la syntaxe "
 "*XPointer*."
 
-#: library/xml.etree.elementtree.rst:782
+#: library/xml.etree.elementtree.rst:790
 msgid ""
 "To process this file, load it as usual, and pass the root element to the :"
 "mod:`xml.etree.ElementTree` module:"
@@ -1148,7 +1446,17 @@ msgstr ""
 "Pour traiter ce fichier, chargez-le comme d'habitude et passez l'élément "
 "racine au module :mod:`xml.etree.ElementTree` :"
 
-#: library/xml.etree.elementtree.rst:793
+#: library/xml.etree.elementtree.rst:792
+msgid ""
+"from xml.etree import ElementTree, ElementInclude\n"
+"\n"
+"tree = ElementTree.parse(\"document.xml\")\n"
+"root = tree.getroot()\n"
+"\n"
+"ElementInclude.include(root)"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:801
 msgid ""
 "The ElementInclude module replaces the ``{http://www.w3.org/2001/XInclude}"
 "include`` element with the root element from the **source.xml** document. "
@@ -1158,7 +1466,14 @@ msgstr ""
 "XInclude}include`` par l'élément racine du document **source.xml**. Le "
 "résultat pourrait ressembler à ceci :"
 
-#: library/xml.etree.elementtree.rst:801
+#: library/xml.etree.elementtree.rst:803
+msgid ""
+"<document xmlns:xi=\"http://www.w3.org/2001/XInclude\">\n"
+"  <para>This is a paragraph.</para>\n"
+"</document>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:809
 msgid ""
 "If the **parse** attribute is omitted, it defaults to \"xml\". The href "
 "attribute is required."
@@ -1166,7 +1481,7 @@ msgstr ""
 "Si l'attribut **parse** est omis, sa valeur par défaut est ``\"xml\"``. "
 "L'attribut *href* est obligatoire."
 
-#: library/xml.etree.elementtree.rst:803
+#: library/xml.etree.elementtree.rst:811
 msgid ""
 "To include a text document, use the ``{http://www.w3.org/2001/XInclude}"
 "include`` element, and set the **parse** attribute to \"text\":"
@@ -1174,19 +1489,35 @@ msgstr ""
 "Pour inclure un document texte, utilisez l'élément ``{http://www.w3.org/2001/"
 "XInclude}include`` et définissez l'attribut **parse** sur ``\"text\"`` :"
 
-#: library/xml.etree.elementtree.rst:812
+#: library/xml.etree.elementtree.rst:813
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<document xmlns:xi=\"http://www.w3.org/2001/XInclude\">\n"
+"  Copyright (c) <xi:include href=\"year.txt\" parse=\"text\" />.\n"
+"</document>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:820
 msgid "The result might look something like:"
 msgstr "Le résultat pourrait ressembler à ceci :"
 
-#: library/xml.etree.elementtree.rst:831
+#: library/xml.etree.elementtree.rst:822
 msgid ""
-"Default loader. This default loader reads an included resource from disk.  "
-"*href* is a URL. *parse* is for parse mode either \"xml\" or \"text\".  "
+"<document xmlns:xi=\"http://www.w3.org/2001/XInclude\">\n"
+"  Copyright (c) 2003.\n"
+"</document>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:840
+#, fuzzy
+msgid ""
+"Default loader. This default loader reads an included resource from disk. "
+"*href* is a URL.  *parse* is for parse mode either \"xml\" or \"text\". "
 "*encoding* is an optional text encoding.  If not given, encoding is "
-"``utf-8``.  Returns the expanded resource.  If the parse mode is ``\"xml"
-"\"``, this is an ElementTree instance.  If the parse mode is \"text\", this "
-"is a Unicode string.  If the loader fails, it can return None or raise an "
-"exception."
+"``utf-8``. Returns the expanded resource. If the parse mode is ``\"xml\"``, "
+"this is an :class:`~xml.etree.ElementTree.Element` instance. If the parse "
+"mode is ``\"text\"``, this is a string. If the loader fails, it can return "
+"``None`` or raise an exception."
 msgstr ""
 "Chargeur par défaut. Ce chargeur par défaut lit une ressource incluse à "
 "partir du disque. *href* est une URL. *parse* (le mode d'analyse) vaut soit "
@@ -1197,15 +1528,18 @@ msgstr ""
 "d'une chaîne Unicode. Si le chargeur échoue, il peut renvoyer ``None`` ou "
 "lever une exception."
 
-#: library/xml.etree.elementtree.rst:843
+#: library/xml.etree.elementtree.rst:851
+#, fuzzy
 msgid ""
-"This function expands XInclude directives.  *elem* is the root element.  "
-"*loader* is an optional resource loader.  If omitted, it defaults to :func:"
-"`default_loader`. If given, it should be a callable that implements the same "
-"interface as :func:`default_loader`.  *base_url* is base URL of the original "
-"file, to resolve relative include file references.  *max_depth* is the "
-"maximum number of recursive inclusions.  Limited to reduce the risk of "
-"malicious content explosion. Pass a negative value to disable the limitation."
+"This function expands XInclude directives in-place in tree pointed by "
+"*elem*. *elem* is either the root :class:`~xml.etree.ElementTree.Element` or "
+"an :class:`~xml.etree.ElementTree.ElementTree` instance to find such "
+"element. *loader* is an optional resource loader.  If omitted, it defaults "
+"to :func:`default_loader`. If given, it should be a callable that implements "
+"the same interface as :func:`default_loader`.  *base_url* is base URL of the "
+"original file, to resolve relative include file references.  *max_depth* is "
+"the maximum number of recursive inclusions.  Limited to reduce the risk of "
+"malicious content explosion. Pass ``None`` to disable the limitation."
 msgstr ""
 "Cette fonction étend les directives *XInclude*. *elem* est l'élément racine. "
 "*loader* est un chargeur de ressources facultatif. S'il est omis, la valeur "
@@ -1217,27 +1551,17 @@ msgstr ""
 "d’explosion de contenu malveillant. Passez une valeur négative pour "
 "désactiver la limite."
 
-#: library/xml.etree.elementtree.rst:851
-msgid ""
-"Returns the expanded resource.  If the parse mode is ``\"xml\"``, this is an "
-"ElementTree instance.  If the parse mode is \"text\", this is a Unicode "
-"string.  If the loader fails, it can return None or raise an exception."
-msgstr ""
-"Renvoie la ressource développée. Si le mode d'analyse est ``\"xml\"``, il "
-"s'agit d'une instance *ElementTree*. Si le mode d'analyse est ``\"text\"``, "
-"il s'agit d'une chaîne Unicode. Si le chargeur échoue, il peut renvoyer "
-"``None`` ou lever une exception."
-
 # suit un :
-#: library/xml.etree.elementtree.rst:856
-msgid "The *base_url* and *max_depth* parameters."
+#: library/xml.etree.elementtree.rst:861
+#, fuzzy
+msgid "Added the *base_url* and *max_depth* parameters."
 msgstr "les paramètres *base_url* et *max_depth*."
 
-#: library/xml.etree.elementtree.rst:863
+#: library/xml.etree.elementtree.rst:868
 msgid "Element Objects"
 msgstr "Objets *Element*"
 
-#: library/xml.etree.elementtree.rst:867
+#: library/xml.etree.elementtree.rst:876
 msgid ""
 "Element class.  This class defines the Element interface, and provides a "
 "reference implementation of this interface."
@@ -1245,7 +1569,7 @@ msgstr ""
 "Classe Element.  Cette classe définit l'interface Element et fournit une "
 "implémentation de référence de cette interface."
 
-#: library/xml.etree.elementtree.rst:870
+#: library/xml.etree.elementtree.rst:879
 msgid ""
 "The element name, attribute names, and attribute values can be either "
 "bytestrings or Unicode strings.  *tag* is the element name.  *attrib* is an "
@@ -1258,7 +1582,7 @@ msgstr ""
 "des éléments. *extra* contient des attributs supplémentaires, donnés sous "
 "forme d'arguments nommés."
 
-#: library/xml.etree.elementtree.rst:878
+#: library/xml.etree.elementtree.rst:887
 msgid ""
 "A string identifying what kind of data this element represents (the element "
 "type, in other words)."
@@ -1266,7 +1590,7 @@ msgstr ""
 "Chaîne identifiant le type de données que cet élément représente (en "
 "d'autres termes, le type d'élément)."
 
-#: library/xml.etree.elementtree.rst:885
+#: library/xml.etree.elementtree.rst:894
 msgid ""
 "These attributes can be used to hold additional data associated with the "
 "element.  Their values are usually strings but may be any application-"
@@ -1285,7 +1609,11 @@ msgstr ""
 "entre la balise de fin de l'élément et la balise suivante, soit ``None``. "
 "Pour les données XML"
 
-#: library/xml.etree.elementtree.rst:897
+#: library/xml.etree.elementtree.rst:902
+msgid "<a><b>1<c>2<d/>3</c></b>4</a>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:906
 msgid ""
 "the *a* element has ``None`` for both *text* and *tail* attributes, the *b* "
 "element has *text* ``\"1\"`` and *tail* ``\"4\"``, the *c* element has "
@@ -1297,20 +1625,20 @@ msgstr ""
 "*text* de l'élément *c* vaut ``\"2\"`` et *tail* vaut ``None``, et "
 "l'attribut *text* de l'élément *d* vaut ``None`` et *tail* vaut ``\"3\"``."
 
-#: library/xml.etree.elementtree.rst:902
+#: library/xml.etree.elementtree.rst:911
 msgid ""
-"To collect the inner text of an element, see :meth:`itertext`, for example ``"
-"\"\".join(element.itertext())``."
+"To collect the inner text of an element, see :meth:`itertext`, for example "
+"``\"\".join(element.itertext())``."
 msgstr ""
 "Pour récupérer le texte interne d'un élément, voir :meth:`itertext`, par "
 "exemple ``\"\".join(element.itertext())``."
 
-#: library/xml.etree.elementtree.rst:905
+#: library/xml.etree.elementtree.rst:914
 msgid "Applications may store arbitrary objects in these attributes."
 msgstr ""
 "Les applications peuvent stocker des objets arbitraires dans ces attributs."
 
-#: library/xml.etree.elementtree.rst:910
+#: library/xml.etree.elementtree.rst:919
 msgid ""
 "A dictionary containing the element's attributes.  Note that while the "
 "*attrib* value is always a real mutable Python dictionary, an ElementTree "
@@ -1325,13 +1653,13 @@ msgstr ""
 "le demande. Pour profiter de telles implémentations, utilisez les méthodes "
 "de dictionnaire ci-dessous autant que possible."
 
-#: library/xml.etree.elementtree.rst:916
+#: library/xml.etree.elementtree.rst:925
 msgid "The following dictionary-like methods work on the element attributes."
 msgstr ""
 "Les méthodes dictionnaire-compatibles suivantes traitent les attributs de "
 "l'élément."
 
-#: library/xml.etree.elementtree.rst:921
+#: library/xml.etree.elementtree.rst:930
 msgid ""
 "Resets an element.  This function removes all subelements, clears all "
 "attributes, and sets the text and tail attributes to ``None``."
@@ -1340,18 +1668,18 @@ msgstr ""
 "efface tous les attributs et définit les attributs *text* et *tail* sur "
 "``None``."
 
-#: library/xml.etree.elementtree.rst:927
+#: library/xml.etree.elementtree.rst:936
 msgid "Gets the element attribute named *key*."
 msgstr "Accède à l'attribut de l'élément nommé *key*."
 
-#: library/xml.etree.elementtree.rst:929
+#: library/xml.etree.elementtree.rst:938
 msgid ""
 "Returns the attribute value, or *default* if the attribute was not found."
 msgstr ""
 "Renvoie la valeur de l'attribut ou *default* si l'attribut n'a pas été "
 "trouvé."
 
-#: library/xml.etree.elementtree.rst:934
+#: library/xml.etree.elementtree.rst:943
 msgid ""
 "Returns the element attributes as a sequence of (name, value) pairs.  The "
 "attributes are returned in an arbitrary order."
@@ -1359,7 +1687,7 @@ msgstr ""
 "Renvoie les attributs de l'élément comme une séquence de paire (nom, "
 "valeur). Les attributs sont renvoyés dans un ordre arbitraire."
 
-#: library/xml.etree.elementtree.rst:940
+#: library/xml.etree.elementtree.rst:949
 msgid ""
 "Returns the elements attribute names as a list.  The names are returned in "
 "an arbitrary order."
@@ -1367,15 +1695,15 @@ msgstr ""
 "Renvoie les noms d'attributs des éléments sous forme de liste. Les noms sont "
 "renvoyés dans un ordre arbitraire."
 
-#: library/xml.etree.elementtree.rst:946
+#: library/xml.etree.elementtree.rst:955
 msgid "Set the attribute *key* on the element to *value*."
 msgstr "Change l'attribut *key* à l'élément *value*."
 
-#: library/xml.etree.elementtree.rst:948
+#: library/xml.etree.elementtree.rst:957
 msgid "The following methods work on the element's children (subelements)."
 msgstr "Les méthodes suivantes traitent les éléments enfants (sous-éléments)."
 
-#: library/xml.etree.elementtree.rst:953
+#: library/xml.etree.elementtree.rst:962
 msgid ""
 "Adds the element *subelement* to the end of this element's internal list of "
 "subelements.  Raises :exc:`TypeError` if *subelement* is not an :class:"
@@ -1385,16 +1713,17 @@ msgstr ""
 "de cet élément. Lève une :exc:`TypeError` si *subelement* n'est pas un :"
 "class:`Element`."
 
-#: library/xml.etree.elementtree.rst:960
+#: library/xml.etree.elementtree.rst:969
+#, fuzzy
 msgid ""
-"Appends *subelements* from a sequence object with zero or more elements. "
-"Raises :exc:`TypeError` if a subelement is not an :class:`Element`."
+"Appends *subelements* from an iterable of elements. Raises :exc:`TypeError` "
+"if a subelement is not an :class:`Element`."
 msgstr ""
 "Ajoute *subelements* à partir d'un objet séquence avec zéro ou plusieurs "
 "éléments. Lève une :exc:`TypeError` si un sous-élément n'est pas un :class:"
 "`Element`."
 
-#: library/xml.etree.elementtree.rst:968
+#: library/xml.etree.elementtree.rst:977
 msgid ""
 "Finds the first subelement matching *match*.  *match* may be a tag name or "
 "a :ref:`path <elementtree-xpath>`.  Returns an element instance or "
@@ -1409,7 +1738,7 @@ msgstr ""
 "``''`` comme préfixe pour déplacer tous les noms de balises sans préfixe "
 "dans l'expression dans l'espace de noms donné."
 
-#: library/xml.etree.elementtree.rst:977
+#: library/xml.etree.elementtree.rst:986
 msgid ""
 "Finds all matching subelements, by tag name or :ref:`path <elementtree-"
 "xpath>`.  Returns a list containing all matching elements in document "
@@ -1424,7 +1753,7 @@ msgstr ""
 "complets. Passez ``''`` comme préfixe pour déplacer tous les noms de balises "
 "sans préfixe dans l'expression dans l'espace de noms donné."
 
-#: library/xml.etree.elementtree.rst:986
+#: library/xml.etree.elementtree.rst:995
 msgid ""
 "Finds text for the first subelement matching *match*.  *match* may be a tag "
 "name or a :ref:`path <elementtree-xpath>`.  Returns the text content of the "
@@ -1443,7 +1772,7 @@ msgstr ""
 "complets. Passez ``''`` comme préfixe pour déplacer tous les noms de balises "
 "sans préfixe dans l'expression dans l'espace de noms donné."
 
-#: library/xml.etree.elementtree.rst:997
+#: library/xml.etree.elementtree.rst:1006
 msgid ""
 "Inserts *subelement* at the given position in this element.  Raises :exc:"
 "`TypeError` if *subelement* is not an :class:`Element`."
@@ -1451,7 +1780,7 @@ msgstr ""
 "Insère le *subelement* à la position donnée dans cet élément. Lève une :exc:"
 "`TypeError` si *subelement* n'est pas un :class:`Element`."
 
-#: library/xml.etree.elementtree.rst:1003
+#: library/xml.etree.elementtree.rst:1012
 msgid ""
 "Creates a tree :term:`iterator` with the current element as the root. The "
 "iterator iterates over this element and all elements below it, in document "
@@ -1466,7 +1795,7 @@ msgstr ""
 "sont renvoyés par l'itérateur. Si l'arborescence est modifiée au cours de "
 "l'itération, le résultat est indéfini."
 
-#: library/xml.etree.elementtree.rst:1014
+#: library/xml.etree.elementtree.rst:1023
 msgid ""
 "Finds all matching subelements, by tag name or :ref:`path <elementtree-"
 "xpath>`.  Returns an iterable yielding all matching elements in document "
@@ -1479,7 +1808,7 @@ msgstr ""
 "correspondances facultatif de préfixes d'espaces de noms vers des noms "
 "complets."
 
-#: library/xml.etree.elementtree.rst:1025
+#: library/xml.etree.elementtree.rst:1034
 msgid ""
 "Creates a text iterator.  The iterator loops over this element and all "
 "subelements, in document order, and returns all inner text."
@@ -1487,7 +1816,7 @@ msgstr ""
 "Crée un itérateur de texte. L'itérateur parcourt cet élément et tous les "
 "sous-éléments, dans l'ordre du document, et renvoie tout le texte interne."
 
-#: library/xml.etree.elementtree.rst:1033
+#: library/xml.etree.elementtree.rst:1042
 msgid ""
 "Creates a new element object of the same type as this element.  Do not call "
 "this method, use the :func:`SubElement` factory function instead."
@@ -1495,7 +1824,7 @@ msgstr ""
 "Crée un nouvel objet élément du même type que cet élément. N'appelez pas "
 "cette méthode, utilisez plutôt la fonction de fabrique :func:`SubElement`."
 
-#: library/xml.etree.elementtree.rst:1039
+#: library/xml.etree.elementtree.rst:1048
 msgid ""
 "Removes *subelement* from the element.  Unlike the find\\* methods this "
 "method compares elements based on the instance identity, not on tag value or "
@@ -1505,7 +1834,7 @@ msgstr ""
 "cette méthode compare les éléments en fonction de l'identité de l'instance, "
 "et non de la valeur ou du contenu de la balise."
 
-#: library/xml.etree.elementtree.rst:1043
+#: library/xml.etree.elementtree.rst:1052
 msgid ""
 ":class:`Element` objects also support the following sequence type methods "
 "for working with subelements: :meth:`~object.__delitem__`, :meth:`~object."
@@ -1516,17 +1845,34 @@ msgstr ""
 "`~object.__delitem__`, :meth:`~object.__getitem__`, :meth:`~object."
 "__setitem__`, :meth:`~object.__len__`."
 
-#: library/xml.etree.elementtree.rst:1048
+#: library/xml.etree.elementtree.rst:1057
+#, fuzzy
 msgid ""
-"Caution: Elements with no subelements will test as ``False``.  This behavior "
-"will change in future versions.  Use specific ``len(elem)`` or ``elem is "
-"None`` test instead. ::"
+"Caution: Elements with no subelements will test as ``False``.  In a future "
+"release of Python, all elements will test as ``True`` regardless of whether "
+"subelements exist.  Instead, prefer explicit ``len(elem)`` or ``elem is not "
+"None`` tests.::"
 msgstr ""
 "Attention : les éléments sans sous-élément sont évalués comme ``False``. Ce "
 "comportement changera dans les versions futures. Utilisez plutôt un test "
 "spécifique ``len(elem)`` ou ``elem is None``. ::"
 
-#: library/xml.etree.elementtree.rst:1060
+#: library/xml.etree.elementtree.rst:1062
+msgid ""
+"element = root.find('foo')\n"
+"\n"
+"if not element:  # careful!\n"
+"    print(\"element not found, or element has no subelements\")\n"
+"\n"
+"if element is None:\n"
+"    print(\"element not found\")"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1070
+msgid "Testing the truth value of an Element emits :exc:`DeprecationWarning`."
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1073
 msgid ""
 "Prior to Python 3.8, the serialisation order of the XML attributes of "
 "elements was artificially made predictable by sorting the attributes by "
@@ -1541,7 +1887,7 @@ msgstr ""
 "l'ordre dans lequel les attributs ont été initialement analysés ou créés par "
 "le code utilisateur."
 
-#: library/xml.etree.elementtree.rst:1066
+#: library/xml.etree.elementtree.rst:1079
 msgid ""
 "In general, user code should try not to depend on a specific ordering of "
 "attributes, given that the `XML Information Set <https://www.w3.org/TR/xml-"
@@ -1560,7 +1906,7 @@ msgstr ""
 "test, la sérialisation canonique est disponible avec la fonction :func:"
 "`canonicalize`."
 
-#: library/xml.etree.elementtree.rst:1074
+#: library/xml.etree.elementtree.rst:1087
 msgid ""
 "In cases where canonical output is not applicable but a specific attribute "
 "order is still desirable on output, code should aim for creating the "
@@ -1578,10 +1924,22 @@ msgstr ""
 "création de l'élément ::"
 
 #: library/xml.etree.elementtree.rst:1094
+msgid ""
+"def reorder_attributes(root):\n"
+"    for el in root.iter():\n"
+"        attrib = el.attrib\n"
+"        if len(attrib) > 1:\n"
+"            # adjust attribute order, e.g. by sorting\n"
+"            attribs = sorted(attrib.items())\n"
+"            attrib.clear()\n"
+"            attrib.update(attribs)"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1107
 msgid "ElementTree Objects"
 msgstr "Objets *ElementTree*"
 
-#: library/xml.etree.elementtree.rst:1099
+#: library/xml.etree.elementtree.rst:1112
 msgid ""
 "ElementTree wrapper class.  This class represents an entire element "
 "hierarchy, and adds some extra support for serialization to and from "
@@ -1591,7 +1949,7 @@ msgstr ""
 "d'éléments entière et ajoute une prise en charge supplémentaire pour la "
 "sérialisation vers et depuis le XML standard."
 
-#: library/xml.etree.elementtree.rst:1103
+#: library/xml.etree.elementtree.rst:1116
 msgid ""
 "*element* is the root element.  The tree is initialized with the contents of "
 "the XML *file* if given."
@@ -1599,7 +1957,7 @@ msgstr ""
 "*element* est l'élément racine. L'arborescence est initialisée avec le "
 "contenu du fichier XML *file* s'il est fourni."
 
-#: library/xml.etree.elementtree.rst:1109
+#: library/xml.etree.elementtree.rst:1122
 msgid ""
 "Replaces the root element for this tree.  This discards the current contents "
 "of the tree, and replaces it with the given element.  Use with care.  "
@@ -1609,27 +1967,27 @@ msgstr ""
 "actuel de l'arborescence et le remplace par l'élément donné. À utiliser avec "
 "précaution. *element* est une instance d'élément."
 
-#: library/xml.etree.elementtree.rst:1116
+#: library/xml.etree.elementtree.rst:1129
 msgid "Same as :meth:`Element.find`, starting at the root of the tree."
 msgstr "Comme :meth:`Element.find`, commence à la racine de l'arbre."
 
-#: library/xml.etree.elementtree.rst:1121
+#: library/xml.etree.elementtree.rst:1134
 msgid "Same as :meth:`Element.findall`, starting at the root of the tree."
 msgstr ""
 "Identique à :meth:`Element.findall`, en commençant à la racine de "
 "l'arborescence."
 
-#: library/xml.etree.elementtree.rst:1126
+#: library/xml.etree.elementtree.rst:1139
 msgid "Same as :meth:`Element.findtext`, starting at the root of the tree."
 msgstr ""
 "Identique à :meth:`Element.findtext`, en commençant à la racine de "
 "l'arborescence."
 
-#: library/xml.etree.elementtree.rst:1131
+#: library/xml.etree.elementtree.rst:1144
 msgid "Returns the root element for this tree."
 msgstr "Renvoie l'élément racine de l'arbre."
 
-#: library/xml.etree.elementtree.rst:1136
+#: library/xml.etree.elementtree.rst:1149
 msgid ""
 "Creates and returns a tree iterator for the root element.  The iterator "
 "loops over all elements in this tree, in section order.  *tag* is the tag to "
@@ -1640,13 +1998,13 @@ msgstr ""
 "des sections. *tag* est la balise à rechercher (la valeur par défaut est de "
 "renvoyer tous les éléments)."
 
-#: library/xml.etree.elementtree.rst:1143
+#: library/xml.etree.elementtree.rst:1156
 msgid "Same as :meth:`Element.iterfind`, starting at the root of the tree."
 msgstr ""
 "Identique à :meth:`Element.iterfind`, en commençant à la racine de "
 "l'arborescence."
 
-#: library/xml.etree.elementtree.rst:1150
+#: library/xml.etree.elementtree.rst:1163
 msgid ""
 "Loads an external XML section into this element tree.  *source* is a file "
 "name or :term:`file object`.  *parser* is an optional parser instance. If "
@@ -1659,19 +2017,19 @@ msgstr ""
 "standard :class:`XMLParser` est utilisé. Renvoie l'élément racine de la "
 "section."
 
-#: library/xml.etree.elementtree.rst:1160
+#: library/xml.etree.elementtree.rst:1173
 msgid ""
 "Writes the element tree to a file, as XML.  *file* is a file name, or a :"
 "term:`file object` opened for writing.  *encoding* [1]_ is the output "
 "encoding (default is US-ASCII). *xml_declaration* controls if an XML "
 "declaration should be added to the file.  Use ``False`` for never, ``True`` "
 "for always, ``None`` for only if not US-ASCII or UTF-8 or Unicode (default "
-"is ``None``). *default_namespace* sets the default XML namespace (for \"xmlns"
-"\"). *method* is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` (default "
-"is ``\"xml\"``). The keyword-only *short_empty_elements* parameter controls "
-"the formatting of elements that contain no content.  If ``True`` (the "
-"default), they are emitted as a single self-closed tag, otherwise they are "
-"emitted as a pair of start/end tags."
+"is ``None``). *default_namespace* sets the default XML namespace (for "
+"\"xmlns\"). *method* is either ``\"xml\"``, ``\"html\"`` or ``\"text\"`` "
+"(default is ``\"xml\"``). The keyword-only *short_empty_elements* parameter "
+"controls the formatting of elements that contain no content.  If ``True`` "
+"(the default), they are emitted as a single self-closed tag, otherwise they "
+"are emitted as a pair of start/end tags."
 msgstr ""
 "Écrit l'arborescence des éléments dans un fichier, au format XML. *file* est "
 "un nom de fichier ou un :term:`objet fichier <file object>` ouvert en "
@@ -1688,13 +2046,14 @@ msgstr ""
 "seule balise auto-fermée, sinon ils sont écrits sous la forme d'une paire de "
 "balises de début-fin."
 
-#: library/xml.etree.elementtree.rst:1174
+#: library/xml.etree.elementtree.rst:1187
 msgid ""
 "The output is either a string (:class:`str`) or binary (:class:`bytes`). "
-"This is controlled by the *encoding* argument.  If *encoding* is ``\"unicode"
-"\"``, the output is a string; otherwise, it's binary.  Note that this may "
-"conflict with the type of *file* if it's an open :term:`file object`; make "
-"sure you do not try to write a string to a binary stream and vice versa."
+"This is controlled by the *encoding* argument.  If *encoding* is "
+"``\"unicode\"``, the output is a string; otherwise, it's binary.  Note that "
+"this may conflict with the type of *file* if it's an open :term:`file "
+"object`; make sure you do not try to write a string to a binary stream and "
+"vice versa."
 msgstr ""
 "La sortie est une chaîne (:class:`str`) ou du binaire (:class:`bytes`). "
 "C'est contrôlé par l'argument *encoding*. Si *encoding* est ``\"unicode\"``, "
@@ -1704,7 +2063,7 @@ msgstr ""
 "chaîne dans un flux binaire et vice versa."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:1184
+#: library/xml.etree.elementtree.rst:1197
 msgid ""
 "The :meth:`write` method now preserves the attribute order specified by the "
 "user."
@@ -1712,11 +2071,24 @@ msgstr ""
 "la méthode :meth:`write` préserve désormais l'ordre des attributs spécifié "
 "par l'utilisateur."
 
-#: library/xml.etree.elementtree.rst:1189
+#: library/xml.etree.elementtree.rst:1202
 msgid "This is the XML file that is going to be manipulated::"
 msgstr "Voici le fichier XML à manipuler ::"
 
-#: library/xml.etree.elementtree.rst:1201
+#: library/xml.etree.elementtree.rst:1204
+msgid ""
+"<html>\n"
+"    <head>\n"
+"        <title>Example page</title>\n"
+"    </head>\n"
+"    <body>\n"
+"        <p>Moved to <a href=\"http://example.org/\">example.org</a>\n"
+"        or <a href=\"http://example.com/\">example.com</a>.</p>\n"
+"    </body>\n"
+"</html>"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1214
 msgid ""
 "Example of changing the attribute \"target\" of every link in first "
 "paragraph::"
@@ -1724,11 +2096,29 @@ msgstr ""
 "Exemple de modification de l'attribut *target* de chaque lien dans le "
 "premier paragraphe ::"
 
-#: library/xml.etree.elementtree.rst:1220
+#: library/xml.etree.elementtree.rst:1216
+msgid ""
+">>> from xml.etree.ElementTree import ElementTree\n"
+">>> tree = ElementTree()\n"
+">>> tree.parse(\"index.xhtml\")\n"
+"<Element 'html' at 0xb77e6fac>\n"
+">>> p = tree.find(\"body/p\")     # Finds first occurrence of tag p in body\n"
+">>> p\n"
+"<Element 'p' at 0xb77ec26c>\n"
+">>> links = list(p.iter(\"a\"))   # Returns list of all links\n"
+">>> links\n"
+"[<Element 'a' at 0xb77ec2ac>, <Element 'a' at 0xb77ec1cc>]\n"
+">>> for i in links:             # Iterates through all found links\n"
+"...     i.attrib[\"target\"] = \"blank\"\n"
+"...\n"
+">>> tree.write(\"output.xhtml\")"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1234
 msgid "QName Objects"
 msgstr "Objets *QName*"
 
-#: library/xml.etree.elementtree.rst:1225
+#: library/xml.etree.elementtree.rst:1239
 msgid ""
 "QName wrapper.  This can be used to wrap a QName attribute value, in order "
 "to get proper namespace handling on output.  *text_or_uri* is a string "
@@ -1745,11 +2135,11 @@ msgstr ""
 "un URI et cet argument est interprété comme un nom local. Les instances :"
 "class:`QName` sont opaques."
 
-#: library/xml.etree.elementtree.rst:1237
+#: library/xml.etree.elementtree.rst:1251
 msgid "TreeBuilder Objects"
 msgstr "Objets *TreeBuilder*"
 
-#: library/xml.etree.elementtree.rst:1243
+#: library/xml.etree.elementtree.rst:1257
 msgid ""
 "Generic element structure builder.  This builder converts a sequence of "
 "start, data, end, comment and pi method calls to a well-formed element "
@@ -1762,7 +2152,7 @@ msgstr ""
 "créer une structure d'éléments à l'aide d'un analyseur XML personnalisé ou "
 "d'un analyseur pour un autre type de format XML."
 
-#: library/xml.etree.elementtree.rst:1248
+#: library/xml.etree.elementtree.rst:1262
 msgid ""
 "*element_factory*, when given, must be a callable accepting two positional "
 "arguments: a tag and a dict of attributes.  It is expected to return a new "
@@ -1772,7 +2162,7 @@ msgstr ""
 "deux arguments positionnels : une balise et un dictionnaire d'attributs. "
 "Elle est censée renvoyer une nouvelle instance d'élément."
 
-#: library/xml.etree.elementtree.rst:1252
+#: library/xml.etree.elementtree.rst:1266
 msgid ""
 "The *comment_factory* and *pi_factory* functions, when given, should behave "
 "like the :func:`Comment` and :func:`ProcessingInstruction` functions to "
@@ -1790,7 +2180,7 @@ msgstr ""
 "s'ils apparaissent dans l'élément racine (mais pas à l'extérieur de celui-"
 "ci)."
 
-#: library/xml.etree.elementtree.rst:1261
+#: library/xml.etree.elementtree.rst:1275
 msgid ""
 "Flushes the builder buffers, and returns the toplevel document element.  "
 "Returns an :class:`Element` instance."
@@ -1798,7 +2188,7 @@ msgstr ""
 "Vide les tampons du générateur et renvoie l'élément de document de niveau "
 "supérieur. Renvoie une instance d':class:`Element`."
 
-#: library/xml.etree.elementtree.rst:1267
+#: library/xml.etree.elementtree.rst:1281
 msgid ""
 "Adds text to the current element.  *data* is a string.  This should be "
 "either a bytestring, or a Unicode string."
@@ -1806,7 +2196,7 @@ msgstr ""
 "Ajoute du texte à l'élément courant.  *data* est une chaîne de caractères.  "
 "Cela peut être une chaîne d'octets ou une chaîne Unicode."
 
-#: library/xml.etree.elementtree.rst:1273
+#: library/xml.etree.elementtree.rst:1287
 msgid ""
 "Closes the current element.  *tag* is the element name.  Returns the closed "
 "element."
@@ -1814,7 +2204,7 @@ msgstr ""
 "Ferme l'élément courant.  *tag* est le nom de l'élément.  Renvoie l'élément "
 "fermé."
 
-#: library/xml.etree.elementtree.rst:1279
+#: library/xml.etree.elementtree.rst:1293
 msgid ""
 "Opens a new element.  *tag* is the element name.  *attrs* is a dictionary "
 "containing element attributes.  Returns the opened element."
@@ -1822,7 +2212,7 @@ msgstr ""
 "Ouvre un nouvel élément. *tag* est le nom de l'élément. *attrs* est un "
 "dictionnaire contenant les attributs de l'élément. Renvoie l'élément ouvert."
 
-#: library/xml.etree.elementtree.rst:1285
+#: library/xml.etree.elementtree.rst:1299
 msgid ""
 "Creates a comment with the given *text*.  If ``insert_comments`` is true, "
 "this will also add it to the tree."
@@ -1830,15 +2220,16 @@ msgstr ""
 "Crée un commentaire avec le *text* donné. Si ``insert_comments`` est vrai, "
 "cela l'ajoute également à l'arborescence."
 
-#: library/xml.etree.elementtree.rst:1293
+#: library/xml.etree.elementtree.rst:1307
+#, fuzzy
 msgid ""
-"Creates a comment with the given *target* name and *text*.  If "
+"Creates a process instruction with the given *target* name and *text*. If "
 "``insert_pis`` is true, this will also add it to the tree."
 msgstr ""
 "Crée un commentaire avec le nom *target* et le *text* donnés. Si "
 "``insert_pis`` est vrai, cela l'ajoute également à l'arborescence."
 
-#: library/xml.etree.elementtree.rst:1299
+#: library/xml.etree.elementtree.rst:1313
 msgid ""
 "In addition, a custom :class:`TreeBuilder` object can provide the following "
 "methods:"
@@ -1846,7 +2237,7 @@ msgstr ""
 "De plus, un objet :class:`TreeBuilder` personnalisé peut fournir les "
 "méthodes suivantes :"
 
-#: library/xml.etree.elementtree.rst:1304
+#: library/xml.etree.elementtree.rst:1318
 msgid ""
 "Handles a doctype declaration.  *name* is the doctype name.  *pubid* is the "
 "public identifier.  *system* is the system identifier.  This method does not "
@@ -1856,7 +2247,7 @@ msgstr ""
 "*pubid* est l'identifiant public. *system* est l'identifiant du système. "
 "Cette méthode n'existe pas sur la classe par défaut :class:`TreeBuilder`."
 
-#: library/xml.etree.elementtree.rst:1312
+#: library/xml.etree.elementtree.rst:1326
 msgid ""
 "Is called whenever the parser encounters a new namespace declaration, before "
 "the ``start()`` callback for the opening element that defines it. *prefix* "
@@ -1869,7 +2260,7 @@ msgstr ""
 "du préfixe d'espace de noms déclaré dans le cas contraire. *uri* est l'URI "
 "de l'espace de noms."
 
-#: library/xml.etree.elementtree.rst:1321
+#: library/xml.etree.elementtree.rst:1335
 msgid ""
 "Is called after the ``end()`` callback of an element that declared a "
 "namespace prefix mapping, with the name of the *prefix* that went out of "
@@ -1879,7 +2270,7 @@ msgstr ""
 "correspondance de préfixe d'espace de noms, avec le nom du *prefix* qui "
 "passe hors de portée."
 
-#: library/xml.etree.elementtree.rst:1333
+#: library/xml.etree.elementtree.rst:1347
 msgid ""
 "A `C14N 2.0 <https://www.w3.org/TR/xml-c14n2/>`_ writer.  Arguments are the "
 "same as for the :func:`canonicalize` function.  This class does not build a "
@@ -1891,11 +2282,11 @@ msgstr ""
 "construit pas d'arborescence mais traduit les événements de rappel "
 "directement sous une forme sérialisée à l'aide de la fonction *write*."
 
-#: library/xml.etree.elementtree.rst:1344
+#: library/xml.etree.elementtree.rst:1358
 msgid "XMLParser Objects"
 msgstr "Objets *XMLParser*"
 
-#: library/xml.etree.elementtree.rst:1349
+#: library/xml.etree.elementtree.rst:1363
 msgid ""
 "This class is the low-level building block of the module.  It uses :mod:`xml."
 "parsers.expat` for efficient, event-based parsing of XML.  It can be fed XML "
@@ -1915,15 +2306,16 @@ msgstr ""
 "fichier XML."
 
 # suit un :
-#: library/xml.etree.elementtree.rst:1357
+#: library/xml.etree.elementtree.rst:1371
+#, fuzzy
 msgid ""
 "Parameters are now :ref:`keyword-only <keyword-only_parameter>`. The *html* "
-"argument no longer supported."
+"argument is no longer supported."
 msgstr ""
 "les paramètres sont désormais :ref:`nommés uniquement <keyword-"
 "only_parameter>`. L'argument *html* n'est plus pris en charge."
 
-#: library/xml.etree.elementtree.rst:1364
+#: library/xml.etree.elementtree.rst:1378
 msgid ""
 "Finishes feeding data to the parser.  Returns the result of calling the "
 "``close()`` method of the *target* passed during construction; by default, "
@@ -1933,11 +2325,30 @@ msgstr ""
 "la méthode ``close()`` de la *target* passée lors de la construction ; par "
 "défaut, il s'agit de l'élément de plus haut niveau du document."
 
-#: library/xml.etree.elementtree.rst:1371
+#: library/xml.etree.elementtree.rst:1385
 msgid "Feeds data to the parser.  *data* is encoded data."
 msgstr "Fournit des données à l’analyseur. *data* est une donnée encodée."
 
-#: library/xml.etree.elementtree.rst:1373
+#: library/xml.etree.elementtree.rst:1390
+#: library/xml.etree.elementtree.rst:1468
+msgid ""
+"Triggers parsing of any previously fed unparsed data, which can be used to "
+"ensure more immediate feedback, in particular with Expat >=2.6.0. The "
+"implementation of :meth:`flush` temporarily disables reparse deferral with "
+"Expat (if currently enabled) and triggers a reparse. Disabling reparse "
+"deferral has security consequences; please see :meth:`xml.parsers.expat."
+"xmlparser.SetReparseDeferralEnabled` for details."
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1397
+#: library/xml.etree.elementtree.rst:1475
+msgid ""
+"Note that :meth:`flush` has been backported to some prior releases of "
+"CPython as a security fix.  Check for availability of :meth:`flush` using :"
+"func:`hasattr` if used in code running across a variety of Python versions."
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1405
 msgid ""
 ":meth:`XMLParser.feed` calls *target*\\'s ``start(tag, attrs_dict)`` method "
 "for each opening tag, its ``end(tag)`` method for each closing tag, and data "
@@ -1956,36 +2367,71 @@ msgstr ""
 "chose que seulement construire une structure arborescente. Voici un exemple "
 "de comptage de la profondeur maximale d'un fichier XML ::"
 
-#: library/xml.etree.elementtree.rst:1417
+#: library/xml.etree.elementtree.rst:1413
+msgid ""
+">>> from xml.etree.ElementTree import XMLParser\n"
+">>> class MaxDepth:                     # The target object of the parser\n"
+"...     maxDepth = 0\n"
+"...     depth = 0\n"
+"...     def start(self, tag, attrib):   # Called for each opening tag.\n"
+"...         self.depth += 1\n"
+"...         if self.depth > self.maxDepth:\n"
+"...             self.maxDepth = self.depth\n"
+"...     def end(self, tag):             # Called for each closing tag.\n"
+"...         self.depth -= 1\n"
+"...     def data(self, data):\n"
+"...         pass            # We do not need to do anything with data.\n"
+"...     def close(self):    # Called when all data has been parsed.\n"
+"...         return self.maxDepth\n"
+"...\n"
+">>> target = MaxDepth()\n"
+">>> parser = XMLParser(target=target)\n"
+">>> exampleXml = \"\"\"\n"
+"... <a>\n"
+"...   <b>\n"
+"...   </b>\n"
+"...   <b>\n"
+"...     <c>\n"
+"...       <d>\n"
+"...       </d>\n"
+"...     </c>\n"
+"...   </b>\n"
+"... </a>\"\"\"\n"
+">>> parser.feed(exampleXml)\n"
+">>> parser.close()\n"
+"4"
+msgstr ""
+
+#: library/xml.etree.elementtree.rst:1449
 msgid "XMLPullParser Objects"
 msgstr "Objets *XMLPullParser*"
 
-#: library/xml.etree.elementtree.rst:1421
+#: library/xml.etree.elementtree.rst:1453
 msgid ""
 "A pull parser suitable for non-blocking applications.  Its input-side API is "
 "similar to that of :class:`XMLParser`, but instead of pushing calls to a "
 "callback target, :class:`XMLPullParser` collects an internal list of parsing "
 "events and lets the user read from it. *events* is a sequence of events to "
-"report back.  The supported events are the strings ``\"start\"``, ``\"end"
-"\"``, ``\"comment\"``, ``\"pi\"``, ``\"start-ns\"`` and ``\"end-ns\"`` (the "
-"\"ns\" events are used to get detailed namespace information).  If *events* "
-"is omitted, only ``\"end\"`` events are reported."
+"report back.  The supported events are the strings ``\"start\"``, "
+"``\"end\"``, ``\"comment\"``, ``\"pi\"``, ``\"start-ns\"`` and ``\"end-"
+"ns\"`` (the \"ns\" events are used to get detailed namespace information).  "
+"If *events* is omitted, only ``\"end\"`` events are reported."
 msgstr ""
 "Analyseur à flux tiré adapté aux applications non bloquantes. Son API côté "
 "entrée est similaire à celle de :class:`XMLParser`, mais au lieu de pousser "
 "les appels vers une cible de rappel, :class:`XMLPullParser` collecte une "
 "liste interne d'événements d'analyse et permet à l'utilisateur de la lire. "
 "*events* est une séquence d'événements à signaler. Les événements pris en "
-"charge sont les chaînes ``\"start\"``, ``\"end\"``, ``\"comment\"``, ``\"pi"
-"\"``, ``\"start-ns\"`` et ``\"end-ns\"`` (les événements ``\"ns\"`` sont "
-"utilisés pour obtenir des informations détaillées sur les espaces de noms). "
-"Si *events* est omis, seuls les événements ``\"end\"`` sont rapportés."
+"charge sont les chaînes ``\"start\"``, ``\"end\"``, ``\"comment\"``, "
+"``\"pi\"``, ``\"start-ns\"`` et ``\"end-ns\"`` (les événements ``\"ns\"`` "
+"sont utilisés pour obtenir des informations détaillées sur les espaces de "
+"noms). Si *events* est omis, seuls les événements ``\"end\"`` sont rapportés."
 
-#: library/xml.etree.elementtree.rst:1432
+#: library/xml.etree.elementtree.rst:1464
 msgid "Feed the given bytes data to the parser."
 msgstr "Transmet les données d’octets à l’analyseur."
 
-#: library/xml.etree.elementtree.rst:1436
+#: library/xml.etree.elementtree.rst:1484
 msgid ""
 "Signal the parser that the data stream is terminated. Unlike :meth:"
 "`XMLParser.close`, this method always returns :const:`None`. Any events not "
@@ -1997,7 +2443,7 @@ msgstr ""
 "les événements non encore récupérés lorsque l'analyseur est fermé peuvent "
 "toujours être lus avec :meth:`read_events`."
 
-#: library/xml.etree.elementtree.rst:1443
+#: library/xml.etree.elementtree.rst:1491
 msgid ""
 "Return an iterator over the events which have been encountered in the data "
 "fed to the parser.  The iterator yields ``(event, elem)`` pairs, where "
@@ -2011,16 +2457,16 @@ msgstr ""
 "exemple ``\"end\"``) et *elem* est l'objet :class:`Element` rencontré, ou "
 "une autre valeur de contexte comme suit."
 
-#: library/xml.etree.elementtree.rst:1449
+#: library/xml.etree.elementtree.rst:1497
 msgid "``start``, ``end``: the current Element."
 msgstr "``start``, ``end`` : l'élément actuel."
 
-#: library/xml.etree.elementtree.rst:1450
+#: library/xml.etree.elementtree.rst:1498
 msgid "``comment``, ``pi``: the current comment / processing instruction"
 msgstr ""
 "``comment``, ``pi`` : le commentaire ou l'instruction de traitement actuel"
 
-#: library/xml.etree.elementtree.rst:1451
+#: library/xml.etree.elementtree.rst:1499
 msgid ""
 "``start-ns``: a tuple ``(prefix, uri)`` naming the declared namespace "
 "mapping."
@@ -2028,11 +2474,11 @@ msgstr ""
 "``start-ns`` : couple ``(prefix, uri)`` nommant la correspondance d'espace "
 "de noms déclarée."
 
-#: library/xml.etree.elementtree.rst:1453
+#: library/xml.etree.elementtree.rst:1501
 msgid "``end-ns``: :const:`None` (this may change in a future version)"
 msgstr "``end-ns`` : :const:`None` (cela peut changer dans une version future)"
 
-#: library/xml.etree.elementtree.rst:1455
+#: library/xml.etree.elementtree.rst:1503
 msgid ""
 "Events provided in a previous call to :meth:`read_events` will not be "
 "yielded again.  Events are consumed from the internal queue only when they "
@@ -2046,7 +2492,7 @@ msgstr ""
 "plusieurs lecteurs itérant en parallèle sur les itérateurs obtenus à partir "
 "de :meth:`read_events` auront des résultats imprévisibles."
 
-#: library/xml.etree.elementtree.rst:1463
+#: library/xml.etree.elementtree.rst:1511
 msgid ""
 ":class:`XMLPullParser` only guarantees that it has seen the \">\" character "
 "of a starting tag when it emits a \"start\" event, so the attributes are "
@@ -2060,11 +2506,11 @@ msgstr ""
 "pas défini à ce stade. La même chose s'applique aux nœuds enfants de "
 "l'élément ; ils peuvent être présents ou non."
 
-#: library/xml.etree.elementtree.rst:1478
+#: library/xml.etree.elementtree.rst:1526
 msgid "Exceptions"
 msgstr "Exceptions"
 
-#: library/xml.etree.elementtree.rst:1482
+#: library/xml.etree.elementtree.rst:1530
 msgid ""
 "XML parse error, raised by the various parsing methods in this module when "
 "parsing fails.  The string representation of an instance of this exception "
@@ -2076,7 +2522,7 @@ msgstr ""
 "d'une instance de cette exception contient un message d'erreur convivial. De "
 "plus, elle possède les attributs suivants :"
 
-#: library/xml.etree.elementtree.rst:1489
+#: library/xml.etree.elementtree.rst:1537
 msgid ""
 "A numeric error code from the expat parser. See the documentation of :mod:"
 "`xml.parsers.expat` for the list of error codes and their meanings."
@@ -2085,18 +2531,18 @@ msgstr ""
 "mod:`xml.parsers.expat` pour la liste des codes d'erreur et leur "
 "signification."
 
-#: library/xml.etree.elementtree.rst:1494
+#: library/xml.etree.elementtree.rst:1542
 msgid ""
 "A tuple of *line*, *column* numbers, specifying where the error occurred."
 msgstr ""
 "Un *n*-uplet de numéros de *ligne* et *colonne* indiquant le lieu "
 "d'apparition de l'erreur."
 
-#: library/xml.etree.elementtree.rst:1497
+#: library/xml.etree.elementtree.rst:1545
 msgid "Footnotes"
 msgstr "Notes"
 
-#: library/xml.etree.elementtree.rst:1498
+#: library/xml.etree.elementtree.rst:1546
 msgid ""
 "The encoding string included in XML output should conform to the appropriate "
 "standards.  For example, \"UTF-8\" is valid, but \"UTF8\" is not.  See "
@@ -2104,7 +2550,18 @@ msgid ""
 "www.iana.org/assignments/character-sets/character-sets.xhtml."
 msgstr ""
 "La chaîne de caractères encodée inclue dans la sortie XML doit être conforme "
-"aux standards. Par exemple, ``\"UTF-8\"`` est valide, mais pas ``"
-"\"UTF8\"``.  Voir https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-"
+"aux standards. Par exemple, ``\"UTF-8\"`` est valide, mais pas "
+"``\"UTF8\"``.  Voir https://www.w3.org/TR/2006/REC-xml11-20060816/#NT-"
 "EncodingDecl et https://www.iana.org/assignments/character-sets/character-"
 "sets.xhtml."
+
+#~ msgid ""
+#~ "Returns the expanded resource.  If the parse mode is ``\"xml\"``, this is "
+#~ "an ElementTree instance.  If the parse mode is \"text\", this is a "
+#~ "Unicode string.  If the loader fails, it can return None or raise an "
+#~ "exception."
+#~ msgstr ""
+#~ "Renvoie la ressource développée. Si le mode d'analyse est ``\"xml\"``, il "
+#~ "s'agit d'une instance *ElementTree*. Si le mode d'analyse est "
+#~ "``\"text\"``, il s'agit d'une chaîne Unicode. Si le chargeur échoue, il "
+#~ "peut renvoyer ``None`` ou lever une exception."

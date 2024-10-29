@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2022-03-23 13:05-0600\n"
 "Last-Translator: Yannick Gingras <ygingras@ygingras.net>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 
 #: library/atexit.rst:2
-msgid ":mod:`atexit` --- Exit handlers"
+#, fuzzy
+msgid ":mod:`!atexit` --- Exit handlers"
 msgstr ":mod:`atexit` — Gestionnaire de fin de programme"
 
 #: library/atexit.rst:12
@@ -109,7 +110,21 @@ msgstr ""
 "Cette fonction renvoie *func*, ce qui rend possible de l'utiliser en tant "
 "que décorateur."
 
-#: library/atexit.rst:54
+#: library/atexit.rst:52
+msgid ""
+"Starting new threads or calling :func:`os.fork` from a registered function "
+"can lead to race condition between the main Python runtime thread freeing "
+"thread states while internal :mod:`threading` routines or the new process "
+"try to use that state. This can lead to crashes rather than clean shutdown."
+msgstr ""
+
+#: library/atexit.rst:58
+msgid ""
+"Attempts to start a new thread or :func:`os.fork` a new process in a "
+"registered function now leads to :exc:`RuntimeError`."
+msgstr ""
+
+#: library/atexit.rst:64
 msgid ""
 "Remove *func* from the list of functions to be run at interpreter shutdown. :"
 "func:`unregister` silently does nothing if *func* was not previously "
@@ -126,11 +141,11 @@ msgstr ""
 "utilisée dans l'implémentation interne de la désinscription. Les références "
 "des fonctions n'ont donc pas besoin d'avoir la même identité."
 
-#: library/atexit.rst:65
+#: library/atexit.rst:74
 msgid "Module :mod:`readline`"
 msgstr "Module :mod:`readline`"
 
-#: library/atexit.rst:65
+#: library/atexit.rst:75
 msgid ""
 "Useful example of :mod:`atexit` to read and write :mod:`readline` history "
 "files."
@@ -138,11 +153,11 @@ msgstr ""
 "Un exemple utile de l'usage de :mod:`atexit` pour lire et écrire des "
 "fichiers d'historique :mod:`readline`."
 
-#: library/atexit.rst:72
+#: library/atexit.rst:82
 msgid ":mod:`atexit` Example"
 msgstr "Exemple avec :mod:`atexit`"
 
-#: library/atexit.rst:74
+#: library/atexit.rst:84
 msgid ""
 "The following simple example demonstrates how a module can initialize a "
 "counter from a file when it is imported and save the counter's updated value "
@@ -155,7 +170,28 @@ msgstr ""
 "besoin que l'application fasse un appel explicite dans ce module au moment "
 "de l'arrêt de l'interpréteur. ::"
 
-#: library/atexit.rst:97
+#: library/atexit.rst:89
+msgid ""
+"try:\n"
+"    with open('counterfile') as infile:\n"
+"        _count = int(infile.read())\n"
+"except FileNotFoundError:\n"
+"    _count = 0\n"
+"\n"
+"def incrcounter(n):\n"
+"    global _count\n"
+"    _count = _count + n\n"
+"\n"
+"def savecounter():\n"
+"    with open('counterfile', 'w') as outfile:\n"
+"        outfile.write('%d' % _count)\n"
+"\n"
+"import atexit\n"
+"\n"
+"atexit.register(savecounter)"
+msgstr ""
+
+#: library/atexit.rst:107
 msgid ""
 "Positional and keyword arguments may also be passed to :func:`register` to "
 "be passed along to the registered function when it is called::"
@@ -163,11 +199,32 @@ msgstr ""
 "Les arguments positionnels et nommés peuvent aussi être passés à :func:"
 "`register` afin d'être repassés à la fonction inscrite lors de son appel ::"
 
-#: library/atexit.rst:109
+#: library/atexit.rst:110
+msgid ""
+"def goodbye(name, adjective):\n"
+"    print('Goodbye %s, it was %s to meet you.' % (name, adjective))\n"
+"\n"
+"import atexit\n"
+"\n"
+"atexit.register(goodbye, 'Donny', 'nice')\n"
+"# or:\n"
+"atexit.register(goodbye, adjective='nice', name='Donny')"
+msgstr ""
+
+#: library/atexit.rst:119
 msgid "Usage as a :term:`decorator`::"
 msgstr "Utilisation en tant que :term:`décorateur <decorator>` ::"
 
-#: library/atexit.rst:117
+#: library/atexit.rst:121
+msgid ""
+"import atexit\n"
+"\n"
+"@atexit.register\n"
+"def goodbye():\n"
+"    print('You are now leaving the Python sector.')"
+msgstr ""
+
+#: library/atexit.rst:127
 msgid "This only works with functions that can be called without arguments."
 msgstr ""
 "Ceci fonctionne uniquement avec des fonctions qui peuvent être appelées sans "

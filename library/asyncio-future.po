@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2023-06-17 10:41+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -228,8 +228,9 @@ msgstr ""
 "`CancelledError`."
 
 #: library/asyncio-future.rst:122
+#, fuzzy
 msgid ""
-"If the Future's result isn't yet available, this method raises a :exc:"
+"If the Future's result isn't yet available, this method raises an :exc:"
 "`InvalidStateError` exception."
 msgstr ""
 "Si le résultat de la tâche n'est pas encore disponible, cette méthode lève "
@@ -240,8 +241,9 @@ msgid "Mark the Future as *done* and set its result."
 msgstr "Marque le *Future* comme « terminé » et définit son résultat."
 
 #: library/asyncio-future.rst:136
+#, fuzzy
 msgid ""
-"Raises a :exc:`InvalidStateError` error if the Future is already *done*."
+"Raises an :exc:`InvalidStateError` error if the Future is already *done*."
 msgstr ""
 "Lève une erreur :exc:`InvalidStateError` si le *Future* est déjà « terminé »."
 
@@ -273,6 +275,12 @@ msgid ""
 msgstr ""
 "Cette méthode est habituellement utilisée pour vérifier qu'un *Future* n'est "
 "pas « annulé » avant de définir un résultat ou une exception pour celui-ci ::"
+
+#: library/asyncio-future.rst:154
+msgid ""
+"if not fut.cancelled():\n"
+"    fut.set_result(42)"
+msgstr ""
 
 #: library/asyncio-future.rst:159
 msgid "Add a callback to be run when the Future is *done*."
@@ -310,6 +318,13 @@ msgid ""
 msgstr ""
 ":func:`functools.partial` peut être utilisée pour passer des paramètres à la "
 "fonction de rappel ::"
+
+#: library/asyncio-future.rst:174
+msgid ""
+"# Call 'print(\"Future:\", fut)' when \"fut\" is done.\n"
+"fut.add_done_callback(\n"
+"    functools.partial(print, \"Future:\"))"
+msgstr ""
 
 #: library/asyncio-future.rst:178
 msgid ""
@@ -381,6 +396,37 @@ msgstr ""
 "tâche asynchrone qui définira le résultat du *Future* et attend jusqu'à ce "
 "que le *Future* ait un résultat ::"
 
+#: library/asyncio-future.rst:226
+msgid ""
+"async def set_after(fut, delay, value):\n"
+"    # Sleep for *delay* seconds.\n"
+"    await asyncio.sleep(delay)\n"
+"\n"
+"    # Set *value* as a result of *fut* Future.\n"
+"    fut.set_result(value)\n"
+"\n"
+"async def main():\n"
+"    # Get the current event loop.\n"
+"    loop = asyncio.get_running_loop()\n"
+"\n"
+"    # Create a new Future object.\n"
+"    fut = loop.create_future()\n"
+"\n"
+"    # Run \"set_after()\" coroutine in a parallel Task.\n"
+"    # We are using the low-level \"loop.create_task()\" API here because\n"
+"    # we already have a reference to the event loop at hand.\n"
+"    # Otherwise we could have just used \"asyncio.create_task()\".\n"
+"    loop.create_task(\n"
+"        set_after(fut, 1, '... world'))\n"
+"\n"
+"    print('hello ...')\n"
+"\n"
+"    # Wait until *fut* has a result (1 second) and print it.\n"
+"    print(await fut)\n"
+"\n"
+"asyncio.run(main())"
+msgstr ""
+
 #: library/asyncio-future.rst:257
 msgid ""
 "The Future object was designed to mimic :class:`concurrent.futures.Future`.  "
@@ -432,9 +478,10 @@ msgstr ""
 "`concurrent.futures.wait` et :func:`concurrent.futures.as_completed` ;"
 
 #: library/asyncio-future.rst:278
+#, fuzzy
 msgid ""
 ":meth:`asyncio.Future.cancel` accepts an optional ``msg`` argument, but :"
-"func:`concurrent.futures.cancel` does not."
+"meth:`concurrent.futures.Future.cancel` does not."
 msgstr ""
 ":meth:`asyncio.Future.cancel` accepte un argument optionnel ``msg`` mais "
 "pas :func:`concurrent.futures.cancel`."

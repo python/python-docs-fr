@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 22:33+0100\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: library/http.cookiejar.rst:2
-msgid ":mod:`http.cookiejar` --- Cookie handling for HTTP clients"
+msgid ":mod:`!http.cookiejar` --- Cookie handling for HTTP clients"
 msgstr ""
 
 #: library/http.cookiejar.rst:10
@@ -66,9 +66,13 @@ msgid ""
 msgstr ""
 
 #: library/http.cookiejar.rst:46
+#, fuzzy
 msgid ""
-"LoadError was made a subclass of :exc:`OSError` instead of :exc:`IOError`."
+":exc:`LoadError` used to be a subtype of :exc:`IOError`, which is now an "
+"alias of :exc:`OSError`."
 msgstr ""
+":exc:`IOError` était normalement levée, elle est maintenant un alias de :exc:"
+"`OSError`."
 
 #: library/http.cookiejar.rst:51
 msgid "The following classes are provided:"
@@ -149,7 +153,7 @@ msgid ""
 "class:`CookieJar` instance."
 msgstr ""
 
-#: library/http.cookiejar.rst:120
+#: library/http.cookiejar.rst:119
 msgid "Module :mod:`urllib.request`"
 msgstr ""
 
@@ -157,7 +161,7 @@ msgstr ""
 msgid "URL opening with automatic cookie handling."
 msgstr ""
 
-#: library/http.cookiejar.rst:125
+#: library/http.cookiejar.rst:122
 #, fuzzy
 msgid "Module :mod:`http.cookies`"
 msgstr "Module :mod:`http.cookiejar`"
@@ -168,7 +172,7 @@ msgid ""
 "`http.cookiejar` and :mod:`http.cookies` modules do not depend on each other."
 msgstr ""
 
-#: library/http.cookiejar.rst:131
+#: library/http.cookiejar.rst:127
 msgid "https://curl.se/rfc/cookie_spec.html"
 msgstr ""
 
@@ -180,7 +184,7 @@ msgid ""
 "resemblance to the one sketched out in ``cookie_spec.html``."
 msgstr ""
 
-#: library/http.cookiejar.rst:134
+#: library/http.cookiejar.rst:133
 msgid ":rfc:`2109` - HTTP State Management Mechanism"
 msgstr ":rfc:`2109` - HTTP State Management Mechanism"
 
@@ -188,7 +192,7 @@ msgstr ":rfc:`2109` - HTTP State Management Mechanism"
 msgid "Obsoleted by :rfc:`2965`. Uses :mailheader:`Set-Cookie` with version=1."
 msgstr ""
 
-#: library/http.cookiejar.rst:138
+#: library/http.cookiejar.rst:136
 #, fuzzy
 msgid ":rfc:`2965` - HTTP State Management Mechanism"
 msgstr ":rfc:`2109` - HTTP State Management Mechanism"
@@ -199,8 +203,8 @@ msgid ""
 "in place of :mailheader:`Set-Cookie`.  Not widely used."
 msgstr ""
 
-#: library/http.cookiejar.rst:141
-msgid "http://kristol.org/cookie/errata.html"
+#: library/http.cookiejar.rst:140
+msgid "https://kristol.org/cookie/errata.html"
 msgstr ""
 
 #: library/http.cookiejar.rst:141
@@ -606,6 +610,19 @@ msgid ""
 "additional checks::"
 msgstr ""
 
+#: library/http.cookiejar.rst:451
+msgid ""
+"import http.cookiejar\n"
+"class MyCookiePolicy(http.cookiejar.DefaultCookiePolicy):\n"
+"    def set_ok(self, cookie, request):\n"
+"        if not http.cookiejar.DefaultCookiePolicy.set_ok(self, cookie, "
+"request):\n"
+"            return False\n"
+"        if i_dont_want_to_store_this_cookie(cookie):\n"
+"            return False\n"
+"        return True"
+msgstr ""
+
 #: library/http.cookiejar.rst:460
 msgid ""
 "In addition to the features required to implement the :class:`CookiePolicy` "
@@ -825,36 +842,40 @@ msgid ""
 msgstr ""
 
 #: library/http.cookiejar.rst:654
-msgid "Cookie path (a string, eg. ``'/acme/rocket_launchers'``)."
+msgid "Cookie domain (a string)."
 msgstr ""
 
 #: library/http.cookiejar.rst:659
-msgid "``True`` if cookie should only be returned over a secure connection."
+msgid "Cookie path (a string, eg. ``'/acme/rocket_launchers'``)."
 msgstr ""
 
 #: library/http.cookiejar.rst:664
+msgid "``True`` if cookie should only be returned over a secure connection."
+msgstr ""
+
+#: library/http.cookiejar.rst:669
 msgid ""
 "Integer expiry date in seconds since epoch, or :const:`None`.  See also the :"
 "meth:`is_expired` method."
 msgstr ""
 
-#: library/http.cookiejar.rst:670
+#: library/http.cookiejar.rst:675
 msgid "``True`` if this is a session cookie."
 msgstr ""
 
-#: library/http.cookiejar.rst:675
+#: library/http.cookiejar.rst:680
 msgid ""
 "String comment from the server explaining the function of this cookie, or :"
 "const:`None`."
 msgstr ""
 
-#: library/http.cookiejar.rst:681
+#: library/http.cookiejar.rst:686
 msgid ""
 "URL linking to a comment from the server explaining the function of this "
 "cookie, or :const:`None`."
 msgstr ""
 
-#: library/http.cookiejar.rst:687
+#: library/http.cookiejar.rst:692
 msgid ""
 "``True`` if this cookie was received as an :rfc:`2109` cookie (ie. the "
 "cookie arrived in a :mailheader:`Set-Cookie` header, and the value of the "
@@ -863,73 +884,106 @@ msgid ""
 "cookies, in which case :attr:`version` is 0."
 msgstr ""
 
-#: library/http.cookiejar.rst:696
+#: library/http.cookiejar.rst:701
 msgid ""
 "``True`` if a port or set of ports was explicitly specified by the server "
 "(in the :mailheader:`Set-Cookie` / :mailheader:`Set-Cookie2` header)."
 msgstr ""
 
-#: library/http.cookiejar.rst:702
+#: library/http.cookiejar.rst:707
 msgid "``True`` if a domain was explicitly specified by the server."
 msgstr ""
 
-#: library/http.cookiejar.rst:707
+#: library/http.cookiejar.rst:712
 msgid ""
 "``True`` if the domain explicitly specified by the server began with a dot "
 "(``'.'``)."
 msgstr ""
 
-#: library/http.cookiejar.rst:710
+#: library/http.cookiejar.rst:715
 msgid ""
 "Cookies may have additional non-standard cookie-attributes.  These may be "
 "accessed using the following methods:"
 msgstr ""
 
-#: library/http.cookiejar.rst:716
+#: library/http.cookiejar.rst:721
 msgid "Return ``True`` if cookie has the named cookie-attribute."
 msgstr ""
 
-#: library/http.cookiejar.rst:721
+#: library/http.cookiejar.rst:726
 msgid ""
 "If cookie has the named cookie-attribute, return its value. Otherwise, "
 "return *default*."
 msgstr ""
 
-#: library/http.cookiejar.rst:727
+#: library/http.cookiejar.rst:732
 msgid "Set the value of the named cookie-attribute."
 msgstr ""
 
-#: library/http.cookiejar.rst:729
+#: library/http.cookiejar.rst:734
 msgid "The :class:`Cookie` class also defines the following method:"
 msgstr ""
 
-#: library/http.cookiejar.rst:734
+#: library/http.cookiejar.rst:739
 msgid ""
 "``True`` if cookie has passed the time at which the server requested it "
 "should expire.  If *now* is given (in seconds since the epoch), return "
 "whether the cookie has expired at the specified time."
 msgstr ""
 
-#: library/http.cookiejar.rst:740
+#: library/http.cookiejar.rst:745
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/http.cookiejar.rst:742
+#: library/http.cookiejar.rst:747
 msgid ""
 "The first example shows the most common usage of :mod:`http.cookiejar`::"
 msgstr ""
 
 #: library/http.cookiejar.rst:749
 msgid ""
+"import http.cookiejar, urllib.request\n"
+"cj = http.cookiejar.CookieJar()\n"
+"opener = urllib.request.build_opener(urllib.request."
+"HTTPCookieProcessor(cj))\n"
+"r = opener.open(\"http://example.com/\")"
+msgstr ""
+
+#: library/http.cookiejar.rst:754
+msgid ""
 "This example illustrates how to open a URL using your Netscape, Mozilla, or "
 "Lynx cookies (assumes Unix/Netscape convention for location of the cookies "
 "file)::"
 msgstr ""
 
-#: library/http.cookiejar.rst:758
+#: library/http.cookiejar.rst:757
+msgid ""
+"import os, http.cookiejar, urllib.request\n"
+"cj = http.cookiejar.MozillaCookieJar()\n"
+"cj.load(os.path.join(os.path.expanduser(\"~\"), \".netscape\", \"cookies."
+"txt\"))\n"
+"opener = urllib.request.build_opener(urllib.request."
+"HTTPCookieProcessor(cj))\n"
+"r = opener.open(\"http://example.com/\")"
+msgstr ""
+
+#: library/http.cookiejar.rst:763
 msgid ""
 "The next example illustrates the use of :class:`DefaultCookiePolicy`. Turn "
 "on :rfc:`2965` cookies, be more strict about domains when setting and "
 "returning Netscape cookies, and block some domains from setting cookies or "
 "having them returned::"
+msgstr ""
+
+#: library/http.cookiejar.rst:768
+msgid ""
+"import urllib.request\n"
+"from http.cookiejar import CookieJar, DefaultCookiePolicy\n"
+"policy = DefaultCookiePolicy(\n"
+"    rfc2965=True, strict_ns_domain=Policy.DomainStrict,\n"
+"    blocked_domains=[\"ads.net\", \".ads.net\"])\n"
+"cj = CookieJar(policy)\n"
+"opener = urllib.request.build_opener(urllib.request."
+"HTTPCookieProcessor(cj))\n"
+"r = opener.open(\"http://example.com/\")"
 msgstr ""

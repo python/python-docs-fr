@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 17:17+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2019-02-03 11:53+0100\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.11\n"
 
 #: library/selectors.rst:2
-msgid ":mod:`selectors` --- High-level I/O multiplexing"
+msgid ":mod:`!selectors` --- High-level I/O multiplexing"
 msgstr ""
 
 #: library/selectors.rst:9
@@ -41,8 +41,8 @@ msgid ""
 "concrete implementations (:class:`KqueueSelector`, :class:"
 "`EpollSelector`...), that can be used to wait for I/O readiness notification "
 "on multiple file objects. In the following, \"file object\" refers to any "
-"object with a :meth:`fileno()` method, or a raw file descriptor. See :term:"
-"`file object`."
+"object with a :meth:`~io.IOBase.fileno` method, or a raw file descriptor. "
+"See :term:`file object`."
 msgstr ""
 
 #: library/selectors.rst:26
@@ -69,7 +69,7 @@ msgid "Low-level I/O multiplexing module."
 msgstr ""
 
 #: includes/wasm-notavail.rst:3
-msgid ":ref:`Availability <availability>`: not Emscripten, not WASI."
+msgid "Availability"
 msgstr ""
 
 #: includes/wasm-notavail.rst:5
@@ -85,6 +85,16 @@ msgstr "Classes"
 
 #: library/selectors.rst:46
 msgid "Classes hierarchy::"
+msgstr ""
+
+#: library/selectors.rst:48
+msgid ""
+"BaseSelector\n"
+"+-- SelectSelector\n"
+"+-- PollSelector\n"
+"+-- EpollSelector\n"
+"+-- DevpollSelector\n"
+"+-- KqueueSelector"
 msgstr ""
 
 #: library/selectors.rst:56
@@ -103,16 +113,8 @@ msgid "Meaning"
 msgstr "Signification"
 
 #: library/selectors.rst:63
-msgid ":const:`EVENT_READ`"
-msgstr ":const:`EVENT_READ`"
-
-#: library/selectors.rst:63
 msgid "Available for read"
 msgstr ""
-
-#: library/selectors.rst:65
-msgid ":const:`EVENT_WRITE`"
-msgstr ":const:`EVENT_WRITE`"
 
 #: library/selectors.rst:65
 msgid "Available for write"
@@ -198,8 +200,8 @@ msgstr ""
 
 #: library/selectors.rst:135
 msgid ""
-"This is equivalent to :meth:`BaseSelector.unregister(fileobj)` followed by :"
-"meth:`BaseSelector.register(fileobj, events, data)`, except that it can be "
+"This is equivalent to ``BaseSelector.unregister(fileobj)`` followed by "
+"``BaseSelector.register(fileobj, events, data)``, except that it can be "
 "implemented more efficiently."
 msgstr ""
 
@@ -332,3 +334,45 @@ msgstr "Exemples"
 #: library/selectors.rst:245
 msgid "Here is a simple echo server implementation::"
 msgstr ""
+
+#: library/selectors.rst:247
+msgid ""
+"import selectors\n"
+"import socket\n"
+"\n"
+"sel = selectors.DefaultSelector()\n"
+"\n"
+"def accept(sock, mask):\n"
+"    conn, addr = sock.accept()  # Should be ready\n"
+"    print('accepted', conn, 'from', addr)\n"
+"    conn.setblocking(False)\n"
+"    sel.register(conn, selectors.EVENT_READ, read)\n"
+"\n"
+"def read(conn, mask):\n"
+"    data = conn.recv(1000)  # Should be ready\n"
+"    if data:\n"
+"        print('echoing', repr(data), 'to', conn)\n"
+"        conn.send(data)  # Hope it won't block\n"
+"    else:\n"
+"        print('closing', conn)\n"
+"        sel.unregister(conn)\n"
+"        conn.close()\n"
+"\n"
+"sock = socket.socket()\n"
+"sock.bind(('localhost', 1234))\n"
+"sock.listen(100)\n"
+"sock.setblocking(False)\n"
+"sel.register(sock, selectors.EVENT_READ, accept)\n"
+"\n"
+"while True:\n"
+"    events = sel.select()\n"
+"    for key, mask in events:\n"
+"        callback = key.data\n"
+"        callback(key.fileobj, mask)"
+msgstr ""
+
+#~ msgid ":const:`EVENT_READ`"
+#~ msgstr ":const:`EVENT_READ`"
+
+#~ msgid ":const:`EVENT_WRITE`"
+#~ msgstr ":const:`EVENT_WRITE`"

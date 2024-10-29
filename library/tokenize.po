@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2018-09-28 10:08+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #: library/tokenize.rst:2
-msgid ":mod:`tokenize` --- Tokenizer for Python source"
+#, fuzzy
+msgid ":mod:`!tokenize` --- Tokenizer for Python source"
 msgstr ":mod:`tokenize` — Analyseur lexical de Python"
 
 #: library/tokenize.rst:10
@@ -270,25 +271,28 @@ msgstr ""
 "divisée sur plusieurs lignes n'est pas complété dans le fichier, par "
 "exemple ::"
 
+#: library/tokenize.rst:142
+msgid ""
+"\"\"\"Beginning of\n"
+"docstring"
+msgstr ""
+
 #: library/tokenize.rst:145
 msgid "or::"
 msgstr "ou ::"
 
-#: library/tokenize.rst:151
+#: library/tokenize.rst:147
 msgid ""
-"Note that unclosed single-quoted strings do not cause an error to be raised. "
-"They are tokenized as :data:`~token.ERRORTOKEN`, followed by the "
-"tokenization of their contents."
+"[1,\n"
+" 2,\n"
+" 3"
 msgstr ""
-"Notez que les chaînes à simple guillemet non fermés ne provoquent pas le "
-"déclenchement d'une erreur. Ils sont tokenisés comme :data:`~token."
-"ERRORTOKEN`, suivi de la tokenisation de leur contenu."
 
-#: library/tokenize.rst:159
+#: library/tokenize.rst:154
 msgid "Command-Line Usage"
 msgstr "Utilisation en ligne de commande."
 
-#: library/tokenize.rst:163
+#: library/tokenize.rst:158
 msgid ""
 "The :mod:`tokenize` module can be executed as a script from the command "
 "line. It is as simple as:"
@@ -296,19 +300,23 @@ msgstr ""
 "Le module :mod:`tokenize` peut être exécuté en tant que script à partir de "
 "la ligne de commande. C'est aussi simple que :"
 
-#: library/tokenize.rst:170
+#: library/tokenize.rst:161
+msgid "python -m tokenize [-e] [filename.py]"
+msgstr ""
+
+#: library/tokenize.rst:165
 msgid "The following options are accepted:"
 msgstr "Les options suivantes sont acceptées :"
 
-#: library/tokenize.rst:176
+#: library/tokenize.rst:171
 msgid "show this help message and exit"
 msgstr "Montre ce message d'aide et quitte"
 
-#: library/tokenize.rst:180
+#: library/tokenize.rst:175
 msgid "display token names using the exact type"
 msgstr "Affiche les noms de jetons en utilisant le même type."
 
-#: library/tokenize.rst:182
+#: library/tokenize.rst:177
 msgid ""
 "If :file:`filename.py` is specified its contents are tokenized to stdout. "
 "Otherwise, tokenization is performed on stdin."
@@ -316,11 +324,11 @@ msgstr ""
 "Si :file:`filename.py` est spécifié, son contenu est tokenisé vers *stdout*. "
 "Sinon, la tokenisation est effectuée sur ce qui est fourni sur *stdin*."
 
-#: library/tokenize.rst:186
+#: library/tokenize.rst:181
 msgid "Examples"
 msgstr "Exemples"
 
-#: library/tokenize.rst:188
+#: library/tokenize.rst:183
 msgid ""
 "Example of a script rewriter that transforms float literals into Decimal "
 "objects::"
@@ -328,11 +336,62 @@ msgstr ""
 "Exemple d'un script qui transforme les littéraux de type *float* en type "
 "*Decimal* ::"
 
-#: library/tokenize.rst:230
+#: library/tokenize.rst:186
+msgid ""
+"from tokenize import tokenize, untokenize, NUMBER, STRING, NAME, OP\n"
+"from io import BytesIO\n"
+"\n"
+"def decistmt(s):\n"
+"    \"\"\"Substitute Decimals for floats in a string of statements.\n"
+"\n"
+"    >>> from decimal import Decimal\n"
+"    >>> s = 'print(+21.3e-5*-.1234/81.7)'\n"
+"    >>> decistmt(s)\n"
+"    \"print (+Decimal ('21.3e-5')*-Decimal ('.1234')/Decimal ('81.7'))\"\n"
+"\n"
+"    The format of the exponent is inherited from the platform C library.\n"
+"    Known cases are \"e-007\" (Windows) and \"e-07\" (not Windows).  Since\n"
+"    we're only showing 12 digits, and the 13th isn't close to 5, the\n"
+"    rest of the output should be platform-independent.\n"
+"\n"
+"    >>> exec(s)  #doctest: +ELLIPSIS\n"
+"    -3.21716034272e-0...7\n"
+"\n"
+"    Output from calculations with Decimal should be identical across all\n"
+"    platforms.\n"
+"\n"
+"    >>> exec(decistmt(s))\n"
+"    -3.217160342717258261933904529E-7\n"
+"    \"\"\"\n"
+"    result = []\n"
+"    g = tokenize(BytesIO(s.encode('utf-8')).readline)  # tokenize the "
+"string\n"
+"    for toknum, tokval, _, _, _ in g:\n"
+"        if toknum == NUMBER and '.' in tokval:  # replace NUMBER tokens\n"
+"            result.extend([\n"
+"                (NAME, 'Decimal'),\n"
+"                (OP, '('),\n"
+"                (STRING, repr(tokval)),\n"
+"                (OP, ')')\n"
+"            ])\n"
+"        else:\n"
+"            result.append((toknum, tokval))\n"
+"    return untokenize(result).decode('utf-8')"
+msgstr ""
+
+#: library/tokenize.rst:225
 msgid "Example of tokenizing from the command line.  The script::"
 msgstr "Exemple de tokenisation à partir de la ligne de commande. Le script ::"
 
-#: library/tokenize.rst:237
+#: library/tokenize.rst:227
+msgid ""
+"def say_hello():\n"
+"    print(\"Hello, World!\")\n"
+"\n"
+"say_hello()"
+msgstr ""
+
+#: library/tokenize.rst:232
 msgid ""
 "will be tokenized to the following output where the first column is the "
 "range of the line/column coordinates where the token is found, the second "
@@ -344,19 +403,98 @@ msgstr ""
 "est le nom du jeton, et la dernière colonne est la valeur du jeton (le cas "
 "échéant)"
 
-#: library/tokenize.rst:265
+#: library/tokenize.rst:236
+msgid ""
+"$ python -m tokenize hello.py\n"
+"0,0-0,0:            ENCODING       'utf-8'\n"
+"1,0-1,3:            NAME           'def'\n"
+"1,4-1,13:           NAME           'say_hello'\n"
+"1,13-1,14:          OP             '('\n"
+"1,14-1,15:          OP             ')'\n"
+"1,15-1,16:          OP             ':'\n"
+"1,16-1,17:          NEWLINE        '\\n'\n"
+"2,0-2,4:            INDENT         '    '\n"
+"2,4-2,9:            NAME           'print'\n"
+"2,9-2,10:           OP             '('\n"
+"2,10-2,25:          STRING         '\"Hello, World!\"'\n"
+"2,25-2,26:          OP             ')'\n"
+"2,26-2,27:          NEWLINE        '\\n'\n"
+"3,0-3,1:            NL             '\\n'\n"
+"4,0-4,0:            DEDENT         ''\n"
+"4,0-4,9:            NAME           'say_hello'\n"
+"4,9-4,10:           OP             '('\n"
+"4,10-4,11:          OP             ')'\n"
+"4,11-4,12:          NEWLINE        '\\n'\n"
+"5,0-5,0:            ENDMARKER      ''"
+msgstr ""
+
+#: library/tokenize.rst:260
 msgid ""
 "The exact token type names can be displayed using the :option:`-e` option:"
 msgstr ""
 "Les noms exacts des types de jeton peuvent être affichés en utilisant "
 "l’option : :option:`-e` :"
 
-#: library/tokenize.rst:291
+#: library/tokenize.rst:262
+msgid ""
+"$ python -m tokenize -e hello.py\n"
+"0,0-0,0:            ENCODING       'utf-8'\n"
+"1,0-1,3:            NAME           'def'\n"
+"1,4-1,13:           NAME           'say_hello'\n"
+"1,13-1,14:          LPAR           '('\n"
+"1,14-1,15:          RPAR           ')'\n"
+"1,15-1,16:          COLON          ':'\n"
+"1,16-1,17:          NEWLINE        '\\n'\n"
+"2,0-2,4:            INDENT         '    '\n"
+"2,4-2,9:            NAME           'print'\n"
+"2,9-2,10:           LPAR           '('\n"
+"2,10-2,25:          STRING         '\"Hello, World!\"'\n"
+"2,25-2,26:          RPAR           ')'\n"
+"2,26-2,27:          NEWLINE        '\\n'\n"
+"3,0-3,1:            NL             '\\n'\n"
+"4,0-4,0:            DEDENT         ''\n"
+"4,0-4,9:            NAME           'say_hello'\n"
+"4,9-4,10:           LPAR           '('\n"
+"4,10-4,11:          RPAR           ')'\n"
+"4,11-4,12:          NEWLINE        '\\n'\n"
+"5,0-5,0:            ENDMARKER      ''"
+msgstr ""
+
+#: library/tokenize.rst:286
 msgid ""
 "Example of tokenizing a file programmatically, reading unicode strings "
 "instead of bytes with :func:`generate_tokens`::"
 msgstr ""
 
-#: library/tokenize.rst:301
+#: library/tokenize.rst:289
+msgid ""
+"import tokenize\n"
+"\n"
+"with tokenize.open('hello.py') as f:\n"
+"    tokens = tokenize.generate_tokens(f.readline)\n"
+"    for token in tokens:\n"
+"        print(token)"
+msgstr ""
+
+#: library/tokenize.rst:296
 msgid "Or reading bytes directly with :func:`.tokenize`::"
 msgstr ""
+
+#: library/tokenize.rst:298
+msgid ""
+"import tokenize\n"
+"\n"
+"with open('hello.py', 'rb') as f:\n"
+"    tokens = tokenize.tokenize(f.readline)\n"
+"    for token in tokens:\n"
+"        print(token)"
+msgstr ""
+
+#~ msgid ""
+#~ "Note that unclosed single-quoted strings do not cause an error to be "
+#~ "raised. They are tokenized as :data:`~token.ERRORTOKEN`, followed by the "
+#~ "tokenization of their contents."
+#~ msgstr ""
+#~ "Notez que les chaînes à simple guillemet non fermés ne provoquent pas le "
+#~ "déclenchement d'une erreur. Ils sont tokenisés comme :data:`~token."
+#~ "ERRORTOKEN`, suivi de la tokenisation de leur contenu."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 14:38+0200\n"
+"POT-Creation-Date: 2024-10-29 21:40+0100\n"
 "PO-Revision-Date: 2021-09-07 00:51+0200\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: library/gc.rst:2
-msgid ":mod:`gc` --- Garbage Collector interface"
+#, fuzzy
+msgid ":mod:`!gc` --- Garbage Collector interface"
 msgstr ":mod:`gc` — Interface du ramasse-miettes"
 
 #: library/gc.rst:12
@@ -103,10 +104,11 @@ msgid "Return the debugging flags currently set."
 msgstr "Renvoie les options de débogage actives."
 
 #: library/gc.rst:71
+#, fuzzy
 msgid ""
 "Returns a list of all objects tracked by the collector, excluding the list "
-"returned. If *generation* is not None, return only the objects tracked by "
-"the collector that are in that generation."
+"returned. If *generation* is not ``None``, return only the objects tracked "
+"by the collector that are in that generation."
 msgstr ""
 "Renvoie la liste des objets suivis par le ramasse-miettes, à l'exclusion de "
 "cette liste elle-même. Le paramètre facultatif *generation* restreint la "
@@ -309,6 +311,22 @@ msgstr ""
 "ramasse-miettes dans les cas simples, comme les dictionnaires dont toutes "
 "les clés et valeurs sont atomiques ::"
 
+#: library/gc.rst:173
+msgid ""
+">>> gc.is_tracked(0)\n"
+"False\n"
+">>> gc.is_tracked(\"a\")\n"
+"False\n"
+">>> gc.is_tracked([])\n"
+"True\n"
+">>> gc.is_tracked({})\n"
+"False\n"
+">>> gc.is_tracked({\"a\": 1})\n"
+"False\n"
+">>> gc.is_tracked({\"a\": []})\n"
+"True"
+msgstr ""
+
 #: library/gc.rst:191
 msgid ""
 "Returns ``True`` if the given object has been finalized by the garbage "
@@ -316,6 +334,22 @@ msgid ""
 msgstr ""
 "Renvoie ``True`` ou ``False`` selon que l'argument a été finalisé par le "
 "ramasse-miettes. ::"
+
+#: library/gc.rst:194
+msgid ""
+">>> x = None\n"
+">>> class Lazarus:\n"
+"...     def __del__(self):\n"
+"...         global x\n"
+"...         x = self\n"
+"...\n"
+">>> lazarus = Lazarus()\n"
+">>> gc.is_finalized(lazarus)\n"
+"False\n"
+">>> del lazarus\n"
+">>> gc.is_finalized(x)\n"
+"True"
+msgstr ""
 
 #: library/gc.rst:212
 msgid ""
@@ -390,8 +424,8 @@ msgstr ""
 #: library/gc.rst:261
 #, fuzzy
 msgid ""
-"Following :pep:`442`, objects with a :meth:`__del__` method don't end up in :"
-"data:`gc.garbage` anymore."
+"Following :pep:`442`, objects with a :meth:`~object.__del__` method don't "
+"end up in :data:`gc.garbage` anymore."
 msgstr ""
 "en application de la :pep:`442`, les objets qui définissent une méthode :"
 "meth:`__del__` ne finissent plus dans :attr:`gc.garbage`."
