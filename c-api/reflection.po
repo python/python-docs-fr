@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 18:39+0100\n"
+"POT-Creation-Date: 2024-10-29 22:40+0100\n"
 "PO-Revision-Date: 2019-02-26 12:01+0100\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -18,7 +18,11 @@ msgstr ""
 msgid "Reflection"
 msgstr "Réflexion"
 
-#: c-api/reflection.rst:10
+#: c-api/reflection.rst:12
+msgid "Use :c:func:`PyEval_GetFrameBuiltins` instead."
+msgstr ""
+
+#: c-api/reflection.rst:66
 msgid ""
 "Return a dictionary of the builtins in the current execution frame, or the "
 "interpreter of the thread state if no frame is currently executing."
@@ -27,16 +31,53 @@ msgstr ""
 "d'exécution, ou si aucune *frame* n'est exécutée, les fonctions natives du "
 "*thread* indiqué par le *thread state*."
 
-#: c-api/reflection.rst:16
+#: c-api/reflection.rst:22
+msgid ""
+"Use either :c:func:`PyEval_GetFrameLocals` to obtain the same behaviour as "
+"calling :func:`locals` in Python code, or else call :c:func:"
+"`PyFrame_GetLocals` on the result of :c:func:`PyEval_GetFrame` to access "
+"the :attr:`~frame.f_locals` attribute of the currently executing frame."
+msgstr ""
+
+#: c-api/reflection.rst:27
 #, fuzzy
 msgid ""
-"Return a dictionary of the local variables in the current execution frame, "
-"or ``NULL`` if no frame is currently executing."
+"Return a mapping providing access to the local variables in the current "
+"execution frame, or ``NULL`` if no frame is currently executing."
 msgstr ""
 "Renvoie un dictionnaire des variables locales de la *frame* en cours "
 "d'exécution, ou *NULL* si aucune *frame* n'est en cours d'exécution."
 
-#: c-api/reflection.rst:22
+#: c-api/reflection.rst:30
+msgid ""
+"Refer to :func:`locals` for details of the mapping returned at different "
+"scopes."
+msgstr ""
+
+#: c-api/reflection.rst:32
+msgid ""
+"As this function returns a :term:`borrowed reference`, the dictionary "
+"returned for :term:`optimized scopes <optimized scope>` is cached on the "
+"frame object and will remain alive as long as the frame object does. Unlike :"
+"c:func:`PyEval_GetFrameLocals` and :func:`locals`, subsequent calls to this "
+"function in the same frame will update the contents of the cached dictionary "
+"to reflect changes in the state of the local variables rather than returning "
+"a new snapshot."
+msgstr ""
+
+#: c-api/reflection.rst:39
+msgid ""
+"As part of :pep:`667`, :c:func:`PyFrame_GetLocals`, :func:`locals`, and :"
+"attr:`FrameType.f_locals <frame.f_locals>` no longer make use of the shared "
+"cache dictionary. Refer to the :ref:`What's New entry <whatsnew313-locals-"
+"semantics>` for additional details."
+msgstr ""
+
+#: c-api/reflection.rst:50
+msgid "Use :c:func:`PyEval_GetFrameGlobals` instead."
+msgstr ""
+
+#: c-api/reflection.rst:52
 #, fuzzy
 msgid ""
 "Return a dictionary of the global variables in the current execution frame, "
@@ -45,7 +86,7 @@ msgstr ""
 "Renvoie un dictionnaire des variables globales de la *frame* en cours "
 "d'exécution ou *NULL* si aucune *frame* n'est en cours d'exécution."
 
-#: c-api/reflection.rst:28
+#: c-api/reflection.rst:58
 #, fuzzy
 msgid ""
 "Return the current thread state's frame, which is ``NULL`` if no frame is "
@@ -54,11 +95,38 @@ msgstr ""
 "Renvoie la *frame* actuelle selon le *thread state*, qui est *NULL* si "
 "aucune *frame* n'est en cours d'exécution."
 
-#: c-api/reflection.rst:31
+#: c-api/reflection.rst:61
 msgid "See also :c:func:`PyThreadState_GetFrame`."
 msgstr ""
 
-#: c-api/reflection.rst:36
+#: c-api/reflection.rst:74
+#, fuzzy
+msgid ""
+"Return a dictionary of the local variables in the current execution frame, "
+"or ``NULL`` if no frame is currently executing. Equivalent to calling :func:"
+"`locals` in Python code."
+msgstr ""
+"Renvoie un dictionnaire des variables locales de la *frame* en cours "
+"d'exécution, ou *NULL* si aucune *frame* n'est en cours d'exécution."
+
+#: c-api/reflection.rst:78
+msgid ""
+"To access :attr:`~frame.f_locals` on the current frame without making an "
+"independent snapshot in :term:`optimized scopes <optimized scope>`, call :c:"
+"func:`PyFrame_GetLocals` on the result of :c:func:`PyEval_GetFrame`."
+msgstr ""
+
+#: c-api/reflection.rst:87
+#, fuzzy
+msgid ""
+"Return a dictionary of the global variables in the current execution frame, "
+"or ``NULL`` if no frame is currently executing. Equivalent to calling :func:"
+"`globals` in Python code."
+msgstr ""
+"Renvoie un dictionnaire des variables globales de la *frame* en cours "
+"d'exécution ou *NULL* si aucune *frame* n'est en cours d'exécution."
+
+#: c-api/reflection.rst:96
 msgid ""
 "Return the name of *func* if it is a function, class or instance object, "
 "else the name of *func*\\s type."
@@ -66,7 +134,7 @@ msgstr ""
 "Renvoie le nom de *func* s'il s'agit d'une fonction, d'une classe ou d'un "
 "objet d'instance, sinon le nom du type de *func*"
 
-#: c-api/reflection.rst:42
+#: c-api/reflection.rst:102
 msgid ""
 "Return a description string, depending on the type of *func*. Return values "
 "include \"()\" for functions and methods, \" constructor\", \" instance\", "

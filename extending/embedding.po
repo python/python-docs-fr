@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 21:40+0100\n"
+"POT-Creation-Date: 2024-10-29 22:40+0100\n"
 "PO-Revision-Date: 2023-07-28 22:36+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -122,36 +122,58 @@ msgid ""
 "int\n"
 "main(int argc, char *argv[])\n"
 "{\n"
-"    wchar_t *program = Py_DecodeLocale(argv[0], NULL);\n"
-"    if (program == NULL) {\n"
-"        fprintf(stderr, \"Fatal error: cannot decode argv[0]\\n\");\n"
-"        exit(1);\n"
+"    PyStatus status;\n"
+"    PyConfig config;\n"
+"    PyConfig_InitPythonConfig(&config);\n"
+"\n"
+"    /* optional but recommended */\n"
+"    status = PyConfig_SetBytesString(&config, &config.program_name, "
+"argv[0]);\n"
+"    if (PyStatus_Exception(status)) {\n"
+"        goto exception;\n"
 "    }\n"
-"    Py_SetProgramName(program);  /* optional but recommended */\n"
-"    Py_Initialize();\n"
+"\n"
+"    status = Py_InitializeFromConfig(&config);\n"
+"    if (PyStatus_Exception(status)) {\n"
+"        goto exception;\n"
+"    }\n"
+"    PyConfig_Clear(&config);\n"
+"\n"
 "    PyRun_SimpleString(\"from time import time,ctime\\n\"\n"
 "                       \"print('Today is', ctime(time()))\\n\");\n"
 "    if (Py_FinalizeEx() < 0) {\n"
 "        exit(120);\n"
 "    }\n"
-"    PyMem_RawFree(program);\n"
 "    return 0;\n"
+"\n"
+"  exception:\n"
+"     PyConfig_Clear(&config);\n"
+"     Py_ExitStatusException(status);\n"
 "}"
 msgstr ""
 
-#: extending/embedding.rst:78
+#: extending/embedding.rst:92
 msgid ""
-"The :c:func:`Py_SetProgramName` function should be called before :c:func:"
-"`Py_Initialize` to inform the interpreter about paths to Python run-time "
-"libraries.  Next, the Python interpreter is initialized with :c:func:"
-"`Py_Initialize`, followed by the execution of a hard-coded Python script "
-"that prints the date and time.  Afterwards, the :c:func:`Py_FinalizeEx` call "
-"shuts the interpreter down, followed by the end of the program.  In a real "
-"program, you may want to get the Python script from another source, perhaps "
-"a text-editor routine, a file, or a database.  Getting the Python code from "
-"a file can better be done by using the :c:func:`PyRun_SimpleFile` function, "
-"which saves you the trouble of allocating memory space and loading the file "
-"contents."
+"``#define PY_SSIZE_T_CLEAN`` was used to indicate that ``Py_ssize_t`` should "
+"be used in some APIs instead of ``int``. It is not necessary since Python "
+"3.13, but we keep it here for backward compatibility. See :ref:`arg-parsing-"
+"string-and-buffers` for a description of this macro."
+msgstr ""
+
+#: extending/embedding.rst:97
+#, fuzzy
+msgid ""
+"Setting :c:member:`PyConfig.program_name` should be called before :c:func:"
+"`Py_InitializeFromConfig` to inform the interpreter about paths to Python "
+"run-time libraries.  Next, the Python interpreter is initialized with :c:"
+"func:`Py_Initialize`, followed by the execution of a hard-coded Python "
+"script that prints the date and time.  Afterwards, the :c:func:"
+"`Py_FinalizeEx` call shuts the interpreter down, followed by the end of the "
+"program.  In a real program, you may want to get the Python script from "
+"another source, perhaps a text-editor routine, a file, or a database.  "
+"Getting the Python code from a file can better be done by using the :c:func:"
+"`PyRun_SimpleFile` function, which saves you the trouble of allocating "
+"memory space and loading the file contents."
 msgstr ""
 "C'est la fonction :c:func:`Py_SetProgramName` qui devrait être appelée en "
 "premier, avant :c:func:`Py_Initialize`, afin d'informer l'interpréteur des "
@@ -165,11 +187,11 @@ msgstr ""
 "`PyRun_SimplFile`, qui vous économise le travail d'allouer de la mémoire et "
 "de charger le contenu du fichier."
 
-#: extending/embedding.rst:93
+#: extending/embedding.rst:112
 msgid "Beyond Very High Level Embedding: An overview"
 msgstr "Au-delà de l'intégration de haut niveau : survol"
 
-#: extending/embedding.rst:95
+#: extending/embedding.rst:114
 msgid ""
 "The high level interface gives you the ability to execute arbitrary pieces "
 "of Python code from your application, but exchanging data values is quite "
@@ -183,7 +205,7 @@ msgstr ""
 "appels de niveau plus bas. Il vous en coûtera plus de lignes de C à écrire, "
 "mais vous pourrez presque tout faire."
 
-#: extending/embedding.rst:100
+#: extending/embedding.rst:119
 msgid ""
 "It should be noted that extending Python and embedding Python is quite the "
 "same activity, despite the different intent. Most topics discussed in the "
@@ -195,27 +217,27 @@ msgstr ""
 "dans les chapitres précédents sont toujours valides. Pour le prouver, "
 "regardez ce qu'un code d'extension de Python vers C fait réellement :"
 
-#: extending/embedding.rst:105
+#: extending/embedding.rst:124
 msgid "Convert data values from Python to C,"
 msgstr "Convertir des valeurs de Python vers le C,"
 
-#: extending/embedding.rst:107
+#: extending/embedding.rst:126
 msgid "Perform a function call to a C routine using the converted values, and"
 msgstr "Appeler une fonction C en utilisant les valeurs converties, et"
 
-#: extending/embedding.rst:109
+#: extending/embedding.rst:128
 msgid "Convert the data values from the call from C to Python."
 msgstr "Convertir les résultats de l'appel à la fonction C pour Python."
 
-#: extending/embedding.rst:111
+#: extending/embedding.rst:130
 msgid "When embedding Python, the interface code does:"
 msgstr "Lors de l'intégration de Python, le code de l'interface fait :"
 
-#: extending/embedding.rst:113
+#: extending/embedding.rst:132
 msgid "Convert data values from C to Python,"
 msgstr "Convertir les valeurs depuis le C vers Python,"
 
-#: extending/embedding.rst:115
+#: extending/embedding.rst:134
 msgid ""
 "Perform a function call to a Python interface routine using the converted "
 "values, and"
@@ -223,11 +245,11 @@ msgstr ""
 "Effectuer un appel de fonction de l'interface Python en utilisant les "
 "valeurs converties, et"
 
-#: extending/embedding.rst:118
+#: extending/embedding.rst:137
 msgid "Convert the data values from the call from Python to C."
 msgstr "Convertir les valeurs de l'appel Python pour le C."
 
-#: extending/embedding.rst:120
+#: extending/embedding.rst:139
 msgid ""
 "As you can see, the data conversion steps are simply swapped to accommodate "
 "the different direction of the cross-language transfer. The only difference "
@@ -240,7 +262,7 @@ msgstr ""
 "données. Lors de l'extension, vous appelez une fonction C, lors de "
 "l'intégration vous appelez une fonction Python."
 
-#: extending/embedding.rst:125
+#: extending/embedding.rst:144
 msgid ""
 "This chapter will not discuss how to convert data from Python to C and vice "
 "versa.  Also, proper use of references and dealing with errors is assumed to "
@@ -253,11 +275,11 @@ msgstr ""
 "l'extension de l'interpréteur, vous pouvez vous référer aux chapitres "
 "précédents."
 
-#: extending/embedding.rst:134
+#: extending/embedding.rst:153
 msgid "Pure Embedding"
 msgstr "Intégration pure"
 
-#: extending/embedding.rst:136
+#: extending/embedding.rst:155
 msgid ""
 "The first program aims to execute a function in a Python script. Like in the "
 "section about the very high level interface, the Python interpreter does not "
@@ -269,11 +291,11 @@ msgstr ""
 "l'interpréteur n'interagit pas directement avec l'application (mais le fera "
 "dans la section suivante)."
 
-#: extending/embedding.rst:141
+#: extending/embedding.rst:160
 msgid "The code to run a function defined in a Python script is:"
 msgstr "Le code pour appeler une fonction définie dans un script Python est :"
 
-#: extending/embedding.rst:143
+#: extending/embedding.rst:162
 msgid ""
 "#define PY_SSIZE_T_CLEAN\n"
 "#include <Python.h>\n"
@@ -349,7 +371,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: extending/embedding.rst:146
+#: extending/embedding.rst:165
 msgid ""
 "This code loads a Python script using ``argv[1]``, and calls the function "
 "named in ``argv[2]``.  Its integer arguments are the other values of the "
@@ -363,7 +385,7 @@ msgstr ""
 "programme (appelons l'exécutable :program:`call`), et l'appelez pour "
 "exécuter un script Python, tel que :"
 
-#: extending/embedding.rst:152
+#: extending/embedding.rst:171
 msgid ""
 "def multiply(a,b):\n"
 "    print(\"Will compute\", a, \"times\", b)\n"
@@ -373,18 +395,18 @@ msgid ""
 "    return c"
 msgstr ""
 
-#: extending/embedding.rst:161
+#: extending/embedding.rst:180
 msgid "then the result should be:"
 msgstr "alors, le résultat sera :"
 
-#: extending/embedding.rst:163
+#: extending/embedding.rst:182
 msgid ""
 "$ call multiply multiply 3 2\n"
 "Will compute 3 times 2\n"
 "Result of call: 6"
 msgstr ""
 
-#: extending/embedding.rst:169
+#: extending/embedding.rst:188
 msgid ""
 "Although the program is quite large for its functionality, most of the code "
 "is for data conversion between Python and C, and for error reporting.  The "
@@ -395,7 +417,7 @@ msgstr ""
 "rapporter les erreurs. La partie intéressante, qui concerne l'intégration de "
 "Python débute par ::"
 
-#: extending/embedding.rst:173
+#: extending/embedding.rst:192
 msgid ""
 "Py_Initialize();\n"
 "pName = PyUnicode_DecodeFSDefault(argv[1]);\n"
@@ -403,7 +425,7 @@ msgid ""
 "pModule = PyImport_Import(pName);"
 msgstr ""
 
-#: extending/embedding.rst:178
+#: extending/embedding.rst:197
 msgid ""
 "After initializing the interpreter, the script is loaded using :c:func:"
 "`PyImport_Import`.  This routine needs a Python string as its argument, "
@@ -415,7 +437,7 @@ msgstr ""
 "argument, elle-même construite en utilisant la fonction de conversion :c:"
 "func:`PyUnicode_FromString`. ::"
 
-#: extending/embedding.rst:183
+#: extending/embedding.rst:202
 msgid ""
 "pFunc = PyObject_GetAttrString(pModule, argv[2]);\n"
 "/* pFunc is a new reference */\n"
@@ -426,7 +448,7 @@ msgid ""
 "Py_XDECREF(pFunc);"
 msgstr ""
 
-#: extending/embedding.rst:191
+#: extending/embedding.rst:210
 msgid ""
 "Once the script is loaded, the name we're looking for is retrieved using :c:"
 "func:`PyObject_GetAttrString`.  If the name exists, and the object returned "
@@ -440,11 +462,11 @@ msgstr ""
 "programme continue, classiquement, par la construction de *n*-uplet "
 "d'arguments. L'appel à la fonction Python est alors effectué avec ::"
 
-#: extending/embedding.rst:197
+#: extending/embedding.rst:216
 msgid "pValue = PyObject_CallObject(pFunc, pArgs);"
 msgstr ""
 
-#: extending/embedding.rst:199
+#: extending/embedding.rst:218
 msgid ""
 "Upon return of the function, ``pValue`` is either ``NULL`` or it contains a "
 "reference to the return value of the function.  Be sure to release the "
@@ -454,11 +476,11 @@ msgstr ""
 "référence sur la valeur donnée par la fonction. Assurez-vous de libérer la "
 "référence après avoir utilisé la valeur."
 
-#: extending/embedding.rst:207
+#: extending/embedding.rst:226
 msgid "Extending Embedded Python"
 msgstr "Étendre un Python intégré"
 
-#: extending/embedding.rst:209
+#: extending/embedding.rst:228
 msgid ""
 "Until now, the embedded Python interpreter had no access to functionality "
 "from the application itself.  The Python API allows this by extending the "
@@ -479,7 +501,7 @@ msgstr ""
 "à Python, tout comme vous écririez une extension Python normale. Par "
 "exemple ::"
 
-#: extending/embedding.rst:218
+#: extending/embedding.rst:237
 msgid ""
 "static int numargs=0;\n"
 "\n"
@@ -510,7 +532,7 @@ msgid ""
 "}"
 msgstr ""
 
-#: extending/embedding.rst:246
+#: extending/embedding.rst:265
 msgid ""
 "Insert the above code just above the :c:func:`main` function. Also, insert "
 "the following two statements before the call to :c:func:`Py_Initialize`::"
@@ -519,13 +541,13 @@ msgstr ""
 "aussi les deux instructions suivantes avant l'appel à :c:func:"
 "`Py_Initialize` ::"
 
-#: extending/embedding.rst:249
+#: extending/embedding.rst:268
 msgid ""
 "numargs = argc;\n"
 "PyImport_AppendInittab(\"emb\", &PyInit_emb);"
 msgstr ""
 
-#: extending/embedding.rst:252
+#: extending/embedding.rst:271
 #, fuzzy
 msgid ""
 "These two lines initialize the ``numargs`` variable, and make the :func:`!"
@@ -536,13 +558,13 @@ msgstr ""
 "func:`emb.numargs` accessible à l'interpréteur intégré. Avec ces ajouts, le "
 "script Python petit maintenant faire des choses comme"
 
-#: extending/embedding.rst:256
+#: extending/embedding.rst:275
 msgid ""
 "import emb\n"
 "print(\"Number of arguments\", emb.numargs())"
 msgstr ""
 
-#: extending/embedding.rst:261
+#: extending/embedding.rst:280
 msgid ""
 "In a real application, the methods will expose an API of the application to "
 "Python."
@@ -550,11 +572,11 @@ msgstr ""
 "Dans un cas réel, les méthodes exposeraient une API de l'application à "
 "Python."
 
-#: extending/embedding.rst:271
+#: extending/embedding.rst:290
 msgid "Embedding Python in C++"
 msgstr "Intégrer Python dans du C++"
 
-#: extending/embedding.rst:273
+#: extending/embedding.rst:292
 msgid ""
 "It is also possible to embed Python in a C++ program; precisely how this is "
 "done will depend on the details of the C++ system used; in general you will "
@@ -568,11 +590,11 @@ msgstr ""
 "compilateur C++ pour compiler et lier votre programme. Il n'y a pas besoin "
 "de recompiler Python en utilisant C++."
 
-#: extending/embedding.rst:282
+#: extending/embedding.rst:301
 msgid "Compiling and Linking under Unix-like systems"
 msgstr "Compiler et Lier en environnement Unix ou similaire"
 
-#: extending/embedding.rst:284
+#: extending/embedding.rst:303
 msgid ""
 "It is not necessarily trivial to find the right flags to pass to your "
 "compiler (and linker) in order to embed the Python interpreter into your "
@@ -584,7 +606,7 @@ msgstr ""
 "Python ayant besoin de charger des extensions sous forme de bibliothèques "
 "dynamiques en C (des :file:`.so`) pour se lier avec."
 
-#: extending/embedding.rst:290
+#: extending/embedding.rst:309
 msgid ""
 "To find out the required compiler and linker flags, you can execute the :"
 "file:`python{X.Y}-config` script which is generated as part of the "
@@ -597,7 +619,7 @@ msgstr ""
 "(un script :file:`python3-config` peut aussi être disponible). Ce script a "
 "quelques options, celles-ci vous seront utiles :"
 
-#: extending/embedding.rst:296
+#: extending/embedding.rst:315
 msgid ""
 "``pythonX.Y-config --cflags`` will give you the recommended flags when "
 "compiling:"
@@ -605,14 +627,14 @@ msgstr ""
 "``pythonX.Y-config --cflags`` vous donnera les options recommandées pour "
 "compiler :"
 
-#: extending/embedding.rst:299
+#: extending/embedding.rst:318
 msgid ""
 "$ /opt/bin/python3.11-config --cflags\n"
 "-I/opt/include/python3.11 -I/opt/include/python3.11 -Wsign-compare  -DNDEBUG "
 "-g -fwrapv -O3 -Wall"
 msgstr ""
 
-#: extending/embedding.rst:304
+#: extending/embedding.rst:323
 msgid ""
 "``pythonX.Y-config --ldflags --embed`` will give you the recommended flags "
 "when linking:"
@@ -620,14 +642,14 @@ msgstr ""
 "``pythonX.Y-config --ldflags --embed`` vous donnera les drapeaux recommandés "
 "lors de l'édition de lien :"
 
-#: extending/embedding.rst:307
+#: extending/embedding.rst:326
 msgid ""
 "$ /opt/bin/python3.11-config --ldflags --embed\n"
 "-L/opt/lib/python3.11/config-3.11-x86_64-linux-gnu -L/opt/lib -lpython3.11 -"
 "lpthread -ldl  -lutil -lm"
 msgstr ""
 
-#: extending/embedding.rst:313
+#: extending/embedding.rst:332
 msgid ""
 "To avoid confusion between several Python installations (and especially "
 "between the system Python and your own compiled Python), it is recommended "
@@ -639,7 +661,7 @@ msgstr ""
 "recommandé d'utiliser un chemin absolu vers :file:`python{X.Y}-config`, "
 "comme dans l'exemple précédent."
 
-#: extending/embedding.rst:318
+#: extending/embedding.rst:337
 msgid ""
 "If this procedure doesn't work for you (it is not guaranteed to work for all "
 "Unix-like platforms; however, we welcome :ref:`bug reports <reporting-"
@@ -660,7 +682,7 @@ msgstr ""
 "extraire automatiquement les valeurs de configuration que vous voudrez "
 "combiner ensemble. Par exemple :"
 
-#: extending/embedding.rst:327
+#: extending/embedding.rst:346
 msgid ""
 ">>> import sysconfig\n"
 ">>> sysconfig.get_config_var('LIBS')\n"

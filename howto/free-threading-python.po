@@ -1,0 +1,256 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2024, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.13\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../Doc/howto/free-threading-python.rst:5
+msgid "Python experimental support for free threading"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:7
+msgid ""
+"Starting with the 3.13 release, CPython has experimental support for a build "
+"of Python called :term:`free threading` where the :term:`global interpreter "
+"lock` (GIL) is disabled.  Free-threaded execution allows for full "
+"utilization of the available processing power by running threads in parallel "
+"on available CPU cores. While not all software will benefit from this "
+"automatically, programs designed with threading in mind will run faster on "
+"multi-core hardware."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:14
+msgid ""
+"**The free-threaded mode is experimental** and work is ongoing to improve "
+"it: expect some bugs and a substantial single-threaded performance hit."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:17
+msgid ""
+"This document describes the implications of free threading for Python code.  "
+"See :ref:`freethreading-extensions-howto` for information on how to write C "
+"extensions that support the free-threaded build."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:23
+msgid ""
+":pep:`703` – Making the Global Interpreter Lock Optional in CPython for an "
+"overall description of free-threaded Python."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:28
+msgid "Installation"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:30
+msgid ""
+"Starting with Python 3.13, the official macOS and Windows installers "
+"optionally support installing free-threaded Python binaries.  The installers "
+"are available at https://www.python.org/downloads/."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:34
+msgid ""
+"For information on other platforms, see the `Installing a Free-Threaded "
+"Python <https://py-free-threading.github.io/installing_cpython/>`_, a "
+"community-maintained installation guide for installing free-threaded Python."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:38
+msgid ""
+"When building CPython from source, the :option:`--disable-gil` configure "
+"option should be used to build a free-threaded Python interpreter."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:43
+msgid "Identifying free-threaded Python"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:45
+msgid ""
+"To check if the current interpreter supports free-threading, :option:`python "
+"-VV <-V>` and :attr:`sys.version` contain \"experimental free-threading "
+"build\". The new :func:`sys._is_gil_enabled` function can be used to check "
+"whether the GIL is actually disabled in the running process."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:50
+msgid ""
+"The ``sysconfig.get_config_var(\"Py_GIL_DISABLED\")`` configuration variable "
+"can be used to determine whether the build supports free threading.  If the "
+"variable is set to ``1``, then the build supports free threading.  This is "
+"the recommended mechanism for decisions related to the build configuration."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:57
+msgid "The global interpreter lock in free-threaded Python"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:59
+msgid ""
+"Free-threaded builds of CPython support optionally running with the GIL "
+"enabled at runtime using the environment variable :envvar:`PYTHON_GIL` or "
+"the command-line option :option:`-X gil`."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:63
+msgid ""
+"The GIL may also automatically be enabled when importing a C-API extension "
+"module that is not explicitly marked as supporting free threading.  A "
+"warning will be printed in this case."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:67
+msgid ""
+"In addition to individual package documentation, the following websites "
+"track the status of popular packages support for free threading:"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:70
+msgid "https://py-free-threading.github.io/tracking/"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:71
+msgid "https://hugovk.github.io/free-threaded-wheels/"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:75
+msgid "Thread safety"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:77
+msgid ""
+"The free-threaded build of CPython aims to provide similar thread-safety "
+"behavior at the Python level to the default GIL-enabled build.  Built-in "
+"types like :class:`dict`, :class:`list`, and :class:`set` use internal locks "
+"to protect against concurrent modifications in ways that behave similarly to "
+"the GIL.  However, Python has not historically guaranteed specific behavior "
+"for concurrent modifications to these built-in types, so this should be "
+"treated as a description of the current implementation, not a guarantee of "
+"current or future behavior."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:88
+msgid ""
+"It's recommended to use the :class:`threading.Lock` or other synchronization "
+"primitives instead of relying on the internal locks of built-in types, when "
+"possible."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:94
+msgid "Known limitations"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:96
+msgid ""
+"This section describes known limitations of the free-threaded CPython build."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:99
+msgid "Immortalization"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:101
+msgid ""
+"The free-threaded build of the 3.13 release makes some objects :term:"
+"`immortal`. Immortal objects are not deallocated and have reference counts "
+"that are never modified.  This is done to avoid reference count contention "
+"that would prevent efficient multi-threaded scaling."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:106
+msgid ""
+"An object will be made immortal when a new thread is started for the first "
+"time after the main thread is running.  The following objects are "
+"immortalized:"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:109
+msgid ""
+":ref:`function <user-defined-funcs>` objects declared at the module level"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:110
+msgid ":ref:`method <instance-methods>` descriptors"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:111
+msgid ":ref:`code <code-objects>` objects"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:112
+msgid ":term:`module` objects and their dictionaries"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:113
+msgid ":ref:`classes <classes>` (type objects)"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:115
+msgid ""
+"Because immortal objects are never deallocated, applications that create "
+"many objects of these types may see increased memory usage.  This is "
+"expected to be addressed in the 3.14 release."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:119
+msgid ""
+"Additionally, numeric and string literals in the code as well as strings "
+"returned by :func:`sys.intern` are also immortalized.  This behavior is "
+"expected to remain in the 3.14 free-threaded build."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:125
+msgid "Frame objects"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:127
+msgid ""
+"It is not safe to access :ref:`frame <frame-objects>` objects from other "
+"threads and doing so may cause your program to crash .  This means that :"
+"func:`sys._current_frames` is generally not safe to use in a free-threaded "
+"build.  Functions like :func:`inspect.currentframe` and :func:`sys."
+"_getframe` are generally safe as long as the resulting frame object is not "
+"passed to another thread."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:135
+msgid "Iterators"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:137
+msgid ""
+"Sharing the same iterator object between multiple threads is generally not "
+"safe and threads may see duplicate or missing elements when iterating or "
+"crash the interpreter."
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:143
+msgid "Single-threaded performance"
+msgstr ""
+
+#: ../Doc/howto/free-threading-python.rst:145
+msgid ""
+"The free-threaded build has additional overhead when executing Python code "
+"compared to the default GIL-enabled build.  In 3.13, this overhead is about "
+"40% on the `pyperformance <https://pyperformance.readthedocs.io/>`_ suite. "
+"Programs that spend most of their time in C extensions or I/O will see less "
+"of an impact.  The largest impact is because the specializing adaptive "
+"interpreter (:pep:`659`) is disabled in the free-threaded build.  We expect "
+"to re-enable it in a thread-safe way in the 3.14 release.  This overhead is "
+"expected to be reduced in upcoming Python release.   We are aiming for an "
+"overhead of 10% or less on the pyperformance suite compared to the default "
+"GIL-enabled build."
+msgstr ""
