@@ -184,6 +184,7 @@ check-headers:
 
 .PHONY: syntax
 syntax:
+	@echo Checking po sytax...
 	@msgcat *.po */*.po > /dev/null
 
 .PHONY: verifs

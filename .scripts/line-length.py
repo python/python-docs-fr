@@ -26,6 +26,8 @@ return_code = 0
 for line in fileinput.input(encoding="utf-8"):
     line = clean(line)
     limit = SOFT_LIMIT if line.count(" ") > 1 else HARD_LIMIT
+    if len(set(line)) <= 6:
+        continue  # msgcat does not wraps the long line of dots in howto/perf_profiling.rst
     if len(line) > limit:
         print(
             f"{fileinput.filename()}:{fileinput.filelineno()} line too long "
