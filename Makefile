@@ -182,8 +182,12 @@ check-headers:
 # 	@echo Checking colons...
 # 	@python .scripts/check-colon.py --check $(SRCS)
 
+.PHONY: syntax
+syntax:
+	@msgcat *.po */*.po > /dev/null
+
 .PHONY: verifs
-verifs: spell line-length check-headers sphinx-lint
+verifs: spell syntax line-length check-headers sphinx-lint
 
 .PHONY: clean
 clean:
