@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -70,12 +70,6 @@ msgstr ""
 msgid ""
 "All function, type and macro definitions needed to use the Python/C API are "
 "included in your code by the following line::"
-msgstr ""
-
-#: c-api/intro.rst:51
-msgid ""
-"#define PY_SSIZE_T_CLEAN\n"
-"#include <Python.h>"
 msgstr ""
 
 #: c-api/intro.rst:54
@@ -178,21 +172,6 @@ msgid ""
 "item defined in the module file. Example::"
 msgstr ""
 
-#: c-api/intro.rst:119
-msgid ""
-"static struct PyModuleDef spam_module = {\n"
-"    PyModuleDef_HEAD_INIT,\n"
-"    .m_name = \"spam\",\n"
-"    ...\n"
-"};\n"
-"\n"
-"PyMODINIT_FUNC\n"
-"PyInit_spam(void)\n"
-"{\n"
-"    return PyModule_Create(&spam_module);\n"
-"}"
-msgstr ""
-
 #: c-api/intro.rst:134
 #, fuzzy
 msgid "Return the absolute value of ``x``."
@@ -229,10 +208,6 @@ msgstr ""
 msgid "It must be specified before the function return type. Usage::"
 msgstr ""
 
-#: c-api/intro.rst:156
-msgid "static inline Py_ALWAYS_INLINE int random(void) { return 4; }"
-msgstr ""
-
 #: c-api/intro.rst:162
 msgid ""
 "Argument must be a character or an integer in the range [-128, 127] or [0, "
@@ -248,10 +223,6 @@ msgstr ""
 #: c-api/intro.rst:256 c-api/intro.rst:274
 msgid "Example::"
 msgstr "Exemple ::"
-
-#: c-api/intro.rst:172
-msgid "Py_DEPRECATED(3.8) PyAPI_FUNC(int) Py_OldFunction(void);"
-msgstr ""
 
 #: c-api/intro.rst:174
 msgid "MSVC support was added."
@@ -285,10 +256,6 @@ msgstr ""
 #: c-api/intro.rst:206
 msgid "Usage::"
 msgstr "Utilisation ::"
-
-#: c-api/intro.rst:208
-msgid "Py_NO_INLINE static int random(void) { return 4; }"
-msgstr ""
 
 #: c-api/intro.rst:214
 msgid ""
@@ -343,17 +310,6 @@ msgid ""
 "without docstrings, as specified in :pep:`7`."
 msgstr ""
 
-#: c-api/intro.rst:258
-msgid ""
-"PyDoc_STRVAR(pop_doc, \"Remove and return the rightmost element.\");\n"
-"\n"
-"static PyMethodDef deque_methods[] = {\n"
-"    // ...\n"
-"    {\"pop\", (PyCFunction)deque_pop, METH_NOARGS, pop_doc},\n"
-"    // ...\n"
-"}"
-msgstr ""
-
 #: c-api/intro.rst:268
 msgid ""
 "Creates a docstring for the given input string or an empty string if "
@@ -364,15 +320,6 @@ msgstr ""
 msgid ""
 "Use :c:macro:`PyDoc_STR` in specifying docstrings to support building Python "
 "without docstrings, as specified in :pep:`7`."
-msgstr ""
-
-#: c-api/intro.rst:276
-msgid ""
-"static PyMethodDef pysqlite_row_methods[] = {\n"
-"    {\"keys\", (PyCFunction)pysqlite_row_keys, METH_NOARGS,\n"
-"        PyDoc_STR(\"Returns the keys of the row.\")},\n"
-"    {NULL, NULL}\n"
-"};"
 msgstr ""
 
 #: c-api/intro.rst:286
@@ -524,16 +471,6 @@ msgid ""
 "below)::"
 msgstr ""
 
-#: c-api/intro.rst:415
-msgid ""
-"PyObject *t;\n"
-"\n"
-"t = PyTuple_New(3);\n"
-"PyTuple_SetItem(t, 0, PyLong_FromLong(1L));\n"
-"PyTuple_SetItem(t, 1, PyLong_FromLong(2L));\n"
-"PyTuple_SetItem(t, 2, PyUnicode_FromString(\"three\"));"
-msgstr ""
-
 #: c-api/intro.rst:422
 msgid ""
 "Here, :c:func:`PyLong_FromLong` returns a new reference which is immediately "
@@ -565,14 +502,6 @@ msgid ""
 "be replaced by the following (which also takes care of the error checking)::"
 msgstr ""
 
-#: c-api/intro.rst:441
-msgid ""
-"PyObject *tuple, *list;\n"
-"\n"
-"tuple = Py_BuildValue(\"(iis)\", 1, 2, \"three\");\n"
-"list = Py_BuildValue(\"[iis]\", 1, 2, \"three\");"
-msgstr ""
-
 #: c-api/intro.rst:446
 msgid ""
 "It is much more common to use :c:func:`PyObject_SetItem` and friends with "
@@ -582,30 +511,6 @@ msgid ""
 "reference just so you can give that reference away (\"have it be stolen\").  "
 "For example, this function sets all items of a list (actually, any mutable "
 "sequence) to a given item::"
-msgstr ""
-
-#: c-api/intro.rst:453
-msgid ""
-"int\n"
-"set_all(PyObject *target, PyObject *item)\n"
-"{\n"
-"    Py_ssize_t i, n;\n"
-"\n"
-"    n = PyObject_Length(target);\n"
-"    if (n < 0)\n"
-"        return -1;\n"
-"    for (i = 0; i < n; i++) {\n"
-"        PyObject *index = PyLong_FromSsize_t(i);\n"
-"        if (!index)\n"
-"            return -1;\n"
-"        if (PyObject_SetItem(target, index, item) < 0) {\n"
-"            Py_DECREF(index);\n"
-"            return -1;\n"
-"        }\n"
-"        Py_DECREF(index);\n"
-"    }\n"
-"    return 0;\n"
-"}"
 msgstr ""
 
 #: c-api/intro.rst:476
@@ -637,62 +542,6 @@ msgid ""
 "Here is an example of how you could write a function that computes the sum "
 "of the items in a list of integers; once using  :c:func:`PyList_GetItem`, "
 "and once using :c:func:`PySequence_GetItem`. ::"
-msgstr ""
-
-#: c-api/intro.rst:501
-msgid ""
-"long\n"
-"sum_list(PyObject *list)\n"
-"{\n"
-"    Py_ssize_t i, n;\n"
-"    long total = 0, value;\n"
-"    PyObject *item;\n"
-"\n"
-"    n = PyList_Size(list);\n"
-"    if (n < 0)\n"
-"        return -1; /* Not a list */\n"
-"    for (i = 0; i < n; i++) {\n"
-"        item = PyList_GetItem(list, i); /* Can't fail */\n"
-"        if (!PyLong_Check(item)) continue; /* Skip non-integers */\n"
-"        value = PyLong_AsLong(item);\n"
-"        if (value == -1 && PyErr_Occurred())\n"
-"            /* Integer too big to fit in a C long, bail out */\n"
-"            return -1;\n"
-"        total += value;\n"
-"    }\n"
-"    return total;\n"
-"}"
-msgstr ""
-
-#: c-api/intro.rst:527
-msgid ""
-"long\n"
-"sum_sequence(PyObject *sequence)\n"
-"{\n"
-"    Py_ssize_t i, n;\n"
-"    long total = 0, value;\n"
-"    PyObject *item;\n"
-"    n = PySequence_Length(sequence);\n"
-"    if (n < 0)\n"
-"        return -1; /* Has no length */\n"
-"    for (i = 0; i < n; i++) {\n"
-"        item = PySequence_GetItem(sequence, i);\n"
-"        if (item == NULL)\n"
-"            return -1; /* Not a sequence, or other failure */\n"
-"        if (PyLong_Check(item)) {\n"
-"            value = PyLong_AsLong(item);\n"
-"            Py_DECREF(item);\n"
-"            if (value == -1 && PyErr_Occurred())\n"
-"                /* Integer too big to fit in a C long, bail out */\n"
-"                return -1;\n"
-"            total += value;\n"
-"        }\n"
-"        else {\n"
-"            Py_DECREF(item); /* Discard reference ownership */\n"
-"        }\n"
-"    }\n"
-"    return total;\n"
-"}"
 msgstr ""
 
 #: c-api/intro.rst:561
@@ -806,64 +655,8 @@ msgid ""
 "why you like Python, we show the equivalent Python code::"
 msgstr ""
 
-#: c-api/intro.rst:655
-msgid ""
-"def incr_item(dict, key):\n"
-"    try:\n"
-"        item = dict[key]\n"
-"    except KeyError:\n"
-"        item = 0\n"
-"    dict[key] = item + 1"
-msgstr ""
-
 #: c-api/intro.rst:664
 msgid "Here is the corresponding C code, in all its glory::"
-msgstr ""
-
-#: c-api/intro.rst:666
-msgid ""
-"int\n"
-"incr_item(PyObject *dict, PyObject *key)\n"
-"{\n"
-"    /* Objects all initialized to NULL for Py_XDECREF */\n"
-"    PyObject *item = NULL, *const_one = NULL, *incremented_item = NULL;\n"
-"    int rv = -1; /* Return value initialized to -1 (failure) */\n"
-"\n"
-"    item = PyObject_GetItem(dict, key);\n"
-"    if (item == NULL) {\n"
-"        /* Handle KeyError only: */\n"
-"        if (!PyErr_ExceptionMatches(PyExc_KeyError))\n"
-"            goto error;\n"
-"\n"
-"        /* Clear the error and use zero: */\n"
-"        PyErr_Clear();\n"
-"        item = PyLong_FromLong(0L);\n"
-"        if (item == NULL)\n"
-"            goto error;\n"
-"    }\n"
-"    const_one = PyLong_FromLong(1L);\n"
-"    if (const_one == NULL)\n"
-"        goto error;\n"
-"\n"
-"    incremented_item = PyNumber_Add(item, const_one);\n"
-"    if (incremented_item == NULL)\n"
-"        goto error;\n"
-"\n"
-"    if (PyObject_SetItem(dict, key, incremented_item) < 0)\n"
-"        goto error;\n"
-"    rv = 0; /* Success */\n"
-"    /* Continue with cleanup code */\n"
-"\n"
-" error:\n"
-"    /* Cleanup code, shared by success and failure path */\n"
-"\n"
-"    /* Use Py_XDECREF() to ignore NULL references */\n"
-"    Py_XDECREF(item);\n"
-"    Py_XDECREF(const_one);\n"
-"    Py_XDECREF(incremented_item);\n"
-"\n"
-"    return rv; /* -1 for error, 0 for success */\n"
-"}"
 msgstr ""
 
 #: c-api/intro.rst:716
@@ -1009,126 +802,20 @@ msgid ""
 "distribution for more detailed information."
 msgstr ""
 
-#: c-api/intro.rst:288
-msgid "object"
-msgstr "objet"
+#~ msgid "object"
+#~ msgstr "objet"
 
-#: c-api/intro.rst:288
-msgid "type"
-msgstr "type"
+#~ msgid "type"
+#~ msgstr "type"
 
-#: c-api/intro.rst:327
-msgid "Py_INCREF (C function)"
-msgstr ""
+#~ msgid "module"
+#~ msgstr "module"
 
-#: c-api/intro.rst:327
-msgid "Py_DECREF (C function)"
-msgstr ""
+#~ msgid "builtins"
+#~ msgstr "builtins"
 
-#: c-api/intro.rst:403
-msgid "PyList_SetItem (C function)"
-msgstr ""
+#~ msgid "__main__"
+#~ msgstr "__main__"
 
-#: c-api/intro.rst:403
-msgid "PyTuple_SetItem (C function)"
-msgstr ""
-
-#: c-api/intro.rst:474
-msgid "set_all()"
-msgstr ""
-
-#: c-api/intro.rst:493
-msgid "PyList_GetItem (C function)"
-msgstr ""
-
-#: c-api/intro.rst:493
-msgid "PySequence_GetItem (C function)"
-msgstr ""
-
-#: c-api/intro.rst:523
-msgid "sum_list()"
-msgstr ""
-
-#: c-api/intro.rst:647
-msgid "sum_sequence()"
-msgstr ""
-
-#: c-api/intro.rst:590
-msgid "PyErr_Occurred (C function)"
-msgstr ""
-
-#: c-api/intro.rst:603
-msgid "PyErr_SetString (C function)"
-msgstr ""
-
-#: c-api/intro.rst:711
-msgid "PyErr_Clear (C function)"
-msgstr ""
-
-#: c-api/intro.rst:627
-msgid "exc_info (in module sys)"
-msgstr ""
-
-#: c-api/intro.rst:709
-msgid "incr_item()"
-msgstr ""
-
-#: c-api/intro.rst:711
-msgid "PyErr_ExceptionMatches (C function)"
-msgstr ""
-
-#: c-api/intro.rst:711
-msgid "Py_XDECREF (C function)"
-msgstr ""
-
-#: c-api/intro.rst:737
-msgid "Py_Initialize (C function)"
-msgstr ""
-
-#: c-api/intro.rst:737
-msgid "module"
-msgstr "module"
-
-#: c-api/intro.rst:737
-msgid "builtins"
-msgstr "builtins"
-
-#: c-api/intro.rst:737
-msgid "__main__"
-msgstr "__main__"
-
-#: c-api/intro.rst:737
-msgid "sys"
-msgstr "*sys*"
-
-#: c-api/intro.rst:737
-msgid "search"
-msgstr ""
-
-#: c-api/intro.rst:737
-msgid "path"
-msgstr ""
-
-#: c-api/intro.rst:737
-msgid "path (in module sys)"
-msgstr ""
-
-#: c-api/intro.rst:772
-msgid "Py_GetPath (C function)"
-msgstr ""
-
-#: c-api/intro.rst:772
-msgid "Py_GetPrefix (C function)"
-msgstr ""
-
-#: c-api/intro.rst:772
-msgid "Py_GetExecPrefix (C function)"
-msgstr ""
-
-#: c-api/intro.rst:772
-msgid "Py_GetProgramFullPath (C function)"
-msgstr ""
-
-#: c-api/intro.rst:787
-msgid "Py_IsInitialized (C function)"
-msgstr ""
+#~ msgid "sys"
+#~ msgstr "*sys*"

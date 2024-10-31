@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2022-05-18 13:35+0200\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -467,10 +467,6 @@ msgstr ""
 "Les filtres d'avertissement individuels sont décrits sous la forme d'une "
 "séquence de champs séparés par des deux-points ::"
 
-#: library/warnings.rst:196
-msgid "action:message:category:module:line"
-msgstr ""
-
 #: library/warnings.rst:198
 msgid ""
 "The meaning of each of these fields is as described in :ref:`warning-"
@@ -497,19 +493,6 @@ msgstr ""
 "avertissements, aux avertissements d'une catégorie particulière ou aux "
 "avertissements émis par certains modules ou paquets. Quelques exemples ::"
 
-#: library/warnings.rst:209
-msgid ""
-"default                      # Show all warnings (even those ignored by "
-"default)\n"
-"ignore                       # Ignore all warnings\n"
-"error                        # Convert all warnings to errors\n"
-"error::ResourceWarning       # Treat ResourceWarning messages as errors\n"
-"default::DeprecationWarning  # Show DeprecationWarning messages\n"
-"ignore,default:::mymodule    # Only report warnings triggered by "
-"\"mymodule\"\n"
-"error:::mymodule             # Convert warnings to errors in \"mymodule\""
-msgstr ""
-
 #: library/warnings.rst:221
 msgid "Default Warning Filter"
 msgstr "Filtre d'avertissement par défaut"
@@ -532,15 +515,6 @@ msgid ""
 msgstr ""
 "Dans les versions standard publiées de Python, le filtre d'avertissement par "
 "défaut a les entrées suivantes (par ordre de priorité) ::"
-
-#: library/warnings.rst:230
-msgid ""
-"default::DeprecationWarning:__main__\n"
-"ignore::DeprecationWarning\n"
-"ignore::PendingDeprecationWarning\n"
-"ignore::ImportWarning\n"
-"ignore::ResourceWarning"
-msgstr ""
 
 #: library/warnings.rst:236
 msgid ""
@@ -596,15 +570,6 @@ msgstr ""
 "filtre à l'interpréteur peut être utilisé comme marqueur pour indiquer si "
 "les avertissements doivent être ou non désactivés ::"
 
-#: library/warnings.rst:263
-msgid ""
-"import sys\n"
-"\n"
-"if not sys.warnoptions:\n"
-"    import warnings\n"
-"    warnings.simplefilter(\"ignore\")"
-msgstr ""
-
 #: library/warnings.rst:269
 msgid ""
 "Developers of test runners for Python code are advised to instead ensure "
@@ -614,16 +579,6 @@ msgstr ""
 "Les développeurs d'exécuteurs de test pour le code Python sont invités à "
 "s'assurer que *tous* les avertissements sont affichés par défaut pour le "
 "code en cours de test, en utilisant par exemple ::"
-
-#: library/warnings.rst:273
-msgid ""
-"import sys\n"
-"\n"
-"if not sys.warnoptions:\n"
-"    import os, warnings\n"
-"    warnings.simplefilter(\"default\") # Change the filter in this process\n"
-"    os.environ[\"PYTHONWARNINGS\"] = \"default\" # Also affect subprocesses"
-msgstr ""
 
 #: library/warnings.rst:280
 msgid ""
@@ -638,13 +593,6 @@ msgstr ""
 "`DeprecationWarning` sont rendus visibles par défaut, en utilisant le code "
 "suivant (où ``user_ns`` est le module utilisé pour exécuter le code entré "
 "interactivement) ::"
-
-#: library/warnings.rst:285
-msgid ""
-"import warnings\n"
-"warnings.filterwarnings(\"default\", category=DeprecationWarning,\n"
-"                                   module=user_ns.get(\"__name__\"))"
-msgstr ""
 
 #: library/warnings.rst:293
 msgid "Temporarily Suppressing Warnings"
@@ -663,18 +611,6 @@ msgstr ""
 "via la ligne de commande), alors il est possible de supprimer "
 "l'avertissement en utilisant le gestionnaire de contexte :class:"
 "`catch_warnings` ::"
-
-#: library/warnings.rst:300
-msgid ""
-"import warnings\n"
-"\n"
-"def fxn():\n"
-"    warnings.warn(\"deprecated\", DeprecationWarning)\n"
-"\n"
-"with warnings.catch_warnings():\n"
-"    warnings.simplefilter(\"ignore\")\n"
-"    fxn()"
-msgstr ""
 
 #: library/warnings.rst:309
 msgid ""
@@ -709,24 +645,6 @@ msgstr ""
 "de contexte :class:`catch_warnings`. Avec lui, vous pouvez temporairement "
 "modifier le filtre d'avertissements pour faciliter votre test. Par exemple, "
 "procédez comme suit pour capturer tous les avertissements levés à vérifier ::"
-
-#: library/warnings.rst:328
-msgid ""
-"import warnings\n"
-"\n"
-"def fxn():\n"
-"    warnings.warn(\"deprecated\", DeprecationWarning)\n"
-"\n"
-"with warnings.catch_warnings(record=True) as w:\n"
-"    # Cause all warnings to always be triggered.\n"
-"    warnings.simplefilter(\"always\")\n"
-"    # Trigger a warning.\n"
-"    fxn()\n"
-"    # Verify some things\n"
-"    assert len(w) == 1\n"
-"    assert issubclass(w[-1].category, DeprecationWarning)\n"
-"    assert \"deprecated\" in str(w[-1].message)"
-msgstr ""
 
 #: library/warnings.rst:343
 msgid ""
@@ -868,12 +786,6 @@ msgstr ""
 "des avertissements <warning-filter>`.  L'argument *stacklevel* peut être "
 "utilisé par les fonctions *wrapper* écrites en Python, comme ceci ::"
 
-#: library/warnings.rst:410
-msgid ""
-"def deprecated_api(message):\n"
-"    warnings.warn(message, DeprecationWarning, stacklevel=2)"
-msgstr ""
-
 #: library/warnings.rst:413
 #, fuzzy
 msgid ""
@@ -895,23 +807,6 @@ msgid ""
 "prefixes are supplied, stacklevel is implicitly overridden to be ``max(2, "
 "stacklevel)``. To cause a warning to be attributed to the caller from "
 "outside of the current package you might write::"
-msgstr ""
-
-#: library/warnings.rst:426
-msgid ""
-"# example/lower.py\n"
-"_warn_skips = (os.path.dirname(__file__),)\n"
-"\n"
-"def one_way(r_luxury_yacht=None, t_wobbler_mangrove=None):\n"
-"    if r_luxury_yacht:\n"
-"        warnings.warn(\"Please migrate to t_wobbler_mangrove=.\",\n"
-"                      skip_file_prefixes=_warn_skips)\n"
-"\n"
-"# example/higher.py\n"
-"from . import lower\n"
-"\n"
-"def another_way(**kw):\n"
-"    lower.one_way(**kw)"
 msgstr ""
 
 #: library/warnings.rst:440
@@ -1068,26 +963,6 @@ msgstr ""
 msgid "Usage::"
 msgstr "Utilisation ::"
 
-#: library/warnings.rst:536
-msgid ""
-"from warnings import deprecated\n"
-"from typing import overload\n"
-"\n"
-"@deprecated(\"Use B instead\")\n"
-"class A:\n"
-"    pass\n"
-"\n"
-"@deprecated(\"Use g instead\")\n"
-"def f():\n"
-"    pass\n"
-"\n"
-"@overload\n"
-"@deprecated(\"int support is deprecated\")\n"
-"def g(x: int) -> int: ...\n"
-"@overload\n"
-"def g(x: str) -> int: ..."
-msgstr ""
-
 #: library/warnings.rst:553
 msgid ""
 "The warning specified by *category* will be emitted at runtime on use of "
@@ -1175,10 +1050,6 @@ msgstr ""
 
 #: library/warnings.rst:611
 msgid "Added the *action*, *category*, *lineno*, and *append* parameters."
-msgstr ""
-
-#: library/warnings.rst:9
-msgid "warnings"
 msgstr ""
 
 #~ msgid ""

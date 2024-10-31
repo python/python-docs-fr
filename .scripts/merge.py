@@ -123,7 +123,14 @@ def main():
     args = parse_args()
     setup_repo(args.cpython_repo, args.branch)
     run(
-        *["sphinx-build", "-jauto", "-QDgettext_compact=0", "-bgettext", ".", "../pot"],
+        "sphinx-build",
+        "-jauto",
+        "--silent",
+        "-Dgettext_compact=0",
+        "-Dgettext_additional_targets=['index']",
+        "-bgettext",
+        ".",
+        "../pot",
         cwd=args.cpython_repo / "Doc",
     )
     pot_path = args.cpython_repo / "pot"

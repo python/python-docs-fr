@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2018-07-31 23:09+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -575,37 +575,10 @@ msgid ""
 "avoided.  For example, the following code written for Python 3.2::"
 msgstr ""
 
-#: whatsnew/3.3.rst:366
-msgid ""
-"from errno import ENOENT, EACCES, EPERM\n"
-"\n"
-"try:\n"
-"    with open(\"document.txt\") as f:\n"
-"        content = f.read()\n"
-"except IOError as err:\n"
-"    if err.errno == ENOENT:\n"
-"        print(\"document.txt file is missing\")\n"
-"    elif err.errno in (EACCES, EPERM):\n"
-"        print(\"You are not allowed to read document.txt\")\n"
-"    else:\n"
-"        raise"
-msgstr ""
-
 #: whatsnew/3.3.rst:379
 msgid ""
 "can now be written without the :mod:`errno` import and without manual "
 "inspection of exception attributes::"
-msgstr ""
-
-#: whatsnew/3.3.rst:382
-msgid ""
-"try:\n"
-"    with open(\"document.txt\") as f:\n"
-"        content = f.read()\n"
-"except FileNotFoundError:\n"
-"    print(\"document.txt file is missing\")\n"
-"except PermissionError:\n"
-"    print(\"You are not allowed to read document.txt\")"
 msgstr ""
 
 #: whatsnew/3.3.rst:392
@@ -643,51 +616,11 @@ msgid ""
 "shortened form of ``for item in iterable: yield item``::"
 msgstr ""
 
-#: whatsnew/3.3.rst:417
-msgid ""
-">>> def g(x):\n"
-"...     yield from range(x, 0, -1)\n"
-"...     yield from range(x)\n"
-"...\n"
-">>> list(g(5))\n"
-"[5, 4, 3, 2, 1, 0, 1, 2, 3, 4]"
-msgstr ""
-
 #: whatsnew/3.3.rst:424
 msgid ""
 "However, unlike an ordinary loop, ``yield from`` allows subgenerators to "
 "receive sent and thrown values directly from the calling scope, and return a "
 "final value to the outer generator::"
-msgstr ""
-
-#: whatsnew/3.3.rst:428
-msgid ""
-">>> def accumulate():\n"
-"...     tally = 0\n"
-"...     while 1:\n"
-"...         next = yield\n"
-"...         if next is None:\n"
-"...             return tally\n"
-"...         tally += next\n"
-"...\n"
-">>> def gather_tallies(tallies):\n"
-"...     while 1:\n"
-"...         tally = yield from accumulate()\n"
-"...         tallies.append(tally)\n"
-"...\n"
-">>> tallies = []\n"
-">>> acc = gather_tallies(tallies)\n"
-">>> next(acc)  # Ensure the accumulator is ready to accept values\n"
-">>> for i in range(4):\n"
-"...     acc.send(i)\n"
-"...\n"
-">>> acc.send(None)  # Finish the first tally\n"
-">>> for i in range(5):\n"
-"...     acc.send(i)\n"
-"...\n"
-">>> acc.send(None)  # Finish the second tally\n"
-">>> tallies\n"
-"[6, 10]"
 msgstr ""
 
 #: whatsnew/3.3.rst:455
@@ -720,52 +653,10 @@ msgid ""
 "applications that convert between exception types::"
 msgstr ""
 
-#: whatsnew/3.3.rst:475
-msgid ""
-">>> class D:\n"
-"...     def __init__(self, extra):\n"
-"...         self._extra_attributes = extra\n"
-"...     def __getattr__(self, attr):\n"
-"...         try:\n"
-"...             return self._extra_attributes[attr]\n"
-"...         except KeyError:\n"
-"...             raise AttributeError(attr) from None\n"
-"...\n"
-">>> D({}).x\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"<stdin>\", line 8, in __getattr__\n"
-"AttributeError: x"
-msgstr ""
-
 #: whatsnew/3.3.rst:490
 msgid ""
 "Without the ``from None`` suffix to suppress the cause, the original "
 "exception would be displayed by default::"
-msgstr ""
-
-#: whatsnew/3.3.rst:493
-msgid ""
-">>> class C:\n"
-"...     def __init__(self, extra):\n"
-"...         self._extra_attributes = extra\n"
-"...     def __getattr__(self, attr):\n"
-"...         try:\n"
-"...             return self._extra_attributes[attr]\n"
-"...         except KeyError:\n"
-"...             raise AttributeError(attr)\n"
-"...\n"
-">>> C({}).x\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 6, in __getattr__\n"
-"KeyError: 'x'\n"
-"\n"
-"During handling of the above exception, another exception occurred:\n"
-"\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"<stdin>\", line 8, in __getattr__\n"
-"AttributeError: x"
 msgstr ""
 
 #: whatsnew/3.3.rst:514
@@ -773,16 +664,6 @@ msgid ""
 "No debugging capability is lost, as the original exception context remains "
 "available if needed (for example, if an intervening library has incorrectly "
 "suppressed valuable underlying details)::"
-msgstr ""
-
-#: whatsnew/3.3.rst:518
-msgid ""
-">>> try:\n"
-"...     D({}).x\n"
-"... except AttributeError as exc:\n"
-"...     print(repr(exc.__context__))\n"
-"...\n"
-"KeyError('x',)"
 msgstr ""
 
 #: whatsnew/3.3.rst:527
@@ -835,68 +716,18 @@ msgstr ""
 msgid "Example with (non-bound) methods::"
 msgstr ""
 
-#: whatsnew/3.3.rst:562
-msgid ""
-">>> class C:\n"
-"...     def meth(self):\n"
-"...         pass\n"
-"...\n"
-">>> C.meth.__name__\n"
-"'meth'\n"
-">>> C.meth.__qualname__\n"
-"'C.meth'"
-msgstr ""
-
 #: whatsnew/3.3.rst:571
 msgid "Example with nested classes::"
-msgstr ""
-
-#: whatsnew/3.3.rst:573
-msgid ""
-">>> class C:\n"
-"...     class D:\n"
-"...         def meth(self):\n"
-"...             pass\n"
-"...\n"
-">>> C.D.__name__\n"
-"'D'\n"
-">>> C.D.__qualname__\n"
-"'C.D'\n"
-">>> C.D.meth.__name__\n"
-"'meth'\n"
-">>> C.D.meth.__qualname__\n"
-"'C.D.meth'"
 msgstr ""
 
 #: whatsnew/3.3.rst:587
 msgid "Example with nested functions::"
 msgstr ""
 
-#: whatsnew/3.3.rst:589
-msgid ""
-">>> def outer():\n"
-"...     def inner():\n"
-"...         pass\n"
-"...     return inner\n"
-"...\n"
-">>> outer().__name__\n"
-"'inner'\n"
-">>> outer().__qualname__\n"
-"'outer.<locals>.inner'"
-msgstr ""
-
 #: whatsnew/3.3.rst:599
 msgid ""
 "The string representation of those objects is also changed to include the "
 "new, more precise information::"
-msgstr ""
-
-#: whatsnew/3.3.rst:602
-msgid ""
-">>> str(C.D)\n"
-"\"<class '__main__.C.D'>\"\n"
-">>> str(C.D.meth)\n"
-"'<function C.D.meth at 0x7f46b9fe31e0>'"
 msgstr ""
 
 #: whatsnew/3.3.rst:609
@@ -1322,20 +1153,6 @@ msgstr ""
 msgid "Example of a segmentation fault on Linux:"
 msgstr ""
 
-#: whatsnew/3.3.rst:879
-msgid ""
-"$ python -q -X faulthandler\n"
-">>> import ctypes\n"
-">>> ctypes.string_at(0)\n"
-"Fatal Python error: Segmentation fault\n"
-"\n"
-"Current thread 0x00007fb899f39700:\n"
-"  File \"/home/python/cpython/Lib/ctypes/__init__.py\", line 486 in "
-"string_at\n"
-"  File \"<stdin>\", line 1 in <module>\n"
-"Segmentation fault"
-msgstr ""
-
 #: whatsnew/3.3.rst:893
 msgid "ipaddress"
 msgstr "*ipaddress*"
@@ -1527,15 +1344,6 @@ msgstr ""
 msgid ""
 "Incremental CJK codec encoders are no longer reset at each call to their "
 "encode() methods. For example::"
-msgstr ""
-
-#: whatsnew/3.3.rst:1007
-msgid ""
-">>> import codecs\n"
-">>> encoder = codecs.getincrementalencoder('hz')('strict')\n"
-">>> b''.join(encoder.encode(x) for x in '\\u52ff\\u65bd\\u65bc\\u4eba\\u3002 "
-"Bye.')\n"
-"b'~{NpJ)l6HK!#~} Bye.'"
 msgstr ""
 
 #: whatsnew/3.3.rst:1012
@@ -1966,10 +1774,6 @@ msgid ""
 "``\\r\\n`` linesep characters like this::"
 msgstr ""
 
-#: whatsnew/3.3.rst:1241
-msgid "mypolicy = compat32.clone(linesep='\\r\\n')"
-msgstr ""
-
 #: whatsnew/3.3.rst:1243
 msgid ""
 "Policies can be used to make the generation of messages in the format needed "
@@ -2040,29 +1844,6 @@ msgid ""
 "now do things like this::"
 msgstr ""
 
-#: whatsnew/3.3.rst:1293
-msgid ""
-">>> m = Message(policy=SMTP)\n"
-">>> m['To'] = 'Éric <foo@example.com>'\n"
-">>> m['to']\n"
-"'Éric <foo@example.com>'\n"
-">>> m['to'].addresses\n"
-"(Address(display_name='Éric', username='foo', domain='example.com'),)\n"
-">>> m['to'].addresses[0].username\n"
-"'foo'\n"
-">>> m['to'].addresses[0].display_name\n"
-"'Éric'\n"
-">>> m['Date'] = email.utils.localtime()\n"
-">>> m['Date'].datetime\n"
-"datetime.datetime(2012, 5, 25, 21, 39, 24, 465484, tzinfo=datetime."
-"timezone(datetime.timedelta(-1, 72000), 'EDT'))\n"
-">>> m['Date']\n"
-"'Fri, 25 May 2012 21:44:27 -0400'\n"
-">>> print(m)\n"
-"To: =?utf-8?q?=C3=89ric?= <foo@example.com>\n"
-"Date: Fri, 25 May 2012 21:44:27 -0400"
-msgstr ""
-
 #: whatsnew/3.3.rst:1312
 msgid ""
 "You will note that the unicode display name is automatically encoded as "
@@ -2076,27 +1857,8 @@ msgstr ""
 msgid "You can also create addresses from parts::"
 msgstr ""
 
-#: whatsnew/3.3.rst:1320
-msgid ""
-">>> m['cc'] = [Group('pals', [Address('Bob', 'bob', 'example.com'),\n"
-"...                           Address('Sally', 'sally', 'example.com')]),\n"
-"...            Address('Bonzo', addr_spec='bonz@laugh.com')]\n"
-">>> print(m)\n"
-"To: =?utf-8?q?=C3=89ric?= <foo@example.com>\n"
-"Date: Fri, 25 May 2012 21:44:27 -0400\n"
-"cc: pals: Bob <bob@example.com>, Sally <sally@example.com>;, Bonzo "
-"<bonz@laugh.com>"
-msgstr ""
-
 #: whatsnew/3.3.rst:1328
 msgid "Decoding to unicode is done automatically::"
-msgstr ""
-
-#: whatsnew/3.3.rst:1330
-msgid ""
-">>> m2 = message_from_string(str(m))\n"
-">>> m2['to']\n"
-"'Éric <foo@example.com>'"
 msgstr ""
 
 #: whatsnew/3.3.rst:1334
@@ -2104,20 +1866,6 @@ msgid ""
 "When you parse a message, you can use the ``addresses`` and ``groups`` "
 "attributes of the header objects to access the groups and individual "
 "addresses::"
-msgstr ""
-
-#: whatsnew/3.3.rst:1338
-msgid ""
-">>> m2['cc'].addresses\n"
-"(Address(display_name='Bob', username='bob', domain='example.com'), "
-"Address(display_name='Sally', username='sally', domain='example.com'), "
-"Address(display_name='Bonzo', username='bonz', domain='laugh.com'))\n"
-">>> m2['cc'].groups\n"
-"(Group(display_name='pals', addresses=(Address(display_name='Bob', "
-"username='bob', domain='example.com'), Address(display_name='Sally', "
-"username='sally', domain='example.com')), Group(display_name=None, "
-"addresses=(Address(display_name='Bonzo', username='bonz', domain='laugh."
-"com'),))"
 msgstr ""
 
 #: whatsnew/3.3.rst:1343
@@ -2451,17 +2199,6 @@ msgid ""
 "The :class:`!nntplib.NNTP` class now supports the context management "
 "protocol to unconditionally consume :exc:`socket.error` exceptions and to "
 "close the NNTP connection when done::"
-msgstr ""
-
-#: whatsnew/3.3.rst:1567
-msgid ""
-">>> from nntplib import NNTP\n"
-">>> with NNTP('news.gmane.org') as n:\n"
-"...     n.group('gmane.comp.python.committers')\n"
-"...\n"
-"('211 1755 1 1755 gmane.comp.python.committers', 1755, 1, 1755, 'gmane.comp."
-"python.committers')\n"
-">>>"
 msgstr ""
 
 #: whatsnew/3.3.rst:1574
@@ -3350,10 +3087,6 @@ msgid ""
 "method should be used.  For example, this will send a ``'HEAD'`` request::"
 msgstr ""
 
-#: whatsnew/3.3.rst:2110
-msgid ">>> urlopen(Request('https://www.python.org', method='HEAD'))"
-msgstr ""
-
 #: whatsnew/3.3.rst:2112
 msgid "(:issue:`1673007`)"
 msgstr ""
@@ -4167,10 +3900,5 @@ msgid ""
 "(:issue:`11591`, contributed by Carl Meyer with editions by Éric Araujo.)"
 msgstr ""
 
-#: whatsnew/3.3.rst:396
-msgid "yield"
-msgstr "yield"
-
-#: whatsnew/3.3.rst:396
-msgid "yield from (in What's New)"
-msgstr ""
+#~ msgid "yield"
+#~ msgstr "yield"

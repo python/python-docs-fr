@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2017-08-10 00:52+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -239,12 +239,6 @@ msgid ""
 "Coroutine functions are declared using the new :keyword:`async def` syntax::"
 msgstr ""
 
-#: whatsnew/3.5.rst:178
-msgid ""
-">>> async def coro():\n"
-"...     return 'spam'"
-msgstr ""
-
 #: whatsnew/3.5.rst:181
 msgid ""
 "Inside a coroutine function, the new :keyword:`await` expression can be used "
@@ -263,71 +257,15 @@ msgstr ""
 msgid "An example of a rudimentary HTTP client written using the new syntax::"
 msgstr ""
 
-#: whatsnew/3.5.rst:191
-msgid ""
-"import asyncio\n"
-"\n"
-"async def http_get(domain):\n"
-"    reader, writer = await asyncio.open_connection(domain, 80)\n"
-"\n"
-"    writer.write(b'\\r\\n'.join([\n"
-"        b'GET / HTTP/1.1',\n"
-"        b'Host: %b' % domain.encode('latin-1'),\n"
-"        b'Connection: close',\n"
-"        b'', b''\n"
-"    ]))\n"
-"\n"
-"    async for line in reader:\n"
-"        print('>>>', line)\n"
-"\n"
-"    writer.close()\n"
-"\n"
-"loop = asyncio.get_event_loop()\n"
-"try:\n"
-"    loop.run_until_complete(http_get('example.com'))\n"
-"finally:\n"
-"    loop.close()"
-msgstr ""
-
 #: whatsnew/3.5.rst:215
 msgid ""
 "Similarly to asynchronous iteration, there is a new syntax for asynchronous "
 "context managers.  The following script::"
 msgstr ""
 
-#: whatsnew/3.5.rst:218
-msgid ""
-"import asyncio\n"
-"\n"
-"async def coro(name, lock):\n"
-"    print('coro {}: waiting for lock'.format(name))\n"
-"    async with lock:\n"
-"        print('coro {}: holding the lock'.format(name))\n"
-"        await asyncio.sleep(1)\n"
-"        print('coro {}: releasing the lock'.format(name))\n"
-"\n"
-"loop = asyncio.get_event_loop()\n"
-"lock = asyncio.Lock()\n"
-"coros = asyncio.gather(coro(1, lock), coro(2, lock))\n"
-"try:\n"
-"    loop.run_until_complete(coros)\n"
-"finally:\n"
-"    loop.close()"
-msgstr ""
-
 #: whatsnew/3.5.rst:235
 msgid "will output::"
 msgstr "affichera ::"
-
-#: whatsnew/3.5.rst:237
-msgid ""
-"coro 2: waiting for lock\n"
-"coro 2: holding the lock\n"
-"coro 1: waiting for lock\n"
-"coro 2: releasing the lock\n"
-"coro 1: holding the lock\n"
-"coro 1: releasing the lock"
-msgstr ""
 
 #: whatsnew/3.5.rst:244
 msgid ""
@@ -385,40 +323,12 @@ msgid ""
 "cleaner code::"
 msgstr ""
 
-#: whatsnew/3.5.rst:285
-msgid "S = (H @ beta - r).T @ inv(H @ V @ H.T) @ (H @ beta - r)"
-msgstr ""
-
 #: whatsnew/3.5.rst:287
 msgid "instead of::"
 msgstr ""
 
-#: whatsnew/3.5.rst:289
-msgid ""
-"S = dot((dot(H, beta) - r).T,\n"
-"        dot(inv(dot(dot(H, V), H.T)), dot(H, beta) - r))"
-msgstr ""
-
 #: whatsnew/3.5.rst:292
 msgid "NumPy 1.10 has support for the new operator::"
-msgstr ""
-
-#: whatsnew/3.5.rst:294
-msgid ""
-">>> import numpy\n"
-"\n"
-">>> x = numpy.ones(3)\n"
-">>> x\n"
-"array([ 1., 1., 1.])\n"
-"\n"
-">>> m = numpy.eye(3)\n"
-">>> m\n"
-"array([[ 1., 0., 0.],\n"
-"       [ 0., 1., 0.],\n"
-"       [ 0., 0., 1.]])\n"
-"\n"
-">>> x @ m\n"
-"array([ 1., 1., 1.])"
 msgstr ""
 
 #: whatsnew/3.5.rst:312
@@ -440,38 +350,10 @@ msgid ""
 "arbitrary number of unpackings in :ref:`function calls <calls>`::"
 msgstr ""
 
-#: whatsnew/3.5.rst:325
-msgid ""
-">>> print(*[1], *[2], 3, *[4, 5])\n"
-"1 2 3 4 5\n"
-"\n"
-">>> def fn(a, b, c, d):\n"
-"...     print(a, b, c, d)\n"
-"...\n"
-"\n"
-">>> fn(**{'a': 1, 'c': 3}, **{'b': 2, 'd': 4})\n"
-"1 2 3 4"
-msgstr ""
-
 #: whatsnew/3.5.rst:335
 msgid ""
 "Similarly, tuple, list, set, and dictionary displays allow multiple "
 "unpackings (see :ref:`exprlists` and :ref:`dict`)::"
-msgstr ""
-
-#: whatsnew/3.5.rst:338
-msgid ""
-">>> *range(4), 4\n"
-"(0, 1, 2, 3, 4)\n"
-"\n"
-">>> [*range(4), 4]\n"
-"[0, 1, 2, 3, 4]\n"
-"\n"
-">>> {*range(4), 4, *(5, 6, 7)}\n"
-"{0, 1, 2, 3, 4, 5, 6, 7}\n"
-"\n"
-">>> {'x': 1, **{'y': 2}}\n"
-"{'x': 1, 'y': 2}"
 msgstr ""
 
 #: whatsnew/3.5.rst:352
@@ -508,31 +390,10 @@ msgstr ""
 msgid "Examples::"
 msgstr "Exemples ::"
 
-#: whatsnew/3.5.rst:375
-msgid ""
-">>> b'Hello %b!' % b'World'\n"
-"b'Hello World!'\n"
-"\n"
-">>> b'x=%i y=%f' % (1, 2.5)\n"
-"b'x=1 y=2.500000'"
-msgstr ""
-
 #: whatsnew/3.5.rst:381
 msgid ""
 "Unicode is not allowed for ``%b``, but it is accepted by ``%a`` (equivalent "
 "of ``repr(obj).encode('ascii', 'backslashreplace')``)::"
-msgstr ""
-
-#: whatsnew/3.5.rst:384
-msgid ""
-">>> b'Hello %b!' % 'World'\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"TypeError: %b requires bytes, or an object that implements __bytes__, not "
-"'str'\n"
-"\n"
-">>> b'price: %a' % '10€'\n"
-"b\"price: '10\\\\u20ac'\""
 msgstr ""
 
 #: whatsnew/3.5.rst:392
@@ -581,12 +442,6 @@ msgstr ""
 msgid ""
 "For example, here is a simple function whose argument and return type are "
 "declared in the annotations::"
-msgstr ""
-
-#: whatsnew/3.5.rst:422
-msgid ""
-"def greeting(name: str) -> str:\n"
-"    return 'Hello ' + name"
 msgstr ""
 
 #: whatsnew/3.5.rst:425
@@ -663,13 +518,6 @@ msgstr ""
 "*path* et ne débutant pas par ``'.'``. L'appel ``entry.is_file()`` ne va "
 "généralement pas faire d'appel système supplémentaire ::"
 
-#: whatsnew/3.5.rst:466
-msgid ""
-"for entry in os.scandir(path):\n"
-"    if not entry.name.startswith('.') and entry.is_file():\n"
-"        print(entry.name)"
-msgstr ""
-
 #: whatsnew/3.5.rst:472
 msgid ""
 ":pep:`471` -- os.scandir() function -- a better and faster directory iterator"
@@ -709,23 +557,9 @@ msgid ""
 "Compare::"
 msgstr ""
 
-#: whatsnew/3.5.rst:494
-msgid "print(\"Hello World\")"
-msgstr ""
-
 #: whatsnew/3.5.rst:496
 msgid "and::"
 msgstr "et ::"
-
-#: whatsnew/3.5.rst:498
-msgid ""
-"while True:\n"
-"    try:\n"
-"        print(\"Hello World\")\n"
-"        break\n"
-"    except InterruptedError:\n"
-"        continue"
-msgstr ""
 
 #: whatsnew/3.5.rst:505
 msgid ""
@@ -833,26 +667,6 @@ msgid ""
 "term:`__future__` import is necessary::"
 msgstr ""
 
-#: whatsnew/3.5.rst:578
-msgid ""
-">>> from __future__ import generator_stop\n"
-"\n"
-">>> def gen():\n"
-"...     next(iter([]))\n"
-"...     yield\n"
-"...\n"
-">>> next(gen())\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 2, in gen\n"
-"StopIteration\n"
-"\n"
-"The above exception was the direct cause of the following exception:\n"
-"\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"RuntimeError: generator raised StopIteration"
-msgstr ""
-
 #: whatsnew/3.5.rst:595
 msgid ""
 "Without a ``__future__`` import, a :exc:`PendingDeprecationWarning` will be "
@@ -884,32 +698,10 @@ msgid ""
 "the larger absolute value::"
 msgstr ""
 
-#: whatsnew/3.5.rst:617
-msgid ""
-">>> import math\n"
-">>> a = 5.0\n"
-">>> b = 4.99998\n"
-">>> math.isclose(a, b, rel_tol=1e-5)\n"
-"True\n"
-">>> math.isclose(a, b, rel_tol=1e-6)\n"
-"False"
-msgstr ""
-
 #: whatsnew/3.5.rst:625
 msgid ""
 "It is also possible to compare two values using absolute tolerance, which "
 "must be a non-negative value::"
-msgstr ""
-
-#: whatsnew/3.5.rst:628
-msgid ""
-">>> import math\n"
-">>> a = 5.0\n"
-">>> b = 4.99998\n"
-">>> math.isclose(a, b, abs_tol=0.00003)\n"
-"True\n"
-">>> math.isclose(a, b, abs_tol=0.00001)\n"
-"False"
 msgstr ""
 
 #: whatsnew/3.5.rst:638
@@ -1067,12 +859,6 @@ msgid ""
 "With the new module, bundling your application is as simple as putting all "
 "the files, including a ``__main__.py`` file, into a directory ``myapp`` and "
 "running:"
-msgstr ""
-
-#: whatsnew/3.5.rst:747
-msgid ""
-"$ python -m zipapp myapp\n"
-"$ python myapp.pyz"
 msgstr ""
 
 #: whatsnew/3.5.rst:752
@@ -1328,14 +1114,6 @@ msgid ""
 "Docstrings produced by :func:`~collections.namedtuple` can now be updated::"
 msgstr ""
 
-#: whatsnew/3.5.rst:923
-msgid ""
-"Point = namedtuple('Point', ['x', 'y'])\n"
-"Point.__doc__ += ': Cartesian coordinate'\n"
-"Point.x.__doc__ = 'abscissa'\n"
-"Point.y.__doc__ = 'ordinate'"
-msgstr ""
-
 #: whatsnew/3.5.rst:928
 msgid "(Contributed by Berker Peksag in :issue:`24064`.)"
 msgstr ""
@@ -1445,25 +1223,6 @@ msgstr ""
 msgid "Example::"
 msgstr "Exemple ::"
 
-#: whatsnew/3.5.rst:1000
-msgid ""
-">>> import configparser\n"
-">>> conv = {}\n"
-">>> conv['list'] = lambda v: [e.strip() for e in v.split() if e.strip()]\n"
-">>> cfg = configparser.ConfigParser(converters=conv)\n"
-">>> cfg.read_string(\"\"\"\n"
-"... [s]\n"
-"... list = a b c d e f g\n"
-"... \"\"\")\n"
-">>> cfg.get('s', 'list')\n"
-"'a b c d e f g'\n"
-">>> cfg.getlist('s', 'list')\n"
-"['a', 'b', 'c', 'd', 'e', 'f', 'g']\n"
-">>> section = cfg['s']\n"
-">>> section.getlist('list')\n"
-"['a', 'b', 'c', 'd', 'e', 'f', 'g']"
-msgstr ""
-
 #: whatsnew/3.5.rst:1016
 msgid "(Contributed by Łukasz Langa in :issue:`18159`.)"
 msgstr ""
@@ -1478,17 +1237,6 @@ msgid ""
 "to :func:`~contextlib.redirect_stdout`) makes it easier for utility scripts "
 "to handle inflexible APIs that write their output to :data:`sys.stderr` and "
 "don't provide any options to redirect it::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1027
-msgid ""
-">>> import contextlib, io, logging\n"
-">>> f = io.StringIO()\n"
-">>> with contextlib.redirect_stderr(f):\n"
-"...     logging.warning('warning')\n"
-"...\n"
-">>> f.getvalue()\n"
-"'WARNING:root:warning\\n'"
 msgstr ""
 
 #: whatsnew/3.5.rst:1035
@@ -1624,15 +1372,6 @@ msgid ""
 "initial number of enum values if only *names* are provided::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1128
-msgid ""
-">>> Animal = enum.Enum('Animal', 'cat dog', start=10)\n"
-">>> Animal.cat\n"
-"<Animal.cat: 10>\n"
-">>> Animal.dog\n"
-"<Animal.dog: 11>"
-msgstr ""
-
 #: whatsnew/3.5.rst:1134
 msgid "(Contributed by Ethan Furman in :issue:`21706`.)"
 msgstr ""
@@ -1694,17 +1433,6 @@ msgid ""
 "comparison::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1181
-msgid ""
-">>> import heapq\n"
-">>> a = ['9', '777', '55555']\n"
-">>> b = ['88', '6666']\n"
-">>> list(heapq.merge(a, b, key=len))\n"
-"['9', '88', '777', '6666', '55555']\n"
-">>> list(heapq.merge(reversed(a), reversed(b), key=len, reverse=True))\n"
-"['55555', '6666', '777', '88', '9']"
-msgstr ""
-
 #: whatsnew/3.5.rst:1189
 msgid "(Contributed by Raymond Hettinger in :issue:`13742`.)"
 msgstr ""
@@ -1732,18 +1460,6 @@ msgid ""
 "exc:`ConnectionError` (of which ``RemoteDisconnected`` is a subclass) is "
 "raised, the client socket is now closed automatically, and will reconnect on "
 "the next request::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1210
-msgid ""
-"import http.client\n"
-"conn = http.client.HTTPConnection('www.python.org')\n"
-"for retries in range(3):\n"
-"    try:\n"
-"        conn.request('GET', '/')\n"
-"        resp = conn.getresponse()\n"
-"    except http.client.RemoteDisconnected:\n"
-"        pass"
 msgstr ""
 
 #: whatsnew/3.5.rst:1219
@@ -1851,15 +1567,6 @@ msgid ""
 "arguments::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1293
-msgid ""
-">>> def foo(a, b='ham', *args): pass\n"
-">>> ba = inspect.signature(foo).bind('spam')\n"
-">>> ba.apply_defaults()\n"
-">>> ba.arguments\n"
-"OrderedDict([('a', 'spam'), ('b', 'ham'), ('args', ())])"
-msgstr ""
-
 #: whatsnew/3.5.rst:1299
 msgid "(Contributed by Yury Selivanov in :issue:`24190`.)"
 msgstr ""
@@ -1920,15 +1627,6 @@ msgid ""
 "construct network objects from existing addresses::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1342
-msgid ""
-">>> import ipaddress\n"
-">>> ipaddress.IPv4Network(('127.0.0.0', 8))\n"
-"IPv4Network('127.0.0.0/8')\n"
-">>> ipaddress.IPv4Network(('127.0.0.0', '255.0.0.0'))\n"
-"IPv4Network('127.0.0.0/8')"
-msgstr ""
-
 #: whatsnew/3.5.rst:1348
 msgid "(Contributed by Peter Moody and Antoine Pitrou in :issue:`16531`.)"
 msgstr ""
@@ -1938,17 +1636,6 @@ msgid ""
 "A new :attr:`~ipaddress.IPv4Network.reverse_pointer` attribute for the :"
 "class:`~ipaddress.IPv4Network` and :class:`~ipaddress.IPv6Network` classes "
 "returns the name of the reverse DNS PTR record::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1354
-msgid ""
-">>> import ipaddress\n"
-">>> addr = ipaddress.IPv4Address('127.0.0.1')\n"
-">>> addr.reverse_pointer\n"
-"'1.0.0.127.in-addr.arpa'\n"
-">>> addr6 = ipaddress.IPv6Address('::1')\n"
-">>> addr6.reverse_pointer\n"
-"'1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa'"
 msgstr ""
 
 #: whatsnew/3.5.rst:1362
@@ -1998,19 +1685,6 @@ msgid ""
 "account::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1394
-msgid ""
-">>> import locale\n"
-">>> locale.setlocale(locale.LC_NUMERIC, 'de_DE.UTF-8')\n"
-"'de_DE.UTF-8'\n"
-">>> locale.delocalize('1.234,56')\n"
-"'1234.56'\n"
-">>> locale.setlocale(locale.LC_NUMERIC, 'en_US.UTF-8')\n"
-"'en_US.UTF-8'\n"
-">>> locale.delocalize('1,234.56')\n"
-"'1234.56'"
-msgstr ""
-
 #: whatsnew/3.5.rst:1404
 msgid "(Contributed by Cédric Krier in :issue:`13918`.)"
 msgstr ""
@@ -2025,16 +1699,6 @@ msgid ""
 "meth:`~logging.Logger.exception`, :meth:`~logging.Logger.critical`, :meth:"
 "`~logging.Logger.debug`, etc.), now accept exception instances as an "
 "*exc_info* argument, in addition to boolean values and exception tuples::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1416
-msgid ""
-">>> import logging\n"
-">>> try:\n"
-"...     1/0\n"
-"... except ZeroDivisionError as ex:\n"
-"...     logging.error('exception', exc_info=ex)\n"
-"ERROR:root:exception"
 msgstr ""
 
 #: whatsnew/3.5.rst:1423
@@ -2172,15 +1836,6 @@ msgid ""
 "commonprefix` function, it always returns a valid path::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1512
-msgid ""
-">>> os.path.commonprefix(['/usr/lib', '/usr/local/lib'])\n"
-"'/usr/l'\n"
-"\n"
-">>> os.path.commonpath(['/usr/lib', '/usr/local/lib'])\n"
-"'/usr'"
-msgstr ""
-
 #: whatsnew/3.5.rst:1518
 msgid "(Contributed by Rafik Draoui and Serhiy Storchaka in :issue:`10395`.)"
 msgstr ""
@@ -2194,15 +1849,6 @@ msgid ""
 "The new :meth:`Path.samefile() <pathlib.Path.samefile>` method can be used "
 "to check whether the path points to the same file as another path, which can "
 "be either another :class:`~pathlib.Path` object, or a string::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1528
-msgid ""
-">>> import pathlib\n"
-">>> p1 = pathlib.Path('/etc/hosts')\n"
-">>> p2 = pathlib.Path('/etc/../etc/hosts')\n"
-">>> p1.samefile(p2)\n"
-"True"
 msgstr ""
 
 #: whatsnew/3.5.rst:1534
@@ -2245,14 +1891,6 @@ msgid ""
 "spam42``::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1558
-msgid ""
-">>> import pathlib\n"
-">>> p = pathlib.Path('~/spam42')\n"
-">>> p.expanduser().write_text('ham')\n"
-"3"
-msgstr ""
-
 #: whatsnew/3.5.rst:1563
 msgid "(Contributed by Christopher Welborn in :issue:`20218`.)"
 msgstr ""
@@ -2290,16 +1928,6 @@ msgid ""
 "allowed in lookbehind assertions::"
 msgstr ""
 
-#: whatsnew/3.5.rst:1589
-msgid ""
-">>> import re\n"
-">>> pat = re.compile(r'(a|b).(?<=\\1)c')\n"
-">>> pat.match('aac')\n"
-"<_sre.SRE_Match object; span=(0, 3), match='aac'>\n"
-">>> pat.match('bbc')\n"
-"<_sre.SRE_Match object; span=(0, 3), match='bbc'>"
-msgstr ""
-
 #: whatsnew/3.5.rst:1596
 msgid "(Contributed by Serhiy Storchaka in :issue:`9179`.)"
 msgstr "(Contribution par Serhiy Storchaka; :issue:`9179`.)"
@@ -2323,17 +1951,6 @@ msgid ""
 "msg`, :attr:`~re.error.pattern`, :attr:`~re.error.pos`, :attr:`~re.error."
 "lineno`, and :attr:`~re.error.colno`, that provide better context "
 "information about the error::"
-msgstr ""
-
-#: whatsnew/3.5.rst:1611
-msgid ""
-">>> re.compile(\"\"\"\n"
-"...     (?x)\n"
-"...     .++\n"
-"... \"\"\")\n"
-"Traceback (most recent call last):\n"
-"   ...\n"
-"sre_constants.error: multiple repeat at position 16 (line 3, column 7)"
 msgstr ""
 
 #: whatsnew/3.5.rst:1619
@@ -2658,22 +2275,6 @@ msgid ""
 "and is the recommended approach to invoking subprocesses in Python code that "
 "does not need to maintain compatibility with earlier Python versions. "
 "(Contributed by Thomas Kluyver in :issue:`23342`.)"
-msgstr ""
-
-#: whatsnew/3.5.rst:1850
-msgid ""
-">>> subprocess.run([\"ls\", \"-l\"])  # doesn't capture output\n"
-"CompletedProcess(args=['ls', '-l'], returncode=0)\n"
-"\n"
-">>> subprocess.run(\"exit 1\", shell=True, check=True)\n"
-"Traceback (most recent call last):\n"
-"  ...\n"
-"subprocess.CalledProcessError: Command 'exit 1' returned non-zero exit "
-"status 1\n"
-"\n"
-">>> subprocess.run([\"ls\", \"-l\", \"/dev/null\"], stdout=subprocess.PIPE)\n"
-"CompletedProcess(args=['ls', '-l', '/dev/null'], returncode=0,\n"
-"stdout=b'crw-rw-rw- 1 root root 1, 3 Jan 23 16:23 /dev/null\\n')"
 msgstr ""
 
 #: whatsnew/3.5.rst:1864
@@ -3488,12 +3089,6 @@ msgstr ""
 msgid ""
 "Due to an oversight, earlier Python versions erroneously accepted the "
 "following syntax::"
-msgstr ""
-
-#: whatsnew/3.5.rst:2389
-msgid ""
-"f(1 for x in [1], *args)\n"
-"f(1 for x in [1], **kwargs)"
 msgstr ""
 
 #: whatsnew/3.5.rst:2392

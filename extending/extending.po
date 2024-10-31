@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2023-11-26 10:23+0100\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -97,12 +97,6 @@ msgstr ""
 "entier. Nous voulons que cette fonction soit appelable à partir de Python "
 "comme suit :"
 
-#: extending/extending.rst:48
-msgid ""
-">>> import spam\n"
-">>> status = spam.system(\"ls -l\")"
-msgstr ""
-
 #: extending/extending.rst:53
 msgid ""
 "Begin by creating a file :file:`spammodule.c`.  (Historically, if a module "
@@ -118,12 +112,6 @@ msgstr ""
 #: extending/extending.rst:58
 msgid "The first two lines of our file can be::"
 msgstr "Les deux premières lignes de notre fichier peuvent être ::"
-
-#: extending/extending.rst:663
-msgid ""
-"#define PY_SSIZE_T_CLEAN\n"
-"#include <Python.h>"
-msgstr ""
 
 #: extending/extending.rst:63
 msgid ""
@@ -180,21 +168,6 @@ msgstr ""
 "fonction C qui sera appelée lorsque l'expression Python ``spam."
 "system(chaîne)`` sera évaluée (nous verrons bientôt comment elle finit par "
 "être appelée) ::"
-
-#: extending/extending.rst:89
-msgid ""
-"static PyObject *\n"
-"spam_system(PyObject *self, PyObject *args)\n"
-"{\n"
-"    const char *command;\n"
-"    int sts;\n"
-"\n"
-"    if (!PyArg_ParseTuple(args, \"s\", &command))\n"
-"        return NULL;\n"
-"    sts = system(command);\n"
-"    return PyLong_FromLong(sts);\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:101
 msgid ""
@@ -454,10 +427,6 @@ msgstr ""
 "Vous pouvez également créer une exception spécifique à votre module. Pour "
 "cela, déclarez simplement une variable statique au début de votre fichier ::"
 
-#: extending/extending.rst:209
-msgid "static PyObject *SpamError;"
-msgstr ""
-
 #: extending/extending.rst:211
 #, fuzzy
 msgid ""
@@ -466,28 +435,6 @@ msgid ""
 msgstr ""
 "et initialisez-la dans la fonction d'initialisation de votre module (:c:func:"
 "`PyInit_spam`) avec un objet exception ::"
-
-#: extending/extending.rst:214
-msgid ""
-"PyMODINIT_FUNC\n"
-"PyInit_spam(void)\n"
-"{\n"
-"    PyObject *m;\n"
-"\n"
-"    m = PyModule_Create(&spammodule);\n"
-"    if (m == NULL)\n"
-"        return NULL;\n"
-"\n"
-"    SpamError = PyErr_NewException(\"spam.error\", NULL, NULL);\n"
-"    if (PyModule_AddObjectRef(m, \"error\", SpamError) < 0) {\n"
-"        Py_CLEAR(SpamError);\n"
-"        Py_DECREF(m);\n"
-"        return NULL;\n"
-"    }\n"
-"\n"
-"    return m;\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:233
 #, fuzzy
@@ -538,25 +485,6 @@ msgstr ""
 "L'exception :exc:`spam.error` peut être levée dans votre module d'extension "
 "en appelant :c:func:`PyErr_SetString` comme montré ci-dessous ::"
 
-#: extending/extending.rst:251
-msgid ""
-"static PyObject *\n"
-"spam_system(PyObject *self, PyObject *args)\n"
-"{\n"
-"    const char *command;\n"
-"    int sts;\n"
-"\n"
-"    if (!PyArg_ParseTuple(args, \"s\", &command))\n"
-"        return NULL;\n"
-"    sts = system(command);\n"
-"    if (sts < 0) {\n"
-"        PyErr_SetString(SpamError, \"System command failed\");\n"
-"        return NULL;\n"
-"    }\n"
-"    return PyLong_FromLong(sts);\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:271
 msgid "Back to the Example"
 msgstr "Retour vers l'exemple"
@@ -568,12 +496,6 @@ msgid ""
 msgstr ""
 "En revenant vers notre fonction exemple, vous devriez maintenant être "
 "capable de comprendre cette affirmation ::"
-
-#: extending/extending.rst:276
-msgid ""
-"if (!PyArg_ParseTuple(args, \"s\", &command))\n"
-"    return NULL;"
-msgstr ""
 
 #: extending/extending.rst:279
 msgid ""
@@ -603,10 +525,6 @@ msgstr ""
 "en lui passant la chaîne que nous venons d'obtenir à partir de :c:func:"
 "`PyArg_ParseTuple` ::"
 
-#: extending/extending.rst:290
-msgid "sts = system(command);"
-msgstr ""
-
 #: extending/extending.rst:292
 msgid ""
 "Our :func:`!spam.system` function must return the value of :c:data:`!sts` as "
@@ -616,10 +534,6 @@ msgstr ""
 "Notre fonction :func:`!spam.system` doit renvoyer la valeur de :c:data:`!"
 "sts` comme un objet Python. Cela est effectué par l'utilisation de la "
 "fonction :c:func:`PyLong_FromLong`. ::"
-
-#: extending/extending.rst:295
-msgid "return PyLong_FromLong(sts);"
-msgstr ""
 
 #: extending/extending.rst:297
 msgid ""
@@ -640,12 +554,6 @@ msgstr ""
 "fonction renvoyant :c:expr:`void`), la fonction Python correspondante doit "
 "renvoyer ``None``. Vous aurez besoin de cet idiome pour cela (qui est "
 "implémenté par la macro :c:macro:`Py_RETURN_NONE`) ::"
-
-#: extending/extending.rst:305
-msgid ""
-"Py_INCREF(Py_None);\n"
-"return Py_None;"
-msgstr ""
 
 #: extending/extending.rst:308
 msgid ""
@@ -671,17 +579,6 @@ msgstr ""
 "Nous avons promis de montrer comment :c:func:`spam_system` est appelée "
 "depuis les programmes Python. D'abord, nous avons besoin d'avoir son nom et "
 "son adresse dans un « tableau des méthodes » ::"
-
-#: extending/extending.rst:321
-msgid ""
-"static PyMethodDef SpamMethods[] = {\n"
-"    ...\n"
-"    {\"system\",  spam_system, METH_VARARGS,\n"
-"     \"Execute a shell command.\"},\n"
-"    ...\n"
-"    {NULL, NULL, 0, NULL}        /* Sentinel */\n"
-"};"
-msgstr ""
 
 #: extending/extending.rst:329
 msgid ""
@@ -730,18 +627,6 @@ msgstr ""
 "Le tableau des méthodes doit être référencé dans la structure de définition "
 "du module ::"
 
-#: extending/extending.rst:346
-msgid ""
-"static struct PyModuleDef spammodule = {\n"
-"    PyModuleDef_HEAD_INIT,\n"
-"    \"spam\",   /* name of module */\n"
-"    spam_doc, /* module documentation, may be NULL */\n"
-"    -1,       /* size of per-interpreter state of the module,\n"
-"                 or -1 if the module keeps state in global variables. */\n"
-"    SpamMethods\n"
-"};"
-msgstr ""
-
 #: extending/extending.rst:355
 #, fuzzy
 msgid ""
@@ -754,15 +639,6 @@ msgstr ""
 "fonction d'initialisation du module.  La fonction d'initialisation doit être "
 "nommée :c:func:`PyInit_name`, où *nom* est le nom du module, et doit être le "
 "seul élément non ``static`` défini dans le fichier du module ::"
-
-#: extending/extending.rst:360
-msgid ""
-"PyMODINIT_FUNC\n"
-"PyInit_spam(void)\n"
-"{\n"
-"    return PyModule_Create(&spammodule);\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:366
 #, fuzzy
@@ -815,59 +691,6 @@ msgstr ""
 "`PyImport_Inittab`. Pour ajouter le module au tableau d'initialisation, "
 "utilisez :c:func:`PyImport_AppendInittab`, suivie éventuellement d'une "
 "importation du module ::"
-
-#: extending/extending.rst:386
-msgid ""
-"#define PY_SSIZE_T_CLEAN\n"
-"#include <Python.h>\n"
-"\n"
-"int\n"
-"main(int argc, char *argv[])\n"
-"{\n"
-"    PyStatus status;\n"
-"    PyConfig config;\n"
-"    PyConfig_InitPythonConfig(&config);\n"
-"\n"
-"    /* Add a built-in module, before Py_Initialize */\n"
-"    if (PyImport_AppendInittab(\"spam\", PyInit_spam) == -1) {\n"
-"        fprintf(stderr, \"Error: could not extend in-built modules "
-"table\\n\");\n"
-"        exit(1);\n"
-"    }\n"
-"\n"
-"    /* Pass argv[0] to the Python interpreter */\n"
-"    status = PyConfig_SetBytesString(&config, &config.program_name, "
-"argv[0]);\n"
-"    if (PyStatus_Exception(status)) {\n"
-"        goto exception;\n"
-"    }\n"
-"\n"
-"    /* Initialize the Python interpreter.  Required.\n"
-"       If this step fails, it will be a fatal error. */\n"
-"    status = Py_InitializeFromConfig(&config);\n"
-"    if (PyStatus_Exception(status)) {\n"
-"        goto exception;\n"
-"    }\n"
-"    PyConfig_Clear(&config);\n"
-"\n"
-"    /* Optionally import the module; alternatively,\n"
-"       import can be deferred until the embedded script\n"
-"       imports it. */\n"
-"    PyObject *pmodule = PyImport_ImportModule(\"spam\");\n"
-"    if (!pmodule) {\n"
-"        PyErr_Print();\n"
-"        fprintf(stderr, \"Error: could not import module 'spam'\\n\");\n"
-"    }\n"
-"\n"
-"    // ... use Python C API here ...\n"
-"\n"
-"    return 0;\n"
-"\n"
-"  exception:\n"
-"     PyConfig_Clear(&config);\n"
-"     Py_ExitStatusException(status);\n"
-"}"
-msgstr ""
 
 # suit un :
 #: extending/extending.rst:436
@@ -947,10 +770,6 @@ msgstr ""
 "distribution source décompressée, ajoutez une ligne au fichier :file:"
 "`Modules/Setup.local` décrivant votre fichier :"
 
-#: extending/extending.rst:473
-msgid "spam spammodule.o"
-msgstr ""
-
 #: extending/extending.rst:477
 msgid ""
 "and rebuild the interpreter by running :program:`make` in the toplevel "
@@ -973,10 +792,6 @@ msgstr ""
 "Si votre module nécessite d'être lié à des bibliothèques supplémentaires, "
 "celles-ci peuvent être ajoutées à la fin de la ligne de votre module dans le "
 "fichier de configuration, par exemple :"
-
-#: extending/extending.rst:486
-msgid "spam spammodule.o -lX11"
-msgstr ""
 
 #: extending/extending.rst:494
 msgid "Calling Python Functions from C"
@@ -1033,33 +848,6 @@ msgstr ""
 "dans une variable globale — ou là où vous le souhaitez. Par exemple, la "
 "fonction suivante peut faire partie d'une définition de module ::"
 
-#: extending/extending.rst:517
-msgid ""
-"static PyObject *my_callback = NULL;\n"
-"\n"
-"static PyObject *\n"
-"my_set_callback(PyObject *dummy, PyObject *args)\n"
-"{\n"
-"    PyObject *result = NULL;\n"
-"    PyObject *temp;\n"
-"\n"
-"    if (PyArg_ParseTuple(args, \"O:set_callback\", &temp)) {\n"
-"        if (!PyCallable_Check(temp)) {\n"
-"            PyErr_SetString(PyExc_TypeError, \"parameter must be "
-"callable\");\n"
-"            return NULL;\n"
-"        }\n"
-"        Py_XINCREF(temp);         /* Add a reference to new callback */\n"
-"        Py_XDECREF(my_callback);  /* Dispose of previous callback */\n"
-"        my_callback = temp;       /* Remember new callback */\n"
-"        /* Boilerplate to return \"None\" */\n"
-"        Py_INCREF(Py_None);\n"
-"        result = Py_None;\n"
-"    }\n"
-"    return result;\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:540
 msgid ""
 "This function must be registered with the interpreter using the :c:macro:"
@@ -1106,20 +894,6 @@ msgstr ""
 "func:`Py_BuildValue` renvoie un *n*-uplet lorsque sa chaîne de format se "
 "compose de zéro ou plusieurs codes de format entre parenthèses. Par "
 "exemple ::"
-
-#: extending/extending.rst:561
-msgid ""
-"int arg;\n"
-"PyObject *arglist;\n"
-"PyObject *result;\n"
-"...\n"
-"arg = 123;\n"
-"...\n"
-"/* Time to call the callback */\n"
-"arglist = Py_BuildValue(\"(i)\", arg);\n"
-"result = PyObject_CallObject(my_callback, arglist);\n"
-"Py_DECREF(arglist);"
-msgstr ""
 
 #: extending/extending.rst:572
 msgid ""
@@ -1171,14 +945,6 @@ msgstr ""
 "souhaitable, l'exception doit être effacée en appelant :c:func:"
 "`PyErr_Clear`. Par exemple ::"
 
-#: extending/extending.rst:593
-msgid ""
-"if (result == NULL)\n"
-"    return NULL; /* Pass error back */\n"
-"...use result...\n"
-"Py_DECREF(result);"
-msgstr ""
-
 #: extending/extending.rst:598
 msgid ""
 "Depending on the desired interface to the Python callback function, you may "
@@ -1200,19 +966,6 @@ msgstr ""
 "d'arguments. La façon la plus simple de faire cela est d'appeler :c:func:"
 "`Py_BuildValue`. Par exemple, si vous voulez passer un code d'événement "
 "intégral, vous pouvez utiliser le code suivant ::"
-
-#: extending/extending.rst:607
-msgid ""
-"PyObject *arglist;\n"
-"...\n"
-"arglist = Py_BuildValue(\"(l)\", eventcode);\n"
-"result = PyObject_CallObject(my_callback, arglist);\n"
-"Py_DECREF(arglist);\n"
-"if (result == NULL)\n"
-"    return NULL; /* Pass error back */\n"
-"/* Here maybe use the result */\n"
-"Py_DECREF(result);"
-msgstr ""
 
 #: extending/extending.rst:617
 msgid ""
@@ -1237,19 +990,6 @@ msgstr ""
 "arguments nommés. Comme dans l'exemple ci-dessus, nous utilisons :c:func:"
 "`Py_BuildValue` pour construire le dictionnaire. ::"
 
-#: extending/extending.rst:625
-msgid ""
-"PyObject *dict;\n"
-"...\n"
-"dict = Py_BuildValue(\"{s:i}\", \"name\", val);\n"
-"result = PyObject_Call(my_callback, NULL, dict);\n"
-"Py_DECREF(dict);\n"
-"if (result == NULL)\n"
-"    return NULL; /* Pass error back */\n"
-"/* Here maybe use the result */\n"
-"Py_DECREF(result);"
-msgstr ""
-
 #: extending/extending.rst:639
 msgid "Extracting Parameters in Extension Functions"
 msgstr "Extraire des paramètres dans des fonctions d'extension"
@@ -1257,10 +997,6 @@ msgstr "Extraire des paramètres dans des fonctions d'extension"
 #: extending/extending.rst:643
 msgid "The :c:func:`PyArg_ParseTuple` function is declared as follows::"
 msgstr "La fonction :c:func:`PyArg_ParseTuple` est déclarée ainsi ::"
-
-#: extending/extending.rst:645
-msgid "int PyArg_ParseTuple(PyObject *arg, const char *format, ...);"
-msgstr ""
 
 #: extending/extending.rst:647
 msgid ""
@@ -1301,75 +1037,6 @@ msgstr ""
 msgid "Some example calls::"
 msgstr "Quelques exemples d'appels ::"
 
-#: extending/extending.rst:668
-msgid ""
-"int ok;\n"
-"int i, j;\n"
-"long k, l;\n"
-"const char *s;\n"
-"Py_ssize_t size;\n"
-"\n"
-"ok = PyArg_ParseTuple(args, \"\"); /* No arguments */\n"
-"    /* Python call: f() */"
-msgstr ""
-
-#: extending/extending.rst:679
-msgid ""
-"ok = PyArg_ParseTuple(args, \"s\", &s); /* A string */\n"
-"    /* Possible Python call: f('whoops!') */"
-msgstr ""
-
-#: extending/extending.rst:684
-msgid ""
-"ok = PyArg_ParseTuple(args, \"lls\", &k, &l, &s); /* Two longs and a string "
-"*/\n"
-"    /* Possible Python call: f(1, 2, 'three') */"
-msgstr ""
-
-#: extending/extending.rst:689
-msgid ""
-"ok = PyArg_ParseTuple(args, \"(ii)s#\", &i, &j, &s, &size);\n"
-"    /* A pair of ints and a string, whose size is also returned */\n"
-"    /* Possible Python call: f((1, 2), 'three') */"
-msgstr ""
-
-#: extending/extending.rst:695
-msgid ""
-"{\n"
-"    const char *file;\n"
-"    const char *mode = \"r\";\n"
-"    int bufsize = 0;\n"
-"    ok = PyArg_ParseTuple(args, \"s|si\", &file, &mode, &bufsize);\n"
-"    /* A string, and optionally another string and an integer */\n"
-"    /* Possible Python calls:\n"
-"       f('spam')\n"
-"       f('spam', 'w')\n"
-"       f('spam', 'wb', 100000) */\n"
-"}"
-msgstr ""
-
-#: extending/extending.rst:709
-msgid ""
-"{\n"
-"    int left, top, right, bottom, h, v;\n"
-"    ok = PyArg_ParseTuple(args, \"((ii)(ii))(ii)\",\n"
-"             &left, &top, &right, &bottom, &h, &v);\n"
-"    /* A rectangle and a point */\n"
-"    /* Possible Python call:\n"
-"       f(((0, 0), (400, 300)), (10, 10)) */\n"
-"}"
-msgstr ""
-
-#: extending/extending.rst:720
-msgid ""
-"{\n"
-"    Py_complex c;\n"
-"    ok = PyArg_ParseTuple(args, \"D:myfunction\", &c);\n"
-"    /* a complex, also providing a function name for errors */\n"
-"    /* Possible Python call: myfunction(1+2j) */\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:731
 msgid "Keyword Parameters for Extension Functions"
 msgstr "Paramètres nommés pour des fonctions d'extension"
@@ -1379,13 +1046,6 @@ msgid ""
 "The :c:func:`PyArg_ParseTupleAndKeywords` function is declared as follows::"
 msgstr ""
 "La fonction :c:func:`PyArg_ParseTupleAndKeywords` est déclarée ainsi ::"
-
-#: extending/extending.rst:737
-msgid ""
-"int PyArg_ParseTupleAndKeywords(PyObject *arg, PyObject *kwdict,\n"
-"                                const char *format, char * const "
-"*kwlist, ...);"
-msgstr ""
 
 #: extending/extending.rst:740
 msgid ""
@@ -1426,60 +1086,6 @@ msgstr ""
 "Voici un exemple de module qui utilise des arguments nommés, basé sur un "
 "exemple de *Geoff Philbrick* (philbrick@hks.com) ::"
 
-#: extending/extending.rst:759
-msgid ""
-"#define PY_SSIZE_T_CLEAN\n"
-"#include <Python.h>\n"
-"\n"
-"static PyObject *\n"
-"keywdarg_parrot(PyObject *self, PyObject *args, PyObject *keywds)\n"
-"{\n"
-"    int voltage;\n"
-"    const char *state = \"a stiff\";\n"
-"    const char *action = \"voom\";\n"
-"    const char *type = \"Norwegian Blue\";\n"
-"\n"
-"    static char *kwlist[] = {\"voltage\", \"state\", \"action\", \"type\", "
-"NULL};\n"
-"\n"
-"    if (!PyArg_ParseTupleAndKeywords(args, keywds, \"i|sss\", kwlist,\n"
-"                                     &voltage, &state, &action, &type))\n"
-"        return NULL;\n"
-"\n"
-"    printf(\"-- This parrot wouldn't %s if you put %i Volts through it."
-"\\n\",\n"
-"           action, voltage);\n"
-"    printf(\"-- Lovely plumage, the %s -- It's %s!\\n\", type, state);\n"
-"\n"
-"    Py_RETURN_NONE;\n"
-"}\n"
-"\n"
-"static PyMethodDef keywdarg_methods[] = {\n"
-"    /* The cast of the function is necessary since PyCFunction values\n"
-"     * only take two PyObject* parameters, and keywdarg_parrot() takes\n"
-"     * three.\n"
-"     */\n"
-"    {\"parrot\", (PyCFunction)(void(*)(void))keywdarg_parrot, METH_VARARGS | "
-"METH_KEYWORDS,\n"
-"     \"Print a lovely skit to standard output.\"},\n"
-"    {NULL, NULL, 0, NULL}   /* sentinel */\n"
-"};\n"
-"\n"
-"static struct PyModuleDef keywdargmodule = {\n"
-"    PyModuleDef_HEAD_INIT,\n"
-"    \"keywdarg\",\n"
-"    NULL,\n"
-"    -1,\n"
-"    keywdarg_methods\n"
-"};\n"
-"\n"
-"PyMODINIT_FUNC\n"
-"PyInit_keywdarg(void)\n"
-"{\n"
-"    return PyModule_Create(&keywdargmodule);\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:811
 msgid "Building Arbitrary Values"
 msgstr "Créer des valeurs arbitraires"
@@ -1491,10 +1097,6 @@ msgid ""
 msgstr ""
 "Cette fonction est le complément de :c:func:`PyArg_ParseTuple`.  Elle est "
 "déclarée comme suit ::"
-
-#: extending/extending.rst:816
-msgid "PyObject *Py_BuildValue(const char *format, ...);"
-msgstr ""
 
 #: extending/extending.rst:818
 msgid ""
@@ -1535,27 +1137,6 @@ msgid ""
 "Examples (to the left the call, to the right the resulting Python value):"
 msgstr ""
 "Exemples (à gauche l'appel, à droite la valeur résultante, en Python) :"
-
-#: extending/extending.rst:833
-msgid ""
-"Py_BuildValue(\"\")                        None\n"
-"Py_BuildValue(\"i\", 123)                  123\n"
-"Py_BuildValue(\"iii\", 123, 456, 789)      (123, 456, 789)\n"
-"Py_BuildValue(\"s\", \"hello\")              'hello'\n"
-"Py_BuildValue(\"y\", \"hello\")              b'hello'\n"
-"Py_BuildValue(\"ss\", \"hello\", \"world\")    ('hello', 'world')\n"
-"Py_BuildValue(\"s#\", \"hello\", 4)          'hell'\n"
-"Py_BuildValue(\"y#\", \"hello\", 4)          b'hell'\n"
-"Py_BuildValue(\"()\")                      ()\n"
-"Py_BuildValue(\"(i)\", 123)                (123,)\n"
-"Py_BuildValue(\"(ii)\", 123, 456)          (123, 456)\n"
-"Py_BuildValue(\"(i,i)\", 123, 456)         (123, 456)\n"
-"Py_BuildValue(\"[i,i]\", 123, 456)         [123, 456]\n"
-"Py_BuildValue(\"{s:i,s:i}\",\n"
-"              \"abc\", 123, \"def\", 456)    {'abc': 123, 'def': 456}\n"
-"Py_BuildValue(\"((ii)(ii)) (ii)\",\n"
-"              1, 2, 3, 4, 5, 6)          (((1, 2), (3, 4)), (5, 6))"
-msgstr ""
 
 #: extending/extending.rst:857
 msgid "Reference Counts"
@@ -1946,18 +1527,6 @@ msgstr ""
 "de :c:func:`Py_DECREF` à un objet non relié lors de l'emprunt d'une "
 "référence à un élément de liste. Par exemple ::"
 
-#: extending/extending.rst:1027
-msgid ""
-"void\n"
-"bug(PyObject *list)\n"
-"{\n"
-"    PyObject *item = PyList_GetItem(list, 0);\n"
-"\n"
-"    PyList_SetItem(list, 1, PyLong_FromLong(0L));\n"
-"    PyObject_Print(item, stdout, 0); /* BUG! */\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:1036
 msgid ""
 "This function first borrows a reference to ``list[0]``, then replaces "
@@ -2014,20 +1583,6 @@ msgstr ""
 "simple : incrémentez temporairement le compteur de références. La version "
 "correcte de la fonction est ::"
 
-#: extending/extending.rst:1058
-msgid ""
-"void\n"
-"no_bug(PyObject *list)\n"
-"{\n"
-"    PyObject *item = PyList_GetItem(list, 0);\n"
-"\n"
-"    Py_INCREF(item);\n"
-"    PyList_SetItem(list, 1, PyLong_FromLong(0L));\n"
-"    PyObject_Print(item, stdout, 0);\n"
-"    Py_DECREF(item);\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:1069
 #, fuzzy
 msgid ""
@@ -2062,19 +1617,6 @@ msgstr ""
 "d'entrées/sorties, afin de permettre aux autres threads d'utiliser le "
 "processeur en attendant que les E/S soient terminées. Évidemment, la "
 "fonction suivante a le même problème que la précédente ::"
-
-#: extending/extending.rst:1082
-msgid ""
-"void\n"
-"bug(PyObject *list)\n"
-"{\n"
-"    PyObject *item = PyList_GetItem(list, 0);\n"
-"    Py_BEGIN_ALLOW_THREADS\n"
-"    ...some blocking I/O call...\n"
-"    Py_END_ALLOW_THREADS\n"
-"    PyObject_Print(item, stdout, 0); /* BUG! */\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:1096
 msgid "NULL Pointers"
@@ -2318,10 +1860,6 @@ msgstr ""
 "En particulier, les capsules utilisées pour exposer les API C doivent "
 "recevoir un nom suivant cette convention ::"
 
-#: extending/extending.rst:1207
-msgid "modulename.attributename"
-msgstr ""
-
 #: extending/extending.rst:1209
 msgid ""
 "The convenience function :c:func:`PyCapsule_Import` makes it easy to load a "
@@ -2382,52 +1920,18 @@ msgstr ""
 "La fonction :c:func:`PySpam_System` est une simple fonction C, déclarée "
 "``static`` comme tout le reste ::"
 
-#: extending/extending.rst:1232
-msgid ""
-"static int\n"
-"PySpam_System(const char *command)\n"
-"{\n"
-"    return system(command);\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:1238
 #, fuzzy
 msgid "The function :c:func:`!spam_system` is modified in a trivial way::"
 msgstr "La fonction :c:func:`spam_system` est modifiée de manière simple ::"
 
-#: extending/extending.rst:1240
-msgid ""
-"static PyObject *\n"
-"spam_system(PyObject *self, PyObject *args)\n"
-"{\n"
-"    const char *command;\n"
-"    int sts;\n"
-"\n"
-"    if (!PyArg_ParseTuple(args, \"s\", &command))\n"
-"        return NULL;\n"
-"    sts = PySpam_System(command);\n"
-"    return PyLong_FromLong(sts);\n"
-"}"
-msgstr ""
-
 #: extending/extending.rst:1252
 msgid "In the beginning of the module, right after the line ::"
 msgstr "Au début du module, immédiatement après la ligne ::"
 
-#: extending/extending.rst:1254
-msgid "#include <Python.h>"
-msgstr ""
-
 #: extending/extending.rst:1256
 msgid "two more lines must be added::"
 msgstr "on doit ajouter deux lignes supplémentaires ::"
-
-#: extending/extending.rst:1258
-msgid ""
-"#define SPAM_MODULE\n"
-"#include \"spammodule.h\""
-msgstr ""
 
 #: extending/extending.rst:1261
 msgid ""
@@ -2440,35 +1944,6 @@ msgstr ""
 "qu'il est inclus dans le module d'exportation, et non dans un module client. "
 "Enfin, la fonction d'initialisation du module doit prendre en charge "
 "l'initialisation du tableau de pointeurs de l'API C ::"
-
-#: extending/extending.rst:1265
-msgid ""
-"PyMODINIT_FUNC\n"
-"PyInit_spam(void)\n"
-"{\n"
-"    PyObject *m;\n"
-"    static void *PySpam_API[PySpam_API_pointers];\n"
-"    PyObject *c_api_object;\n"
-"\n"
-"    m = PyModule_Create(&spammodule);\n"
-"    if (m == NULL)\n"
-"        return NULL;\n"
-"\n"
-"    /* Initialize the C API pointer array */\n"
-"    PySpam_API[PySpam_System_NUM] = (void *)PySpam_System;\n"
-"\n"
-"    /* Create a Capsule containing the API pointer array's address */\n"
-"    c_api_object = PyCapsule_New((void *)PySpam_API, \"spam._C_API\", "
-"NULL);\n"
-"\n"
-"    if (PyModule_Add(m, \"_C_API\", c_api_object) < 0) {\n"
-"        Py_DECREF(m);\n"
-"        return NULL;\n"
-"    }\n"
-"\n"
-"    return m;\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:1290
 #, fuzzy
@@ -2487,58 +1962,6 @@ msgstr ""
 "L'essentiel du travail se trouve dans le fichier d'en-tête :file:`spammodule."
 "h`, qui ressemble à ceci ::"
 
-#: extending/extending.rst:1296
-msgid ""
-"#ifndef Py_SPAMMODULE_H\n"
-"#define Py_SPAMMODULE_H\n"
-"#ifdef __cplusplus\n"
-"extern \"C\" {\n"
-"#endif\n"
-"\n"
-"/* Header file for spammodule */\n"
-"\n"
-"/* C API functions */\n"
-"#define PySpam_System_NUM 0\n"
-"#define PySpam_System_RETURN int\n"
-"#define PySpam_System_PROTO (const char *command)\n"
-"\n"
-"/* Total number of C API pointers */\n"
-"#define PySpam_API_pointers 1\n"
-"\n"
-"\n"
-"#ifdef SPAM_MODULE\n"
-"/* This section is used when compiling spammodule.c */\n"
-"\n"
-"static PySpam_System_RETURN PySpam_System PySpam_System_PROTO;\n"
-"\n"
-"#else\n"
-"/* This section is used in modules that use spammodule's API */\n"
-"\n"
-"static void **PySpam_API;\n"
-"\n"
-"#define PySpam_System \\\n"
-" (*(PySpam_System_RETURN (*)PySpam_System_PROTO) "
-"PySpam_API[PySpam_System_NUM])\n"
-"\n"
-"/* Return -1 on error, 0 on success.\n"
-" * PyCapsule_Import will set an exception if there's an error.\n"
-" */\n"
-"static int\n"
-"import_spam(void)\n"
-"{\n"
-"    PySpam_API = (void **)PyCapsule_Import(\"spam._C_API\", 0);\n"
-"    return (PySpam_API != NULL) ? 0 : -1;\n"
-"}\n"
-"\n"
-"#endif\n"
-"\n"
-"#ifdef __cplusplus\n"
-"}\n"
-"#endif\n"
-"\n"
-"#endif /* !defined(Py_SPAMMODULE_H) */"
-msgstr ""
-
 #: extending/extending.rst:1344
 #, fuzzy
 msgid ""
@@ -2549,23 +1972,6 @@ msgstr ""
 "Tout ce qu'un module client doit faire pour avoir accès à la fonction :c:"
 "func:`PySpam_System` est d'appeler la fonction (ou plutôt la macro) :c:func:"
 "`import_spam` dans sa fonction d'initialisation ::"
-
-#: extending/extending.rst:1348
-msgid ""
-"PyMODINIT_FUNC\n"
-"PyInit_client(void)\n"
-"{\n"
-"    PyObject *m;\n"
-"\n"
-"    m = PyModule_Create(&clientmodule);\n"
-"    if (m == NULL)\n"
-"        return NULL;\n"
-"    if (import_spam() < 0)\n"
-"        return NULL;\n"
-"    /* additional initialization can happen here */\n"
-"    return m;\n"
-"}"
-msgstr ""
 
 #: extending/extending.rst:1362
 msgid ""
@@ -2634,24 +2040,20 @@ msgstr ""
 "nommage anciennes, qu'on retrouve encore assez souvent dans beaucoup de code "
 "existant."
 
-#: extending/extending.rst:550
 #, fuzzy
-msgid "PyObject_CallObject (C function)"
-msgstr "PyObject_CallObject()"
+#~ msgid "PyObject_CallObject (C function)"
+#~ msgstr "PyObject_CallObject()"
 
-#: extending/extending.rst:641
 #, fuzzy
-msgid "PyArg_ParseTuple (C function)"
-msgstr "PyArg_ParseTuple()"
+#~ msgid "PyArg_ParseTuple (C function)"
+#~ msgstr "PyArg_ParseTuple()"
 
-#: extending/extending.rst:733
 #, fuzzy
-msgid "PyArg_ParseTupleAndKeywords (C function)"
-msgstr "PyArg_ParseTupleAndKeywords()"
+#~ msgid "PyArg_ParseTupleAndKeywords (C function)"
+#~ msgstr "PyArg_ParseTupleAndKeywords()"
 
-#: extending/extending.rst:754
-msgid "Philbrick, Geoff"
-msgstr "Philbrick, Geoff"
+#~ msgid "Philbrick, Geoff"
+#~ msgstr "Philbrick, Geoff"
 
 #~ msgid ""
 #~ "It is recommended to always define ``PY_SSIZE_T_CLEAN`` before including "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 21:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2021-11-06 21:37+0100\n"
 "Last-Translator: Jean Abou Samra <jean@abou-samra.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -107,30 +107,8 @@ msgstr ""
 "L'exemple abstrait suivant présente comment assurer une gestion correcte des "
 "ressources ::"
 
-#: library/contextlib.rst:57
-msgid ""
-"from contextlib import contextmanager\n"
-"\n"
-"@contextmanager\n"
-"def managed_resource(*args, **kwds):\n"
-"    # Code to acquire resource, e.g.:\n"
-"    resource = acquire_resource(*args, **kwds)\n"
-"    try:\n"
-"        yield resource\n"
-"    finally:\n"
-"        # Code to release resource, e.g.:\n"
-"        release_resource(resource)"
-msgstr ""
-
 #: library/contextlib.rst:69
 msgid "The function can then be used like this::"
-msgstr ""
-
-#: library/contextlib.rst:71
-msgid ""
-">>> with managed_resource(timeout=3600) as resource:\n"
-"...     # Resource is released at the end of this block,\n"
-"...     # even if code in the block raises an exception"
 msgstr ""
 
 #: library/contextlib.rst:75
@@ -223,23 +201,6 @@ msgstr ""
 msgid "A simple example::"
 msgstr "Un exemple simple ::"
 
-#: library/contextlib.rst:115
-msgid ""
-"from contextlib import asynccontextmanager\n"
-"\n"
-"@asynccontextmanager\n"
-"async def get_connection():\n"
-"    conn = await acquire_db_connection()\n"
-"    try:\n"
-"        yield conn\n"
-"    finally:\n"
-"        await release_db_connection(conn)\n"
-"\n"
-"async def get_all_users():\n"
-"    async with get_connection() as conn:\n"
-"        return conn.query('SELECT ...')"
-msgstr ""
-
 #: library/contextlib.rst:131
 msgid ""
 "Context managers defined with :func:`asynccontextmanager` can be used either "
@@ -248,24 +209,6 @@ msgstr ""
 "Les gestionnaires de contexte définis avec :func:`asynccontextmanager` "
 "peuvent s'utiliser comme décorateurs ou dans les instructions :keyword:"
 "`async with` ::"
-
-#: library/contextlib.rst:134
-msgid ""
-"import time\n"
-"from contextlib import asynccontextmanager\n"
-"\n"
-"@asynccontextmanager\n"
-"async def timeit():\n"
-"    now = time.monotonic()\n"
-"    try:\n"
-"        yield\n"
-"    finally:\n"
-"        print(f'it took {time.monotonic() - now}s to run')\n"
-"\n"
-"@timeit()\n"
-"async def main():\n"
-"    # ... async code ..."
-msgstr ""
 
 #: library/contextlib.rst:149
 msgid ""
@@ -292,31 +235,9 @@ msgstr ""
 "Renvoie un gestionnaire de contexte qui ferme *thing* à la fin du bloc. "
 "C'est essentiellement équivalent à ::"
 
-#: library/contextlib.rst:164
-msgid ""
-"from contextlib import contextmanager\n"
-"\n"
-"@contextmanager\n"
-"def closing(thing):\n"
-"    try:\n"
-"        yield thing\n"
-"    finally:\n"
-"        thing.close()"
-msgstr ""
-
 #: library/contextlib.rst:173
 msgid "And lets you write code like this::"
 msgstr "Et cela vous permet d'écrire du code tel que ::"
-
-#: library/contextlib.rst:175
-msgid ""
-"from contextlib import closing\n"
-"from urllib.request import urlopen\n"
-"\n"
-"with closing(urlopen('https://www.python.org')) as page:\n"
-"    for line in page:\n"
-"        print(line)"
-msgstr ""
 
 #: library/contextlib.rst:182
 msgid ""
@@ -344,33 +265,11 @@ msgstr ""
 "Renvoie un gestionnaire de contexte qui ferme *thing* à la fin du bloc. "
 "C'est essentiellement équivalent à ::"
 
-#: library/contextlib.rst:199
-msgid ""
-"from contextlib import asynccontextmanager\n"
-"\n"
-"@asynccontextmanager\n"
-"async def aclosing(thing):\n"
-"    try:\n"
-"        yield thing\n"
-"    finally:\n"
-"        await thing.aclose()"
-msgstr ""
-
 #: library/contextlib.rst:208
 msgid ""
 "Significantly, ``aclosing()`` supports deterministic cleanup of async "
 "generators when they happen to exit early by :keyword:`break` or an "
 "exception.  For example::"
-msgstr ""
-
-#: library/contextlib.rst:212
-msgid ""
-"from contextlib import aclosing\n"
-"\n"
-"async with aclosing(my_generator()) as values:\n"
-"    async for value in values:\n"
-"        if value == 42:\n"
-"            break"
 msgstr ""
 
 #: library/contextlib.rst:219
@@ -391,36 +290,9 @@ msgstr ""
 "*enter_result*, mais ne fait rien d'autre. L'idée est de l'utiliser comme "
 "remplaçant pour un gestionnaire de contexte optionnel, par exemple ::"
 
-#: library/contextlib.rst:235
-msgid ""
-"def myfunction(arg, ignore_exceptions=False):\n"
-"    if ignore_exceptions:\n"
-"        # Use suppress to ignore all exceptions.\n"
-"        cm = contextlib.suppress(Exception)\n"
-"    else:\n"
-"        # Do not ignore any exceptions, cm has no effect.\n"
-"        cm = contextlib.nullcontext()\n"
-"    with cm:\n"
-"        # Do something"
-msgstr ""
-
 #: library/contextlib.rst:245
 msgid "An example using *enter_result*::"
 msgstr "Un exemple utilisant *enter_result* ::"
-
-#: library/contextlib.rst:247
-msgid ""
-"def process_file(file_or_path):\n"
-"    if isinstance(file_or_path, str):\n"
-"        # If string, open file\n"
-"        cm = open(file_or_path)\n"
-"    else:\n"
-"        # Caller is responsible for closing file\n"
-"        cm = nullcontext(file_or_path)\n"
-"\n"
-"    with cm as file:\n"
-"        # Perform processing on the file"
-msgstr ""
 
 #: library/contextlib.rst:258
 #, fuzzy
@@ -430,20 +302,6 @@ msgid ""
 msgstr ""
 "Similaire à :func:`~contextlib.contextmanager`, mais crée un :ref:"
 "`gestionnaire de contexte asynchrone <async-context-managers>` ::"
-
-#: library/contextlib.rst:261
-msgid ""
-"async def send_http(session=None):\n"
-"    if not session:\n"
-"        # If no http session, create it with aiohttp\n"
-"        cm = aiohttp.ClientSession()\n"
-"    else:\n"
-"        # Caller is responsible for closing the session\n"
-"        cm = nullcontext(session)\n"
-"\n"
-"    async with cm as session:\n"
-"        # Send http requests with session"
-msgstr ""
 
 #: library/contextlib.rst:274
 msgid ":term:`asynchronous context manager` support was added."
@@ -477,33 +335,9 @@ msgstr ""
 msgid "For example::"
 msgstr "Par exemple ::"
 
-#: library/contextlib.rst:293
-msgid ""
-"from contextlib import suppress\n"
-"\n"
-"with suppress(FileNotFoundError):\n"
-"    os.remove('somefile.tmp')\n"
-"\n"
-"with suppress(FileNotFoundError):\n"
-"    os.remove('someotherfile.tmp')"
-msgstr ""
-
 #: library/contextlib.rst:301
 msgid "This code is equivalent to::"
 msgstr "Ce code est équivalent à ::"
-
-#: library/contextlib.rst:303
-msgid ""
-"try:\n"
-"    os.remove('somefile.tmp')\n"
-"except FileNotFoundError:\n"
-"    pass\n"
-"\n"
-"try:\n"
-"    os.remove('someotherfile.tmp')\n"
-"except FileNotFoundError:\n"
-"    pass"
-msgstr ""
 
 #: library/contextlib.rst:362 library/contextlib.rst:389
 msgid "This context manager is :ref:`reentrant <reentrant-cms>`."
@@ -553,13 +387,6 @@ msgstr ""
 "stdout*. Vous pouvez capturer cette sortie dans une chaîne de caractères en "
 "la redirigeant vers un objet :class:`io.StringIO` ::"
 
-#: library/contextlib.rst:341
-msgid ""
-"with redirect_stdout(io.StringIO()) as f:\n"
-"    help(pow)\n"
-"s = f.getvalue()"
-msgstr ""
-
 #: library/contextlib.rst:345
 msgid ""
 "To send the output of :func:`help` to a file on disk, redirect the output to "
@@ -568,22 +395,9 @@ msgstr ""
 "Pour envoyer la sortie de :func:`help` vers un fichier sur le disque, "
 "redirigez-la sur un fichier normal ::"
 
-#: library/contextlib.rst:348
-msgid ""
-"with open('help.txt', 'w') as f:\n"
-"    with redirect_stdout(f):\n"
-"        help(pow)"
-msgstr ""
-
 #: library/contextlib.rst:352
 msgid "To send the output of :func:`help` to *sys.stderr*::"
 msgstr "Pour envoyer la sortie de :func:`help` sur *sys.stderr* ::"
-
-#: library/contextlib.rst:354
-msgid ""
-"with redirect_stdout(sys.stderr):\n"
-"    help(pow)"
-msgstr ""
 
 #: library/contextlib.rst:357
 msgid ""
@@ -653,41 +467,8 @@ msgstr ""
 msgid "Example of ``ContextDecorator``::"
 msgstr "Exemple de ``ContextDecorator`` ::"
 
-#: library/contextlib.rst:407
-msgid ""
-"from contextlib import ContextDecorator\n"
-"\n"
-"class mycontext(ContextDecorator):\n"
-"    def __enter__(self):\n"
-"        print('Starting')\n"
-"        return self\n"
-"\n"
-"    def __exit__(self, *exc):\n"
-"        print('Finishing')\n"
-"        return False"
-msgstr ""
-
 #: library/contextlib.rst:490
 msgid "The class can then be used like this::"
-msgstr ""
-
-#: library/contextlib.rst:420
-msgid ""
-">>> @mycontext()\n"
-"... def function():\n"
-"...     print('The bit in the middle')\n"
-"...\n"
-">>> function()\n"
-"Starting\n"
-"The bit in the middle\n"
-"Finishing\n"
-"\n"
-">>> with mycontext():\n"
-"...     print('The bit in the middle')\n"
-"...\n"
-"Starting\n"
-"The bit in the middle\n"
-"Finishing"
 msgstr ""
 
 #: library/contextlib.rst:436
@@ -697,23 +478,9 @@ msgstr ""
 "Ce changement est simplement un sucre syntaxique pour les constructions de "
 "la forme suivante ::"
 
-#: library/contextlib.rst:438
-msgid ""
-"def f():\n"
-"    with cm():\n"
-"        # Do stuff"
-msgstr ""
-
 #: library/contextlib.rst:442
 msgid "``ContextDecorator`` lets you instead write::"
 msgstr "``ContextDecorator`` vous permet d'écrire à la place ::"
-
-#: library/contextlib.rst:444
-msgid ""
-"@cm()\n"
-"def f():\n"
-"    # Do stuff"
-msgstr ""
 
 #: library/contextlib.rst:448
 msgid ""
@@ -731,18 +498,6 @@ msgid ""
 msgstr ""
 "Les gestionnaires de contexte existants qui ont déjà une classe mère peuvent "
 "être étendus en utilisant ``ContextDecorator`` comme une *mixin* ::"
-
-#: library/contextlib.rst:454
-msgid ""
-"from contextlib import ContextDecorator\n"
-"\n"
-"class mycontext(ContextBaseClass, ContextDecorator):\n"
-"    def __enter__(self):\n"
-"        return self\n"
-"\n"
-"    def __exit__(self, *exc):\n"
-"        return False"
-msgstr ""
 
 #: library/contextlib.rst:464
 msgid ""
@@ -770,42 +525,6 @@ msgstr ""
 msgid "Example of ``AsyncContextDecorator``::"
 msgstr "Exemple de ``ContextDecorator`` ::"
 
-#: library/contextlib.rst:478
-msgid ""
-"from asyncio import run\n"
-"from contextlib import AsyncContextDecorator\n"
-"\n"
-"class mycontext(AsyncContextDecorator):\n"
-"    async def __aenter__(self):\n"
-"        print('Starting')\n"
-"        return self\n"
-"\n"
-"    async def __aexit__(self, *exc):\n"
-"        print('Finishing')\n"
-"        return False"
-msgstr ""
-
-#: library/contextlib.rst:492
-msgid ""
-">>> @mycontext()\n"
-"... async def function():\n"
-"...     print('The bit in the middle')\n"
-"...\n"
-">>> run(function())\n"
-"Starting\n"
-"The bit in the middle\n"
-"Finishing\n"
-"\n"
-">>> async def function():\n"
-"...    async with mycontext():\n"
-"...         print('The bit in the middle')\n"
-"...\n"
-">>> run(function())\n"
-"Starting\n"
-"The bit in the middle\n"
-"Finishing"
-msgstr ""
-
 #: library/contextlib.rst:515
 msgid ""
 "A context manager that is designed to make it easy to programmatically "
@@ -824,15 +543,6 @@ msgid ""
 msgstr ""
 "Par exemple, un ensemble de fichiers peut facilement être géré dans une "
 "unique instruction *with* comme suit ::"
-
-#: library/contextlib.rst:522
-msgid ""
-"with ExitStack() as stack:\n"
-"    files = [stack.enter_context(open(fname)) for fname in filenames]\n"
-"    # All opened files will automatically be closed at the end of\n"
-"    # the with statement, even if attempts to open files later\n"
-"    # in the list raise an exception"
-msgstr ""
 
 #: library/contextlib.rst:528
 msgid ""
@@ -1012,18 +722,6 @@ msgstr ""
 "Par exemple, un groupe de fichiers peut être ouvert comme une opération "
 "« tout ou rien » comme suit ::"
 
-#: library/contextlib.rst:606
-msgid ""
-"with ExitStack() as stack:\n"
-"    files = [stack.enter_context(open(fname)) for fname in filenames]\n"
-"    # Hold onto the close method, but don't call it yet.\n"
-"    close_files = stack.pop_all().close\n"
-"    # If opening any file fails, all previously opened files will be\n"
-"    # closed automatically. If all files are opened successfully,\n"
-"    # they will remain open even after the with statement ends.\n"
-"    # close_files() can then be invoked explicitly to close them all."
-msgstr ""
-
 #: library/contextlib.rst:617
 msgid ""
 "Immediately unwinds the callback stack, invoking callbacks in the reverse "
@@ -1094,16 +792,6 @@ msgstr ""
 msgid "Continuing the example for :func:`asynccontextmanager`::"
 msgstr "En continuité de l'exemple de :func:`asynccontextmanager` ::"
 
-#: library/contextlib.rst:656
-msgid ""
-"async with AsyncExitStack() as stack:\n"
-"    connections = [await stack.enter_async_context(get_connection())\n"
-"        for i in range(5)]\n"
-"    # All opened connections will automatically be released at the end of\n"
-"    # the async with statement, even if attempts to open a connection\n"
-"    # later in the list raise an exception."
-msgstr ""
-
 #: library/contextlib.rst:666
 msgid "Examples and Recipes"
 msgstr "Exemples et Recettes"
@@ -1137,17 +825,6 @@ msgstr ""
 "collection spécifique de fichiers de l'utilisateur), ou de certains "
 "gestionnaires de contexte qui peuvent être optionnels ::"
 
-#: library/contextlib.rst:682
-msgid ""
-"with ExitStack() as stack:\n"
-"    for resource in resources:\n"
-"        stack.enter_context(resource)\n"
-"    if need_special_resource():\n"
-"        special = acquire_special_resource()\n"
-"        stack.callback(release_special_resource, special)\n"
-"    # Perform operations that use the acquired resources"
-msgstr ""
-
 #: library/contextlib.rst:690
 msgid ""
 "As shown, :class:`ExitStack` also makes it quite easy to use :keyword:`with` "
@@ -1176,18 +853,6 @@ msgstr ""
 "la méthode ``__exit__`` des gestionnaires de contexte. En utilisant :class:"
 "`ExitStack`, les étapes du protocole des gestionnaires de contexte peuvent "
 "être légèrement séparées pour permettre le code suivant ::"
-
-#: library/contextlib.rst:704
-msgid ""
-"stack = ExitStack()\n"
-"try:\n"
-"    x = stack.enter_context(cm)\n"
-"except Exception:\n"
-"    # handle __enter__ exception\n"
-"else:\n"
-"    with stack:\n"
-"        # Handle normal case"
-msgstr ""
 
 #: library/contextlib.rst:713
 msgid ""
@@ -1233,44 +898,6 @@ msgstr ""
 "d'acquisition de ressources et de libération, avec une méthode de validation "
 "optionnelle, et qui les adapte au protocole des gestionnaires de contexte ::"
 
-#: library/contextlib.rst:733
-msgid ""
-"from contextlib import contextmanager, AbstractContextManager, ExitStack\n"
-"\n"
-"class ResourceManager(AbstractContextManager):\n"
-"\n"
-"    def __init__(self, acquire_resource, release_resource, "
-"check_resource_ok=None):\n"
-"        self.acquire_resource = acquire_resource\n"
-"        self.release_resource = release_resource\n"
-"        if check_resource_ok is None:\n"
-"            def check_resource_ok(resource):\n"
-"                return True\n"
-"        self.check_resource_ok = check_resource_ok\n"
-"\n"
-"    @contextmanager\n"
-"    def _cleanup_on_error(self):\n"
-"        with ExitStack() as stack:\n"
-"            stack.push(self)\n"
-"            yield\n"
-"            # The validation check passed and didn't raise an exception\n"
-"            # Accordingly, we want to keep the resource, and pass it\n"
-"            # back to our caller\n"
-"            stack.pop_all()\n"
-"\n"
-"    def __enter__(self):\n"
-"        resource = self.acquire_resource()\n"
-"        with self._cleanup_on_error():\n"
-"            if not self.check_resource_ok(resource):\n"
-"                msg = \"Failed validation for {!r}\"\n"
-"                raise RuntimeError(msg.format(resource))\n"
-"        return resource\n"
-"\n"
-"    def __exit__(self, *exc_details):\n"
-"        # We don't need to duplicate any of our resource release logic\n"
-"        self.release_resource()"
-msgstr ""
-
 #: library/contextlib.rst:769
 msgid "Replacing any use of ``try-finally`` and flag variables"
 msgstr "Remplacer un ``try-finally`` avec une option variable"
@@ -1286,18 +913,6 @@ msgstr ""
 "option pour indiquer si le corps de la clause ``finally`` doit être exécuté "
 "ou non. Dans sa forme la plus simple (qui ne peut pas déjà être gérée avec "
 "juste une clause ``except``), cela ressemble à ::"
-
-#: library/contextlib.rst:776
-msgid ""
-"cleanup_needed = True\n"
-"try:\n"
-"    result = perform_operation()\n"
-"    if result:\n"
-"        cleanup_needed = False\n"
-"finally:\n"
-"    if cleanup_needed:\n"
-"        cleanup_resources()"
-msgstr ""
 
 #: library/contextlib.rst:785
 msgid ""
@@ -1320,17 +935,6 @@ msgstr ""
 "rappel pour être exécutée à la fin d'une instruction ``with``, et décider "
 "ensuite de passer l'exécution de cet appel ::"
 
-#: library/contextlib.rst:793
-msgid ""
-"from contextlib import ExitStack\n"
-"\n"
-"with ExitStack() as stack:\n"
-"    stack.callback(cleanup_resources)\n"
-"    result = perform_operation()\n"
-"    if result:\n"
-"        stack.pop_all()"
-msgstr ""
-
 #: library/contextlib.rst:801
 #, fuzzy
 msgid ""
@@ -1348,24 +952,6 @@ msgstr ""
 "Si une application particulière utilise beaucoup ce modèle, cela peut-être "
 "simplifié encore plus au moyen d'une petite classe d'aide ::"
 
-#: library/contextlib.rst:807
-msgid ""
-"from contextlib import ExitStack\n"
-"\n"
-"class Callback(ExitStack):\n"
-"    def __init__(self, callback, /, *args, **kwds):\n"
-"        super().__init__()\n"
-"        self.callback(callback, *args, **kwds)\n"
-"\n"
-"    def cancel(self):\n"
-"        self.pop_all()\n"
-"\n"
-"with Callback(cleanup_resources) as cb:\n"
-"    result = perform_operation()\n"
-"    if result:\n"
-"        cb.cancel()"
-msgstr ""
-
 #: library/contextlib.rst:822
 msgid ""
 "If the resource cleanup isn't already neatly bundled into a standalone "
@@ -1376,19 +962,6 @@ msgstr ""
 "une fonction autonome, il est possible d'utiliser le décorateur :meth:"
 "`ExitStack.callback` pour déclarer la fonction de nettoyage de ressource en "
 "avance ::"
-
-#: library/contextlib.rst:827
-msgid ""
-"from contextlib import ExitStack\n"
-"\n"
-"with ExitStack() as stack:\n"
-"    @stack.callback\n"
-"    def cleanup_resources():\n"
-"        ...\n"
-"    result = perform_operation()\n"
-"    if result:\n"
-"        stack.pop_all()"
-msgstr ""
 
 #: library/contextlib.rst:837
 msgid ""
@@ -1430,48 +1003,15 @@ msgstr ""
 "`ContextDecorator` fournit les deux fonctionnalités en une seule "
 "définition ::"
 
-#: library/contextlib.rst:854
-msgid ""
-"from contextlib import ContextDecorator\n"
-"import logging\n"
-"\n"
-"logging.basicConfig(level=logging.INFO)\n"
-"\n"
-"class track_entry_and_exit(ContextDecorator):\n"
-"    def __init__(self, name):\n"
-"        self.name = name\n"
-"\n"
-"    def __enter__(self):\n"
-"        logging.info('Entering: %s', self.name)\n"
-"\n"
-"    def __exit__(self, exc_type, exc, exc_tb):\n"
-"        logging.info('Exiting: %s', self.name)"
-msgstr ""
-
 #: library/contextlib.rst:869
 msgid "Instances of this class can be used as both a context manager::"
 msgstr ""
 "Les instances de cette classe peuvent être utilisées comme gestionnaires de "
 "contexte ::"
 
-#: library/contextlib.rst:871
-msgid ""
-"with track_entry_and_exit('widget loader'):\n"
-"    print('Some time consuming activity goes here')\n"
-"    load_widget()"
-msgstr ""
-
 #: library/contextlib.rst:875
 msgid "And also as a function decorator::"
 msgstr "Et comme décorateurs de fonctions ::"
-
-#: library/contextlib.rst:877
-msgid ""
-"@track_entry_and_exit('widget loader')\n"
-"def activity():\n"
-"    print('Some time consuming activity goes here')\n"
-"    load_widget()"
-msgstr ""
 
 #: library/contextlib.rst:882
 #, fuzzy
@@ -1547,29 +1087,6 @@ msgstr ""
 "usage unique, et se plaindront du fait que le générateur sous-jacent ne "
 "produise plus de valeur si vous essayez de les utiliser une seconde fois ::"
 
-#: library/contextlib.rst:916
-msgid ""
-">>> from contextlib import contextmanager\n"
-">>> @contextmanager\n"
-"... def singleuse():\n"
-"...     print(\"Before\")\n"
-"...     yield\n"
-"...     print(\"After\")\n"
-"...\n"
-">>> cm = singleuse()\n"
-">>> with cm:\n"
-"...     pass\n"
-"...\n"
-"Before\n"
-"After\n"
-">>> with cm:\n"
-"...     pass\n"
-"...\n"
-"Traceback (most recent call last):\n"
-"    ...\n"
-"RuntimeError: generator didn't yield"
-msgstr ""
-
 #: library/contextlib.rst:940
 msgid "Reentrant context managers"
 msgstr "Gestionnaires de contexte réentrants"
@@ -1597,24 +1114,6 @@ msgstr ""
 ":class:`threading.RLock` est un exemple de gestionnaire de contexte "
 "réentrant, comme le sont aussi :func:`suppress` et :func:`redirect_stdout`. "
 "Voici un très simple exemple d'utilisation réentrante ::"
-
-#: library/contextlib.rst:951
-msgid ""
-">>> from contextlib import redirect_stdout\n"
-">>> from io import StringIO\n"
-">>> stream = StringIO()\n"
-">>> write_to_stream = redirect_stdout(stream)\n"
-">>> with write_to_stream:\n"
-"...     print(\"This is written to the stream rather than stdout\")\n"
-"...     with write_to_stream:\n"
-"...         print(\"This is also written to the stream\")\n"
-"...\n"
-">>> print(\"This is written directly to stdout\")\n"
-"This is written directly to stdout\n"
-">>> print(stream.getvalue())\n"
-"This is written to the stream rather than stdout\n"
-"This is also written to the stream"
-msgstr ""
 
 #: library/contextlib.rst:966
 msgid ""
@@ -1681,35 +1180,6 @@ msgstr ""
 "actuellement enregistrées en quittant l'instruction *with*, sans regarder où "
 "ces fonctions ont été ajoutées ::"
 
-#: library/contextlib.rst:997
-msgid ""
-">>> from contextlib import ExitStack\n"
-">>> stack = ExitStack()\n"
-">>> with stack:\n"
-"...     stack.callback(print, \"Callback: from first context\")\n"
-"...     print(\"Leaving first context\")\n"
-"...\n"
-"Leaving first context\n"
-"Callback: from first context\n"
-">>> with stack:\n"
-"...     stack.callback(print, \"Callback: from second context\")\n"
-"...     print(\"Leaving second context\")\n"
-"...\n"
-"Leaving second context\n"
-"Callback: from second context\n"
-">>> with stack:\n"
-"...     stack.callback(print, \"Callback: from outer context\")\n"
-"...     with stack:\n"
-"...         stack.callback(print, \"Callback: from inner context\")\n"
-"...         print(\"Leaving inner context\")\n"
-"...     print(\"Leaving outer context\")\n"
-"...\n"
-"Leaving inner context\n"
-"Callback: from inner context\n"
-"Callback: from outer context\n"
-"Leaving outer context"
-msgstr ""
-
 #: library/contextlib.rst:1023
 msgid ""
 "As the output from the example shows, reusing a single stack object across "
@@ -1729,19 +1199,3 @@ msgid ""
 msgstr ""
 "Pour éviter ce problème, utilisez des instances différentes de :class:"
 "`ExitStack` plutôt qu'une seule instance ::"
-
-#: library/contextlib.rst:1031
-msgid ""
-">>> from contextlib import ExitStack\n"
-">>> with ExitStack() as outer_stack:\n"
-"...     outer_stack.callback(print, \"Callback: from outer context\")\n"
-"...     with ExitStack() as inner_stack:\n"
-"...         inner_stack.callback(print, \"Callback: from inner context\")\n"
-"...         print(\"Leaving inner context\")\n"
-"...     print(\"Leaving outer context\")\n"
-"...\n"
-"Leaving inner context\n"
-"Callback: from inner context\n"
-"Leaving outer context\n"
-"Callback: from outer context"
-msgstr ""

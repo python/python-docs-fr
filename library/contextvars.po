@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 21:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2023-04-08 19:57+0200\n"
 "Last-Translator: Martin Chlumsky <martin.chlumsky@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -60,10 +60,6 @@ msgid "This class is used to declare a new Context Variable, e.g.::"
 msgstr ""
 "Cette classe est utilisée pour déclarer une nouvelle variable de contexte, "
 "p. ex ::"
-
-#: library/contextvars.rst:33
-msgid "var: ContextVar[int] = ContextVar('var', default=42)"
-msgstr ""
 
 #: library/contextvars.rst:35
 msgid ""
@@ -167,18 +163,6 @@ msgstr ""
 msgid "For example::"
 msgstr "Par exemple ::"
 
-#: library/contextvars.rst:87
-msgid ""
-"var = ContextVar('var')\n"
-"\n"
-"token = var.set('new value')\n"
-"# code that uses 'var'; var.get() returns 'new value'.\n"
-"var.reset(token)\n"
-"\n"
-"# After the reset call the var has no value again, so\n"
-"# var.get() would raise a LookupError."
-msgstr ""
-
 #: library/contextvars.rst:99
 msgid ""
 "*Token* objects are returned by the :meth:`ContextVar.set` method. They can "
@@ -228,12 +212,6 @@ msgstr ""
 "Le fragment de code qui suit obtient une copie du contexte actuel et affiche "
 "toutes les variables avec leurs valeurs définies dans ce contexte ::"
 
-#: library/contextvars.rst:131
-msgid ""
-"ctx: Context = copy_context()\n"
-"print(list(ctx.items()))"
-msgstr ""
-
 #: library/contextvars.rst:134
 #, fuzzy
 msgid ""
@@ -261,13 +239,55 @@ msgstr ""
 
 #: library/contextvars.rst:147
 msgid ""
-"Every thread will have a different top-level :class:`~contextvars.Context` "
-"object. This means that a :class:`ContextVar` object behaves in a similar "
-"fashion to :func:`threading.local` when values are assigned in different "
-"threads."
+"Each thread has its own effective stack of :class:`!Context` objects.  The :"
+"term:`current context` is the :class:`!Context` object at the top of the "
+"current thread's stack.  All :class:`!Context` objects in the stacks are "
+"considered to be *entered*."
 msgstr ""
 
 #: library/contextvars.rst:152
+msgid ""
+"*Entering* a context, which can be done by calling its :meth:`~Context.run` "
+"method, makes the context the current context by pushing it onto the top of "
+"the current thread's context stack."
+msgstr ""
+
+#: library/contextvars.rst:156
+msgid ""
+"*Exiting* from the current context, which can be done by returning from the "
+"callback passed to the :meth:`~Context.run` method, restores the current "
+"context to what it was before the context was entered by popping the context "
+"off the top of the context stack."
+msgstr ""
+
+#: library/contextvars.rst:161
+msgid ""
+"Since each thread has its own context stack, :class:`ContextVar` objects "
+"behave in a similar fashion to :func:`threading.local` when values are "
+"assigned in different threads."
+msgstr ""
+
+#: library/contextvars.rst:165
+msgid ""
+"Attempting to enter an already entered context, including contexts entered "
+"in other threads, raises a :exc:`RuntimeError`."
+msgstr ""
+
+#: library/contextvars.rst:168
+msgid "After exiting a context, it can later be re-entered (from any thread)."
+msgstr ""
+
+#: library/contextvars.rst:170
+msgid ""
+"Any changes to :class:`ContextVar` values via the :meth:`ContextVar.set` "
+"method are recorded in the current context.  The :meth:`ContextVar.get` "
+"method returns the value associated with the current context.  Exiting a "
+"context effectively reverts any changes made to context variables while the "
+"context was entered (if needed, the values can be restored by re-entering "
+"the context)."
+msgstr ""
+
+#: library/contextvars.rst:177
 msgid "Context implements the :class:`collections.abc.Mapping` interface."
 msgstr "*Context* implémente l'interface :class:`collections.abc.Mapping`."
 
@@ -281,67 +301,27 @@ msgstr "*Context* implémente l'interface :class:`collections.abc.Mapping`."
 # lequel est appelée la méthode  »run*. Renvoie###
 # library/contextvars.po:238: warning: Mot inconnu : run => ###xte sur lequel
 # est appelée la méthode  »run*. Renvoie###
-#: library/contextvars.rst:156
+#: library/contextvars.rst:181
+#, fuzzy
 msgid ""
-"Execute ``callable(*args, **kwargs)`` code in the context object the *run* "
-"method is called on.  Return the result of the execution or propagate an "
-"exception if one occurred."
+"Enters the Context, executes ``callable(*args, **kwargs)``, then exits the "
+"Context.  Returns *callable*'s return value, or propagates an exception if "
+"one occurred."
 msgstr ""
 "Exécute le code ``callable(*args, **kwargs)`` dans le contexte défini par "
 "l'objet. Renvoie le résultat de l'exécution ou propage une exception s'il y "
 "en a une qui s'est produite."
 
-#: library/contextvars.rst:160
-msgid ""
-"Any changes to any context variables that *callable* makes will be contained "
-"in the context object::"
-msgstr ""
-"Tout changement apporté aux variables de contexte effectué par *callable* "
-"sera contenu dans l'objet de contexte ::"
+#: library/contextvars.rst:185
+#, fuzzy
+msgid "Example:"
+msgstr "Par exemple ::"
 
-#: library/contextvars.rst:163
-msgid ""
-"var = ContextVar('var')\n"
-"var.set('spam')\n"
-"\n"
-"def main():\n"
-"    # 'var' was set to 'spam' before\n"
-"    # calling 'copy_context()' and 'ctx.run(main)', so:\n"
-"    # var.get() == ctx[var] == 'spam'\n"
-"\n"
-"    var.set('ham')\n"
-"\n"
-"    # Now, after setting 'var' to 'ham':\n"
-"    # var.get() == ctx[var] == 'ham'\n"
-"\n"
-"ctx = copy_context()\n"
-"\n"
-"# Any changes that the 'main' function makes to 'var'\n"
-"# will be contained in 'ctx'.\n"
-"ctx.run(main)\n"
-"\n"
-"# The 'main()' function was run in the 'ctx' context,\n"
-"# so changes to 'var' are contained in it:\n"
-"# ctx[var] == 'ham'\n"
-"\n"
-"# However, outside of 'ctx', 'var' is still set to 'spam':\n"
-"# var.get() == 'spam'"
-msgstr ""
-
-#: library/contextvars.rst:189
-msgid ""
-"The method raises a :exc:`RuntimeError` when called on the same context "
-"object from more than one OS thread, or when called recursively."
-msgstr ""
-"La méthode lève une :exc:`RuntimeError` quand elle est appelée sur le même "
-"objet de contexte depuis plus qu'un fil d'exécution ou quand elle est "
-"appelée récursivement."
-
-#: library/contextvars.rst:195
+#: library/contextvars.rst:233
 msgid "Return a shallow copy of the context object."
 msgstr "Renvoie une copie superficielle de l'objet de contexte."
 
-#: library/contextvars.rst:199
+#: library/contextvars.rst:237
 msgid ""
 "Return ``True`` if the *context* has a value for *var* set; return ``False`` "
 "otherwise."
@@ -349,7 +329,7 @@ msgstr ""
 "Renvoie ``True`` si le *context* a une valeur pour *var* ; sinon renvoie "
 "``False``."
 
-#: library/contextvars.rst:204
+#: library/contextvars.rst:242
 msgid ""
 "Return the value of the *var* :class:`ContextVar` variable. If the variable "
 "is not set in the context object, a :exc:`KeyError` is raised."
@@ -357,7 +337,7 @@ msgstr ""
 "Renvoie la valeur de la variable :class:`ContextVar` *var*. Si la variable "
 "n'est pas définie dans l'objet de contexte, une :exc:`KeyError` est levée."
 
-#: library/contextvars.rst:210
+#: library/contextvars.rst:248
 msgid ""
 "Return the value for *var* if *var* has the value in the context object.  "
 "Return *default* otherwise.  If *default* is not given, return ``None``."
@@ -365,26 +345,26 @@ msgstr ""
 "Renvoie la valeur de *var* si *var* possède une valeur dans l'objet de "
 "contexte. Renvoie *default* sinon (ou ``None`` si *default* n'est pas donné)."
 
-#: library/contextvars.rst:216
+#: library/contextvars.rst:254
 msgid "Return an iterator over the variables stored in the context object."
 msgstr ""
 "Renvoie un itérateur sur les variables stockées dans l'objet de contexte."
 
-#: library/contextvars.rst:221
+#: library/contextvars.rst:259
 msgid "Return the number of variables set in the context object."
 msgstr "Renvoie le nombre de variables définies dans l'objet de contexte."
 
-#: library/contextvars.rst:225
+#: library/contextvars.rst:263
 msgid "Return a list of all variables in the context object."
 msgstr "Renvoie une liste de toutes les variables dans l'objet de contexte."
 
-#: library/contextvars.rst:229
+#: library/contextvars.rst:267
 msgid "Return a list of all variables' values in the context object."
 msgstr ""
 "Renvoie une liste de toutes les valeurs des variables dans l'objet de "
 "contexte."
 
-#: library/contextvars.rst:234
+#: library/contextvars.rst:272
 msgid ""
 "Return a list of 2-tuples containing all variables and their values in the "
 "context object."
@@ -392,11 +372,11 @@ msgstr ""
 "Renvoie une liste de paires contenant toutes les variables et leurs valeurs "
 "dans l'objet de contexte."
 
-#: library/contextvars.rst:239
+#: library/contextvars.rst:277
 msgid "asyncio support"
 msgstr "Gestion avec *asyncio*"
 
-#: library/contextvars.rst:241
+#: library/contextvars.rst:279
 msgid ""
 "Context variables are natively supported in :mod:`asyncio` and are ready to "
 "be used without any extra configuration.  For example, here is a simple echo "
@@ -409,48 +389,17 @@ msgstr ""
 "l’adresse d'un client distant soit disponible dans le *Task* qui gère ce "
 "client ::"
 
-#: library/contextvars.rst:247
-msgid ""
-"import asyncio\n"
-"import contextvars\n"
-"\n"
-"client_addr_var = contextvars.ContextVar('client_addr')\n"
-"\n"
-"def render_goodbye():\n"
-"    # The address of the currently handled client can be accessed\n"
-"    # without passing it explicitly to this function.\n"
-"\n"
-"    client_addr = client_addr_var.get()\n"
-"    return f'Good bye, client @ {client_addr}\\r\\n'.encode()\n"
-"\n"
-"async def handle_request(reader, writer):\n"
-"    addr = writer.transport.get_extra_info('socket').getpeername()\n"
-"    client_addr_var.set(addr)\n"
-"\n"
-"    # In any code that we call is now possible to get\n"
-"    # client's address by calling 'client_addr_var.get()'.\n"
-"\n"
-"    while True:\n"
-"        line = await reader.readline()\n"
-"        print(line)\n"
-"        if not line.strip():\n"
-"            break\n"
-"\n"
-"    writer.write(b'HTTP/1.1 200 OK\\r\\n')  # status line\n"
-"    writer.write(b'\\r\\n')  # headers\n"
-"    writer.write(render_goodbye())  # body\n"
-"    writer.close()\n"
-"\n"
-"async def main():\n"
-"    srv = await asyncio.start_server(\n"
-"        handle_request, '127.0.0.1', 8081)\n"
-"\n"
-"    async with srv:\n"
-"        await srv.serve_forever()\n"
-"\n"
-"asyncio.run(main())\n"
-"\n"
-"# To test it you can use telnet or curl:\n"
-"#     telnet 127.0.0.1 8081\n"
-"#     curl 127.0.0.1:8081"
-msgstr ""
+#~ msgid ""
+#~ "Any changes to any context variables that *callable* makes will be "
+#~ "contained in the context object::"
+#~ msgstr ""
+#~ "Tout changement apporté aux variables de contexte effectué par *callable* "
+#~ "sera contenu dans l'objet de contexte ::"
+
+#~ msgid ""
+#~ "The method raises a :exc:`RuntimeError` when called on the same context "
+#~ "object from more than one OS thread, or when called recursively."
+#~ msgstr ""
+#~ "La méthode lève une :exc:`RuntimeError` quand elle est appelée sur le "
+#~ "même objet de contexte depuis plus qu'un fil d'exécution ou quand elle "
+#~ "est appelée récursivement."

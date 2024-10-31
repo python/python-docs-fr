@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2023-03-27 18:03+0200\n"
 "Last-Translator: Mathieu Dupuy\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -99,12 +99,6 @@ msgstr ""
 "les modules écrits en C et liés à l'interpréteur ; pour obtenir leur liste, "
 "entrez ::"
 
-#: faq/library.rst:42
-msgid ""
-"import sys\n"
-"print(sys.builtin_module_names)"
-msgstr ""
-
 #: faq/library.rst:47
 msgid "How do I make a Python script executable on Unix?"
 msgstr "Comment rendre un script Python exécutable sous Unix ?"
@@ -135,10 +129,6 @@ msgstr ""
 "Il y a plusieurs façons de remplir la seconde. La plus simple consiste à "
 "écrire au tout début du fichier ::"
 
-#: faq/library.rst:59
-msgid "#!/usr/local/bin/python"
-msgstr ""
-
 #: faq/library.rst:61
 msgid ""
 "as the very first line of your file, using the pathname for where the Python "
@@ -157,10 +147,6 @@ msgstr ""
 "fonctionne sur la quasi-totalité des dérivés de Unix, à condition que "
 "l'interpréteur Python soit dans un dossier référencé dans la variable :"
 "envvar:`PATH` de l'utilisateur ::"
-
-#: faq/library.rst:69
-msgid "#!/usr/bin/env python"
-msgstr ""
 
 #: faq/library.rst:71
 msgid ""
@@ -183,14 +169,6 @@ msgstr ""
 "n'existe pas du tout. Dans ce cas, vous pouvez utiliser l'astuce suivante, "
 "élaborée par Alex Rezinsky :"
 
-#: faq/library.rst:79
-msgid ""
-"#! /bin/sh\n"
-"\"\"\":\"\n"
-"exec python $0 ${1+\"$@\"}\n"
-"\"\"\""
-msgstr ""
-
 #: faq/library.rst:86
 msgid ""
 "The minor disadvantage is that this defines the script's __doc__ string. "
@@ -198,10 +176,6 @@ msgid ""
 msgstr ""
 "Le léger inconvénient est que cela définit la variable *__doc__* du script. "
 "Cependant, il est possible de corriger cela en ajoutant ::"
-
-#: faq/library.rst:89
-msgid "__doc__ = \"\"\"...Whatever...\"\"\""
-msgstr ""
 
 #: faq/library.rst:94
 msgid "Is there a curses/termcap package for Python?"
@@ -261,19 +235,9 @@ msgstr ""
 "Le problème le plus courant est d'appeler le gestionnaire de signaux avec "
 "les mauvais arguments. Un gestionnaire est appelé de la façon suivante ::"
 
-#: faq/library.rst:123
-msgid "handler(signum, frame)"
-msgstr ""
-
 #: faq/library.rst:125
 msgid "so it should be declared with two parameters::"
 msgstr "donc il doit être déclaré avec deux paramètres ::"
-
-#: faq/library.rst:127
-msgid ""
-"def handler(signum, frame):\n"
-"    ..."
-msgstr ""
 
 #: faq/library.rst:132
 msgid "Common tasks"
@@ -325,12 +289,6 @@ msgid "The \"global main logic\" of your program may be as simple as ::"
 msgstr ""
 "La « logique générale » d'un programme devrait être aussi simple que ::"
 
-#: faq/library.rst:154
-msgid ""
-"if __name__ == \"__main__\":\n"
-"    main_logic()"
-msgstr ""
-
 #: faq/library.rst:157
 msgid "at the bottom of the main module of your program."
 msgstr "à la fin du module principal du programme."
@@ -364,12 +322,6 @@ msgid ""
 msgstr ""
 "Les « modules auxiliaires » qui n'ont pas vocation à être le module "
 "principal du programme peuvent inclure un test pour se vérifier eux-mêmes. ::"
-
-#: faq/library.rst:170
-msgid ""
-"if __name__ == \"__main__\":\n"
-"    self_test()"
-msgstr ""
 
 #: faq/library.rst:173
 msgid ""
@@ -450,21 +402,6 @@ msgstr ""
 "Une correction simple consiste à ajouter un temps d'attente suffisamment "
 "long à la fin du programme pour que tous les fils puissent se terminer ::"
 
-#: faq/library.rst:253
-msgid ""
-"import threading, time\n"
-"\n"
-"def thread_task(name, n):\n"
-"    for i in range(n):\n"
-"        print(name, i)\n"
-"\n"
-"for i in range(10):\n"
-"    T = threading.Thread(target=thread_task, args=(str(i), i))\n"
-"    T.start()\n"
-"\n"
-"time.sleep(10)  # <---------------------------!"
-msgstr ""
-
 #: faq/library.rst:265
 msgid ""
 "But now (on many platforms) the threads don't run in parallel, but appear to "
@@ -481,20 +418,6 @@ msgid "A simple fix is to add a tiny sleep to the start of the run function::"
 msgstr ""
 "Une correction simple consiste à ajouter un petit temps d'attente au début "
 "de la fonction ::"
-
-#: faq/library.rst:271
-msgid ""
-"def thread_task(name, n):\n"
-"    time.sleep(0.001)  # <--------------------!\n"
-"    for i in range(n):\n"
-"        print(name, i)\n"
-"\n"
-"for i in range(10):\n"
-"    T = threading.Thread(target=thread_task, args=(str(i), i))\n"
-"    T.start()\n"
-"\n"
-"time.sleep(10)"
-msgstr ""
 
 #: faq/library.rst:282
 msgid ""
@@ -547,65 +470,9 @@ msgstr ""
 msgid "Here's a trivial example::"
 msgstr "Voici un exemple trivial ::"
 
-#: faq/library.rst:304
-msgid ""
-"import threading, queue, time\n"
-"\n"
-"# The worker thread gets jobs off the queue.  When the queue is empty, it\n"
-"# assumes there will be no more work and exits.\n"
-"# (Realistically workers will run until terminated.)\n"
-"def worker():\n"
-"    print('Running worker')\n"
-"    time.sleep(0.1)\n"
-"    while True:\n"
-"        try:\n"
-"            arg = q.get(block=False)\n"
-"        except queue.Empty:\n"
-"            print('Worker', threading.current_thread(), end=' ')\n"
-"            print('queue empty')\n"
-"            break\n"
-"        else:\n"
-"            print('Worker', threading.current_thread(), end=' ')\n"
-"            print('running with argument', arg)\n"
-"            time.sleep(0.5)\n"
-"\n"
-"# Create queue\n"
-"q = queue.Queue()\n"
-"\n"
-"# Start a pool of 5 workers\n"
-"for i in range(5):\n"
-"    t = threading.Thread(target=worker, name='worker %i' % (i+1))\n"
-"    t.start()\n"
-"\n"
-"# Begin adding work to the queue\n"
-"for i in range(50):\n"
-"    q.put(i)\n"
-"\n"
-"# Give threads time to run\n"
-"print('Main thread sleeping')\n"
-"time.sleep(5)"
-msgstr ""
-
 #: faq/library.rst:340
 msgid "When run, this will produce the following output:"
 msgstr "Quand celui-ci est exécuté, il produit la sortie suivante :"
-
-#: faq/library.rst:342
-msgid ""
-"Running worker\n"
-"Running worker\n"
-"Running worker\n"
-"Running worker\n"
-"Running worker\n"
-"Main thread sleeping\n"
-"Worker <Thread(worker 1, started 130283832797456)> running with argument 0\n"
-"Worker <Thread(worker 2, started 130283824404752)> running with argument 1\n"
-"Worker <Thread(worker 3, started 130283816012048)> running with argument 2\n"
-"Worker <Thread(worker 4, started 130283807619344)> running with argument 3\n"
-"Worker <Thread(worker 5, started 130283799226640)> running with argument 4\n"
-"Worker <Thread(worker 1, started 130283832797456)> running with argument 5\n"
-"..."
-msgstr ""
 
 #: faq/library.rst:358
 msgid ""
@@ -661,32 +528,9 @@ msgstr ""
 "*L2* sont des listes, *D*, *D1* et *D2* sont des dictionnaires, *x* et *y* "
 "sont des objets, *i* et *j* des entiers) ::"
 
-#: faq/library.rst:380
-msgid ""
-"L.append(x)\n"
-"L1.extend(L2)\n"
-"x = L[i]\n"
-"x = L.pop()\n"
-"L1[i:j] = L2\n"
-"L.sort()\n"
-"x = y\n"
-"x.field = y\n"
-"D[x] = y\n"
-"D1.update(D2)\n"
-"D.keys()"
-msgstr ""
-
 #: faq/library.rst:392
 msgid "These aren't::"
 msgstr "Les suivantes ne le sont pas ::"
-
-#: faq/library.rst:394
-msgid ""
-"i = i+1\n"
-"L.append(L[-1])\n"
-"L[i] = L[j]\n"
-"D[x] = D[x] + 1"
-msgstr ""
 
 #: faq/library.rst:399
 #, fuzzy
@@ -899,15 +743,6 @@ msgstr ""
 "Par exemple, le code suivant lit, depuis un fichier, deux entiers codés sur "
 "2 octets et un entier codé sur 4 octets, en format gros-boutiste ::"
 
-#: faq/library.rst:512
-msgid ""
-"import struct\n"
-"\n"
-"with open(filename, \"rb\") as f:\n"
-"    s = f.read(8)\n"
-"    x, y, z = struct.unpack(\">hhl\", s)"
-msgstr ""
-
 #: faq/library.rst:518
 msgid ""
 "The '>' in the format string forces big-endian data; the letter 'h' reads "
@@ -1033,13 +868,6 @@ msgstr ""
 "exemple, perturber le bon fonctionnement de modules qui font des opérations "
 "d'entrée-sortie). Si c'est le cas, utilisez :func:`os.close` ::"
 
-#: faq/library.rst:655
-msgid ""
-"os.close(stdin.fileno())\n"
-"os.close(stdout.fileno())\n"
-"os.close(stderr.fileno())"
-msgstr ""
-
 #: faq/library.rst:659
 msgid "Or you can use the numeric constants 0, 1 and 2, respectively."
 msgstr ""
@@ -1100,26 +928,6 @@ msgstr ""
 "Voici un exemple très simple d'un envoyeur de courriel qui l'utilise. Cette "
 "méthode fonctionne sur tous les serveurs qui implémentent SMTP. ::"
 
-#: faq/library.rst:695
-msgid ""
-"import sys, smtplib\n"
-"\n"
-"fromaddr = input(\"From: \")\n"
-"toaddrs  = input(\"To: \").split(',')\n"
-"print(\"Enter message, end with ^D:\")\n"
-"msg = ''\n"
-"while True:\n"
-"    line = sys.stdin.readline()\n"
-"    if not line:\n"
-"        break\n"
-"    msg += line\n"
-"\n"
-"# The actual mail send\n"
-"server = smtplib.SMTP('localhost')\n"
-"server.sendmail(fromaddr, toaddrs, msg)\n"
-"server.quit()"
-msgstr ""
-
 #: faq/library.rst:712
 msgid ""
 "A Unix-only alternative uses sendmail.  The location of the sendmail program "
@@ -1131,22 +939,6 @@ msgstr ""
 "l'exécutable *sendmail* dépend du système ; cela peut-être ``/usr/lib/"
 "sendmail`` ou ``/usr/sbin/sendmail``, la page de manuel de *sendmail* peut "
 "vous aider. Par exemple ::"
-
-#: faq/library.rst:717
-msgid ""
-"import os\n"
-"\n"
-"SENDMAIL = \"/usr/sbin/sendmail\"  # sendmail location\n"
-"p = os.popen(\"%s -t -i\" % SENDMAIL, \"w\")\n"
-"p.write(\"To: receiver@example.com\\n\")\n"
-"p.write(\"Subject: test\\n\")\n"
-"p.write(\"\\n\")  # blank line separating headers from body\n"
-"p.write(\"Some text\\n\")\n"
-"p.write(\"some more text\\n\")\n"
-"sts = p.close()\n"
-"if sts != 0:\n"
-"    print(\"Sendmail exit status\", sts)"
-msgstr ""
 
 #: faq/library.rst:732
 msgid "How do I avoid blocking in the connect() method of a socket?"
@@ -1276,12 +1068,6 @@ msgid ""
 msgstr ""
 "Le module :mod:`random` de la bibliothèque standard comprend un générateur "
 "de nombres aléatoires. Son utilisation est simple ::"
-
-#: faq/library.rst:796
-msgid ""
-"import random\n"
-"random.random()"
-msgstr ""
 
 #: faq/library.rst:799
 #, fuzzy

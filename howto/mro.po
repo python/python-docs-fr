@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 21:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -17,26 +17,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../Doc/howto/mro.rst:4
+#: howto/mro.rst:4
 msgid "The Python 2.3 Method Resolution Order"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:8
+#: howto/mro.rst:8
 msgid ""
 "This is a historical document, provided as an appendix to the official "
 "documentation. The Method Resolution Order discussed here was *introduced* "
 "in Python 2.3, but it is still used in later versions -- including Python 3."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:13
+#: howto/mro.rst:13
 msgid "By `Michele Simionato <https://www.phyast.pitt.edu/~micheles/>`__."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:0
+#: howto/mro.rst:0
 msgid "Abstract"
 msgstr "Résumé"
 
-#: ../Doc/howto/mro.rst:17
+#: howto/mro.rst:17
 msgid ""
 "*This document is intended for Python programmers who want to understand the "
 "C3 Method Resolution Order used in Python 2.3. Although it is not intended "
@@ -45,11 +45,11 @@ msgid ""
 "therefore it should be useful.*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:23
+#: howto/mro.rst:23
 msgid "Disclaimer:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:25
+#: howto/mro.rst:25
 msgid ""
 "*I donate this document to the Python Software Foundation, under the Python "
 "2.3 license.  As usual in these circumstances, I warn the reader that what "
@@ -57,11 +57,11 @@ msgid ""
 "own risk and peril!*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:30
+#: howto/mro.rst:30
 msgid "Acknowledgments:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:32
+#: howto/mro.rst:32
 msgid ""
 "*All the people of the Python mailing list who sent me their support. Paul "
 "Foley who pointed out various imprecisions and made me to add the part on "
@@ -71,15 +71,15 @@ msgid ""
 "home-page.*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:40
+#: howto/mro.rst:40
 msgid "The beginning"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:42
+#: howto/mro.rst:42
 msgid "*Felix qui potuit rerum cognoscere causas* -- Virgilius"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:44
+#: howto/mro.rst:44
 msgid ""
 "Everything started with a post by Samuele Pedroni to the Python development "
 "mailing list [#]_.  In his post, Samuele showed that the Python 2.2 method "
@@ -92,7 +92,7 @@ msgid ""
 "understand the reasons for the change."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:55
+#: howto/mro.rst:55
 msgid ""
 "First of all, let me point out that what I am going to say only applies to "
 "the *new style classes* introduced in Python 2.2:  *classic classes* "
@@ -104,11 +104,11 @@ msgid ""
 "breaking of code is expected.  Therefore:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:64
+#: howto/mro.rst:64
 msgid "*Don't be scared!*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:66
+#: howto/mro.rst:66
 msgid ""
 "Moreover, unless you make strong use of multiple inheritance and you have "
 "non-trivial hierarchies, you don't need to understand the C3 algorithm, and "
@@ -117,32 +117,32 @@ msgid ""
 "news is that things are not as complicated as you might expect."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:73
+#: howto/mro.rst:73
 msgid "Let me begin with some basic definitions."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:75
+#: howto/mro.rst:75
 msgid ""
 "Given a class C in a complicated multiple inheritance hierarchy, it is a non-"
 "trivial task to specify the order in which methods are overridden, i.e. to "
 "specify the order of the ancestors of C."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:79
+#: howto/mro.rst:79
 msgid ""
 "The list of the ancestors of a class C, including the class itself, ordered "
 "from the nearest ancestor to the furthest, is called the class precedence "
 "list or the *linearization* of C."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:83
+#: howto/mro.rst:83
 msgid ""
 "The *Method Resolution Order* (MRO) is the set of rules that construct the "
 "linearization.  In the Python literature, the idiom \"the MRO of C\" is also "
 "used as a synonymous for the linearization of the class C."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:88
+#: howto/mro.rst:88
 msgid ""
 "For instance, in the case of single inheritance hierarchy, if C is a "
 "subclass of C1, and C1 is a subclass of C2, then the linearization of C is "
@@ -152,7 +152,7 @@ msgid ""
 "precedence ordering* and *monotonicity*."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:96
+#: howto/mro.rst:96
 msgid ""
 "I will discuss the local precedence ordering later, but I can give the "
 "definition of monotonicity here.  A MRO is monotonic when the following is "
@@ -163,46 +163,32 @@ msgid ""
 "be shown later."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:104
+#: howto/mro.rst:104
 msgid ""
 "Not all classes admit a linearization.  There are cases, in complicated "
 "hierarchies, where it is not possible to derive a class such that its "
 "linearization respects all the desired properties."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:108
+#: howto/mro.rst:108
 msgid "Here I give an example of this situation. Consider the hierarchy"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:116
+#: howto/mro.rst:116
 msgid ""
 "which can be represented with the following inheritance graph, where I have "
 "denoted with O the ``object`` class, which is the beginning of any hierarchy "
 "for new style classes:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:120
-msgid ""
-" -----------\n"
-"|           |\n"
-"|    O      |\n"
-"|  /   \\    |\n"
-" - X    Y  /\n"
-"   |  / | /\n"
-"   | /  |/\n"
-"   A    B\n"
-"   \\   /\n"
-"     ?"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:133
+#: howto/mro.rst:133
 msgid ""
 "In this case, it is not possible to derive a new class C from A and B, since "
 "X precedes Y in A, but Y precedes X in B, therefore the method resolution "
 "order would be ambiguous in C."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:137
+#: howto/mro.rst:137
 msgid ""
 "Python 2.3 raises an exception in this situation (TypeError:  MRO conflict "
 "among bases Y, X) forbidding the naive programmer from creating ambiguous "
@@ -210,94 +196,70 @@ msgid ""
 "*ad hoc* ordering (CABXYO in this case)."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:143
+#: howto/mro.rst:143
 msgid "The C3 Method Resolution Order"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:145
+#: howto/mro.rst:145
 msgid ""
 "Let me introduce a few simple notations which will be useful for the "
 "following discussion.  I will use the shortcut notation::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:148
-msgid "C1 C2 ... CN"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:150
+#: howto/mro.rst:150
 msgid "to indicate the list of classes [C1, C2, ... , CN]."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:152
+#: howto/mro.rst:152
 msgid "The *head* of the list is its first element::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:154
-msgid "head = C1"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:156
+#: howto/mro.rst:156
 msgid "whereas the *tail* is the rest of the list::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:158
-msgid "tail = C2 ... CN."
-msgstr ""
-
-#: ../Doc/howto/mro.rst:160
+#: howto/mro.rst:160
 msgid "I shall also use the notation::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:162
-msgid "C + (C1 C2 ... CN) = C C1 C2 ... CN"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:164
+#: howto/mro.rst:164
 msgid "to denote the sum of the lists [C] + [C1, C2, ... ,CN]."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:166
+#: howto/mro.rst:166
 msgid "Now I can explain how the MRO works in Python 2.3."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:168
+#: howto/mro.rst:168
 msgid ""
 "Consider a class C in a multiple inheritance hierarchy, with C inheriting "
 "from the base classes B1, B2, ...  , BN.  We want to compute the "
 "linearization L[C] of the class C. The rule is the following:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:173
+#: howto/mro.rst:173
 msgid ""
 "*the linearization of C is the sum of C plus the merge of the linearizations "
 "of the parents and the list of the parents.*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:176
+#: howto/mro.rst:176
 msgid "In symbolic notation::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:178
-msgid "L[C(B1 ... BN)] = C + merge(L[B1] ... L[BN], B1 ... BN)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:180
+#: howto/mro.rst:180
 msgid ""
 "In particular, if C is the ``object`` class, which has no parents, the "
 "linearization is trivial::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:183
-msgid "L[object] = object."
-msgstr ""
-
-#: ../Doc/howto/mro.rst:185
+#: howto/mro.rst:185
 msgid ""
 "However, in general one has to compute the merge according to the following "
 "prescription:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:188
+#: howto/mro.rst:188
 msgid ""
 "*take the head of the first list, i.e L[B1][0]; if this head is not in the "
 "tail of any of the other lists, then add it to the linearization of C and "
@@ -308,7 +270,7 @@ msgid ""
 "to create the class C and will raise an exception.*"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:197
+#: howto/mro.rst:197
 msgid ""
 "This prescription ensures that the merge operation *preserves* the ordering, "
 "if the ordering can be preserved.  On the other hand, if the order cannot be "
@@ -316,80 +278,39 @@ msgid ""
 "then the merge cannot be computed."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:202
+#: howto/mro.rst:202
 msgid ""
 "The computation of the merge is trivial if C has only one parent (single "
 "inheritance); in this case::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:205
-msgid "L[C(B)] = C + merge(L[B],B) = C + L[B]"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:207
+#: howto/mro.rst:207
 msgid ""
 "However, in the case of multiple inheritance things are more cumbersome and "
 "I don't expect you can understand the rule without a couple of examples ;-)"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:212
+#: howto/mro.rst:212
 msgid "Examples"
 msgstr "Exemples"
 
-#: ../Doc/howto/mro.rst:214
+#: howto/mro.rst:214
 msgid "First example. Consider the following hierarchy:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:224
+#: howto/mro.rst:224
 msgid "In this case the inheritance graph can be drawn as:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:226
-msgid ""
-"                          6\n"
-"                         ---\n"
-"Level 3                 | O |                  (more general)\n"
-"                      /  ---  \\\n"
-"                     /    |    \\                      |\n"
-"                    /     |     \\                     |\n"
-"                   /      |      \\                    |\n"
-"                  ---    ---    ---                   |\n"
-"Level 2        3 | D | 4| E |  | F | 5                |\n"
-"                  ---    ---    ---                   |\n"
-"                   \\  \\ _ /       |                   |\n"
-"                    \\    / \\ _    |                   |\n"
-"                     \\  /      \\  |                   |\n"
-"                      ---      ---                    |\n"
-"Level 1            1 | B |    | C | 2                 |\n"
-"                      ---      ---                    |\n"
-"                        \\      /                      |\n"
-"                         \\    /                      \\ /\n"
-"                           ---\n"
-"Level 0                 0 | A |                (more specialized)\n"
-"                           ---"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:251
+#: howto/mro.rst:251
 msgid "The linearizations of O,D,E and F are trivial::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:253
-msgid ""
-"L[O] = O\n"
-"L[D] = D O\n"
-"L[E] = E O\n"
-"L[F] = F O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:258
+#: howto/mro.rst:258
 msgid "The linearization of B can be computed as::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:260
-msgid "L[B] = B + merge(DO, EO, DE)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:262
+#: howto/mro.rst:262
 msgid ""
 "We see that D is a good head, therefore we take it and we are reduced to "
 "compute ``merge(O,EO,E)``.  Now O is not a good head, since it is in the "
@@ -398,38 +319,15 @@ msgid ""
 "reduced to compute ``merge(O,O)`` which gives O. Therefore::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:268
-msgid "L[B] =  B D E O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:270
+#: howto/mro.rst:270
 msgid "Using the same procedure one finds::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:272
-msgid ""
-"L[C] = C + merge(DO,FO,DF)\n"
-"     = C + D + merge(O,FO,F)\n"
-"     = C + D + F + merge(O,O)\n"
-"     = C D F O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:277
+#: howto/mro.rst:277
 msgid "Now we can compute::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:279
-msgid ""
-"L[A] = A + merge(BDEO,CDFO,BC)\n"
-"     = A + B + merge(DEO,CDFO,C)\n"
-"     = A + B + C + merge(DEO,DFO)\n"
-"     = A + B + C + D + merge(EO,FO)\n"
-"     = A + B + C + D + E + merge(O,FO)\n"
-"     = A + B + C + D + E + F + merge(O,O)\n"
-"     = A B C D E F O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:287
+#: howto/mro.rst:287
 msgid ""
 "In this example, the linearization is ordered in a pretty nice way according "
 "to the inheritance level, in the sense that lower levels (i.e. more "
@@ -437,88 +335,47 @@ msgid ""
 "However, this is not the general case."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:292
+#: howto/mro.rst:292
 msgid ""
 "I leave as an exercise for the reader to compute the linearization for my "
 "second example:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:303
+#: howto/mro.rst:303
 msgid ""
 "The only difference with the previous example is the change B(D,E) --> B(E,"
 "D); however even such a little modification completely changes the ordering "
 "of the hierarchy:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:307
-msgid ""
-"                           6\n"
-"                          ---\n"
-"Level 3                  | O |\n"
-"                       /  ---  \\\n"
-"                      /    |    \\\n"
-"                     /     |     \\\n"
-"                    /      |      \\\n"
-"                  ---     ---    ---\n"
-"Level 2        2 | E | 4 | D |  | F | 5\n"
-"                  ---     ---    ---\n"
-"                   \\      / \\     /\n"
-"                    \\    /   \\   /\n"
-"                     \\  /     \\ /\n"
-"                      ---     ---\n"
-"Level 1            1 | B |   | C | 3\n"
-"                      ---     ---\n"
-"                       \\       /\n"
-"                        \\     /\n"
-"                          ---\n"
-"Level 0                0 | A |\n"
-"                          ---"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:332
+#: howto/mro.rst:332
 msgid ""
 "Notice that the class E, which is in the second level of the hierarchy, "
 "precedes the class C, which is in the first level of the hierarchy, i.e. E "
 "is more specialized than C, even if it is in a higher level."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:336
+#: howto/mro.rst:336
 msgid ""
 "A lazy programmer can obtain the MRO directly from Python 2.2, since in this "
 "case it coincides with the Python 2.3 linearization.  It is enough to invoke "
 "the :meth:`~type.mro` method of class A:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:345
+#: howto/mro.rst:345
 msgid ""
 "Finally, let me consider the example discussed in the first section, "
 "involving a serious order disagreement.  In this case, it is straightforward "
 "to compute the linearizations of O, X, Y, A and B:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:349
-msgid ""
-"L[O] = 0\n"
-"L[X] = X O\n"
-"L[Y] = Y O\n"
-"L[A] = A X Y O\n"
-"L[B] = B Y X O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:357
+#: howto/mro.rst:357
 msgid ""
 "However, it is impossible to compute the linearization for a class C that "
 "inherits from A and B::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:360
-msgid ""
-"L[C] = C + merge(AXYO, BYXO, AB)\n"
-"     = C + A + merge(XYO, BYXO, B)\n"
-"     = C + A + B + merge(XYO, YXO)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:364
+#: howto/mro.rst:364
 msgid ""
 "At this point we cannot merge the lists XYO and YXO, since X is in the tail "
 "of YXO whereas Y is in the tail of XYO:  therefore there are no good heads "
@@ -526,11 +383,11 @@ msgid ""
 "create the class C."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:370
+#: howto/mro.rst:370
 msgid "Bad Method Resolution Orders"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:372
+#: howto/mro.rst:372
 msgid ""
 "A MRO is *bad* when it breaks such fundamental properties as local "
 "precedence ordering and monotonicity.  In this section, I will show that "
@@ -538,48 +395,31 @@ msgid ""
 "2.2 are bad."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:377
+#: howto/mro.rst:377
 msgid ""
 "It is easier to start with the local precedence ordering.  Consider the "
 "following example:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:384
+#: howto/mro.rst:384
 msgid "with inheritance diagram"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:386
-msgid ""
-"             O\n"
-"             |\n"
-"(buy spam)   F\n"
-"             | \\\n"
-"             | E   (buy eggs)\n"
-"             | /\n"
-"             G\n"
-"\n"
-"      (buy eggs or spam ?)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:399
+#: howto/mro.rst:399
 msgid ""
 "We see that class G inherits from F and E, with F *before* E:  therefore we "
 "would expect the attribute *G.remember2buy* to be inherited by *F."
 "rembermer2buy* and not by *E.remember2buy*:  nevertheless Python 2.2 gives"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:407
+#: howto/mro.rst:407
 msgid ""
 "This is a breaking of local precedence ordering since the order in the local "
 "precedence list, i.e. the list of the parents of G, is not preserved in the "
 "Python 2.2 linearization of G::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:411
-msgid "L[G,P22]= G E F object   # F *follows* E"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:413
+#: howto/mro.rst:413
 msgid ""
 "One could argue that the reason why F follows E in the Python 2.2 "
 "linearization is that F is less specialized than E, since F is the "
@@ -588,12 +428,12 @@ msgid ""
 "a different from old style classes:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:425
+#: howto/mro.rst:425
 msgid ""
 "In this case the MRO is GFEF and the local precedence ordering is preserved."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:428
+#: howto/mro.rst:428
 msgid ""
 "As a general rule, hierarchies such as the previous one should be avoided, "
 "since it is unclear if F should override E or vice-versa. Python 2.3 solves "
@@ -602,116 +442,79 @@ msgid ""
 "The reason for that is that the C3 algorithm fails when the merge::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:435
-msgid "merge(FO,EFO,FE)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:437
+#: howto/mro.rst:437
 msgid ""
 "cannot be computed, because F is in the tail of EFO and E is in the tail of "
 "FE."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:440
+#: howto/mro.rst:440
 msgid ""
 "The real solution is to design a non-ambiguous hierarchy, i.e. to derive G "
 "from E and F (the more specific first) and not from F and E; in this case "
 "the MRO is GEF without any doubt."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:444
-msgid ""
-"           O\n"
-"           |\n"
-"           F (spam)\n"
-"         / |\n"
-"(eggs)   E |\n"
-"         \\ |\n"
-"           G\n"
-"             (eggs, no doubt)"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:456
+#: howto/mro.rst:456
 msgid ""
 "Python 2.3 forces the programmer to write good hierarchies (or, at least, "
 "less error-prone ones)."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:459
+#: howto/mro.rst:459
 msgid ""
 "On a related note, let me point out that the Python 2.3 algorithm is smart "
 "enough to recognize obvious mistakes, as the duplication of classes in the "
 "list of parents:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:469
+#: howto/mro.rst:469
 msgid ""
 "Python 2.2 (both for classic classes and new style classes) in this "
 "situation, would not raise any exception."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:472
+#: howto/mro.rst:472
 msgid ""
 "Finally, I would like to point out two lessons we have learned from this "
 "example:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:475
+#: howto/mro.rst:475
 msgid ""
 "despite the name, the MRO determines the resolution order of attributes, not "
 "only of methods;"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:478
+#: howto/mro.rst:478
 msgid ""
 "the default food for Pythonistas is spam !  (but you already knew that ;-)"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:481
+#: howto/mro.rst:481
 msgid ""
 "Having discussed the issue of local precedence ordering, let me now consider "
 "the issue of monotonicity.  My goal is to show that neither the MRO for "
 "classic classes nor that for Python 2.2 new style classes is monotonic."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:486
+#: howto/mro.rst:486
 msgid ""
 "To prove that the MRO for classic classes is non-monotonic is rather "
 "trivial, it is enough to look at the diamond diagram:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:489
-msgid ""
-"   C\n"
-"  / \\\n"
-" /   \\\n"
-"A     B\n"
-" \\   /\n"
-"  \\ /\n"
-"   D"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:500
+#: howto/mro.rst:500
 msgid "One easily discerns the inconsistency::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:502
-msgid ""
-"L[B,P21] = B C        # B precedes C : B's methods win\n"
-"L[D,P21] = D A C B C  # B follows C  : C's methods win!"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:505
+#: howto/mro.rst:505
 msgid ""
 "On the other hand, there are no problems with the Python 2.2 and 2.3 MROs, "
 "they give both::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:508
-msgid "L[D] = D A B C"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:510
+#: howto/mro.rst:510
 msgid ""
 "Guido points out in his essay [#]_ that the classic MRO is not so bad in "
 "practice, since one can typically avoids diamonds for classic classes. But "
@@ -719,44 +522,27 @@ msgid ""
 "unavoidable and inconsistencies shows up in every multiple inheritance graph."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:516
+#: howto/mro.rst:516
 msgid ""
 "The MRO of Python 2.2 makes breaking monotonicity difficult, but not "
 "impossible.  The following example, originally provided by Samuele Pedroni, "
 "shows that the MRO of Python 2.2 is non-monotonic:"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:530
+#: howto/mro.rst:530
 msgid ""
 "Here are the linearizations according to the C3 MRO (the reader should "
 "verify these linearizations as an exercise and draw the inheritance "
 "diagram ;-) ::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:534
-msgid ""
-"L[A] = A O\n"
-"L[B] = B O\n"
-"L[C] = C O\n"
-"L[D] = D O\n"
-"L[E] = E O\n"
-"L[K1]= K1 A B C O\n"
-"L[K2]= K2 D B E O\n"
-"L[K3]= K3 D A O\n"
-"L[Z] = Z K1 K2 K3 D A B C E O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:544
+#: howto/mro.rst:544
 msgid ""
 "Python 2.2 gives exactly the same linearizations for A, B, C, D, E, K1, K2 "
 "and K3, but a different linearization for Z::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:547
-msgid "L[Z,P22] = Z K1 K3 A K2 D B C E O"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:549
+#: howto/mro.rst:549
 msgid ""
 "It is clear that this linearization is *wrong*, since A comes before D "
 "whereas in the linearization of K3 A comes *after* D. In other words, in K3 "
@@ -769,11 +555,11 @@ msgid ""
 "rule has been dismissed in favor of the C3 rule."
 msgstr ""
 
-#: ../Doc/howto/mro.rst:561
+#: howto/mro.rst:561
 msgid "The end"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:563
+#: howto/mro.rst:563
 msgid ""
 "This section is for the impatient reader, who skipped all the previous "
 "sections and jumped immediately to the end.  This section is for the lazy "
@@ -787,117 +573,31 @@ msgid ""
 "paper.::"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:574
-msgid ""
-"#<mro.py>\n"
-"\n"
-"\"\"\"C3 algorithm by Samuele Pedroni (with readability enhanced by me)."
-"\"\"\"\n"
-"\n"
-"class __metaclass__(type):\n"
-"    \"All classes are metamagically modified to be nicely printed\"\n"
-"    __repr__ = lambda cls: cls.__name__\n"
-"\n"
-"class ex_2:\n"
-"    \"Serious order disagreement\" #From Guido\n"
-"    class O: pass\n"
-"    class X(O): pass\n"
-"    class Y(O): pass\n"
-"    class A(X,Y): pass\n"
-"    class B(Y,X): pass\n"
-"    try:\n"
-"        class Z(A,B): pass #creates Z(A,B) in Python 2.2\n"
-"    except TypeError:\n"
-"        pass # Z(A,B) cannot be created in Python 2.3\n"
-"\n"
-"class ex_5:\n"
-"    \"My first example\"\n"
-"    class O: pass\n"
-"    class F(O): pass\n"
-"    class E(O): pass\n"
-"    class D(O): pass\n"
-"    class C(D,F): pass\n"
-"    class B(D,E): pass\n"
-"    class A(B,C): pass\n"
-"\n"
-"class ex_6:\n"
-"    \"My second example\"\n"
-"    class O: pass\n"
-"    class F(O): pass\n"
-"    class E(O): pass\n"
-"    class D(O): pass\n"
-"    class C(D,F): pass\n"
-"    class B(E,D): pass\n"
-"    class A(B,C): pass\n"
-"\n"
-"class ex_9:\n"
-"    \"Difference between Python 2.2 MRO and C3\" #From Samuele\n"
-"    class O: pass\n"
-"    class A(O): pass\n"
-"    class B(O): pass\n"
-"    class C(O): pass\n"
-"    class D(O): pass\n"
-"    class E(O): pass\n"
-"    class K1(A,B,C): pass\n"
-"    class K2(D,B,E): pass\n"
-"    class K3(D,A): pass\n"
-"    class Z(K1,K2,K3): pass\n"
-"\n"
-"def merge(seqs):\n"
-"    print '\\n\\nCPL[%s]=%s' % (seqs[0][0],seqs),\n"
-"    res = []; i=0\n"
-"    while 1:\n"
-"      nonemptyseqs=[seq for seq in seqs if seq]\n"
-"      if not nonemptyseqs: return res\n"
-"      i+=1; print '\\n',i,'round: candidates...',\n"
-"      for seq in nonemptyseqs: # find merge candidates among seq heads\n"
-"          cand = seq[0]; print ' ',cand,\n"
-"          nothead=[s for s in nonemptyseqs if cand in s[1:]]\n"
-"          if nothead: cand=None #reject candidate\n"
-"          else: break\n"
-"      if not cand: raise \"Inconsistent hierarchy\"\n"
-"      res.append(cand)\n"
-"      for seq in nonemptyseqs: # remove cand\n"
-"          if seq[0] == cand: del seq[0]\n"
-"\n"
-"def mro(C):\n"
-"    \"Compute the class precedence list (mro) according to C3\"\n"
-"    return merge([[C]]+map(mro,C.__bases__)+[list(C.__bases__)])\n"
-"\n"
-"def print_mro(C):\n"
-"    print '\\nMRO[%s]=%s' % (C,mro(C))\n"
-"    print '\\nP22 MRO[%s]=%s' % (C,C.mro())\n"
-"\n"
-"print_mro(ex_9.Z)\n"
-"\n"
-"#</mro.py>"
-msgstr ""
-
-#: ../Doc/howto/mro.rst:656
+#: howto/mro.rst:656
 msgid "That's all folks,"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:658
+#: howto/mro.rst:658
 msgid "enjoy !"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:662
+#: howto/mro.rst:662
 msgid "Resources"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:664
+#: howto/mro.rst:664
 msgid ""
 "The thread on python-dev started by Samuele Pedroni: https://mail.python.org/"
 "pipermail/python-dev/2002-October/029035.html"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:667
+#: howto/mro.rst:667
 msgid ""
 "The paper *A Monotonic Superclass Linearization for Dylan*: https://doi."
 "org/10.1145/236337.236343"
 msgstr ""
 
-#: ../Doc/howto/mro.rst:670
+#: howto/mro.rst:670
 msgid ""
 "Guido van Rossum's essay, *Unifying types and classes in Python 2.2*: "
 "https://web.archive.org/web/20140210194412/http://www.python.org/download/"

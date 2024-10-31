@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2024-11-01 00:16+0100\n"
 "PO-Revision-Date: 2021-11-09 08:06+0100\n"
 "Last-Translator: Antoine Wecxsteen\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -115,17 +115,6 @@ msgstr ""
 "de Microsoft qui contient la plupart des fonctions standards C. Elle suit la "
 "convention d'appel *cdecl* ::"
 
-#: library/ctypes.rst:57
-msgid ""
-">>> from ctypes import *\n"
-">>> print(windll.kernel32)  \n"
-"<WinDLL 'kernel32', handle ... at ...>\n"
-">>> print(cdll.msvcrt)      \n"
-"<CDLL 'msvcrt', handle ... at ...>\n"
-">>> libc = cdll.msvcrt      \n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:65
 msgid "Windows appends the usual ``.dll`` file suffix automatically."
 msgstr "Windows ajoute le suffixe habituel ``.dll`` automatiquement."
@@ -158,16 +147,6 @@ msgstr ""
 "chargeurs de DLL, ou bien charger la bibliothèque en créant une instance de "
 "*CDLL* en appelant son constructeur ::"
 
-#: library/ctypes.rst:79
-msgid ""
-">>> cdll.LoadLibrary(\"libc.so.6\")  \n"
-"<CDLL 'libc.so.6', handle ... at ...>\n"
-">>> libc = CDLL(\"libc.so.6\")       \n"
-">>> libc                           \n"
-"<CDLL 'libc.so.6', handle ... at ...>\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:92
 msgid "Accessing functions from loaded dlls"
 msgstr "Accès aux fonctions des DLL chargées"
@@ -175,21 +154,6 @@ msgstr "Accès aux fonctions des DLL chargées"
 #: library/ctypes.rst:94
 msgid "Functions are accessed as attributes of dll objects::"
 msgstr "Les fonctions sont alors des attributs des objets DLL ::"
-
-#: library/ctypes.rst:96
-msgid ""
-">>> libc.printf\n"
-"<_FuncPtr object at 0x...>\n"
-">>> print(windll.kernel32.GetModuleHandleA)  \n"
-"<_FuncPtr object at 0x...>\n"
-">>> print(windll.kernel32.MyOwnFunction)     \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"ctypes.py\", line 239, in __getattr__\n"
-"    func = _StdcallFuncPtr(name, self)\n"
-"AttributeError: function 'MyOwnFunction' not found\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:108
 #, fuzzy
@@ -209,14 +173,6 @@ msgstr ""
 "de module* à partir de son nom, a le prototype C suivant (c'est une macro "
 "qui décide d'exporter l'une ou l'autre à travers ``GetModuleHandle``, selon "
 "qu'UNICODE est définie ou non) ::"
-
-#: library/ctypes.rst:116
-msgid ""
-"/* ANSI version */\n"
-"HMODULE GetModuleHandleA(LPCSTR lpModuleName);\n"
-"/* UNICODE version */\n"
-"HMODULE GetModuleHandleW(LPCWSTR lpModuleName);"
-msgstr ""
 
 #: library/ctypes.rst:121
 msgid ""
@@ -239,13 +195,6 @@ msgstr ""
 "identifiants Python valides, comme ``\"??2@YAPAXI@Z\"``. Dans ce cas, il "
 "faut utiliser :func:`getattr` pour accéder à la fonction ::"
 
-#: library/ctypes.rst:129
-msgid ""
-">>> getattr(cdll.msvcrt, \"??2@YAPAXI@Z\")  \n"
-"<_FuncPtr object at 0x...>\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:133
 msgid ""
 "On Windows, some dlls export functions not by name but by ordinal. These "
@@ -255,19 +204,6 @@ msgstr ""
 "Sous Windows, certaines DLL exportent des fonctions à travers un indice "
 "plutôt qu'à travers un nom. On accède à une fonction en indiçant l'objet DLL "
 "avec son index ::"
-
-#: library/ctypes.rst:136
-msgid ""
-">>> cdll.kernel32[1]  \n"
-"<_FuncPtr object at 0x...>\n"
-">>> cdll.kernel32[0]  \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"ctypes.py\", line 310, in __getitem__\n"
-"    func = _StdcallFuncPtr(name, self)\n"
-"AttributeError: function ordinal 0 not found\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:150
 msgid "Calling functions"
@@ -285,24 +221,11 @@ msgstr ""
 "depuis l'*epoch* Unix, et la fonction ``GetModuleHandleA()``, qui renvoie un "
 "gestionnaire de module *win32*."
 
-#: library/ctypes.rst:155
-msgid ""
-">>> print(libc.rand())  \n"
-"1804289383"
-msgstr ""
-
 #: library/ctypes.rst:158
 msgid ""
 "On Windows, you can call the ``GetModuleHandleA()`` function, which returns "
 "a win32 module handle (passing ``None`` as single argument to call it with a "
 "``NULL`` pointer)::"
-msgstr ""
-
-#: library/ctypes.rst:161
-msgid ""
-">>> print(hex(windll.kernel32.GetModuleHandleA(None)))  \n"
-"0x1d000000\n"
-">>>"
 msgstr ""
 
 #: library/ctypes.rst:165
@@ -312,23 +235,6 @@ msgid ""
 msgstr ""
 "Une :exc:`ValueError` est levée quand on appelle une fonction ``stdcall`` "
 "avec la convention d'appel ``cdecl`` et vice-versa ::"
-
-#: library/ctypes.rst:168
-msgid ""
-">>> cdll.kernel32.GetModuleHandleA(None)  \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"ValueError: Procedure probably called with not enough arguments (4 bytes "
-"missing)\n"
-">>>\n"
-"\n"
-">>> windll.msvcrt.printf(b\"spam\")  \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"ValueError: Procedure probably called with too many arguments (4 bytes in "
-"excess)\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:180
 msgid ""
@@ -349,15 +255,6 @@ msgstr ""
 "plantages dus à des interruptions, afin de préserver la protection globale "
 "(*general protection faults*) du système, lorsque des fonctions sont "
 "appelées avec un nombre incorrect d'arguments ::"
-
-#: library/ctypes.rst:187
-msgid ""
-">>> windll.kernel32.GetModuleHandleA(32)  \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"OSError: exception: access violation reading 0x00000020\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:193
 msgid ""
@@ -663,36 +560,12 @@ msgstr ""
 "Il est possible de créer chacun de ces types en les appelant avec une valeur "
 "d'initialisation du bon type et avec une valeur cohérente ::"
 
-#: library/ctypes.rst:272
-msgid ""
-">>> c_int()\n"
-"c_long(0)\n"
-">>> c_wchar_p(\"Hello, World\")\n"
-"c_wchar_p(140018365411392)\n"
-">>> c_ushort(-3)\n"
-"c_ushort(65533)\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:280
 msgid ""
 "Since these types are mutable, their value can also be changed afterwards::"
 msgstr ""
 "Ces types étant des mutables, leur valeur peut aussi être modifiée après "
 "coup ::"
-
-#: library/ctypes.rst:282
-msgid ""
-">>> i = c_int(42)\n"
-">>> print(i)\n"
-"c_long(42)\n"
-">>> print(i.value)\n"
-"42\n"
-">>> i.value = -99\n"
-">>> print(i.value)\n"
-"-99\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:292
 msgid ""
@@ -705,24 +578,6 @@ msgstr ""
 "`c_char_p`, :class:`c_wchar_p` et :class:`c_void_p` — change *la zone "
 "mémoire* sur laquelle elle pointe, et non *le contenu* de ce bloc mémoire "
 "(c'est logique parce que les objets octets sont immuables en Python) ::"
-
-#: library/ctypes.rst:297
-msgid ""
-">>> s = \"Hello, World\"\n"
-">>> c_s = c_wchar_p(s)\n"
-">>> print(c_s)\n"
-"c_wchar_p(139966785747344)\n"
-">>> print(c_s.value)\n"
-"Hello World\n"
-">>> c_s.value = \"Hi, there\"\n"
-">>> print(c_s)              # the memory location has changed\n"
-"c_wchar_p(139966783348904)\n"
-">>> print(c_s.value)\n"
-"Hi, there\n"
-">>> print(s)                # first object is unchanged\n"
-"Hello, World\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:312
 msgid ""
@@ -739,28 +594,6 @@ msgstr ""
 "`create_string_buffer` qui en crée de plusieurs façons. L'attribut ``raw`` "
 "permet d'accéder à (ou de modifier) un bloc mémoire ; l'attribut ``value`` "
 "permet d'y accéder comme à une chaîne de caractères terminée par NUL ::"
-
-#: library/ctypes.rst:319
-msgid ""
-">>> from ctypes import *\n"
-">>> p = create_string_buffer(3)            # create a 3 byte buffer, "
-"initialized to NUL bytes\n"
-">>> print(sizeof(p), repr(p.raw))\n"
-"3 b'\\x00\\x00\\x00'\n"
-">>> p = create_string_buffer(b\"Hello\")     # create a buffer containing a "
-"NUL terminated string\n"
-">>> print(sizeof(p), repr(p.raw))\n"
-"6 b'Hello\\x00'\n"
-">>> print(repr(p.value))\n"
-"b'Hello'\n"
-">>> p = create_string_buffer(b\"Hello\", 10) # create a 10 byte buffer\n"
-">>> print(sizeof(p), repr(p.raw))\n"
-"10 b'Hello\\x00\\x00\\x00\\x00\\x00'\n"
-">>> p.value = b\"Hi\"\n"
-">>> print(sizeof(p), repr(p.raw))\n"
-"10 b'Hi\\x00lo\\x00\\x00\\x00\\x00\\x00'\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:336
 #, fuzzy
@@ -790,26 +623,6 @@ msgstr ""
 "exemples suivants ne fonctionnent donc que dans une invite de commande et "
 "non depuis *IDLE* or *PythonWin* ::"
 
-#: library/ctypes.rst:351
-msgid ""
-">>> printf = libc.printf\n"
-">>> printf(b\"Hello, %s\\n\", b\"World!\")\n"
-"Hello, World!\n"
-"14\n"
-">>> printf(b\"Hello, %S\\n\", \"World!\")\n"
-"Hello, World!\n"
-"14\n"
-">>> printf(b\"%d bottles of beer\\n\", 42)\n"
-"42 bottles of beer\n"
-"19\n"
-">>> printf(b\"%f bottles of beer\\n\", 42.5)\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"ctypes.ArgumentError: argument 2: TypeError: Don't know how to convert "
-"parameter 2\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:367
 msgid ""
 "As has been mentioned before, all Python types except integers, strings, and "
@@ -820,14 +633,6 @@ msgstr ""
 "de caractères et les objets octet exceptés) doivent être encapsulés dans "
 "leur type :mod:`ctypes` correspondant pour pouvoir être convertis dans le "
 "type C requis ::"
-
-#: library/ctypes.rst:371
-msgid ""
-">>> printf(b\"An int %d, a double %f\\n\", 1234, c_double(3.14))\n"
-"An int 1234, a double 3.140000\n"
-"31\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:379
 #, fuzzy
@@ -847,10 +652,6 @@ msgstr ""
 msgid ""
 "On those platforms it is required to specify the :attr:`~_CFuncPtr.argtypes` "
 "attribute for the regular, non-variadic, function arguments:"
-msgstr ""
-
-#: library/ctypes.rst:389
-msgid "libc.printf.argtypes = [ctypes.c_char_p]"
 msgstr ""
 
 #: library/ctypes.rst:393
@@ -877,19 +678,6 @@ msgstr ""
 "propres classes. :mod:`ctypes` recherche un attribut :attr:`_as_parameter_` "
 "et le prend comme argument à la fonction. Bien entendu, cet attribut doit "
 "être un entier, une chaîne de caractères ou des octets ::"
-
-#: library/ctypes.rst:408
-msgid ""
-">>> class Bottles:\n"
-"...     def __init__(self, number):\n"
-"...         self._as_parameter_ = number\n"
-"...\n"
-">>> bottles = Bottles(42)\n"
-">>> printf(b\"%d bottles of beer\\n\", bottles)\n"
-"42 bottles of beer\n"
-"19\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:418
 #, fuzzy
@@ -930,15 +718,6 @@ msgstr ""
 "selon la chaîne de formatage ; cela dit, elle se révèle pratique pour tester "
 "cette fonctionnalité) ::"
 
-#: library/ctypes.rst:436
-msgid ""
-">>> printf.argtypes = [c_char_p, c_char_p, c_int, c_double]\n"
-">>> printf(b\"String '%s', Int %d, Double %f\\n\", b\"Hi\", 10, 2.2)\n"
-"String 'Hi', Int 10, Double 2.200000\n"
-"37\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:442
 msgid ""
 "Specifying a format protects against incompatible argument types (just as a "
@@ -948,19 +727,6 @@ msgstr ""
 "Définir un format empêche de passer des arguments de type incompatible "
 "(comme le fait le prototype d'une fonction C) et tente de convertir les "
 "arguments en des types valides ::"
-
-#: library/ctypes.rst:445
-msgid ""
-">>> printf(b\"%d %d %d\", 1, 2, 3)\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"ctypes.ArgumentError: argument 2: TypeError: 'int' object cannot be "
-"interpreted as ctypes.c_char_p\n"
-">>> printf(b\"%s %d %f\\n\", b\"X\", 2, 3)\n"
-"X 2 3.000000\n"
-"13\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:454
 #, fuzzy
@@ -1008,16 +774,8 @@ msgid ""
 "expr:`int`, you should specify the :attr:`!restype` attribute::"
 msgstr ""
 
-#: library/ctypes.rst:486
-msgid ">>> libc.time.restype = c_time_t"
-msgstr ""
-
 #: library/ctypes.rst:488
 msgid "The argument types can be specified using :attr:`~_CFuncPtr.argtypes`::"
-msgstr ""
-
-#: library/ctypes.rst:490
-msgid ">>> libc.time.argtypes = (POINTER(c_time_t),)"
 msgstr ""
 
 #: library/ctypes.rst:492
@@ -1029,12 +787,6 @@ msgstr ""
 "Cet exemple appelle les deux fonctions avec un pointeur ``NULL`` (on utilise "
 "``None`` pour passer un pointeur ``NULL``) ::"
 
-#: library/ctypes.rst:494
-msgid ""
-">>> print(libc.time(None))  \n"
-"1150640792"
-msgstr ""
-
 #: library/ctypes.rst:497
 #, fuzzy
 msgid ""
@@ -1044,19 +796,6 @@ msgstr ""
 "Voici un exemple plus poussé. Celui-ci utilise la fonction ``strchr``, qui "
 "prend en paramètres un pointeur vers une chaîne et un caractère. Elle "
 "renvoie un pointeur sur une chaîne de caractères ::"
-
-#: library/ctypes.rst:500
-msgid ""
-">>> strchr = libc.strchr\n"
-">>> strchr(b\"abcdef\", ord(\"d\"))  \n"
-"8059983\n"
-">>> strchr.restype = c_char_p    # c_char_p is a pointer to a string\n"
-">>> strchr(b\"abcdef\", ord(\"d\"))\n"
-"b'def'\n"
-">>> print(strchr(b\"abcdef\", ord(\"x\")))\n"
-"None\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:510
 #, fuzzy
@@ -1068,23 +807,6 @@ msgstr ""
 "Pour économiser l'appel ``ord(\"x\")``, il est possible de définir "
 "l'attribut :attr:`argtypes` ; le second argument, un objet octet à un seul "
 "caractère, sera automatiquement converti en un caractère C ::"
-
-#: library/ctypes.rst:514
-msgid ""
-">>> strchr.restype = c_char_p\n"
-">>> strchr.argtypes = [c_char_p, c_char]\n"
-">>> strchr(b\"abcdef\", b\"d\")\n"
-"b'def'\n"
-">>> strchr(b\"abcdef\", b\"def\")\n"
-"Traceback (most recent call last):\n"
-"ctypes.ArgumentError: argument 2: TypeError: one character bytes, bytearray "
-"or integer expected\n"
-">>> print(strchr(b\"abcdef\", b\"x\"))\n"
-"None\n"
-">>> strchr(b\"abcdef\", b\"d\")\n"
-"b'def'\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:529
 #, fuzzy
@@ -1102,26 +824,6 @@ msgstr ""
 "résultat de cet appel sera le résultat final de l'appel à la fonction. C'est "
 "pratique pour vérifier les codes d'erreurs des valeurs de retour et lever "
 "automatiquement des exceptions ::"
-
-#: library/ctypes.rst:535
-msgid ""
-">>> GetModuleHandle = windll.kernel32.GetModuleHandleA  \n"
-">>> def ValidHandle(value):\n"
-"...     if value == 0:\n"
-"...         raise WinError()\n"
-"...     return value\n"
-"...\n"
-">>>\n"
-">>> GetModuleHandle.restype = ValidHandle  \n"
-">>> GetModuleHandle(None)  \n"
-"486539264\n"
-">>> GetModuleHandle(\"something silly\")  \n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"<stdin>\", line 3, in ValidHandle\n"
-"OSError: [Errno 126] The specified module could not be found.\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:552
 msgid ""
@@ -1177,21 +879,6 @@ msgstr ""
 "pointeur. Ainsi, si vous n'avez pas besoin de cet objet dans votre code "
 "Python, utiliser :func:`byref` est plus performant ::"
 
-#: library/ctypes.rst:577
-msgid ""
-">>> i = c_int()\n"
-">>> f = c_float()\n"
-">>> s = create_string_buffer(b'\\000' * 32)\n"
-">>> print(i.value, f.value, repr(s.value))\n"
-"0 0.0 b''\n"
-">>> libc.sscanf(b\"1 3.14 Hello\", b\"%d %f %s\",\n"
-"...             byref(i), byref(f), s)\n"
-"3\n"
-">>> print(i.value, f.value, repr(s.value))\n"
-"1 3.1400001049 b'Hello'\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:593
 msgid "Structures and unions"
 msgstr "Structures et unions"
@@ -1229,26 +916,6 @@ msgstr ""
 "et *y* et qui montre également comment instancier une structure avec le "
 "constructeur ::"
 
-#: library/ctypes.rst:606
-msgid ""
-">>> from ctypes import *\n"
-">>> class POINT(Structure):\n"
-"...     _fields_ = [(\"x\", c_int),\n"
-"...                 (\"y\", c_int)]\n"
-"...\n"
-">>> point = POINT(10, 20)\n"
-">>> print(point.x, point.y)\n"
-"10 20\n"
-">>> point = POINT(y=5)\n"
-">>> print(point.x, point.y)\n"
-"0 5\n"
-">>> POINT(1, 2, 3)\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"TypeError: too many initializers\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:623
 msgid ""
 "You can, however, build much more complicated structures.  A structure can "
@@ -1266,20 +933,6 @@ msgstr ""
 "Voici une structure RECT qui contient deux POINTs *upperleft* et "
 "*lowerright* ::"
 
-#: library/ctypes.rst:629
-msgid ""
-">>> class RECT(Structure):\n"
-"...     _fields_ = [(\"upperleft\", POINT),\n"
-"...                 (\"lowerright\", POINT)]\n"
-"...\n"
-">>> rc = RECT(point)\n"
-">>> print(rc.upperleft.x, rc.upperleft.y)\n"
-"0 5\n"
-">>> print(rc.lowerright.x, rc.lowerright.y)\n"
-"0 0\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:640
 msgid ""
 "Nested structures can also be initialized in the constructor in several "
@@ -1287,12 +940,6 @@ msgid ""
 msgstr ""
 "Une structure encapsulée peut être instanciée par un constructeur de "
 "plusieurs façons ::"
-
-#: library/ctypes.rst:642
-msgid ""
-">>> r = RECT(POINT(1, 2), POINT(3, 4))\n"
-">>> r = RECT((1, 2), (3, 4))"
-msgstr ""
 
 #: library/ctypes.rst:645
 msgid ""
@@ -1302,15 +949,6 @@ msgstr ""
 "Il est possible de récupérer les :term:`descripteurs <descriptor>` des "
 "champs depuis la *classe*. Ils sont importants pour déboguer car ils "
 "contiennent des informations utiles ::"
-
-#: library/ctypes.rst:648
-msgid ""
-">>> print(POINT.x)\n"
-"<Field type=c_long, ofs=0, size=4>\n"
-">>> print(POINT.y)\n"
-"<Field type=c_long, ofs=4, size=4>\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:659
 msgid ""
@@ -1377,19 +1015,6 @@ msgstr ""
 "de bits. Seuls les entiers peuvent être des champs de bits, le nombre de "
 "bits est défini dans le troisième champ du *n*-uplet :attr:`_fields_` ::"
 
-#: library/ctypes.rst:693
-msgid ""
-">>> class Int(Structure):\n"
-"...     _fields_ = [(\"first_16\", c_int, 16),\n"
-"...                 (\"second_16\", c_int, 16)]\n"
-"...\n"
-">>> print(Int.first_16)\n"
-"<Field type=c_long, ofs=0:0, bits=16>\n"
-">>> print(Int.second_16)\n"
-"<Field type=c_long, ofs=0:16, bits=16>\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:707
 msgid "Arrays"
 msgstr "Tableaux"
@@ -1410,10 +1035,6 @@ msgstr ""
 "La meilleure façon de créer des tableaux consiste à multiplier le type de "
 "donnée par un entier positif ::"
 
-#: library/ctypes.rst:714
-msgid "TenPointsArrayType = POINT * 10"
-msgstr ""
-
 #: library/ctypes.rst:716
 msgid ""
 "Here is an example of a somewhat artificial data type, a structure "
@@ -1422,32 +1043,9 @@ msgstr ""
 "Voici un exemple — un peu artificiel — d'une structure contenant, entre "
 "autres, 4 POINTs ::"
 
-#: library/ctypes.rst:719
-msgid ""
-">>> from ctypes import *\n"
-">>> class POINT(Structure):\n"
-"...     _fields_ = (\"x\", c_int), (\"y\", c_int)\n"
-"...\n"
-">>> class MyStruct(Structure):\n"
-"...     _fields_ = [(\"a\", c_int),\n"
-"...                 (\"b\", c_float),\n"
-"...                 (\"point_array\", POINT * 4)]\n"
-">>>\n"
-">>> print(len(MyStruct().point_array))\n"
-"4\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:732
 msgid "Instances are created in the usual way, by calling the class::"
 msgstr "Comme d'habitude, on crée les instances en appelant la classe ::"
-
-#: library/ctypes.rst:734
-msgid ""
-"arr = TenPointsArrayType()\n"
-"for pt in arr:\n"
-"    print(pt.x, pt.y)"
-msgstr ""
 
 #: library/ctypes.rst:738
 msgid ""
@@ -1461,19 +1059,6 @@ msgstr ""
 msgid "Initializers of the correct type can also be specified::"
 msgstr "Des valeurs d'initialisation du bon type peuvent être passées ::"
 
-#: library/ctypes.rst:743
-msgid ""
-">>> from ctypes import *\n"
-">>> TenIntegers = c_int * 10\n"
-">>> ii = TenIntegers(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)\n"
-">>> print(ii)\n"
-"<c_long_Array_10 object at 0x...>\n"
-">>> for i in ii: print(i, end=\" \")\n"
-"...\n"
-"1 2 3 4 5 6 7 8 9 10\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:757
 msgid "Pointers"
 msgstr "Pointeurs"
@@ -1486,14 +1071,6 @@ msgstr ""
 "On crée une instance de pointeur en appelant la fonction :func:`pointer` sur "
 "un type :mod:`ctypes` ::"
 
-#: library/ctypes.rst:762
-msgid ""
-">>> from ctypes import *\n"
-">>> i = c_int(42)\n"
-">>> pi = pointer(i)\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:767
 msgid ""
 "Pointer instances have a :attr:`~_Pointer.contents` attribute which returns "
@@ -1502,13 +1079,6 @@ msgstr ""
 "Les instances de pointeurs ont un attribut :attr:`~_Pointer.contents` qui "
 "renvoie l'objet pointé (l'objet ``i`` ci-dessus) ::"
 
-#: library/ctypes.rst:770
-msgid ""
-">>> pi.contents\n"
-"c_long(42)\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:774
 msgid ""
 "Note that :mod:`ctypes` does not have OOR (original object return), it "
@@ -1516,15 +1086,6 @@ msgid ""
 msgstr ""
 "Attention, :mod:`ctypes` ne fait pas de ROI (retour de l'objet initial). Il "
 "crée un nouvel objet à chaque fois qu'on accède à un attribut ::"
-
-#: library/ctypes.rst:777
-msgid ""
-">>> pi.contents is i\n"
-"False\n"
-">>> pi.contents is pi.contents\n"
-"False\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:783
 msgid ""
@@ -1536,39 +1097,13 @@ msgstr ""
 "pointeur fait pointer le pointeur vers l'adresse mémoire de cette nouvelle "
 "instance ::"
 
-#: library/ctypes.rst:786
-msgid ""
-">>> i = c_int(99)\n"
-">>> pi.contents = i\n"
-">>> pi.contents\n"
-"c_long(99)\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:795
 msgid "Pointer instances can also be indexed with integers::"
 msgstr "Il est possible d'indexer les pointeurs par des entiers ::"
 
-#: library/ctypes.rst:797
-msgid ""
-">>> pi[0]\n"
-"99\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:801
 msgid "Assigning to an integer index changes the pointed to value::"
 msgstr "Affecter à travers un indice change la valeur pointée ::"
-
-#: library/ctypes.rst:803
-msgid ""
-">>> print(i)\n"
-"c_long(99)\n"
-">>> pi[0] = 22\n"
-">>> print(i)\n"
-"c_long(22)\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:810
 msgid ""
@@ -1596,20 +1131,6 @@ msgstr ""
 "sur… ». Cela s'effectue avec la fonction :func:`POINTER`, qui prend en "
 "paramètre n'importe quel type :mod:`ctypes` et renvoie un nouveau type ::"
 
-#: library/ctypes.rst:821
-msgid ""
-">>> PI = POINTER(c_int)\n"
-">>> PI\n"
-"<class 'ctypes.LP_c_long'>\n"
-">>> PI(42)\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"TypeError: expected c_long instead of int\n"
-">>> PI(c_int(42))\n"
-"<ctypes.LP_c_long object at 0x...>\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:832
 msgid ""
 "Calling the pointer type without an argument creates a ``NULL`` pointer. "
@@ -1617,14 +1138,6 @@ msgid ""
 msgstr ""
 "Appeler le pointeur sur type sans arguments crée un pointeur ``NULL``. Les "
 "pointeurs ``NULL`` s'évaluent à ``False`` ::"
-
-#: library/ctypes.rst:835
-msgid ""
-">>> null_ptr = POINTER(c_int)()\n"
-">>> print(bool(null_ptr))\n"
-"False\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:840
 msgid ""
@@ -1634,21 +1147,6 @@ msgstr ""
 ":mod:`ctypes` vérifie que le pointeur n'est pas ``NULL`` quand il en "
 "déréférence un (mais déréférencer des pointeurs non ``NULL`` invalides fait "
 "planter Python) ::"
-
-#: library/ctypes.rst:843
-msgid ""
-">>> null_ptr[0]\n"
-"Traceback (most recent call last):\n"
-"    ....\n"
-"ValueError: NULL pointer access\n"
-">>>\n"
-"\n"
-">>> null_ptr[0] = 1234\n"
-"Traceback (most recent call last):\n"
-"    ....\n"
-"ValueError: NULL pointer access\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:859
 msgid "Type conversions"
@@ -1674,23 +1172,6 @@ msgstr ""
 "place de pointeurs, s'ils sont compatibles. Dans le cas de "
 "``POINTER(c_int)``, *ctypes* accepte des tableaux de *c_int* ::"
 
-#: library/ctypes.rst:868
-msgid ""
-">>> class Bar(Structure):\n"
-"...     _fields_ = [(\"count\", c_int), (\"values\", POINTER(c_int))]\n"
-"...\n"
-">>> bar = Bar()\n"
-">>> bar.values = (c_int * 3)(1, 2, 3)\n"
-">>> bar.count = 3\n"
-">>> for i in range(bar.count):\n"
-"...     print(bar.values[i])\n"
-"...\n"
-"1\n"
-"2\n"
-"3\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:882
 #, fuzzy
 msgid ""
@@ -1712,12 +1193,6 @@ msgstr ""
 "Pour mettre un champ de type *POINTER* à ``NULL``, il faut lui affecter "
 "``None`` ::"
 
-#: library/ctypes.rst:889
-msgid ""
-">>> bar.values = None\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:894
 msgid ""
 "Sometimes you have instances of incompatible types.  In C, you can cast one "
@@ -1732,16 +1207,6 @@ msgstr ""
 "dessus accepte des pointeurs ``POINTER(c_int)`` ou des tableaux de :class:"
 "`c_int` comme valeur pour le champ ``values``, mais pas des instances "
 "d'autres types ::"
-
-#: library/ctypes.rst:900
-msgid ""
-">>> bar.values = (c_byte * 4)()\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"TypeError: incompatible types, c_byte_Array_4 instance instead of LP_c_long "
-"instance\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:906
 msgid "For these cases, the :func:`cast` function is handy."
@@ -1762,14 +1227,6 @@ msgstr ""
 "du second argument, qui pointe sur le même bloc mémoire que le premier "
 "argument ::"
 
-#: library/ctypes.rst:914
-msgid ""
-">>> a = (c_byte * 4)()\n"
-">>> cast(a, POINTER(c_int))\n"
-"<ctypes.LP_c_long object at ...>\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:919
 msgid ""
 "So, :func:`cast` can be used to assign to the ``values`` field of ``Bar`` "
@@ -1777,15 +1234,6 @@ msgid ""
 msgstr ""
 "Ainsi, la fonction :func:`cast` permet de remplir le champ ``values`` de la "
 "structure ``Bar`` ::"
-
-#: library/ctypes.rst:922
-msgid ""
-">>> bar = Bar()\n"
-">>> bar.values = cast((c_byte * 4)(), POINTER(c_int))\n"
-">>> print(bar.values[0])\n"
-"0\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:932
 msgid "Incomplete Types"
@@ -1801,35 +1249,12 @@ msgstr ""
 "membres ne sont pas encore définis. C'est l'équivalent d'une déclaration "
 "avancée en C, où la définition est fournie plus tard ::"
 
-#: library/ctypes.rst:938
-msgid ""
-"struct cell; /* forward declaration */\n"
-"\n"
-"struct cell {\n"
-"    char *name;\n"
-"    struct cell *next;\n"
-"};"
-msgstr ""
-
 #: library/ctypes.rst:945
 msgid ""
 "The straightforward translation into ctypes code would be this, but it does "
 "not work::"
 msgstr ""
 "Une traduction naïve, mais invalide, en code *ctypes* ressemblerait à ça ::"
-
-#: library/ctypes.rst:948
-msgid ""
-">>> class cell(Structure):\n"
-"...     _fields_ = [(\"name\", c_char_p),\n"
-"...                 (\"next\", POINTER(cell))]\n"
-"...\n"
-"Traceback (most recent call last):\n"
-"  File \"<stdin>\", line 1, in <module>\n"
-"  File \"<stdin>\", line 2, in cell\n"
-"NameError: name 'cell' is not defined\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:958
 #, fuzzy
@@ -1843,17 +1268,6 @@ msgstr ""
 "`ctypes`, on définit la classe ``cell`` et on définira les :attr:`_fields_` "
 "plus tard, après avoir défini la classe ::"
 
-#: library/ctypes.rst:962
-msgid ""
-">>> from ctypes import *\n"
-">>> class cell(Structure):\n"
-"...     pass\n"
-"...\n"
-">>> cell._fields_ = [(\"name\", c_char_p),\n"
-"...                  (\"next\", POINTER(cell))]\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:970
 msgid ""
 "Let's try it. We create two instances of ``cell``, and let them point to "
@@ -1862,23 +1276,6 @@ msgstr ""
 "Essayons. Nous créons deux instances de ``cell``, les faisons pointer l'une "
 "sur l'autre et enfin nous suivons quelques maillons de la chaîne de "
 "pointeurs ::"
-
-#: library/ctypes.rst:973
-msgid ""
-">>> c1 = cell()\n"
-">>> c1.name = b\"foo\"\n"
-">>> c2 = cell()\n"
-">>> c2.name = b\"bar\"\n"
-">>> c1.next = pointer(c2)\n"
-">>> c2.next = pointer(c1)\n"
-">>> p = c1\n"
-">>> for i in range(8):\n"
-"...     print(p.name, end=\" \")\n"
-"...     p = p.next[0]\n"
-"...\n"
-"foo bar foo bar foo bar foo bar\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:991
 msgid "Callback functions"
@@ -1935,15 +1332,6 @@ msgstr ""
 "l'emploi d'une fonction de rappel. Nous allons utiliser :c:func:`qsort` pour "
 "ordonner un tableau d'entiers ::"
 
-#: library/ctypes.rst:1013
-msgid ""
-">>> IntArray5 = c_int * 5\n"
-">>> ia = IntArray5(5, 1, 7, 33, 99)\n"
-">>> qsort = libc.qsort\n"
-">>> qsort.restype = None\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1019
 #, fuzzy
 msgid ""
@@ -1969,12 +1357,6 @@ msgstr ""
 "Ainsi notre fonction de rappel reçoit des pointeurs vers des entiers et doit "
 "renvoyer un entier. Créons d'abord le ``type`` pour la fonction de rappel ::"
 
-#: library/ctypes.rst:1028
-msgid ""
-">>> CMPFUNC = CFUNCTYPE(c_int, POINTER(c_int), POINTER(c_int))\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1031
 msgid ""
 "To get started, here is a simple callback that shows the values it gets "
@@ -1983,30 +1365,9 @@ msgstr ""
 "Pour commencer, voici une fonction de rappel simple qui affiche les valeurs "
 "qu'on lui passe ::"
 
-#: library/ctypes.rst:1034
-msgid ""
-">>> def py_cmp_func(a, b):\n"
-"...     print(\"py_cmp_func\", a[0], b[0])\n"
-"...     return 0\n"
-"...\n"
-">>> cmp_func = CMPFUNC(py_cmp_func)\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1041
 msgid "The result::"
 msgstr "Résultat ::"
-
-#: library/ctypes.rst:1043
-msgid ""
-">>> qsort(ia, len(ia), sizeof(c_int), cmp_func)  \n"
-"py_cmp_func 5 1\n"
-"py_cmp_func 33 99\n"
-"py_cmp_func 7 33\n"
-"py_cmp_func 5 7\n"
-"py_cmp_func 1 7\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1051
 msgid "Now we can actually compare the two items and return a useful result::"
@@ -2014,34 +1375,10 @@ msgstr ""
 "À présent, comparons pour de vrai les deux entiers et renvoyons un résultat "
 "utile ::"
 
-#: library/ctypes.rst:1053
-msgid ""
-">>> def py_cmp_func(a, b):\n"
-"...     print(\"py_cmp_func\", a[0], b[0])\n"
-"...     return a[0] - b[0]\n"
-"...\n"
-">>>\n"
-">>> qsort(ia, len(ia), sizeof(c_int), CMPFUNC(py_cmp_func)) \n"
-"py_cmp_func 5 1\n"
-"py_cmp_func 33 99\n"
-"py_cmp_func 7 33\n"
-"py_cmp_func 1 7\n"
-"py_cmp_func 5 7\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1066
 msgid "As we can easily check, our array is sorted now::"
 msgstr ""
 "Et comme il est facile de le voir, notre tableau est désormais classé ::"
-
-#: library/ctypes.rst:1068
-msgid ""
-">>> for i in ia: print(i, end=\" \")\n"
-"...\n"
-"1 5 7 33 99\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1073
 msgid ""
@@ -2050,22 +1387,6 @@ msgid ""
 msgstr ""
 "Ces fonctions peuvent aussi être utilisées comme des décorateurs ; il est "
 "donc possible d'écrire ::"
-
-#: library/ctypes.rst:1076
-msgid ""
-">>> @CFUNCTYPE(c_int, POINTER(c_int), POINTER(c_int))\n"
-"... def py_cmp_func(a, b):\n"
-"...     print(\"py_cmp_func\", a[0], b[0])\n"
-"...     return a[0] - b[0]\n"
-"...\n"
-">>> qsort(ia, len(ia), sizeof(c_int), py_cmp_func)\n"
-"py_cmp_func 5 1\n"
-"py_cmp_func 33 99\n"
-"py_cmp_func 7 33\n"
-"py_cmp_func 1 7\n"
-"py_cmp_func 5 7\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1091
 msgid ""
@@ -2122,13 +1443,6 @@ msgstr ""
 "meth:`in_dll` du type considéré. *pythonapi* est un symbole prédéfini qui "
 "donne accès à l'API C Python ::"
 
-#: library/ctypes.rst:1115
-msgid ""
-">>> version = ctypes.c_int.in_dll(ctypes.pythonapi, \"Py_Version\")\n"
-">>> print(hex(version.value))\n"
-"0x30c00a0"
-msgstr ""
-
 #: library/ctypes.rst:1119
 msgid ""
 "An extended example which also demonstrates the use of pointers accesses "
@@ -2165,20 +1479,6 @@ msgstr ""
 "taille de l'exemple, nous nous bornons à montrer comment lire ce tableau "
 "avec :mod:`ctypes` ::"
 
-#: library/ctypes.rst:1132
-msgid ""
-">>> from ctypes import *\n"
-">>>\n"
-">>> class struct_frozen(Structure):\n"
-"...     _fields_ = [(\"name\", c_char_p),\n"
-"...                 (\"code\", POINTER(c_ubyte)),\n"
-"...                 (\"size\", c_int),\n"
-"...                 (\"get_code\", POINTER(c_ubyte)),  # Function pointer\n"
-"...                ]\n"
-"...\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1143
 #, fuzzy
 msgid ""
@@ -2187,13 +1487,6 @@ msgid ""
 msgstr ""
 "Le type de donnée :c:type:`struct _frozen` ayant été défini, nous pouvons "
 "récupérer le pointeur vers le tableau ::"
-
-#: library/ctypes.rst:1146
-msgid ""
-">>> FrozenTable = POINTER(struct_frozen)\n"
-">>> table = FrozenTable.in_dll(pythonapi, \"_PyImport_FrozenBootstrap\")\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1150
 msgid ""
@@ -2208,19 +1501,6 @@ msgstr ""
 "certain que la boucle se termine, car les pointeurs n'ont pas de taille. Tôt "
 "ou tard, il planterait probablement avec une erreur de segmentation ou "
 "autre, donc mieux vaut sortir de la boucle quand on lit l'entrée ``NULL`` ::"
-
-#: library/ctypes.rst:1156
-msgid ""
-">>> for item in table:\n"
-"...     if item.name is None:\n"
-"...         break\n"
-"...     print(item.name.decode(\"ascii\"), item.size)\n"
-"...\n"
-"_frozen_importlib 31764\n"
-"_frozen_importlib_external 41499\n"
-"zipimport 12345\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1166
 msgid ""
@@ -2248,27 +1528,6 @@ msgstr ""
 msgid "Consider the following example::"
 msgstr "Examinons l'exemple suivant ::"
 
-#: library/ctypes.rst:1181
-msgid ""
-">>> from ctypes import *\n"
-">>> class POINT(Structure):\n"
-"...     _fields_ = (\"x\", c_int), (\"y\", c_int)\n"
-"...\n"
-">>> class RECT(Structure):\n"
-"...     _fields_ = (\"a\", POINT), (\"b\", POINT)\n"
-"...\n"
-">>> p1 = POINT(1, 2)\n"
-">>> p2 = POINT(3, 4)\n"
-">>> rc = RECT(p1, p2)\n"
-">>> print(rc.a.x, rc.a.y, rc.b.x, rc.b.y)\n"
-"1 2 3 4\n"
-">>> # now swap the two points\n"
-">>> rc.a, rc.b = rc.b, rc.a\n"
-">>> print(rc.a.x, rc.a.y, rc.b.x, rc.b.y)\n"
-"3 4 3 4\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1199
 msgid ""
 "Hm. We certainly expected the last statement to print ``3 4 1 2``. What "
@@ -2277,14 +1536,6 @@ msgstr ""
 "Diantre. On s'attendait certainement à ce que le dernier résultat affiche "
 "``3 4 1 2``. Que s'est-il passé ? Les étapes de la ligne ``rc.a, rc.b = rc."
 "b, rc.a`` ci-dessus sont les suivantes ::"
-
-#: library/ctypes.rst:1202
-msgid ""
-">>> temp0, temp1 = rc.b, rc.a\n"
-">>> rc.a = temp0\n"
-">>> rc.b = temp1\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1207
 msgid ""
@@ -2316,17 +1567,6 @@ msgid ""
 "this::"
 msgstr ""
 "Un autre exemple de comportement *a priori* inattendu est le suivant ::"
-
-#: library/ctypes.rst:1219
-msgid ""
-">>> s = c_char_p()\n"
-">>> s.value = b\"abc def ghi\"\n"
-">>> s.value\n"
-"b'abc def ghi'\n"
-">>> s.value is s.value\n"
-"False\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1229
 msgid ""
@@ -2376,23 +1616,6 @@ msgstr ""
 "unitaire du type considéré. Une :exc:`ValueError` est levée si c'est le "
 "cas ::"
 
-#: library/ctypes.rst:1252
-msgid ""
-">>> short_array = (c_short * 4)()\n"
-">>> print(sizeof(short_array))\n"
-"8\n"
-">>> resize(short_array, 4)\n"
-"Traceback (most recent call last):\n"
-"    ...\n"
-"ValueError: minimum size is 8\n"
-">>> resize(short_array, 32)\n"
-">>> sizeof(short_array)\n"
-"32\n"
-">>> sizeof(type(short_array))\n"
-"8\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1266
 msgid ""
 "This is nice and fine, but how would one access the additional elements "
@@ -2402,17 +1625,6 @@ msgstr ""
 "Cela dit, comment accéder aux éléments supplémentaires contenus dans le "
 "tableau ? Vu que le type ne connaît que 4 éléments, on obtient une erreur si "
 "l'on accède aux suivants ::"
-
-#: library/ctypes.rst:1270
-msgid ""
-">>> short_array[:]\n"
-"[0, 0, 0, 0]\n"
-">>> short_array[7]\n"
-"Traceback (most recent call last):\n"
-"    ...\n"
-"IndexError: invalid index\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1278
 msgid ""
@@ -2508,18 +1720,6 @@ msgstr ""
 msgid "Here are some examples::"
 msgstr "Voici quelques exemples ::"
 
-#: library/ctypes.rst:1328
-msgid ""
-">>> from ctypes.util import find_library\n"
-">>> find_library(\"m\")\n"
-"'libm.so.6'\n"
-">>> find_library(\"c\")\n"
-"'libc.so.6'\n"
-">>> find_library(\"bz2\")\n"
-"'libbz2.so.1.0'\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1337
 #, fuzzy
 msgid ""
@@ -2530,20 +1730,6 @@ msgstr ""
 "Sous macOS, :func:`find_library` regarde dans des chemins et conventions de "
 "chemins prédéfinies pour trouver la bibliothèque et en renvoie le chemin "
 "complet si elle la trouve ::"
-
-#: library/ctypes.rst:1341
-msgid ""
-">>> from ctypes.util import find_library\n"
-">>> find_library(\"c\")\n"
-"'/usr/lib/libc.dylib'\n"
-">>> find_library(\"m\")\n"
-"'/usr/lib/libm.dylib'\n"
-">>> find_library(\"bz2\")\n"
-"'/usr/lib/libbz2.dylib'\n"
-">>> find_library(\"AGL\")\n"
-"'/System/Library/Frameworks/AGL.framework/AGL'\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1352
 #, fuzzy
@@ -2825,16 +2011,6 @@ msgstr ""
 "accès consécutifs renvoient à chaque fois le même objet. Accéder à une "
 "fonction par indice renvoie cependant chaque fois un nouvel objet ::"
 
-#: library/ctypes.rst:1507
-msgid ""
-">>> from ctypes import CDLL\n"
-">>> libc = CDLL(\"libc.so.6\")  # On Linux\n"
-">>> libc.time == libc.time\n"
-"True\n"
-">>> libc['time'] == libc['time']\n"
-"False"
-msgstr ""
-
 #: library/ctypes.rst:1514
 msgid ""
 "The following public attributes are available, their name starts with an "
@@ -2987,16 +2163,6 @@ msgstr ""
 msgid ""
 "They are instances of a private local class :class:`!_FuncPtr` (not exposed "
 "in :mod:`!ctypes`) which inherits from the private :class:`_CFuncPtr` class:"
-msgstr ""
-
-#: library/ctypes.rst:1616
-msgid ""
-">>> import ctypes\n"
-">>> lib = ctypes.CDLL(None)\n"
-">>> issubclass(lib._FuncPtr, ctypes._CFuncPtr)\n"
-"True\n"
-">>> lib._FuncPtr is ctypes._CFuncPtr\n"
-"False"
 msgstr ""
 
 #: library/ctypes.rst:1627
@@ -3377,42 +2543,15 @@ msgstr ""
 "et des arguments nommés. Sa déclaration C dans le fichier d'en-tête des "
 "fenêtres est ::"
 
-#: library/ctypes.rst:1818
-msgid ""
-"WINUSERAPI int WINAPI\n"
-"MessageBoxW(\n"
-"    HWND hWnd,\n"
-"    LPCWSTR lpText,\n"
-"    LPCWSTR lpCaption,\n"
-"    UINT uType);"
-msgstr ""
-
 #: library/ctypes.rst:1848
 msgid "Here is the wrapping with :mod:`ctypes`::"
 msgstr "L'encapsulation :mod:`ctypes` correspondante est alors ::"
-
-#: library/ctypes.rst:1827
-msgid ""
-">>> from ctypes import c_int, WINFUNCTYPE, windll\n"
-">>> from ctypes.wintypes import HWND, LPCWSTR, UINT\n"
-">>> prototype = WINFUNCTYPE(c_int, HWND, LPCWSTR, LPCWSTR, UINT)\n"
-">>> paramflags = (1, \"hwnd\", 0), (1, \"text\", \"Hi\"), (1, \"caption\", "
-"\"Hello from ctypes\"), (1, \"flags\", 0)\n"
-">>> MessageBox = prototype((\"MessageBoxW\", windll.user32), paramflags)"
-msgstr ""
 
 #: library/ctypes.rst:1833
 msgid "The ``MessageBox`` foreign function can now be called in these ways::"
 msgstr ""
 "La fonction ``MessageBox`` peut désormais être appelée des manières "
 "suivantes ::"
-
-#: library/ctypes.rst:1835
-msgid ""
-">>> MessageBox()\n"
-">>> MessageBox(text=\"Spam, spam, spam\")\n"
-">>> MessageBox(flags=2, text=\"foo bar\")"
-msgstr ""
 
 #: library/ctypes.rst:1839
 msgid ""
@@ -3424,25 +2563,6 @@ msgstr ""
 "L'exemple qui suit traite des paramètres en sortie. La fonction win32 "
 "``GetWindowRect`` donne les dimensions d'une fenêtre en les copiant dans une "
 "structure ``RECT`` que l'appelant doit fournir. Sa déclaration en C est ::"
-
-#: library/ctypes.rst:1843
-msgid ""
-"WINUSERAPI BOOL WINAPI\n"
-"GetWindowRect(\n"
-"     HWND hWnd,\n"
-"     LPRECT lpRect);"
-msgstr ""
-
-#: library/ctypes.rst:1850
-msgid ""
-">>> from ctypes import POINTER, WINFUNCTYPE, windll, WinError\n"
-">>> from ctypes.wintypes import BOOL, HWND, RECT\n"
-">>> prototype = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))\n"
-">>> paramflags = (1, \"hwnd\"), (2, \"lprect\")\n"
-">>> GetWindowRect = prototype((\"GetWindowRect\", windll.user32), "
-"paramflags)\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1857
 msgid ""
@@ -3472,17 +2592,6 @@ msgstr ""
 "pour indiquer le succès ou l'échec de l'exécution, donc cette fonction peut "
 "vérifier le résultat et lever une exception quand l'appel à l'API a échoué ::"
 
-#: library/ctypes.rst:1867
-msgid ""
-">>> def errcheck(result, func, args):\n"
-"...     if not result:\n"
-"...         raise WinError()\n"
-"...     return args\n"
-"...\n"
-">>> GetWindowRect.errcheck = errcheck\n"
-">>>"
-msgstr ""
-
 #: library/ctypes.rst:1875
 #, fuzzy
 msgid ""
@@ -3498,18 +2607,6 @@ msgstr ""
 "renvoyer une instance de ``RECT``, il faut récupérer les champs "
 "correspondants et les renvoyer en retour. Dans ce cas, l'exécution "
 "habituelle n'a plus lieu ::"
-
-#: library/ctypes.rst:1881
-msgid ""
-">>> def errcheck(result, func, args):\n"
-"...     if not result:\n"
-"...         raise WinError()\n"
-"...     rc = args[1]\n"
-"...     return rc.left, rc.top, rc.bottom, rc.right\n"
-"...\n"
-">>> GetWindowRect.errcheck = errcheck\n"
-">>>"
-msgstr ""
 
 #: library/ctypes.rst:1894
 msgid "Utility functions"
@@ -3542,10 +2639,6 @@ msgstr ""
 
 #: library/ctypes.rst:1916
 msgid "``byref(obj, offset)`` corresponds to this C code::"
-msgstr ""
-
-#: library/ctypes.rst:1918
-msgid "(((char *)&obj) + offset)"
 msgstr ""
 
 #: library/ctypes.rst:1920
@@ -4243,15 +3336,6 @@ msgid ""
 "data types that directly or indirectly reference themselves::"
 msgstr ""
 
-#: library/ctypes.rst:2523
-msgid ""
-"class List(Structure):\n"
-"    pass\n"
-"List._fields_ = [(\"pnext\", POINTER(List)),\n"
-"                 ...\n"
-"                ]"
-msgstr ""
-
 #: library/ctypes.rst:2529
 msgid ""
 "The :attr:`_fields_` class variable must, however, be defined before the "
@@ -4301,19 +3385,6 @@ msgstr ""
 msgid "Here is an example type (Windows)::"
 msgstr ""
 
-#: library/ctypes.rst:2568
-msgid ""
-"class _U(Union):\n"
-"    _fields_ = [(\"lptdesc\", POINTER(TYPEDESC)),\n"
-"                (\"lpadesc\", POINTER(ARRAYDESC)),\n"
-"                (\"hreftype\", HREFTYPE)]\n"
-"\n"
-"class TYPEDESC(Structure):\n"
-"    _anonymous_ = (\"u\",)\n"
-"    _fields_ = [(\"u\", _U),\n"
-"                (\"vt\", VARTYPE)]"
-msgstr ""
-
 #: library/ctypes.rst:2579
 msgid ""
 "The ``TYPEDESC`` structure describes a COM data type, the ``vt`` field "
@@ -4322,14 +3393,6 @@ msgid ""
 "directly off the TYPEDESC instance. ``td.lptdesc`` and ``td.u.lptdesc`` are "
 "equivalent, but the former is faster since it does not need to create a "
 "temporary union instance::"
-msgstr ""
-
-#: library/ctypes.rst:2586
-msgid ""
-"td = TYPEDESC()\n"
-"td.vt = VT_PTR\n"
-"td.lptdesc = POINTER(some_type)\n"
-"td.u.lptdesc = POINTER(some_type)"
 msgstr ""
 
 #: library/ctypes.rst:2591
