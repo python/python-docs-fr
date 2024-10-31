@@ -22,7 +22,7 @@
 # .po files.
 CPYTHON_CURRENT_COMMIT := db0a1b8c1291bf1aa9e016e43bc2f7ed0acf83bd
 LANGUAGE := fr
-BRANCH := 3.11
+BRANCH := 3.12
 
 EXCLUDED := \
 	whatsnew/2.?.po \
