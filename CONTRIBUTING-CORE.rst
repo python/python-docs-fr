@@ -8,6 +8,8 @@ traduire ::
     python .scripts/merge.py --cpython_repo ../cpython/ origin/3.13
     make verifs
 
+Il faut mettre à jour la variable ``BRANCH`` dans le ``Makefile``.
+
 
 Maintenance
 -----------
