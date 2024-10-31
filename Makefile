@@ -188,7 +188,7 @@ syntax:
 	@msgcat *.po */*.po > /dev/null
 
 .PHONY: verifs
-verifs: spell syntax line-length check-headers sphinx-lint
+verifs: syntax check-headers sphinx-lint spell line-length
 
 .PHONY: clean
 clean:
