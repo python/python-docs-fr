@@ -242,21 +242,21 @@ Création de la branche de traduction
 
 Vous êtes maintenant prêt. Pour travailler, nous avons besoin d'une
 branche, basée sur une version à jour (fraîchement récupérée) de la
-branche « upstream/3.11 ». On met donc à jour notre version locale.
+branche « upstream/3.13 ». On met donc à jour notre version locale.
 
 .. code-block:: bash
 
     git fetch upstream
 
 
-On crée ensuite la branche, en la basant sur « upstream/3.11 », fraîchement récupérée.
+On crée ensuite la branche, en la basant sur « upstream/3.13 », fraîchement récupérée.
 Il est pratique de nommer cette branche en fonction du
 fichier sur lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 
 .. code-block:: bash
 
-    git switch -c library-sys upstream/3.11
+    git switch -c library-sys upstream/3.13
 
 
 
