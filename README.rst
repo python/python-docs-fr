@@ -1,9 +1,10 @@
 Traduction française de la documentation Python
 ===============================================
 
-Ceci est un mirroir en lecture seule.
+Ce repo existe sur deux forges :
 
-Le travail de traduction est hébergé par l'AFPy, en France, sur une
-forge open-source, veuillez faire vos demandes d'ajout là bas :
+- https://git.afpy.org/AFPy/python-docs-fr/
+- https://github.com/python/python-docs-fr/
 
-https://git.afpy.org/AFPy/python-docs-fr/
+le travail s’effectue sur `git.afpy.org`, github est un mirroir
+utilisé pour générer la doc sur https://docs.python.org/fr/
