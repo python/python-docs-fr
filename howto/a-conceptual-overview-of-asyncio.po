@@ -1,0 +1,534 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001 Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.14\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: howto/a-conceptual-overview-of-asyncio.rst:5
+msgid "A Conceptual Overview of :mod:`!asyncio`"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:7
+msgid ""
+"This :ref:`HOWTO <how-tos>` article seeks to help you build a sturdy mental "
+"model of how :mod:`asyncio` fundamentally works, helping you understand the "
+"how and why behind the recommended patterns."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:11
+msgid ""
+"You might be curious about some key :mod:`!asyncio` concepts. By the end of "
+"this article, you'll be able to comfortably answer these questions:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:14
+msgid "What's happening behind the scenes when an object is awaited?"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:15
+msgid ""
+"How does :mod:`!asyncio` differentiate between a task which doesn't need CPU "
+"time (such as a network request or file read) as opposed to a task that does "
+"(such as computing n-factorial)?"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:18
+msgid ""
+"How to write an asynchronous variant of an operation, such as an async sleep "
+"or database request."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:23
+msgid ""
+"The `guide <https://github.com/anordin95/a-conceptual-overview-of-asyncio/ "
+"tree/main>`_ that inspired this HOWTO article, by Alexander Nordin."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:25
+msgid ""
+"This in-depth `YouTube tutorial series <https://www.youtube.com/ watch?"
+"v=Xbl7XjFYsN4&list=PLhNSoGM2ik6SIkVGXWBwerucXjgP1rHmB>`_ on ``asyncio`` "
+"created by Python core team member, Łukasz Langa."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:28
+msgid ""
+"`500 Lines or Less: A Web Crawler With asyncio Coroutines <https:// "
+"aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html>`_ by A. "
+"Jesse Jiryu Davis and Guido van Rossum."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:34
+msgid "A conceptual overview part 1: the high-level"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:36
+msgid ""
+"In part 1, we'll cover the main, high-level building blocks of :mod:`!"
+"asyncio`: the event loop, coroutine functions, coroutine objects, tasks, and "
+"``await``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:41
+msgid "Event Loop"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:43
+msgid ""
+"Everything in :mod:`!asyncio` happens relative to the event loop. It's the "
+"star of the show. It's like an orchestra conductor. It's behind the scenes "
+"managing resources. Some power is explicitly granted to it, but a lot of its "
+"ability to get things done comes from the respect and cooperation of its "
+"worker bees."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:50
+msgid ""
+"In more technical terms, the event loop contains a collection of jobs to be "
+"run. Some jobs are added directly by you, and some indirectly by :mod:`!"
+"asyncio`. The event loop takes a job from its backlog of work and invokes it "
+"(or \"gives it control\"), similar to calling a function, and then that job "
+"runs. Once it pauses or completes, it returns control to the event loop. The "
+"event loop will then select another job from its pool and invoke it. You can "
+"*roughly* think of the collection of jobs as a queue: jobs are added and "
+"then processed one at a time, generally (but not always) in order. This "
+"process repeats indefinitely, with the event loop cycling endlessly onwards. "
+"If there are no more jobs pending execution, the event loop is smart enough "
+"to rest and avoid needlessly wasting CPU cycles, and will come back when "
+"there's more work to be done."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:64
+msgid ""
+"Effective execution relies on jobs sharing well and cooperating; a greedy "
+"job could hog control and leave the other jobs to starve, rendering the "
+"overall event loop approach rather useless."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:79
+msgid "Asynchronous functions and coroutines"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:81
+msgid "This is a basic, boring Python function::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:90
+msgid "Calling a regular function invokes its logic or body::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:96
+msgid ""
+"The :ref:`async def <async def>`, as opposed to just a plain ``def``, makes "
+"this an asynchronous function (or \"coroutine function\"). Calling it "
+"creates and returns a :ref:`coroutine <coroutine>` object."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:108
+msgid ""
+"Calling the async function, ``loudmouth_penguin``, does not execute the "
+"print statement; instead, it creates a coroutine object::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:114
+msgid ""
+"The terms \"coroutine function\" and \"coroutine object\" are often "
+"conflated as coroutine. That can be confusing! In this article, coroutine "
+"specifically refers to a coroutine object, or more precisely, an instance "
+"of :data:`types.CoroutineType` (native coroutine). Note that coroutines can "
+"also exist as instances of :class:`collections.abc.Coroutine` -- a "
+"distinction that matters for type checking."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:123
+msgid ""
+"A coroutine represents the function's body or logic. A coroutine has to be "
+"explicitly started; again, merely creating the coroutine does not start it. "
+"Notably, the coroutine can be paused and resumed at various points within "
+"the function's body. That pausing and resuming ability is what allows for "
+"asynchronous behavior!"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:130
+msgid ""
+"Coroutines and coroutine functions were built by leveraging the "
+"functionality of :term:`generators <generator iterator>` "
+"and :term:`generator functions <generator>`. Recall, a generator function is "
+"a function that :keyword:`yield`\\s, like this one::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:146
+msgid ""
+"Similar to a coroutine function, calling a generator function does not run "
+"it. Instead, it creates a generator object::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:152
+msgid ""
+"You can proceed to the next ``yield`` of a generator by using the built-in "
+"function :func:`next`. In other words, the generator runs, then pauses. For "
+"example::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:167
+msgid "Tasks"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:169
+msgid ""
+"Roughly speaking, :ref:`tasks <asyncio-task-obj>` are coroutines (not "
+"coroutine functions) tied to an event loop. A task also maintains a list of "
+"callback functions whose importance will become clear in a moment when we "
+"discuss :keyword:`await`. The recommended way to create tasks is "
+"via :func:`asyncio.create_task`."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:175
+msgid ""
+"Creating a task automatically schedules it for execution (by adding a "
+"callback to run it in the event loop's to-do list, that is, collection of "
+"jobs)."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:178
+msgid ""
+"Since there's only one event loop (in each thread), :mod:`!asyncio` takes "
+"care of associating the task with the event loop for you. As such, there's "
+"no need to specify the event loop."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:188
+msgid ""
+"Earlier, we manually created the event loop and set it to run forever. In "
+"practice, it's recommended to use (and common to see) :func:`asyncio.run`, "
+"which takes care of managing the event loop and ensuring the provided "
+"coroutine finishes before advancing. For example, many async programs follow "
+"this setup::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:206
+msgid ""
+"It's important to be aware that the task itself is not added to the event "
+"loop, only a callback to the task is. This matters if the task object you "
+"created is garbage collected before it's called by the event loop. For "
+"example, consider this program:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:226
+msgid ""
+"Because there's no reference to the task object created on line 5, it "
+"*might* be garbage collected before the event loop invokes it. Later "
+"instructions in the coroutine ``main()`` hand control back to the event loop "
+"so it can invoke other jobs. When the event loop eventually tries to run the "
+"task, it might fail and discover the task object does not exist! This can "
+"also happen even if a coroutine keeps a reference to a task but completes "
+"before that task finishes. When the coroutine exits, local variables go out "
+"of scope and may be subject to garbage collection. In practice, ``asyncio`` "
+"and Python's garbage collector work pretty hard to ensure this sort of thing "
+"doesn't happen. But that's no reason to be reckless!"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:242
+msgid "await"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:244
+msgid ""
+":keyword:`await` is a Python keyword that's commonly used in one of two "
+"different ways::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:250
+msgid ""
+"In a crucial way, the behavior of ``await`` depends on the type of object "
+"being awaited."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:253
+msgid ""
+"Awaiting a task will cede control from the current task or coroutine to the "
+"event loop. In the process of relinquishing control, a few important things "
+"happen. We'll use the following code example to illustrate::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:265
+msgid ""
+"In this example, imagine the event loop has passed control to the start of "
+"the coroutine ``plant_a_tree()``. As seen above, the coroutine creates a "
+"task and then awaits it. The ``await dig_the_hole_task`` instruction adds a "
+"callback (which will resume ``plant_a_tree()``) to the ``dig_the_hole_task`` "
+"object's list of callbacks. And then, the instruction cedes control to the "
+"event loop. Some time later, the event loop will pass control to "
+"``dig_the_hole_task`` and the task will finish whatever it needs to do. Once "
+"the task finishes, it will add its various callbacks to the event loop, in "
+"this case, a call to resume ``plant_a_tree()``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:276
+msgid ""
+"Generally speaking, when the awaited task finishes (``dig_the_hole_task``), "
+"the original task or coroutine (``plant_a_tree()``) is added back to the "
+"event loop's to-do list to be resumed."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:280
+msgid ""
+"This is a basic, yet reliable mental model. In practice, the control "
+"handoffs are slightly more complex, but not by much. In part 2, we'll walk "
+"through the details that make this possible."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:284
+msgid ""
+"**Unlike tasks, awaiting a coroutine does not hand control back to the event "
+"loop!** Wrapping a coroutine in a task first, then awaiting that would cede "
+"control. The behavior of ``await coroutine`` is effectively the same as "
+"invoking a regular, synchronous Python function. Consider this program::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:309
+msgid ""
+"The first statement in the coroutine ``main()`` creates ``task_b`` and "
+"schedules it for execution via the event loop. Then, ``coro_a()`` is "
+"repeatedly awaited. Control never cedes to the event loop, which is why we "
+"see the output of all three ``coro_a()`` invocations before ``coro_b()``'s "
+"output:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:322
+msgid ""
+"If we change ``await coro_a()`` to ``await asyncio.create_task(coro_a())``, "
+"the behavior changes. The coroutine ``main()`` cedes control to the event "
+"loop with that statement. The event loop then proceeds through its backlog "
+"of work, calling ``task_b`` and then the task which wraps ``coro_a()`` "
+"before resuming the coroutine ``main()``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:336
+msgid ""
+"This behavior of ``await coroutine`` can trip a lot of people up! That "
+"example highlights how using only ``await coroutine`` could unintentionally "
+"hog control from other tasks and effectively stall the event "
+"loop. :func:`asyncio.run` can help you detect such occurrences via the "
+"``debug=True`` flag, which enables :ref:`debug mode <asyncio-debug-mode>`. "
+"Among other things, it will log any coroutines that monopolize execution for "
+"100ms or longer."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:346
+msgid ""
+"The design intentionally trades off some conceptual clarity around usage of "
+"``await`` for improved performance. Each time a task is awaited, control "
+"needs to be passed all the way up the call stack to the event loop. That "
+"might sound minor, but in a large program with many ``await`` statements and "
+"a deep call stack, that overhead can add up to a meaningful performance drag."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:355
+msgid "A conceptual overview part 2: the nuts and bolts"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:357
+msgid ""
+"Part 2 goes into detail on the mechanisms :mod:`!asyncio` uses to manage "
+"control flow. This is where the magic happens. You'll come away from this "
+"section knowing what ``await`` does behind the scenes and how to make your "
+"own asynchronous operators."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:365
+msgid "The inner workings of coroutines"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:367
+msgid ":mod:`!asyncio` leverages four components to pass around control."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:369
+msgid ""
+":meth:`coroutine.send(arg) <generator.send>` is the method used to start or "
+"resume a coroutine. If the coroutine was paused and is now being resumed, "
+"the argument ``arg`` will be sent in as the return value of the ``yield`` "
+"statement which originally paused it. If the coroutine is being used for the "
+"first time (as opposed to being resumed), ``arg`` must be ``None``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:405
+msgid ""
+":ref:`yield <yieldexpr>`, as usual, pauses execution and returns control to "
+"the caller. In the example above, the ``yield``, on line 3, is called by "
+"``... = await rock`` on line 11. More broadly speaking, ``await`` calls "
+"the :meth:`~object.__await__` method of the given object. ``await`` also "
+"does one more very special thing: it propagates (or \"passes along\") any "
+"``yield``\\ s it receives up the call chain. In this case, that's back to "
+"``... = coroutine.send(None)`` on line 16."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:415
+msgid ""
+"The coroutine is resumed via the ``coroutine.send(42)`` call on line 21. The "
+"coroutine picks back up from where it ``yield``\\ ed (or paused) on line 3 "
+"and executes the remaining statements in its body. When a coroutine "
+"finishes, it raises a :exc:`StopIteration` exception with the return value "
+"attached in the :attr:`~StopIteration.value` attribute."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:421
+msgid "That snippet produces this output:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:433
+msgid ""
+"It's worth pausing for a moment here and making sure you followed the "
+"various ways that control flow and values were passed. A lot of important "
+"ideas were covered and it's worth ensuring your understanding is firm."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:437
+msgid ""
+"The only way to yield (or effectively cede control) from a coroutine is to "
+"``await`` an object that ``yield``\\ s in its ``__await__`` method. That "
+"might sound odd to you. You might be thinking:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:441
+msgid ""
+"1. What about a ``yield`` directly within the coroutine function? The "
+"coroutine function becomes an :ref:`async generator function <asynchronous-"
+"generator-functions>`, a different beast entirely."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:446
+msgid ""
+"2. What about a :ref:`yield from <yieldexpr>` within the coroutine function "
+"to a (plain) generator? That causes the error: ``SyntaxError: yield from not "
+"allowed in a coroutine.`` This was intentionally designed for the sake of "
+"simplicity -- mandating only one way of using coroutines. Initially "
+"``yield`` was barred as well, but was re-accepted to allow for async "
+"generators. Despite that, ``yield from`` and ``await`` effectively do the "
+"same thing."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:457
+msgid "Futures"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:459
+msgid ""
+"A :ref:`future <asyncio-future-obj>` is an object meant to represent a "
+"computation's status and result. The term is a nod to the idea of something "
+"still to come or not yet happened, and the object is a way to keep an eye on "
+"that something."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:464
+msgid ""
+"A future has a few important attributes. One is its state, which can be "
+"either \"pending\", \"cancelled\", or \"done\". Another is its result, which "
+"is set when the state transitions to done. Unlike a coroutine, a future does "
+"not represent the actual computation to be done; instead, it represents the "
+"status and result of that computation, kind of like a status light (red, "
+"yellow, or green) or indicator."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:471
+msgid ""
+":class:`asyncio.Task` subclasses :class:`asyncio.Future` in order to gain "
+"these various capabilities. The prior section said tasks store a list of "
+"callbacks, which wasn't entirely accurate. It's actually the ``Future`` "
+"class that implements this logic, which ``Task`` inherits."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:478
+msgid ""
+"Futures may also be used directly (not via tasks). Tasks mark themselves as "
+"done when their coroutine is complete. Futures are much more versatile and "
+"will be marked as done when you say so. In this way, they're the flexible "
+"interface for you to make your own conditions for waiting and resuming."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:486
+msgid "A homemade asyncio.sleep"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:488
+msgid ""
+"We'll go through an example of how you could leverage a future to create "
+"your own variant of asynchronous sleep (``async_sleep``) which "
+"mimics :func:`asyncio.sleep`."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:492
+msgid ""
+"This snippet registers a few tasks with the event loop and then awaits the "
+"task created by ``asyncio.create_task``, which wraps the ``async_sleep(3)`` "
+"coroutine. We want that task to finish only after three seconds have "
+"elapsed, but without preventing other tasks from running."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:523
+msgid ""
+"Below, we use a future to enable custom control over when that task will be "
+"marked as done. If :meth:`future.set_result() <asyncio.Future.set_result>` "
+"(the method responsible for marking that future as done) is never called, "
+"then this task will never finish. We've also enlisted the help of another "
+"task, which we'll see in a moment, that will monitor how much time has "
+"elapsed and, accordingly, call ``future.set_result()``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:542
+msgid ""
+"Below, we use a rather bare ``YieldToEventLoop()`` object to ``yield`` from "
+"its ``__await__`` method, ceding control to the event loop. This is "
+"effectively the same as calling ``asyncio.sleep(0)``, but this approach "
+"offers more clarity, not to mention it's somewhat cheating to use "
+"``asyncio.sleep`` when showcasing how to implement it!"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:548
+msgid ""
+"As usual, the event loop cycles through its tasks, giving them control and "
+"receiving control back when they pause or finish. The ``watcher_task``, "
+"which runs the coroutine ``_sleep_watcher(...)``, will be invoked once per "
+"full cycle of the event loop. On each resumption, it'll check the time and "
+"if not enough has elapsed, then it'll pause once again and hand control back "
+"to the event loop. Once enough time has elapsed, ``_sleep_watcher(...)`` "
+"marks the future as done and completes by exiting its infinite ``while`` "
+"loop. Given this helper task is only invoked once per cycle of the event "
+"loop, you'd be correct to note that this asynchronous sleep will sleep *at "
+"least* three seconds, rather than exactly three seconds. Note this is also "
+"true of ``asyncio.sleep``."
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:577
+msgid "Here is the full program's output:"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:588
+msgid ""
+"You might feel this implementation of asynchronous sleep was unnecessarily "
+"convoluted. And, well, it was. The example was meant to showcase the "
+"versatility of futures with a simple example that could be mimicked for more "
+"complex needs. For reference, you could implement it without futures, like "
+"so::"
+msgstr ""
+
+#: howto/a-conceptual-overview-of-asyncio.rst:603
+msgid ""
+"But that's all for now. Hopefully you're ready to more confidently dive into "
+"some async programming or check out advanced topics in the :mod:`rest of the "
+"documentation <asyncio>`."
+msgstr ""

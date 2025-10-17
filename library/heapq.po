@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-01 00:16+0100\n"
+"POT-Creation-Date: 2025-10-17 09:58+0200\n"
 "PO-Revision-Date: 2021-05-10 23:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -34,19 +34,19 @@ msgstr ""
 
 #: library/heapq.rst:19
 msgid ""
-"Heaps are binary trees for which every parent node has a value less than or "
-"equal to any of its children.  We refer to this condition as the heap "
+"Min-heaps are binary trees for which every parent node has a value less than "
+"or equal to any of its children. We refer to this condition as the heap "
 "invariant."
 msgstr ""
 
-#: library/heapq.rst:22
+#: library/heapq.rst:23
 #, fuzzy
 msgid ""
-"This implementation uses arrays for which ``heap[k] <= heap[2*k+1]`` and "
-"``heap[k] <= heap[2*k+2]`` for all *k*, counting elements from zero.  For "
-"the sake of comparison, non-existing elements are considered to be "
-"infinite.  The interesting property of a heap is that its smallest element "
-"is always the root, ``heap[0]``."
+"For min-heaps, this implementation uses lists for which ``heap[k] <= "
+"heap[2*k+1]`` and ``heap[k] <= heap[2*k+2]`` for all *k* for which the "
+"compared elements exist.  Elements are counted from zero.  The interesting "
+"property of a min-heap is that its smallest element is always the root, "
+"``heap[0]``."
 msgstr ""
 "Les tas sont des arbres binaires pour lesquels chaque valeur portée par un "
 "nœud est inférieure ou égale à celle de ses deux fils. Cette implémentation "
@@ -56,15 +56,26 @@ msgstr ""
 "considérés comme porteur d'une valeur infinie. L'intérêt du tas est que son "
 "plus petit élément est toujours la racine, ``tas[0]``."
 
-#: library/heapq.rst:28
+#: library/heapq.rst:29
 msgid ""
-"The API below differs from textbook heap algorithms in two aspects: (a) We "
-"use zero-based indexing.  This makes the relationship between the index for "
-"a node and the indexes for its children slightly less obvious, but is more "
-"suitable since Python uses zero-based indexing. (b) Our pop method returns "
-"the smallest item, not the largest (called a \"min heap\" in textbooks; a "
-"\"max heap\" is more common in texts because of its suitability for in-place "
-"sorting)."
+"Max-heaps satisfy the reverse invariant: every parent node has a value "
+"*greater* than any of its children.  These are implemented as lists for "
+"which ``maxheap[2*k+1] <= maxheap[k]`` and ``maxheap[2*k+2] <= maxheap[k]`` "
+"for all *k* for which the compared elements exist. The root, ``maxheap[0]``, "
+"contains the *largest* element; ``heap.sort(reverse=True)`` maintains the "
+"max-heap invariant."
+msgstr ""
+
+#: library/heapq.rst:36
+#, fuzzy
+msgid ""
+"The :mod:`!heapq` API differs from textbook heap algorithms in two aspects: "
+"(a) We use zero-based indexing.  This makes the relationship between the "
+"index for a node and the indexes for its children slightly less obvious, but "
+"is more suitable since Python uses zero-based indexing. (b) Textbooks often "
+"focus on max-heaps, due to their suitability for in-place sorting. Our "
+"implementation favors min-heaps as they better correspond to "
+"Python :class:`lists <list>`."
 msgstr ""
 "L'API ci-dessous diffère de la file de priorité classique par deux aspects : "
 "(a) l'indiçage commence à zéro. Cela complexifie légèrement la relation "
@@ -74,38 +85,58 @@ msgstr ""
 "les manuels scolaires ; le « tas-max » étant généralement plus courant dans "
 "la littérature car il permet le classement sans tampon)."
 
-#: library/heapq.rst:35
+#: library/heapq.rst:43
+#, fuzzy
 msgid ""
-"These two make it possible to view the heap as a regular Python list without "
-"surprises: ``heap[0]`` is the smallest item, and ``heap.sort()`` maintains "
-"the heap invariant!"
+"These two aspects make it possible to view the heap as a regular Python list "
+"without surprises: ``heap[0]`` is the smallest item, and ``heap.sort()`` "
+"maintains the heap invariant!"
 msgstr ""
 "Ces deux points permettent d'aborder le tas comme une liste Python standard "
 "sans surprise : ``heap[0]`` est le plus petit élément et ``heap.sort()`` "
 "conserve l'invariant du tas !"
 
-#: library/heapq.rst:39
+#: library/heapq.rst:47
 msgid ""
-"To create a heap, use a list initialized to ``[]``, or you can transform a "
-"populated list into a heap via function :func:`heapify`."
+"Like :meth:`list.sort`, this implementation uses only the ``<`` operator for "
+"comparisons, for both min-heaps and max-heaps."
+msgstr ""
+
+#: library/heapq.rst:50
+msgid ""
+"In the API below, and in this documentation, the unqualified term *heap* "
+"generally refers to a min-heap. The API for max-heaps is named using a "
+"``_max``  suffix."
+msgstr ""
+
+#: library/heapq.rst:54
+#, fuzzy
+msgid ""
+"To create a heap, use a list initialized as ``[]``, or transform an existing "
+"list into a min-heap or max-heap using the :func:`heapify` "
+"or :func:`heapify_max` functions, respectively."
 msgstr ""
 "Pour créer un tas, utilisez une liste initialisée à ``[]`` ou bien utilisez "
-"une liste existante et transformez la en tas à l'aide de la fonction :func:"
-"`heapify`."
+"une liste existante et transformez la en tas à l'aide de la "
+"fonction :func:`heapify`."
 
-#: library/heapq.rst:42
-msgid "The following functions are provided:"
+#: library/heapq.rst:58
+#, fuzzy
+msgid "The following functions are provided for min-heaps:"
 msgstr "Les fonctions suivantes sont fournies :"
 
-#: library/heapq.rst:47
-msgid "Push the value *item* onto the *heap*, maintaining the heap invariant."
+#: library/heapq.rst:63
+#, fuzzy
+msgid ""
+"Push the value *item* onto the *heap*, maintaining the min-heap invariant."
 msgstr ""
 "Introduit la valeur *item* dans le tas *heap*, en conservant l'invariance du "
 "tas."
 
-#: library/heapq.rst:52
+#: library/heapq.rst:68
+#, fuzzy
 msgid ""
-"Pop and return the smallest item from the *heap*, maintaining the heap "
+"Pop and return the smallest item from the *heap*, maintaining the min-heap "
 "invariant.  If the heap is empty, :exc:`IndexError` is raised.  To access "
 "the smallest item without popping it, use ``heap[0]``."
 msgstr ""
@@ -113,7 +144,7 @@ msgstr ""
 "le tas est vide, une exception :exc:`IndexError` est levée. Pour accéder au "
 "plus petit élément sans le retirer, utilisez ``heap[0]``."
 
-#: library/heapq.rst:59
+#: library/heapq.rst:75
 msgid ""
 "Push *item* on the heap, then pop and return the smallest item from the "
 "*heap*.  The combined action runs more efficiently than :func:`heappush` "
@@ -123,23 +154,24 @@ msgstr ""
 "de *heap*. Cette action combinée est plus efficace que :func:`heappush` "
 "suivie par un appel séparé à :func:`heappop`."
 
-#: library/heapq.rst:66
-msgid "Transform list *x* into a heap, in-place, in linear time."
+#: library/heapq.rst:82
+#, fuzzy
+msgid "Transform list *x* into a min-heap, in-place, in linear time."
 msgstr ""
 "Transforme une liste *x* en un tas, sans utiliser de tampon et en temps "
 "linéaire."
 
-#: library/heapq.rst:71
+#: library/heapq.rst:87
 msgid ""
 "Pop and return the smallest item from the *heap*, and also push the new "
-"*item*. The heap size doesn't change. If the heap is empty, :exc:"
-"`IndexError` is raised."
+"*item*. The heap size doesn't change. If the heap is "
+"empty, :exc:`IndexError` is raised."
 msgstr ""
 "Extraie le plus petit élément de *heap* et introduit le nouvel élément "
-"*item*. La taille du tas ne change pas. Si le tas est vide, une exception :"
-"exc:`IndexError` est levée."
+"*item*. La taille du tas ne change pas. Si le tas est vide, une "
+"exception :exc:`IndexError` est levée."
 
-#: library/heapq.rst:74
+#: library/heapq.rst:90
 msgid ""
 "This one step operation is more efficient than a :func:`heappop` followed "
 "by :func:`heappush` and can be more appropriate when using a fixed-size "
@@ -151,7 +183,7 @@ msgstr ""
 "est de taille fixe. La combinaison *pop*/*push* renvoie toujours un élément "
 "du tas et le remplace par *item*."
 
-#: library/heapq.rst:79
+#: library/heapq.rst:95
 msgid ""
 "The value returned may be larger than the *item* added.  If that isn't "
 "desired, consider using :func:`heappushpop` instead.  Its push/pop "
@@ -163,12 +195,72 @@ msgstr ""
 "Sa combinaison *push*/*pop* renvoie le plus petit élément des deux valeurs "
 "et laisse la plus grande sur le tas."
 
-#: library/heapq.rst:85
+#: library/heapq.rst:101
+#, fuzzy
+msgid "For max-heaps, the following functions are provided:"
+msgstr "Les fonctions suivantes sont fournies :"
+
+#: library/heapq.rst:106
+#, fuzzy
+msgid "Transform list *x* into a max-heap, in-place, in linear time."
+msgstr ""
+"Transforme une liste *x* en un tas, sans utiliser de tampon et en temps "
+"linéaire."
+
+#: library/heapq.rst:113
+#, fuzzy
+msgid ""
+"Push the value *item* onto the max-heap *heap*, maintaining the max-heap "
+"invariant."
+msgstr ""
+"Introduit la valeur *item* dans le tas *heap*, en conservant l'invariance du "
+"tas."
+
+#: library/heapq.rst:121
+#, fuzzy
+msgid ""
+"Pop and return the largest item from the max-heap *heap*, maintaining the "
+"max-heap invariant.  If the max-heap is empty, :exc:`IndexError` is raised. "
+"To access the largest item without popping it, use ``maxheap[0]``."
+msgstr ""
+"Extraie le plus petit élément de *heap* en préservant l'invariant du tas. Si "
+"le tas est vide, une exception :exc:`IndexError` est levée. Pour accéder au "
+"plus petit élément sans le retirer, utilisez ``heap[0]``."
+
+#: library/heapq.rst:130
+#, fuzzy
+msgid ""
+"Push *item* on the max-heap *heap*, then pop and return the largest item "
+"from *heap*. The combined action runs more efficiently "
+"than :func:`heappush_max` followed by a separate call to :func:`heappop_max`."
+msgstr ""
+"Introduit l'élément *item* dans le tas, puis extraie le plus petit élément "
+"de *heap*. Cette action combinée est plus efficace que :func:`heappush` "
+"suivie par un appel séparé à :func:`heappop`."
+
+#: library/heapq.rst:140
+#, fuzzy
+msgid ""
+"Pop and return the largest item from the max-heap *heap* and also push the "
+"new *item*. The max-heap size doesn't change. If the max-heap is "
+"empty, :exc:`IndexError` is raised."
+msgstr ""
+"Extraie le plus petit élément de *heap* et introduit le nouvel élément "
+"*item*. La taille du tas ne change pas. Si le tas est vide, une "
+"exception :exc:`IndexError` est levée."
+
+#: library/heapq.rst:145
+msgid ""
+"The value returned may be smaller than the *item* added.  Refer to the "
+"analogous function :func:`heapreplace` for detailed usage notes."
+msgstr ""
+
+#: library/heapq.rst:151
 msgid "The module also offers three general purpose functions based on heaps."
 msgstr ""
 "Ce module contient également trois fonctions génériques utilisant les tas."
 
-#: library/heapq.rst:90
+#: library/heapq.rst:156
 msgid ""
 "Merge multiple sorted inputs into a single sorted output (for example, merge "
 "timestamped entries from multiple log files).  Returns an :term:`iterator` "
@@ -178,7 +270,7 @@ msgstr ""
 "exemple, fusionne des entrées datées provenant de multiples journaux "
 "applicatifs). Renvoie un :term:`iterator` sur les valeurs ordonnées."
 
-#: library/heapq.rst:94
+#: library/heapq.rst:160
 msgid ""
 "Similar to ``sorted(itertools.chain(*iterables))`` but returns an iterable, "
 "does not pull the data into memory all at once, and assumes that each of the "
@@ -188,12 +280,12 @@ msgstr ""
 "itérable, ne stocke pas toutes les données en mémoire en une fois et suppose "
 "que chaque flux d'entrée est déjà classé (en ordre croissant)."
 
-#: library/heapq.rst:98
+#: library/heapq.rst:164
 msgid ""
 "Has two optional arguments which must be specified as keyword arguments."
 msgstr "A deux arguments optionnels qui doivent être fournis par mot clef."
 
-#: library/heapq.rst:100
+#: library/heapq.rst:166
 msgid ""
 "*key* specifies a :term:`key function` of one argument that is used to "
 "extract a comparison key from each input element.  The default value is "
@@ -203,7 +295,7 @@ msgstr ""
 "une clef de comparaison de chaque élément de la liste. La valeur par défaut "
 "est ``None`` (compare les éléments directement)."
 
-#: library/heapq.rst:104
+#: library/heapq.rst:170
 msgid ""
 "*reverse* is a boolean value.  If set to ``True``, then the input elements "
 "are merged as if each comparison were reversed. To achieve behavior similar "
@@ -212,15 +304,15 @@ msgid ""
 msgstr ""
 "*reverse* est une valeur booléenne. Si elle est ``True``, la liste "
 "d'éléments est fusionnée comme si toutes les comparaisons étaient inversées. "
-"Pour obtenir un comportement similaire à ``sorted(itertools."
-"chain(*iterables), reverse=True)``, tous les itérables doivent être classés "
-"par ordre décroissant."
+"Pour obtenir un comportement similaire à "
+"``sorted(itertools.chain(*iterables), reverse=True)``, tous les itérables "
+"doivent être classés par ordre décroissant."
 
-#: library/heapq.rst:109
+#: library/heapq.rst:175
 msgid "Added the optional *key* and *reverse* parameters."
 msgstr "Ajout des paramètres optionnels *key* et *reverse*."
 
-#: library/heapq.rst:115
+#: library/heapq.rst:181
 msgid ""
 "Return a list with the *n* largest elements from the dataset defined by "
 "*iterable*.  *key*, if provided, specifies a function of one argument that "
@@ -234,13 +326,13 @@ msgstr ""
 "de chaque élément dans *iterable* (par exemple, ``key=str.lower``). "
 "Équivalent à : ``sorted(iterable, key=key, reverse=True)[:n]``."
 
-#: library/heapq.rst:124
+#: library/heapq.rst:190
 msgid ""
 "Return a list with the *n* smallest elements from the dataset defined by "
 "*iterable*.  *key*, if provided, specifies a function of one argument that "
 "is used to extract a comparison key from each element in *iterable* (for "
-"example, ``key=str.lower``).  Equivalent to:  ``sorted(iterable, key=key)[:"
-"n]``."
+"example, ``key=str.lower``).  Equivalent to:  ``sorted(iterable, key=key)"
+"[:n]``."
 msgstr ""
 "Renvoie une liste contenant les *n* plus petits éléments du jeu de données "
 "défini par *iterable*. Si l'option *key* est fournie, celle-ci spécifie une "
@@ -248,13 +340,13 @@ msgstr ""
 "de chaque élément dans *iterable* (par exemple, ``key=str.lower``). "
 "Équivalent à : ``sorted(iterable, key=key)[:n]``."
 
-#: library/heapq.rst:130
+#: library/heapq.rst:196
 msgid ""
 "The latter two functions perform best for smaller values of *n*.  For larger "
 "values, it is more efficient to use the :func:`sorted` function.  Also, when "
-"``n==1``, it is more efficient to use the built-in :func:`min` and :func:"
-"`max` functions.  If repeated usage of these functions is required, consider "
-"turning the iterable into an actual heap."
+"``n==1``, it is more efficient to use the built-in :func:`min` "
+"and :func:`max` functions.  If repeated usage of these functions is "
+"required, consider turning the iterable into an actual heap."
 msgstr ""
 "Les deux fonctions précédentes sont les plus efficaces pour des petites "
 "valeurs de *n*. Pour de grandes valeurs, il est préférable d'utiliser la "
@@ -263,11 +355,11 @@ msgstr ""
 "utiliser ces fonctions de façon répétée, il est préférable de transformer "
 "l'itérable en tas."
 
-#: library/heapq.rst:138
+#: library/heapq.rst:204
 msgid "Basic Examples"
 msgstr "Exemples simples"
 
-#: library/heapq.rst:140
+#: library/heapq.rst:206
 msgid ""
 "A `heapsort <https://en.wikipedia.org/wiki/Heapsort>`_ can be implemented by "
 "pushing all values onto a heap and then popping off the smallest values one "
@@ -277,15 +369,15 @@ msgstr ""
 "implémenté en introduisant toutes les valeurs dans un tas puis en effectuant "
 "l'extraction des éléments un par un ::"
 
-#: library/heapq.rst:153
+#: library/heapq.rst:219
 msgid ""
 "This is similar to ``sorted(iterable)``, but unlike :func:`sorted`, this "
 "implementation is not stable."
 msgstr ""
-"Ceci est similaire à ``sorted(iterable)`` mais, contrairement à :func:"
-"`sorted`, cette implémentation n'est pas stable."
+"Ceci est similaire à ``sorted(iterable)`` mais, contrairement "
+"à :func:`sorted`, cette implémentation n'est pas stable."
 
-#: library/heapq.rst:156
+#: library/heapq.rst:222
 msgid ""
 "Heap elements can be tuples.  This is useful for assigning comparison values "
 "(such as task priorities) alongside the main record being tracked::"
@@ -294,11 +386,11 @@ msgstr ""
 "assigner des valeurs de comparaison (par exemple, des priorités de tâches) "
 "en plus de l'élément qui est suivi ::"
 
-#: library/heapq.rst:169
+#: library/heapq.rst:235
 msgid "Priority Queue Implementation Notes"
 msgstr "Notes d'implémentation de la file de priorité"
 
-#: library/heapq.rst:171
+#: library/heapq.rst:237
 msgid ""
 "A `priority queue <https://en.wikipedia.org/wiki/Priority_queue>`_ is common "
 "use for a heap, and it presents several implementation challenges:"
@@ -307,7 +399,7 @@ msgstr ""
 "File_de_priorit%C3%A9>`_ est une application courante des tas et présente "
 "plusieurs défis d'implémentation :"
 
-#: library/heapq.rst:174
+#: library/heapq.rst:240
 msgid ""
 "Sort stability:  how do you get two tasks with equal priorities to be "
 "returned in the order they were originally added?"
@@ -315,7 +407,7 @@ msgstr ""
 "Stabilité du classement : comment s'assurer que deux tâches avec la même "
 "priorité sont renvoyées dans l'ordre de leur ajout ?"
 
-#: library/heapq.rst:177
+#: library/heapq.rst:243
 msgid ""
 "Tuple comparison breaks for (priority, task) pairs if the priorities are "
 "equal and the tasks do not have a default comparison order."
@@ -323,7 +415,7 @@ msgstr ""
 "La comparaison des couples (priorité, tâche) échoue si les priorités sont "
 "identiques et que les tâches n'ont pas de relation d'ordre par défaut."
 
-#: library/heapq.rst:180
+#: library/heapq.rst:246
 msgid ""
 "If the priority of a task changes, how do you move it to a new position in "
 "the heap?"
@@ -331,7 +423,7 @@ msgstr ""
 "Si la priorité d'une tâche change, comment la déplacer à sa nouvelle "
 "position dans le tas ?"
 
-#: library/heapq.rst:183
+#: library/heapq.rst:249
 msgid ""
 "Or if a pending task needs to be deleted, how do you find it and remove it "
 "from the queue?"
@@ -339,7 +431,7 @@ msgstr ""
 "Si une tâche en attente doit être supprimée, comment la trouver et la "
 "supprimer de la file ?"
 
-#: library/heapq.rst:186
+#: library/heapq.rst:252
 msgid ""
 "A solution to the first two challenges is to store entries as 3-element list "
 "including the priority, an entry count, and the task.  The entry count "
@@ -355,7 +447,7 @@ msgstr ""
 "comparaison des triplets ne va jamais chercher à comparer des tâches entre "
 "elles."
 
-#: library/heapq.rst:192
+#: library/heapq.rst:258
 msgid ""
 "Another solution to the problem of non-comparable tasks is to create a "
 "wrapper class that ignores the task item and only compares the priority "
@@ -365,7 +457,7 @@ msgstr ""
 "d'ordre est de créer une classe d'encapsulation qui ignore l'élément tâche "
 "et ne compare que le champ priorité ::"
 
-#: library/heapq.rst:203
+#: library/heapq.rst:269
 msgid ""
 "The remaining challenges revolve around finding a pending task and making "
 "changes to its priority or removing it entirely.  Finding a task can be done "
@@ -375,7 +467,7 @@ msgstr ""
 "priorité ou la supprimer. Trouver une tâche peut être réalisé à l'aide d'un "
 "dictionnaire pointant vers une entrée dans la file."
 
-#: library/heapq.rst:207
+#: library/heapq.rst:273
 msgid ""
 "Removing the entry or changing its priority is more difficult because it "
 "would break the heap structure invariants.  So, a possible solution is to "
@@ -386,11 +478,11 @@ msgstr ""
 "marquer l'entrée comme supprimée et d'ajouter une nouvelle entrée avec sa "
 "priorité modifiée ::"
 
-#: library/heapq.rst:241
+#: library/heapq.rst:307
 msgid "Theory"
 msgstr "Théorie"
 
-#: library/heapq.rst:243
+#: library/heapq.rst:309
 msgid ""
 "Heaps are arrays for which ``a[k] <= a[2*k+1]`` and ``a[k] <= a[2*k+2]`` for "
 "all *k*, counting elements from 0.  For the sake of comparison, non-existing "
@@ -403,7 +495,7 @@ msgstr ""
 "étant infinis. L'intérêt des tas est que ``a[0]`` est toujours leur plus "
 "petit élément."
 
-#: library/heapq.rst:248
+#: library/heapq.rst:314
 msgid ""
 "The strange invariant above is meant to be an efficient memory "
 "representation for a tournament.  The numbers below are *k*, not ``a[k]``::"
@@ -411,7 +503,7 @@ msgstr ""
 "L'invariant étrange ci-dessus est une représentation efficace en mémoire "
 "d'un tournoi. Les nombres ci-dessous sont *k* et non ``a[k]`` ::"
 
-#: library/heapq.rst:261
+#: library/heapq.rst:327
 msgid ""
 "In the tree above, each cell *k* is topping ``2*k+1`` and ``2*k+2``. In a "
 "usual binary tournament we see in sports, each cell is the winner over the "
@@ -435,7 +527,7 @@ msgstr ""
 "trois éléments différents, mais le nœud supérieur « gagne » contre les deux "
 "nœuds inférieurs."
 
-#: library/heapq.rst:270
+#: library/heapq.rst:336
 #, fuzzy
 msgid ""
 "If this heap invariant is protected at all time, index 0 is clearly the "
@@ -456,7 +548,7 @@ msgstr ""
 "l'arbre. En itérant sur tous les éléments, le classement s'effectue en O(n "
 "log n) opérations."
 
-#: library/heapq.rst:277
+#: library/heapq.rst:343
 msgid ""
 "A nice feature of this sort is that you can efficiently insert new items "
 "while the sort is going on, provided that the inserted items are not "
@@ -478,7 +570,7 @@ msgstr ""
 "implémenter un ordonnanceur (et c'est ce que j'ai utilisé pour mon "
 "séquenceur MIDI ☺)."
 
-#: library/heapq.rst:286
+#: library/heapq.rst:352
 msgid ""
 "Various structures for implementing schedulers have been extensively "
 "studied, and heaps are good for this, as they are reasonably speedy, the "
@@ -492,7 +584,7 @@ msgstr ""
 "trop du cas moyen. S'il existe des représentations qui sont plus efficaces "
 "en général, les pires cas peuvent être terriblement mauvais."
 
-#: library/heapq.rst:292
+#: library/heapq.rst:358
 msgid ""
 "Heaps are also very useful in big disk sorts.  You most probably all know "
 "that a big sort implies producing \"runs\" (which are pre-sorted sequences, "
@@ -518,7 +610,7 @@ msgstr ""
 "de la mémoire pour une entrée aléatoire et bien mieux pour une entrée "
 "approximativement triée."
 
-#: library/heapq.rst:302
+#: library/heapq.rst:368
 msgid ""
 "Moreover, if you output the 0'th item on disk and get an input which may not "
 "fit in the current tournament (because the value \"wins\" over the last "
@@ -537,7 +629,7 @@ msgstr ""
 "décroît. Lorsque le premier tas a complètement disparu, vous échangez les "
 "tas et démarrez une nouvelle séquence. Malin et plutôt efficace !"
 
-#: library/heapq.rst:310
+#: library/heapq.rst:376
 msgid ""
 "In a word, heaps are useful memory structures to know.  I use them in a few "
 "applications, and I think it is good to keep a 'heap' module around. :-)"
@@ -546,11 +638,11 @@ msgstr ""
 "connaître. Je les utilise dans quelques applications et je pense qu'il est "
 "bon de garder le module *heap* sous le coude. ☺"
 
-#: library/heapq.rst:314
+#: library/heapq.rst:380
 msgid "Footnotes"
 msgstr "Notes"
 
-#: library/heapq.rst:315
+#: library/heapq.rst:381
 msgid ""
 "The disk balancing algorithms which are current, nowadays, are more annoying "
 "than clever, and this is a consequence of the seeking capabilities of the "

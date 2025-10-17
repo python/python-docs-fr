@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-01 00:16+0100\n"
+"POT-Creation-Date: 2025-10-17 09:58+0200\n"
 "PO-Revision-Date: 2017-08-10 00:59+0200\n"
 "Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -22,8 +22,8 @@ msgstr ""
 #: library/fcntl.rst:16
 msgid ""
 "This module performs file and I/O control on file descriptors. It is an "
-"interface to the :c:func:`fcntl` and :c:func:`ioctl` Unix routines. See the :"
-"manpage:`fcntl(2)` and :manpage:`ioctl(2)` Unix manual pages for full "
+"interface to the :c:func:`fcntl` and :c:func:`ioctl` Unix routines. See "
+"the :manpage:`fcntl(2)` and :manpage:`ioctl(2)` Unix manual pages for full "
 "details."
 msgstr ""
 
@@ -34,10 +34,10 @@ msgstr ""
 #: library/fcntl.rst:23
 msgid ""
 "All functions in this module take a file descriptor *fd* as their first "
-"argument.  This can be an integer file descriptor, such as returned by ``sys."
-"stdin.fileno()``, or an :class:`io.IOBase` object, such as ``sys.stdin`` "
-"itself, which provides a :meth:`~io.IOBase.fileno` that returns a genuine "
-"file descriptor."
+"argument.  This can be an integer file descriptor, such as returned by "
+"``sys.stdin.fileno()``, or an :class:`io.IOBase` object, such as "
+"``sys.stdin`` itself, which provides a :meth:`~io.IOBase.fileno` that "
+"returns a genuine file descriptor."
 msgstr ""
 
 #: library/fcntl.rst:29
@@ -56,8 +56,8 @@ msgstr ""
 #: library/fcntl.rst:38
 msgid ""
 "On macOS, the :mod:`!fcntl` module exposes the ``F_GETPATH`` constant, which "
-"obtains the path of a file from a file descriptor. On Linux(>=3.15), the :"
-"mod:`!fcntl` module exposes the ``F_OFD_GETLK``, ``F_OFD_SETLK`` and "
+"obtains the path of a file from a file descriptor. On Linux(>=3.15), "
+"the :mod:`!fcntl` module exposes the ``F_OFD_GETLK``, ``F_OFD_SETLK`` and "
 "``F_OFD_SETLKW`` constants, which are used when working with open file "
 "description locks."
 msgstr ""
@@ -106,106 +106,140 @@ msgid ""
 msgstr ""
 
 #: library/fcntl.rst:82
+msgid ""
+"On Linux >= 6.1, the :mod:`!fcntl` module exposes the ``F_DUPFD_QUERY`` to "
+"query a file descriptor pointing to the same file."
+msgstr ""
+
+#: library/fcntl.rst:86
 msgid "The module defines the following functions:"
 msgstr "Le module définit les fonctions suivantes :"
 
-#: library/fcntl.rst:87
+#: library/fcntl.rst:91
 msgid ""
 "Perform the operation *cmd* on file descriptor *fd* (file objects providing "
 "a :meth:`~io.IOBase.fileno` method are accepted as well).  The values used "
 "for *cmd* are operating system dependent, and are available as constants in "
 "the :mod:`fcntl` module, using the same names as used in the relevant C "
-"header files. The argument *arg* can either be an integer value, or a :class:"
-"`bytes` object. With an integer value, the return value of this function is "
-"the integer return value of the C :c:func:`fcntl` call.  When the argument "
-"is bytes it represents a binary structure, e.g. created by :func:`struct."
-"pack`. The binary data is copied to a buffer whose address is passed to the "
-"C :c:func:`fcntl` call.  The return value after a successful call is the "
-"contents of the buffer, converted to a :class:`bytes` object. The length of "
-"the returned object will be the same as the length of the *arg* argument. "
-"This is limited to 1024 bytes. If the information returned in the buffer by "
-"the operating system is larger than 1024 bytes, this is most likely to "
-"result in a segmentation violation or a more subtle data corruption."
+"header files. The argument *arg* can either be an integer value, "
+"a :term:`bytes-like object`, or a string. The type and size of *arg* must "
+"match the type and size of the argument of the operation as specified in the "
+"relevant C documentation."
 msgstr ""
 
-#: library/fcntl.rst:104
+#: library/fcntl.rst:100
+msgid ""
+"When *arg* is an integer, the function returns the integer return value of "
+"the C :c:func:`fcntl` call."
+msgstr ""
+
+#: library/fcntl.rst:103
+msgid ""
+"When the argument is bytes-like object, it represents a binary structure, "
+"for example, created by :func:`struct.pack`. A string value is encoded to "
+"binary using the UTF-8 encoding. The binary data is copied to a buffer whose "
+"address is passed to the C :c:func:`fcntl` call.  The return value after a "
+"successful call is the contents of the buffer, converted to a :class:`bytes` "
+"object. The length of the returned object will be the same as the length of "
+"the *arg* argument. This is limited to 1024 bytes."
+msgstr ""
+
+#: library/fcntl.rst:112
 msgid "If the :c:func:`fcntl` call fails, an :exc:`OSError` is raised."
 msgstr ""
 
-#: library/fcntl.rst:106
+#: library/fcntl.rst:115
+msgid ""
+"If the type or the size of *arg* does not match the type or size of the "
+"argument of the operation (for example, if an integer is passed when a "
+"pointer is expected, or the information returned in the buffer by the "
+"operating system is larger than 1024 bytes), this is most likely to result "
+"in a segmentation violation or a more subtle data corruption."
+msgstr ""
+
+#: library/fcntl.rst:122
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``fcntl.fcntl`` with arguments "
 "``fd``, ``cmd``, ``arg``."
 msgstr ""
 
-#: library/fcntl.rst:111
+#: library/fcntl.rst:124
+msgid ""
+"Add support of arbitrary :term:`bytes-like objects <bytes-like object>`, not "
+"only :class:`bytes`."
+msgstr ""
+
+#: library/fcntl.rst:131
 msgid ""
 "This function is identical to the :func:`~fcntl.fcntl` function, except that "
 "the argument handling is even more complicated."
 msgstr ""
 
-#: library/fcntl.rst:114
-msgid ""
-"The *request* parameter is limited to values that can fit in 32-bits. "
-"Additional constants of interest for use as the *request* argument can be "
-"found in the :mod:`termios` module, under the same names as used in the "
-"relevant C header files."
-msgstr ""
-
-#: library/fcntl.rst:119
-msgid ""
-"The parameter *arg* can be one of an integer, an object supporting the read-"
-"only buffer interface (like :class:`bytes`) or an object supporting the read-"
-"write buffer interface (like :class:`bytearray`)."
-msgstr ""
-
-#: library/fcntl.rst:123
-msgid ""
-"In all but the last case, behaviour is as for the :func:`~fcntl.fcntl` "
-"function."
-msgstr ""
-
-#: library/fcntl.rst:126
-msgid ""
-"If a mutable buffer is passed, then the behaviour is determined by the value "
-"of the *mutate_flag* parameter."
-msgstr ""
-
-#: library/fcntl.rst:129
-msgid ""
-"If it is false, the buffer's mutability is ignored and behaviour is as for a "
-"read-only buffer, except that the 1024 byte limit mentioned above is avoided "
-"-- so long as the buffer you pass is at least as long as what the operating "
-"system wants to put there, things should work."
-msgstr ""
-
 #: library/fcntl.rst:134
 msgid ""
-"If *mutate_flag* is true (the default), then the buffer is (in effect) "
-"passed to the underlying :func:`ioctl` system call, the latter's return code "
-"is passed back to the calling Python, and the buffer's new contents reflect "
-"the action of the :func:`ioctl`.  This is a slight simplification, because "
-"if the supplied buffer is less than 1024 bytes long it is first copied into "
-"a static buffer 1024 bytes long which is then passed to :func:`ioctl` and "
-"copied back into the supplied buffer."
+"The *request* parameter is limited to values that can fit in 32-bits or 64-"
+"bits, depending on the platform. Additional constants of interest for use as "
+"the *request* argument can be found in the :mod:`termios` module, under the "
+"same names as used in the relevant C header files."
 msgstr ""
 
-#: library/fcntl.rst:142
+#: library/fcntl.rst:140
+msgid ""
+"The parameter *arg* can be an integer, a :term:`bytes-like object`, or a "
+"string. The type and size of *arg* must match the type and size of the "
+"argument of the operation as specified in the relevant C documentation."
+msgstr ""
+
+#: library/fcntl.rst:145
+msgid ""
+"If *arg* does not support the read-write buffer interface or the "
+"*mutate_flag* is false, behavior is as for the :func:`~fcntl.fcntl` function."
+msgstr ""
+
+#: library/fcntl.rst:149
+msgid ""
+"If *arg* supports the read-write buffer interface (like :class:`bytearray`) "
+"and *mutate_flag* is true (the default), then the buffer is (in effect) "
+"passed to the underlying :c:func:`!ioctl` system call, the latter's return "
+"code is passed back to the calling Python, and the buffer's new contents "
+"reflect the action of the :c:func:`ioctl`.  This is a slight simplification, "
+"because if the supplied buffer is less than 1024 bytes long it is first "
+"copied into a static buffer 1024 bytes long which is then passed "
+"to :func:`ioctl` and copied back into the supplied buffer."
+msgstr ""
+
+#: library/fcntl.rst:158
 msgid ""
 "If the :c:func:`ioctl` call fails, an :exc:`OSError` exception is raised."
 msgstr ""
 
-#: library/fcntl.rst:144
+#: library/fcntl.rst:161
+msgid ""
+"If the type or size of *arg* does not match the type or size of the "
+"operation's argument (for example, if an integer is passed when a pointer is "
+"expected, or the information returned in the buffer by the operating system "
+"is larger than 1024 bytes, or the size of the mutable bytes-like object is "
+"too small), this is most likely to result in a segmentation violation or a "
+"more subtle data corruption."
+msgstr ""
+
+#: library/fcntl.rst:169
 msgid "An example::"
 msgstr "Un exemple ::"
 
-#: library/fcntl.rst:157
+#: library/fcntl.rst:182
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``fcntl.ioctl`` with arguments "
 "``fd``, ``request``, ``arg``."
 msgstr ""
 
-#: library/fcntl.rst:162
+#: library/fcntl.rst:184
+msgid ""
+"The GIL is always released during a system call. System calls failing with "
+"EINTR are automatically retried."
+msgstr ""
+
+#: library/fcntl.rst:190
 msgid ""
 "Perform the lock operation *operation* on file descriptor *fd* (file objects "
 "providing a :meth:`~io.IOBase.fileno` method are accepted as well). See the "
@@ -213,90 +247,90 @@ msgid ""
 "function is emulated using :c:func:`fcntl`.)"
 msgstr ""
 
-#: library/fcntl.rst:167
+#: library/fcntl.rst:195
 msgid ""
 "If the :c:func:`flock` call fails, an :exc:`OSError` exception is raised."
 msgstr ""
 
-#: library/fcntl.rst:169
+#: library/fcntl.rst:197
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``fcntl.flock`` with arguments "
 "``fd``, ``operation``."
 msgstr ""
 
-#: library/fcntl.rst:174
+#: library/fcntl.rst:202
 msgid ""
 "This is essentially a wrapper around the :func:`~fcntl.fcntl` locking calls. "
-"*fd* is the file descriptor (file objects providing a :meth:`~io.IOBase."
-"fileno` method are accepted as well) of the file to lock or unlock, and "
-"*cmd* is one of the following values:"
+"*fd* is the file descriptor (file objects providing "
+"a :meth:`~io.IOBase.fileno` method are accepted as well) of the file to lock "
+"or unlock, and *cmd* is one of the following values:"
 msgstr ""
 
-#: library/fcntl.rst:181
+#: library/fcntl.rst:209
 msgid "Release an existing lock."
 msgstr ""
 
-#: library/fcntl.rst:185
+#: library/fcntl.rst:213
 msgid "Acquire a shared lock."
 msgstr ""
 
-#: library/fcntl.rst:189
+#: library/fcntl.rst:217
 msgid "Acquire an exclusive lock."
 msgstr ""
 
-#: library/fcntl.rst:193
+#: library/fcntl.rst:221
 msgid ""
 "Bitwise OR with any of the other three ``LOCK_*`` constants to make the "
 "request non-blocking."
 msgstr ""
 
-#: library/fcntl.rst:196
+#: library/fcntl.rst:224
 msgid ""
-"If :const:`!LOCK_NB` is used and the lock cannot be acquired, an :exc:"
-"`OSError` will be raised and the exception will have an *errno* attribute "
-"set to :const:`~errno.EACCES` or :const:`~errno.EAGAIN` (depending on the "
-"operating system; for portability, check for both values).  On at least some "
-"systems, :const:`!LOCK_EX` can only be used if the file descriptor refers to "
-"a file opened for writing."
+"If :const:`!LOCK_NB` is used and the lock cannot be acquired, "
+"an :exc:`OSError` will be raised and the exception will have an *errno* "
+"attribute set to :const:`~errno.EACCES` or :const:`~errno.EAGAIN` (depending "
+"on the operating system; for portability, check for both values).  On at "
+"least some systems, :const:`!LOCK_EX` can only be used if the file "
+"descriptor refers to a file opened for writing."
 msgstr ""
 
-#: library/fcntl.rst:203
+#: library/fcntl.rst:231
 msgid ""
 "*len* is the number of bytes to lock, *start* is the byte offset at which "
-"the lock starts, relative to *whence*, and *whence* is as with :func:`io."
-"IOBase.seek`, specifically:"
+"the lock starts, relative to *whence*, and *whence* is as "
+"with :func:`io.IOBase.seek`, specifically:"
 msgstr ""
 
-#: library/fcntl.rst:207
+#: library/fcntl.rst:235
 msgid "``0`` -- relative to the start of the file (:const:`os.SEEK_SET`)"
 msgstr ""
 
-#: library/fcntl.rst:208
+#: library/fcntl.rst:236
 msgid "``1`` -- relative to the current buffer position (:const:`os.SEEK_CUR`)"
 msgstr ""
 
-#: library/fcntl.rst:209
+#: library/fcntl.rst:237
 msgid "``2`` -- relative to the end of the file (:const:`os.SEEK_END`)"
 msgstr ""
 
-#: library/fcntl.rst:211
+#: library/fcntl.rst:239
 msgid ""
 "The default for *start* is 0, which means to start at the beginning of the "
 "file. The default for *len* is 0 which means to lock to the end of the "
 "file.  The default for *whence* is also 0."
 msgstr ""
 
-#: library/fcntl.rst:215
+#: library/fcntl.rst:243
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``fcntl.lockf`` with arguments "
 "``fd``, ``cmd``, ``len``, ``start``, ``whence``."
 msgstr ""
 
-#: library/fcntl.rst:217
+#: library/fcntl.rst:245
 msgid "Examples (all on a SVR4 compliant system)::"
 msgstr ""
 
-#: library/fcntl.rst:227
+#: library/fcntl.rst:255
 msgid ""
 "Note that in the first example the return value variable *rv* will hold an "
 "integer value; in the second example it will hold a :class:`bytes` object.  "
@@ -304,11 +338,11 @@ msgid ""
 "therefore using the :func:`flock` call may be better."
 msgstr ""
 
-#: library/fcntl.rst:235
+#: library/fcntl.rst:263
 msgid "Module :mod:`os`"
 msgstr "Module :mod:`os`"
 
-#: library/fcntl.rst:236
+#: library/fcntl.rst:264
 msgid ""
 "If the locking flags :const:`~os.O_SHLOCK` and :const:`~os.O_EXLOCK` are "
 "present in the :mod:`os` module (on BSD only), the :func:`os.open` function "

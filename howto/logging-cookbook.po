@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-01 00:16+0100\n"
+"POT-Creation-Date: 2025-10-17 09:58+0200\n"
 "PO-Revision-Date: 2023-02-01 22:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -243,8 +243,8 @@ msgstr ""
 #: howto/logging-cookbook.rst:291
 msgid "Send messages of severity ``DEBUG`` and above to file ``app.log``"
 msgstr ""
-"envoyer les messages de niveau ``DEBUG`` et au-dessus vers le fichier ``app."
-"log``."
+"envoyer les messages de niveau ``DEBUG`` et au-dessus vers le fichier "
+"``app.log``."
 
 #: howto/logging-cookbook.rst:293
 msgid "Suppose you configure logging with the following JSON:"
@@ -262,9 +262,9 @@ msgid ""
 "it to the relevant handler. This can be configured by adding a ``filters`` "
 "section parallel to ``formatters`` and ``handlers``:"
 msgstr ""
-"Cette configuration fait *presque* ce que nous voulons, sauf que ``sys."
-"stdout`` affiche les messages de gravité ``ERROR`` et supérieurs ainsi que "
-"les messages ``INFO`` et ``WARNING``. Pour éviter cela, nous pouvons "
+"Cette configuration fait *presque* ce que nous voulons, sauf que "
+"``sys.stdout`` affiche les messages de gravité ``ERROR`` et supérieurs ainsi "
+"que les messages ``INFO`` et ``WARNING``. Pour éviter cela, nous pouvons "
 "configurer un filtre qui exclut ces messages et l'ajouter au gestionnaire "
 "approprié. Effectuons la configuration en ajoutant une section ``filters`` "
 "parallèle à ``formatters`` et ``handlers`` :"
@@ -289,9 +289,9 @@ msgid ""
 "a function which only returns ``True`` if the level of the passed in record "
 "is at or below the specified level. Note that in this example I have defined "
 "the ``filter_maker`` in a test script ``main.py`` that I run from the "
-"command line, so its module will be ``__main__`` - hence the ``__main__."
-"filter_maker`` in the filter configuration. You will need to change that if "
-"you define it in a different module."
+"command line, so its module will be ``__main__`` - hence the "
+"``__main__.filter_maker`` in the filter configuration. You will need to "
+"change that if you define it in a different module."
 msgstr ""
 "Elle convertit la chaîne transmise en argument vers un niveau numérique puis "
 "renvoie une fonction qui ne renvoie ``True`` que si le niveau de "
@@ -354,13 +354,13 @@ msgstr ""
 
 #: howto/logging-cookbook.rst:555
 msgid ""
-"A common culprit which demonstrates sluggish behaviour is the :class:"
-"`SMTPHandler`: sending emails can take a long time, for a number of reasons "
-"outside the developer's control (for example, a poorly performing mail or "
-"network infrastructure). But almost any network-based handler can block: "
-"Even a :class:`SocketHandler` operation may do a DNS query under the hood "
-"which is too slow (and this query can be deep in the socket library code, "
-"below the Python layer, and outside your control)."
+"A common culprit which demonstrates sluggish behaviour is "
+"the :class:`SMTPHandler`: sending emails can take a long time, for a number "
+"of reasons outside the developer's control (for example, a poorly performing "
+"mail or network infrastructure). But almost any network-based handler can "
+"block: Even a :class:`SocketHandler` operation may do a DNS query under the "
+"hood which is too slow (and this query can be deep in the socket library "
+"code, below the Python layer, and outside your control)."
 msgstr ""
 "Un gestionnaire classiquement lent est le :class:`SMTPHandler` : l’envoi d’e-"
 "mails peut prendre beaucoup de temps, pour un certain nombre de raisons "
@@ -401,12 +401,12 @@ msgstr ""
 #: howto/logging-cookbook.rst:574
 msgid ""
 "The second part of the solution is :class:`QueueListener`, which has been "
-"designed as the counterpart to :class:`QueueHandler`.  A :class:"
-"`QueueListener` is very simple: it's passed a queue and some handlers, and "
-"it fires up an internal thread which listens to its queue for LogRecords "
-"sent from ``QueueHandlers`` (or any other source of ``LogRecords``, for that "
-"matter). The ``LogRecords`` are removed from the queue and passed to the "
-"handlers for processing."
+"designed as the counterpart to :class:`QueueHandler`.  "
+"A :class:`QueueListener` is very simple: it's passed a queue and some "
+"handlers, and it fires up an internal thread which listens to its queue for "
+"LogRecords sent from ``QueueHandlers`` (or any other source of "
+"``LogRecords``, for that matter). The ``LogRecords`` are removed from the "
+"queue and passed to the handlers for processing."
 msgstr ""
 "La deuxième partie de la solution est la classe :class:`QueueListener`, "
 "conçue comme l’homologue de :class:`QueueHandler`. Un :class:`QueueListener` "
@@ -445,10 +445,10 @@ msgid ""
 "Although the earlier discussion wasn't specifically talking about async "
 "code, but rather about slow logging handlers, it should be noted that when "
 "logging from async code, network and even file handlers could lead to "
-"problems (blocking the event loop) because some logging is done from :mod:"
-"`asyncio` internals. It might be best, if any async code is used in an "
-"application, to use the above approach for logging, so that any blocking "
-"code runs only in the ``QueueListener`` thread."
+"problems (blocking the event loop) because some logging is done "
+"from :mod:`asyncio` internals. It might be best, if any async code is used "
+"in an application, to use the above approach for logging, so that any "
+"blocking code runs only in the ``QueueListener`` thread."
 msgstr ""
 "bien que la discussion précédente n'aborde pas spécifiquement l'utilisation "
 "de code asynchrone, mais concerne les gestionnaires de journalisation lents, "
@@ -482,30 +482,36 @@ msgstr ""
 "``QueueListener`` compare le niveau de chaque message avec le niveau défini "
 "dans chaque gestionnaire et ne transmet le message que si c’est opportun."
 
-#: howto/logging-cookbook.rst:632
+#: howto/logging-cookbook.rst:629
+msgid ""
+"The :class:`QueueListener` can be started (and stopped) via "
+"the :keyword:`with` statement. For example:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:645
 msgid "Sending and receiving logging events across a network"
 msgstr "Envoi et réception d’événements de journalisation à travers le réseau"
 
-#: howto/logging-cookbook.rst:634
+#: howto/logging-cookbook.rst:647
 msgid ""
 "Let's say you want to send logging events across a network, and handle them "
-"at the receiving end. A simple way of doing this is attaching a :class:"
-"`SocketHandler` instance to the root logger at the sending end::"
+"at the receiving end. A simple way of doing this is attaching "
+"a :class:`SocketHandler` instance to the root logger at the sending end::"
 msgstr ""
 "Supposons que vous souhaitiez envoyer des événements de journalisation sur "
 "un réseau et les traiter à la réception. Une façon simple de faire est "
 "d’attacher une instance :class:`SocketHandler` à la journalisation racine de "
 "l’émetteur ::"
 
-#: howto/logging-cookbook.rst:662
+#: howto/logging-cookbook.rst:675
 msgid ""
-"At the receiving end, you can set up a receiver using the :mod:"
-"`socketserver` module. Here is a basic working example::"
+"At the receiving end, you can set up a receiver using "
+"the :mod:`socketserver` module. Here is a basic working example::"
 msgstr ""
-"Vous pouvez configurer le récepteur en utilisant le module :mod:"
-"`socketserver`. Voici un exemple élémentaire ::"
+"Vous pouvez configurer le récepteur en utilisant le "
+"module :mod:`socketserver`. Voici un exemple élémentaire ::"
 
-#: howto/logging-cookbook.rst:750
+#: howto/logging-cookbook.rst:763
 msgid ""
 "First run the server, and then the client. On the client side, nothing is "
 "printed on the console; on the server side, you should see something like:"
@@ -513,7 +519,7 @@ msgstr ""
 "Lancez d’abord le serveur, puis le client. Côté client, rien ne s’affiche "
 "sur la console ; côté serveur, vous devez voir quelque chose comme ça :"
 
-#: howto/logging-cookbook.rst:762
+#: howto/logging-cookbook.rst:775
 #, fuzzy
 msgid ""
 "Note that there are some security issues with pickle in some scenarios. If "
@@ -524,16 +530,17 @@ msgid ""
 msgstr ""
 "Notez que ``pickle`` introduit des problèmes de sécurité dans certains "
 "scénarios. Si vous êtes concerné, vous pouvez utiliser une sérialisation "
-"alternative en surchargeant la méthode :meth:`~handlers.SocketHandler."
-"makePickle` par votre propre implémentation, ainsi qu’en adaptant le script "
-"ci-dessus pour utiliser votre sérialisation."
+"alternative en surchargeant la "
+"méthode :meth:`~handlers.SocketHandler.makePickle` par votre propre "
+"implémentation, ainsi qu’en adaptant le script ci-dessus pour utiliser votre "
+"sérialisation."
 
-#: howto/logging-cookbook.rst:770
+#: howto/logging-cookbook.rst:783
 msgid "Running a logging socket listener in production"
 msgstr ""
 "Journalisation en production à l’aide d’un connecteur en écoute sur le réseau"
 
-#: howto/logging-cookbook.rst:774
+#: howto/logging-cookbook.rst:787
 msgid ""
 "To run a logging listener in production, you may need to use a process-"
 "management tool such as `Supervisor <http://supervisord.org/>`_. `Here is a "
@@ -546,27 +553,27 @@ msgstr ""
 "dans ce `Gist <socket-listener-gist_>`__ des gabarits pour assurer cette "
 "fonction avec *Supervisor*. Il est composé des fichiers suivants :"
 
-#: howto/logging-cookbook.rst:781
+#: howto/logging-cookbook.rst:794
 msgid "File"
 msgstr "Fichier"
 
-#: howto/logging-cookbook.rst:781
+#: howto/logging-cookbook.rst:794
 msgid "Purpose"
 msgstr "Objectif"
 
-#: howto/logging-cookbook.rst:783
+#: howto/logging-cookbook.rst:796
 msgid ":file:`prepare.sh`"
 msgstr ":file:`prepare.sh`"
 
-#: howto/logging-cookbook.rst:783
+#: howto/logging-cookbook.rst:796
 msgid "A Bash script to prepare the environment for testing"
 msgstr "Script Bash pour préparer l'environnement de test"
 
-#: howto/logging-cookbook.rst:786
+#: howto/logging-cookbook.rst:799
 msgid ":file:`supervisor.conf`"
 msgstr ":file:`supervisor.conf`"
 
-#: howto/logging-cookbook.rst:786
+#: howto/logging-cookbook.rst:799
 msgid ""
 "The Supervisor configuration file, which has entries for the listener and a "
 "multi-process web application"
@@ -574,11 +581,11 @@ msgstr ""
 "Fichier de configuration de *Supervisor*, avec les entrées pour le "
 "connecteur en écoute et l'application web multi-processus"
 
-#: howto/logging-cookbook.rst:790
+#: howto/logging-cookbook.rst:803
 msgid ":file:`ensure_app.sh`"
 msgstr ":file:`ensure_app.sh`"
 
-#: howto/logging-cookbook.rst:790
+#: howto/logging-cookbook.rst:803
 msgid ""
 "A Bash script to ensure that Supervisor is running with the above "
 "configuration"
@@ -586,11 +593,11 @@ msgstr ""
 "Script Bash pour s'assurer que *Supervisor* fonctionne bien avec la "
 "configuration ci-dessus"
 
-#: howto/logging-cookbook.rst:793
+#: howto/logging-cookbook.rst:806
 msgid ":file:`log_listener.py`"
 msgstr ":file:`log_listener.py`"
 
-#: howto/logging-cookbook.rst:793
+#: howto/logging-cookbook.rst:806
 msgid ""
 "The socket listener program which receives log events and records them to a "
 "file"
@@ -598,35 +605,35 @@ msgstr ""
 "Programme en écoute sur le réseau qui reçoit les événements de "
 "journalisation et les enregistre dans un fichier"
 
-#: howto/logging-cookbook.rst:796
+#: howto/logging-cookbook.rst:809
 msgid ":file:`main.py`"
 msgstr ":file:`main.py`"
 
-#: howto/logging-cookbook.rst:796
+#: howto/logging-cookbook.rst:809
 msgid ""
 "A simple web application which performs logging via a socket connected to "
 "the listener"
 msgstr "Application web simple qui journalise *via* un connecteur réseau"
 
-#: howto/logging-cookbook.rst:799
+#: howto/logging-cookbook.rst:812
 msgid ":file:`webapp.json`"
 msgstr ":file:`webapp.json`"
 
-#: howto/logging-cookbook.rst:799
+#: howto/logging-cookbook.rst:812
 msgid "A JSON configuration file for the web application"
 msgstr "Fichier JSON de configuration de l'application web"
 
-#: howto/logging-cookbook.rst:801
+#: howto/logging-cookbook.rst:814
 msgid ":file:`client.py`"
 msgstr ":file:`client.py`"
 
-#: howto/logging-cookbook.rst:801
+#: howto/logging-cookbook.rst:814
 msgid "A Python script to exercise the web application"
 msgstr ""
 "Script Python qui interagit avec l'application web pour effectuer des appels "
 "à la journalisation"
 
-#: howto/logging-cookbook.rst:804
+#: howto/logging-cookbook.rst:817
 msgid ""
 "The web application uses `Gunicorn <https://gunicorn.org/>`_, which is a "
 "popular web application server that starts multiple worker processes to "
@@ -641,25 +648,25 @@ msgstr ""
 "conflit les uns avec les autres — ils passent tous par le connecteur en "
 "écoute."
 
-#: howto/logging-cookbook.rst:809
+#: howto/logging-cookbook.rst:822
 msgid "To test these files, do the following in a POSIX environment:"
 msgstr ""
 "Pour tester ces fichiers, suivez cette procédure dans un environnement "
 "POSIX :"
 
-#: howto/logging-cookbook.rst:811
+#: howto/logging-cookbook.rst:824
 msgid ""
-"Download `the Gist <socket-listener-gist_>`__ as a ZIP archive using the :"
-"guilabel:`Download ZIP` button."
+"Download `the Gist <socket-listener-gist_>`__ as a ZIP archive using "
+"the :guilabel:`Download ZIP` button."
 msgstr ""
 "Téléchargez l'archive ZIP du `Gist  <socket-listener-gist_>`__  à l'aide du "
 "bouton :guilabel:`Download ZIP`."
 
-#: howto/logging-cookbook.rst:814
+#: howto/logging-cookbook.rst:827
 msgid "Unzip the above files from the archive into a scratch directory."
 msgstr "Décompressez les fichiers de l'archive dans un répertoire de travail."
 
-#: howto/logging-cookbook.rst:816
+#: howto/logging-cookbook.rst:829
 msgid ""
 "In the scratch directory, run ``bash prepare.sh`` to get things ready. This "
 "creates a :file:`run` subdirectory to contain Supervisor-related and log "
@@ -672,7 +679,7 @@ msgstr ""
 "répertoire :file:`venv` pour contenir un environnement virtuel dans lequel "
 "``bottle``, ``gunicorn`` et ``supervisor`` sont installés."
 
-#: howto/logging-cookbook.rst:821
+#: howto/logging-cookbook.rst:834
 msgid ""
 "Run ``bash ensure_app.sh`` to ensure that Supervisor is running with the "
 "above configuration."
@@ -680,7 +687,7 @@ msgstr ""
 "Exécutez ``bash ensure_app.sh`` pour vous assurer que *Supervisor* s'exécute "
 "avec la configuration ci-dessus."
 
-#: howto/logging-cookbook.rst:824
+#: howto/logging-cookbook.rst:837
 msgid ""
 "Run ``venv/bin/python client.py`` to exercise the web application, which "
 "will lead to records being written to the log."
@@ -688,7 +695,7 @@ msgstr ""
 "Exécutez ``venv/bin/python client.py`` pour tester l'application Web, ce qui "
 "entraîne l'écriture d'enregistrements dans le journal."
 
-#: howto/logging-cookbook.rst:827
+#: howto/logging-cookbook.rst:840
 msgid ""
 "Inspect the log files in the :file:`run` subdirectory. You should see the "
 "most recent log lines in files matching the pattern :file:`app.log*`. They "
@@ -701,7 +708,7 @@ msgstr ""
 "ont été traités par les différents processus de travail de manière non "
 "déterministe."
 
-#: howto/logging-cookbook.rst:832
+#: howto/logging-cookbook.rst:845
 msgid ""
 "You can shut down the listener and the web application by running ``venv/bin/"
 "supervisorctl -c supervisor.conf shutdown``."
@@ -709,7 +716,7 @@ msgstr ""
 "Vous pouvez arrêter le connecteur en écoute et l'application Web en "
 "exécutant ``venv/bin/supervisorctl -c supervisor.conf shutdown``."
 
-#: howto/logging-cookbook.rst:835
+#: howto/logging-cookbook.rst:848
 msgid ""
 "You may need to tweak the configuration files in the unlikely event that the "
 "configured ports clash with something else in your test environment."
@@ -718,12 +725,33 @@ msgstr ""
 "probable où les ports configurés entrent en conflit avec autre chose dans "
 "votre environnement de test."
 
-#: howto/logging-cookbook.rst:843
+#: howto/logging-cookbook.rst:851
+msgid ""
+"The default configuration uses a TCP socket on port 9020. You can use a Unix "
+"Domain socket instead of a TCP socket by doing the following:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:854
+msgid ""
+"In :file:`listener.json`, add a ``socket`` key with the path to the domain "
+"socket you want to use. If this key is present, the listener listens on the "
+"corresponding domain socket and not on a TCP socket (the ``port`` key is "
+"ignored)."
+msgstr ""
+
+#: howto/logging-cookbook.rst:859
+msgid ""
+"In :file:`webapp.json`, change the socket handler configuration dictionary "
+"so that the ``host`` value is the path to the domain socket, and set the "
+"``port`` value to ``null``."
+msgstr ""
+
+#: howto/logging-cookbook.rst:869
 msgid "Adding contextual information to your logging output"
 msgstr "Ajout d’informations contextuelles dans la journalisation"
 
 # #no-qa
-#: howto/logging-cookbook.rst:845
+#: howto/logging-cookbook.rst:871
 msgid ""
 "Sometimes you want logging output to contain contextual information in "
 "addition to the parameters passed to the logging call. For example, in a "
@@ -735,8 +763,8 @@ msgid ""
 "is not a good idea because these instances are not garbage collected. While "
 "this is not a problem in practice, when the number of :class:`Logger` "
 "instances is dependent on the level of granularity you want to use in "
-"logging an application, it could be hard to manage if the number of :class:"
-"`Logger` instances becomes effectively unbounded."
+"logging an application, it could be hard to manage if the number "
+"of :class:`Logger` instances becomes effectively unbounded."
 msgstr ""
 "Dans certains cas, vous pouvez souhaiter que la journalisation contienne des "
 "informations contextuelles en plus des paramètres transmis à l’appel de "
@@ -745,48 +773,48 @@ msgstr ""
 "journal (par exemple, le nom d’utilisateur ou l’adresse IP du client "
 "distant). Bien que vous puissiez utiliser le paramètre *extra* pour y "
 "parvenir, il n’est pas toujours pratique de transmettre les informations de "
-"cette manière. Il peut être aussi tentant de créer des instances :class:"
-"`Logger` connexion par connexion, mais ce n’est pas une bonne idée car ces "
-"instances :class:`Logger` ne sont pas éliminées par le ramasse-miettes. Même "
-"si ce point n’est pas problématique en soi si la journalisation est "
-"configurée avec plusieurs niveaux de granularité, cela peut devenir "
-"difficile de gérer un nombre potentiellement illimité d’instances de :class:"
-"`Logger`."
+"cette manière. Il peut être aussi tentant de créer des "
+"instances :class:`Logger` connexion par connexion, mais ce n’est pas une "
+"bonne idée car ces instances :class:`Logger` ne sont pas éliminées par le "
+"ramasse-miettes. Même si ce point n’est pas problématique en soi si la "
+"journalisation est configurée avec plusieurs niveaux de granularité, cela "
+"peut devenir difficile de gérer un nombre potentiellement illimité "
+"d’instances de :class:`Logger`."
 
-#: howto/logging-cookbook.rst:860
+#: howto/logging-cookbook.rst:886
 msgid "Using LoggerAdapters to impart contextual information"
 msgstr ""
 "Utilisation d’adaptateurs de journalisation pour transmettre des "
 "informations contextuelles"
 
-#: howto/logging-cookbook.rst:862
+#: howto/logging-cookbook.rst:888
 msgid ""
 "An easy way in which you can pass contextual information to be output along "
 "with logging event information is to use the :class:`LoggerAdapter` class. "
-"This class is designed to look like a :class:`Logger`, so that you can call :"
-"meth:`debug`, :meth:`info`, :meth:`warning`, :meth:`error`, :meth:"
-"`exception`, :meth:`critical` and :meth:`log`. These methods have the same "
-"signatures as their counterparts in :class:`Logger`, so you can use the two "
-"types of instances interchangeably."
+"This class is designed to look like a :class:`Logger`, so that you can "
+"call :meth:`debug`, :meth:`info`, :meth:`warning`, :meth:`error`, :meth:`exception`, :meth:`critical` "
+"and :meth:`log`. These methods have the same signatures as their "
+"counterparts in :class:`Logger`, so you can use the two types of instances "
+"interchangeably."
 msgstr ""
 "Un moyen simple de transmettre des informations contextuelles accompagnant "
-"les informations de journalisation consiste à utiliser la classe :class:"
-"`LoggerAdapter`. Cette classe est conçue pour ressembler à un :class:"
-"`Logger`, de sorte que vous pouvez appeler :meth:`debug`, :meth:`info`, :"
-"meth:`warning`, :meth:`error`, :meth:`exception`, :meth:`critical` et :meth:"
-"`log`. Ces méthodes ont les mêmes signatures que leurs homologues dans :"
-"class:`Logger`, vous pouvez donc utiliser les deux types d’instances de "
-"manière interchangeable."
+"les informations de journalisation consiste à utiliser la "
+"classe :class:`LoggerAdapter`. Cette classe est conçue pour ressembler à "
+"un :class:`Logger`, de sorte que vous pouvez "
+"appeler :meth:`debug`, :meth:`info`, :meth:`warning`, :meth:`error`, :meth:`exception`, :meth:`critical` "
+"et :meth:`log`. Ces méthodes ont les mêmes signatures que leurs homologues "
+"dans :class:`Logger`, vous pouvez donc utiliser les deux types d’instances "
+"de manière interchangeable."
 
-#: howto/logging-cookbook.rst:870
+#: howto/logging-cookbook.rst:896
 msgid ""
-"When you create an instance of :class:`LoggerAdapter`, you pass it a :class:"
-"`Logger` instance and a dict-like object which contains your contextual "
-"information. When you call one of the logging methods on an instance of :"
-"class:`LoggerAdapter`, it delegates the call to the underlying instance of :"
-"class:`Logger` passed to its constructor, and arranges to pass the "
-"contextual information in the delegated call. Here's a snippet from the code "
-"of :class:`LoggerAdapter`::"
+"When you create an instance of :class:`LoggerAdapter`, you pass it "
+"a :class:`Logger` instance and a dict-like object which contains your "
+"contextual information. When you call one of the logging methods on an "
+"instance of :class:`LoggerAdapter`, it delegates the call to the underlying "
+"instance of :class:`Logger` passed to its constructor, and arranges to pass "
+"the contextual information in the delegated call. Here's a snippet from the "
+"code of :class:`LoggerAdapter`::"
 msgstr ""
 "Lorsque vous créez une instance de :class:`LoggerAdapter`, vous lui "
 "transmettez une instance de :class:`Logger` et un objet dictionnaire qui "
@@ -796,7 +824,7 @@ msgstr ""
 "constructeur et s’arrange pour intégrer les informations contextuelles dans "
 "l’appel délégué. Voici un extrait du code de :class:`LoggerAdapter` ::"
 
-#: howto/logging-cookbook.rst:886
+#: howto/logging-cookbook.rst:912
 msgid ""
 "The :meth:`~LoggerAdapter.process` method of :class:`LoggerAdapter` is where "
 "the contextual information is added to the logging output. It's passed the "
@@ -808,41 +836,42 @@ msgid ""
 "had passed an 'extra' keyword argument in the call to the adapter, it will "
 "be silently overwritten."
 msgstr ""
-"Les informations contextuelles sont ajoutées dans la méthode :meth:"
-"`~LoggerAdapter.process` de :class:`LoggerAdapter`. On lui passe le message "
-"et les arguments par mot-clé de l’appel de journalisation, et elle en "
-"renvoie des versions (potentiellement) modifiées à utiliser pour la "
-"journalisation sous-jacente. L’implémentation par défaut de cette méthode "
+"Les informations contextuelles sont ajoutées dans la "
+"méthode :meth:`~LoggerAdapter.process` de :class:`LoggerAdapter`. On lui "
+"passe le message et les arguments par mot-clé de l’appel de journalisation, "
+"et elle en renvoie des versions (potentiellement) modifiées à utiliser pour "
+"la journalisation sous-jacente. L’implémentation par défaut de cette méthode "
 "laisse le message seul, mais insère une clé ``extra`` dans l’argument par "
 "mot-clé dont la valeur est l’objet dictionnaire passé au constructeur. Bien "
 "sûr, si vous avez passé un argument par mot-clé ``extra`` dans l’appel à "
 "l’adaptateur, il est écrasé silencieusement."
 
-#: howto/logging-cookbook.rst:895
+#: howto/logging-cookbook.rst:921
 msgid ""
 "The advantage of using 'extra' is that the values in the dict-like object "
 "are merged into the :class:`LogRecord` instance's __dict__, allowing you to "
 "use customized strings with your :class:`Formatter` instances which know "
 "about the keys of the dict-like object. If you need a different method, e.g. "
 "if you want to prepend or append the contextual information to the message "
-"string, you just need to subclass :class:`LoggerAdapter` and override :meth:"
-"`~LoggerAdapter.process` to do what you need. Here is a simple example::"
+"string, you just need to subclass :class:`LoggerAdapter` and "
+"override :meth:`~LoggerAdapter.process` to do what you need. Here is a "
+"simple example::"
 msgstr ""
 "L’avantage d’utiliser ``extra`` est que les valeurs de l’objet dictionnaire "
 "sont fusionnées dans le ``__dict__`` de l’instance :class:`LogRecord`, ce "
-"qui vous permet d’utiliser des chaînes personnalisées avec vos instances :"
-"class:`Formatter` qui connaissent les clés de l’objet dictionnaire. Si vous "
-"avez besoin d’une méthode différente, par exemple si vous souhaitez ajouter "
-"des informations contextuelles avant ou après la chaîne de message, il vous "
-"suffit de surcharger :class:`LoggerAdapter` et de remplacer :meth:"
-"`~LoggerAdapter.process` pour faire ce dont vous avez besoin. Voici un "
-"exemple simple ::"
+"qui vous permet d’utiliser des chaînes personnalisées avec vos "
+"instances :class:`Formatter` qui connaissent les clés de l’objet "
+"dictionnaire. Si vous avez besoin d’une méthode différente, par exemple si "
+"vous souhaitez ajouter des informations contextuelles avant ou après la "
+"chaîne de message, il vous suffit de surcharger :class:`LoggerAdapter` et de "
+"remplacer :meth:`~LoggerAdapter.process` pour faire ce dont vous avez "
+"besoin. Voici un exemple simple ::"
 
-#: howto/logging-cookbook.rst:911
+#: howto/logging-cookbook.rst:937
 msgid "which you can use like this::"
 msgstr "que vous pouvez utiliser comme ceci ::"
 
-#: howto/logging-cookbook.rst:916
+#: howto/logging-cookbook.rst:942
 msgid ""
 "Then any events that you log to the adapter will have the value of "
 "``some_conn_id`` prepended to the log messages."
@@ -850,13 +879,13 @@ msgstr ""
 "Ainsi, tout événement journalisé aura la valeur de ``some_conn_id`` insérée "
 "en début de message de journalisation."
 
-#: howto/logging-cookbook.rst:920
+#: howto/logging-cookbook.rst:946
 msgid "Using objects other than dicts to pass contextual information"
 msgstr ""
 "Utilisation d’objets autres que les dictionnaires pour passer des "
 "informations contextuelles"
 
-#: howto/logging-cookbook.rst:922
+#: howto/logging-cookbook.rst:948
 msgid ""
 "You don't need to pass an actual dict to a :class:`LoggerAdapter` - you "
 "could pass an instance of a class which implements ``__getitem__`` and "
@@ -864,24 +893,24 @@ msgid ""
 "if you want to generate values dynamically (whereas the values in a dict "
 "would be constant)."
 msgstr ""
-"Il n’est pas obligatoire de passer un dictionnaire réel à un :class:"
-"`LoggerAdapter`, vous pouvez passer une instance d’une classe qui implémente "
-"``__getitem__`` et ``__iter__`` pour qu’il ressemble à un dictionnaire du "
-"point de vue de la journalisation. C’est utile si vous souhaitez générer des "
-"valeurs de manière dynamique (alors que les valeurs d’un dictionnaire "
-"seraient constantes)."
+"Il n’est pas obligatoire de passer un dictionnaire réel à "
+"un :class:`LoggerAdapter`, vous pouvez passer une instance d’une classe qui "
+"implémente ``__getitem__`` et ``__iter__`` pour qu’il ressemble à un "
+"dictionnaire du point de vue de la journalisation. C’est utile si vous "
+"souhaitez générer des valeurs de manière dynamique (alors que les valeurs "
+"d’un dictionnaire seraient constantes)."
 
-#: howto/logging-cookbook.rst:931
+#: howto/logging-cookbook.rst:957
 msgid "Using Filters to impart contextual information"
 msgstr "Utilisation de filtres pour transmettre des informations contextuelles"
 
-#: howto/logging-cookbook.rst:933
+#: howto/logging-cookbook.rst:959
 msgid ""
-"You can also add contextual information to log output using a user-defined :"
-"class:`Filter`. ``Filter`` instances are allowed to modify the "
+"You can also add contextual information to log output using a user-"
+"defined :class:`Filter`. ``Filter`` instances are allowed to modify the "
 "``LogRecords`` passed to them, including adding additional attributes which "
-"can then be output using a suitable format string, or if needed a custom :"
-"class:`Formatter`."
+"can then be output using a suitable format string, or if needed a "
+"custom :class:`Formatter`."
 msgstr ""
 "Un :class:`Filter` défini par l’utilisateur peut aussi ajouter des "
 "informations contextuelles à la journalisation. Les instances de ``Filter`` "
@@ -890,16 +919,16 @@ msgstr ""
 "intégrés à la journalisation en utilisant une chaîne de formatage appropriée "
 "ou, si nécessaire, un :class:`Formatter` personnalisé."
 
-#: howto/logging-cookbook.rst:938
+#: howto/logging-cookbook.rst:964
 msgid ""
 "For example in a web application, the request being processed (or at least, "
-"the interesting parts of it) can be stored in a threadlocal (:class:"
-"`threading.local`) variable, and then accessed from a ``Filter`` to add, "
-"say, information from the request - say, the remote IP address and remote "
-"user's username - to the ``LogRecord``, using the attribute names 'ip' and "
-"'user' as in the ``LoggerAdapter`` example above. In that case, the same "
-"format string can be used to get similar output to that shown above. Here's "
-"an example script::"
+"the interesting parts of it) can be stored in a threadlocal "
+"(:class:`threading.local`) variable, and then accessed from a ``Filter`` to "
+"add, say, information from the request - say, the remote IP address and "
+"remote user's username - to the ``LogRecord``, using the attribute names "
+"'ip' and 'user' as in the ``LoggerAdapter`` example above. In that case, the "
+"same format string can be used to get similar output to that shown above. "
+"Here's an example script::"
 msgstr ""
 "Par exemple, dans une application Web, la requête en cours de traitement (ou "
 "du moins ce qu’elle contient d’intéressant) peut être stockée dans une "
@@ -911,15 +940,15 @@ msgstr ""
 "formatage peut être utilisée pour obtenir une sortie similaire à celle "
 "indiquée ci-dessus. Voici un exemple de script ::"
 
-#: howto/logging-cookbook.rst:984
+#: howto/logging-cookbook.rst:1010
 msgid "which, when run, produces something like:"
 msgstr "qui, à l’exécution, produit quelque chose comme ça :"
 
-#: howto/logging-cookbook.rst:1002
+#: howto/logging-cookbook.rst:1028
 msgid "Use of ``contextvars``"
 msgstr ""
 
-#: howto/logging-cookbook.rst:1004
+#: howto/logging-cookbook.rst:1030
 msgid ""
 "Since Python 3.7, the :mod:`contextvars` module has provided context-local "
 "storage which works for both :mod:`threading` and :mod:`asyncio` processing "
@@ -929,7 +958,7 @@ msgid ""
 "attributes handled by web applications."
 msgstr ""
 
-#: howto/logging-cookbook.rst:1010
+#: howto/logging-cookbook.rst:1036
 msgid ""
 "For the purposes of illustration, say that you have different web "
 "applications, each independent of the other but running in the same Python "
@@ -940,18 +969,18 @@ msgid ""
 "information such as client IP, HTTP request method and client username?"
 msgstr ""
 
-#: howto/logging-cookbook.rst:1017
+#: howto/logging-cookbook.rst:1043
 msgid "Let's assume that the library can be simulated by the following code:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:1033
+#: howto/logging-cookbook.rst:1059
 msgid ""
 "We can simulate the multiple web applications by means of two simple "
 "classes, ``Request`` and ``WebApp``. These simulate how real threaded web "
 "applications work - each request is handled by a thread:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:1177
+#: howto/logging-cookbook.rst:1203
 msgid ""
 "If you run the above, you should find that roughly half the requests go "
 "into :file:`app1.log` and the rest into :file:`app2.log`, and the all the "
@@ -962,11 +991,11 @@ msgid ""
 "illustrated by the following shell output:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:1224
+#: howto/logging-cookbook.rst:1250
 msgid "Imparting contextual information in handlers"
 msgstr "Ajout d'informations contextuelles dans la journalisation"
 
-#: howto/logging-cookbook.rst:1226
+#: howto/logging-cookbook.rst:1252
 msgid ""
 "Each :class:`~Handler` has its own chain of filters. If you want to add "
 "contextual information to a :class:`LogRecord` without leaking it to other "
@@ -979,11 +1008,11 @@ msgstr ""
 "renvoie un nouveau :class:`~LogRecord` au lieu de le modifier sur place, "
 "comme dans le script suivant ::"
 
-#: howto/logging-cookbook.rst:1253
+#: howto/logging-cookbook.rst:1279
 msgid "Logging to a single file from multiple processes"
 msgstr "Journalisation vers un fichier unique à partir de plusieurs processus"
 
-#: howto/logging-cookbook.rst:1255
+#: howto/logging-cookbook.rst:1281
 msgid ""
 "Although logging is thread-safe, and logging to a single file from multiple "
 "threads in a single process *is* supported, logging to a single file from "
@@ -993,10 +1022,10 @@ msgid ""
 "this is to have all the processes log to a :class:`~handlers.SocketHandler`, "
 "and have a separate process which implements a socket server which reads "
 "from the socket and logs to file. (If you prefer, you can dedicate one "
-"thread in one of the existing processes to perform this function.) :ref:"
-"`This section <network-logging>` documents this approach in more detail and "
-"includes a working socket receiver which can be used as a starting point for "
-"you to adapt in your own applications."
+"thread in one of the existing processes to perform this "
+"function.) :ref:`This section <network-logging>` documents this approach in "
+"more detail and includes a working socket receiver which can be used as a "
+"starting point for you to adapt in your own applications."
 msgstr ""
 "La journalisation est fiable avec les programmes à fils d’exécution "
 "multiples (*thread-safe*) : rien n’empêche plusieurs fils d’exécution de "
@@ -1013,26 +1042,25 @@ msgstr ""
 "en détail et inclut un connecteur en écoute réseau fonctionnel qui peut être "
 "utilisé comme point de départ pour l’adapter à vos propres applications."
 
-#: howto/logging-cookbook.rst:1268
+#: howto/logging-cookbook.rst:1294
+#, fuzzy
 msgid ""
-"You could also write your own handler which uses the :class:"
-"`~multiprocessing.Lock` class from the :mod:`multiprocessing` module to "
-"serialize access to the file from your processes. The existing :class:"
-"`FileHandler` and subclasses do not make use of :mod:`multiprocessing` at "
-"present, though they may do so in the future. Note that at present, the :mod:"
-"`multiprocessing` module does not provide working lock functionality on all "
-"platforms (see https://bugs.python.org/issue3770)."
+"You could also write your own handler which uses "
+"the :class:`~multiprocessing.Lock` class from the :mod:`multiprocessing` "
+"module to serialize access to the file from your processes. The "
+"stdlib :class:`FileHandler` and subclasses do not make use "
+"of :mod:`multiprocessing`."
 msgstr ""
 "Vous pouvez également écrire votre propre gestionnaire en utilisant la "
 "classe :class:`~multiprocessing.Lock` du module :mod:`multiprocessing` pour "
-"sérialiser l’accès au fichier depuis vos processus. Les actuels :class:"
-"`FileHandler` et sous-classes n’utilisent pas :mod:`multiprocessing` pour le "
-"moment, même s’ils pourraient le faire à l’avenir. Notez qu’à l’heure "
-"actuelle, le module :mod:`multiprocessing` ne fournit pas un verrouillage "
-"fonctionnel pour toutes les plates-formes (voir https://bugs.python.org/"
-"issue3770)."
+"sérialiser l’accès au fichier depuis vos processus. Les "
+"actuels :class:`FileHandler` et sous-classes n’utilisent "
+"pas :mod:`multiprocessing` pour le moment, même s’ils pourraient le faire à "
+"l’avenir. Notez qu’à l’heure actuelle, le module :mod:`multiprocessing` ne "
+"fournit pas un verrouillage fonctionnel pour toutes les plates-formes (voir "
+"https://bugs.python.org/issue3770)."
 
-#: howto/logging-cookbook.rst:1278
+#: howto/logging-cookbook.rst:1301
 msgid ""
 "Alternatively, you can use a ``Queue`` and a :class:`QueueHandler` to send "
 "all logging events to one of the processes in your multi-process "
@@ -1059,7 +1087,7 @@ msgstr ""
 "les autres processus de votre application, et peut être utilisé comme base "
 "pour répondre à vos propres exigences ::"
 
-#: howto/logging-cookbook.rst:1394
+#: howto/logging-cookbook.rst:1417
 msgid ""
 "A variant of the above script keeps the logging in the main process, in a "
 "separate thread::"
@@ -1067,7 +1095,7 @@ msgstr ""
 "Une variante du script ci-dessus conserve la journalisation dans le "
 "processus principal, dans un fil séparé ::"
 
-#: howto/logging-cookbook.rst:1489
+#: howto/logging-cookbook.rst:1512
 msgid ""
 "This variant shows how you can e.g. apply configuration for particular "
 "loggers - e.g. the ``foo`` logger has a special handler which stores all "
@@ -1084,11 +1112,11 @@ msgstr ""
 "journalisation sont générés dans les processus de travail) pour diriger les "
 "messages vers les destinations appropriées."
 
-#: howto/logging-cookbook.rst:1496
+#: howto/logging-cookbook.rst:1519
 msgid "Using concurrent.futures.ProcessPoolExecutor"
 msgstr "Utilisation de concurrent.futures.ProcessPoolExecutor"
 
-#: howto/logging-cookbook.rst:1498
+#: howto/logging-cookbook.rst:1521
 msgid ""
 "If you want to use :class:`concurrent.futures.ProcessPoolExecutor` to start "
 "your worker processes, you need to create the queue slightly differently. "
@@ -1098,27 +1126,27 @@ msgstr ""
 "pour démarrer vos processus de travail, vous devez créer la file d’attente "
 "légèrement différemment. À la place de"
 
-#: howto/logging-cookbook.rst:1506
+#: howto/logging-cookbook.rst:1529
 msgid "you should use"
 msgstr "vous devez écrire"
 
-#: howto/logging-cookbook.rst:1512
+#: howto/logging-cookbook.rst:1535
 msgid "and you can then replace the worker creation from this::"
 msgstr ""
 "et vous pouvez alors remplacer la création du processus de travail telle "
 "que ::"
 
-#: howto/logging-cookbook.rst:1523
+#: howto/logging-cookbook.rst:1546
 msgid "to this (remembering to first import :mod:`concurrent.futures`)::"
 msgstr ""
-"par celle-ci (souvenez-vous d’importer au préalable :mod:`concurrent."
-"futures`) ::"
+"par celle-ci (souvenez-vous d’importer au "
+"préalable :mod:`concurrent.futures`) ::"
 
-#: howto/logging-cookbook.rst:1530
+#: howto/logging-cookbook.rst:1553
 msgid "Deploying Web applications using Gunicorn and uWSGI"
 msgstr "Déploiement d’applications Web avec *Gunicorn* et *uWSGI*"
 
-#: howto/logging-cookbook.rst:1532
+#: howto/logging-cookbook.rst:1555
 msgid ""
 "When deploying Web applications using `Gunicorn <https://gunicorn.org/>`_ or "
 "`uWSGI <https://uwsgi-docs.readthedocs.io/en/latest/>`_ (or similar), "
@@ -1140,11 +1168,11 @@ msgstr ""
 "tel que *Supervisor* (voir `Journalisation en production à l’aide d’un "
 "connecteur en écoute sur le réseau`_ pour plus de détails)."
 
-#: howto/logging-cookbook.rst:1542
+#: howto/logging-cookbook.rst:1565
 msgid "Using file rotation"
 msgstr "Utilisation du roulement de fichiers"
 
-#: howto/logging-cookbook.rst:1547
+#: howto/logging-cookbook.rst:1570
 #, fuzzy
 msgid ""
 "Sometimes you want to let a log file grow to a certain size, then open a new "
@@ -1158,10 +1186,11 @@ msgstr ""
 "les nouveaux événements. Vous souhaitez peut-être conserver un certain "
 "nombre de ces fichiers et, lorsque ce nombre de fichiers aura été créé, "
 "faire rouler les fichiers afin que le nombre de fichiers et la taille des "
-"fichiers restent tous deux limités. Pour ce cas d’usage, :class:`~handlers."
-"RotatingFileHandler` est inclus dans le paquet de journalisation ::"
+"fichiers restent tous deux limités. Pour ce cas "
+"d’usage, :class:`~handlers.RotatingFileHandler` est inclus dans le paquet de "
+"journalisation ::"
 
-#: howto/logging-cookbook.rst:1579
+#: howto/logging-cookbook.rst:1602
 msgid ""
 "The result should be 6 separate files, each with part of the log history for "
 "the application:"
@@ -1169,20 +1198,20 @@ msgstr ""
 "Vous devez obtenir 6 fichiers séparés, chacun contenant une partie de "
 "l’historique de journalisation de l’application :"
 
-#: howto/logging-cookbook.rst:1591
+#: howto/logging-cookbook.rst:1614
 msgid ""
 "The most current file is always :file:`logging_rotatingfile_example.out`, "
 "and each time it reaches the size limit it is renamed with the suffix "
 "``.1``. Each of the existing backup files is renamed to increment the suffix "
 "(``.1`` becomes ``.2``, etc.)  and the ``.6`` file is erased."
 msgstr ""
-"Le fichier de journalisation actuel est toujours :file:"
-"`logging_rotatingfile_example.out`, et chaque fois qu’il atteint la taille "
-"limite, il est renommé avec le suffixe ``.1``. Chacun des fichiers de "
-"sauvegarde existants est renommé pour incrémenter le suffixe (``.1`` devient "
-"``.2``, etc.) et le fichier ``.6`` est effacé."
+"Le fichier de journalisation actuel est "
+"toujours :file:`logging_rotatingfile_example.out`, et chaque fois qu’il "
+"atteint la taille limite, il est renommé avec le suffixe ``.1``. Chacun des "
+"fichiers de sauvegarde existants est renommé pour incrémenter le suffixe "
+"(``.1`` devient ``.2``, etc.) et le fichier ``.6`` est effacé."
 
-#: howto/logging-cookbook.rst:1596
+#: howto/logging-cookbook.rst:1619
 msgid ""
 "Obviously this example sets the log length much too small as an extreme "
 "example.  You would want to set *maxBytes* to an appropriate value."
@@ -1190,17 +1219,17 @@ msgstr ""
 "De toute évidence, la longueur du journal définie dans cet exemple est "
 "beaucoup trop petite. À vous de définir *maxBytes* à une valeur appropriée."
 
-#: howto/logging-cookbook.rst:1604
+#: howto/logging-cookbook.rst:1627
 msgid "Use of alternative formatting styles"
 msgstr "Utilisation d’autres styles de formatage"
 
-#: howto/logging-cookbook.rst:1606
+#: howto/logging-cookbook.rst:1629
 msgid ""
 "When logging was added to the Python standard library, the only way of "
 "formatting messages with variable content was to use the %-formatting "
-"method. Since then, Python has gained two new formatting approaches: :class:"
-"`string.Template` (added in Python 2.4) and :meth:`str.format` (added in "
-"Python 2.6)."
+"method. Since then, Python has gained two new formatting "
+"approaches: :class:`string.Template` (added in Python 2.4) "
+"and :meth:`str.format` (added in Python 2.6)."
 msgstr ""
 "Lorsque la journalisation a été ajoutée à la bibliothèque standard Python, "
 "la seule façon de formater les messages avec un contenu variable était "
@@ -1208,7 +1237,7 @@ msgstr ""
 "de deux nouvelles méthode de formatage : :class:`string.Template` (ajouté "
 "dans Python 2.4) et :meth:`str.format` (ajouté dans Python 2.6)."
 
-#: howto/logging-cookbook.rst:1612
+#: howto/logging-cookbook.rst:1635
 msgid ""
 "Logging (as of 3.2) provides improved support for these two additional "
 "formatting styles. The :class:`Formatter` class been enhanced to take an "
@@ -1216,23 +1245,23 @@ msgid ""
 "``'%'``, but other possible values are ``'{'`` and ``'$'``, which correspond "
 "to the other two formatting styles. Backwards compatibility is maintained by "
 "default (as you would expect), but by explicitly specifying a style "
-"parameter, you get the ability to specify format strings which work with :"
-"meth:`str.format` or :class:`string.Template`. Here's an example console "
-"session to show the possibilities:"
+"parameter, you get the ability to specify format strings which work "
+"with :meth:`str.format` or :class:`string.Template`. Here's an example "
+"console session to show the possibilities:"
 msgstr ""
 "La journalisation (à partir de la version 3.2) offre une meilleure prise en "
-"charge de ces deux styles de formatage supplémentaires. La classe :class:"
-"`Formatter` a été améliorée pour accepter un paramètre par mot-clé "
-"facultatif supplémentaire nommé ``style``. La valeur par défaut est ``'%'``, "
-"les autres valeurs possibles étant ``'{'`` et ``'$'``, qui correspondent aux "
-"deux autres styles de formatage. La rétrocompatibilité est maintenue par "
-"défaut (comme vous vous en doutez) mais, en spécifiant explicitement un "
-"paramètre de style, vous avez la possibilité de spécifier des chaînes de "
-"format qui fonctionnent avec :meth:`str.format` ou :class:`string.Template`. "
-"Voici un exemple de session interactive en console pour montrer les "
-"possibilités :"
+"charge de ces deux styles de formatage supplémentaires. La "
+"classe :class:`Formatter` a été améliorée pour accepter un paramètre par mot-"
+"clé facultatif supplémentaire nommé ``style``. La valeur par défaut est "
+"``'%'``, les autres valeurs possibles étant ``'{'`` et ``'$'``, qui "
+"correspondent aux deux autres styles de formatage. La rétrocompatibilité est "
+"maintenue par défaut (comme vous vous en doutez) mais, en spécifiant "
+"explicitement un paramètre de style, vous avez la possibilité de spécifier "
+"des chaînes de format qui fonctionnent avec :meth:`str.format` "
+"ou :class:`string.Template`. Voici un exemple de session interactive en "
+"console pour montrer les possibilités :"
 
-#: howto/logging-cookbook.rst:1646
+#: howto/logging-cookbook.rst:1669
 msgid ""
 "Note that the formatting of logging messages for final output to logs is "
 "completely independent of how an individual logging message is constructed. "
@@ -1243,7 +1272,7 @@ msgstr ""
 "individuel est construit. Vous pouvez toujours utiliser formatage *via* "
 "« % », comme ici ::"
 
-#: howto/logging-cookbook.rst:1654
+#: howto/logging-cookbook.rst:1677
 msgid ""
 "Logging calls (``logger.debug()``, ``logger.info()`` etc.) only take "
 "positional parameters for the actual logging message itself, with keyword "
@@ -1251,12 +1280,12 @@ msgid ""
 "logging call (e.g. the ``exc_info`` keyword parameter to indicate that "
 "traceback information should be logged, or the ``extra`` keyword parameter "
 "to indicate additional contextual information to be added to the log). So "
-"you cannot directly make logging calls using :meth:`str.format` or :class:"
-"`string.Template` syntax, because internally the logging package uses %-"
-"formatting to merge the format string and the variable arguments. There "
-"would be no changing this while preserving backward compatibility, since all "
-"logging calls which are out there in existing code will be using %-format "
-"strings."
+"you cannot directly make logging calls using :meth:`str.format` "
+"or :class:`string.Template` syntax, because internally the logging package "
+"uses %-formatting to merge the format string and the variable arguments. "
+"There would be no changing this while preserving backward compatibility, "
+"since all logging calls which are out there in existing code will be using %-"
+"format strings."
 msgstr ""
 "Les appels de journalisation (``logger.debug()``, ``logger.info()`` etc.) ne "
 "prennent que des paramètres positionnels pour le message de journalisation "
@@ -1265,14 +1294,15 @@ msgstr ""
 "clé ``exc_info`` indique que les informations de trace doivent être "
 "enregistrées, ou le paramètre par mot-clé ``extra`` indique des informations "
 "contextuelles supplémentaires à ajouter au journal). Vous ne pouvez donc pas "
-"inclure dans les appels de journalisation à l’aide de la syntaxe :meth:`str."
-"format` ou :class:`string.Template`, car le paquet de journalisation utilise "
-"le formatage via « % » en interne pour fusionner la chaîne de format et les "
-"arguments de variables. Il n’est pas possible de changer ça tout en "
-"préservant la rétrocompatibilité puisque tous les appels de journalisation "
-"dans le code pré-existant utilisent des chaînes au format « % »."
+"inclure dans les appels de journalisation à l’aide de la "
+"syntaxe :meth:`str.format` ou :class:`string.Template`, car le paquet de "
+"journalisation utilise le formatage via « % » en interne pour fusionner la "
+"chaîne de format et les arguments de variables. Il n’est pas possible de "
+"changer ça tout en préservant la rétrocompatibilité puisque tous les appels "
+"de journalisation dans le code pré-existant utilisent des chaînes au format "
+"« % »."
 
-#: howto/logging-cookbook.rst:1667
+#: howto/logging-cookbook.rst:1690
 msgid ""
 "There is, however, a way that you can use {}- and $- formatting to construct "
 "your individual log messages. Recall that for a message you can use an "
@@ -1286,7 +1316,7 @@ msgstr ""
 "et que le package de journalisation appelle ``str()`` sur cet objet pour "
 "fabriquer la chaîne finale. Considérez les deux classes suivantes ::"
 
-#: howto/logging-cookbook.rst:1691
+#: howto/logging-cookbook.rst:1714
 msgid ""
 "Either of these can be used in place of a format string, to allow {}- or $-"
 "formatting to be used to build the actual \"message\" part which appears in "
@@ -1296,16 +1326,16 @@ msgid ""
 "__ (double underscore --- not to be confused with _, the single underscore "
 "used as a synonym/alias for :func:`gettext.gettext` or its brethren)."
 msgstr ""
-"L’une ou l’autre peut être utilisée à la place d’une chaîne de format "
-"\"%(message)s\" ou \"{message}\" ou \"$message\", afin de mettre en forme "
-"*via* « { } » ou « $ » la partie « message réel » qui apparaît dans la "
-"sortie de journal formatée. Il est un peu lourd d’utiliser les noms de "
-"classe chaque fois que vous voulez journaliser quelque chose, mais ça "
-"devient acceptable si vous utilisez un alias tel que __ (double trait de "
-"soulignement — à ne pas confondre avec _, le trait de soulignement unique "
-"utilisé comme alias pour :func:`gettext.gettext` ou ses homologues)."
+"L’une ou l’autre peut être utilisée à la place d’une chaîne de format \"%"
+"(message)s\" ou \"{message}\" ou \"$message\", afin de mettre en forme *via* "
+"« { } » ou « $ » la partie « message réel » qui apparaît dans la sortie de "
+"journal formatée. Il est un peu lourd d’utiliser les noms de classe chaque "
+"fois que vous voulez journaliser quelque chose, mais ça devient acceptable "
+"si vous utilisez un alias tel que __ (double trait de soulignement — à ne "
+"pas confondre avec _, le trait de soulignement unique utilisé comme alias "
+"pour :func:`gettext.gettext` ou ses homologues)."
 
-#: howto/logging-cookbook.rst:1699
+#: howto/logging-cookbook.rst:1722
 msgid ""
 "The above classes are not included in Python, though they're easy enough to "
 "copy and paste into your own code. They can be used as follows (assuming "
@@ -1316,7 +1346,7 @@ msgstr ""
 "utilisées comme suit (en supposant qu’elles soient déclarées dans un module "
 "appelé ``wherever``) :"
 
-#: howto/logging-cookbook.rst:1721
+#: howto/logging-cookbook.rst:1744
 msgid ""
 "While the above examples use ``print()`` to show how the formatting works, "
 "you would of course use ``logger.debug()`` or similar to actually log using "
@@ -1326,7 +1356,7 @@ msgstr ""
 "fonctionne le formatage, utilisez bien sûr ``logger.debug()`` ou similaire "
 "pour journaliser avec cette approche."
 
-#: howto/logging-cookbook.rst:1725
+#: howto/logging-cookbook.rst:1748
 #, fuzzy
 msgid ""
 "One thing to note is that you pay no significant performance penalty with "
@@ -1347,7 +1377,7 @@ msgstr ""
 "n’est que du sucre syntaxique pour un appel de constructeur à l’une des "
 "classes ``XXXMessage``."
 
-#: howto/logging-cookbook.rst:1733
+#: howto/logging-cookbook.rst:1756
 msgid ""
 "If you prefer, you can use a :class:`LoggerAdapter` to achieve a similar "
 "effect to the above, as in the following example::"
@@ -1355,7 +1385,7 @@ msgstr ""
 "Si vous préférez, vous pouvez utiliser un :class:`LoggerAdapter` pour "
 "obtenir un effet similaire à ce qui précède, comme dans l’exemple suivant ::"
 
-#: howto/logging-cookbook.rst:1762
+#: howto/logging-cookbook.rst:1785
 #, fuzzy
 msgid ""
 "The above script should log the message ``Hello, world!`` when run with "
@@ -1364,29 +1394,30 @@ msgstr ""
 "Le script ci-dessus journalise le message ``Hello, world!`` quand il est "
 "lancé avec Python 3.2 ou ultérieur."
 
-#: howto/logging-cookbook.rst:1771
+#: howto/logging-cookbook.rst:1794
 msgid "Customizing ``LogRecord``"
 msgstr "Personnalisation de ``LogRecord``"
 
-#: howto/logging-cookbook.rst:1773
+#: howto/logging-cookbook.rst:1796
 msgid ""
 "Every logging event is represented by a :class:`LogRecord` instance. When an "
-"event is logged and not filtered out by a logger's level, a :class:"
-"`LogRecord` is created, populated with information about the event and then "
-"passed to the handlers for that logger (and its ancestors, up to and "
-"including the logger where further propagation up the hierarchy is "
+"event is logged and not filtered out by a logger's level, "
+"a :class:`LogRecord` is created, populated with information about the event "
+"and then passed to the handlers for that logger (and its ancestors, up to "
+"and including the logger where further propagation up the hierarchy is "
 "disabled). Before Python 3.2, there were only two places where this creation "
 "was done:"
 msgstr ""
-"Chaque événement de journalisation est représenté par une instance :class:"
-"`LogRecord`. Lorsqu’un événement est enregistré et non filtré en raison du "
-"niveau d’un enregistreur, un :class:`LogRecord` est créé, rempli avec les "
-"informations de l’événement, puis transmis aux gestionnaires de cet "
-"enregistreur (et ses ancêtres, jusqu’à et y compris l’enregistreur où la "
-"propagation vers le haut de la hiérarchie est désactivée). Avant Python 3.2, "
-"il n’y avait que deux endroits où cette création était effectuée :"
+"Chaque événement de journalisation est représenté par une "
+"instance :class:`LogRecord`. Lorsqu’un événement est enregistré et non "
+"filtré en raison du niveau d’un enregistreur, un :class:`LogRecord` est "
+"créé, rempli avec les informations de l’événement, puis transmis aux "
+"gestionnaires de cet enregistreur (et ses ancêtres, jusqu’à et y compris "
+"l’enregistreur où la propagation vers le haut de la hiérarchie est "
+"désactivée). Avant Python 3.2, il n’y avait que deux endroits où cette "
+"création était effectuée :"
 
-#: howto/logging-cookbook.rst:1780
+#: howto/logging-cookbook.rst:1803
 msgid ""
 ":meth:`Logger.makeRecord`, which is called in the normal process of logging "
 "an event. This invoked :class:`LogRecord` directly to create an instance."
@@ -1395,13 +1426,13 @@ msgstr ""
 "journalisation d’un événement. Elle appelait :class:`LogRecord` directement "
 "pour créer une instance."
 
-#: howto/logging-cookbook.rst:1783
+#: howto/logging-cookbook.rst:1806
 msgid ""
 ":func:`makeLogRecord`, which is called with a dictionary containing "
 "attributes to be added to the LogRecord. This is typically invoked when a "
 "suitable dictionary has been received over the network (e.g. in pickle form "
-"via a :class:`~handlers.SocketHandler`, or in JSON form via an :class:"
-"`~handlers.HTTPHandler`)."
+"via a :class:`~handlers.SocketHandler`, or in JSON form via "
+"an :class:`~handlers.HTTPHandler`)."
 msgstr ""
 ":func:`makeLogRecord`, qui est appelée avec un dictionnaire contenant des "
 "attributs à ajouter au *LogRecord*. Elle est généralement invoquée lorsqu’un "
@@ -1409,26 +1440,28 @@ msgstr ""
 "*pickle* *via* un :class:`~handlers.SocketHandler`, ou sous format JSON "
 "*via* un :class:`~handlers.HTTPHandler`)."
 
-#: howto/logging-cookbook.rst:1789
+#: howto/logging-cookbook.rst:1812
 msgid ""
-"This has usually meant that if you need to do anything special with a :class:"
-"`LogRecord`, you've had to do one of the following."
+"This has usually meant that if you need to do anything special with "
+"a :class:`LogRecord`, you've had to do one of the following."
 msgstr ""
 "Cela signifiait généralement que, si vous deviez faire quelque chose de "
 "spécial avec un :class:`LogRecord`, vous deviez faire l’une des choses "
 "suivantes."
 
-#: howto/logging-cookbook.rst:1792
+#: howto/logging-cookbook.rst:1815
 msgid ""
-"Create your own :class:`Logger` subclass, which overrides :meth:`Logger."
-"makeRecord`, and set it using :func:`~logging.setLoggerClass` before any "
-"loggers that you care about are instantiated."
+"Create your own :class:`Logger` subclass, which "
+"overrides :meth:`Logger.makeRecord`, and set it "
+"using :func:`~logging.setLoggerClass` before any loggers that you care about "
+"are instantiated."
 msgstr ""
-"Créer votre propre sous-classe :class:`Logger`, surchargeant :meth:`Logger."
-"makeRecord`, et la personnaliser à l’aide de :func:`~logging.setLoggerClass` "
-"avant que les enregistreurs qui vous intéressaient ne soient instanciés."
+"Créer votre propre sous-classe :class:`Logger`, "
+"surchargeant :meth:`Logger.makeRecord`, et la personnaliser à l’aide "
+"de :func:`~logging.setLoggerClass` avant que les enregistreurs qui vous "
+"intéressaient ne soient instanciés."
 
-#: howto/logging-cookbook.rst:1795
+#: howto/logging-cookbook.rst:1818
 msgid ""
 "Add a :class:`Filter` to a logger or handler, which does the necessary "
 "special manipulation you need when its :meth:`~Filter.filter` method is "
@@ -1438,7 +1471,7 @@ msgstr ""
 "effectuait la manipulation spéciale nécessaire dont vous aviez besoin "
 "lorsque sa méthode :meth:`~Filter.filter` était appelée."
 
-#: howto/logging-cookbook.rst:1799
+#: howto/logging-cookbook.rst:1822
 msgid ""
 "The first approach would be a little unwieldy in the scenario where (say) "
 "several different libraries wanted to do different things. Each would "
@@ -1450,7 +1483,7 @@ msgstr ""
 "Chacun essaie de définir sa propre sous-classe :class:`Logger`, et celui qui "
 "l’a fait en dernier gagne."
 
-#: howto/logging-cookbook.rst:1804
+#: howto/logging-cookbook.rst:1827
 msgid ""
 "The second approach works reasonably well for many cases, but does not allow "
 "you to e.g. use a specialized subclass of :class:`LogRecord`. Library "
@@ -1465,7 +1498,7 @@ msgstr ""
 "faire chaque fois qu’ils introduisent un nouvel enregistreur (ce qu’ils font "
 "simplement en ajoutant de nouveaux paquets ou modules et en écrivant ::"
 
-#: howto/logging-cookbook.rst:1812
+#: howto/logging-cookbook.rst:1835
 msgid ""
 "at module level). It's probably one too many things to think about. "
 "Developers could also add the filter to a :class:`~logging.NullHandler` "
@@ -1475,31 +1508,31 @@ msgid ""
 "developer."
 msgstr ""
 "au niveau des modules). C’est probablement trop de choses auxquelles penser. "
-"Les développeurs pourraient également ajouter le filtre à un :class:"
-"`~logging.NullHandler` attaché à leur enregistreur de niveau supérieur, mais "
-"cela ne serait pas invoqué si un développeur d’application attachait un "
-"gestionnaire à un enregistreur de bibliothèque de niveau inférieur — donc la "
-"sortie de ce gestionnaire ne refléterait pas les intentions du développeur "
-"de la bibliothèque."
+"Les développeurs pourraient également ajouter le filtre à "
+"un :class:`~logging.NullHandler` attaché à leur enregistreur de niveau "
+"supérieur, mais cela ne serait pas invoqué si un développeur d’application "
+"attachait un gestionnaire à un enregistreur de bibliothèque de niveau "
+"inférieur — donc la sortie de ce gestionnaire ne refléterait pas les "
+"intentions du développeur de la bibliothèque."
 
-#: howto/logging-cookbook.rst:1818
+#: howto/logging-cookbook.rst:1841
 msgid ""
 "In Python 3.2 and later, :class:`~logging.LogRecord` creation is done "
 "through a factory, which you can specify. The factory is just a callable you "
-"can set with :func:`~logging.setLogRecordFactory`, and interrogate with :"
-"func:`~logging.getLogRecordFactory`. The factory is invoked with the same "
-"signature as the :class:`~logging.LogRecord` constructor, as :class:"
-"`LogRecord` is the default setting for the factory."
+"can set with :func:`~logging.setLogRecordFactory`, and interrogate "
+"with :func:`~logging.getLogRecordFactory`. The factory is invoked with the "
+"same signature as the :class:`~logging.LogRecord` constructor, "
+"as :class:`LogRecord` is the default setting for the factory."
 msgstr ""
 "Dans Python 3.2 et ultérieurs, la création de :class:`~logging.LogRecord` "
 "est effectuée via une fabrique, que vous pouvez spécifier. La fabrique est "
-"juste un appelable que vous pouvez définir avec :func:`~logging."
-"setLogRecordFactory`, et interroger avec :func:`~logging."
-"getLogRecordFactory`. La fabrique est invoquée avec la même signature que le "
-"constructeur :class:`~logging.LogRecord`, car :class:`LogRecord` est le "
-"paramètre par défaut de la fabrique."
+"juste un appelable que vous pouvez définir "
+"avec :func:`~logging.setLogRecordFactory`, et interroger "
+"avec :func:`~logging.getLogRecordFactory`. La fabrique est invoquée avec la "
+"même signature que le constructeur :class:`~logging.LogRecord`, "
+"car :class:`LogRecord` est le paramètre par défaut de la fabrique."
 
-#: howto/logging-cookbook.rst:1825
+#: howto/logging-cookbook.rst:1848
 msgid ""
 "This approach allows a custom factory to control all aspects of LogRecord "
 "creation. For example, you could return a subclass, or just add some "
@@ -1512,7 +1545,7 @@ msgstr ""
 "l’enregistrement une fois créé, en utilisant un modèle similaire à celui-"
 "ci ::"
 
-#: howto/logging-cookbook.rst:1838
+#: howto/logging-cookbook.rst:1861
 msgid ""
 "This pattern allows different libraries to chain factories together, and as "
 "long as they don't overwrite each other's attributes or unintentionally "
@@ -1530,17 +1563,17 @@ msgstr ""
 "l’utilisation d’un :class:`Filter` ne permet pas d’obtenir le résultat "
 "souhaité."
 
-#: howto/logging-cookbook.rst:1850
+#: howto/logging-cookbook.rst:1873
 #, fuzzy
 msgid "Subclassing QueueHandler and QueueListener- a ZeroMQ example"
 msgstr "Dérivation de *QueueHandler* – un exemple de *ZeroMQ*"
 
-#: howto/logging-cookbook.rst:1853 howto/logging-cookbook.rst:1986
+#: howto/logging-cookbook.rst:1876 howto/logging-cookbook.rst:2009
 #, fuzzy
 msgid "Subclass ``QueueHandler``"
 msgstr "Dérivation de *QueueHandler* – un exemple de *ZeroMQ*"
 
-#: howto/logging-cookbook.rst:1855
+#: howto/logging-cookbook.rst:1878
 msgid ""
 "You can use a :class:`QueueHandler` subclass to send messages to other kinds "
 "of queues, for example a ZeroMQ 'publish' socket. In the example below,the "
@@ -1551,7 +1584,7 @@ msgstr ""
 "*ZeroMQ publish*. Dans l’exemple ci-dessous, le connecteur est créé "
 "séparément et transmis au gestionnaire (en tant que file d’attente) ::"
 
-#: howto/logging-cookbook.rst:1874
+#: howto/logging-cookbook.rst:1897
 msgid ""
 "Of course there are other ways of organizing this, for example passing in "
 "the data needed by the handler to create the socket::"
@@ -1559,12 +1592,12 @@ msgstr ""
 "Bien sûr, il existe d’autres manières de faire, par exemple en transmettant "
 "les données nécessaires au gestionnaire pour créer le connecteur ::"
 
-#: howto/logging-cookbook.rst:1892 howto/logging-cookbook.rst:1922
+#: howto/logging-cookbook.rst:1915 howto/logging-cookbook.rst:1945
 #, fuzzy
 msgid "Subclass ``QueueListener``"
 msgstr "Dérivation de *QueueListener* – un exemple de *ZeroMQ*"
 
-#: howto/logging-cookbook.rst:1894
+#: howto/logging-cookbook.rst:1917
 msgid ""
 "You can also subclass :class:`QueueListener` to get messages from other "
 "kinds of queues, for example a ZeroMQ 'subscribe' socket. Here's an example::"
@@ -1573,51 +1606,51 @@ msgstr ""
 "messages d’autres types de files d’attente, par exemple un connecteur "
 "*ZeroMQ subscribe*. Voici un exemple ::"
 
-#: howto/logging-cookbook.rst:1912
+#: howto/logging-cookbook.rst:1935
 #, fuzzy
 msgid "Subclassing QueueHandler and QueueListener- a ``pynng`` example"
 msgstr "Dérivation de *QueueHandler* – un exemple de *ZeroMQ*"
 
-#: howto/logging-cookbook.rst:1914
+#: howto/logging-cookbook.rst:1937
 msgid ""
 "In a similar way to the above section, we can implement a listener and "
-"handler using :pypi:`pynng`, which is a Python binding to `NNG <https://nng."
-"nanomsg.org/>`_, billed as a spiritual successor to ZeroMQ. The following "
-"snippets illustrate -- you can test them in an environment which has "
-"``pynng`` installed. Just for variety, we present the listener first."
+"handler using :pypi:`pynng`, which is a Python binding to `NNG <https://"
+"nng.nanomsg.org/>`_, billed as a spiritual successor to ZeroMQ. The "
+"following snippets illustrate -- you can test them in an environment which "
+"has ``pynng`` installed. Just for variety, we present the listener first."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2037
+#: howto/logging-cookbook.rst:2060
 msgid ""
 "You can run the above two snippets in separate command shells. If we run the "
 "listener in one shell and run the sender in two separate shells, we should "
 "see something like the following. In the first sender shell:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2054
+#: howto/logging-cookbook.rst:2077
 msgid "In the second sender shell:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2069
+#: howto/logging-cookbook.rst:2092
 msgid "In the listener shell:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2093
+#: howto/logging-cookbook.rst:2116
 msgid ""
 "As you can see, the logging from the two sender processes is interleaved in "
 "the listener's output."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2098
+#: howto/logging-cookbook.rst:2121
 msgid "An example dictionary-based configuration"
 msgstr "Exemple de configuration basée sur un dictionnaire"
 
-#: howto/logging-cookbook.rst:2100
+#: howto/logging-cookbook.rst:2123
 msgid ""
 "Below is an example of a logging configuration dictionary - it's taken from "
 "the `documentation on the Django project <https://docs.djangoproject.com/en/"
-"stable/topics/logging/#configuring-logging>`_. This dictionary is passed to :"
-"func:`~config.dictConfig` to put the configuration into effect::"
+"stable/topics/logging/#configuring-logging>`_. This dictionary is passed "
+"to :func:`~config.dictConfig` to put the configuration into effect::"
 msgstr ""
 "Vous trouverez ci-dessous un exemple de dictionnaire de configuration de "
 "journalisation ­– il est tiré de la `documentation du projet Django <https://"
@@ -1625,7 +1658,7 @@ msgstr ""
 "dictionnaire est passé à :func:`~config.dictConfig` pour activer la "
 "configuration ::"
 
-#: howto/logging-cookbook.rst:2153
+#: howto/logging-cookbook.rst:2176
 msgid ""
 "For more information about this configuration, you can see the `relevant "
 "section <https://docs.djangoproject.com/en/stable/topics/logging/"
@@ -1635,13 +1668,13 @@ msgstr ""
 "`section correspondante <https://docs.djangoproject.com/fr/stable/topics/"
 "logging/#configuring-logging>`_ de la documentation de *Django*."
 
-#: howto/logging-cookbook.rst:2160
+#: howto/logging-cookbook.rst:2183
 msgid "Using a rotator and namer to customize log rotation processing"
 msgstr ""
 "Utilisation d’un rotateur et d’un nom pour personnaliser la rotation des "
 "journaux"
 
-#: howto/logging-cookbook.rst:2162
+#: howto/logging-cookbook.rst:2185
 msgid ""
 "An example of how you can define a namer and rotator is given in the "
 "following runnable script, which shows gzip compression of the log file::"
@@ -1649,18 +1682,18 @@ msgstr ""
 "L’extrait de code suivant fournit un exemple de la façon dont vous pouvez "
 "définir un nom et un rotateur, avec la compression par *zlib* du journal ::"
 
-#: howto/logging-cookbook.rst:2193
+#: howto/logging-cookbook.rst:2216
 msgid ""
 "After running this, you will see six new files, five of which are compressed:"
 msgstr ""
 "Après l'avoir exécuté, vous verrez six nouveaux fichiers, dont cinq sont "
 "compressés :"
 
-#: howto/logging-cookbook.rst:2206
+#: howto/logging-cookbook.rst:2229
 msgid "A more elaborate multiprocessing example"
 msgstr "Exemple plus élaboré avec traitement en parallèle"
 
-#: howto/logging-cookbook.rst:2208
+#: howto/logging-cookbook.rst:2231
 msgid ""
 "The following working example shows how logging can be used with "
 "multiprocessing using configuration files. The configurations are fairly "
@@ -1673,7 +1706,7 @@ msgstr ""
 "simples, mais servent à illustrer comment des configurations plus complexes "
 "pourraient être implémentées dans un scénario multi-processus réel."
 
-#: howto/logging-cookbook.rst:2213
+#: howto/logging-cookbook.rst:2236
 msgid ""
 "In the example, the main process spawns a listener process and some worker "
 "processes. Each of the main process, the listener and the workers have three "
@@ -1698,7 +1731,7 @@ msgstr ""
 "sont purement illustratives, mais vous devriez pouvoir adapter cet exemple à "
 "votre propre scénario."
 
-#: howto/logging-cookbook.rst:2223
+#: howto/logging-cookbook.rst:2246
 msgid ""
 "Here's the script - the docstrings and the comments hopefully explain how it "
 "works::"
@@ -1706,11 +1739,11 @@ msgstr ""
 "Voici le script – les chaines de documentation et les commentaires "
 "expliquent (en anglais), le principe de fonctionnement ::"
 
-#: howto/logging-cookbook.rst:2435
+#: howto/logging-cookbook.rst:2458
 msgid "Inserting a BOM into messages sent to a SysLogHandler"
 msgstr "Insertion d’une *BOM* dans les messages envoyés à un *SysLogHandler*"
 
-#: howto/logging-cookbook.rst:2437
+#: howto/logging-cookbook.rst:2460
 msgid ""
 ":rfc:`5424` requires that a Unicode message be sent to a syslog daemon as a "
 "set of bytes which have the following structure: an optional pure-ASCII "
@@ -1724,19 +1757,20 @@ msgstr ""
 "pour *Byte Order Mark* en anglais) UTF-8, suivie de contenu Unicode UTF-8 "
 "(voir la :rfc:`la spécification correspondante <5424#section-6>`)."
 
-#: howto/logging-cookbook.rst:2443
+#: howto/logging-cookbook.rst:2466
 msgid ""
 "In Python 3.1, code was added to :class:`~logging.handlers.SysLogHandler` to "
 "insert a BOM into the message, but unfortunately, it was implemented "
 "incorrectly, with the BOM appearing at the beginning of the message and "
 "hence not allowing any pure-ASCII component to appear before it."
 msgstr ""
-"Dans Python 3.1, du code a été ajouté à :class:`~logging.handlers."
-"SysLogHandler` pour insérer une *BOM* dans le message mais, malheureusement, "
-"il a été implémenté de manière incorrecte, la *BOM* apparaissant au début du "
-"message et n’autorisant donc aucun composant ASCII pur à être placé devant."
+"Dans Python 3.1, du code a été ajouté "
+"à :class:`~logging.handlers.SysLogHandler` pour insérer une *BOM* dans le "
+"message mais, malheureusement, il a été implémenté de manière incorrecte, la "
+"*BOM* apparaissant au début du message et n’autorisant donc aucun composant "
+"ASCII pur à être placé devant."
 
-#: howto/logging-cookbook.rst:2449
+#: howto/logging-cookbook.rst:2472
 msgid ""
 "As this behaviour is broken, the incorrect BOM insertion code is being "
 "removed from Python 3.2.4 and later. However, it is not being replaced, and "
@@ -1751,15 +1785,17 @@ msgstr ""
 "Unicode arbitraire après, encodé en UTF-8, alors vous devez appliquer ce qui "
 "suit :"
 
-#: howto/logging-cookbook.rst:2455
+#: howto/logging-cookbook.rst:2478
 msgid ""
-"Attach a :class:`~logging.Formatter` instance to your :class:`~logging."
-"handlers.SysLogHandler` instance, with a format string such as::"
+"Attach a :class:`~logging.Formatter` instance to "
+"your :class:`~logging.handlers.SysLogHandler` instance, with a format string "
+"such as::"
 msgstr ""
-"Adjoignez une instance :class:`~logging.Formatter` à votre instance :class:"
-"`~logging.handlers.SysLogHandler`, avec une chaîne de format telle que ::"
+"Adjoignez une instance :class:`~logging.Formatter` à votre "
+"instance :class:`~logging.handlers.SysLogHandler`, avec une chaîne de format "
+"telle que ::"
 
-#: howto/logging-cookbook.rst:2461
+#: howto/logging-cookbook.rst:2484
 msgid ""
 "The Unicode code point U+FEFF, when encoded using UTF-8, will be encoded as "
 "a UTF-8 BOM -- the byte-string ``b'\\xef\\xbb\\xbf'``."
@@ -1767,7 +1803,7 @@ msgstr ""
 "Le point de code Unicode U+FEFF, lorsqu’il est encodé en UTF-8, est encodé "
 "comme une *BOM* UTF-8 – la chaîne d’octets ``b'\\xef\\xbb\\xbf'``."
 
-#: howto/logging-cookbook.rst:2464
+#: howto/logging-cookbook.rst:2487
 msgid ""
 "Replace the ASCII section with whatever placeholders you like, but make sure "
 "that the data that appears in there after substitution is always ASCII (that "
@@ -1777,7 +1813,7 @@ msgstr ""
 "vous que les données qui y apparaissent après la substitution sont toujours "
 "ASCII (ainsi elles resteront inchangées après l’encodage UTF-8)."
 
-#: howto/logging-cookbook.rst:2468
+#: howto/logging-cookbook.rst:2491
 msgid ""
 "Replace the Unicode section with whatever placeholders you like; if the data "
 "which appears there after substitution contains characters outside the ASCII "
@@ -1788,7 +1824,7 @@ msgstr ""
 "dehors de la plage ASCII, c’est pris en charge – elles seront encodées en "
 "UTF-8."
 
-#: howto/logging-cookbook.rst:2472
+#: howto/logging-cookbook.rst:2495
 msgid ""
 "The formatted message *will* be encoded using UTF-8 encoding by "
 "``SysLogHandler``. If you follow the above rules, you should be able to "
@@ -1802,11 +1838,11 @@ msgstr ""
 "se plaindra peut-être pas, mais vos messages ne seront pas conformes à la "
 "RFC 5424 et votre démon *syslog* est susceptible de se plaindre."
 
-#: howto/logging-cookbook.rst:2479
+#: howto/logging-cookbook.rst:2502
 msgid "Implementing structured logging"
 msgstr "Journalisation structurée"
 
-#: howto/logging-cookbook.rst:2481
+#: howto/logging-cookbook.rst:2504
 msgid ""
 "Although most logging messages are intended for reading by humans, and thus "
 "not readily machine-parseable, there might be circumstances where you want "
@@ -1826,11 +1862,11 @@ msgstr ""
 "plusieurs façons d’y parvenir et voici une approche simple qui utilise JSON "
 "pour sérialiser l’événement de manière à être analysable par une machine ::"
 
-#: howto/logging-cookbook.rst:2505
+#: howto/logging-cookbook.rst:2528
 msgid "If the above script is run, it prints:"
 msgstr "Si vous lancez le script ci-dessus, il imprime :"
 
-#: howto/logging-cookbook.rst:2511 howto/logging-cookbook.rst:2553
+#: howto/logging-cookbook.rst:2534 howto/logging-cookbook.rst:2576
 msgid ""
 "Note that the order of items might be different according to the version of "
 "Python used."
@@ -1838,7 +1874,7 @@ msgstr ""
 "Notez que l’ordre des éléments peut être différent en fonction de la version "
 "de Python utilisée."
 
-#: howto/logging-cookbook.rst:2514
+#: howto/logging-cookbook.rst:2537
 msgid ""
 "If you need more specialised processing, you can use a custom JSON encoder, "
 "as in the following complete example::"
@@ -1846,15 +1882,15 @@ msgstr ""
 "Si vous avez besoin d’un traitement plus spécifique, vous pouvez utiliser un "
 "encodeur JSON personnalisé, comme dans l’exemple complet suivant ::"
 
-#: howto/logging-cookbook.rst:2547
+#: howto/logging-cookbook.rst:2570
 msgid "When the above script is run, it prints:"
 msgstr "Quand vous exécutez le script ci-dessus, il imprime :"
 
-#: howto/logging-cookbook.rst:2562
+#: howto/logging-cookbook.rst:2585
 msgid "Customizing handlers with :func:`dictConfig`"
 msgstr "Personnalisation des gestionnaires avec :func:`dictConfig`"
 
-#: howto/logging-cookbook.rst:2564
+#: howto/logging-cookbook.rst:2587
 msgid ""
 "There are times when you want to customize logging handlers in particular "
 "ways, and if you use :func:`dictConfig` you may be able to do this without "
@@ -1867,21 +1903,23 @@ msgstr ""
 "d’une manière particulière et, en utilisant :func:`dictConfig`, vous pourrez "
 "peut-être le faire sans avoir à dériver les classes mères. Par exemple, "
 "supposons que vous souhaitiez définir le propriétaire d’un fichier journal. "
-"Dans un environnement POSIX, cela se fait facilement en utilisant :func:"
-"`shutil.chown`, mais les gestionnaires de fichiers de la bibliothèque "
-"standard n’offrent pas cette gestion nativement. Vous pouvez personnaliser "
-"la création du gestionnaire à l’aide d’une fonction simple telle que ::"
+"Dans un environnement POSIX, cela se fait facilement en "
+"utilisant :func:`shutil.chown`, mais les gestionnaires de fichiers de la "
+"bibliothèque standard n’offrent pas cette gestion nativement. Vous pouvez "
+"personnaliser la création du gestionnaire à l’aide d’une fonction simple "
+"telle que ::"
 
-#: howto/logging-cookbook.rst:2578
+#: howto/logging-cookbook.rst:2601
 msgid ""
-"You can then specify, in a logging configuration passed to :func:"
-"`dictConfig`, that a logging handler be created by calling this function::"
+"You can then specify, in a logging configuration passed "
+"to :func:`dictConfig`, that a logging handler be created by calling this "
+"function::"
 msgstr ""
 "Vous pouvez ensuite spécifier, dans une configuration de journalisation "
 "transmise à :func:`dictConfig`, qu’un gestionnaire de journalisation soit "
 "créé en appelant cette fonction ::"
 
-#: howto/logging-cookbook.rst:2611
+#: howto/logging-cookbook.rst:2634
 msgid ""
 "In this example I am setting the ownership using the ``pulse`` user and "
 "group, just for the purposes of illustration. Putting it together into a "
@@ -1891,27 +1929,27 @@ msgstr ""
 "groupe ``pulse``, uniquement à des fins d’illustration. Rassemblons le tout "
 "dans un script ``chowntest.py`` ::"
 
-#: howto/logging-cookbook.rst:2658
+#: howto/logging-cookbook.rst:2681
 msgid "To run this, you will probably need to run as ``root``:"
 msgstr ""
 "Pour l’exécuter, vous devrez probablement le faire en tant que ``root`` :"
 
-#: howto/logging-cookbook.rst:2668
+#: howto/logging-cookbook.rst:2691
 msgid ""
-"Note that this example uses Python 3.3 because that's where :func:`shutil."
-"chown` makes an appearance. This approach should work with any Python "
-"version that supports :func:`dictConfig` - namely, Python 2.7, 3.2 or later. "
-"With pre-3.3 versions, you would need to implement the actual ownership "
-"change using e.g. :func:`os.chown`."
+"Note that this example uses Python 3.3 because that's "
+"where :func:`shutil.chown` makes an appearance. This approach should work "
+"with any Python version that supports :func:`dictConfig` - namely, Python "
+"2.7, 3.2 or later. With pre-3.3 versions, you would need to implement the "
+"actual ownership change using e.g. :func:`os.chown`."
 msgstr ""
-"Notez que cet exemple utilise Python 3.3 car c’est là que :func:`shutil."
-"chown` fait son apparition. Cette approche devrait fonctionner avec "
-"n’importe quelle version de Python prenant en charge :func:`dictConfig` – à "
-"savoir, Python 2.7, 3.2 ou version ultérieure. Avec les versions antérieures "
-"à la 3.3, vous devrez implémenter le changement de propriétaire réel en "
-"utilisant par exemple :func:`os.chown`."
+"Notez que cet exemple utilise Python 3.3 car c’est là "
+"que :func:`shutil.chown` fait son apparition. Cette approche devrait "
+"fonctionner avec n’importe quelle version de Python prenant en "
+"charge :func:`dictConfig` – à savoir, Python 2.7, 3.2 ou version ultérieure. "
+"Avec les versions antérieures à la 3.3, vous devrez implémenter le "
+"changement de propriétaire réel en utilisant par exemple :func:`os.chown`."
 
-#: howto/logging-cookbook.rst:2674
+#: howto/logging-cookbook.rst:2697
 msgid ""
 "In practice, the handler-creating function may be in a utility module "
 "somewhere in your project. Instead of the line in the configuration::"
@@ -1920,11 +1958,11 @@ msgstr ""
 "un module utilitaire ailleurs dans votre projet. Au lieu de cette ligne dans "
 "la configuration ::"
 
-#: howto/logging-cookbook.rst:2679
+#: howto/logging-cookbook.rst:2702
 msgid "you could use e.g.::"
 msgstr "vous pouvez écrire par exemple ::"
 
-#: howto/logging-cookbook.rst:2683
+#: howto/logging-cookbook.rst:2706
 msgid ""
 "where ``project.util`` can be replaced with the actual name of the package "
 "where the function resides. In the above working script, using ``'ext://"
@@ -1937,7 +1975,7 @@ msgstr ""
 "l’appelable réel est résolu par :func:`dictConfig` à partir de la "
 "spécification ``ext://``."
 
-#: howto/logging-cookbook.rst:2688
+#: howto/logging-cookbook.rst:2711
 msgid ""
 "This example hopefully also points the way to how you could implement other "
 "types of file change - e.g. setting specific POSIX permission bits - in the "
@@ -1947,7 +1985,7 @@ msgstr ""
 "types de modification de fichier – par ex. définir des bits d’autorisation "
 "POSIX spécifiques – de la même manière, en utilisant :func:`os.chmod`."
 
-#: howto/logging-cookbook.rst:2692
+#: howto/logging-cookbook.rst:2715
 msgid ""
 "Of course, the approach could also be extended to types of handler other "
 "than a :class:`~logging.FileHandler` - for example, one of the rotating file "
@@ -1958,11 +1996,11 @@ msgstr ""
 "des gestionnaires à roulement de fichiers ou un autre type de gestionnaire "
 "complètement différent."
 
-#: howto/logging-cookbook.rst:2702
+#: howto/logging-cookbook.rst:2725
 msgid "Using particular formatting styles throughout your application"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2704
+#: howto/logging-cookbook.rst:2727
 msgid ""
 "In Python 3.2, the :class:`~logging.Formatter` gained a ``style`` keyword "
 "parameter which, while defaulting to ``%`` for backward compatibility, "
@@ -1973,7 +2011,7 @@ msgid ""
 "is constructed."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2711
+#: howto/logging-cookbook.rst:2734
 #, fuzzy
 msgid ""
 "Logging calls (:meth:`~Logger.debug`, :meth:`~Logger.info` etc.) only take "
@@ -1982,11 +2020,12 @@ msgid ""
 "call (e.g. the ``exc_info`` keyword parameter to indicate that traceback "
 "information should be logged, or the ``extra`` keyword parameter to indicate "
 "additional contextual information to be added to the log). So you cannot "
-"directly make logging calls using :meth:`str.format` or :class:`string."
-"Template` syntax, because internally the logging package uses %-formatting "
-"to merge the format string and the variable arguments. There would be no "
-"changing this while preserving backward compatibility, since all logging "
-"calls which are out there in existing code will be using %-format strings."
+"directly make logging calls using :meth:`str.format` "
+"or :class:`string.Template` syntax, because internally the logging package "
+"uses %-formatting to merge the format string and the variable arguments. "
+"There would be no changing this while preserving backward compatibility, "
+"since all logging calls which are out there in existing code will be using %-"
+"format strings."
 msgstr ""
 "Les appels de journalisation (``logger.debug()``, ``logger.info()`` etc.) ne "
 "prennent que des paramètres positionnels pour le message de journalisation "
@@ -1995,14 +2034,15 @@ msgstr ""
 "clé ``exc_info`` indique que les informations de trace doivent être "
 "enregistrées, ou le paramètre par mot-clé ``extra`` indique des informations "
 "contextuelles supplémentaires à ajouter au journal). Vous ne pouvez donc pas "
-"inclure dans les appels de journalisation à l’aide de la syntaxe :meth:`str."
-"format` ou :class:`string.Template`, car le paquet de journalisation utilise "
-"le formatage via « % » en interne pour fusionner la chaîne de format et les "
-"arguments de variables. Il n’est pas possible de changer ça tout en "
-"préservant la rétrocompatibilité puisque tous les appels de journalisation "
-"dans le code pré-existant utilisent des chaînes au format « % »."
+"inclure dans les appels de journalisation à l’aide de la "
+"syntaxe :meth:`str.format` ou :class:`string.Template`, car le paquet de "
+"journalisation utilise le formatage via « % » en interne pour fusionner la "
+"chaîne de format et les arguments de variables. Il n’est pas possible de "
+"changer ça tout en préservant la rétrocompatibilité puisque tous les appels "
+"de journalisation dans le code pré-existant utilisent des chaînes au format "
+"« % »."
 
-#: howto/logging-cookbook.rst:2723
+#: howto/logging-cookbook.rst:2746
 msgid ""
 "There have been suggestions to associate format styles with specific "
 "loggers, but that approach also runs into backward compatibility problems "
@@ -2010,7 +2050,7 @@ msgid ""
 "formatting."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2727
+#: howto/logging-cookbook.rst:2750
 msgid ""
 "For logging to work interoperably between any third-party libraries and your "
 "code, decisions about formatting need to be made at the level of the "
@@ -2018,11 +2058,11 @@ msgid ""
 "formatting styles can be accommodated."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2734
+#: howto/logging-cookbook.rst:2757
 msgid "Using LogRecord factories"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2736
+#: howto/logging-cookbook.rst:2759
 msgid ""
 "In Python 3.2, along with the :class:`~logging.Formatter` changes mentioned "
 "above, the logging package gained the ability to allow users to set their "
@@ -2037,27 +2077,27 @@ msgid ""
 "implementation does."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2747
+#: howto/logging-cookbook.rst:2770
 msgid ""
-"Refer to the reference documentation on :func:`setLogRecordFactory` and :"
-"class:`LogRecord` for more information."
+"Refer to the reference documentation on :func:`setLogRecordFactory` "
+"and :class:`LogRecord` for more information."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2752
+#: howto/logging-cookbook.rst:2775
 msgid "Using custom message objects"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2754
+#: howto/logging-cookbook.rst:2777
 msgid ""
 "There is another, perhaps simpler way that you can use {}- and $- formatting "
-"to construct your individual log messages. You may recall (from :ref:"
-"`arbitrary-object-messages`) that when logging you can use an arbitrary "
-"object as a message format string, and that the logging package will call :"
-"func:`str` on that object to get the actual format string. Consider the "
-"following two classes::"
+"to construct your individual log messages. You may recall "
+"(from :ref:`arbitrary-object-messages`) that when logging you can use an "
+"arbitrary object as a message format string, and that the logging package "
+"will call :func:`str` on that object to get the actual format string. "
+"Consider the following two classes::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2779
+#: howto/logging-cookbook.rst:2802
 msgid ""
 "Either of these can be used in place of a format string, to allow {}- or $-"
 "formatting to be used to build the actual \"message\" part which appears in "
@@ -2068,17 +2108,17 @@ msgid ""
 "using ``_`` for localization)."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2787
+#: howto/logging-cookbook.rst:2810
 msgid ""
-"Examples of this approach are given below. Firstly, formatting with :meth:"
-"`str.format`::"
+"Examples of this approach are given below. Firstly, formatting "
+"with :meth:`str.format`::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2801
+#: howto/logging-cookbook.rst:2824
 msgid "Secondly, formatting with :class:`string.Template`::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2808
+#: howto/logging-cookbook.rst:2831
 #, fuzzy
 msgid ""
 "One thing to note is that you pay no significant performance penalty with "
@@ -2100,41 +2140,41 @@ msgstr ""
 "n’est que du sucre syntaxique pour un appel de constructeur à l’une des "
 "classes ``XXXMessage``."
 
-#: howto/logging-cookbook.rst:2822
+#: howto/logging-cookbook.rst:2845
 msgid "Configuring filters with :func:`dictConfig`"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2824
+#: howto/logging-cookbook.rst:2847
 msgid ""
 "You *can* configure filters using :func:`~logging.config.dictConfig`, though "
 "it might not be obvious at first glance how to do it (hence this recipe). "
 "Since :class:`~logging.Filter` is the only filter class included in the "
 "standard library, and it is unlikely to cater to many requirements (it's "
-"only there as a base class), you will typically need to define your own :"
-"class:`~logging.Filter` subclass with an overridden :meth:`~logging.Filter."
-"filter` method. To do this, specify the ``()`` key in the configuration "
-"dictionary for the filter, specifying a callable which will be used to "
-"create the filter (a class is the most obvious, but you can provide any "
-"callable which returns a :class:`~logging.Filter` instance). Here is a "
-"complete example::"
+"only there as a base class), you will typically need to define your "
+"own :class:`~logging.Filter` subclass with an "
+"overridden :meth:`~logging.Filter.filter` method. To do this, specify the "
+"``()`` key in the configuration dictionary for the filter, specifying a "
+"callable which will be used to create the filter (a class is the most "
+"obvious, but you can provide any callable which returns "
+"a :class:`~logging.Filter` instance). Here is a complete example::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2877
+#: howto/logging-cookbook.rst:2900
 msgid ""
 "This example shows how you can pass configuration data to the callable which "
 "constructs the instance, in the form of keyword parameters. When run, the "
 "above script will print:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2885
+#: howto/logging-cookbook.rst:2908
 msgid "which shows that the filter is working as configured."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2887
+#: howto/logging-cookbook.rst:2910
 msgid "A couple of extra points to note:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2889
+#: howto/logging-cookbook.rst:2912
 msgid ""
 "If you can't refer to the callable directly in the configuration (e.g. if it "
 "lives in a different module, and you can't import it directly where the "
@@ -2144,7 +2184,7 @@ msgid ""
 "the above example."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2896
+#: howto/logging-cookbook.rst:2919
 msgid ""
 "As well as for filters, this technique can also be used to configure custom "
 "handlers and formatters. See :ref:`logging-config-dict-userdef` for more "
@@ -2153,11 +2193,11 @@ msgid ""
 "above."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2905
+#: howto/logging-cookbook.rst:2928
 msgid "Customized exception formatting"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2907
+#: howto/logging-cookbook.rst:2930
 msgid ""
 "There might be times when you want to do customized exception formatting - "
 "for argument's sake, let's say you want exactly one line per logged event, "
@@ -2165,56 +2205,56 @@ msgid ""
 "formatter class, as shown in the following example::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2948
+#: howto/logging-cookbook.rst:2971
 msgid "When run, this produces a file with exactly two lines:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2955
+#: howto/logging-cookbook.rst:2978
 msgid ""
 "While the above treatment is simplistic, it points the way to how exception "
 "information can be formatted to your liking. The :mod:`traceback` module may "
 "be helpful for more specialized needs."
 msgstr ""
 
-#: howto/logging-cookbook.rst:2962
+#: howto/logging-cookbook.rst:2985
 msgid "Speaking logging messages"
 msgstr ""
 
-#: howto/logging-cookbook.rst:2964
+#: howto/logging-cookbook.rst:2987
 msgid ""
 "There might be situations when it is desirable to have logging messages "
 "rendered in an audible rather than a visible format. This is easy to do if "
 "you have text-to-speech (TTS) functionality available in your system, even "
 "if it doesn't have a Python binding. Most TTS systems have a command line "
-"program you can run, and this can be invoked from a handler using :mod:"
-"`subprocess`. It's assumed here that TTS command line programs won't expect "
-"to interact with users or take a long time to complete, and that the "
-"frequency of logged messages will be not so high as to swamp the user with "
-"messages, and that it's acceptable to have the messages spoken one at a time "
-"rather than concurrently, The example implementation below waits for one "
-"message to be spoken before the next is processed, and this might cause "
-"other handlers to be kept waiting. Here is a short example showing the "
+"program you can run, and this can be invoked from a handler "
+"using :mod:`subprocess`. It's assumed here that TTS command line programs "
+"won't expect to interact with users or take a long time to complete, and "
+"that the frequency of logged messages will be not so high as to swamp the "
+"user with messages, and that it's acceptable to have the messages spoken one "
+"at a time rather than concurrently, The example implementation below waits "
+"for one message to be spoken before the next is processed, and this might "
+"cause other handlers to be kept waiting. Here is a short example showing the "
 "approach, which assumes that the ``espeak`` TTS package is available::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3006
+#: howto/logging-cookbook.rst:3029
 msgid ""
 "When run, this script should say \"Hello\" and then \"Goodbye\" in a female "
 "voice."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3008
+#: howto/logging-cookbook.rst:3031
 msgid ""
 "The above approach can, of course, be adapted to other TTS systems and even "
 "other systems altogether which can process messages via external programs "
 "run from a command line."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3016
+#: howto/logging-cookbook.rst:3039
 msgid "Buffering logging messages and outputting them conditionally"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3018
+#: howto/logging-cookbook.rst:3041
 msgid ""
 "There might be situations where you want to log messages in a temporary area "
 "and only output them if a certain condition occurs. For example, you may "
@@ -2224,7 +2264,7 @@ msgid ""
 "debug information to be output as well as the error."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3025
+#: howto/logging-cookbook.rst:3048
 msgid ""
 "Here is an example which shows how you could do this using a decorator for "
 "your functions where you want logging to behave this way. It makes use of "
@@ -2237,7 +2277,7 @@ msgid ""
 "subclass of ``MemoryHandler`` if you want custom flushing behavior."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3035
+#: howto/logging-cookbook.rst:3058
 msgid ""
 "The example script has a simple function, ``foo``, which just cycles through "
 "all the logging levels, writing to ``sys.stderr`` to say what level it's "
@@ -2246,53 +2286,54 @@ msgid ""
 "levels - otherwise, it only logs at DEBUG, INFO and WARNING levels."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3041
+#: howto/logging-cookbook.rst:3064
 msgid ""
 "The script just arranges to decorate ``foo`` with a decorator which will do "
 "the conditional logging that's required. The decorator takes a logger as a "
 "parameter and attaches a memory handler for the duration of the call to the "
 "decorated function. The decorator can be additionally parameterised using a "
 "target handler, a level at which flushing should occur, and a capacity for "
-"the buffer (number of records buffered). These default to a :class:`~logging."
-"StreamHandler` which writes to ``sys.stderr``, ``logging.ERROR`` and ``100`` "
-"respectively."
+"the buffer (number of records buffered). These default to "
+"a :class:`~logging.StreamHandler` which writes to ``sys.stderr``, "
+"``logging.ERROR`` and ``100`` respectively."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3049
+#: howto/logging-cookbook.rst:3072
 msgid "Here's the script::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3112
+#: howto/logging-cookbook.rst:3135
 msgid "When this script is run, the following output should be observed:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3142
+#: howto/logging-cookbook.rst:3165
 msgid ""
 "As you can see, actual logging output only occurs when an event is logged "
 "whose severity is ERROR or greater, but in that case, any previous events at "
 "lower severities are also logged."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3146
+#: howto/logging-cookbook.rst:3169
 msgid "You can of course use the conventional means of decoration::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3156
+#: howto/logging-cookbook.rst:3179
 msgid "Sending logging messages to email, with buffering"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3158
+#: howto/logging-cookbook.rst:3181
 msgid ""
 "To illustrate how you can send log messages via email, so that a set number "
-"of messages are sent per email, you can subclass :class:`~logging.handlers."
-"BufferingHandler`. In the following  example, which you can adapt to suit "
-"your specific needs, a simple test harness is provided which allows you to "
-"run the script with command line arguments specifying what you typically "
-"need to send things via SMTP. (Run the downloaded script with the ``-h`` "
-"argument to see the required and optional arguments.)"
+"of messages are sent per email, you can "
+"subclass :class:`~logging.handlers.BufferingHandler`. In the following  "
+"example, which you can adapt to suit your specific needs, a simple test "
+"harness is provided which allows you to run the script with command line "
+"arguments specifying what you typically need to send things via SMTP. (Run "
+"the downloaded script with the ``-h`` argument to see the required and "
+"optional arguments.)"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3230
+#: howto/logging-cookbook.rst:3253
 msgid ""
 "If you run this script and your SMTP server is correctly set up, you should "
 "find that it sends eleven emails to the addressee you specify. The first ten "
@@ -2300,39 +2341,39 @@ msgid ""
 "messages. That makes up 102 messages as specified in the script."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3238
+#: howto/logging-cookbook.rst:3261
 msgid "Formatting times using UTC (GMT) via configuration"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3240
+#: howto/logging-cookbook.rst:3263
 msgid ""
 "Sometimes you want to format times using UTC, which can be done using a "
 "class such as ``UTCFormatter``, shown below::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3249
+#: howto/logging-cookbook.rst:3272
 msgid ""
-"and you can then use the ``UTCFormatter`` in your code instead of :class:"
-"`~logging.Formatter`. If you want to do that via configuration, you can use "
-"the :func:`~logging.config.dictConfig` API with an approach illustrated by "
-"the following complete example::"
+"and you can then use the ``UTCFormatter`` in your code instead "
+"of :class:`~logging.Formatter`. If you want to do that via configuration, "
+"you can use the :func:`~logging.config.dictConfig` API with an approach "
+"illustrated by the following complete example::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3292
+#: howto/logging-cookbook.rst:3315
 msgid "When this script is run, it should print something like:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3299
+#: howto/logging-cookbook.rst:3322
 msgid ""
 "showing how the time is formatted both as local time and UTC, one for each "
 "handler."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3306
+#: howto/logging-cookbook.rst:3329
 msgid "Using a context manager for selective logging"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3308
+#: howto/logging-cookbook.rst:3331
 msgid ""
 "There are times when it would be useful to temporarily change the logging "
 "configuration and revert it back after doing something. For this, a context "
@@ -2342,7 +2383,7 @@ msgid ""
 "scope of the context manager::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3341
+#: howto/logging-cookbook.rst:3364
 msgid ""
 "If you specify a level value, the logger's level is set to that value in the "
 "scope of the with block covered by the context manager. If you specify a "
@@ -2351,13 +2392,13 @@ msgid ""
 "block exit - you could do this if you don't need the handler any more."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3347
+#: howto/logging-cookbook.rst:3370
 msgid ""
 "To illustrate how it works, we can add the following block of code to the "
 "above::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3365
+#: howto/logging-cookbook.rst:3388
 msgid ""
 "We initially set the logger's level to ``INFO``, so message #1 appears and "
 "message #2 doesn't. We then change the level to ``DEBUG`` temporarily in the "
@@ -2370,121 +2411,121 @@ msgid ""
 "(like message #1) whereas message #7 doesn't (just like message #2)."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3375
+#: howto/logging-cookbook.rst:3398
 msgid "If we run the resulting script, the result is as follows:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3386
+#: howto/logging-cookbook.rst:3409
 msgid ""
 "If we run it again, but pipe ``stderr`` to ``/dev/null``, we see the "
 "following, which is the only message written to ``stdout``:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3394
+#: howto/logging-cookbook.rst:3417
 msgid "Once again, but piping ``stdout`` to ``/dev/null``, we get:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3404
+#: howto/logging-cookbook.rst:3427
 msgid ""
 "In this case, the message #5 printed to ``stdout`` doesn't appear, as "
 "expected."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3406
+#: howto/logging-cookbook.rst:3429
 msgid ""
 "Of course, the approach described here can be generalised, for example to "
 "attach logging filters temporarily. Note that the above code works in Python "
 "2 as well as Python 3."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3414
+#: howto/logging-cookbook.rst:3437
 msgid "A CLI application starter template"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3416
+#: howto/logging-cookbook.rst:3439
 msgid "Here's an example which shows how you can:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3418
+#: howto/logging-cookbook.rst:3441
 msgid "Use a logging level based on command-line arguments"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3419
+#: howto/logging-cookbook.rst:3442
 msgid ""
 "Dispatch to multiple subcommands in separate files, all logging at the same "
 "level in a consistent way"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3421
+#: howto/logging-cookbook.rst:3444
 msgid "Make use of simple, minimal configuration"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3423
+#: howto/logging-cookbook.rst:3446
 msgid ""
 "Suppose we have a command-line application whose job is to stop, start or "
 "restart some services. This could be organised for the purposes of "
 "illustration as a file ``app.py`` that is the main script for the "
-"application, with individual commands implemented in ``start.py``, ``stop."
-"py`` and ``restart.py``. Suppose further that we want to control the "
+"application, with individual commands implemented in ``start.py``, "
+"``stop.py`` and ``restart.py``. Suppose further that we want to control the "
 "verbosity of the application via a command-line argument, defaulting to "
 "``logging.INFO``. Here's one way that ``app.py`` could be written::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3472
+#: howto/logging-cookbook.rst:3495
 msgid ""
 "And the ``start``, ``stop`` and ``restart`` commands can be implemented in "
 "separate modules, like so for starting::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3485
+#: howto/logging-cookbook.rst:3508
 msgid "and thus for stopping::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3506
+#: howto/logging-cookbook.rst:3529
 msgid "and similarly for restarting::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3527
+#: howto/logging-cookbook.rst:3550
 msgid ""
 "If we run this application with the default log level, we get output like "
 "this:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3540
+#: howto/logging-cookbook.rst:3563
 msgid ""
 "The first word is the logging level, and the second word is the module or "
 "package name of the place where the event was logged."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3543
+#: howto/logging-cookbook.rst:3566
 msgid ""
 "If we change the logging level, then we can change the information sent to "
 "the log. For example, if we want more information:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3560
+#: howto/logging-cookbook.rst:3583
 msgid "And if we want less:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3568
+#: howto/logging-cookbook.rst:3591
 msgid ""
 "In this case, the commands don't print anything to the console, since "
 "nothing at ``WARNING`` level or above is logged by them."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3574
+#: howto/logging-cookbook.rst:3597
 msgid "A Qt GUI for logging"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3576
+#: howto/logging-cookbook.rst:3599
 msgid ""
 "A question that comes up from time to time is about how to log to a GUI "
 "application. The `Qt <https://www.qt.io/>`_ framework is a popular cross-"
-"platform UI framework with Python bindings using :pypi:`PySide2` or :pypi:"
-"`PyQt5` libraries."
+"platform UI framework with Python bindings using :pypi:`PySide2` "
+"or :pypi:`PyQt5` libraries."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3581
+#: howto/logging-cookbook.rst:3604
 msgid ""
 "The following example shows how to log to a Qt GUI. This introduces a simple "
 "``QtHandler`` class which takes a callable, which should be a slot in the "
@@ -2494,14 +2535,14 @@ msgid ""
 "logging messages at random levels with random short delays in between)."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3588
+#: howto/logging-cookbook.rst:3611
 msgid ""
 "The worker thread is implemented using Qt's ``QThread`` class rather than "
 "the :mod:`threading` module, as there are circumstances where one has to use "
 "``QThread``, which offers better integration with other ``Qt`` components."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3592
+#: howto/logging-cookbook.rst:3615
 msgid ""
 "The code should work with recent releases of any of ``PySide6``, ``PyQt6``, "
 "``PySide2`` or ``PyQt5``. You should be able to adapt the approach to "
@@ -2509,28 +2550,29 @@ msgid ""
 "more detailed information."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3829
+#: howto/logging-cookbook.rst:3852
 msgid "Logging to syslog with RFC5424 support"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3831
+#: howto/logging-cookbook.rst:3854
 msgid ""
 "Although :rfc:`5424` dates from 2009, most syslog servers are configured by "
 "default to use the older :rfc:`3164`, which hails from 2001. When "
 "``logging`` was added to Python in 2003, it supported the earlier (and only "
 "existing) protocol at the time. Since RFC5424 came out, as there has not "
-"been widespread deployment of it in syslog servers, the :class:`~logging."
-"handlers.SysLogHandler` functionality has not been updated."
+"been widespread deployment of it in syslog servers, "
+"the :class:`~logging.handlers.SysLogHandler` functionality has not been "
+"updated."
 msgstr ""
 
-#: howto/logging-cookbook.rst:3838
+#: howto/logging-cookbook.rst:3861
 msgid ""
 "RFC 5424 contains some useful features such as support for structured data, "
 "and if you need to be able to log to a syslog server with support for it, "
 "you can do so with a subclassed handler which looks something like this::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3904
+#: howto/logging-cookbook.rst:3927
 msgid ""
 "You'll need to be familiar with RFC 5424 to fully understand the above code, "
 "and it may be that you have slightly different needs (e.g. for how you pass "
@@ -2539,11 +2581,11 @@ msgid ""
 "using something like this::"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3918
+#: howto/logging-cookbook.rst:3941
 msgid "How to treat a logger like an output stream"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3920
+#: howto/logging-cookbook.rst:3943
 msgid ""
 "Sometimes, you need to interface to a third-party API which expects a file-"
 "like object to write to, but you want to direct the API's output to a "
@@ -2551,43 +2593,43 @@ msgid ""
 "API. Here's a short script illustrating such a class:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3960
+#: howto/logging-cookbook.rst:3983
 msgid "When this script is run, it prints"
-msgstr ""
-
-#: howto/logging-cookbook.rst:3967
-msgid ""
-"You could also use ``LoggerWriter`` to redirect ``sys.stdout`` and ``sys."
-"stderr`` by doing something like this:"
-msgstr ""
-
-#: howto/logging-cookbook.rst:3977
-msgid ""
-"You should do this *after* configuring logging for your needs. In the above "
-"example, the :func:`~logging.basicConfig` call does this (using the ``sys."
-"stderr`` value *before* it is overwritten by a ``LoggerWriter`` instance). "
-"Then, you'd get this kind of result:"
 msgstr ""
 
 #: howto/logging-cookbook.rst:3990
 msgid ""
-"Of course, the examples above show output according to the format used by :"
-"func:`~logging.basicConfig`, but you can use a different formatter when you "
-"configure logging."
+"You could also use ``LoggerWriter`` to redirect ``sys.stdout`` and "
+"``sys.stderr`` by doing something like this:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:3994
+#: howto/logging-cookbook.rst:4000
+msgid ""
+"You should do this *after* configuring logging for your needs. In the above "
+"example, the :func:`~logging.basicConfig` call does this (using the "
+"``sys.stderr`` value *before* it is overwritten by a ``LoggerWriter`` "
+"instance). Then, you'd get this kind of result:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4013
+msgid ""
+"Of course, the examples above show output according to the format used "
+"by :func:`~logging.basicConfig`, but you can use a different formatter when "
+"you configure logging."
+msgstr ""
+
+#: howto/logging-cookbook.rst:4017
 msgid ""
 "Note that with the above scheme, you are somewhat at the mercy of buffering "
 "and the sequence of write calls which you are intercepting. For example, "
 "with the definition of ``LoggerWriter`` above, if you have the snippet"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4003
+#: howto/logging-cookbook.rst:4026
 msgid "then running the script results in"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4021
+#: howto/logging-cookbook.rst:4044
 msgid ""
 "As you can see, this output isn't ideal. That's because the underlying code "
 "which writes to ``sys.stderr`` makes multiple writes, each of which results "
@@ -2597,17 +2639,60 @@ msgid ""
 "``LoggerWriter``:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4046
+#: howto/logging-cookbook.rst:4069
 msgid ""
 "This just buffers up stuff until a newline is seen, and then logs complete "
 "lines. With this approach, you get better output:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4062
+#: howto/logging-cookbook.rst:4082
+msgid "How to uniformly handle newlines in logging output"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4084
+msgid ""
+"Usually, messages that are logged (say to console or file) consist of a "
+"single line of text. However, sometimes there is a need to handle messages "
+"with multiple lines - whether because a logging format string contains "
+"newlines, or logged data contains newlines. If you want to handle such "
+"messages uniformly, so that each line in the logged message appears "
+"uniformly formatted as if it was logged separately, you can do this using a "
+"handler mixin, as in the following snippet:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4110
+msgid "You can use the mixin as in the following script:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4131
+#, fuzzy
+msgid "The script, when run, prints something like:"
+msgstr "qui, à l’exécution, produit quelque chose comme ça :"
+
+#: howto/logging-cookbook.rst:4143
+msgid ""
+"If, on the other hand, you are concerned about `log injection <https://"
+"owasp.org/www-community/attacks/Log_Injection>`_, you can use a formatter "
+"which escapes newlines, as per the following example:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4167
+msgid ""
+"You can, of course, use whatever escaping scheme makes the most sense for "
+"you. The script, when run, should produce output like this:"
+msgstr ""
+
+#: howto/logging-cookbook.rst:4177
+msgid ""
+"Escaping behaviour can't be the stdlib default , as it would break backwards "
+"compatibility."
+msgstr ""
+
+#: howto/logging-cookbook.rst:4183
 msgid "Patterns to avoid"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4064
+#: howto/logging-cookbook.rst:4185
 msgid ""
 "Although the preceding sections have described ways of doing things you "
 "might need to do or deal with, it is worth mentioning some usage patterns "
@@ -2615,11 +2700,11 @@ msgid ""
 "The following sections are in no particular order."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4070
+#: howto/logging-cookbook.rst:4191
 msgid "Opening the same log file multiple times"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4072
+#: howto/logging-cookbook.rst:4193
 msgid ""
 "On Windows, you will generally not be able to open the same file multiple "
 "times as this will lead to a \"file is in use by another process\" error. "
@@ -2627,32 +2712,32 @@ msgid ""
 "file multiple times. This could be done accidentally, for example by:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4077
+#: howto/logging-cookbook.rst:4198
 msgid ""
 "Adding a file handler more than once which references the same file (e.g. by "
 "a copy/paste/forget-to-change error)."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4080
+#: howto/logging-cookbook.rst:4201
 msgid ""
 "Opening two files that look different, as they have different names, but are "
 "the same because one is a symbolic link to the other."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4083
+#: howto/logging-cookbook.rst:4204
 msgid ""
 "Forking a process, following which both parent and child have a reference to "
 "the same file. This might be through use of the :mod:`multiprocessing` "
 "module, for example."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4087
+#: howto/logging-cookbook.rst:4208
 msgid ""
 "Opening a file multiple times might *appear* to work most of the time, but "
 "can lead to a number of problems in practice:"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4090
+#: howto/logging-cookbook.rst:4211
 msgid ""
 "Logging output can be garbled because multiple threads or processes try to "
 "write to the same file. Although logging guards against concurrent use of "
@@ -2661,7 +2746,7 @@ msgid ""
 "different handler instances which happen to point to the same file."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4096
+#: howto/logging-cookbook.rst:4217
 msgid ""
 "An attempt to delete a file (e.g. during file rotation) silently fails, "
 "because there is another reference pointing to it. This can lead to "
@@ -2671,17 +2756,17 @@ msgid ""
 "being supposedly in place."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4103
+#: howto/logging-cookbook.rst:4224
 msgid ""
 "Use the techniques outlined in :ref:`multiple-processes` to circumvent such "
 "issues."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4107
+#: howto/logging-cookbook.rst:4228
 msgid "Using loggers as attributes in a class or passing them as parameters"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4109
+#: howto/logging-cookbook.rst:4230
 msgid ""
 "While there might be unusual cases where you'll need to do this, in general "
 "there is no point because loggers are singletons. Code can always access a "
@@ -2692,13 +2777,13 @@ msgid ""
 "module (and not the class) is the unit of software decomposition."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4118
+#: howto/logging-cookbook.rst:4239
 msgid ""
 "Adding handlers other than :class:`~logging.NullHandler` to a logger in a "
 "library"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4120
+#: howto/logging-cookbook.rst:4241
 msgid ""
 "Configuring logging by adding handlers, formatters and filters is the "
 "responsibility of the application developer, not the library developer. If "
@@ -2706,11 +2791,11 @@ msgid ""
 "your loggers other than a :class:`~logging.NullHandler` instance."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4126
+#: howto/logging-cookbook.rst:4247
 msgid "Creating a lot of loggers"
 msgstr ""
 
-#: howto/logging-cookbook.rst:4128
+#: howto/logging-cookbook.rst:4249
 msgid ""
 "Loggers are singletons that are never freed during a script execution, and "
 "so creating lots of loggers will use up memory which can't then be freed. "
@@ -2721,39 +2806,39 @@ msgid ""
 "occasionally slightly more fine-grained than that)."
 msgstr ""
 
-#: howto/logging-cookbook.rst:4139
+#: howto/logging-cookbook.rst:4260
 msgid "Other resources"
 msgstr "Autres ressources"
 
-#: howto/logging-cookbook.rst:4143
+#: howto/logging-cookbook.rst:4264
 msgid "Module :mod:`logging`"
 msgstr "Module :mod:`logging`"
 
-#: howto/logging-cookbook.rst:4144
+#: howto/logging-cookbook.rst:4265
 msgid "API reference for the logging module."
 msgstr "Référence de l’API du module de journalisation."
 
-#: howto/logging-cookbook.rst:4146
+#: howto/logging-cookbook.rst:4267
 msgid "Module :mod:`logging.config`"
 msgstr "Module :mod:`logging.config`"
 
-#: howto/logging-cookbook.rst:4147
+#: howto/logging-cookbook.rst:4268
 msgid "Configuration API for the logging module."
 msgstr "API pour la configuration du module de journalisation."
 
-#: howto/logging-cookbook.rst:4149
+#: howto/logging-cookbook.rst:4270
 msgid "Module :mod:`logging.handlers`"
 msgstr "Module :mod:`logging.handlers`"
 
-#: howto/logging-cookbook.rst:4150
+#: howto/logging-cookbook.rst:4271
 msgid "Useful handlers included with the logging module."
 msgstr "Gestionnaires utiles inclus avec le module de journalisation."
 
-#: howto/logging-cookbook.rst:4152
+#: howto/logging-cookbook.rst:4273
 msgid ":ref:`Basic Tutorial <logging-basic-tutorial>`"
 msgstr ":ref:`Tutoriel de découverte <logging-basic-tutorial>`"
 
-#: howto/logging-cookbook.rst:4154
+#: howto/logging-cookbook.rst:4275
 msgid ":ref:`Advanced Tutorial <logging-advanced-tutorial>`"
 msgstr ":ref:`Tutoriel avancé <logging-advanced-tutorial>`"
 

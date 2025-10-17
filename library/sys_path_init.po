@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-29 22:40+0100\n"
+"POT-Creation-Date: 2025-10-17 09:58+0200\n"
 "PO-Revision-Date: 2022-05-23 00:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -28,8 +28,8 @@ msgstr ""
 msgid ""
 "The first entry in the module search path is the directory that contains the "
 "input script, if there is one. Otherwise, the first entry is the current "
-"directory, which is the case when executing the interactive shell, a :option:"
-"`-c` command, or :option:`-m` module."
+"directory, which is the case when executing the interactive shell, "
+"a :option:`-c` command, or :option:`-m` module."
 msgstr ""
 
 #: library/sys_path_init.rst:14
@@ -70,28 +70,38 @@ msgstr ""
 #: library/sys_path_init.rst:37
 msgid ""
 "Once ``home`` is determined, the ``prefix`` directory is found by first "
-"looking for :file:`python{majorversion}{minorversion}.zip` (``python311."
-"zip``). On Windows the zip archive is searched for in ``home`` and on Unix "
-"the archive is expected to be in :file:`lib`. Note that the expected zip "
-"archive location is added to the module search path even if the archive does "
-"not exist. If no archive was found, Python on Windows will continue the "
-"search for ``prefix`` by looking for :file:`Lib\\\\os.py`. Python on Unix "
-"will look for :file:`lib/python{majorversion}.{minorversion}/os.py` (``lib/"
-"python3.11/os.py``). On Windows ``prefix`` and ``exec_prefix`` are the same, "
-"however on other platforms :file:`lib/python{majorversion}.{minorversion}/"
-"lib-dynload` (``lib/python3.11/lib-dynload``) is searched for and used as an "
-"anchor for ``exec_prefix``. On some platforms :file:`lib` may be :file:"
-"`lib64` or another value, see :data:`sys.platlibdir` and :envvar:"
-"`PYTHONPLATLIBDIR`."
+"looking for :file:`python{majorversion}{minorversion}.zip` "
+"(``python311.zip``). On Windows the zip archive is searched for in ``home`` "
+"and on Unix the archive is expected to be in :file:`lib`. Note that the "
+"expected zip archive location is added to the module search path even if the "
+"archive does not exist. If no archive was found, Python on Windows will "
+"continue the search for ``prefix`` by looking for :file:`Lib\\\\os.py`. "
+"Python on Unix will look for :file:`lib/python{majorversion}.{minorversion}/"
+"os.py` (``lib/python3.11/os.py``). On Windows ``prefix`` and ``exec_prefix`` "
+"are the same, however on other platforms :file:`lib/python{majorversion}."
+"{minorversion}/lib-dynload` (``lib/python3.11/lib-dynload``) is searched for "
+"and used as an anchor for ``exec_prefix``. On some platforms :file:`lib` may "
+"be :file:`lib64` or another value, see :data:`sys.platlibdir` "
+"and :envvar:`PYTHONPLATLIBDIR`."
 msgstr ""
 
 #: library/sys_path_init.rst:50
 msgid ""
-"Once found, ``prefix`` and ``exec_prefix`` are available at :data:`sys."
-"prefix` and :data:`sys.exec_prefix` respectively."
+"Once found, ``prefix`` and ``exec_prefix`` are available "
+"at :data:`sys.base_prefix` and :data:`sys.base_exec_prefix` respectively."
 msgstr ""
 
 #: library/sys_path_init.rst:53
+msgid ""
+"If :envvar:`PYTHONHOME` is not set, and a ``pyvenv.cfg`` file is found "
+"alongside the main executable, or in its parent "
+"directory, :data:`sys.prefix` and :data:`sys.exec_prefix` get set to the "
+"directory containing ``pyvenv.cfg``, otherwise they are set to the same "
+"value as :data:`sys.base_prefix` and :data:`sys.base_exec_prefix`, "
+"respectively. This is used by :ref:`sys-path-init-virtual-environments`."
+msgstr ""
+
+#: library/sys_path_init.rst:60
 msgid ""
 "Finally, the :mod:`site` module is processed and :file:`site-packages` "
 "directories are added to the module search path. A common way to customize "
@@ -99,40 +109,64 @@ msgid ""
 "modules as described in the :mod:`site` module documentation."
 msgstr ""
 
-#: library/sys_path_init.rst:60
+#: library/sys_path_init.rst:67
 msgid ""
-"Certain command line options may further affect path calculations. See :"
-"option:`-E`, :option:`-I`, :option:`-s` and :option:`-S` for further details."
-msgstr ""
-
-#: library/sys_path_init.rst:64
-msgid "Virtual environments"
-msgstr "Environnements virtuels"
-
-#: library/sys_path_init.rst:66
-msgid ""
-"If Python is run in a virtual environment (as described at :ref:`tut-venv`) "
-"then ``prefix`` and ``exec_prefix`` are specific to the virtual environment."
-msgstr ""
-
-#: library/sys_path_init.rst:69
-msgid ""
-"If a ``pyvenv.cfg`` file is found alongside the main executable, or in the "
-"directory one level above the executable, the following variations apply:"
+"Certain command line options may further affect path calculations. "
+"See :option:`-E`, :option:`-I`, :option:`-s` and :option:`-S` for further "
+"details."
 msgstr ""
 
 #: library/sys_path_init.rst:72
 msgid ""
-"If ``home`` is an absolute path and :envvar:`PYTHONHOME` is not set, this "
-"path is used instead of the path to the main executable when deducing "
-"``prefix`` and ``exec_prefix``."
-msgstr ""
-
-#: library/sys_path_init.rst:77
-msgid "_pth files"
+":data:`sys.prefix` and :data:`sys.exec_prefix` are now set to the "
+"``pyvenv.cfg`` directory during the path initialization. This was previously "
+"done by :mod:`site`, therefore affected by :option:`-S`."
 msgstr ""
 
 #: library/sys_path_init.rst:79
+#, fuzzy
+msgid "Virtual Environments"
+msgstr "Environnements virtuels"
+
+#: library/sys_path_init.rst:81
+msgid ""
+"Virtual environments place a ``pyvenv.cfg`` file in their prefix, which "
+"causes :data:`sys.prefix` and :data:`sys.exec_prefix` to point to them, "
+"instead of the base installation."
+msgstr ""
+
+#: library/sys_path_init.rst:85
+msgid ""
+"The ``prefix`` and ``exec_prefix`` values of the base installation are "
+"available at :data:`sys.base_prefix` and :data:`sys.base_exec_prefix`."
+msgstr ""
+
+#: library/sys_path_init.rst:88
+msgid ""
+"As well as being used as a marker to identify virtual environments, "
+"``pyvenv.cfg`` may also be used to configure the :mod:`site` initialization. "
+"Please refer to :mod:`site`'s :ref:`virtual environments documentation <site-"
+"virtual-environments-configuration>`."
+msgstr ""
+
+#: library/sys_path_init.rst:95
+msgid ":envvar:`PYTHONHOME` overrides the ``pyvenv.cfg`` detection."
+msgstr ""
+
+#: library/sys_path_init.rst:99
+msgid ""
+"There are other ways how \"virtual environments\" could be implemented, this "
+"documentation refers implementations based on the ``pyvenv.cfg`` mechanism, "
+"such as :mod:`venv`. Most virtual environment implementations follow the "
+"model set by :mod:`venv`, but there may be exotic implementations that "
+"diverge from it."
+msgstr ""
+
+#: library/sys_path_init.rst:106
+msgid "_pth files"
+msgstr ""
+
+#: library/sys_path_init.rst:108
 msgid ""
 "To completely override :data:`sys.path` create a ``._pth`` file with the "
 "same name as the shared library or executable (``python._pth`` or "
@@ -143,7 +177,7 @@ msgid ""
 "allows paths to be restricted for any program loading the runtime if desired."
 msgstr ""
 
-#: library/sys_path_init.rst:87
+#: library/sys_path_init.rst:116
 msgid ""
 "When the file exists, all registry and environment variables are ignored, "
 "isolated mode is enabled, and :mod:`site` is not imported unless one line in "
@@ -160,7 +194,7 @@ msgstr ""
 "importations autres que vers *site* ne sont pas autorisées, ni n'importe "
 "quelle instruction Python."
 
-#: library/sys_path_init.rst:94
+#: library/sys_path_init.rst:123
 msgid ""
 "Note that ``.pth`` files (without leading underscore) will be processed "
 "normally by the :mod:`site` module when ``import site`` has been specified."
@@ -169,22 +203,22 @@ msgstr ""
 "seront traités normalement par le module :mod:`site` lorsque ``import site`` "
 "a été spécifié."
 
-#: library/sys_path_init.rst:98
+#: library/sys_path_init.rst:127
 msgid "Embedded Python"
 msgstr ""
 
-#: library/sys_path_init.rst:100
+#: library/sys_path_init.rst:129
 msgid ""
-"If Python is embedded within another application :c:func:"
-"`Py_InitializeFromConfig` and the :c:type:`PyConfig` structure can be used "
-"to initialize Python. The path specific details are described at :ref:`init-"
-"path-config`."
+"If Python is embedded within another "
+"application :c:func:`Py_InitializeFromConfig` and the :c:type:`PyConfig` "
+"structure can be used to initialize Python. The path specific details are "
+"described at :ref:`init-path-config`."
 msgstr ""
 
-#: library/sys_path_init.rst:106
+#: library/sys_path_init.rst:135
 msgid ":ref:`windows_finding_modules` for detailed Windows notes."
 msgstr ""
 
-#: library/sys_path_init.rst:107
+#: library/sys_path_init.rst:136
 msgid ":ref:`using-on-unix` for Unix details."
 msgstr ""
