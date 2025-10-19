@@ -9,29 +9,34 @@ It does not count zero-width caracters from the Mn Unicode category
 It returns 0 on success, 1 on failure.
 """
 
-from unicodedata import category
 import fileinput
 import sys
+from unicodedata import category
 
-SOFT_LIMIT = 80  # used for splitables lines (with spaces in them)
-HARD_LIMIT = 88  # used for non-splitables lines (without spaces in them)
-
+MAX_LINE_LENGTH = 80
 
 def clean(line):
-    return "".join(char for char in line if category(char) != "Mn").rstrip("\n")
+    """Prepare the line to be measured.
+
+    See https://lists.gnu.org/archive/html/bug-gettext/2025-10/msg00010.html
+    about hiding spaces before colon.
+    """
+    line =  "".join(char for char in line if category(char) != "Mn").rstrip("\n")
+    line = line.replace(" :", " :")  # It's not allowed to split a line before `:`
+    return line
 
 
 return_code = 0
 
 for line in fileinput.input(encoding="utf-8"):
     line = clean(line)
-    limit = SOFT_LIMIT if line.count(" ") > 1 else HARD_LIMIT
-    if len(set(line)) <= 6:
-        continue  # msgcat does not wraps the long line of dots in howto/perf_profiling.rst
-    if len(line) > limit:
+
+    if line.count(" ") <= 2:
+        continue  # Could be hard to break.
+    if len(line) > MAX_LINE_LENGTH:
         print(
             f"{fileinput.filename()}:{fileinput.filelineno()} line too long "
-            f"({len(line)} > {limit} characters)",
+            f"({len(line)} > {MAX_LINE_LENGTH} characters)",
             file=sys.stderr,
         )
         return_code = 1
