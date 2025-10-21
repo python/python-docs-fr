@@ -23,7 +23,9 @@ Vous pouvez contribuer :
   `mécène <https://liberapay.com/python-docs-fr>`_ du projet.
 
 Consultez le
-`guide <https://git.afpy.org/AFPy/python-docs-fr/src/branch/3.14/CONTRIBUTING.rst>`_
+`guide de style <https://devguide.python.org/documentation/translations/translating/#style-guide>`_
+de la documentation, et le
+`guide de la traduction en français <https://git.afpy.org/AFPy/python-docs-fr/src/branch/3.14/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
 Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>`_ de
@@ -71,4 +73,3 @@ Historique du projet
 .. image:: https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png
    :target: https://framagit.org/JulienPalard/write-the-docs-paris-19
    :alt: Progression de la traduction
-
