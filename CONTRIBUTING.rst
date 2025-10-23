@@ -1,14 +1,16 @@
 Guide de contribution à la documentation
 ########################################
 
+.. |branch| replace:: 3.14
+
+
 Prérequis
 =========
 
-Outils souhaitables
--------------------
+Outils nécessaires
+------------------
 
-Pour pouvoir participer à la traduction en commun, il est souhaitable
-d'installer :
+Pour participer à la traduction, vous aurez besoin d'installer :
 
 - un client ``git`` `Linux <https://git-scm.com/>`_, `MacOS
   <https://git-scm.com/>`_ ou `Windows <https://gitforwindows.org/>`_ ;
@@ -18,147 +20,107 @@ d'installer :
 
 Outils facultatifs
 ------------------
+
 De plus, il peut être utile de s'équiper d'utilitaires pour faciliter
 la manipulation des fichiers ``.po`` et la traduction.
 
 `Poutils <https://pypi.org/project/poutils/>`_ est un paquet PyPI qui
-regroupe un certain nombre d'outils liés à la traduction. Dans un
-environnement disposant de Python 3.7 ou plus, installez-le avec ::
+regroupe un certain nombre d'outils liés à la traduction ::
 
   python3 -m pip install poutils
 
-Dans notre cas, les utilitaires de *Poutils* qui nous intéressent sont :
-
-Pospell
-^^^^^^^
-
-Vérificateur d'orthographe fondé sur Hunspell. ``make spell`` exécute
-Pospell. Pour l'utiliser, il vous faut installer Hunspell. Attention,
-dans Debian notamment (et ses dérivés comme Ubuntu), il existe plusieurs
-dictionnaires français qui diffèrent en raison de l'orthographe
-réformée. Installez celui qui contient les deux orthographes avec ::
-
-  sudo apt install hunspell hunspell-fr-comprehensive
-
-Potodo
-^^^^^^
-
-Permet d'identifier les parties de la documentation qu'il reste à
-traduire.  ``make todo`` fait appel à Potodo.
-
-Pogrep
-^^^^^^
-
-Permet de rechercher dans la documentation des termes. Utile si on a un doute
-sur comment traduire un terme ou chercher la traduction d'un terme dans
-d'autres fichiers. Pour connaître les options disponibles, tapez ::
-
-  pogrep --help
-
-Powrap
-^^^^^^
-
-Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
-wrap``.
-
-Padpo (beta)
-^^^^^^^^^^^^
-
-Analyseur de code qui encapsule notamment `Grammalecte
-<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
-et la syntaxe des fichiers *.po*.
-
-Configuration des outils
-------------------------
-
-Configuration de Poedit
-^^^^^^^^^^^^^^^^^^^^^^^
-* N'oubliez pas de configurer votre nom et
-  votre adresse de courriel (Édition → Préférences → Général).
-* Vérifiez également qu'il est configuré pour passer à la ligne à 79
-  caractères (Édition → Préférences → Avancé → Passer à la ligne à
-  79).
-
-Configuration de Git (rendre plus lisible l'affichage des modifications)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
-de ligne, comme :
-
-.. code-block:: diff
-
-    -#: ../Doc/library/sys.rst:406
-    +#: ../Doc/library/sys.rst:408
-
-
-Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
-ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
-``PATH``.
-
-.. code-block:: bash
-
-    cat <<EOF > ~/.local/bin/podiff
-    #!/bin/sh
-    grep -v '^#:' "\$1"
-    EOF
-
-    chmod a+x ~/.local/bin/podiff
-
-Allez ensuite dans le répertoire du dépôt récupéré (``python-docs-fr``) et faites :
-
-.. code-block:: bash
-
-    git config diff.podiff.textconv podiff
-
-
-Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
-les fichiers de la traduction, sans incidence sur les autres.
 
 .. _cloner:
 
 Première étape : créer et peupler son dépôt
 ===========================================
 
-Si ce n'est pas déjà fait, créez un compte sur `le serveur Git de
-l'AFPy <https://git.afpy.org/>`_. Puis, allez sur le dépôt
-`python-docs-fr <https://git.afpy.org/AFPy/python-docs-fr>`_ et
-cliquez sur le bouton « Bifurcation » en haut à droite. Vous créez
-ainsi sur Gitea une copie privée du projet où vous avez le droit de
-faire des modifications.
+Créer un compte
+---------------
 
-À ce stade, il est recommandé, bien que facultatif, de vous créer une
-clé SSH si vous n'en avez pas encore, et de l'ajouter à votre compte
-Gitea.  Pour générer la clé, consultez `le guide de GitLab
-<https://docs.gitlab.com/ee/user/ssh.html>`_ ou `celui de GitHub
-<https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/connecting-to-github-with-ssh>`_.
-Pour l'ajouter à votre compte Gitea, il suffit d'aller dans le menu de
-votre compte en haut à droite et de cliquer sur « Configuration »,
-puis d'aller dans l'onglet « Clés SSH / GPG », et de copier la clé
-SSH.
+Si ce n'est pas déjà fait, créez un compte sur `la forge de l'AFPy
+<https://git.afpy.org/>`_ (souvent nommée Forgejo plus loin, ça se
+prononce `/forˈd͡ʒe.jo/ <https://forgejo.org/static/forgejo.mp4>`_).
 
-Si vous le préférez, vous pouvez également vous passer de cette
-configuration et utiliser le HTTPS à la place du SSH. Néanmoins,
-sachez que vous devrez taper votre nom d'utilisateur et votre mot de
-passe Gitea à chaque fois que vous ouvrez ou modifiez une
-contribution.
+
+Créer un *fork* du dépôt des fichiers de traduction
+---------------------------------------------------
+
+Commençons par créer une copie du dépôt ``python-docs-fr`` sur
+Forgejo, pour cela rendez-vous sur le dépôt `python-docs-fr
+<https://git.afpy.org/AFPy/python-docs-fr>`_ et cliquez sur le bouton
+« Fourche » (*Fork*) en haut à droite.
+
+De votre point de vue il existe maintenant deux versions de
+``python-docs-fr`` :
+
+- https://git.afpy.org/AFPy/python-docs-fr le dépôt commun, que vous n'avez pas le droit de modifier.
+- https://git.afpy.org/VOTRE_LOGIN/python-docs-fr votre dépôt, que vous avez le droit de modifier.
+
+
+Créer sa paire de clés SSH (facultatif)
+---------------------------------------
+
+Une clé SSH permet d’effectuer des ``git pull`` et des ``git push`` en
+utilisant SSH : sans avoir à saisir son identifiant et son mot de
+passe HTTP à chaque fois : c'est du confort.
+
+Vous pouvez sauter cette section pour le moment : vous pourrez y
+revenir plus tard.
+
+Si vous n'avez pas encore de clé SSH, créez une paire de clés SSH en
+utilisant la commande ``ssh-keygen``, consultez `le guide de GitLab
+<https://docs.gitlab.com/ee/user/ssh.html>`_ si vous souhaitez en
+savoir plus.
+
+Vous obtiendrez deux fichiers : typiquement ``id_ed25519`` et
+``id_ed25519.pub`` (ou ``id_rsa`` et ``id_rsa.pub``). Le premier est
+votre clé privée, elle **doit** rester secrète. La seconde se
+terminant par ``.pub`` est votre clé publique, comme son nom l'indique
+vous pouvez la partager publiquement.
+
+
+Ajouter sa clé SSH à la forge de l'AFPy
+---------------------------------------
+
+Pour ajouter votre clé publique sur Forgejo, allez dans le menu de
+votre compte en haut à droite et cliquez sur « Configuration », puis
+d'aller dans l'onglet « Clés SSH / GPG », et copiez votre clé SSH
+publique.
+
+Cette clé publique sur le serveur Forgejo lui permet de s'assurer de
+votre identité (en générant des défis que seul le détenteur de la clé
+privée peut résoudre).
+
+
+Obtenir une copie du dépôt sur son ordinateur
+---------------------------------------------
 
 Enfin, faites une copie locale du dépôt sur votre ordinateur afin de
 pouvoir éditer les fichiers, avec ces commandes :
 
 .. code-block:: bash
 
-    # Clonez votre copie sur Gitea avec `git` en utilisant SSH :
-    git clone git@git.afpy.org:VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
+    # Si vous utilisez une clé SSH :
+    git clone git@git.afpy.org:VOTRE_NOM_DE_COMPTE_FORGEJO/python-docs-fr.git
 
-    # ... ou bien avec HTTPS :
-    git clone https://git.afpy.org/VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
+    # Sinon :
+    git clone https://git.afpy.org/VOTRE_NOM_DE_COMPTE_FORGEJO/python-docs-fr.git
 
-    # Allez dans le répertoire cloné
+    # Allez dans le répertoire cloné :
     cd python-docs-fr/
 
-    # Ajoutez le dépôt officiel (nommé upstream),
-    # ceci permet à `git` de savoir quoi et où est *upstream*
+    # Profitez-en pour indiquer à git qu'il existe aussi le dépôt
+    # commun (qu'on nomme upstream) :
     git remote add upstream https://git.afpy.org/AFPy/python-docs-fr.git
+
+
+À partir de maintenant de votre point de vue il existe trois copies
+des fichiers :
+
+- Une sur votre ordinateur, pour la modifier aisément.
+- Une appartenant à l'AFPy sur Forgejo, que ``git`` appelle ``upstream``.
+- Une vous appartenant sur Forgejo, que ``git`` appelle ``origin``.
 
 
 Deuxième étape : choisir et réserver le fichier sur lequel travailler
@@ -180,23 +142,25 @@ répertoires *c-api/*, *whatsnew/*, *distutils/* et *install/* :
   obsolètes. De manière générale, il n'est pas utile de traduire un module que
   sa documentation mentionne comme obsolète.
 
+
 Trouver un fichier sur lequel travailler
 ----------------------------------------
 
-Pour vous aiguiller dans votre choix, vous pouvez utiliser ``potodo``,
-un outil recherchant des fichiers ``.po`` à traduire. Une fois
-installé, utilisez la commande ``make todo`` dans votre clone local.
+Si vous avez besoin d'aide pour choisir un fichier à traduire, vous
+pouvez utiliser la commande ``make todo`` (dans le dossier
+``python-docs-fr``).
 
 La liste renvoyée contient tous les fichiers qui ne sont pas encore complètement
 traduits. Vous pouvez choisir n'importe quel fichier non réservé dans la liste
 renvoyée (notez que ceux mentionnés plus haut sont automatiquement exclus).
 
 Vous pouvez commencer par des tâches faciles comme réviser les entrées
-*fuzzy* pour aider à garder la documentation à jour (trouvez-les à l'aide
-de ``make fuzzy``). Une entrée *fuzzy* correspond à une entrée déjà traduite
-mais dont la source en anglais a été modifiée depuis (correction orthographique,
-changement d'un terme, ajout ou suppression d'une phrase…). Elles sont
-généralement plus « faciles » à traduire.
+*fuzzy* pour aider à garder la documentation à jour
+(trouvez-les à l'aide de ``make fuzzy``). Une entrée *fuzzy*
+correspond à une entrée déjà traduite mais dont la source en anglais a
+été modifiée depuis (correction orthographique, changement d'un terme,
+ajout ou suppression d'une phrase…). Elles sont généralement plus
+« faciles » à traduire.
 
 Vous pouvez également relire des entrées déjà traduites pour vous faire une
 idée, et passer ensuite à la traduction de celles qui ne le sont pas encore.
@@ -211,28 +175,23 @@ pas nécessaire de terminer un fichier lorsqu'on le commence, vous
 pouvez donc prendre n'importe quel fichier, mais ne traduire que
 quelques paragraphes.
 
+
 Réserver le fichier
 -------------------
 
 *Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
 
+Pour éviter que quelqu'un d'autre fasse le travail en double.
+
 Une fois que vous avez choisi un fichier sur lequel travailler vous pouvez nous
 le signaler par différents moyens :
 
-* Soit en ouvrant un `ticket sur Gitea <https://git.afpy.org/AFPy/python-docs-fr/issues>`_
+* Soit en ouvrant un `ticket sur Forgejo <https://git.afpy.org/AFPy/python-docs-fr/issues>`_
   en indiquant dans le titre ``Je travaille sur DOSSIER/FICHIER.po``
   (par exemple « Je travaille sur library/sys.po »).
 
-Ceci permet à `potodo`_ de détecter via l'API Gitea les fichiers ``.po`` réservés
+Ceci permet à `potodo`_ de détecter via l'API Forgejo les fichiers ``.po`` réservés
 dans les tickets et les demandes d'ajout.
-
-* Soit en créant un sujet sur le
-  `discuss de l'AFPy <https://discuss.afpy.org/>`_ dans la section Traduction
-  en indiquant sur quoi vous travaillez et l'URL de votre dépôt.
-
-* Soit sur IRC en venant sur le canal
-  `irc://irc.libera.chat/#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_
-  pour nous le signaler.
 
 
 Création de la branche de traduction
@@ -240,31 +199,40 @@ Création de la branche de traduction
 
 *Chaque fois que vous commencez un nouveau fichier, suivez cette procédure.*
 
-Vous êtes maintenant prêt. Pour travailler, nous avons besoin d'une
-branche, basée sur une version à jour (fraîchement récupérée) de la
-branche « upstream/3.13 ». On met donc à jour notre version locale.
+``git`` représente une session de travail sous forme d'une branche (en
+traduisant vous allez faire diverger les fichiers qui sont sur votre
+ordinateur par rapport aux fichiers publics, comme une branche qui se
+sépare de son tronc).
+
+Pour éviter de travailler sur des fichiers modifiés par d'autres,
+assurez-vous toujours que la base de votre future branche est « un
+tronc » à jour. Pour ceci utilisez :
 
 .. code-block:: bash
 
     git fetch upstream
 
 
-On crée ensuite la branche, en la basant sur « upstream/3.13 », fraîchement récupérée.
-Il est pratique de nommer cette branche en fonction du
-fichier sur lequel on travaille. Par exemple, si vous travaillez sur
+Créez ensuite une branche ``git``, dont la base est « upstream/|branch| »,
+Il est pratique de nommer cette branche en fonction du fichier sur
+lequel on travaille. Par exemple, si vous travaillez sur
 « library/sys.po », vous pouvez nommer votre branche « library-sys ».
 
 .. code-block:: bash
 
-    git switch -c library-sys upstream/3.13
+    git switch -c library-sys upstream/3.14
+
+Chaque branche ayant un nom, avec un peu de pratique vous pourrez
+bientôt avoir plusieurs sessions de travail en parallèle (avoir
+plusieurs branches, travailler un peu sur l'une, puis un peu sur
+l'autre, puis revenir à la première, …) !
 
 
+Troisième étape : la traduction
+===============================
 
-Troisième étape: Traduction
-===========================
-
-Avec Poedit
------------
+Avec Poedit ou avec votre éditeur préféré
+-----------------------------------------
 
 Ici, remplacez « library/sys.po » par le fichier que vous avez choisi précédemment.
 
@@ -275,10 +243,22 @@ Ici, remplacez « library/sys.po » par le fichier que vous avez choisi préc�
 
 Ou lancez simplement Poedit puis « Fichier » → « Ouvrir ».
 
+Configurez votre nom et votre adresse de courriel (Édition →
+  Préférences → Général).
+
+Vérifiez également que poedit est configuré pour passer à la ligne à
+79 caractères (Édition → Préférences → Avancé → Passer à la ligne à
+79).
+
 Il n'est pas obligatoire de terminer un fichier, ni de le travailler
 de haut en bas, chacun traduit ce qu'il souhaite. Cependant évitons de
 changer plus de 200 lignes par *pull request* (pour le confort des
-relecteurs). Faire plusieurs *pull requests* est bien sûr autorisé.
+relecteurs). Faire plusieurs *pull requests* est bien sûr autorisé !
+
+La vocation de ce projet de traduction n'est pas d'y injecter la
+sortie brute d'un outil LLM. Si vous utilisez ce type d'outil,
+veillez à faire une relecture attentive afin que ce que vous
+soumettez soit agréable à lire et sémantiquement correct.
 
 
 Vérifications après traduction
@@ -300,25 +280,13 @@ Si ``make verifs`` trouve des problèmes de longueurs de ligne,
 vérifiez votre configuration ``poedit`` (Édition → Préférences →
 Avancé → Passer à la ligne à 79) ou utilisez ``make wrap``.
 
-Une fois la traduction finie, il faut compiler la documentation,
-c'est-à-dire générer les fichiers HTML affichés par le site, pour les
-relire. Si la commande précédente s'est exécutée sans erreur, la
-compilation ne devrait pas échouer.
-
-.. code-block:: bash
-
-    make
-
-
-Vérifiez alors le rendu de la traduction « en vrai ». Lancez un serveur de
-documentation local :
+Une fois la traduction finie, vous pouvez générer la documentation
+pour les relire. Si la commande précédente s'est exécutée sans erreur,
+la génération ne devrait pas échouer.
 
 .. code-block:: bash
 
     make htmlview
-
-
-La documentation est publiée à l'adresse `<http://localhost:8000/library/sys.html>`_.
 
 Attention: le port TCP/8000 ne peut être changé, il convient d'arrêter
 tout service qui écouterait sur celui-ci.
@@ -331,90 +299,62 @@ Poedit donne beaucoup d'avertissements, par exemple pour vous informer que
 la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
 *affichez et relisez la page HTML produite* avec ``make htmlview``.
 
+
 Quatrième étape : publier sa traduction
 =======================================
 
-Une fois que le ``make verifs`` ne lève pas d'erreur et que vous êtes certains de bien respecter les
-`Conventions`_ de traduction, vient le moment d'envoyer votre travail sur le dépôt local.
+Une fois que le ``make verifs`` ne lève pas d'erreur et que vous êtes
+certains de bien respecter les `Conventions`_ de traduction, vient le
+moment d'envoyer votre travail sur votre dépôt Forgejo.
 
-* ``git add`` place nos modifications dans l'index de Git en attendant
-  d'être propagées dans le dépôt local.
+* ``git add`` permet d’indiquer à git quels fichiers vous voulez
+  ajouter au futur ``commit``.
 
 .. code-block:: bash
 
     git add library/sys.po
 
 
-* ``git commit`` permet de les propager :
+* ``git commit`` permet de valider les modifications effectuées.
 
 .. code-block:: bash
 
     git commit --message "Traduction de library/sys.po"  # Ou un autre message plus inspiré :)
 
 
-
-Poussez ensuite vos modifications sur votre bifurcation (*fork*) avec ``git push``.
-Le ``-u`` n'est utile qu'une fois pour que votre client git se souvienne que cette
-branche est liée à votre bifurcation (et donc que vos futurs ``git pull`` et
-``git push`` sachent quoi tirer).
+Publiez ensuite vos modifications sur votre dépôt Forgejo avec ``git push``.
 
 .. code-block:: bash
 
-    git push --set-upstream origin
+    git push origin
 
-Sur Gitea
----------
+
+Sur Forgejo
+-----------
 
 La commande précédente vous affiche un lien pour ouvrir une demande d'ajout sur
-Gitea. Si vous l'avez manqué, allez simplement sur
+Forgejo. Si vous l'avez manqué, allez simplement sur
 https://git.afpy.org/AFPy/python-docs-fr/pulls et cliquez
 sur le bouton « Nouvelle demande d'ajout ».
 
 Mettez dans le commentaire de la demande d'ajout le texte suivant :
-« Closes #XXXX » où XXXX est le numéro du ticket Gitea créé pour réserver le
-fichier traduit. Cela permet à Gitea de lier la demande d'ajout au ticket de
+« Closes #XXXX » où XXXX est le numéro du ticket Forgejo créé pour réserver le
+fichier traduit. Cela permet à Forgejo de lier la demande d'ajout au ticket de
 réservation.
 
-Il peut arriver que vous ayez besoin de reprendre votre demande d'ajout sur votre
-ordinateur après avoir fait des modifications en ligne sur Gitea,
-par exemple lorsque Gitea vous offre la possibilité de faire un commit
-automatique contenant les suggestions proposées pendant la revue.
-Cela fonctionne bien, mais le résultat n'est pas toujours accepté par
-``powrap``. Si cela arrive, vous pouvez récupérer le commit fait par
-Gitea puis relancer ``powrap`` :
+Pour le moment vous savez :
 
-.. code-block:: bash
+- récupérez des modifications depuis *upstream* (le dépôt commun sur Forgejo) ;
+- poussez des modifications vers *origin* (votre dépôt sur Forgejo).
 
-    git pull
-    powrap <fichier.po>
-    git add <fichier.po>
-    git commit -m "Formatage après commit automatique"
-    git push
-
-
-Vous avez peut-être remarqué que cela ressemble à un triangle, avec un
-segment manquant :
-
-- vous récupérez depuis *upstream* (le dépôt commun public sur Gitea) ;
-- vous poussez sur *origin* (votre clone sur Gitea).
-
-C'est le travail de quelqu'un d'autre d'ajouter le dernier segment,
-de votre *origin* au *upstream* public, pour « boucler la boucle ». C'est le
-rôle des personnes qui fusionnent les demandes d'ajout après les avoir relues.
-
-Vous avez peut-être aussi remarqué que vous n'avez jamais commité sur une
-branche de version (3.9, 3.10, etc.), seulement récupéré les
-modifications à partir d'elles.
+Mais vous ne pouvez pas faire la dernière étape : copier les
+modifications depuis votre dépôt Forgejo vers le dépôt commun Forgejo,
+c'est le travail d’un administrateur du dépôt commun.
 
 Toutes les traductions sont faites sur la dernière version.
 Nous ne traduisons jamais sur une version plus ancienne. Par exemple,
-si la dernière version de python est Python 3.10, nous ne voulons pas
+si la dernière version de python est Python |branch|, nous ne voulons pas
 traduire directement sur la version Python 3.6.
-Si nécessaire, les traductions seraient rétroportées sur les versions
-les plus anciennes par l'`équipe de documentation
-<https://www.python.org/dev/peps/pep-8015/#documentation-team>`_.
-
-
 
 
 Conventions
@@ -436,6 +376,7 @@ documentation anglaise, si le rythme l'exige. Il faut aussi chercher des
 équivalents français aux termes techniques et aux idiotismes rencontrés, et prendre
 garde aux anglicismes.
 
+
 Utilisation du futur
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -448,6 +389,7 @@ produit cela… ». On ne conserve le futur que si la seconde proposition
 se situe réellement dans le futur (par exemple, on peut penser qu'un
 processus de compilation n'est pas immédiat) ou pour des raisons de
 concordance des temps.
+
 
 Utilisation du conditionnel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -463,12 +405,14 @@ de possibilité, en particulier quand la phrase est à la voix passive ; la
 phrase « these objects can be accessed by… » se traduit mieux par « on accède à
 ces objets en… ».
 
+
 Utilisation du masculin
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Dans un souci de lisibilité et en accord avec la préconisation de
 l'Académie française, nous utilisons le masculin pour indiquer un
 genre neutre. Par exemple : l'utilisateur ou le lecteur.
+
 
 Règles rst
 ----------
@@ -640,6 +584,46 @@ underscore                 tiret bas, *underscore*, sous-tiret
 whitespace                 caractère d'espacement
 ========================== ===============================================
 
+
+Utilisation avancée
+===================
+
+Configuration de Git (rendre plus lisible l'affichage des modifications)
+------------------------------------------------------------------------
+
+Le résultat de ``git diff`` est souvent encombré de changements inutiles de numéros
+de ligne, comme :
+
+.. code-block:: diff
+
+    -#: ../Doc/library/sys.rst:406
+    +#: ../Doc/library/sys.rst:408
+
+
+Pour dire à Git que ce ne sont pas des informations utiles, vous pouvez faire
+ce qui suit après vous être assuré que ``~/.local/bin/`` se trouve dans votre
+``PATH``.
+
+.. code-block:: bash
+
+    cat <<EOF > ~/.local/bin/podiff
+    #!/bin/sh
+    grep -v '^#:' "\$1"
+    EOF
+
+    chmod a+x ~/.local/bin/podiff
+
+Allez ensuite dans le répertoire du dépôt récupéré (``python-docs-fr``) et faites :
+
+.. code-block:: bash
+
+    git config diff.podiff.textconv podiff
+
+
+Pas d'inquiétude, cela ne change la façon dont Git affiche les changements que sur
+les fichiers de la traduction, sans incidence sur les autres.
+
+
 Ressources de traduction
 ========================
 
@@ -698,19 +682,19 @@ simplement fonctionner :
 - :kbd:`Compose ' E` donne ``É``
 - etc.
 
+
 Comment définir la touche de composition ?
 ------------------------------------------
 
 Cela dépend de votre système d'exploitation et de votre clavier.
 
-⇒ Sous Linux, Unix et \*BSD (tel OpenBSD), vous pouvez la configurer à l'aide de
-l'outil graphique de configuration de votre clavier ou avec
-``dpkg-reconfigure keyboard-configuration``
-(pour `Ubuntu <https://help.ubuntu.com/community/ComposeKey>`_ ou Debian
-et distributions assimilées).
+- Sur Gnome c'est dans « Paramètres », « Clavier », « Touche de composition ».
+- Sur Debian en ligne de commande ``dpkg-reconfigure keyboard-configuration``.
+- Ubuntu documente aussi la `Compose Key <https://help.ubuntu.com/community/ComposeKey>`_.
+- Sur Windows, vous pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
-À tout le moins, vous pouvez configurer votre fichier *~/.Xmodmap* pour
-ajouter l'équivalent de :
+Si aucune des solutions précédente ne vous convient, vous pouvez
+configurer votre fichier *~/.Xmodmap* pour ajouter l'équivalent de :
 
 .. code-block:: shell
 
@@ -728,13 +712,8 @@ Ensuite, dans votre fichier *~/.xsession*, ajoutez :
     # Gestion des touches clavier
     xmodmap $HOME/.Xmodmap
 
+Pour finir, redémarrez votre session.
 
-⇒ Sous X, avec un bureau graphique, tel que Gnome, ou Xfce, il faut aller
-modifier dans les « Paramètres » → « Clavier » → « Disposition » →
-« Touche composée ». Pour finir, redémarrez votre session.
-
-⇒ Sous Windows, vous
-pouvez utiliser `wincompose <https://github.com/SamHocevar/wincompose>`_.
 
 Le cas de « --- », « -- », « ... »
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -752,6 +731,7 @@ Les *smartquotes* sont normalement responsables de la transformation de
 | « -- » ou « --- » : faites :kbd:`Compose - - -`
 | « ... » : faites :kbd:`Compose . . .`
 
+
 Le cas de « "…" »
 ^^^^^^^^^^^^^^^^^
 
@@ -762,6 +742,7 @@ traduire les guillemets mais pas les délimiteurs de chaîne.
 
 ⇒ Si vous voyez :
 | « "…" » : faites :kbd:`Compose < <` ou :kbd:`Compose > >`
+
 
 Le cas de « :: »
 ^^^^^^^^^^^^^^^^
@@ -779,7 +760,8 @@ En français, nous mettons une espace insécable devant nos deux-points, comme :
 
 Pour saisir une espace insécable faites :kbd:`Compose SPACE SPACE`
 
-Les doubles-espaces
+
+Les doubles espaces
 ^^^^^^^^^^^^^^^^^^^
 
 La documentation originale comporte beaucoup de doubles-espaces.
@@ -789,6 +771,7 @@ au HTML et au PDF, qui n'en tiennent pas compte.
 Nous avons décidé de ne rien changer pour les doubles-espaces
 coté traduction : nous ne les retirons pas et ce n'est pas grave
 si des traducteurs en retirent par accident.
+
 
 Les énumérations
 ^^^^^^^^^^^^^^^^
@@ -818,32 +801,53 @@ les traducteurs suivants et éviter qu'ils ne « corrigent » par erreur ces
 avertissements.
 
 
+Outils disponnibles dans poutils
+================================
 
-Migration vers Gitea
-====================
+Pospell
+-------
 
-En novembre 2022, le dépôt de cette traduction a migré de GitHub à une
-instance de Gitea hébergée par l'AFPy.  Si vous contribuiez auparavant
-sur GitHub, voici comment s'y prendre pour la migration :
+Vérificateur d'orthographe fondé sur Hunspell, qu'il vous faut donc installer ::
 
-- Suivez le guide `plus haut <cloner_>`_ pour faire une bifurcation (*fork*)
-  du dépôt sur Gitea. De manière facultative mais recommandée, ajoutez
-  votre clé SSH à votre profil Gitea comme expliqué ci-dessus (vous
-  aviez probablement une clé sur GitHub, auquel cas il suffit de
-  réutiliser la même, qui doit se trouver dans le fichier
-  ``~/.ssh/id_ed25519.pub`` ou un nom similaire).
+  sudo apt install hunspell hunspell-fr-comprehensive
 
-- Exécutez ces deux commandes pour mettre à jour votre dépôt local
-  afin qu'il interagisse avec Gitea au lieu de GitHub :
+Attention, dans Debian notamment (et ses dérivés comme Ubuntu), il
+existe plusieurs dictionnaires français qui diffèrent en raison de
+l'orthographe réformée. Nous utilisons la version qui accepte les deux
+orthographes.
 
-  .. code-block:: bash
+C'est l'outil qui se cache derrière ``make spell``.
 
-     git remote set-url upstream https://git.afpy.org/AFPy/python-docs-fr.git
-     git remote set-url origin git@git.afpy.org:VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
 
-  Si vous avez choisi d'utiliser le HTTPS à la place du SSH, remplacez
-  la deuxième ligne par :
+Potodo
+------
 
-  .. code-block:: bash
+Permet d'identifier les parties de la documentation qu'il reste à
+traduire.
 
-     git remote set-url origin https://git.afpy.org/VOTRE_NOM_DE_COMPTE_GITEA/python-docs-fr.git
+C'est l'outil qui se cache derrière ``make todo``.
+
+
+Pogrep
+------
+
+Permet de rechercher dans la documentation des termes. Utile si on a un doute
+sur comment traduire un terme ou chercher la traduction d'un terme dans
+d'autres fichiers. Pour connaître les options disponibles, tapez ::
+
+  pogrep --help
+
+
+Powrap
+------
+
+Formateur de fichier *.po*. C'est l'outil qui se cache derrière ``make
+wrap``.
+
+
+Padpo (beta)
+------------
+
+Analyseur de code qui encapsule notamment `Grammalecte
+<https://grammalecte.net>`_ et qui vérifie la grammaire, l'orthographe
+et la syntaxe des fichiers *.po*.

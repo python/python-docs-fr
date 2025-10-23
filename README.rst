@@ -10,8 +10,11 @@ l'édition francophone de la PyCon, la `PyConFR
 maintien de nombreux projets communautaires pour enrichir
 l'écosystème.
 
+
 Contribuer à la traduction
 --------------------------
+
+TL;DR::
 
 Vous pouvez contribuer :
 
@@ -70,6 +73,5 @@ Historique du projet
 - 2019 : 30 % de la documentation traduite ;
 - 2021 : 50 % de la documentation traduite.
 
-.. image:: https://julienpalard.frama.io/write-the-docs-paris-19/fr_translation_percent.png
-   :target: https://framagit.org/JulienPalard/write-the-docs-paris-19
+.. image:: .scripts/plot.png
    :alt: Progression de la traduction
