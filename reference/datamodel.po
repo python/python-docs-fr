@@ -596,7 +596,7 @@ msgstr ""
 "Une chaîne de caractères (*string* en anglais) est une séquence de valeurs "
 "qui représentent des caractères Unicode. Tout caractère dont le code est "
 "dans l'intervalle ``U+0000 - U+10FFFF`` peut être représenté dans une "
-"chaîne. Python ne possède pas de type :c:type:`char` ; à la place, chaque "
+"chaîne. Python ne possède pas de type :c:expr:`char` ; à la place, chaque "
 "caractère Unicode dans la chaîne est représenté par un objet chaîne de "
 "longueur ``1``. La fonction native :func:`ord` convertit un caractère "
 "Unicode de la représentation en chaîne vers un entier dans l'intervalle ``0 "
@@ -1263,7 +1263,7 @@ msgstr ""
 
 #: reference/datamodel.rst:788
 msgid "Asynchronous generator functions"
-msgstr "Fonctions génératrices (ou générateurs) asynchrones"
+msgstr "Fonctions génératrices asynchrones"
 
 #: reference/datamodel.rst:794
 msgid ""
@@ -2981,6 +2981,14 @@ msgid ""
 "references its own traceback, which references the locals of all frames "
 "caught in the traceback."
 msgstr ""
+"Il est possible qu'un cycle de référence empêche le compteur de références "
+"d'un objet d'atteindre zéro. Dans ce cas, le cycle sera ultérieurement "
+"détecté et supprimé par le :term:`ramasse-miettes <garbage collection>`. Une "
+"cause fréquente de cycle de références est lorsqu'une exception a été "
+"interceptée dans une variable locale. Les paramètres locaux de la trame font "
+"ensuite référence à l'exception, qui fait référence à sa propre trace "
+"d'appels, qui fait référence aux paramètres locaux de toutes les cadres "
+"capturés dans la trace d'appels."
 
 #: reference/datamodel.rst:2004
 msgid "Documentation for the :mod:`gc` module."
@@ -3326,9 +3334,9 @@ msgstr ""
 "pas être utilisées en tant qu'élément dans une collection de hachables. Si "
 "une classe définit des objets mutables et implémente la "
 "méthode :meth:`__eq__`, elle ne doit pas implémenter :meth:`__hash__` "
-"puisque l'implémentation des collections hachables requiert que les clés "
-"soient des empreintes immuables (si l'empreinte d'un objet change, il ne "
-"sera plus stocké à l'emplacement prévu)."
+"puisque l'implémentation des collections :term:`hachables <hashable>` "
+"requiert que les clés soient des empreintes immuables (si l'empreinte d'un "
+"objet change, il ne sera plus stocké à l'emplacement prévu)."
 
 #: reference/datamodel.rst:2204
 #, fuzzy
@@ -4084,15 +4092,15 @@ msgstr ""
 "ajoutée pour empêcher cela."
 
 #: reference/datamodel.rst:2629
-#, fuzzy
 msgid ""
 ":exc:`TypeError` will be raised if nonempty *__slots__* are defined for a "
 "class derived from a :c:member:`\"variable-length\" built-in type "
 "<PyTypeObject.tp_itemsize>` such as :class:`int`, :class:`bytes`, "
 "and :class:`tuple`."
 msgstr ""
-"Un *__slot__* non vide ne fonctionne pas pour les classes dérivées des types "
-"natifs à longueur variable tels que :class:`int`, :class:`bytes` "
+"Une :exc:`TypeError` est levée si un *__slot__* non vide est défini pour une "
+"classe dérivée des :c:member:`types natifs à longueur variable "
+"<PyTypeObject.tp_itemsize>` tels que :class:`int`, :class:`bytes` "
 "et :class:`tuple`."
 
 #: reference/datamodel.rst:2634
@@ -4312,7 +4320,6 @@ msgid "Resolving MRO entries"
 msgstr "Résolution des entrées MRO"
 
 #: reference/datamodel.rst:2772
-#, fuzzy
 msgid ""
 "If a base that appears in a class definition is not an instance "
 "of :class:`type`, then an :meth:`!__mro_entries__` method is searched on the "
@@ -4323,20 +4330,25 @@ msgid ""
 "will be used instead of the base. The returned tuple may be empty: in these "
 "cases, the original base is ignored."
 msgstr ""
-"Si une classe de base qui apparaît dans la définition d'une classe n'est pas "
-"une instance de :class:`type`, alors Python y recherche une méthode "
-"``__mro_entries__``. S'il la trouve, il l'appelle avec le *n*-uplet original "
-"des classes de bases. Cette méthode doit renvoyer un *n*-uplet de classes "
-"qui est utilisé à la place de la classe de base. Le *n*-uplet peut être "
-"vide, dans ce cas la classe de base originale est ignorée."
+"Si une classe mère qui apparaît dans la définition d'une classe n'est pas "
+"une instance de :class:`type`, alors Python cherche une méthode :meth:`!"
+"__mro_entries__` dans cette classe mère. S'il la trouve, au moment de la "
+"création de la classe, la classe mère est remplacée par le résultat de "
+"l'appel à :meth:`!__mro_entries__`. Cette méthode est appelée avec le *n*-"
+"uplet des classes mères originales passé au paramètre *bases*. Cette méthode "
+"doit renvoyer un *n*-uplet de classes qui seront utilisées à la place de la "
+"classe mère. Le *n*-uplet renvoyé peut être vide : dans ce cas la classe "
+"mère originale est ignorée."
 
 #: reference/datamodel.rst:2783
 msgid ":func:`types.resolve_bases`"
-msgstr ""
+msgstr ":func:`types.resolve_bases`"
 
 #: reference/datamodel.rst:2784
 msgid "Dynamically resolve bases that are not instances of :class:`type`."
 msgstr ""
+"Résout dynamiquement les classes mères qui ne sont pas des instances "
+"de :class:`type`."
 
 #: reference/datamodel.rst:2786
 msgid ":func:`types.get_original_bases`"
@@ -4350,13 +4362,11 @@ msgstr ""
 
 #: reference/datamodel.rst:2790
 msgid ":pep:`560`"
-msgstr ""
+msgstr ":pep:`560`"
 
 #: reference/datamodel.rst:2791
-#, fuzzy
 msgid "Core support for typing module and generic types."
-msgstr ""
-":pep:`560` — Gestion de base pour les types modules et les types génériques"
+msgstr "Prise en charge native du module *typing* et des types génériques"
 
 #: reference/datamodel.rst:2795
 msgid "Determining the appropriate metaclass"
@@ -4837,7 +4847,7 @@ msgid ""
 "instead. ``__class_getitem__()`` should return a :ref:`GenericAlias<types-"
 "genericalias>` object if it is properly defined."
 msgstr ""
-"D'habitude, l':ref:`indiçage <subscriptions>` d'un objet en utilisant des "
+"D'habitude, la :ref:`sélection <subscriptions>` d'un objet en utilisant des "
 "crochets appelle la méthode :meth:`~object.__getitem__` de l'instance, "
 "définie dans la classe de l'objet. Cependant, si l'objet dont on cherche un "
 "indice est lui-même une classe, la méthode de "
@@ -4881,9 +4891,9 @@ msgid ""
 "module::"
 msgstr ""
 "Cependant, si une classe a une métaclasse particularisée qui "
-"définit :meth:`~object.__getitem__`, l'indiçage de la classe peut conduire à "
-"un comportement différent. Un exemple peut être trouvé dans le "
-"module :mod:`enum` ::"
+"définit :meth:`~object.__getitem__`, la sélection d'indices de la classe "
+"peut conduire à un comportement différent. Un exemple peut être trouvé dans "
+"le module :mod:`enum` ::"
 
 #: reference/datamodel.rst:3099
 msgid ":pep:`560` - Core Support for typing module and generic types"
@@ -4897,7 +4907,7 @@ msgid ""
 "being called instead of :meth:`~object.__getitem__`"
 msgstr ""
 "Introduction de :meth:`~object.__class_getitem__`, et présentation des cas "
-"où un :ref:`indiçage<subscriptions>` conduit à l'appel de "
+"où une :ref:`sélection d'indices <subscriptions>` conduit à l'appel de "
 "``__class_getitem__()`` au lieu de :meth:`~object.__getitem__`"
 
 #: reference/datamodel.rst:3108
@@ -5809,6 +5819,10 @@ msgid ""
 "specific to the implementation of the asynchronous execution framework "
 "(e.g. :mod:`asyncio`) that will be managing the :term:`awaitable` object."
 msgstr ""
+"le langage n'impose aucune restriction sur le type ou la valeur des objets "
+"générés par l'itérateur renvoyé par ``__await__``, car cela est spécifique à "
+"l'implémentation du cadriciel d'exécution asynchrone (par "
+"exemple :mod:`asyncio`) qui gère l'objet :term:`awaitable`."
 
 #: reference/datamodel.rst:3761
 msgid ":pep:`492` for additional information about awaitable objects."
@@ -6032,7 +6046,7 @@ msgstr "Un exemple de classe de gestionnaire de contexte asynchrone ::"
 
 #: reference/datamodel.rst:3909
 msgid "Footnotes"
-msgstr "Notes de bas de page"
+msgstr "Notes"
 
 #: reference/datamodel.rst:3910
 msgid ""
@@ -6115,42 +6129,35 @@ msgstr ""
 #~ msgid "The delegation of :func:`int` to :meth:`__trunc__` is deprecated."
 #~ msgstr "la délégation de :func:`int` vers :func:`__trunc__` est obsolète."
 
-#, fuzzy
 #~ msgid "object"
-#~ msgstr "Objets Code"
+#~ msgstr "objet"
 
 #~ msgid "data"
 #~ msgstr "valeur"
 
-#, fuzzy
 #~ msgid "built-in function"
-#~ msgstr "Fonctions natives"
+#~ msgstr "fonction native"
 
 #~ msgid "id"
-#~ msgstr "id"
+#~ msgstr "identifiant"
 
-#, fuzzy
 #~ msgid "type"
-#~ msgstr "Ensembles"
+#~ msgstr "type"
 
-#, fuzzy
 #~ msgid "mutable object"
-#~ msgstr "Objets *attendables* (*awaitable*)"
+#~ msgstr "objet mutable"
 
-#, fuzzy
 #~ msgid "immutable object"
-#~ msgstr "Objets *attendables* (*awaitable*)"
+#~ msgstr "objet immuable"
 
 #~ msgid "garbage collection"
 #~ msgstr "ramasse-miettes"
 
-#, fuzzy
 #~ msgid "unreachable object"
-#~ msgstr "Objets cadres"
+#~ msgstr "objet inatteignable"
 
-#, fuzzy
 #~ msgid "module"
-#~ msgstr "Modules"
+#~ msgstr "module"
 
 #~ msgid "C"
 #~ msgstr "C"
@@ -6158,28 +6165,26 @@ msgstr ""
 #~ msgid "language"
 #~ msgstr "langage"
 
-#, fuzzy
 #~ msgid "attribute"
-#~ msgstr "Attribut"
+#~ msgstr "attribut"
 
 #~ msgid "integer"
-#~ msgstr "*int* (entier)"
+#~ msgstr "entier"
 
 #~ msgid "Boolean"
 #~ msgstr "booléenne"
 
 #~ msgid "False"
-#~ msgstr "*False*"
+#~ msgstr "False"
 
 #~ msgid "True"
-#~ msgstr "*True*"
+#~ msgstr "True"
 
 #~ msgid "number"
-#~ msgstr "*number*"
+#~ msgstr "nombre"
 
-#, fuzzy
 #~ msgid "sequence"
-#~ msgstr "Séquences"
+#~ msgstr "séquence"
 
 #~ msgid "subscription"
 #~ msgstr "sélection (ou indiçage)"
@@ -6187,21 +6192,17 @@ msgstr ""
 #~ msgid "slicing"
 #~ msgstr "découpage"
 
-#, fuzzy
 #~ msgid "immutable sequence"
-#~ msgstr "Séquences immuables"
+#~ msgstr "séquence immuable"
 
-#, fuzzy
 #~ msgid "immutable"
-#~ msgstr "Accessible en écriture"
+#~ msgstr "immuable"
 
-#, fuzzy
 #~ msgid "string"
-#~ msgstr "Chaînes de caractères"
+#~ msgstr "chaîne de caractères"
 
-#, fuzzy
 #~ msgid "immutable sequences"
-#~ msgstr "Séquences immuables"
+#~ msgstr "séquences immuables"
 
 #~ msgid "character"
 #~ msgstr "caractère"
@@ -6209,24 +6210,20 @@ msgstr ""
 #~ msgid "Unicode"
 #~ msgstr "Unicode"
 
-#, fuzzy
 #~ msgid "tuple"
-#~ msgstr "*n*-uplets (*tuples* en anglais)"
+#~ msgstr "*n*-uplet"
 
 #~ msgid "empty"
 #~ msgstr "vide"
 
-#, fuzzy
 #~ msgid "bytes"
-#~ msgstr "Chaînes d'octets (ou *bytes*)"
+#~ msgstr "chaîne d'octets (ou *bytes*)"
 
-#, fuzzy
 #~ msgid "mutable sequence"
-#~ msgstr "Séquences immuables"
+#~ msgstr "séquence mutable"
 
-#, fuzzy
 #~ msgid "mutable"
-#~ msgstr "Accessible en écriture"
+#~ msgstr "mutable"
 
 #~ msgid "assignment"
 #~ msgstr "affectation"
@@ -6235,41 +6232,34 @@ msgstr ""
 #~ msgstr "instruction"
 
 #~ msgid "array"
-#~ msgstr "*array*"
+#~ msgstr "tableau"
 
 #~ msgid "list"
 #~ msgstr "liste"
 
-#, fuzzy
 #~ msgid "bytearray"
-#~ msgstr "Tableaux d'octets"
+#~ msgstr "tableau d'octets (ou *bytearray*)"
 
-#, fuzzy
 #~ msgid "set type"
-#~ msgstr "Ensembles"
+#~ msgstr "ensemble (type *set*)"
 
 #~ msgid "set"
 #~ msgstr "ensemble"
 
-#, fuzzy
 #~ msgid "frozenset"
-#~ msgstr "Ensembles figés"
+#~ msgstr "ensemble figé (ou *frozenset*)"
 
-#, fuzzy
 #~ msgid "mapping"
-#~ msgstr "Tableaux de correspondances"
+#~ msgstr "tableau de correspondances"
 
-#, fuzzy
 #~ msgid "dictionary"
-#~ msgstr "Dictionnaires"
+#~ msgstr "dictionnaire"
 
-#, fuzzy
 #~ msgid "callable"
-#~ msgstr "Types appelables"
+#~ msgstr "appelable"
 
-#, fuzzy
 #~ msgid "function"
-#~ msgstr "Fonctions natives"
+#~ msgstr "fonction"
 
 #~ msgid "call"
 #~ msgstr "appel"
@@ -6277,19 +6267,17 @@ msgstr ""
 #~ msgid "argument"
 #~ msgstr "argument"
 
-#, fuzzy
 #~ msgid "user-defined"
-#~ msgstr "Fonctions définies par l'utilisateur"
+#~ msgstr "défini par l'utilisateur"
 
-#, fuzzy
 #~ msgid "user-defined function"
-#~ msgstr "Fonctions définies par l'utilisateur"
+#~ msgstr "fonction définie par l'utilisateur"
 
 #~ msgid "global"
 #~ msgstr "global"
 
 #~ msgid "namespace"
-#~ msgstr "espace de nommage"
+#~ msgstr "espace de noms"
 
 #, fuzzy
 #~ msgid "__type_params__ (function attribute)"
@@ -6298,9 +6286,8 @@ msgstr ""
 #~ msgid "method"
 #~ msgstr "méthode"
 
-#, fuzzy
 #~ msgid "user-defined method"
-#~ msgstr "Fonctions définies par l'utilisateur"
+#~ msgstr "méthode définie par l'utilisateur"
 
 #~ msgid "generator"
 #~ msgstr "générateur"
@@ -6308,21 +6295,17 @@ msgstr ""
 #~ msgid "iterator"
 #~ msgstr "itérateur"
 
-#, fuzzy
 #~ msgid "coroutine"
-#~ msgstr "Coroutines"
+#~ msgstr "coroutine"
 
-#, fuzzy
 #~ msgid "asynchronous generator"
-#~ msgstr "Itérateurs asynchrones"
+#~ msgstr "générateur asynchrone"
 
-#, fuzzy
 #~ msgid "asynchronous iterator"
-#~ msgstr "Itérateurs asynchrones"
+#~ msgstr "itérateur asynchrone"
 
-#, fuzzy
 #~ msgid "built-in method"
-#~ msgstr "Méthodes natives"
+#~ msgstr "méthode native"
 
 #~ msgid "import"
 #~ msgstr "importation"
@@ -6350,26 +6333,20 @@ msgstr ""
 #~ msgstr ""
 #~ "l'attribut ``__class__`` du module est maintenant en lecture-écriture."
 
-#, fuzzy
 #~ msgid "__doc__ (module attribute)"
-#~ msgstr ""
-#~ "l'attribut ``__class__`` du module est maintenant en lecture-écriture."
+#~ msgstr "__doc__ (attribut de module)"
 
-#, fuzzy
 #~ msgid "class"
-#~ msgstr "Classes"
+#~ msgstr "classe"
 
-#, fuzzy
 #~ msgid "class instance"
-#~ msgstr "Instances de classe"
+#~ msgstr "instance de classe"
 
-#, fuzzy
 #~ msgid "instance"
-#~ msgstr "Instances de classe"
+#~ msgstr "instance"
 
-#, fuzzy
 #~ msgid "class object"
-#~ msgstr "Objets méthodes de classes"
+#~ msgstr "objet classe"
 
 #, fuzzy
 #~ msgid "__type_params__ (class attribute)"
@@ -6384,39 +6361,34 @@ msgstr ""
 #~ msgstr "attributs ``__getattr__`` et ``__dir__`` du module."
 
 #~ msgid "open"
-#~ msgstr "*open*"
+#~ msgstr "open"
 
-#, fuzzy
 #~ msgid "internal type"
-#~ msgstr "Types internes"
+#~ msgstr "type interne"
 
 #~ msgid "bytecode"
-#~ msgstr "code intermédiaire (*bytecode*)"
+#~ msgstr "code intermédiaire"
 
 #~ msgid "code"
 #~ msgstr "code"
 
-#, fuzzy
 #~ msgid "code object"
-#~ msgstr "Objets Code"
+#~ msgstr "objet code"
 
 #~ msgid "documentation string"
-#~ msgstr "texte de documentation"
+#~ msgstr "chaîne de documentation"
 
 #~ msgid "frame"
 #~ msgstr "cadre"
 
-#, fuzzy
 #~ msgid "f_trace_lines (frame attribute)"
-#~ msgstr "Attributs prédéfinis (accessibles en écriture) :"
+#~ msgstr "f_trace_lines (attribut de cadre)"
 
-#, fuzzy
 #~ msgid "f_lineno (frame attribute)"
-#~ msgstr "Attributs prédéfinis (accessibles en écriture) :"
+#~ msgstr "f_lineno (attribut de cadre)"
 
-#, fuzzy
 #~ msgid "traceback"
-#~ msgstr "Objets traces d'appels"
+#~ msgstr "trace d'appels"
 
 #~ msgid "exception"
 #~ msgstr "exception"
@@ -6431,20 +6403,19 @@ msgstr ""
 #~ msgstr "tranche"
 
 #~ msgid "start (slice object attribute)"
-#~ msgstr "``start`` (attribut d’objet tranche)"
+#~ msgstr "start (attribut d'objet tranche)"
 
 #~ msgid "stop (slice object attribute)"
-#~ msgstr "``stop`` (attribut d’objet tranche)"
+#~ msgstr "stop (attribut d'objet tranche)"
 
 #~ msgid "step (slice object attribute)"
 #~ msgstr "step (attribut d'objet tranche)"
 
 #~ msgid "operator"
-#~ msgstr "``operator``"
+#~ msgstr "opérateur"
 
-#, fuzzy
 #~ msgid "immutable types"
-#~ msgstr "Types appelables"
+#~ msgstr "types immuables"
 
 #~ msgid "destructor"
 #~ msgstr "destructeur"
@@ -6452,17 +6423,14 @@ msgstr ""
 #~ msgid "del"
 #~ msgstr "del"
 
-#, fuzzy
 #~ msgid "repr() (built-in function)"
-#~ msgstr "Fonctions natives"
+#~ msgstr "repr() (fonction native)"
 
-#, fuzzy
 #~ msgid "format() (built-in function)"
-#~ msgstr "Fonctions natives"
+#~ msgstr "format() (fonction native)"
 
-#, fuzzy
 #~ msgid "print() (built-in function)"
-#~ msgstr "Fonctions natives"
+#~ msgstr "print() (fonction native)"
 
 #~ msgid "conversion"
 #~ msgstr "conversion"
@@ -6470,50 +6438,41 @@ msgstr ""
 #~ msgid "comparisons"
 #~ msgstr "comparaisons"
 
-#, fuzzy
 #~ msgid "__getattr__ (module attribute)"
-#~ msgstr "attributs ``__getattr__`` et ``__dir__`` du module."
+#~ msgstr "__getattr__ (attribut de module)"
 
-#, fuzzy
 #~ msgid "__dir__ (module attribute)"
-#~ msgstr "attributs ``__getattr__`` et ``__dir__`` du module."
+#~ msgstr "__dir__ (attribut de module)"
 
-#, fuzzy
 #~ msgid "__class__ (module attribute)"
-#~ msgstr ""
-#~ "l'attribut ``__class__`` du module est maintenant en lecture-écriture."
+#~ msgstr "__class__ (attribut de module)"
 
-#, fuzzy
 #~ msgid "metaclass"
-#~ msgstr "Métaclasses"
+#~ msgstr "métaclasse"
 
 #~ msgid "= (equals)"
 #~ msgstr "= (égal)"
 
-#, fuzzy
 #~ msgid "class definition"
-#~ msgstr "Liaison avec une classe"
+#~ msgstr "définition de classe"
 
-#, fuzzy
 #~ msgid "metaclass hint"
-#~ msgstr "Métaclasses"
+#~ msgstr "indication de métaclasse"
 
-#, fuzzy
 #~ msgid "__class__ (method cell)"
-#~ msgstr "Objets méthodes de classes"
+#~ msgstr "__class__ (méthode *cell*)"
 
 #~ msgid "int"
-#~ msgstr "*int*"
+#~ msgstr "int"
 
 #~ msgid "float"
-#~ msgstr "*float* (nombre à virgule flottante)"
+#~ msgstr "float"
 
 #~ msgid "with"
 #~ msgstr "with"
 
-#, fuzzy
 #~ msgid "context manager"
-#~ msgstr "Gestionnaires de contexte asynchrones"
+#~ msgstr "gestionnaire de contexte"
 
 #~ msgid ":attr:`__doc__`"
 #~ msgstr ":attr:`__doc__`"
