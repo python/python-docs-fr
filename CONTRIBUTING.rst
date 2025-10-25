@@ -269,14 +269,14 @@ Après avoir modifié les fichiers, vérifiez que vous respectez les
 
 .. code-block:: bash
 
-    make verifs
+    make check
 
 vérifie la longueur des lignes et l'orthographe (mais pas la
 grammaire, pour cela utilisez `padpo (beta)`_). En cas de doute, un
 `glossaire`_ répertorie déjà les traductions retenues pour certains
 termes techniques ou faux amis en anglais.
 
-Si ``make verifs`` trouve des problèmes de longueurs de ligne,
+Si ``make check`` trouve des problèmes de longueurs de ligne,
 vérifiez votre configuration ``poedit`` (Édition → Préférences →
 Avancé → Passer à la ligne à 79) ou utilisez ``make wrap``.
 
@@ -303,7 +303,7 @@ la source. Ces avertissements ne sont pas tous fondés. En cas de doute,
 Quatrième étape : publier sa traduction
 =======================================
 
-Une fois que le ``make verifs`` ne lève pas d'erreur et que vous êtes
+Une fois que le ``make check`` ne lève pas d'erreur et que vous êtes
 certains de bien respecter les `Conventions`_ de traduction, vient le
 moment d'envoyer votre travail sur votre dépôt Forgejo.
 

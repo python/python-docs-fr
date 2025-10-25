@@ -6,7 +6,7 @@ traduire ::
 
     git switch -c 3.13
     python .scripts/merge.py --cpython_repo ../cpython/ origin/3.13
-    make verifs
+    make check-all -j 8
 
 Il faut mettre à jour la variable ``BRANCH`` dans le ``Makefile``.
 

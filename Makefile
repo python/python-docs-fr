@@ -4,7 +4,8 @@
 #
 # - make  # Automatically build an HTML local version
 # - make todo  # To list remaining tasks and show current progression
-# - make verifs  # To check for correctness: wrapping, spelling
+# - make check  # To check for correctness of modified files: wrapping, spelling, …
+# - make check-all  # To check for correctness of all files: wrapping, spelling, …
 # - make wrap  # To rewrap modified files
 # - make spell  # To check for spelling
 # - make clean # To remove build artifacts
@@ -63,7 +64,7 @@ UPSTREAM := https://github.com/python/cpython
 
 PYTHON := $(shell which python3)
 MODE := html
-POSPELL_TMP_DIR := .pospell/
+MAKE_TMP_DIR := .make/
 JOBS := auto
 SPHINXERRORHANDLING = -W
 
@@ -100,7 +101,6 @@ all: ensure_build_prerequisites
 	  SPHINXERRORHANDLING=$(SPHINXERRORHANDLING) \
 	  $(MODE)
 	@echo "Build success, open file://$(abspath venv/cpython/)/Doc/build/html/index.html or run 'make htmlview' to see them."
-
 
 # We clone cpython/ inside venv/ because venv/ is the only directory
 # excluded by cpython' Sphinx configuration.
@@ -146,27 +146,40 @@ wrap: ensure_test_prerequisites
 	@echo "Re wrapping modified files"
 	powrap -m
 
-SRCS = $(shell git diff --name-only --diff-filter=d $(BRANCH) | grep '.po$$')
-# foo/bar.po => $(POSPELL_TMP_DIR)/foo/bar.po.out
-DESTS = $(addprefix $(POSPELL_TMP_DIR)/,$(addsuffix .out,$(SRCS)))
+SRCS_MODIFIED = $(shell git diff --name-only --diff-filter=d $(BRANCH) | grep '.po$$')
+SRCS_ALL = $(wildcard *.po */*.po)
+
+# foo/bar.po => $(MAKE_TMP_DIR)/foo/bar.po.out
+DESTS_MODIFIED = $(addprefix $(MAKE_TMP_DIR)/,$(addsuffix .pospell,$(SRCS_MODIFIED)))
+DESTS_ALL = $(addprefix $(MAKE_TMP_DIR)/,$(addsuffix .all,$(SRCS_ALL)))
 
 .PHONY: spell
-spell: ensure_test_prerequisites $(DESTS)
+spell: ensure_test_prerequisites $(DESTS_MODIFIED)
 
 .PHONY: line-length
 line-length:
 	@echo Checking line length...
-	@if [ -n "$(SRCS)" ]; then python .scripts/line-length.py $(SRCS); fi
+	@if [ -n "$(SRCS_MODIFIED)" ]; then python .scripts/line-length.py $(SRCS_MODIFIED); fi
 
 .PHONY: sphinx-lint
 sphinx-lint: ensure_test_prerequisites
 	@echo Checking reStructuredText syntax...
-	@if [ -n "$(SRCS)" ]; then sphinx-lint --enable all --disable line-too-long $(SRCS); fi
+	@if [ -n "$(SRCS_MODIFIED)" ]; then sphinx-lint --enable all --disable line-too-long $(SRCS_MODIFIED); fi
 
-$(POSPELL_TMP_DIR)/%.po.out: %.po dict
+$(MAKE_TMP_DIR)/%.po.pospell: %.po dict
 	@echo "Pospell checking $<..."
 	@mkdir -p $(@D)
-	pospell -p dict -l fr_FR $< && touch $@
+	pospell -p dict -l fr_FR $<
+	@touch $@
+
+$(MAKE_TMP_DIR)/%.po.all: %.po dict
+	@mkdir -p $(@D)
+	@msgcat $< >/dev/null
+	@python .scripts/line-length.py $<
+	@sh .scripts/check-headers.sh $<
+	@pospell -p dict -l fr_FR $<
+	@sphinx-lint --enable all --disable line-too-long $< >/dev/null
+	@touch $@
 
 .PHONY: fuzzy
 fuzzy: ensure_test_prerequisites
@@ -175,12 +188,12 @@ fuzzy: ensure_test_prerequisites
 .PHONY: check-headers
 check-headers:
 	@echo Checking po headers...
-	@sh .scripts/check-headers.sh $(SRCS)
+	@sh .scripts/check-headers.sh $(SRCS_MODIFIED)
 
 # .PHONY: check-colons
 # check-colons:
 # 	@echo Checking colons...
-# 	@python .scripts/check-colon.py --check $(SRCS)
+# 	@python .scripts/check-colon.py --check $(SRCS_MODIFIED)
 
 .PHONY: syntax
 syntax:
@@ -189,11 +202,18 @@ syntax:
 
 .PHONY: verifs
 verifs: syntax check-headers sphinx-lint spell line-length
+	@echo "'make verifs' is deprecated, please use 'make check' instead."
+
+.PHONY: check
+check: syntax check-headers sphinx-lint spell line-length
+
+.PHONY: check-all
+check-all: ensure_test_prerequisites $(DESTS_ALL)
 
 .PHONY: clean
 clean:
-	@echo "Cleaning *.mo and $(POSPELL_TMP_DIR)"
-	rm -fr $(POSPELL_TMP_DIR) locales/$(LANGUAGE)/LC_MESSAGES/
+	@echo "Cleaning *.mo and $(MAKE_TMP_DIR)"
+	rm -fr .pospell/ $(MAKE_TMP_DIR) locales/$(LANGUAGE)/LC_MESSAGES/
 	find -name '*.mo' -delete
 	@echo "Cleaning build directory"
 	$(MAKE) -C venv/cpython/Doc/ clean
