@@ -628,16 +628,10 @@ Ressources de traduction
 ========================
 
 - les canaux IRC sur irc.libera.chat :
-
   - `#python-docs-fr <https://web.libera.chat/#python-docs-fr>`_ — communauté python autour de la documentation française,
   - `#python-fr <https://web.libera.chat/#python-fr>`_ — communauté python francophone,
   - `#python-doc <https://web.libera.chat/#python-doc>`_ — communauté python autour de la documentation anglophone ;
-- les listes de diffusion relatives à la documentation (courriel) :
-
-  - `de l'AFPy <http://lists.afpy.org/mailman/listinfo/traductions>`_,
-  - `de CPython <https://mail.python.org/mailman/listinfo/doc-sig>`_ ;
 - des glossaires et dictionnaires :
-
   - le `glossaire de la documentation Python <https://docs.python.org/fr/3/glossary.html>`_, car il est déjà traduit,
   - les `glossaires et dictionnaires de traduc.org <https://traduc.org/Glossaires_et_dictionnaires>`_, en particulier le `grand dictionnaire terminologique <http://gdt.oqlf.gouv.qc.ca/>`_ de l'Office québécois de la langue française,
   - Wikipédia. En consultant un article sur la version anglaise, puis en basculant sur la version française pour voir comment le sujet de l'article est traduit ;

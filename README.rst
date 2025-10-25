@@ -18,10 +18,11 @@ TL;DR::
 
 Vous pouvez contribuer :
 
-- en proposant des *pull requests* Github (solution recommandée) ;
+- en proposant des *pull requests* sur `notre forge
+  <https://git.afpy.org/AFPy/python-docs-fr/>`_ (solution
+  recommandée) ;
 - en remontant des erreurs et propositions d'amélioration sur
-  le `forum de l'AFPy <https://discuss.afpy.org/c/traduction/>`_ ou sur la
-  `liste de diffusion <https://lists.afpy.org/mailman/listinfo/traductions>`_ ;
+  le `forum de l'AFPy <https://discuss.afpy.org/>`_ ;
 - en devenant `membre <https://www.afpy.org/adhesions>`_ de l'AFPy ou
   `mécène <https://liberapay.com/python-docs-fr>`_ du projet.
 
