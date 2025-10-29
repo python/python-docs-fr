@@ -139,7 +139,7 @@ htmlview: all
 
 .PHONY: todo
 todo: ensure_test_prerequisites
-	potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open&type=issues' --exclude venv .venv $(EXCLUDED)
+	@potodo --api-url 'https://git.afpy.org/api/v1/repos/AFPy/python-docs-fr/issues?state=open' --exclude venv .venv $(EXCLUDED)
 
 .PHONY: wrap
 wrap: ensure_test_prerequisites
