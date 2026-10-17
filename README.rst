@@ -29,7 +29,7 @@ Vous pouvez contribuer :
 Consultez le
 `guide de style <https://devguide.python.org/documentation/translations/translating/#style-guide>`_
 de la documentation, et le
-`guide de la traduction en français <https://git.afpy.org/AFPy/python-docs-fr/src/branch/3.14/CONTRIBUTING.rst>`_
+`guide de la traduction en français <https://git.afpy.org/AFPy/python-docs-fr/src/branch/3.15/CONTRIBUTING.rst>`_
 pour apprendre les conventions à respecter.
 
 Le `coordinateur <https://www.python.org/dev/peps/pep-0545/#language-team>`_ de

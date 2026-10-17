@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001 Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.15\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: c-api/tls.rst:6
+msgid "Thread-local storage support"
+msgstr ""
+
+#: c-api/tls.rst:8
+msgid ""
+"The Python interpreter provides low-level support for thread-local storage "
+"(TLS) which wraps the underlying native TLS implementation to support the "
+"Python-level thread-local storage API (:class:`threading.local`).  The "
+"CPython C level APIs are similar to those offered by pthreads and Windows: "
+"use a thread key and functions to associate a :c:expr:`void*` value per "
+"thread."
+msgstr ""
+
+#: c-api/tls.rst:15
+msgid ""
+"A :term:`thread state` does *not* need to be :term:`attached <attached "
+"thread state>` when calling these functions; they supply their own locking."
+msgstr ""
+
+#: c-api/tls.rst:18
+msgid ""
+"Note that :file:`Python.h` does not include the declaration of the TLS APIs, "
+"you need to include :file:`pythread.h` to use thread-local storage."
+msgstr ""
+
+#: c-api/tls.rst:22
+msgid ""
+"None of these API functions handle memory management on behalf of "
+"the :c:expr:`void*` values.  You need to allocate and deallocate them "
+"yourself. If the :c:expr:`void*` values happen to be :c:expr:`PyObject*`, "
+"these functions don't do refcount operations on them either."
+msgstr ""
+
+#: c-api/tls.rst:30
+msgid "Thread-specific storage API"
+msgstr ""
+
+#: c-api/tls.rst:32
+msgid ""
+"The thread-specific storage (TSS) API was introduced to supersede the use of "
+"the existing TLS API within the CPython interpreter.  This API uses a new "
+"type :c:type:`Py_tss_t` instead of :c:expr:`int` to represent thread keys."
+msgstr ""
+
+#: c-api/tls.rst:38
+msgid "\"A New C-API for Thread-Local Storage in CPython\" (:pep:`539`)"
+msgstr ""
+
+#: c-api/tls.rst:43
+msgid ""
+"This data structure represents the state of a thread key, the definition of "
+"which may depend on the underlying TLS implementation, and it has an "
+"internal field representing the key's initialization state.  There are no "
+"public members in this structure."
+msgstr ""
+
+#: c-api/tls.rst:48
+msgid ""
+"When :ref:`Py_LIMITED_API <stable>` is not defined, static allocation of "
+"this type by :c:macro:`Py_tss_NEEDS_INIT` is allowed."
+msgstr ""
+
+#: c-api/tls.rst:54
+msgid ""
+"This macro expands to the initializer for :c:type:`Py_tss_t` variables. Note "
+"that this macro won't be defined with :ref:`Py_LIMITED_API <stable>`."
+msgstr ""
+
+#: c-api/tls.rst:59
+msgid "Dynamic allocation"
+msgstr ""
+
+#: c-api/tls.rst:61
+msgid ""
+"Dynamic allocation of the :c:type:`Py_tss_t`, required in extension modules "
+"built with :ref:`Py_LIMITED_API <stable>`, where static allocation of this "
+"type is not possible due to its implementation being opaque at build time."
+msgstr ""
+
+#: c-api/tls.rst:68
+msgid ""
+"Return a value which is the same state as a value initialized "
+"with :c:macro:`Py_tss_NEEDS_INIT`, or ``NULL`` in the case of dynamic "
+"allocation failure."
+msgstr ""
+
+#: c-api/tls.rst:75
+msgid ""
+"Free the given *key* allocated by :c:func:`PyThread_tss_alloc`, after first "
+"calling :c:func:`PyThread_tss_delete` to ensure any associated thread locals "
+"have been unassigned. This is a no-op if the *key* argument is ``NULL``."
+msgstr ""
+
+#: c-api/tls.rst:81
+msgid ""
+"A freed key becomes a dangling pointer. You should reset the key to ``NULL``."
+msgstr ""
+
+#: c-api/tls.rst:86
+msgid "Methods"
+msgstr ""
+
+#: c-api/tls.rst:88
+msgid ""
+"The parameter *key* of these functions must not be ``NULL``.  Moreover, the "
+"behaviors of :c:func:`PyThread_tss_set` and :c:func:`PyThread_tss_get` are "
+"undefined if the given :c:type:`Py_tss_t` has not been initialized "
+"by :c:func:`PyThread_tss_create`."
+msgstr ""
+
+#: c-api/tls.rst:96
+msgid ""
+"Return a non-zero value if the given :c:type:`Py_tss_t` has been initialized "
+"by :c:func:`PyThread_tss_create`."
+msgstr ""
+
+#: c-api/tls.rst:102
+msgid ""
+"Return a zero value on successful initialization of a TSS key.  The behavior "
+"is undefined if the value pointed to by the *key* argument is not "
+"initialized by :c:macro:`Py_tss_NEEDS_INIT`.  This function can be called "
+"repeatedly on the same key -- calling it on an already initialized key is a "
+"no-op and immediately returns success."
+msgstr ""
+
+#: c-api/tls.rst:111
+msgid ""
+"Destroy a TSS key to forget the values associated with the key across all "
+"threads, and change the key's initialization state to uninitialized.  A "
+"destroyed key is able to be initialized again "
+"by :c:func:`PyThread_tss_create`. This function can be called repeatedly on "
+"the same key -- calling it on an already destroyed key is a no-op."
+msgstr ""
+
+#: c-api/tls.rst:120
+msgid ""
+"Return a zero value to indicate successfully associating a :c:expr:`void*` "
+"value with a TSS key in the current thread.  Each thread has a distinct "
+"mapping of the key to a :c:expr:`void*` value."
+msgstr ""
+
+#: c-api/tls.rst:127
+msgid ""
+"Return the :c:expr:`void*` value associated with a TSS key in the current "
+"thread.  This returns ``NULL`` if no value is associated with the key in the "
+"current thread."
+msgstr ""
+
+#: c-api/tls.rst:135
+msgid "Legacy APIs"
+msgstr ""
+
+#: c-api/tls.rst:137
+msgid ""
+"This API is superseded by the :ref:`thread-specific storage (TSS) API "
+"<thread-specific-storage-api>`."
+msgstr ""
+
+#: c-api/tls.rst:142
+msgid ""
+"This version of the API does not support platforms where the native TLS key "
+"is defined in a way that cannot be safely cast to ``int``.  On such "
+"platforms, :c:func:`PyThread_create_key` will return immediately with a "
+"failure status, and the other TLS functions will all be no-ops on such "
+"platforms."
+msgstr ""
+
+#: c-api/tls.rst:147
+msgid ""
+"Due to the compatibility problem noted above, this version of the API should "
+"not be used in new code."
+msgstr ""

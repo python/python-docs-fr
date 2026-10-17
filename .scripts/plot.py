@@ -9,7 +9,7 @@ for i in $(seq -w 01 12)
 do
    git clean -dfqx >/dev/null
    git checkout -- . >/dev/null
-   git checkout $(git log 3.14 --after "$YEAR-$i-01" | grep ^commit | tail -n 1 | cut -d' ' -f2) >/dev/null 2>/dev/null
+   git checkout $(git log 3.15 --after "$YEAR-$i-01" | grep ^commit | tail -n 1 | cut -d' ' -f2) >/dev/null 2>/dev/null
    python -c 'import sys; print("datetime.date({}, {}, {}): {:.1f},".format(int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]), 100 * int(sys.argv[1]) / int(sys.argv[2])))' \
        "$(ls -1 *.po */*.po | grep -v 'whatsnew/changelog\|whatsnew/2\|whatsnew/3.[0-8]\|setupscript.po\|random.po\|typing.po' | xargs msgcat -u --use-first | msgattrib --translated | grep -c '^msgid')" \
        "$(ls -1 *.po */*.po | grep -v 'whatsnew/changelog\|whatsnew/2\|whatsnew/3.[0-8]\|setupscript.po\|random.po\|typing.po' | xargs msgcat -u --use-first | grep -c '^msgid')" \

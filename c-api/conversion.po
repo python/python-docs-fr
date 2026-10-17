@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -77,9 +77,9 @@ msgstr ""
 
 #: c-api/conversion.rst:44
 msgid ""
-"When ``rv < 0``, \"something bad happened.\" ``str[size-1]`` is ``'\\0'`` in "
-"this case too, but the rest of *str* is undefined. The exact cause of the "
-"error depends on the underlying platform."
+"When ``rv < 0``, the output conversion failed and ``str[size-1]`` is "
+"``'\\0'`` in this case too, but the rest of *str* is undefined. The exact "
+"cause of the error depends on the underlying platform."
 msgstr ""
 
 #: c-api/conversion.rst:49
@@ -162,7 +162,7 @@ msgstr ""
 msgid ""
 "If ``s`` represents a value that is too large to store in a float (for "
 "example, ``\"1e500\"`` is such a string on many platforms) then if "
-"``overflow_exception`` is ``NULL`` return ``Py_INFINITY`` (with an "
+"``overflow_exception`` is ``NULL`` return :c:macro:`!INFINITY` (with an "
 "appropriate sign) and don't set any exception.  Otherwise, "
 "``overflow_exception`` must point to a Python exception object; raise that "
 "exception and return ``-1.0``.  In both cases, set ``*endptr`` to point to "
@@ -189,52 +189,152 @@ msgid ""
 msgstr ""
 
 #: c-api/conversion.rst:131
-msgid ""
-"*flags* can be zero or more of the values ``Py_DTSF_SIGN``, "
-"``Py_DTSF_ADD_DOT_0``, or ``Py_DTSF_ALT``, or-ed together:"
-msgstr ""
-
-#: c-api/conversion.rst:134
-msgid ""
-"``Py_DTSF_SIGN`` means to always precede the returned string with a sign "
-"character, even if *val* is non-negative."
+msgid "*flags* can be zero or more of the following values or-ed together:"
 msgstr ""
 
 #: c-api/conversion.rst:137
 msgid ""
-"``Py_DTSF_ADD_DOT_0`` means to ensure that the returned string will not look "
-"like an integer."
+"Always precede the returned string with a sign character, even if *val* is "
+"non-negative."
 msgstr ""
 
-#: c-api/conversion.rst:140
+#: c-api/conversion.rst:142
+msgid "Ensure that the returned string will not look like an integer."
+msgstr ""
+
+#: c-api/conversion.rst:146
 msgid ""
-"``Py_DTSF_ALT`` means to apply \"alternate\" formatting rules.  See the "
-"documentation for the :c:func:`PyOS_snprintf` ``'#'`` specifier for details."
+"Apply \"alternate\" formatting rules. See the documentation for "
+"the :c:func:`PyOS_snprintf` ``'#'`` specifier for details."
 msgstr ""
 
-#: c-api/conversion.rst:144
+#: c-api/conversion.rst:152
+msgid "Negative zero is converted to positive zero."
+msgstr ""
+
+#: c-api/conversion.rst:156
 msgid ""
 "If *ptype* is non-``NULL``, then the value it points to will be set to one "
-"of ``Py_DTST_FINITE``, ``Py_DTST_INFINITE``, or ``Py_DTST_NAN``, signifying "
-"that *val* is a finite number, an infinite number, or not a number, "
-"respectively."
+"of the following constants depending on the type of *val*:"
 msgstr ""
 
-#: c-api/conversion.rst:148
+#: c-api/conversion.rst:163
+msgid "*\\*ptype*"
+msgstr ""
+
+#: c-api/conversion.rst:164
+msgid "type of *val*"
+msgstr ""
+
+#: c-api/conversion.rst:166
+msgid "finite number"
+msgstr ""
+
+#: c-api/conversion.rst:168
+msgid "infinite number"
+msgstr ""
+
+#: c-api/conversion.rst:170
+msgid "not a number"
+msgstr ""
+
+#: c-api/conversion.rst:172
 msgid ""
 "The return value is a pointer to *buffer* with the converted string or "
 "``NULL`` if the conversion failed. The caller is responsible for freeing the "
 "returned string by calling :c:func:`PyMem_Free`."
 msgstr ""
 
-#: c-api/conversion.rst:157
+#: c-api/conversion.rst:182
 msgid ""
-"Case insensitive comparison of strings. The function works almost "
-"identically to :c:func:`!strcmp` except that it ignores the case."
+"Case insensitive comparison of strings. These functions work almost "
+"identically to :c:func:`!strcmp` and :c:func:`!strncmp` (respectively), "
+"except that they ignore the case of ASCII characters."
 msgstr ""
 
-#: c-api/conversion.rst:163
+#: c-api/conversion.rst:186
 msgid ""
-"Case insensitive comparison of strings. The function works almost "
-"identically to :c:func:`!strncmp` except that it ignores the case."
+"Return ``0`` if the strings are equal, a negative value if *str1* sorts "
+"lexicographically before *str2*, or a positive value if it sorts after."
+msgstr ""
+
+#: c-api/conversion.rst:189
+msgid ""
+"In the *str1* or *str2* arguments, a NUL byte marks the end of the string. "
+"For :c:func:`!PyOS_mystrnicmp`, the *size* argument gives the maximum size "
+"of the string, as if NUL was present at the index given by *size*."
+msgstr ""
+
+#: c-api/conversion.rst:193
+msgid "These functions do not use the locale."
+msgstr ""
+
+#: c-api/conversion.rst:199
+msgid "Case insensitive comparison of strings."
+msgstr ""
+
+#: c-api/conversion.rst:201
+msgid ""
+"On Windows, these are aliases of :c:func:`!stricmp` and :c:func:`!strnicmp`, "
+"respectively."
+msgstr ""
+
+#: c-api/conversion.rst:204
+msgid ""
+"On other platforms, they are aliases of :c:func:`PyOS_mystricmp` "
+"and :c:func:`PyOS_mystrnicmp`, respectively."
+msgstr ""
+
+#: c-api/conversion.rst:209
+msgid "Character classification and conversion"
+msgstr ""
+
+#: c-api/conversion.rst:211
+msgid ""
+"The following macros provide locale-independent (unlike the C standard "
+"library ``ctype.h``) character classification and conversion. The argument "
+"must be a signed or unsigned :c:expr:`char`."
+msgstr ""
+
+#: c-api/conversion.rst:218
+msgid "Return true if the character *c* is an alphanumeric character."
+msgstr ""
+
+#: c-api/conversion.rst:223
+msgid ""
+"Return true if the character *c* is an alphabetic character (``a-z`` and ``A-"
+"Z``)."
+msgstr ""
+
+#: c-api/conversion.rst:228
+msgid "Return true if the character *c* is a decimal digit (``0-9``)."
+msgstr ""
+
+#: c-api/conversion.rst:233
+msgid "Return true if the character *c* is a lowercase ASCII letter (``a-z``)."
+msgstr ""
+
+#: c-api/conversion.rst:238
+msgid ""
+"Return true if the character *c* is an uppercase ASCII letter (``A-Z``)."
+msgstr ""
+
+#: c-api/conversion.rst:243
+msgid ""
+"Return true if the character *c* is a whitespace character (space, tab, "
+"carriage return, newline, vertical tab, or form feed)."
+msgstr ""
+
+#: c-api/conversion.rst:249
+msgid ""
+"Return true if the character *c* is a hexadecimal digit (``0-9``, ``a-f``, "
+"and ``A-F``)."
+msgstr ""
+
+#: c-api/conversion.rst:255
+msgid "Return the lowercase equivalent of the character *c*."
+msgstr ""
+
+#: c-api/conversion.rst:260
+msgid "Return the uppercase equivalent of the character *c*."
 msgstr ""

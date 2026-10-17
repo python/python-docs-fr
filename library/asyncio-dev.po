@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: 2023-06-19 22:57+0200\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -303,7 +303,7 @@ msgstr ""
 "pas planifiée avec :meth:`asyncio.create_task`, *asyncio* émet "
 "un :exc:`RuntimeWarning` ::"
 
-#: library/asyncio-dev.rst:219
+#: library/asyncio-dev.rst:219 library/asyncio-dev.rst:450
 msgid "Output::"
 msgstr "Sortie ::"
 
@@ -346,6 +346,132 @@ msgid ""
 msgstr ""
 ":ref:`Activez le mode débogage <asyncio-debug-mode>` pour récupérer la trace "
 "d'appels indiquant où la tâche a été créée ::"
+
+#: library/asyncio-dev.rst:254
+msgid "Asynchronous generators best practices"
+msgstr ""
+
+#: library/asyncio-dev.rst:256
+msgid ""
+"Writing correct and efficient asyncio code requires awareness of certain "
+"pitfalls. This section outlines essential best practices that can save you "
+"hours of debugging."
+msgstr ""
+
+#: library/asyncio-dev.rst:261
+msgid "Close asynchronous generators explicitly"
+msgstr ""
+
+#: library/asyncio-dev.rst:263
+msgid ""
+"It is recommended to manually close the :term:`asynchronous generator "
+"<asynchronous generator iterator>`. If a generator exits early - for "
+"example, due to an exception raised in the body of an ``async for`` loop - "
+"its asynchronous cleanup code may run in an unexpected context. This can "
+"occur after the tasks it depends on have completed, or during the event loop "
+"shutdown when the async-generator's garbage collection hook is called."
+msgstr ""
+
+#: library/asyncio-dev.rst:271
+msgid ""
+"To avoid this, explicitly close the generator by calling "
+"its :meth:`~agen.aclose` method, or use the :func:`contextlib.aclosing` "
+"context manager::"
+msgstr ""
+
+#: library/asyncio-dev.rst:289
+msgid ""
+"As noted above, the cleanup code for these asynchronous generators is "
+"deferred. The following example demonstrates that the finalization of an "
+"asynchronous generator can occur in an unexpected order::"
+msgstr ""
+
+#: library/asyncio-dev.rst:319
+msgid "For this example, we get the following output::"
+msgstr ""
+
+#: library/asyncio-dev.rst:336
+msgid ""
+"The ``cursor()`` asynchronous generator was finalized before the ``rows`` "
+"generator - an unexpected behavior."
+msgstr ""
+
+#: library/asyncio-dev.rst:339
+msgid ""
+"The example can be fixed by explicitly closing the ``cursor`` and ``rows`` "
+"async-generators::"
+msgstr ""
+
+#: library/asyncio-dev.rst:352
+msgid "Create asynchronous generators only when the event loop is running"
+msgstr ""
+
+#: library/asyncio-dev.rst:354
+msgid ""
+"It is recommended to create :term:`asynchronous generators <asynchronous "
+"generator iterator>` only after the event loop has been created."
+msgstr ""
+
+#: library/asyncio-dev.rst:358
+msgid ""
+"To ensure that asynchronous generators close reliably, the event loop uses "
+"the :func:`sys.set_asyncgen_hooks` function to register callback functions. "
+"These callbacks update the list of running asynchronous generators to keep "
+"it in a consistent state."
+msgstr ""
+
+#: library/asyncio-dev.rst:363
+msgid ""
+"When the :meth:`loop.shutdown_asyncgens() <asyncio.loop.shutdown_asyncgens>` "
+"function is called, the running generators are stopped gracefully and the "
+"list is cleared."
+msgstr ""
+
+#: library/asyncio-dev.rst:367
+msgid ""
+"The asynchronous generator invokes the corresponding system hook during its "
+"first iteration. At the same time, the generator records that the hook has "
+"been called and does not call it again."
+msgstr ""
+
+#: library/asyncio-dev.rst:371
+msgid ""
+"Therefore, if iteration begins before the event loop is created, the event "
+"loop will not be able to add the generator to its list of active generators "
+"because the hooks are set after the generator attempts to call them. "
+"Consequently, the event loop will not be able to terminate the generator if "
+"necessary."
+msgstr ""
+
+#: library/asyncio-dev.rst:377
+msgid "Consider the following example::"
+msgstr ""
+
+#: library/asyncio-dev.rst:403
+msgid "This example can be fixed as follows::"
+msgstr ""
+
+#: library/asyncio-dev.rst:422
+msgid "Avoid concurrent iteration and closure of the same generator"
+msgstr ""
+
+#: library/asyncio-dev.rst:424
+msgid ""
+"Async generators may be reentered while "
+"another :meth:`~agen.__anext__` / :meth:`~agen.athrow` / :meth:`~agen.aclose` "
+"call is in progress. This may lead to an inconsistent state of the async "
+"generator and can cause errors."
+msgstr ""
+
+#: library/asyncio-dev.rst:429
+msgid "Let's consider the following example::"
+msgstr ""
+
+#: library/asyncio-dev.rst:471
+msgid ""
+"Therefore, it is recommended to avoid using asynchronous generators in "
+"parallel tasks or across multiple event loops."
+msgstr ""
 
 # long ref
 #~ msgid ""

@@ -1,7 +1,7 @@
 Guide de contribution à la documentation
 ########################################
 
-.. |branch| replace:: 3.14
+.. |branch| replace:: 3.15
 
 
 Prérequis
@@ -220,7 +220,7 @@ lequel on travaille. Par exemple, si vous travaillez sur
 
 .. code-block:: bash
 
-    git switch -c library-sys upstream/3.14
+    git switch -c library-sys upstream/3.15
 
 Chaque branche ayant un nom, avec un peu de pratique vous pourrez
 bientôt avoir plusieurs sessions de travail en parallèle (avoir

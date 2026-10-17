@@ -1,11 +1,11 @@
 Nouvelle branche upstream
 -------------------------
 
-Lorsque cpython crée une nouvelle branche, il debient possible de la
+Lorsque cpython crée une nouvelle branche, il devient possible de la
 traduire ::
 
-    git switch -c 3.13
-    python .scripts/merge.py --cpython_repo ../cpython/ origin/3.13
+    git switch -c 3.16
+    python .scripts/merge.py --cpython_repo ../cpython/ origin/3.16
     make check-all -j 8
 
 Il faut mettre à jour la variable ``BRANCH`` dans le ``Makefile``.

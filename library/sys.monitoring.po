@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -21,9 +21,10 @@ msgstr ""
 
 #: library/sys.monitoring.rst:13
 msgid ""
-":mod:`sys.monitoring` is a namespace within the :mod:`sys` module, not an "
-"independent module, so there is no need to ``import sys.monitoring``, simply "
-"``import sys`` and then use ``sys.monitoring``."
+":mod:`!sys.monitoring` is a namespace within the :mod:`sys` module, not an "
+"independent module, and ``import sys.monitoring`` would fail with "
+"a :exc:`ModuleNotFoundError`. Instead, simply ``import sys`` and then use "
+"``sys.monitoring``."
 msgstr ""
 
 #: library/sys.monitoring.rst:19
@@ -35,7 +36,7 @@ msgstr ""
 #: library/sys.monitoring.rst:22
 msgid ""
 "As programs execute, events occur that might be of interest to tools that "
-"monitor execution. The :mod:`sys.monitoring` namespace provides means to "
+"monitor execution. The :mod:`!sys.monitoring` namespace provides means to "
 "receive callbacks when events of interest occur."
 msgstr ""
 
@@ -244,8 +245,8 @@ msgstr ""
 #: library/sys.monitoring.rst:182
 msgid ""
 "Local events are associated with normal execution of the program and happen "
-"at clearly defined locations. All local events can be disabled. The local "
-"events are:"
+"at clearly defined locations. All local events can be disabled per location. "
+"The local events are:"
 msgstr ""
 
 #: library/sys.monitoring.rst:186
@@ -307,25 +308,25 @@ msgid ""
 "much better performance as they can be disabled independently."
 msgstr ""
 
-#: library/sys.monitoring.rst:209
+#: library/sys.monitoring.rst:211
 msgid "Ancillary events"
 msgstr ""
 
-#: library/sys.monitoring.rst:211
+#: library/sys.monitoring.rst:213
 msgid ""
 "Ancillary events can be monitored like other events, but are controlled by "
 "another event:"
 msgstr ""
 
-#: library/sys.monitoring.rst:214
+#: library/sys.monitoring.rst:216
 msgid ":monitoring-event:`C_RAISE`"
 msgstr ""
 
-#: library/sys.monitoring.rst:215
+#: library/sys.monitoring.rst:217
 msgid ":monitoring-event:`C_RETURN`"
 msgstr ""
 
-#: library/sys.monitoring.rst:217
+#: library/sys.monitoring.rst:219
 msgid ""
 "The :monitoring-event:`C_RETURN` and :monitoring-event:`C_RAISE` events are "
 "controlled by the :monitoring-event:`CALL` event. :monitoring-"
@@ -333,41 +334,52 @@ msgid ""
 "the corresponding :monitoring-event:`CALL` event is being monitored."
 msgstr ""
 
-#: library/sys.monitoring.rst:223
+#: library/sys.monitoring.rst:228
 msgid "Other events"
 msgstr ""
 
-#: library/sys.monitoring.rst:225
+#: library/sys.monitoring.rst:230
 msgid ""
 "Other events are not necessarily tied to a specific location in the program "
-"and cannot be individually disabled."
-msgstr ""
-
-#: library/sys.monitoring.rst:228
-msgid "The other events that can be monitored are:"
-msgstr ""
-
-#: library/sys.monitoring.rst:230
-msgid ":monitoring-event:`PY_THROW`"
-msgstr ""
-
-#: library/sys.monitoring.rst:231
-msgid ":monitoring-event:`PY_UNWIND`"
-msgstr ""
-
-#: library/sys.monitoring.rst:232
-msgid ":monitoring-event:`RAISE`"
+"and cannot be individually disabled per location."
 msgstr ""
 
 #: library/sys.monitoring.rst:233
-msgid ":monitoring-event:`EXCEPTION_HANDLED`"
+msgid "The other events that can be monitored are:"
+msgstr ""
+
+#: library/sys.monitoring.rst:235
+msgid ":monitoring-event:`PY_THROW`"
+msgstr ""
+
+#: library/sys.monitoring.rst:236
+msgid ":monitoring-event:`PY_UNWIND`"
 msgstr ""
 
 #: library/sys.monitoring.rst:237
-msgid "The STOP_ITERATION event"
+msgid ":monitoring-event:`RAISE`"
+msgstr ""
+
+#: library/sys.monitoring.rst:238
+msgid ":monitoring-event:`EXCEPTION_HANDLED`"
 msgstr ""
 
 #: library/sys.monitoring.rst:239
+msgid ":monitoring-event:`RERAISE`"
+msgstr ""
+
+#: library/sys.monitoring.rst:241
+msgid ""
+"Other events can now be turned on and disabled on a per code object basis. "
+"Returning :data:`DISABLE` from a callback disables the event for the entire "
+"code object (for the current tool)."
+msgstr ""
+
+#: library/sys.monitoring.rst:248
+msgid "The STOP_ITERATION event"
+msgstr ""
+
+#: library/sys.monitoring.rst:250
 msgid ""
 ":pep:`PEP 380 <380#use-of-stopiteration-to-return-values>` specifies that "
 "a :exc:`StopIteration` exception is raised when returning a value from a "
@@ -376,15 +388,14 @@ msgid ""
 "an exception unless it would be visible to other code."
 msgstr ""
 
-#: library/sys.monitoring.rst:245
+#: library/sys.monitoring.rst:256
 msgid ""
 "To allow tools to monitor for real exceptions without slowing down "
 "generators and coroutines, the :monitoring-event:`STOP_ITERATION` event is "
-"provided. :monitoring-event:`STOP_ITERATION` can be locally disabled, "
-"unlike :monitoring-event:`RAISE`."
+"provided. :monitoring-event:`STOP_ITERATION` can be locally disabled."
 msgstr ""
 
-#: library/sys.monitoring.rst:250
+#: library/sys.monitoring.rst:260
 msgid ""
 "Note that the :monitoring-event:`STOP_ITERATION` event and the :monitoring-"
 "event:`RAISE` event for a :exc:`StopIteration` exception are equivalent, and "
@@ -393,11 +404,11 @@ msgid ""
 "generate a :monitoring-event:`RAISE` event with a :exc:`StopIteration`."
 msgstr ""
 
-#: library/sys.monitoring.rst:258
+#: library/sys.monitoring.rst:268
 msgid "Turning events on and off"
 msgstr ""
 
-#: library/sys.monitoring.rst:260
+#: library/sys.monitoring.rst:270
 msgid ""
 "In order to monitor an event, it must be turned on and a corresponding "
 "callback must be registered. Events can be turned on or off by setting the "
@@ -405,35 +416,35 @@ msgid ""
 "trigger only once, even if it is turned on both globally and locally."
 msgstr ""
 
-#: library/sys.monitoring.rst:267
+#: library/sys.monitoring.rst:277
 msgid "Setting events globally"
 msgstr ""
 
-#: library/sys.monitoring.rst:269
+#: library/sys.monitoring.rst:279
 msgid ""
 "Events can be controlled globally by modifying the set of events being "
 "monitored."
 msgstr ""
 
-#: library/sys.monitoring.rst:273
+#: library/sys.monitoring.rst:283
 msgid "Returns the ``int`` representing all the active events."
 msgstr ""
 
-#: library/sys.monitoring.rst:277
+#: library/sys.monitoring.rst:287
 msgid ""
 "Activates all events which are set in *event_set*. Raises "
 "a :exc:`ValueError` if *tool_id* is not in use."
 msgstr ""
 
-#: library/sys.monitoring.rst:280
+#: library/sys.monitoring.rst:290
 msgid "No events are active by default."
 msgstr ""
 
-#: library/sys.monitoring.rst:283
+#: library/sys.monitoring.rst:293
 msgid "Per code object events"
 msgstr ""
 
-#: library/sys.monitoring.rst:285
+#: library/sys.monitoring.rst:295
 msgid ""
 "Events can also be controlled on a per code object basis. The functions "
 "defined below which accept a :class:`types.CodeType` should be prepared to "
@@ -441,35 +452,44 @@ msgid ""
 "(see :ref:`c-api-monitoring`)."
 msgstr ""
 
-#: library/sys.monitoring.rst:292
-msgid "Returns all the local events for *code*"
+#: library/sys.monitoring.rst:302
+msgid "Returns all the :ref:`local events <monitoring-event-local>` for *code*"
 msgstr ""
 
-#: library/sys.monitoring.rst:296
+#: library/sys.monitoring.rst:306
 msgid ""
-"Activates all the local events for *code* which are set in *event_set*. "
-"Raises a :exc:`ValueError` if *tool_id* is not in use."
+"Activates all the :ref:`local events <monitoring-event-local>` for *code* "
+"which are set in *event_set*. Raises a :exc:`ValueError` if *tool_id* is not "
+"in use."
 msgstr ""
 
-#: library/sys.monitoring.rst:301
+#: library/sys.monitoring.rst:312
 msgid "Disabling events"
 msgstr ""
 
-#: library/sys.monitoring.rst:305
+#: library/sys.monitoring.rst:316
 msgid ""
 "A special value that can be returned from a callback function to disable "
 "events for the current code location."
 msgstr ""
 
-#: library/sys.monitoring.rst:308
+#: library/sys.monitoring.rst:319
 msgid ""
-"Local events can be disabled for a specific code location by "
-"returning :data:`sys.monitoring.DISABLE` from a callback function. This does "
-"not change which events are set, or any other code locations for the same "
-"event."
+":ref:`Local events <monitoring-event-local>` can be disabled for a specific "
+"code location by returning :data:`sys.monitoring.DISABLE` from a callback "
+"function. This does not change which events are set, or any other code "
+"locations for the same event."
 msgstr ""
 
-#: library/sys.monitoring.rst:312
+#: library/sys.monitoring.rst:324
+msgid ""
+":ref:`Other events <monitoring-event-global>` can be disabled on a per code "
+"object basis by returning :data:`sys.monitoring.DISABLE` from a callback "
+"function. This disables the event for the entire code object (for the "
+"current tool)."
+msgstr ""
+
+#: library/sys.monitoring.rst:329
 msgid ""
 "Disabling events for specific locations is very important for high "
 "performance monitoring. For example, a program can be run under a debugger "
@@ -477,44 +497,44 @@ msgid ""
 "breakpoints."
 msgstr ""
 
-#: library/sys.monitoring.rst:319
+#: library/sys.monitoring.rst:335
 msgid ""
 "Enable all the events that were disabled by :data:`sys.monitoring.DISABLE` "
 "for all tools."
 msgstr ""
 
-#: library/sys.monitoring.rst:326
+#: library/sys.monitoring.rst:342
 msgid "Registering callback functions"
 msgstr ""
 
-#: library/sys.monitoring.rst:330
+#: library/sys.monitoring.rst:346
 msgid "Registers the callable *func* for the *event* with the given *tool_id*"
 msgstr ""
 
-#: library/sys.monitoring.rst:332
+#: library/sys.monitoring.rst:348
 msgid ""
 "If another callback was registered for the given *tool_id* and *event*, it "
 "is unregistered and returned. Otherwise :func:`register_callback` returns "
 "``None``."
 msgstr ""
 
-#: library/sys.monitoring.rst:336
+#: library/sys.monitoring.rst:352
 msgid ""
 "Raises an :ref:`auditing event <auditing>` "
 "``sys.monitoring.register_callback`` with argument ``func``."
 msgstr ""
 
-#: library/sys.monitoring.rst:338
+#: library/sys.monitoring.rst:354
 msgid ""
 "Functions can be unregistered by calling "
 "``sys.monitoring.register_callback(tool_id, event, None)``."
 msgstr ""
 
-#: library/sys.monitoring.rst:341
+#: library/sys.monitoring.rst:357
 msgid "Callback functions can be registered and unregistered at any time."
 msgstr ""
 
-#: library/sys.monitoring.rst:343
+#: library/sys.monitoring.rst:359
 msgid ""
 "Callbacks are called only once regardless if the event is turned on both "
 "globally and locally. As such, if an event could be turned on for both "
@@ -522,17 +542,17 @@ msgid ""
 "to handle either trigger."
 msgstr ""
 
-#: library/sys.monitoring.rst:350
+#: library/sys.monitoring.rst:366
 msgid "Callback function arguments"
 msgstr ""
 
-#: library/sys.monitoring.rst:354
+#: library/sys.monitoring.rst:370
 msgid ""
 "A special value that is passed to a callback function to indicate that there "
 "are no arguments to the call."
 msgstr ""
 
-#: library/sys.monitoring.rst:357
+#: library/sys.monitoring.rst:373
 msgid ""
 "When an active event occurs, the registered callback function is called. "
 "Callback functions returning an object other than :data:`DISABLE` will have "
@@ -540,21 +560,21 @@ msgid ""
 "different arguments, as follows:"
 msgstr ""
 
-#: library/sys.monitoring.rst:361
+#: library/sys.monitoring.rst:377
 msgid ":monitoring-event:`PY_START` and :monitoring-event:`PY_RESUME`::"
 msgstr ""
 
-#: library/sys.monitoring.rst:365
+#: library/sys.monitoring.rst:381
 msgid ":monitoring-event:`PY_RETURN` and :monitoring-event:`PY_YIELD`::"
 msgstr ""
 
-#: library/sys.monitoring.rst:369
+#: library/sys.monitoring.rst:385
 msgid ""
 ":monitoring-event:`CALL`, :monitoring-event:`C_RAISE` and :monitoring-"
 "event:`C_RETURN` (*arg0* can be :data:`MISSING` specifically)::"
 msgstr ""
 
-#: library/sys.monitoring.rst:374
+#: library/sys.monitoring.rst:390
 msgid ""
 "*code* represents the code object where the call is being made, while "
 "*callable* is the object that is about to be called (and thus triggered the "
@@ -562,34 +582,34 @@ msgid ""
 "to :data:`sys.monitoring.MISSING`."
 msgstr ""
 
-#: library/sys.monitoring.rst:379
+#: library/sys.monitoring.rst:395
 msgid ""
 "For instance methods, *callable* will be the function object as found on the "
 "class with *arg0* set to the instance (i.e. the ``self`` argument to the "
 "method)."
 msgstr ""
 
-#: library/sys.monitoring.rst:383
+#: library/sys.monitoring.rst:399
 msgid ""
 ":monitoring-event:`RAISE`, :monitoring-event:`RERAISE`, :monitoring-"
 "event:`EXCEPTION_HANDLED`, :monitoring-event:`PY_UNWIND`, :monitoring-"
 "event:`PY_THROW` and :monitoring-event:`STOP_ITERATION`::"
 msgstr ""
 
-#: library/sys.monitoring.rst:388
+#: library/sys.monitoring.rst:404
 msgid ":monitoring-event:`LINE`::"
 msgstr ""
 
-#: library/sys.monitoring.rst:392
+#: library/sys.monitoring.rst:408
 msgid ""
 ":monitoring-event:`BRANCH_LEFT`, :monitoring-event:`BRANCH_RIGHT` "
 "and :monitoring-event:`JUMP`::"
 msgstr ""
 
-#: library/sys.monitoring.rst:396
+#: library/sys.monitoring.rst:412
 msgid "Note that the *destination_offset* is where the code will next execute."
 msgstr ""
 
-#: library/sys.monitoring.rst:398
+#: library/sys.monitoring.rst:414
 msgid ":monitoring-event:`INSTRUCTION`::"
 msgstr ""

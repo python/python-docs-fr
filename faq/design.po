@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: 2023-03-26 17:18+0200\n"
 "Last-Translator: Mathieu Dupuy\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -822,12 +822,15 @@ msgstr ""
 "dossier."
 
 #: faq/design.rst:423
+#, fuzzy
 msgid ""
-"Tuples are immutable, meaning that once a tuple has been created, you can't "
-"replace any of its elements with a new value.  Lists are mutable, meaning "
-"that you can always change a list's elements.  Only immutable elements can "
-"be used as dictionary keys, and hence only tuples and not lists can be used "
-"as keys."
+"Tuples are :term:`immutable`, meaning that once a tuple has been created, "
+"you can't replace any of its elements with a new value.  Lists "
+"are :term:`mutable`, meaning that you can always change a list's elements.  "
+"Only :term:`hashable` objects can be used as dictionary keys. Most immutable "
+"types are hashable, which is why tuples, but not lists, can be used as keys. "
+"Note, however, that a tuple is only hashable if all of its elements are "
+"hashable."
 msgstr ""
 "Les *n*-uplets sont immuables, ce qui signifie que lorsqu'un *n*-uplet a été "
 "créé, vous ne pouvez remplacer aucun de ses éléments par une nouvelle "
@@ -836,11 +839,11 @@ msgstr ""
 "utilisés comme clés de dictionnaires, et donc de ``tuple`` et ``list`` seul "
 "des *n*-uplets peuvent être utilisés comme clés."
 
-#: faq/design.rst:430
+#: faq/design.rst:432
 msgid "How are lists implemented in CPython?"
 msgstr "Comment les listes sont-elles implémentées dans CPython ?"
 
-#: faq/design.rst:432
+#: faq/design.rst:434
 msgid ""
 "CPython's lists are really variable-length arrays, not Lisp-style linked "
 "lists. The implementation uses a contiguous array of references to other "
@@ -853,7 +856,7 @@ msgstr ""
 "Elle conserve également un pointeur vers ce tableau et la longueur du "
 "tableau dans une structure de tête de liste."
 
-#: faq/design.rst:436
+#: faq/design.rst:438
 msgid ""
 "This makes indexing a list ``a[i]`` an operation whose cost is independent "
 "of the size of the list or the value of the index."
@@ -861,7 +864,7 @@ msgstr ""
 "Cela rend l'indexation d'une liste ``a[i]`` une opération dont le coût est "
 "indépendant de la taille de la liste ou de la valeur de l'indice."
 
-#: faq/design.rst:439
+#: faq/design.rst:441
 msgid ""
 "When items are appended or inserted, the array of references is resized.  "
 "Some cleverness is applied to improve the performance of appending items "
@@ -874,11 +877,11 @@ msgstr ""
 "être étendu, un certain espace supplémentaire est alloué de sorte que pour "
 "la prochaine fois, ceci ne nécessite plus un redimensionnement effectif."
 
-#: faq/design.rst:446
+#: faq/design.rst:448
 msgid "How are dictionaries implemented in CPython?"
 msgstr "Comment les dictionnaires sont-ils implémentés dans CPython ?"
 
-#: faq/design.rst:448
+#: faq/design.rst:450
 msgid ""
 "CPython's dictionaries are implemented as resizable hash tables.  Compared "
 "to B-trees, this gives better performance for lookup (the most common "
@@ -890,7 +893,7 @@ msgstr ""
 "performances pour la recherche (l'opération la plus courante de loin) dans "
 "la plupart des circonstances, et leur implémentation est plus simple."
 
-#: faq/design.rst:452
+#: faq/design.rst:454
 #, fuzzy
 msgid ""
 "Dictionaries work by computing a hash code for each key stored in the "
@@ -915,11 +918,11 @@ msgstr ""
 "différents, cela signifie que le temps pour récupérer une clé est constant — "
 "O(1), en notation grand O de Landau."
 
-#: faq/design.rst:463
+#: faq/design.rst:465
 msgid "Why must dictionary keys be immutable?"
 msgstr "Pourquoi les clés du dictionnaire sont immuables ?"
 
-#: faq/design.rst:465
+#: faq/design.rst:467
 msgid ""
 "The hash table implementation of dictionaries uses a hash value calculated "
 "from the key value to find the key.  If the key were a mutable object, its "
@@ -942,7 +945,7 @@ msgstr ""
 "chercher l'ancienne valeur, elle serait également introuvable car la valeur "
 "de l'objet trouvé dans cet emplacement de hachage serait différente."
 
-#: faq/design.rst:474
+#: faq/design.rst:476
 msgid ""
 "If you want a dictionary indexed with a list, simply convert the list to a "
 "tuple first; the function ``tuple(L)`` creates a tuple with the same entries "
@@ -954,11 +957,11 @@ msgstr ""
 "uplet avec les mêmes entrées que la liste ``L``. Les *n*-uplets sont "
 "immuables et peuvent donc être utilisés comme clés du dictionnaire."
 
-#: faq/design.rst:478
+#: faq/design.rst:480
 msgid "Some unacceptable solutions that have been proposed:"
 msgstr "Certaines solutions insatisfaisantes ont été proposées :"
 
-#: faq/design.rst:480
+#: faq/design.rst:482
 msgid ""
 "Hash lists by their address (object ID).  This doesn't work because if you "
 "construct a new list with the same value it won't be found; e.g.::"
@@ -967,7 +970,7 @@ msgstr ""
 "parce que si vous créez une nouvelle liste avec la même valeur, elle ne sera "
 "pas retrouvée ; par exemple ::"
 
-#: faq/design.rst:486
+#: faq/design.rst:488
 msgid ""
 "would raise a :exc:`KeyError` exception because the id of the ``[1, 2]`` "
 "used in the second line differs from that in the first line.  In other "
@@ -979,7 +982,7 @@ msgstr ""
 "les clés de dictionnaire doivent être comparées à l'aide du comparateur "
 "``==`` et non à l'aide du mot clé :keyword:`is`."
 
-#: faq/design.rst:490
+#: faq/design.rst:492
 msgid ""
 "Make a copy when using a list as a key.  This doesn't work because the list, "
 "being a mutable object, could contain a reference to itself, and then the "
@@ -990,7 +993,7 @@ msgstr ""
 "une référence à elle-même ou avoir une boucle infinie au niveau du code "
 "copié."
 
-#: faq/design.rst:494
+#: faq/design.rst:496
 msgid ""
 "Allow lists as keys but tell the user not to modify them.  This would allow "
 "a class of hard-to-track bugs in programs when you forgot or modified a list "
@@ -1003,7 +1006,7 @@ msgstr ""
 "accident. Cela casse également un impératif important des dictionnaires : "
 "chaque valeur de ``d.keys()`` est utilisable comme clé du dictionnaire."
 
-#: faq/design.rst:499
+#: faq/design.rst:501
 msgid ""
 "Mark lists as read-only once they are used as a dictionary key.  The problem "
 "is that it's not just the top-level object that could change its value; you "
@@ -1021,7 +1024,7 @@ msgstr ""
 "encore une fois, les objets se faisant référence pourraient provoquer une "
 "boucle infinie."
 
-#: faq/design.rst:505
+#: faq/design.rst:507
 #, fuzzy
 msgid ""
 "There is a trick to get around this if you need to, but use it at your own "
@@ -1039,7 +1042,7 @@ msgstr ""
 "dictionnaire (ou une autre structure basée sur le hachage), restent fixes "
 "pendant que l'objet est dans le dictionnaire (ou une autre structure). ::"
 
-#: faq/design.rst:530
+#: faq/design.rst:532
 msgid ""
 "Note that the hash computation is complicated by the possibility that some "
 "members of the list may be unhashable and also by the possibility of "
@@ -1049,7 +1052,7 @@ msgstr ""
 "certains membres de la liste soient impossibles à hacher et aussi par la "
 "possibilité de débordement arithmétique."
 
-#: faq/design.rst:534
+#: faq/design.rst:536
 msgid ""
 "Furthermore it must always be the case that if ``o1 == o2`` (ie "
 "``o1.__eq__(o2) is True``) then ``hash(o1) == hash(o2)`` (ie, "
@@ -1063,7 +1066,7 @@ msgstr ""
 "ne remplissez pas ces conditions, les dictionnaires et autres structures "
 "basées sur le hachage se comporteront mal."
 
-#: faq/design.rst:539
+#: faq/design.rst:541
 #, fuzzy
 msgid ""
 "In the case of :class:`!ListWrapper`, whenever the wrapper object is in a "
@@ -1077,11 +1080,11 @@ msgstr ""
 "conséquences de ne pas satisfaire entièrement ces conditions. Vous avez été "
 "prévenus."
 
-#: faq/design.rst:546
+#: faq/design.rst:548
 msgid "Why doesn't list.sort() return the sorted list?"
 msgstr "Pourquoi ``list.sort()`` ne renvoie pas la liste triée ?"
 
-#: faq/design.rst:548
+#: faq/design.rst:550
 msgid ""
 "In situations where performance matters, making a copy of the list just to "
 "sort it would be wasteful. Therefore, :meth:`list.sort` sorts the list in "
@@ -1097,7 +1100,7 @@ msgstr ""
 "serez pas dupés en écrasant accidentellement une liste lorsque vous avez "
 "besoin d’une copie triée tout en gardant sous la main la version non triée."
 
-#: faq/design.rst:554
+#: faq/design.rst:556
 msgid ""
 "If you want to return a new list, use the built-in :func:`sorted` function "
 "instead.  This function creates a new list from a provided iterable, sorts "
@@ -1109,13 +1112,13 @@ msgstr ""
 "partir d’un itérable fourni, la classe et la renvoie. Par exemple, voici "
 "comment itérer dans l’ordre sur les clés d’un dictionnaire ::"
 
-#: faq/design.rst:564
+#: faq/design.rst:566
 msgid "How do you specify and enforce an interface spec in Python?"
 msgstr ""
 "Comment spécifier une interface et appliquer une spécification d’interface "
 "en Python ?"
 
-#: faq/design.rst:566
+#: faq/design.rst:568
 msgid ""
 "An interface specification for a module as provided by languages such as C++ "
 "and Java describes the prototypes for the methods and functions of the "
@@ -1127,7 +1130,7 @@ msgstr ""
 "module. Beaucoup estiment que la vérification au moment de la compilation "
 "des spécifications d'interface facilite la construction de grands programmes."
 
-#: faq/design.rst:571
+#: faq/design.rst:573
 msgid ""
 "Python 2.6 adds an :mod:`abc` module that lets you define Abstract Base "
 "Classes (ABCs).  You can then use :func:`isinstance` and :func:`issubclass` "
@@ -1144,7 +1147,7 @@ msgstr ""
 "que :class:`~collections.abc.Iterable`, :class:`~collections.abc.Container` "
 "et :class:`collections.abc.MutableMapping`."
 
-#: faq/design.rst:578
+#: faq/design.rst:580
 msgid ""
 "For Python, many of the advantages of interface specifications can be "
 "obtained by an appropriate test discipline for components."
@@ -1152,7 +1155,7 @@ msgstr ""
 "Pour Python, la plupart des avantages des spécifications d'interface peuvent "
 "être obtenus par une discipline de test appropriée pour les composants."
 
-#: faq/design.rst:581
+#: faq/design.rst:583
 msgid ""
 "A good test suite for a module can both provide a regression test and serve "
 "as a module interface specification and a set of examples.  Many Python "
@@ -1173,7 +1176,7 @@ msgstr ""
 "test tiers peuvent être utilisés pour construire des suites de tests "
 "exhaustives qui éprouvent chaque ligne de code dans un module."
 
-#: faq/design.rst:589
+#: faq/design.rst:591
 #, fuzzy
 msgid ""
 "An appropriate testing discipline can help build large complex applications "
@@ -1195,7 +1198,7 @@ msgstr ""
 "réellement le faire correctement, mais il est trivial de vérifier cette "
 "propriété dans une suite de tests."
 
-#: faq/design.rst:597
+#: faq/design.rst:599
 msgid ""
 "Writing test suites is very helpful, and you might want to design your code "
 "to make it easily tested. One increasingly popular technique, test-driven "
@@ -1210,11 +1213,11 @@ msgstr ""
 "le code réel. Bien sûr, Python vous permet d'être laxiste et de ne pas "
 "écrire de test du tout."
 
-#: faq/design.rst:605
+#: faq/design.rst:607
 msgid "Why is there no goto?"
 msgstr "Pourquoi n'y a-t-il pas de ``goto`` en Python ?"
 
-#: faq/design.rst:607
+#: faq/design.rst:609
 #, fuzzy
 msgid ""
 "In the 1970s people realized that unrestricted goto could lead to messy "
@@ -1233,7 +1236,7 @@ msgstr ""
 "boucler (avec les instructions ``while`` et ``for``, qui peuvent contenir "
 "des ``continue`` et ``break``)."
 
-#: faq/design.rst:614
+#: faq/design.rst:616
 #, fuzzy
 msgid ""
 "One can also use exceptions to provide a \"structured goto\" that works even "
@@ -1247,7 +1250,7 @@ msgstr ""
 "l'utilisation raisonnable des constructions *go* ou *goto* du C, du Fortran "
 "ou d'autres langages de programmation. Par exemple ::"
 
-#: faq/design.rst:630
+#: faq/design.rst:632
 #, fuzzy
 msgid ""
 "This doesn't allow you to jump into the middle of a loop, but that's usually "
@@ -1257,13 +1260,13 @@ msgstr ""
 "toute façon généralement considéré comme un abus de ``goto``. À Utiliser "
 "avec parcimonie."
 
-#: faq/design.rst:635
+#: faq/design.rst:637
 msgid "Why can't raw strings (r-strings) end with a backslash?"
 msgstr ""
 "Pourquoi les chaînes de caractères brutes (r-strings) ne peuvent-elles pas "
 "se terminer par un *backslash* ?"
 
-#: faq/design.rst:637
+#: faq/design.rst:639
 msgid ""
 "More precisely, they can't end with an odd number of backslashes: the "
 "unpaired backslash at the end escapes the closing quote character, leaving "
@@ -1273,7 +1276,7 @@ msgstr ""
 "*backslashes* : le *backslash* non appairé à la fin échappe le caractère de "
 "guillemet final, laissant la chaîne non terminée."
 
-#: faq/design.rst:641
+#: faq/design.rst:643
 msgid ""
 "Raw strings were designed to ease creating input for processors (chiefly "
 "regular expression engines) that want to do their own backslash escape "
@@ -1291,7 +1294,7 @@ msgstr ""
 "chaîne en l'échappant avec un *antislash*. Ces règles fonctionnent bien "
 "lorsque les chaînes brutes sont utilisées pour leur but premier."
 
-#: faq/design.rst:648
+#: faq/design.rst:650
 msgid ""
 "If you're trying to build Windows pathnames, note that all Windows system "
 "calls accept forward slashes too::"
@@ -1300,20 +1303,20 @@ msgstr ""
 "les appels système Windows acceptent également les *slashes* "
 "« classiques » ::"
 
-#: faq/design.rst:653
+#: faq/design.rst:655
 msgid ""
 "If you're trying to build a pathname for a DOS command, try e.g. one of ::"
 msgstr ""
 "Si vous essayez de construire un chemin d'accès pour une commande DOS, "
 "essayez par exemple l'un de ceux-ci ::"
 
-#: faq/design.rst:661
+#: faq/design.rst:663
 msgid "Why doesn't Python have a \"with\" statement for attribute assignments?"
 msgstr ""
 "Pourquoi la déclaration ``with`` pour les assignations d'attributs n'existe "
 "pas en Python ?"
 
-#: faq/design.rst:663
+#: faq/design.rst:665
 #, fuzzy
 msgid ""
 "Python has a :keyword:`with` statement that wraps the execution of a block, "
@@ -1324,11 +1327,11 @@ msgstr ""
 "appelant du code à l'entrée et la sortie du bloc. Certains langages "
 "possèdent une construction qui ressemble à ceci ::"
 
-#: faq/design.rst:671
+#: faq/design.rst:673
 msgid "In Python, such a construct would be ambiguous."
 msgstr "En Python, une telle construction serait ambiguë."
 
-#: faq/design.rst:673
+#: faq/design.rst:675
 msgid ""
 "Other languages, such as Object Pascal, Delphi, and C++, use static types, "
 "so it's possible to know, in an unambiguous way, what member is being "
@@ -1341,7 +1344,7 @@ msgstr ""
 "le compilateur connaît *toujours* la portée de toutes les variables au "
 "moment de la compilation."
 
-#: faq/design.rst:678
+#: faq/design.rst:680
 msgid ""
 "Python uses dynamic types. It is impossible to know in advance which "
 "attribute will be referenced at runtime. Member attributes may be added or "
@@ -1355,11 +1358,11 @@ msgstr ""
 "impossible de savoir, d'une simple lecture, quel attribut est référencé : "
 "s'il est local, global ou un attribut membre ?"
 
-#: faq/design.rst:684
+#: faq/design.rst:686
 msgid "For instance, take the following incomplete snippet::"
 msgstr "Prenons par exemple l'extrait incomplet suivant ::"
 
-#: faq/design.rst:690
+#: faq/design.rst:692
 #, fuzzy
 msgid ""
 "The snippet assumes that ``a`` must have a member attribute called ``x``. "
@@ -1374,7 +1377,7 @@ msgstr ""
 "« x » existe, est-elle utilisée dans le bloc ``with`` ?  Comme vous voyez, "
 "la nature dynamique du Python rend ces choix beaucoup plus difficiles."
 
-#: faq/design.rst:696
+#: faq/design.rst:698
 #, fuzzy
 msgid ""
 "The primary benefit of :keyword:`with` and similar language features "
@@ -1385,11 +1388,11 @@ msgstr ""
 "similaires (réduction du volume de code) peut, cependant, être facilement "
 "réalisé en Python par assignation.  Au lieu de ::"
 
-#: faq/design.rst:703
+#: faq/design.rst:705
 msgid "write this::"
 msgstr "écrivez ceci ::"
 
-#: faq/design.rst:710
+#: faq/design.rst:712
 msgid ""
 "This also has the side-effect of increasing execution speed because name "
 "bindings are resolved at run-time in Python, and the second version only "
@@ -1399,19 +1402,19 @@ msgstr ""
 "car les liaisons de noms sont résolues au moment de l'exécution en Python, "
 "et la deuxième version n'a besoin d'exécuter la résolution qu'une seule fois."
 
-#: faq/design.rst:714
+#: faq/design.rst:716
 msgid ""
 "Similar proposals that would introduce syntax to further reduce code volume, "
 "such as using a 'leading dot', have been rejected in favour of explicitness "
 "(see https://mail.python.org/pipermail/python-ideas/2016-May/040070.html)."
 msgstr ""
 
-#: faq/design.rst:720
+#: faq/design.rst:722
 msgid "Why don't generators support the with statement?"
 msgstr ""
 "Pourquoi l'instruction ``with`` ne prend-elle pas en charge les générateurs ?"
 
-#: faq/design.rst:722
+#: faq/design.rst:724
 #, fuzzy
 msgid ""
 "For technical reasons, a generator used directly as a context manager would "
@@ -1426,13 +1429,13 @@ msgstr ""
 "besoin de le fermer. Sinon, on peut toujours mettre "
 "``contextlib.closing(générateur)`` dans la ligne du ``with``."
 
-#: faq/design.rst:730
+#: faq/design.rst:732
 msgid "Why are colons required for the if/while/def/class statements?"
 msgstr ""
 "Pourquoi les deux-points sont-ils nécessaires pour les déclarations ``if/"
 "while/def/class`` ?"
 
-#: faq/design.rst:732
+#: faq/design.rst:734
 msgid ""
 "The colon is required primarily to enhance readability (one of the results "
 "of the experimental ABC language).  Consider this::"
@@ -1440,11 +1443,11 @@ msgstr ""
 "Le deux-points est principalement nécessaire pour améliorer la lisibilité "
 "(l'un des résultats du langage expérimental ABC).  Considérez ceci ::"
 
-#: faq/design.rst:738
+#: faq/design.rst:740
 msgid "versus ::"
 msgstr "et cela ::"
 
-#: faq/design.rst:743
+#: faq/design.rst:745
 msgid ""
 "Notice how the second one is slightly easier to read.  Notice further how a "
 "colon sets off the example in this FAQ answer; it's a standard usage in "
@@ -1454,7 +1457,7 @@ msgstr ""
 "aussi comment un deux-points introduit l'exemple dans cette réponse à la "
 "FAQ ; c'est un usage standard en français (et en anglais)."
 
-#: faq/design.rst:746
+#: faq/design.rst:748
 msgid ""
 "Another minor reason is that the colon makes it easier for editors with "
 "syntax highlighting; they can look for colons to decide when indentation "
@@ -1466,13 +1469,13 @@ msgstr ""
 "pour décider quand l'indentation doit être augmentée au lieu d'avoir à faire "
 "une analyse plus élaborée du texte du programme."
 
-#: faq/design.rst:752
+#: faq/design.rst:754
 msgid "Why does Python allow commas at the end of lists and tuples?"
 msgstr ""
 "Pourquoi Python permet-il les virgules à la fin des listes et des *n*-"
 "uplets ?"
 
-#: faq/design.rst:754
+#: faq/design.rst:756
 msgid ""
 "Python lets you add a trailing comma at the end of lists, tuples, and "
 "dictionaries::"
@@ -1480,11 +1483,11 @@ msgstr ""
 "Python vous permet d'ajouter une virgule à la fin des listes, des *n*-uplets "
 "et des dictionnaires ::"
 
-#: faq/design.rst:765
+#: faq/design.rst:767
 msgid "There are several reasons to allow this."
 msgstr "Il y a plusieurs raisons d'accepter cela."
 
-#: faq/design.rst:767
+#: faq/design.rst:769
 msgid ""
 "When you have a literal value for a list, tuple, or dictionary spread across "
 "multiple lines, it's easier to add more elements because you don't have to "
@@ -1497,7 +1500,7 @@ msgstr ""
 "virgule à la ligne précédente.  Les lignes peuvent aussi être réorganisées "
 "sans créer une erreur de syntaxe."
 
-#: faq/design.rst:772
+#: faq/design.rst:774
 msgid ""
 "Accidentally omitting the comma can lead to errors that are hard to "
 "diagnose. For example::"
@@ -1505,7 +1508,7 @@ msgstr ""
 "L'omission accidentelle de la virgule peut entraîner des erreurs difficiles "
 "à diagnostiquer, par exemple ::"
 
-#: faq/design.rst:782
+#: faq/design.rst:784
 msgid ""
 "This list looks like it has four elements, but it actually contains three: "
 "\"fee\", \"fiefoo\" and \"fum\".  Always adding the comma avoids this source "
@@ -1515,7 +1518,7 @@ msgstr ""
 "trois : \"*fee*\", \"*fiefoo*\" et \"*fum*\". Toujours ajouter la virgule "
 "permet d'éviter cette source d'erreur."
 
-#: faq/design.rst:785
+#: faq/design.rst:787
 msgid ""
 "Allowing the trailing comma may also make programmatic code generation "
 "easier."

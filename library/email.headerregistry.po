@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: 2024-03-17 22:00+0100\n"
 "Last-Translator: Christophe Nanteuil <christophe.nanteuil@gmail.com>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid ":mod:`!email.headerregistry`: Custom Header Objects"
 msgstr ":mod:`email.headerregistry` : objets d'en-tête personnalisés"
 
-#: library/email.headerregistry.rst:10
+#: library/email.headerregistry.rst:7
 msgid "**Source code:** :source:`Lib/email/headerregistry.py`"
 msgstr "**Code source :** :source:`Lib/email/headerregistry.py`"
 
-#: library/email.headerregistry.rst:14
+#: library/email.headerregistry.rst:11
 msgid "[1]_"
 msgstr "[1]_"
 
-#: library/email.headerregistry.rst:16
+#: library/email.headerregistry.rst:13
 msgid ""
 "Headers are represented by customized subclasses of :class:`str`.  The "
 "particular class used to represent a given header is determined by "
@@ -51,7 +51,7 @@ msgstr ""
 "d'extension permettant aux applications d'ajouter leurs propres types d'en-"
 "tête personnalisés."
 
-#: library/email.headerregistry.rst:25
+#: library/email.headerregistry.rst:22
 msgid ""
 "When using any of the policy objects derived "
 "from :data:`~email.policy.EmailPolicy`, all headers are produced "
@@ -78,7 +78,7 @@ msgstr ""
 "pour modifier le comportement par défaut pour une utilisation par des "
 "applications plus complexes."
 
-#: library/email.headerregistry.rst:36
+#: library/email.headerregistry.rst:33
 msgid ""
 "The sections below first document the header base classes and their "
 "attributes, followed by the API for modifying the behavior "
@@ -90,7 +90,7 @@ msgstr ""
 "de :class:`.HeaderRegistry`, et enfin les classes de gestion utilisées pour "
 "représenter les données analysées à partir d'en-têtes structurés."
 
-#: library/email.headerregistry.rst:44
+#: library/email.headerregistry.rst:41
 msgid ""
 "*name* and *value* are passed to ``BaseHeader`` from "
 "the :attr:`~email.policy.EmailPolicy.header_factory` call.  The string value "
@@ -100,11 +100,11 @@ msgstr ""
 "l'appel :attr:`~email.policy.EmailPolicy.header_factory`. La valeur de "
 "chaîne de tout objet d'en-tête est la *value* entièrement décodée en Unicode."
 
-#: library/email.headerregistry.rst:48
+#: library/email.headerregistry.rst:45
 msgid "This base class defines the following read-only properties:"
 msgstr "Cette classe mère définit les propriétés en lecture seule suivantes :"
 
-#: library/email.headerregistry.rst:53
+#: library/email.headerregistry.rst:50
 msgid ""
 "The name of the header (the portion of the field before the ':').  This is "
 "exactly the value passed in "
@@ -115,7 +115,7 @@ msgstr ""
 "valeur passée dans l'appel :attr:`~email.policy.EmailPolicy.header_factory` "
 "pour *name* ; c'est-à-dire que la casse est préservée."
 
-#: library/email.headerregistry.rst:61
+#: library/email.headerregistry.rst:58
 msgid ""
 "A tuple of :exc:`~email.errors.HeaderDefect` instances reporting any RFC "
 "compliance problems found during parsing.  The email package tries to be "
@@ -128,7 +128,7 @@ msgstr ""
 "conformité. Voir le module :mod:`~email.errors` pour une discussion sur les "
 "types de défauts qui peuvent être signalés."
 
-#: library/email.headerregistry.rst:69
+#: library/email.headerregistry.rst:66
 msgid ""
 "The maximum number of headers of this type that can have the same ``name``.  "
 "A value of ``None`` means unlimited.  The ``BaseHeader`` value for this "
@@ -140,7 +140,7 @@ msgstr ""
 "attribut est ``None`` ; les classes d'en-tête spécialisées sont censées "
 "remplacer cette valeur si nécessaire."
 
-#: library/email.headerregistry.rst:74
+#: library/email.headerregistry.rst:71
 msgid ""
 "``BaseHeader`` also provides the following method, which is called by the "
 "email library code and should not in general be called by application "
@@ -150,7 +150,7 @@ msgstr ""
 "code de la bibliothèque de messagerie et ne doit généralement pas être "
 "appelée par les programmes d'application :"
 
-#: library/email.headerregistry.rst:80
+#: library/email.headerregistry.rst:77
 msgid ""
 "Return a string containing :attr:`~email.policy.Policy.linesep` characters "
 "as required to correctly fold the header according to *policy*.  "
@@ -167,7 +167,7 @@ msgstr ""
 "binaires arbitraires. Si :attr:`~email.policy.EmailPolicy.utf8` est "
 "``False``, les données non-ASCII seront encodées selon la :rfc:`2047`."
 
-#: library/email.headerregistry.rst:88
+#: library/email.headerregistry.rst:85
 msgid ""
 "``BaseHeader`` by itself cannot be used to create a header object.  It "
 "defines a protocol that each specialized header cooperates with in order to "
@@ -181,17 +181,19 @@ msgstr ""
 "nécessite que la classe spécialisée fournisse une :func:`classmethod` nommée "
 "``parse``. Cette méthode s'appelle comme suit ::"
 
-#: library/email.headerregistry.rst:96
+#: library/email.headerregistry.rst:93
+#, fuzzy
 msgid ""
 "``kwds`` is a dictionary containing one pre-initialized key, ``defects``. "
 "``defects`` is an empty list.  The parse method should append any detected "
 "defects to this list.  On return, the ``kwds`` dictionary *must* contain "
-"values for at least the keys ``decoded`` and ``defects``.  ``decoded`` "
-"should be the string value for the header (that is, the header value fully "
-"decoded to unicode).  The parse method should assume that *string* may "
-"contain content-transfer-encoded parts, but should correctly handle all "
-"valid unicode characters as well so that it can parse un-encoded header "
-"values."
+"values for at least the keys ``decoded``, ``defects`` and ``parse_tree``. "
+"``decoded`` should be the string value for the header (that is, the header "
+"value fully decoded to unicode). ``parse_tree`` is set to the parse tree "
+"obtained from parsing the header. The parse method should assume that "
+"*string* may contain content-transfer-encoded parts, but should correctly "
+"handle all valid unicode characters as well so that it can parse un-encoded "
+"header values."
 msgstr ""
 "``kwds`` est un dictionnaire contenant une clé pré-initialisée : "
 "``defects``. ``defects`` est une liste vide. La méthode d'analyse doit "
@@ -204,7 +206,7 @@ msgstr ""
 "les caractères Unicode valides afin de pouvoir analyser les valeurs d'en-"
 "tête non codées."
 
-#: library/email.headerregistry.rst:105
+#: library/email.headerregistry.rst:103
 msgid ""
 "``BaseHeader``'s ``__new__`` then creates the header instance, and calls its "
 "``init`` method.  The specialized class only needs to provide an ``init`` "
@@ -217,7 +219,7 @@ msgstr ""
 "de ceux fournis par ``BaseHeader`` lui-même. Une telle méthode ``init`` "
 "devrait ressembler à ceci ::"
 
-#: library/email.headerregistry.rst:114
+#: library/email.headerregistry.rst:112
 msgid ""
 "That is, anything extra that the specialized class puts in to the ``kwds`` "
 "dictionary should be removed and handled, and the remaining contents of "
@@ -227,7 +229,7 @@ msgstr ""
 "``kwds`` doit être supprimé et géré, et le contenu restant de ``kw`` (et "
 "``args``) est passé à la méthode ``init`` de  ``BaseHeader``."
 
-#: library/email.headerregistry.rst:121
+#: library/email.headerregistry.rst:119
 msgid ""
 "An \"unstructured\" header is the default type of header in :rfc:`5322`. Any "
 "header that does not have a specified syntax is treated as unstructured.  "
@@ -239,7 +241,7 @@ msgstr ""
 "comme non structuré. L'exemple classique d'en-tête non structuré est l'en-"
 "tête :mailheader:`Subject`."
 
-#: library/email.headerregistry.rst:126
+#: library/email.headerregistry.rst:124
 msgid ""
 "In :rfc:`5322`, an unstructured header is a run of arbitrary text in the "
 "ASCII character set.  :rfc:`2047`, however, has an :rfc:`5322` compatible "
@@ -263,11 +265,11 @@ msgstr ""
 "des problèmes tels que des caractères non valides dans les mots codés ou le "
 "texte non codé."
 
-#: library/email.headerregistry.rst:136
+#: library/email.headerregistry.rst:134
 msgid "This header type provides no additional attributes."
 msgstr "Ce type d'en-tête ne fournit aucun attribut supplémentaire."
 
-#: library/email.headerregistry.rst:141
+#: library/email.headerregistry.rst:139
 msgid ""
 ":rfc:`5322` specifies a very specific format for dates within email headers. "
 "The ``DateHeader`` parser recognizes that date format, as well as "
@@ -279,11 +281,11 @@ msgstr ""
 "format de date, ainsi qu'un certain nombre de formes variantes que l'on "
 "trouve parfois « dans la nature »."
 
-#: library/email.headerregistry.rst:146 library/email.headerregistry.rst:188
+#: library/email.headerregistry.rst:144 library/email.headerregistry.rst:186
 msgid "This header type provides the following additional attributes:"
 msgstr "Ce type d'en-tête fournit les attributs supplémentaires suivants :"
 
-#: library/email.headerregistry.rst:150
+#: library/email.headerregistry.rst:148
 msgid ""
 "If the header value can be recognized as a valid date of one form or "
 "another, this attribute will contain a :class:`~datetime.datetime` instance "
@@ -306,7 +308,7 @@ msgstr ""
 "utilise :class:`datetime.timezone` pour enregistrer le décalage lié au "
 "fuseau horaire."
 
-#: library/email.headerregistry.rst:160
+#: library/email.headerregistry.rst:158
 msgid ""
 "The ``decoded`` value of the header is determined by formatting the "
 "``datetime`` according to the :rfc:`5322` rules; that is, it is set to::"
@@ -315,7 +317,7 @@ msgstr ""
 "``datetime`` selon les règles de la :rfc:`5322` ; c'est-à-dire qu'elle est "
 "définie sur ::"
 
-#: library/email.headerregistry.rst:165
+#: library/email.headerregistry.rst:163
 msgid ""
 "When creating a ``DateHeader``, *value* may be :class:`~datetime.datetime` "
 "instance.  This means, for example, that the following code is valid and "
@@ -325,7 +327,7 @@ msgstr ""
 "de :class:`~datetime.datetime`. Cela signifie, par exemple, que le code "
 "suivant est valide et fait ce à quoi on pourrait s'attendre ::"
 
-#: library/email.headerregistry.rst:171
+#: library/email.headerregistry.rst:169
 msgid ""
 "Because this is a naive ``datetime`` it will be interpreted as a UTC "
 "timestamp, and the resulting value will have a timezone of ``-0000``.  Much "
@@ -337,7 +339,7 @@ msgstr ""
 "est beaucoup plus utile d'utiliser la "
 "fonction :func:`~email.utils.localtime` du module :mod:`~email.utils` ::"
 
-#: library/email.headerregistry.rst:178
+#: library/email.headerregistry.rst:176
 msgid ""
 "This example sets the date header to the current time and date using the "
 "current timezone offset."
@@ -345,7 +347,7 @@ msgstr ""
 "Cet exemple définit l'en-tête de date sur l'heure et la date actuelles à "
 "l'aide du décalage horaire actuel."
 
-#: library/email.headerregistry.rst:184
+#: library/email.headerregistry.rst:182
 msgid ""
 "Address headers are one of the most complex structured header types. The "
 "``AddressHeader`` class provides a generic interface to any address header."
@@ -354,7 +356,7 @@ msgstr ""
 "complexes. La classe ``AddressHeader`` fournit une interface générique à "
 "n'importe quel en-tête d'adresse."
 
-#: library/email.headerregistry.rst:193
+#: library/email.headerregistry.rst:191
 msgid ""
 "A tuple of :class:`.Group` objects encoding the addresses and groups found "
 "in the header value.  Addresses that are not part of a group are represented "
@@ -366,7 +368,7 @@ msgstr ""
 "groupe sont représentées dans cette liste comme des ``Groups`` à adresse "
 "unique dont :attr:`~.Group.display_name` est ``None``."
 
-#: library/email.headerregistry.rst:201
+#: library/email.headerregistry.rst:199
 msgid ""
 "A tuple of :class:`.Address` objects encoding all of the individual "
 "addresses from the header value.  If the header value contains any groups, "
@@ -380,7 +382,7 @@ msgstr ""
 "dans la liste au point où le groupe apparaît dans la valeur (c'est-à-dire "
 "que la liste d'adresses est « aplatie » en une liste unidimensionnelle)."
 
-#: library/email.headerregistry.rst:207
+#: library/email.headerregistry.rst:205
 msgid ""
 "The ``decoded`` value of the header will have all encoded words decoded to "
 "unicode.  :class:`~encodings.idna` encoded domain names are also decoded to "
@@ -394,7 +396,7 @@ msgstr ""
 "<meth-str-join>` la valeur :class:`str` des éléments de l'attribut "
 "``groups`` avec ``', '``."
 
-#: library/email.headerregistry.rst:213
+#: library/email.headerregistry.rst:211
 msgid ""
 "A list of :class:`.Address` and :class:`.Group` objects in any combination "
 "may be used to set the value of an address header.  ``Group`` objects whose "
@@ -409,14 +411,14 @@ msgstr ""
 "d'adresses avec des groupes intacts en utilisant la liste obtenue à partir "
 "de l'attribut ``groups`` de l'en-tête source."
 
-#: library/email.headerregistry.rst:222
+#: library/email.headerregistry.rst:220
 msgid ""
 "A subclass of :class:`.AddressHeader` that adds one additional attribute:"
 msgstr ""
 "Sous-classe de :class:`.AddressHeader` qui ajoute un attribut "
 "supplémentaire :"
 
-#: library/email.headerregistry.rst:228
+#: library/email.headerregistry.rst:226
 msgid ""
 "The single address encoded by the header value.  If the header value "
 "actually contains more than one address (which would be a violation of the "
@@ -428,7 +430,7 @@ msgstr ""
 "sous la valeur par défaut :mod:`~email.policy`), l'accès à cet attribut lève "
 "une :exc:`ValueError`."
 
-#: library/email.headerregistry.rst:234
+#: library/email.headerregistry.rst:232
 msgid ""
 "Many of the above classes also have a ``Unique`` variant (for example, "
 "``UniqueUnstructuredHeader``).  The only difference is that in the "
@@ -438,7 +440,7 @@ msgstr ""
 "exemple, ``UniqueUnstructuredHeader``). La seule différence est que dans la "
 "variante ``Unique``, :attr:`~.BaseHeader.max_count` est définie sur 1."
 
-#: library/email.headerregistry.rst:241
+#: library/email.headerregistry.rst:239
 msgid ""
 "There is really only one valid value for the :mailheader:`MIME-Version` "
 "header, and that is ``1.0``.  For future proofing, this header class "
@@ -452,20 +454,20 @@ msgstr ""
 "de version a une valeur valide selon la :rfc:`2045`, alors l'objet d'en-tête "
 "a des valeurs autres que ``None`` pour les attributs suivants :"
 
-#: library/email.headerregistry.rst:249
+#: library/email.headerregistry.rst:247
 msgid ""
 "The version number as a string, with any whitespace and/or comments removed."
 msgstr "Numéro de version sous forme de chaîne, sans espaces ni commentaires."
 
-#: library/email.headerregistry.rst:254
+#: library/email.headerregistry.rst:252
 msgid "The major version number as an integer"
 msgstr "Numéro de version majeure sous forme d'entier"
 
-#: library/email.headerregistry.rst:258
+#: library/email.headerregistry.rst:256
 msgid "The minor version number as an integer"
 msgstr "Numéro de version mineure sous forme d'entier"
 
-#: library/email.headerregistry.rst:263
+#: library/email.headerregistry.rst:261
 msgid ""
 "MIME headers all start with the prefix 'Content-'.  Each specific header has "
 "a certain value, described under the class for that header.  Some can also "
@@ -478,12 +480,17 @@ msgstr ""
 "qui ont un format commun. Cette classe sert de base à tous les en-têtes MIME "
 "qui prennent des paramètres."
 
-#: library/email.headerregistry.rst:270
+#: library/email.headerregistry.rst:268
 msgid "A dictionary mapping parameter names to parameter values."
 msgstr ""
 "Dictionnaire de correspondance entre les noms de paramètres et leurs valeurs."
 
-#: library/email.headerregistry.rst:275
+#: library/email.headerregistry.rst:270
+msgid ""
+"It is now a :class:`frozendict` instead of a :class:`types.MappingProxyType`."
+msgstr ""
+
+#: library/email.headerregistry.rst:277
 msgid ""
 "A :class:`ParameterizedMIMEHeader` class that handles "
 "the :mailheader:`Content-Type` header."
@@ -491,11 +498,11 @@ msgstr ""
 "Classe :class:`ParameterizedMIMEHeader` qui gère l'en-"
 "tête :mailheader:`Content-Type`."
 
-#: library/email.headerregistry.rst:280
+#: library/email.headerregistry.rst:282
 msgid "The content type string, in the form ``maintype/subtype``."
 msgstr "Chaîne de type de contenu, sous la forme ``maintype/subtype``."
 
-#: library/email.headerregistry.rst:289
+#: library/email.headerregistry.rst:291
 msgid ""
 "A :class:`ParameterizedMIMEHeader` class that handles "
 "the :mailheader:`Content-Disposition` header."
@@ -503,17 +510,17 @@ msgstr ""
 "Classe :class:`ParameterizedMIMEHeader` qui gère l'en-"
 "tête :mailheader:`Content-Disposition`."
 
-#: library/email.headerregistry.rst:294
+#: library/email.headerregistry.rst:296
 msgid "``inline`` and ``attachment`` are the only valid values in common use."
 msgstr ""
 "``inline`` et ``attachment`` sont les seules valeurs valides couramment "
 "utilisées."
 
-#: library/email.headerregistry.rst:299
+#: library/email.headerregistry.rst:301
 msgid "Handles the :mailheader:`Content-Transfer-Encoding` header."
 msgstr "Gère l'en-tête :mailheader:`Content-Transfer-Encoding`."
 
-#: library/email.headerregistry.rst:303
+#: library/email.headerregistry.rst:305
 msgid ""
 "Valid values are ``7bit``, ``8bit``, ``base64``, and ``quoted-printable``.  "
 "See :rfc:`2045` for more information."
@@ -521,7 +528,7 @@ msgstr ""
 "Les valeurs valides sont ``7bit``, ``8bit``, ``base64`` et ``quoted-"
 "printable``. Voir la :rfc:`2045` pour plus d'informations."
 
-#: library/email.headerregistry.rst:312
+#: library/email.headerregistry.rst:314
 #, fuzzy
 msgid ""
 "This is the factory used by :class:`~email.policy.EmailPolicy` by default. "
@@ -545,7 +552,7 @@ msgstr ""
 "l'initialisation. *base_class* est toujours la dernière classe dans la liste "
 "``__bases__`` de la classe générée."
 
-#: library/email.headerregistry.rst:322
+#: library/email.headerregistry.rst:324
 msgid "The default mappings are:"
 msgstr "Les correspondances par défaut sont :"
 
@@ -553,7 +560,7 @@ msgstr "Les correspondances par défaut sont :"
 msgid "subject"
 msgstr "subject"
 
-#: library/email.headerregistry.rst:324
+#: library/email.headerregistry.rst:326
 msgid "UniqueUnstructuredHeader"
 msgstr "UniqueUnstructuredHeader"
 
@@ -561,7 +568,7 @@ msgstr "UniqueUnstructuredHeader"
 msgid "date"
 msgstr "date"
 
-#: library/email.headerregistry.rst:325 library/email.headerregistry.rst:327
+#: library/email.headerregistry.rst:327 library/email.headerregistry.rst:329
 msgid "UniqueDateHeader"
 msgstr "UniqueDateHeader"
 
@@ -569,7 +576,7 @@ msgstr "UniqueDateHeader"
 msgid "resent-date"
 msgstr "resent-date"
 
-#: library/email.headerregistry.rst:326
+#: library/email.headerregistry.rst:328
 msgid "DateHeader"
 msgstr "DateHeader"
 
@@ -581,7 +588,7 @@ msgstr "orig-date"
 msgid "sender"
 msgstr "sender"
 
-#: library/email.headerregistry.rst:328
+#: library/email.headerregistry.rst:330
 msgid "UniqueSingleAddressHeader"
 msgstr "UniqueSingleAddressHeader"
 
@@ -589,7 +596,7 @@ msgstr "UniqueSingleAddressHeader"
 msgid "resent-sender"
 msgstr "resent-sender"
 
-#: library/email.headerregistry.rst:329
+#: library/email.headerregistry.rst:331
 msgid "SingleAddressHeader"
 msgstr "SingleAddressHeader"
 
@@ -597,9 +604,9 @@ msgstr "SingleAddressHeader"
 msgid "to"
 msgstr "to"
 
-#: library/email.headerregistry.rst:330 library/email.headerregistry.rst:332
-#: library/email.headerregistry.rst:334 library/email.headerregistry.rst:336
-#: library/email.headerregistry.rst:338
+#: library/email.headerregistry.rst:332 library/email.headerregistry.rst:334
+#: library/email.headerregistry.rst:336 library/email.headerregistry.rst:338
+#: library/email.headerregistry.rst:340
 msgid "UniqueAddressHeader"
 msgstr "UniqueAddressHeader"
 
@@ -607,8 +614,8 @@ msgstr "UniqueAddressHeader"
 msgid "resent-to"
 msgstr "resent-to"
 
-#: library/email.headerregistry.rst:331 library/email.headerregistry.rst:333
-#: library/email.headerregistry.rst:335 library/email.headerregistry.rst:337
+#: library/email.headerregistry.rst:333 library/email.headerregistry.rst:335
+#: library/email.headerregistry.rst:337 library/email.headerregistry.rst:339
 msgid "AddressHeader"
 msgstr "AddressHeader"
 
@@ -644,7 +651,7 @@ msgstr "reply-to"
 msgid "mime-version"
 msgstr "mime-version"
 
-#: library/email.headerregistry.rst:339
+#: library/email.headerregistry.rst:341
 msgid "MIMEVersionHeader"
 msgstr "MIMEVersionHeader"
 
@@ -652,7 +659,7 @@ msgstr "MIMEVersionHeader"
 msgid "content-type"
 msgstr "content-type"
 
-#: library/email.headerregistry.rst:340
+#: library/email.headerregistry.rst:342
 msgid "ContentTypeHeader"
 msgstr "ContentTypeHeader"
 
@@ -660,7 +667,7 @@ msgstr "ContentTypeHeader"
 msgid "content-disposition"
 msgstr "content-disposition"
 
-#: library/email.headerregistry.rst:341
+#: library/email.headerregistry.rst:343
 msgid "ContentDispositionHeader"
 msgstr "ContentDispositionHeader"
 
@@ -668,7 +675,7 @@ msgstr "ContentDispositionHeader"
 msgid "content-transfer-encoding"
 msgstr "content-transfer-encoding"
 
-#: library/email.headerregistry.rst:342
+#: library/email.headerregistry.rst:344
 msgid "ContentTransferEncodingHeader"
 msgstr "ContentTransferEncodingHeader"
 
@@ -676,15 +683,15 @@ msgstr "ContentTransferEncodingHeader"
 msgid "message-id"
 msgstr "message-id"
 
-#: library/email.headerregistry.rst:343
+#: library/email.headerregistry.rst:345
 msgid "MessageIDHeader"
 msgstr "MessageIDHeader"
 
-#: library/email.headerregistry.rst:345
+#: library/email.headerregistry.rst:347
 msgid "``HeaderRegistry`` has the following methods:"
 msgstr "``HeaderRegistry`` a les méthodes suivantes :"
 
-#: library/email.headerregistry.rst:350
+#: library/email.headerregistry.rst:352
 msgid ""
 "*name* is the name of the header to be mapped.  It will be converted to "
 "lower case in the registry.  *cls* is the specialized class to be used, "
@@ -696,12 +703,12 @@ msgstr ""
 "avec *base_class*, pour créer la classe utilisée pour instancier les en-"
 "têtes qui correspondent à *name*."
 
-#: library/email.headerregistry.rst:358
+#: library/email.headerregistry.rst:360
 msgid "Construct and return a class to handle creating a *name* header."
 msgstr ""
 "Construit et renvoie une classe pour gérer la création d'un en-tête *name*."
 
-#: library/email.headerregistry.rst:363
+#: library/email.headerregistry.rst:365
 msgid ""
 "Retrieves the specialized header associated with *name* from the registry "
 "(using *default_class* if *name* does not appear in the registry) and "
@@ -715,7 +722,7 @@ msgstr ""
 "classe construite, en lui passant la même liste d'arguments, et renvoie "
 "enfin l'instance de classe ainsi créée."
 
-#: library/email.headerregistry.rst:370
+#: library/email.headerregistry.rst:372
 msgid ""
 "The following classes are the classes used to represent data parsed from "
 "structured headers and can, in general, be used by an application program to "
@@ -726,7 +733,7 @@ msgstr ""
 "être utilisées par un programme d'application pour construire des valeurs "
 "structurées à affecter à des en-têtes spécifiques."
 
-#: library/email.headerregistry.rst:377
+#: library/email.headerregistry.rst:379
 msgid ""
 "The class used to represent an email address.  The general form of an "
 "address is::"
@@ -734,11 +741,11 @@ msgstr ""
 "Classe utilisée pour représenter une adresse e-mail. La forme générale d'une "
 "adresse est :"
 
-#: library/email.headerregistry.rst:382
+#: library/email.headerregistry.rst:384
 msgid "or::"
 msgstr "ou ::"
 
-#: library/email.headerregistry.rst:386
+#: library/email.headerregistry.rst:388
 msgid ""
 "where each part must conform to specific syntax rules spelled out "
 "in :rfc:`5322`."
@@ -746,7 +753,7 @@ msgstr ""
 "où chaque partie doit se conformer à des règles de syntaxe spécifiques "
 "énoncées dans la :rfc:`5322`."
 
-#: library/email.headerregistry.rst:389
+#: library/email.headerregistry.rst:391
 msgid ""
 "As a convenience *addr_spec* can be specified instead of *username* and "
 "*domain*, in which case *username* and *domain* will be parsed from the "
@@ -763,7 +770,7 @@ msgstr ""
 "sérialisation. Cependant, selon les RFC, l’Unicode n'est *pas* autorisé dans "
 "la partie nom d'utilisateur de l'adresse."
 
-#: library/email.headerregistry.rst:398
+#: library/email.headerregistry.rst:400
 msgid ""
 "The display name portion of the address, if any, with all quoting removed.  "
 "If the address does not have a display name, this attribute will be an empty "
@@ -773,15 +780,15 @@ msgstr ""
 "citations supprimées. Si l'adresse n'a pas de nom d'affichage, cet attribut "
 "est une chaîne vide."
 
-#: library/email.headerregistry.rst:404
+#: library/email.headerregistry.rst:406
 msgid "The ``username`` portion of the address, with all quoting removed."
 msgstr "Partie ``username`` de l'adresse, sans guillemets."
 
-#: library/email.headerregistry.rst:408
+#: library/email.headerregistry.rst:410
 msgid "The ``domain`` portion of the address."
 msgstr "Partie ``domain`` de l'adresse."
 
-#: library/email.headerregistry.rst:412
+#: library/email.headerregistry.rst:414
 msgid ""
 "The ``username@domain`` portion of the address, correctly quoted for use as "
 "a bare address (the second form shown above).  This attribute is not mutable."
@@ -790,7 +797,7 @@ msgstr ""
 "utilisation en tant qu'adresse nue (la deuxième forme illustrée ci-dessus). "
 "Cet attribut n'est pas modifiable."
 
-#: library/email.headerregistry.rst:418
+#: library/email.headerregistry.rst:420
 msgid ""
 "The ``str`` value of the object is the address quoted according "
 "to :rfc:`5322` rules, but with no Content Transfer Encoding of any non-ASCII "
@@ -800,7 +807,7 @@ msgstr ""
 "de la :rfc:`5322`, mais sans encodage de contenu pour les caractères non-"
 "ASCII."
 
-#: library/email.headerregistry.rst:422
+#: library/email.headerregistry.rst:424
 msgid ""
 "To support SMTP (:rfc:`5321`), ``Address`` handles one special case: if "
 "``username`` and ``domain`` are both the empty string (or ``None``), then "
@@ -810,7 +817,7 @@ msgstr ""
 "particulier : si ``username`` et ``domain`` sont tous deux la chaîne vide "
 "(ou ``None``), alors la valeur de chaîne de ``Address`` est ``<>``."
 
-#: library/email.headerregistry.rst:429
+#: library/email.headerregistry.rst:431
 msgid ""
 "The class used to represent an address group.  The general form of an "
 "address group is::"
@@ -818,7 +825,7 @@ msgstr ""
 "Classe utilisée pour représenter un groupe d'adresses. La forme générale "
 "d'un groupe d'adresses est :"
 
-#: library/email.headerregistry.rst:434
+#: library/email.headerregistry.rst:436
 msgid ""
 "As a convenience for processing lists of addresses that consist of a mixture "
 "of groups and single addresses, a ``Group`` may also be used to represent "
@@ -831,7 +838,7 @@ msgstr ""
 "définissant *display_name* sur ``None`` et en fournissant une liste de "
 "l'adresse unique sous la forme *adresses*."
 
-#: library/email.headerregistry.rst:441
+#: library/email.headerregistry.rst:443
 msgid ""
 "The ``display_name`` of the group.  If it is ``None`` and there is exactly "
 "one ``Address`` in ``addresses``, then the ``Group`` represents a single "
@@ -841,7 +848,7 @@ msgstr ""
 "``Adress`` dans ``adresses``, alors le ``Group`` représente une seule "
 "adresse qui n'est pas dans un groupe."
 
-#: library/email.headerregistry.rst:447
+#: library/email.headerregistry.rst:449
 msgid ""
 "A possibly empty tuple of :class:`.Address` objects representing the "
 "addresses in the group."
@@ -849,7 +856,7 @@ msgstr ""
 "*n*-uplet éventuellement vide d'objets :class:`.Address` représentant les "
 "adresses du groupe."
 
-#: library/email.headerregistry.rst:452
+#: library/email.headerregistry.rst:454
 msgid ""
 "The ``str`` value of a ``Group`` is formatted according to :rfc:`5322`, but "
 "with no Content Transfer Encoding of any non-ASCII characters.  If "
@@ -862,11 +869,11 @@ msgstr ""
 "est ``None`` et qu'il y a une seule ``Address`` dans la liste ``addresses``, "
 "la valeur ``str`` est la même que la ``str`` de cette seule ``Adress``."
 
-#: library/email.headerregistry.rst:460
+#: library/email.headerregistry.rst:462
 msgid "Footnotes"
 msgstr "Notes"
 
-#: library/email.headerregistry.rst:461
+#: library/email.headerregistry.rst:463
 msgid ""
 "Originally added in 3.3 as a :term:`provisional module <provisional package>`"
 msgstr ""

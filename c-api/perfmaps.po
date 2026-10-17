@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 09:58+0200\n"
+"POT-Creation-Date: 2026-10-17 14:27+0200\n"
 "PO-Revision-Date: 2024-10-29 22:25+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: FRENCH <traductions@lists.afpy.org>\n"
@@ -20,29 +20,30 @@ msgstr ""
 
 #: c-api/perfmaps.rst:8
 msgid ""
-"On supported platforms (as of this writing, only Linux), the runtime can "
-"take advantage of *perf map files* to make Python functions visible to an "
-"external profiling tool (such as `perf <https://perf.wiki.kernel.org/"
-"index.php/Main_Page>`_). A running process may create a file in the ``/tmp`` "
-"directory, which contains entries that can map a section of executable code "
-"to a name. This interface is described in the `documentation of the Linux "
-"Perf tool <https://git.kernel.org/pub/scm/linux/ kernel/git/torvalds/"
-"linux.git/tree/tools/perf/Documentation/jit-interface.txt>`_."
+"On supported platforms (Linux and macOS), the runtime can take advantage of "
+"*perf map files* to make Python functions visible to an external profiling "
+"tool (such as `perf <https://perf.wiki.kernel.org/index.php/Main_Page>`_ or "
+"`samply <https://github.com/mstange/samply/>`_). A running process may "
+"create a file in the ``/tmp`` directory, which contains entries that can map "
+"a section of executable code to a name. This interface is described in the "
+"`documentation of the Linux Perf tool <https://git.kernel.org/pub/scm/linux/ "
+"kernel/git/torvalds/linux.git/tree/tools/perf/Documentation/jit-"
+"interface.txt>`_."
 msgstr ""
 
-#: c-api/perfmaps.rst:16
+#: c-api/perfmaps.rst:17
 msgid ""
 "In Python, these helper APIs can be used by libraries and features that rely "
 "on generating machine code on the fly."
 msgstr ""
 
-#: c-api/perfmaps.rst:19
+#: c-api/perfmaps.rst:20
 msgid ""
 "Note that holding an :term:`attached thread state` is not required for these "
 "APIs."
 msgstr ""
 
-#: c-api/perfmaps.rst:23
+#: c-api/perfmaps.rst:24
 msgid ""
 "Open the ``/tmp/perf-$pid.map`` file, unless it's already opened, and create "
 "a lock to ensure thread-safe writes to the file (provided the writes are "
@@ -52,30 +53,99 @@ msgid ""
 "on first call."
 msgstr ""
 
-#: c-api/perfmaps.rst:29
+#: c-api/perfmaps.rst:30
 msgid ""
 "Returns ``0`` on success, ``-1`` on failure to create/open the perf map "
 "file, or ``-2`` on failure to create a lock. Check ``errno`` for more "
 "information about the cause of a failure."
 msgstr ""
 
-#: c-api/perfmaps.rst:35
+#: c-api/perfmaps.rst:36
 msgid ""
 "Write one single entry to the ``/tmp/perf-$pid.map`` file. This function is "
 "thread safe. Here is what an example entry looks like::"
 msgstr ""
 
-#: c-api/perfmaps.rst:41
+#: c-api/perfmaps.rst:42
 msgid ""
 "Will call :c:func:`PyUnstable_PerfMapState_Init` before writing the entry, "
 "if the perf map file is not already opened. Returns ``0`` on success, or the "
 "same error codes as :c:func:`PyUnstable_PerfMapState_Init` on failure."
 msgstr ""
 
-#: c-api/perfmaps.rst:47
+#: c-api/perfmaps.rst:48
 msgid ""
 "Close the perf map file opened by :c:func:`PyUnstable_PerfMapState_Init`. "
 "This is called by the runtime itself during interpreter shut-down. In "
 "general, there shouldn't be a reason to explicitly call this, except to "
 "handle specific scenarios such as forking."
+msgstr ""
+
+#: c-api/perfmaps.rst:55
+msgid ""
+"Open the ``/tmp/perf-$pid.map`` file and append the content of "
+"*parent_filename* to it."
+msgstr ""
+
+#: c-api/perfmaps.rst:58
+msgid ""
+"This function is available on all platforms but only generates output on "
+"platforms that support perf maps (currently only Linux). On other platforms, "
+"it does nothing."
+msgstr ""
+
+#: c-api/perfmaps.rst:65
+msgid "Compile the given code object using the current perf trampoline."
+msgstr ""
+
+#: c-api/perfmaps.rst:67
+msgid ""
+"The \"current\" trampoline is the one set by the runtime or the most "
+"recent :c:func:`PyUnstable_PerfTrampoline_SetPersistAfterFork` call."
+msgstr ""
+
+#: c-api/perfmaps.rst:70
+msgid ""
+"If no trampoline is set, falls back to normal compilation (no perf map "
+"entry)."
+msgstr ""
+
+#: c-api/perfmaps.rst:0
+msgid "Parameters"
+msgstr ""
+
+#: c-api/perfmaps.rst:72
+msgid "The code object to compile."
+msgstr ""
+
+#: c-api/perfmaps.rst:0
+msgid "Returns"
+msgstr ""
+
+#: c-api/perfmaps.rst:89
+msgid "0 on success, -1 on failure."
+msgstr ""
+
+#: c-api/perfmaps.rst:79
+msgid "Set whether the perf trampoline should persist after a fork."
+msgstr ""
+
+#: c-api/perfmaps.rst:81
+msgid ""
+"If ``enable`` is true (non-zero): perf map file remains open/valid post-"
+"fork. Child process inherits all existing perf map entries."
+msgstr ""
+
+#: c-api/perfmaps.rst:83
+msgid ""
+"If ``enable`` is false (zero): perf map closes post-fork. Child process gets "
+"empty perf map."
+msgstr ""
+
+#: c-api/perfmaps.rst:86
+msgid "Default: false (clears on fork)."
+msgstr ""
+
+#: c-api/perfmaps.rst:88
+msgid "1 to enable, 0 to disable."
 msgstr ""
